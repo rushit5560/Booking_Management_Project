@@ -8,11 +8,27 @@ class HeaderLogoModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Image.asset(
+      AppImages.headerLogoImg,
       height: Get.height * 0.10,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(AppImages.headerLogoImg),
+      scale: 0.9,
+    );
+  }
+}
+
+class HeaderTextModule extends StatelessWidget {
+  final String name;
+  const HeaderTextModule({Key? key, required this.name}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        name,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 30,
         ),
       ),
     );

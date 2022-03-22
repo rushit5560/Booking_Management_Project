@@ -1,6 +1,7 @@
 import 'package:booking_management/common/constants/app_images.dart';
 import 'package:booking_management/common/field_validation.dart';
 import 'package:booking_management/controllers/vendor_details_screen_controller/vendor_details_screen_controller.dart';
+import 'package:booking_management/screens/book_appointment_screen/book_appointment_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -235,7 +236,7 @@ class BookAppointmentButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
+        Get.to(() => BookAppointMentScreen());
       },
       child: Container(
         alignment: Alignment.centerRight,

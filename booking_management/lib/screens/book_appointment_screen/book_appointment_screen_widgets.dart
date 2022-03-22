@@ -30,7 +30,7 @@ class AppBarWidget extends StatelessWidget {
               },
                 child: Image.asset(AppImages.backArrowImg)),
 
-            Text("Book Appointment", style: TextStyle(
+            const Text("Book Appointment", style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20
             ),),
 
@@ -50,10 +50,10 @@ class SelectDateModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Select Date", style: TextStyle(
+        const Text("Select Date", style: TextStyle(
           color: Colors.black, fontWeight: FontWeight.bold
         ),),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -65,8 +65,8 @@ class SelectDateModule extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {screenController.selectDatePreviousClick(pageController: screenController.selectDatePageController);},
-                    child:  LeftArrowButtonModule()),
-                SizedBox(width: 10,),
+                    child:  const LeftArrowButtonModule()),
+                const SizedBox(width: 10,),
                 Expanded(
                   child: SizedBox(
                     height: 100,
@@ -87,9 +87,9 @@ class SelectDateModule extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("Mar", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
-                                SizedBox(height: 3,),
+                                const SizedBox(height: 3,),
                                 Text(index.toString(), style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
-                                SizedBox(height: 3,),
+                                const SizedBox(height: 3,),
                                 Text("Fri", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),)
                               ],
                             ),
@@ -99,10 +99,10 @@ class SelectDateModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 GestureDetector(
                     onTap: () {screenController.selectDateNextClick(pageController: screenController.selectDatePageController);},
-                    child:  RightArrowButtonModule()),
+                    child:  const RightArrowButtonModule()),
               ],
             ),
           ),
@@ -119,7 +119,7 @@ class LeftArrowButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Image.asset(AppImages.backArrowImg)
     );
   }
@@ -131,7 +131,7 @@ class RightArrowButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Image.asset(AppImages.rightArrowImg)
     );
   }
@@ -151,12 +151,12 @@ class SelectTimeModule extends StatelessWidget {
         const Text("Select Time", style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold
         ),),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         GridView.builder(
           itemCount: screenController.timeList.length,
           shrinkWrap: true,
           physics:  const AlwaysScrollableScrollPhysics(),
-          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
@@ -195,10 +195,10 @@ class SelectPaymentMethod extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Select Payment Method", style: TextStyle(
+        const Text("Select Payment Method", style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold
         ),),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
 
         Obx(()=>
             Container(
@@ -218,11 +218,11 @@ class SelectPaymentMethod extends StatelessWidget {
                     // });
                   },
                 ),
-                title: Text('Credit/Debit Card', style: TextStyle(color: Colors.black, fontSize: 15),),
+                title: const Text('Credit/Debit Card', style: TextStyle(color: Colors.black, fontSize: 15),),
               ),
             ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Obx(()=>
             Container(
               //height: 55,
@@ -241,12 +241,12 @@ class SelectPaymentMethod extends StatelessWidget {
                     // });
                   },
                 ),
-                title: Text('UPI', style: TextStyle(color: Colors.black, fontSize: 15),),
+                title: const Text('UPI', style: TextStyle(color: Colors.black, fontSize: 15),),
               ),
             ),
         ),
 
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Obx(()=>
             Container(
               //height: 55,
@@ -265,12 +265,12 @@ class SelectPaymentMethod extends StatelessWidget {
                     // });
                   },
                 ),
-                title: Text('Paypal', style: TextStyle(color: Colors.black, fontSize: 15),),
+                title: const Text('Paypal', style: TextStyle(color: Colors.black, fontSize: 15),),
               ),
             ),
         ),
 
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Obx(()=>
             Container(
               //height: 55,
@@ -289,7 +289,7 @@ class SelectPaymentMethod extends StatelessWidget {
                     // });
                   },
                 ),
-                title: Text('Cash', style: TextStyle(color: Colors.black, fontSize: 15),),
+                title: const Text('Cash', style: TextStyle(color: Colors.black, fontSize: 15),),
               ),
             ),
         )

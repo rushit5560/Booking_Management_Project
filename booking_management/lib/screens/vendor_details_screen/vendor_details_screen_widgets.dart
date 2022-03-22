@@ -15,7 +15,7 @@ class ProfileModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
         child: Image.asset(AppImages.vendorImg, scale: 2.5,)
     );
   }
@@ -31,7 +31,7 @@ class BackArrow extends StatelessWidget {
         Get.back();
       },
       child: Container(
-          margin: EdgeInsets.only(top: 15, left: 20),
+          margin: const EdgeInsets.only(top: 15, left: 20),
           child: Image.asset(AppImages.backArrowImg)),
     );
   }
@@ -43,7 +43,7 @@ class VendorName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Lorem Ipsum", style: TextStyle(color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),);
+    return Text("Lorem Ipsum", style: const TextStyle(color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),);
   }
 }
 
@@ -107,7 +107,7 @@ class PriceAndLocation extends StatelessWidget {
                 child: Text("\$20 - \$30/Day", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)))
           ],
         ),
-        SizedBox(height: 15,),
+        const SizedBox(height: 15,),
         Row(
           children: const [
             Expanded(
@@ -189,7 +189,7 @@ class ReviewTextFieldAndButtonModule extends StatelessWidget {
                 ),
               ),
           ),
-          SizedBox(width: 20,),
+          const SizedBox(width: 20,),
           Expanded(
             flex: 1,
             child: GestureDetector(

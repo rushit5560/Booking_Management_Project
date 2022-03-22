@@ -21,8 +21,8 @@ class VendorDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProfileModule(),
-                  SizedBox(height: 10,),
+                  const ProfileModule(),
+                  const SizedBox(height: 10,),
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

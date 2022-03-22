@@ -58,7 +58,7 @@ class SendCodeButtonModule extends StatelessWidget {
 }
 
 class CodeTextFieldModule extends StatelessWidget {
-  //CodeTextFieldModule({Key? key}) : super(key: key);
+  const CodeTextFieldModule({Key? key}) : super(key: key);
 
   static const int pinLength = 5;
 

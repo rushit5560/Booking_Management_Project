@@ -64,17 +64,17 @@ class FieldValidator {
     }
   }
 
- /* String ? validateConfimrPassword(String value) {
+  String ? validateConfirmPassword(String value, String password) {
     if (value.isEmpty) {
-      return "password is Required";
+      return "confirm password is Required";
     } else if (value.length < 6) {
       return "Length should be 6 character";
-    } else if (value != signUpScreenController.passwordTextFieldController.text){
+    } else if (value != password){
       return "Password and Confirm password should be same";
     } else{
       return null;
     }
-  }*/
+  }
 
   String ? validateMobile(String value) {
 // Indian Mobile number are of 10 digit only
@@ -103,4 +103,12 @@ class FieldValidator {
     }
     return null;
   }
+
+  String? validateReview(String value) {
+    if (value.isEmpty) {
+      return 'Review is Required';
+    }
+    return null;
+  }
+
 }

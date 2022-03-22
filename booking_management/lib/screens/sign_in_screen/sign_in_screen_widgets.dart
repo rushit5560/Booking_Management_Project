@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../common/field_decorations.dart';
 import '../../common/field_validation.dart';
+import '../user_sign_up_screen/user_sign_up_screen.dart';
 
 SignInScreenController screenController = Get.find<SignInScreenController>();
 
@@ -57,7 +58,7 @@ class SignInButtonModule extends StatelessWidget {
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
-          ]
+          ],
         ),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
@@ -103,7 +104,7 @@ class SignUpTextModule extends StatelessWidget {
         const Text("Don't have an account? "),
         GestureDetector(
           onTap: () {
-            // Get.off(()=> SignUpScreen());
+            Get.off(()=> UserSignUpScreen());
           },
           child: const Text(
             'Sign Up',

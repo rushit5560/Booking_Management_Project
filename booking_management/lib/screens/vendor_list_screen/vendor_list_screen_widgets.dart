@@ -46,7 +46,7 @@ class VendorList extends StatelessWidget {
   Widget vendorListModule(){
     return GestureDetector(
       onTap: (){
-        Get.to(() => const VendorDetailScreen());
+        Get.to(() => VendorDetailScreen());
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),

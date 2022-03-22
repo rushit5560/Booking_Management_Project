@@ -1,7 +1,7 @@
 
 import 'package:booking_management/common/constants/app_colors.dart';
 import 'package:booking_management/common/constants/app_images.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class VendorList extends StatelessWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index){
           return Container(
-            margin: EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
@@ -62,12 +62,6 @@ class VendorList extends StatelessWidget {
                       children: [
                         Expanded(
                           flex: 1,
-                          // child: Container(
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(10),
-                          //   ),
-                          //   child: Image.asset(AppImages.vendorImg, scale: 10,),
-                          // ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.asset(AppImages.vendorImg),
@@ -101,7 +95,9 @@ class VendorList extends StatelessWidget {
                                       color: Colors.amber,
                                     ),
                                     onRatingUpdate: (rating) {
-                                      print(rating);
+                                      if (kDebugMode) {
+                                        print(rating);
+                                      }
                                     },
                                   )
                                 ],

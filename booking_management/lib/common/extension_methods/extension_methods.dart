@@ -8,4 +8,11 @@ extension CustomWidgets on Widget {
       child: this,
     );
   }
+
+  Widget commonSymmetricPadding({double horizontal = 0, double vertical = 0}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
+      child: this,
+    );
+  }
 }

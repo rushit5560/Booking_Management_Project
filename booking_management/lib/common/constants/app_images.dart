@@ -5,4 +5,5 @@ class AppImages {
   static const headerLogoImg = root + "header_logo.png";
   static const vendorImg = root + "vendor1.png";
   static const rightArrowImg = root + "right_arrow.png";
+  static const backArrowImg = root + "back_arrow.png";
 }

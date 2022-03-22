@@ -71,7 +71,6 @@ class CodeTextFieldModule extends StatelessWidget {
     return PinInputTextFormField(
       key: screenController.codeFormKey,
       pinLength: pinLength,
-
       decoration: screenController.pinDecoration!,
       controller: screenController.codeFieldController,
       textInputAction: TextInputAction.go,
@@ -94,13 +93,13 @@ class CodeTextFieldModule extends StatelessWidget {
          // setState(() {
             screenController.hasError.value = true;
           //});
-          return 'Pin cannot empty.';
+          return 'Code cannot empty.';
         }
         if (pin.length < pinLength) {
           //setState(() {
           screenController.hasError.value = true;
           //});
-          return 'Pin is not completed.';
+          return 'Code is not completed.';
         }
         //setState(() {
         screenController.hasError.value = false;
@@ -109,9 +108,45 @@ class CodeTextFieldModule extends StatelessWidget {
       },
       cursor: Cursor(
         width: 2,
-        color: Colors.lightBlue,
+        color: Colors.black,
         radius: const Radius.circular(1),
         enabled: _cursorEnable,
+      ),
+    );
+  }
+}
+
+class SubmitButtonModule extends StatelessWidget {
+  const SubmitButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if(screenController.codeFormKey.currentState!.validate()){}
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          child: Text(
+            'SUBMIT',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
       ),
     );
   }

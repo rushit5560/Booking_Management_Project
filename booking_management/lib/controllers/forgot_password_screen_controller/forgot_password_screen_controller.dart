@@ -18,7 +18,6 @@ class ForgotPasswordScreenController extends GetxController {
   PinListenColorBuilder(Colors.grey, Colors.grey);
   final bool _solidEnable = false;
   bool obscureEnable = false;
-  //String kDefaultHint = 'abcd';
 
   @override
   void onInit() {
@@ -33,61 +32,60 @@ class ForgotPasswordScreenController extends GetxController {
       case PinEntryType.underline:
         //setState(() {
           pinDecoration = UnderlineDecoration(
-            colorBuilder: PinListenColorBuilder(Colors.cyan, Colors.green),
+            colorBuilder: PinListenColorBuilder(Colors.black, Colors.black),
             bgColorBuilder: _solidEnable ? _solidColor : null,
             obscureStyle: ObscureStyle(
               isTextObscure: obscureEnable,
               obscureText: '😂',
             ),
-            //hintText: 'abcd',
           );
        // });
         break;
-      // case PinEntryType.boxTight:
-      //   setState(() {
-      //     _pinDecoration = BoxTightDecoration(
-      //       bgColorBuilder: _solidEnable ? _solidColor : null,
-      //       obscureStyle: ObscureStyle(
-      //         isTextObscure: _obscureEnable,
-      //         obscureText: '👿',
-      //       ),
-      //       hintText: _kDefaultHint,
-      //     );
-      //   });
-      //   break;
-      // case PinEntryType.boxLoose:
-      //   setState(() {
-      //     _pinDecoration = BoxLooseDecoration(
-      //       strokeColorBuilder:
-      //       PinListenColorBuilder(Colors.cyan, Colors.green),
-      //       bgColorBuilder: _solidEnable ? _solidColor : null,
-      //       obscureStyle: ObscureStyle(
-      //         isTextObscure: _obscureEnable,
-      //         obscureText: '☺️',
-      //       ),
-      //       hintText: _kDefaultHint,
-      //     );
-      //   });
-      //   break;
-      // case PinEntryType.circle:
-      //   setState(() {
-      //     _pinDecoration = CirclePinDecoration(
-      //       bgColorBuilder: _solidEnable ? _solidColor : null,
-      //       strokeColorBuilder:
-      //       PinListenColorBuilder(Colors.cyan, Colors.green),
-      //       obscureStyle: ObscureStyle(
-      //         isTextObscure: _obscureEnable,
-      //         obscureText: '🤪',
-      //       ),
-      //       hintText: _kDefaultHint,
-      //     );
-      //   });
-      //   break;
-      // case PinEntryType.customized:
-      //   setState(() {
-      //     _pinDecoration = ExampleDecoration();
-      //   });
-      //   break;
+      case PinEntryType.boxTight:
+       // setState(() {
+          pinDecoration = BoxTightDecoration(
+            bgColorBuilder: _solidEnable ? _solidColor : null,
+            obscureStyle: ObscureStyle(
+              isTextObscure: obscureEnable,
+              obscureText: '👿',
+            ),
+            //hintText: _kDefaultHint,
+          );
+       // });
+        break;
+      case PinEntryType.boxLoose:
+        //setState(() {
+          pinDecoration = BoxLooseDecoration(
+            strokeColorBuilder:
+            PinListenColorBuilder(Colors.cyan, Colors.green),
+            bgColorBuilder: _solidEnable ? _solidColor : null,
+            obscureStyle: ObscureStyle(
+              isTextObscure: obscureEnable,
+              obscureText: '☺️',
+            ),
+            //hintText: _kDefaultHint,
+          );
+        //});
+        break;
+      case PinEntryType.circle:
+        //setState(() {
+          pinDecoration = CirclePinDecoration(
+            bgColorBuilder: _solidEnable ? _solidColor : null,
+            strokeColorBuilder:
+            PinListenColorBuilder(Colors.cyan, Colors.green),
+            obscureStyle: ObscureStyle(
+              isTextObscure: obscureEnable,
+              obscureText: '🤪',
+            ),
+            //hintText: _kDefaultHint,
+          );
+        //});
+        break;
+      case PinEntryType.customized:
+      // setState(() {
+       //  pinDecoration = ExampleDecoration();
+      // });
+       break;
     }
   }
 }

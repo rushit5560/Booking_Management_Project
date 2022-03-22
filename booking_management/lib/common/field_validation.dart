@@ -3,7 +3,7 @@ class FieldValidator {
 
   String? validateFullName(String value) {
     if (value.isEmpty) {
-      return 'Name is Required';
+      return 'Field is Required';
     }
     return null;
   }

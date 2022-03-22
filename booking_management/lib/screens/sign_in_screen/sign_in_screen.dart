@@ -23,6 +23,7 @@ class SignInScreen extends StatelessWidget {
               // From Common Widgets
               HeaderLogoModule(),
               SizedBox(height: 20),
+              // From Common Widgets
               HeaderTextModule(name: "Welcome \nBack"),
               SizedBox(height: 20),
               EmailFieldModule(),

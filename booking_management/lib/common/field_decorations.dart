@@ -1,6 +1,7 @@
 import 'package:booking_management/controllers/sign_in_screen_controller/sign_in_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 
 InputDecoration signInFormFieldDecoration(
     {required String hintText,
@@ -9,16 +10,14 @@ InputDecoration signInFormFieldDecoration(
   return InputDecoration(
       hintText: hintText,
       hintStyle: const TextStyle(color: Colors.grey),
-
       enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
+          borderSide: BorderSide(color: Colors.black)),
       focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
-      errorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.red)),
-      focusedErrorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.red)),
-
+          borderSide: BorderSide(color: Colors.black)),
+      errorBorder:
+          const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      focusedErrorBorder:
+          const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
       suffixIcon: index == 1
           ? Obx(
               () => GestureDetector(
@@ -34,5 +33,85 @@ InputDecoration signInFormFieldDecoration(
                     color: Colors.grey),
               ),
             )
+          : null);
+}
+
+InputDecoration signUpFormFieldDecoration({
+  required String hintText,
+  int index = 0,
+  required UserSignUpScreenController controller,
+  required BuildContext context,
+}) {
+  return InputDecoration(
+      hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
+      enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      errorBorder:
+          const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      focusedErrorBorder:
+          const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      suffixIcon: index == 1
+          ? Obx(
+              () => GestureDetector(
+                onTap: () {
+                  controller.isPasswordVisible.value =
+                      !controller.isPasswordVisible.value;
+                },
+                child: Icon(
+                    controller.isPasswordVisible.value
+                        ? Icons.visibility_off_rounded
+                        : Icons.visibility_rounded,
+                    size: 20,
+                    color: Colors.grey),
+              ),
+            )
+          : index == 2
+              ? GestureDetector(
+                  onTap: () {
+                    controller.selectDate(context);
+                  },
+                  child: const Icon(Icons.calendar_today_rounded,
+                      size: 20, color: Colors.grey),
+                )
+              : null);
+}
+
+
+InputDecoration forgotPasswordFormFieldDecoration(
+    {required String hintText,
+      int index = 0,
+      required ForgotPasswordScreenController controller}) {
+  return InputDecoration(
+      hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
+
+      enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.red)),
+      focusedErrorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.red)),
+
+      suffixIcon: index == 1
+          ? Obx(
+
+            () => GestureDetector(
+          onTap: () {
+            controller.isPasswordVisible.value =
+            !controller.isPasswordVisible.value;
+          },
+          child: Icon(
+              controller.isPasswordVisible.value
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded,
+              size: 20,
+              color: Colors.grey),
+        ),
+      )
           : null);
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 extension CustomWidgets on Widget {
 
-  Widget commonAllSidePadding() {
+  Widget commonAllSidePadding(double padding) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(padding),
       child: this,
     );
   }

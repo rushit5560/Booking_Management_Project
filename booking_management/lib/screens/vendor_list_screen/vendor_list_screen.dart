@@ -21,7 +21,7 @@ class VendorListScreen extends StatelessWidget {
                 children: const [
                   Expanded(child: VendorList())
                 ],
-              ).commonAllSidePadding(),
+              ).commonAllSidePadding(20),
             )
           ],
         ),

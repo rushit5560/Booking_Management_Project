@@ -20,9 +20,9 @@ class ForgotPasswordScreen extends StatelessWidget {
             children: [
               // From Common Widgets
               const HeaderLogoModule(),
-              const SizedBox(height: 30),
-              const HeaderTextModule(name: "Forgot \nPassword"),
-              const SizedBox(height: 30),
+              const SizedBox(height: 50),
+              const HeaderTextModule(name: "Forgot Password"),
+              const SizedBox(height: 80),
               const EmailFieldModule(),
               const SizedBox(height: 45),
               const SendCodeButtonModule(),

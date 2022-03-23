@@ -49,7 +49,7 @@ class VendorList extends StatelessWidget {
         Get.to(() => VendorDetailScreen());
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20, left: 3, right: 3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,

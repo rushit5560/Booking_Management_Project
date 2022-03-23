@@ -4,4 +4,6 @@ import 'package:get/get.dart';
 class VendorDetailsScreenController extends GetxController{
   final TextEditingController reviewFieldController = TextEditingController();
   GlobalKey<FormState> reviewFormKey = GlobalKey<FormState>();
+  RxBool isOverviewSelected = true.obs;
+  RxBool isReviewSelected = false.obs;
 }

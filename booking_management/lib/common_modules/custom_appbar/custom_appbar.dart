@@ -85,7 +85,9 @@ class CommonAppBarModule extends StatelessWidget {
             ? Image.asset(AppImages.backArrowImg)
             : appBarOption == AppBarOption.userConversationScreen
                 ? Image.asset(AppImages.backArrowImg)
-                : Container(),
+                : appBarOption == AppBarOption.none
+                    ? null
+                    : Container(),
       ),
     );
   }

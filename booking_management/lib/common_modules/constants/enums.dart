@@ -1,4 +1,14 @@
 enum AppBarOption {
+   none,
    singleBackButtonOption,
-   userConversationScreen
+   userConversationScreen,
+}
+
+enum UserSettingScreenOption {
+   profile,
+   chat,
+   bookingHistory,
+   payment,
+   help,
+   logOut
 }

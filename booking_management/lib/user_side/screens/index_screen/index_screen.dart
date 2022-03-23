@@ -1,11 +1,14 @@
 import 'dart:developer';
 import 'package:booking_management/user_side/screens/business_list_screen/business_list_screen.dart';
+import 'package:booking_management/user_side/screens/user_notification_screen/user_notification_screen.dart';
+import 'package:booking_management/user_side/screens/user_settings_screen/user_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/index_screen_controller/index_screen_controller.dart';
 import '../home_screen/home_screen.dart';
+
 
 class IndexScreen extends StatelessWidget {
   IndexScreen({Key? key}) : super(key: key);
@@ -35,9 +38,9 @@ class IndexScreen extends StatelessWidget {
     } else if (indexScreenController.menuIndex.value == 1) {
       return const BusinessListScreen();
     } else if (indexScreenController.menuIndex.value == 2) {
-      return HomeScreen();
+      return const UserNotificationScreen();
     } else {
-      return HomeScreen();
+      return const UserSettingsScreen();
     }
   }
 

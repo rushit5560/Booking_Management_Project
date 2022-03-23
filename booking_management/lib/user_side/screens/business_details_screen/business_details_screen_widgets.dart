@@ -1,3 +1,4 @@
+import 'package:booking_management/user_side/controllers/business_details_screen_controller/business_details_screen_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -6,10 +7,9 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/field_validation.dart';
-import '../../controllers/vendor_details_screen_controller/vendor_details_screen_controller.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
 
-VendorDetailsScreenController screenController = Get.find<VendorDetailsScreenController>();
+BusinessDetailsScreenController screenController = Get.find<BusinessDetailsScreenController>();
 
 class ProfileModule extends StatelessWidget {
   const ProfileModule({Key? key}) : super(key: key);
@@ -410,13 +410,13 @@ class ReviewModule extends StatelessWidget {
   Widget showReviewList(){
     return ListView.builder(
       shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 5,
         itemBuilder: (context, index){
           return Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+              borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
               color: AppColors.colorLightGrey1
             ),
             child: Padding(
@@ -429,13 +429,13 @@ class ReviewModule extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(AppImages.vendorImg, scale: 20,),
                       ),
-                      SizedBox(width: 10,),
+                      const SizedBox(width: 10,),
 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Mr. John Doe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                          SizedBox(height: 3,),
+                          const Text("Mr. John Doe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                          const SizedBox(height: 3,),
                           RatingBar.builder(
                             initialRating: 5,
                             minRating: 1,
@@ -458,9 +458,9 @@ class ReviewModule extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
-                  Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry")
+                  const Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry")
                 ],
               ),
             ),

@@ -2,10 +2,10 @@ import 'package:booking_management/common_modules/custom_appbar/custom_appbar.da
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 
-import 'vendor_list_screen_widgets.dart';
+import 'business_list_screen_widgets.dart';
 
-class VendorListScreen extends StatelessWidget {
-  const VendorListScreen({Key? key}) : super(key: key);
+class BusinessListScreen extends StatelessWidget {
+  const BusinessListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class VendorListScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const CommonAppBarModule(title: "Vendor List"),
+            const CommonAppBarModule(title: "Business List"),
             Expanded(
               child: Column(
                 children: const [
-                  Expanded(child: VendorListScreenVendorList()),
+                  Expanded(child: BusinessList()),
                 ],
               ).commonAllSidePadding(20),
             )

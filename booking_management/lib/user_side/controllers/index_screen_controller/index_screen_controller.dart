@@ -1,7 +1,7 @@
+import 'package:booking_management/user_side/screens/business_list_screen/business_list_screen.dart';
 import 'package:get/get.dart';
 
 import '../../screens/home_screen/home_screen.dart';
-import '../../screens/vendor_list_screen/vendor_list_screen.dart';
 
 
 class IndexScreenController extends GetxController {
@@ -9,6 +9,6 @@ class IndexScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
 
   RxInt currentSelectedIndex = 0.obs;
-  final tabs = [HomeScreen(), VendorListScreen(), HomeScreen(), HomeScreen()];
+  final tabs = [HomeScreen(), BusinessListScreen(), HomeScreen(), HomeScreen()];
   RxInt menuIndex = 0.obs;
 }

@@ -21,7 +21,8 @@ class BookAppointmentScreenController extends GetxController{
     '01:20 AM',
     '01:40 AM',
   ];
-
+  RxString date = '23-Mar-2022'.obs;
+  RxString time = '6:35 PM'.obs;
 
   selectDatePreviousClick({required PageController pageController}) {
     pageController.previousPage(duration: 300.milliseconds, curve: Curves.ease);

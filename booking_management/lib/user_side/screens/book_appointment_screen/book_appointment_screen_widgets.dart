@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,42 +7,6 @@ import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
 
 final screenController = Get.find<BookAppointmentScreenController>();
-
-class BookAppointmentScreenAppBarWidget extends StatelessWidget {
-  const BookAppointmentScreenAppBarWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      width: Get.width,
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
-          color: AppColors.colorLightGrey
-        //color: Colors.grey
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: (){
-                Get.back();
-              },
-                child: Image.asset(AppImages.backArrowImg)),
-
-            const Text("Book Appointment", style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20
-            ),),
-
-            Container()
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class SelectDateModule extends StatelessWidget {
   const SelectDateModule({Key? key}) : super(key: key);
@@ -187,6 +152,297 @@ class SelectTimeModule extends StatelessWidget {
     );
   }
 }
+
+class SelectSlot extends StatelessWidget {
+  const SelectSlot({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Select Your Slot", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+        SizedBox(height: 15,),
+
+        Row(
+          children: [
+            Expanded(child: dateSlotDropDownModule(context)),
+            const SizedBox(width: 15,),
+            Expanded(child: timeSlotDropDownModule(context))
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget dateSlotDropDownModule(BuildContext context){
+    return Obx(()=>
+        Container(
+          padding: const EdgeInsets.only(right: 10),
+          height: 45,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.colorLightGrey,
+                blurRadius: 5,
+                //spreadRadius: 5,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+                canvasColor: Colors.grey.shade100,
+                // background color for the dropdown items
+                buttonTheme: ButtonTheme.of(context).copyWith(
+                  alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
+                )),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                isExpanded: true,
+                focusColor: Colors.white,
+                value: screenController.date.value,
+                //elevation: 5,
+                style: TextStyle(color: AppColors.colorLightGrey),
+                iconEnabledColor: Colors.black,
+                items: <String>[
+                  '23-Mar-2022',
+                  '24-Mar-2022',
+                  '25-Mar-2022',
+                  '26-Mar-2022',
+                  '27-Mar-2022'
+                ].
+                map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
+                hint: Text("Date", style: const TextStyle(color: Colors.black),),
+                onChanged: (newValue) {
+                  screenController.date.value = newValue!;
+                },
+              ),
+            ),
+          ),
+        ),
+    );
+  }
+
+  Widget timeSlotDropDownModule(BuildContext context){
+    return Obx(()=>
+        Container(
+          padding: const EdgeInsets.only(right: 10),
+          height: 45,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.colorLightGrey,
+                blurRadius: 5,
+                //spreadRadius: 5,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+                canvasColor: Colors.grey.shade100,
+                // background color for the dropdown items
+                buttonTheme: ButtonTheme.of(context).copyWith(
+                  alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
+                )),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                isExpanded: true,
+                focusColor: Colors.white,
+                value: screenController.time.value,
+                //elevation: 5,
+                style: TextStyle(color: AppColors.colorLightGrey),
+                iconEnabledColor: Colors.black,
+                items: <String>[
+                  '6:35 PM',
+                  '7:00 PM',
+                  '8:00 PM',
+                  '9:00 PM',
+                  '10:00 PM'
+                ].
+                map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
+                hint: Text("Time", style: const TextStyle(color: Colors.black),),
+                onChanged: (newValue) {
+                  screenController.time.value = newValue!;
+                },
+              ),
+            ),
+          ),
+        ),
+    );
+  }
+}
+
+class CheckAvaibilityButtonModule extends StatelessWidget {
+  const CheckAvaibilityButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        //Get.to(() => BookAppointMentScreen());
+      },
+      child: Container(
+        alignment: Alignment.center,
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  color: Colors.grey.shade300,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ]
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              'Check Avaibility',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ResourcesList extends StatelessWidget {
+  const ResourcesList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Resources -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
+        SizedBox(height: 20,),
+
+        Expanded(
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: AlwaysScrollableScrollPhysics(),
+              itemCount: 10,
+              itemBuilder: (context, index){
+                return Container(
+                  margin: EdgeInsets.only(bottom: 15, left: 3, right: 3, top: 3),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppColors.colorLightGrey,
+                            blurStyle: BlurStyle.outer,
+                            blurRadius: 5
+                        )
+                      ]
+                  ),
+                  //color: AppColors.colorLightGrey1
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex:3,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex:1,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(AppImages.vendorImg),
+                                ),
+                              ),
+                              SizedBox(width: 15,),
+
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Lorem Ipsum", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                                    SizedBox(height: 7,),
+                                    Text("Lorem Ipsum is simply dummy text of the following", maxLines: 1, style: TextStyle(fontSize: 11,),),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        //SizedBox(height: 10,),
+
+                        Expanded(
+                            flex:1,
+                            child: GestureDetector(
+                              onTap: () {
+                                //Get.to(() => BookAppointMentScreen());
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          spreadRadius: 3,
+                                          blurRadius: 5,
+                                          color: Colors.grey.shade300,
+                                          blurStyle: BlurStyle.outer,
+                                        ),
+                                      ]
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Book',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                );
+              }),
+        )
+      ],
+    );
+  }
+}
+
+
+
 
 class SelectPaymentMethod extends StatelessWidget {
   const SelectPaymentMethod({Key? key}) : super(key: key);

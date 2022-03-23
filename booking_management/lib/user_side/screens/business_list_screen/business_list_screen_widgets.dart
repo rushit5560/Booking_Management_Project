@@ -1,35 +1,13 @@
+import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
-import '../vendor_details_screen/vendor_details_screen.dart';
 
-class VendorListScreenAppBarWidget extends StatelessWidget {
-  const VendorListScreenAppBarWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      width: Get.width,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
-        color: AppColors.colorLightGrey
-        //color: Colors.grey
-      ),
-      child: const Center(
-        child: Text("Vendor List", style: TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20
-        ),),
-      ),
-    );
-  }
-}
-
-class VendorListScreenVendorList extends StatelessWidget {
-  const VendorListScreenVendorList({Key? key}) : super(key: key);
+class BusinessList extends StatelessWidget {
+  const BusinessList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +16,17 @@ class VendorListScreenVendorList extends StatelessWidget {
         shrinkWrap: true,
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index){
-          return vendorListModule();
+          return businessListModule();
         });
   }
 
-  Widget vendorListModule(){
+  Widget businessListModule(){
     return GestureDetector(
       onTap: (){
-        Get.to(() => VendorDetailScreen());
+        Get.to(() => BusinessDetailScreen());
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 20, left: 3, right: 3),
+        margin: const EdgeInsets.only(bottom: 20, left: 3, right: 3, top: 7),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,

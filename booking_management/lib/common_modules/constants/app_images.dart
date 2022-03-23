@@ -20,4 +20,8 @@ class AppImages {
 
   static const fbLoginImg = root + "fb_login.png";
   static const googleLoginImg = root + "google_login.png";
+  static const emojiImg = root + "emoji.png";
+  static const sendImg = root + "send.png";
+  static const calenderImg = root + "calender.png";
+  static const clockImg = root + "clock.png";
 }

@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 
 import '../common_ui/common_controller/forgot_password_screen_controller/forgot_password_screen_controller.dart';
 import '../common_ui/common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
+import '../user_side/controllers/user_conversation_screen_controller/user_conversation_screen_controller.dart';
 import '../user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import '../vendor_side/controllers/vendor_sign_up_screen_controller/vendor_sign_up_screen_controller.dart';
+import 'common_functions.dart';
+import 'constants/app_colors.dart';
+import 'constants/app_images.dart';
 
 InputDecoration signInFormFieldDecoration(
     {required String hintText,
@@ -152,4 +156,35 @@ InputDecoration vendorSignUpFormFieldDecoration(
                       size: 20, color: Colors.grey),
                 )
               : null);
+}
+
+InputDecoration conversationScreenFieldDecoration(
+    {required String hintText,
+    required UserConversationScreenController controller}) {
+  return InputDecoration(
+    hintText: hintText,
+    hintStyle: const TextStyle(color: Colors.grey),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: AppColors.colorLightGrey),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: AppColors.colorLightGrey),
+    ),
+    fillColor: Colors.white,
+    filled: true,
+    isDense: true,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    suffixIcon: GestureDetector(
+      onTap: () {
+        controller.messageFieldController.clear();
+      },
+      child: Image.asset(AppImages.sendImg, scale: 0.75),
+    ),
+    prefixIcon: GestureDetector(
+      onTap: () {},
+      child: Image.asset(AppImages.emojiImg, scale: 0.75),
+    ),
+  );
 }

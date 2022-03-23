@@ -1,3 +1,4 @@
 enum AppBarOption {
    singleBackButtonOption,
+   userConversationScreen
 }

@@ -19,7 +19,7 @@ class BookAppointMentScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CommonAppBarModule(title: "Book Appointment", appBarOption: AppBarOption.bookAppointmentScreenOption),
+            const CommonAppBarModule(title: "Book Appointment", appBarOption: AppBarOption.singleBackButtonOption),
             //SizedBox(height: 20,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

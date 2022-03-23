@@ -31,11 +31,14 @@ class CommonAppBarModule extends StatelessWidget {
           children: [
             leftSideButton(context),
 
-            Text(title, style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20
-            ),),
-
-            Container()
+            Text(
+              title,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            ),
+            rightSideButton(),
           ],
         ),
       ),
@@ -47,8 +50,12 @@ class CommonAppBarModule extends StatelessWidget {
       onTap: (){
         Get.back();
       },
-      child: appBarOption == AppBarOption.bookAppointmentScreenOption ?
+      child: appBarOption == AppBarOption.singleBackButtonOption ?
         Image.asset(AppImages.backArrowImg) : Container(),
     );
+  }
+
+  Widget rightSideButton(){
+    return Container();
   }
 }

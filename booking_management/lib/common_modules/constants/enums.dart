@@ -1,3 +1,3 @@
 enum AppBarOption {
-   bookAppointmentScreenOption
+   singleBackButtonOption,
 }

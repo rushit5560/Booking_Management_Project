@@ -31,6 +31,7 @@ class CommonAppBarModule extends StatelessWidget {
           children: [
             leftSideButton(context),
 
+
             Text(
               title,
               style: const TextStyle(
@@ -38,6 +39,8 @@ class CommonAppBarModule extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
             ),
+
+
             rightSideButton(),
           ],
         ),
@@ -50,12 +53,19 @@ class CommonAppBarModule extends StatelessWidget {
       onTap: (){
         Get.back();
       },
-      child: appBarOption == AppBarOption.singleBackButtonOption ?
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: appBarOption == AppBarOption.singleBackButtonOption ?
         Image.asset(AppImages.backArrowImg) : Container(),
+      ),
     );
   }
 
   Widget rightSideButton(){
-    return Container();
+    return SizedBox(
+      height: 50,
+      width: 50,
+    );
   }
 }

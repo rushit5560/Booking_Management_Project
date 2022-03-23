@@ -2,8 +2,8 @@ import 'package:booking_management/common/extension_methods/extension_methods.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../common/common_widgets.dart';
-import '../../controllers/sign_in_screen_controller/sign_in_screen_controller.dart';
+import '../../../common/common_widgets.dart';
+import '../../../controllers/sign_in_screen_controller/sign_in_screen_controller.dart';
 import 'sign_in_screen_widgets.dart';
 
 class SignInScreen extends StatelessWidget {

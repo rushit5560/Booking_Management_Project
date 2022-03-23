@@ -1,9 +1,10 @@
 import 'package:booking_management/common/common_widgets.dart';
 import 'package:booking_management/common/extension_methods/extension_methods.dart';
 import 'package:booking_management/controllers/forgot_password_screen_controller/forgot_password_screen_controller.dart';
-import 'package:booking_management/screens/forgot_password_screen/forgot_password_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'forgot_password_screen_widget.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -23,13 +24,13 @@ class ForgotPasswordScreen extends StatelessWidget {
               const SizedBox(height: 50),
               const HeaderTextModule(name: "Forgot Password"),
               const SizedBox(height: 80),
-              const EmailFieldModule(),
+              const ForgotPasswordScreenEmailFieldModule(),
               const SizedBox(height: 45),
               const SendCodeButtonModule(),
               const SizedBox(height: 45),
               CodeTextFieldModule(),
               const SizedBox(height: 45),
-              const SubmitButtonModule(),
+              const ForgotPasswordScreenSubmitButtonModule(),
             ],
           ).commonAllSidePadding(20),
         ),

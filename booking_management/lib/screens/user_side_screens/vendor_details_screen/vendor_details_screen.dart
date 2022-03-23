@@ -1,9 +1,8 @@
-import 'package:booking_management/common/constants/app_images.dart';
-import 'package:booking_management/common/extension_methods/extension_methods.dart';
 import 'package:booking_management/controllers/vendor_details_screen_controller/vendor_details_screen_controller.dart';
-import 'package:booking_management/screens/vendor_details_screen/vendor_details_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'vendor_details_screen_widgets.dart';
 
 class VendorDetailScreen extends StatelessWidget {
   VendorDetailScreen({Key? key}) : super(key: key);

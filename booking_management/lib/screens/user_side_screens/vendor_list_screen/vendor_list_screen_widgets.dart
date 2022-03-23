@@ -1,14 +1,15 @@
 
 import 'package:booking_management/common/constants/app_colors.dart';
 import 'package:booking_management/common/constants/app_images.dart';
-import 'package:booking_management/screens/vendor_details_screen/vendor_details_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({Key? key}) : super(key: key);
+import '../vendor_details_screen/vendor_details_screen.dart';
+
+class VendorListScreenAppBarWidget extends StatelessWidget {
+  const VendorListScreenAppBarWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,8 @@ class AppBarWidget extends StatelessWidget {
   }
 }
 
-class VendorList extends StatelessWidget {
-  const VendorList({Key? key}) : super(key: key);
+class VendorListScreenVendorList extends StatelessWidget {
+  const VendorListScreenVendorList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

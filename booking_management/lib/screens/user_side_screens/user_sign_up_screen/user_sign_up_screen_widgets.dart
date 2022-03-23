@@ -1,10 +1,10 @@
 import 'package:booking_management/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
-import 'package:booking_management/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../common/field_decorations.dart';
-import '../../common/field_validation.dart';
+import '../../../common/field_decorations.dart';
+import '../../../common/field_validation.dart';
+import '../../common_screens/sign_in_screen/sign_in_screen.dart';
 
 UserSignUpScreenController screenController = Get.find<UserSignUpScreenController>();
 

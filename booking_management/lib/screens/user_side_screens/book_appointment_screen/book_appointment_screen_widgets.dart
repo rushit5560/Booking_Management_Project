@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 
 final screenController = Get.find<BookAppointmentScreenController>();
 
-class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({Key? key}) : super(key: key);
+class BookAppointmentScreenAppBarWidget extends StatelessWidget {
+  const BookAppointmentScreenAppBarWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

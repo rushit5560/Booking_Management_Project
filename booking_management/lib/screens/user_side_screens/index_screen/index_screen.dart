@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../common/constants/app_colors.dart';
-import '../../common/constants/app_images.dart';
-import '../../controllers/index_screen_controller/index_screen_controller.dart';
+import '../../../common/constants/app_colors.dart';
+import '../../../common/constants/app_images.dart';
+import '../../../controllers/index_screen_controller/index_screen_controller.dart';
 import '../home_screen/home_screen.dart';
 import '../vendor_list_screen/vendor_list_screen.dart';
 
@@ -35,7 +35,7 @@ class IndexScreen extends StatelessWidget {
     if (indexScreenController.menuIndex.value == 0) {
       return HomeScreen();
     } else if (indexScreenController.menuIndex.value == 1) {
-      return VendorListScreen();
+      return const VendorListScreen();
     } else if (indexScreenController.menuIndex.value == 2) {
       return HomeScreen();
     } else {
@@ -64,7 +64,7 @@ class IndexScreen extends StatelessWidget {
 
               indexScreenController.menuIndex.value = 0;
             },
-            child: Container(
+            child: SizedBox(
               // margin: const EdgeInsets.only(top: 5),
               // padding: const EdgeInsets.all(5),
               height: 30,
@@ -83,7 +83,7 @@ class IndexScreen extends StatelessWidget {
 
               indexScreenController.menuIndex.value = 1;
             },
-            child: Container(
+            child: SizedBox(
               height: 30,
               width: 30,
               child: Image.asset(
@@ -101,7 +101,7 @@ class IndexScreen extends StatelessWidget {
 
               indexScreenController.menuIndex.value = 2;
             },
-            child: Container(
+            child: SizedBox(
               height: 30,
               width: 30,
               child: Image.asset(
@@ -118,7 +118,7 @@ class IndexScreen extends StatelessWidget {
 
               indexScreenController.menuIndex.value = 3;
             },
-            child: Container(
+            child: SizedBox(
               height: 30,
               width: 30,
               child: Image.asset(

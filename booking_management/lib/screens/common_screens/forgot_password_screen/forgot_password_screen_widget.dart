@@ -7,8 +7,8 @@ import 'package:pin_input_text_field/pin_input_text_field.dart';
 
 ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
 
-class EmailFieldModule extends StatelessWidget {
-  const EmailFieldModule({Key? key}) : super(key: key);
+class ForgotPasswordScreenEmailFieldModule extends StatelessWidget {
+  const ForgotPasswordScreenEmailFieldModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +116,8 @@ class CodeTextFieldModule extends StatelessWidget {
   }
 }
 
-class SubmitButtonModule extends StatelessWidget {
-  const SubmitButtonModule({Key? key}) : super(key: key);
+class ForgotPasswordScreenSubmitButtonModule extends StatelessWidget {
+  const ForgotPasswordScreenSubmitButtonModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

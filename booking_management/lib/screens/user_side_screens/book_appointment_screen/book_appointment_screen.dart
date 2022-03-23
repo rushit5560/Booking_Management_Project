@@ -1,8 +1,9 @@
 import 'package:booking_management/common/extension_methods/extension_methods.dart';
 import 'package:booking_management/controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
-import 'package:booking_management/screens/book_appointment_screen/book_appointment_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'book_appointment_screen_widgets.dart';
 
 class BookAppointMentScreen extends StatelessWidget {
   BookAppointMentScreen({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class BookAppointMentScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const AppBarWidget(),
+            const BookAppointmentScreenAppBarWidget(),
             //SizedBox(height: 20,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

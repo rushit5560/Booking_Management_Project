@@ -3,7 +3,7 @@ import 'package:booking_management/common/extension_methods/extension_methods.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/home_screen_controller/home_screen_controller.dart';
+import '../../../controllers/home_screen_controller/home_screen_controller.dart';
 
 HomeScreenController screenController = Get.find<HomeScreenController>();
 

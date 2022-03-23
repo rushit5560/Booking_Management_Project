@@ -2,10 +2,10 @@ import 'package:booking_management/controllers/sign_in_screen_controller/sign_in
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../common/constants/app_images.dart';
-import '../../common/field_decorations.dart';
-import '../../common/field_validation.dart';
-import '../user_sign_up_screen/user_sign_up_screen.dart';
+import '../../../common/field_decorations.dart';
+import '../../../common/field_validation.dart';
+import '../../user_side_screens/user_sign_up_screen/user_sign_up_screen.dart';
+
 
 SignInScreenController screenController = Get.find<SignInScreenController>();
 

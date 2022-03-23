@@ -2,8 +2,8 @@ import 'package:booking_management/common/extension_methods/extension_methods.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../common/common_widgets.dart';
-import '../../controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
+import '../../../common/common_widgets.dart';
+import '../../../controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import 'user_sign_up_screen_widgets.dart';
 
 class UserSignUpScreen extends StatelessWidget {

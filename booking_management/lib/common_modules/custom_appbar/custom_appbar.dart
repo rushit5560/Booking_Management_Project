@@ -29,11 +29,13 @@ class CommonAppBarModule extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            leftSideButton(context),
+            leftSideButton(),
 
 
             Text(
               title,
+              maxLines: 1,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -48,7 +50,7 @@ class CommonAppBarModule extends StatelessWidget {
     );
   }
 
-  Widget leftSideButton(BuildContext context){
+  Widget leftSideButton(){
     return GestureDetector(
       onTap: (){
         Get.back();
@@ -63,7 +65,7 @@ class CommonAppBarModule extends StatelessWidget {
   }
 
   Widget rightSideButton(){
-    return SizedBox(
+    return const SizedBox(
       height: 50,
       width: 50,
     );

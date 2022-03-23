@@ -16,6 +16,7 @@ class UserSignUpScreenController extends GetxController {
   final TextEditingController mobileFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController addressFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController passwordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController cPasswordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   TextEditingController dobFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   TextEditingController countryFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   TextEditingController stateFieldController = TextEditingController(/*text: "demo@gmail.com"*/);

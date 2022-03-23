@@ -26,11 +26,55 @@ class HeaderTextModule extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         name,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 30,
         ),
       ),
+    );
+  }
+}
+
+class OrTextModule extends StatelessWidget {
+  const OrTextModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('OR');
+  }
+}
+
+
+class SocialMediaLoginModule extends StatelessWidget {
+  const SocialMediaLoginModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 30,
+          width: 30,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppImages.googleLoginImg),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(width: 60),
+        Container(
+          height: 30,
+          width: 30,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppImages.fbLoginImg),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

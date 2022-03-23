@@ -134,7 +134,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'UPCOMING APPOINTMENT',
+          'Upcoming Appointment',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -236,7 +236,7 @@ class FavouriteDoctorsModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Favourite Doctors',
+          'Favourites',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,

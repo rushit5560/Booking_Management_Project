@@ -15,4 +15,9 @@ class AppImages {
   static const menuChat1Img = root + "chat1.png";
   static const menuSettingImg = root + "setting.png";
   static const menuSetting1Img = root + "setting1.png";
+  static const menuNotificationImg = root + "notification.png";
+  static const menuNotification1Img = root + "notification1.png";
+
+  static const fbLoginImg = root + "fb_login.png";
+  static const googleLoginImg = root + "google_login.png";
 }

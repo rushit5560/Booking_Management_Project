@@ -99,6 +99,25 @@ class PasswordFieldModule extends StatelessWidget {
   }
 }
 
+class CPasswordFieldModule extends StatelessWidget {
+  const CPasswordFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.cPasswordFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateConfirmPassword(value!, screenController.passwordFieldController.text.trim()),
+      decoration: signUpFormFieldDecoration(
+        controller: screenController,
+        hintText: 'Confirm Password',
+        index: 1,
+        context: context,
+      ),
+    );
+  }
+}
+
 class DOBFieldModule extends StatelessWidget {
   const DOBFieldModule({Key? key}) : super(key: key);
 

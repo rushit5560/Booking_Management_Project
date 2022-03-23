@@ -31,8 +31,6 @@ class UserSignUpScreen extends StatelessWidget {
               const SizedBox(height: 5),
               const AddressFieldModule(),
               const SizedBox(height: 5),
-              const PasswordFieldModule(),
-              const SizedBox(height: 5),
               // DOB & Country Module
               Row(
                 children: const  [
@@ -58,9 +56,19 @@ class UserSignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 5),
+              const PasswordFieldModule(),
+              const SizedBox(height: 5),
+              const CPasswordFieldModule(),
               const SizedBox(height: 30),
               const SignUpButtonModule(),
               const SizedBox(height: 25),
+              // From Common Widgets
+              const OrTextModule(),
+              const SizedBox(height: 15),
+              // From Common Widgets
+              const SocialMediaLoginModule(),
+              const SizedBox(height: 40),
               const VendorSignUpTextModule(),
               const SizedBox(height: 15),
               const SignInTextModule(),

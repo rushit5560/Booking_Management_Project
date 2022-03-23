@@ -106,8 +106,8 @@ class IndexScreen extends StatelessWidget {
               width: 30,
               child: Image.asset(
                   indexScreenController.menuIndex.value == 2
-                      ? AppImages.menuChatImg
-                      : AppImages.menuChat1Img,
+                      ? AppImages.menuNotificationImg
+                      : AppImages.menuNotification1Img,
                   scale: 0.9),
             ),
           ),

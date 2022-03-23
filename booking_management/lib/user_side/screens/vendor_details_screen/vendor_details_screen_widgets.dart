@@ -55,7 +55,7 @@ class TabViewModule extends StatelessWidget {
               screenController.isReviewSelected.value = false;
             },
             child: Container(
-              width: Get.width/3.5,
+              width: Get.width/4,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
@@ -70,7 +70,7 @@ class TabViewModule extends StatelessWidget {
                 //     color: AppColors.colorLightGrey,
                 //     width: 2
                 // ),
-                color: screenController.isOverviewSelected.value ? AppColors.colorLightGrey : Colors.white,
+                color: screenController.isOverviewSelected.value ? AppColors.colorLightGrey2 : Colors.white,
               ),
               child: const Padding(
                 padding: EdgeInsets.symmetric( vertical: 12),
@@ -87,14 +87,14 @@ class TabViewModule extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 30),
           GestureDetector(
             onTap: () {
               screenController.isOverviewSelected.value = false;
               screenController.isReviewSelected.value = true;
             },
             child: Container(
-              width: Get.width/3.5,
+              width: Get.width/4,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
@@ -109,7 +109,7 @@ class TabViewModule extends StatelessWidget {
                 //     color: AppColors.colorLightGrey,
                 //     width: 2
                 // ),
-                color: screenController.isReviewSelected.value ? AppColors.colorLightGrey : Colors.white,
+                color: screenController.isReviewSelected.value ? AppColors.colorLightGrey2 : Colors.white,
               ),
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
@@ -294,11 +294,56 @@ class OverviewModule extends StatelessWidget {
     }
 }
 
-class ReviewTextFieldAndButtonModule extends StatelessWidget {
-  const ReviewTextFieldAndButtonModule({Key? key}) : super(key: key);
+class ReviewModule extends StatelessWidget {
+  const ReviewModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ratting(),
+            const SizedBox(height: 20,),
+            reviewTextFieldAndButtonModule(),
+            const SizedBox(height: 20,),
+            showReviewList()
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget ratting(){
+    return Column(
+      children: [
+        const Text("4.5", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),),
+        const SizedBox(height: 5,),
+        RatingBar.builder(
+          initialRating: 5,
+          minRating: 1,
+          direction: Axis.horizontal,
+          allowHalfRating: true,
+          itemCount: 5,
+          itemSize: 45,
+          //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) {
+            if (kDebugMode) {
+              print(rating);
+            }
+          },
+        )
+      ],
+    );
+  }
+
+  Widget reviewTextFieldAndButtonModule(){
     return Form(
       key: screenController.reviewFormKey,
       child: Row(
@@ -306,22 +351,22 @@ class ReviewTextFieldAndButtonModule extends StatelessWidget {
           Expanded(
             flex: 3,
             child:  TextFormField(
-                controller: screenController.reviewFieldController,
-                keyboardType: TextInputType.text,
-                validator: (value) => FieldValidator().validateReview(value!),
-                decoration: const InputDecoration(
-                    hintText: "Add Review",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    errorBorder:
-                    UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-                    focusedErrorBorder:
-                    UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-                ),
+              controller: screenController.reviewFieldController,
+              keyboardType: TextInputType.text,
+              validator: (value) => FieldValidator().validateReview(value!),
+              decoration: const InputDecoration(
+                hintText: "Add Review",
+                hintStyle: TextStyle(color: Colors.grey),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                errorBorder:
+                UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+                focusedErrorBorder:
+                UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
               ),
+            ),
           ),
           const SizedBox(width: 20,),
           Expanded(
@@ -361,5 +406,68 @@ class ReviewTextFieldAndButtonModule extends StatelessWidget {
       ),
     );
   }
+
+  Widget showReviewList(){
+    return ListView.builder(
+      shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 5,
+        itemBuilder: (context, index){
+          return Container(
+            margin: EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+              color: AppColors.colorLightGrey1
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(AppImages.vendorImg, scale: 20,),
+                      ),
+                      SizedBox(width: 10,),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Mr. John Doe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                          SizedBox(height: 3,),
+                          RatingBar.builder(
+                            initialRating: 5,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemSize: 15,
+                            //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              if (kDebugMode) {
+                                print(rating);
+                              }
+                            },
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+
+                  Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry")
+                ],
+              ),
+            ),
+          );
+    });
+  }
+
 }
+
 

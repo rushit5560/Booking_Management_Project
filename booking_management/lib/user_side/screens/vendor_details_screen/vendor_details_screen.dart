@@ -16,41 +16,43 @@ class VendorDetailScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topLeft,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ProfileModule(),
-                const SizedBox(height: 20,),
-                const TabViewModule(),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: vendorDetailsScreenController.isOverviewSelected.value ?
-                   const OverviewModule() : const OverviewModule(),
-                )
-                // Expanded(
-                //   child: SingleChildScrollView(
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: const [
-                //         VendorName(),
-                //         SizedBox(height: 10,),
-                //         Ratting(),
-                //         SizedBox(height: 10,),
-                //         Description(),
-                //         SizedBox(height: 20,),
-                //         PriceAndLocation(),
-                //         SizedBox(height: 25,),
-                //         ViewMapButtonModule(),
-                //         SizedBox(height: 25,),
-                //         ReviewTextFieldAndButtonModule(),
-                //         SizedBox(height: 40,),
-                //         BookAppointmentButtonModule()
-                //       ],
-                //     ).commonAllSidePadding(20),
-                //   ),
-                // )
-              ],
-            ),
+               Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const ProfileModule(),
+                  const SizedBox(height: 20,),
+                  const TabViewModule(),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: Obx(()=>
+                      vendorDetailsScreenController.isOverviewSelected.value ?
+                       const OverviewModule() :  const ReviewModule(),
+                    ),
+                  )
+                  // Expanded(
+                  //   child: SingleChildScrollView(
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: const [
+                  //         VendorName(),
+                  //         SizedBox(height: 10,),
+                  //         Ratting(),
+                  //         SizedBox(height: 10,),
+                  //         Description(),
+                  //         SizedBox(height: 20,),
+                  //         PriceAndLocation(),
+                  //         SizedBox(height: 25,),
+                  //         ViewMapButtonModule(),
+                  //         SizedBox(height: 25,),
+                  //         ReviewTextFieldAndButtonModule(),
+                  //         SizedBox(height: 40,),
+                  //         BookAppointmentButtonModule()
+                  //       ],
+                  //     ).commonAllSidePadding(20),
+                  //   ),
+                  // )
+                ],
+              ),
             const BackArrow()
 
           ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'screens/user_side_screens/index_screen/index_screen.dart';
+import 'user_side/screens/index_screen/index_screen.dart';
 
 
 void main() {

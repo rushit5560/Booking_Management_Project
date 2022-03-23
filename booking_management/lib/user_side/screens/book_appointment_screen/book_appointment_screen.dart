@@ -1,3 +1,5 @@
+import 'package:booking_management/common_modules/constants/enums.dart';
+import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +19,7 @@ class BookAppointMentScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const BookAppointmentScreenAppBarWidget(),
+            const CommonAppBarModule(title: "Book Appointment", appBarOption: AppBarOption.bookAppointmentScreenOption),
             //SizedBox(height: 20,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

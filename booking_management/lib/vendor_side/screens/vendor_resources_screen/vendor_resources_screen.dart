@@ -16,7 +16,7 @@ class VendorResourcesScreen extends StatelessWidget {
           children: [
             const CommonAppBarModule(title: "Resources", appBarOption: AppBarOption.singleBackButtonOption),
 
-            Expanded(child: const VendorResourcesListModule().commonAllSidePadding(25)),
+            Expanded(child: const VendorResourcesListModule().commonAllSidePadding(30)),
           ],
         ),
       ),

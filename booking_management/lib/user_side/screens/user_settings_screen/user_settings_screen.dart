@@ -67,7 +67,7 @@ class UserSettingsScreen extends StatelessWidget {
                     SizedBox(height: 20),
 
                   ],
-                ).commonAllSidePadding(20),
+                ).commonAllSidePadding(30),
               ),
             ),
           ],

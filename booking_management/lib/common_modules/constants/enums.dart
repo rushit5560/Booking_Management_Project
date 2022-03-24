@@ -12,3 +12,15 @@ enum UserSettingScreenOption {
    help,
    logOut
 }
+
+enum VendorSettingScreenOption {
+   profile,
+   chat,
+   bookingHistory,
+   wallet,
+   resources,
+   subscription,
+   help,
+   changePassword,
+   logout
+}

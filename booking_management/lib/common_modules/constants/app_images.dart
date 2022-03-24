@@ -30,6 +30,9 @@ class AppImages {
   static const logoutImg = root + "logout.png";
   static const chatImg = root + "chat.png";
   static const dropDownArrowImg = root + "drop_down_arrow.png";
+  static const changePasswordImg = root + "change_password.png";
+  static const resourcesImg = root + "resources.png";
+  static const subscriptionsImg = root + "subscriptions.png";
 
 
 }

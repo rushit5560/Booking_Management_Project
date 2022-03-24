@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:booking_management/vendor_side/screens/vendor_appointment_list_screen/vendor_appointment_list_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_settings_screen/vendor_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class VendorIndexScreen extends StatelessWidget {
     if (vendorIndexScreenController.vendorMenuIndex.value == 0) {
       return VendorHomeScreen();
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 1) {
-      return VendorHomeScreen();
+      return VendorAppointmentListScreen();
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 2) {
       return VendorHomeScreen();
     } else {

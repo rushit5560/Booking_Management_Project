@@ -40,7 +40,11 @@ class UserMapScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.asset(AppImages.backArrowImg),
+                          GestureDetector(
+                            onTap: (){
+                              Get.back();
+                            },
+                              child: Image.asset(AppImages.backArrowImg)),
                           const Text(
                             "Map",
                             maxLines: 1,

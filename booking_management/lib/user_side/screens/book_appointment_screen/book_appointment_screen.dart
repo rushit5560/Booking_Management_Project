@@ -25,11 +25,13 @@ class BookAppointMentScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  SelectSlot(),
+                  SelectDateModule(),
+                  SizedBox(height: 25,),
+                  SelectTimeModule(),
                   SizedBox(height: 40,),
-                  CheckAvaibilityButtonModule(),
-                  SizedBox(height: 30,),
-                  Expanded(child: ResourcesList())
+                  BookButtonModule(),
+                  //SizedBox(height: 30,),
+                  //Expanded(child: ResourcesList())
                 ],
               ).commonAllSidePadding(20),
             )

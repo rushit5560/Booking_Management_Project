@@ -35,6 +35,7 @@ class AppImages {
   static const subscriptionsImg = root + "subscriptions.png";
   static const dateImg = root + "date.png";
   static const timeImg = root + "time.png";
-
+  static const callingImg = root + "calling.png";
+  static const msgImg = root + "msg.png";
 
 }

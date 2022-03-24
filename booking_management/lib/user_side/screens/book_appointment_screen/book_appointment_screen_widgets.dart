@@ -1,6 +1,7 @@
 import 'package:booking_management/user_side/screens/user_checkout_screen/user_checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
@@ -8,7 +9,7 @@ import '../../controllers/book_appointment_screen_controller/book_appointment_sc
 
 final screenController = Get.find<BookAppointmentScreenController>();
 
-class SelectDateModule extends StatelessWidget {
+/*class SelectDateModule extends StatelessWidget {
   const SelectDateModule({Key? key}) : super(key: key);
 
   @override
@@ -101,13 +102,121 @@ class RightArrowButtonModule extends StatelessWidget {
       child: Image.asset(AppImages.rightArrowImg)
     );
   }
+}*/
+
+
+class SelectDateModule extends StatefulWidget {
+  const SelectDateModule({Key? key}) : super(key: key);
+
+  @override
+  State<SelectDateModule> createState() => _SelectDateModuleState();
+}
+
+class _SelectDateModuleState extends State<SelectDateModule> {
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Select Date", style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold
+        ),),
+        const SizedBox(height: 10,),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                setState(() {
+                  selectedDay = selectDay;
+                  focusedDay = focusDay;
+                });
+                print('\nselectedDay :: $selectedDay');
+                print('focusedDay :: $focusedDay\n');
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                   // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle, color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle, color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle, color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle, color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                leftChevronIcon:
+                const Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
 }
 
 
 class SelectTimeModule extends StatelessWidget {
   const SelectTimeModule({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +246,11 @@ class SelectTimeModule extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color:screenController.selectedTimeIndex.value == i  ? AppColors.colorLightGrey : Colors.white,
+                        color:screenController.selectedTimeIndex.value == i  ? AppColors.colorLightGrey1 : Colors.white,
                         border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
                     ),
                     child: Center(
-                      child: Text(screenController.timeList[i]),
+                      child: Text(screenController.timeList[i], style: TextStyle(fontWeight: FontWeight.bold),),
                     ),
                   ),
               ),
@@ -153,7 +262,7 @@ class SelectTimeModule extends StatelessWidget {
   }
 }
 
-class SelectSlot extends StatelessWidget {
+/*class SelectSlot extends StatelessWidget {
   const SelectSlot({Key? key}) : super(key: key);
 
   @override
@@ -292,10 +401,10 @@ class SelectSlot extends StatelessWidget {
         ),
     );
   }
-}
+}*/
 
-class CheckAvaibilityButtonModule extends StatelessWidget {
-  const CheckAvaibilityButtonModule({Key? key}) : super(key: key);
+class BookButtonModule extends StatelessWidget {
+  const BookButtonModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -320,7 +429,7 @@ class CheckAvaibilityButtonModule extends StatelessWidget {
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
-              'Check Avaibility',
+              'Book',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -333,113 +442,7 @@ class CheckAvaibilityButtonModule extends StatelessWidget {
   }
 }
 
-class ResourcesList extends StatelessWidget {
-  const ResourcesList({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Resources -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
-        SizedBox(height: 20,),
-
-        Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              physics: AlwaysScrollableScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (context, index){
-                return Container(
-                  margin: EdgeInsets.only(bottom: 15, left: 3, right: 3, top: 3),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppColors.colorLightGrey,
-                            blurStyle: BlurStyle.outer,
-                            blurRadius: 5
-                        )
-                      ]
-                  ),
-                  //color: AppColors.colorLightGrey1
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          flex:3,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex:1,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(AppImages.vendorImg),
-                                ),
-                              ),
-                              SizedBox(width: 15,),
-
-                              Expanded(
-                                flex: 2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Lorem Ipsum", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-                                    SizedBox(height: 7,),
-                                    Text("Lorem Ipsum is simply dummy text of the following", maxLines: 1, style: TextStyle(fontSize: 11,),),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        //SizedBox(height: 10,),
-
-                        Expanded(
-                            flex:1,
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(() => UserCheckoutScreen());
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          spreadRadius: 3,
-                                          blurRadius: 5,
-                                          color: Colors.grey.shade300,
-                                          blurStyle: BlurStyle.outer,
-                                        ),
-                                      ]
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Text(
-                                      'Book',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                );
-              }),
-        )
-      ],
-    );
-  }
-}
 
 
 

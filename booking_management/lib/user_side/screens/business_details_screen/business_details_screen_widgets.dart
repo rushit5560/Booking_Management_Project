@@ -1,4 +1,6 @@
 import 'package:booking_management/user_side/controllers/business_details_screen_controller/business_details_screen_controller.dart';
+import 'package:booking_management/user_side/screens/user_checkout_screen/user_checkout_screen.dart';
+import 'package:booking_management/user_side/screens/user_map_screen/user_map_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -152,10 +154,13 @@ class OverviewModule extends StatelessWidget {
             priceAndLocation(),
             const SizedBox(height: 25,),
             viewMapButtonModule(),
+            const SizedBox(height: 25,),
+            serviceDropDown(context),
             //SizedBox(height: 25,),
             //ReviewTextFieldAndButtonModule(),
             const SizedBox(height: 40,),
-            bookAppointmentButtonModule()
+            resourcesList()
+            //bookAppointmentButtonModule()
           ],
         ),
       )
@@ -213,6 +218,58 @@ class OverviewModule extends StatelessWidget {
            ],
          ),
          const SizedBox(height: 15,),
+
+         Row(
+           children: [
+             Row(
+               children: [
+                 Container(
+                   height: 40, width: 40,
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(10),
+                     boxShadow: [
+                       BoxShadow(
+                         color: AppColors.colorLightGrey,
+                         blurStyle: BlurStyle.outer,
+                         blurRadius: 5
+                       )
+                     ]
+                   ),
+                   child: Center(
+                     child: Image.asset(AppImages.callingImg),
+                   ),
+                 ),
+                 SizedBox(width: 10,),
+                 Text("+1234567890", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),)
+               ],
+             ),
+             SizedBox(width: 20,),
+             Row(
+               children: [
+                 Container(
+                   height: 40, width: 40,
+                   decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(10),
+                       boxShadow: [
+                         BoxShadow(
+                             color: AppColors.colorLightGrey,
+                             blurStyle: BlurStyle.outer,
+                             blurRadius: 5
+                         )
+                       ]
+                   ),
+                   child: Center(
+                     child: Image.asset(AppImages.msgImg),
+                   ),
+                 ),
+                 SizedBox(width: 10,),
+                 Text("Message", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),)
+               ],
+             ),
+           ],
+         ),
+
+         const SizedBox(height: 15,),
          Row(
            children: const [
              Expanded(
@@ -231,7 +288,7 @@ class OverviewModule extends StatelessWidget {
     Widget viewMapButtonModule(){
       return GestureDetector(
         onTap: () {
-
+          Get.to(()=> const UserMapScreen());
         },
         child: Container(
           decoration: BoxDecoration(
@@ -256,6 +313,71 @@ class OverviewModule extends StatelessWidget {
             ),
           ),
         ),
+      );
+    }
+
+    Widget serviceDropDown(context){
+      return Row(
+        children: [
+          Text("Service -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
+          SizedBox(width: 20,),
+
+          Obx(()=>
+              Container(
+                width: Get.width/1.8,
+                padding: const EdgeInsets.only(right: 10),
+                height: 45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.colorLightGrey.withOpacity(0.5),
+                      blurRadius: 5,
+                      //spreadRadius: 5,
+                      blurStyle: BlurStyle.outer,
+                    ),
+                  ],
+                ),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                      canvasColor: Colors.grey.shade100,
+                      // background color for the dropdown items
+                      buttonTheme: ButtonTheme.of(context).copyWith(
+                        alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
+                      )),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                      isExpanded: true,
+                      focusColor: Colors.white,
+                      value: screenController.service.value,
+                      //elevation: 5,
+                      style: TextStyle(color: AppColors.colorLightGrey),
+                      iconEnabledColor: Colors.black,
+                      items: <String>[
+                        'Daily Checkup',
+                        'Daily Checkup1',
+                        'Daily Checkup2'
+                      ].
+                      map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(color: AppColors.colorLightGrey),
+                          ),
+                        );
+                      }).toList(),
+                      hint: Text("Ratting", style: TextStyle(color: Colors.black),),
+                      onChanged: (newValue) {
+                        screenController.service.value = newValue!;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+          )
+        ],
       );
     }
 
@@ -290,6 +412,107 @@ class OverviewModule extends StatelessWidget {
             ),
           ),
         ),
+      );
+    }
+
+    Widget resourcesList(){
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Resources -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
+          SizedBox(height: 30,),
+
+          ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: 2,
+              itemBuilder: (context, index){
+                return Container(
+                  margin: EdgeInsets.only(bottom: 15, left: 3, right: 3, top: 3),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppColors.colorLightGrey,
+                            blurStyle: BlurStyle.outer,
+                            blurRadius: 5
+                        )
+                      ]
+                  ),
+                  //color: AppColors.colorLightGrey1
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex:3,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex:1,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(AppImages.vendorImg),
+                                ),
+                              ),
+                              SizedBox(width: 15,),
+
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text("Lorem Ipsum", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                                    SizedBox(height: 7,),
+                                    Text("Lorem Ipsum is simply dummy text of the following", maxLines: 1, style: TextStyle(fontSize: 11,),),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        //SizedBox(height: 10,),
+
+                        Expanded(
+                            flex:1,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(() => BookAppointMentScreen());
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          spreadRadius: 3,
+                                          blurRadius: 5,
+                                          color: Colors.grey.shade300,
+                                          blurStyle: BlurStyle.outer,
+                                        ),
+                                      ]
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Book',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                );
+              })
+        ],
       );
     }
 }

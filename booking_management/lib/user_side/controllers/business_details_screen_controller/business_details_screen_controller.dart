@@ -6,4 +6,5 @@ class BusinessDetailsScreenController extends GetxController{
   GlobalKey<FormState> reviewFormKey = GlobalKey<FormState>();
   RxBool isOverviewSelected = true.obs;
   RxBool isReviewSelected = false.obs;
+  RxString service = 'Daily Checkup'.obs;
 }

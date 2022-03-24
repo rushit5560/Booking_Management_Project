@@ -8,6 +8,34 @@ class FieldValidator {
     return null;
   }
 
+  String? validateCityName(String value) {
+    if (value.isEmpty) {
+      return 'City is Required';
+    }
+    return null;
+  }
+
+  String? validateStateName(String value) {
+    if (value.isEmpty) {
+      return 'State is Required';
+    }
+    return null;
+  }
+
+  String? validateCountryName(String value) {
+    if (value.isEmpty) {
+      return 'Country is Required';
+    }
+    return null;
+  }
+
+  String? validateName(String value) {
+    if (value.isEmpty) {
+      return 'Name is Required';
+    }
+    return null;
+  }
+
   String? validateColor(String value) {
     if (value.isEmpty) {
       return 'Color is Required';

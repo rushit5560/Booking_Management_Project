@@ -5,7 +5,6 @@ class BookAppointmentScreenController extends GetxController{
 
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
   RxInt selectedPageIndex = 0.obs;
-  RxString payment = 'Credit'.obs;
   RxInt selectedTimeIndex = 0.obs;
   RxInt selectedDateIndex = 0.obs;
   //List<String> serviceLists = ['2.5 Km', '2.5 Km', '2.5 Km', '2.5 Km'];

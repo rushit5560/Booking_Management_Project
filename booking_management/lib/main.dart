@@ -1,4 +1,5 @@
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/user_side/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: "Booking Management System",
       debugShowCheckedModeBanner: false,
-      home: VendorSettingsScreen(),
+      home: UserProfileScreen(),
     );
   }
 }

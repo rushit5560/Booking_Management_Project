@@ -33,6 +33,8 @@ class AppImages {
   static const changePasswordImg = root + "change_password.png";
   static const resourcesImg = root + "resources.png";
   static const subscriptionsImg = root + "subscriptions.png";
+  static const dateImg = root + "date.png";
+  static const timeImg = root + "time.png";
 
 
 }

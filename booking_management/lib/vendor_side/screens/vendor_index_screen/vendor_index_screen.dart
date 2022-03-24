@@ -9,6 +9,7 @@ import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/vendor_index_screen_controller/vendor_index_screen_controller.dart';
 import '../vendor_home_screen/vendor_home_screen.dart';
+import '../vendor_notification_screen/vendor_notification_screen.dart';
 
 class VendorIndexScreen extends StatelessWidget {
   VendorIndexScreen({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class VendorIndexScreen extends StatelessWidget {
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 1) {
       return VendorAppointmentListScreen();
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 2) {
-      return VendorHomeScreen();
+      return VendorNotificationScreen();
     } else {
       return VendorSettingsScreen();
     }

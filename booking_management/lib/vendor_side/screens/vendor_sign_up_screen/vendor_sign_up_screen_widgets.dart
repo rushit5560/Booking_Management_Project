@@ -1,3 +1,5 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -93,6 +95,71 @@ class PhotoTextModule extends StatelessWidget {
   }
 }
 
+class BusinessTypeModule extends StatelessWidget {
+  const BusinessTypeModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(()=>
+        Container(
+
+          width: Get.width,
+          //padding: const EdgeInsets.only(right: 10),
+          height: 45,
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(15),
+          //   boxShadow: [
+          //     BoxShadow(
+          //       color: AppColors.colorLightGrey.withOpacity(0.5),
+          //       blurRadius: 5,
+          //       //spreadRadius: 5,
+          //       blurStyle: BlurStyle.outer,
+          //     ),
+          //   ],
+          // ),
+          child: InputDecorator(
+            decoration: const InputDecoration(
+                //labelStyle: textStyle,
+                errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                hintText: 'Please select business',
+                //border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                icon: Image.asset(AppImages.dropDownArrowImg, scale: 2, color: Colors.black,),
+                isExpanded: true,
+                focusColor: Colors.white,
+                value: screenController.businessType.value,
+                //elevation: 5,
+                style: TextStyle(color: AppColors.colorLightGrey),
+                iconEnabledColor: Colors.black,
+                items: <String>[
+                  'Business',
+                  'Business1',
+                  'Business2'
+                ].
+                map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  );
+                }).toList(),
+                hint: Text("Business Type", style: TextStyle(color: Colors.grey),),
+                onChanged: (newValue) {
+                  screenController.businessType.value = newValue!;
+                },
+              ),
+            ),
+          ),
+        ),
+    );
+  }
+}
+
+
 class BusinessNameFieldModule extends StatelessWidget {
   const BusinessNameFieldModule({Key? key}) : super(key: key);
 
@@ -148,6 +215,77 @@ class BusinessAddressFieldModule extends StatelessWidget {
     );
   }
 }
+
+class StreetFieldModule extends StatelessWidget {
+  const StreetFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.streetFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Street', controller: screenController),
+    );
+  }
+}
+
+class StateFieldModule extends StatelessWidget {
+  const StateFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.stateFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'State', controller: screenController),
+    );
+  }
+}
+
+class CountryFieldModule extends StatelessWidget {
+  const CountryFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.countryFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Country', controller: screenController),
+    );
+  }
+}
+
+class PostCodeFieldModule extends StatelessWidget {
+  const PostCodeFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.postCodeFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Post Code', controller: screenController),
+    );
+  }
+}
+
+class SuburbFieldModule extends StatelessWidget {
+  const SuburbFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.subUrbFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Sub urb', controller: screenController),
+    );
+  }
+}
+
 
 class BusinessIdFieldModule extends StatelessWidget {
   const BusinessIdFieldModule({Key? key}) : super(key: key);

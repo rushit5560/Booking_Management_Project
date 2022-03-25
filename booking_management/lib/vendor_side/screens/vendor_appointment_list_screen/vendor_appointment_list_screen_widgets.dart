@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/screens/vendor_user_details_screen/vendor_user_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -427,29 +428,32 @@ class AllAppointmentListModule extends StatelessWidget {
   }
 
   Widget _viewButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'View',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 2,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Text(
+            'View',
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
 
+      ),
     );
   }
 

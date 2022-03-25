@@ -3,7 +3,9 @@ import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/container_decorations.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/screens/vendor_checkout_screen/vendor_checkout_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VendorSubscriptionPlanScreen extends StatelessWidget {
   const VendorSubscriptionPlanScreen({Key? key}) : super(key: key);
@@ -22,97 +24,100 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, i){
-                  return Container(
-                    decoration: shadowDecoration(),
-                    // margin: EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                  return GestureDetector(
+                    onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft),
+                    child: Container(
+                      decoration: shadowDecoration(),
+                      // margin: EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-                              const Text(
-                                '\$49 / Mon',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                const Text(
+                                  '\$49 / Mon',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
+                                const SizedBox(height: 8),
 
-                              const Text(
-                                '\$49 / Mon',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                                const Text(
+                                  '\$49 / Mon',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
+                                const SizedBox(height: 8),
 
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    '- ',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      '- ',
                                       style: TextStyle(fontSize: 12),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 3),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    '- ',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Lorem Ipsum has been the industry's standard",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                    Expanded(
+                                      child: Text(
+                                        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 3),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      '- ',
                                       style: TextStyle(fontSize: 12),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Expanded(
+                                      child: Text(
+                                        "Lorem Ipsum has been the industry's standard",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                              const SizedBox(height: 3),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    '- ',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Lorem Ipsum has been the industry's standard",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                const SizedBox(height: 3),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      '- ',
                                       style: TextStyle(fontSize: 12),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    Expanded(
+                                      child: Text(
+                                        "Lorem Ipsum has been the industry's standard",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 15),
-                        Image.asset(AppImages.rightArrowImg),
-                      ],
-                    ).commonAllSidePadding(10),
-                  ).commonSymmetricPadding(vertical: 10);
+                          const SizedBox(width: 15),
+                          Image.asset(AppImages.rightArrowImg),
+                        ],
+                      ).commonAllSidePadding(10),
+                    ).commonSymmetricPadding(vertical: 10),
+                  );
                 },
               ).commonSymmetricPadding(horizontal: 25),
             ),

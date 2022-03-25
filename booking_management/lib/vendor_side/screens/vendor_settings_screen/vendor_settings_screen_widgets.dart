@@ -1,3 +1,8 @@
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_profile_screen/vendor_profile_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_resources_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_subscription_plan_screen/vendor_subscription_plan_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,20 +70,32 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap(
-      {required VendorSettingScreenOption vendorSettingScreenOption}) {
+  singleItemOnTap({
+    required VendorSettingScreenOption vendorSettingScreenOption,
+  }) {
     if (vendorSettingScreenOption == VendorSettingScreenOption.profile) {
+      Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.chat) {
+      // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.bookingHistory) {
+      // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.wallet) {
+      Get.to(() => VendorWalletScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.resources) {
+      Get.to(()=> const VendorResourcesScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.subscription) {
+      Get.to(() => const VendorSubscriptionPlanScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.help) {
+      // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.changePassword) {
-    } else if (vendorSettingScreenOption == VendorSettingScreenOption.logout) {}
+      // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorSettingScreenOption.logout) {
+      Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);
+    }
   }
 }

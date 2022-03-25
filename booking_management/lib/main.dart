@@ -1,6 +1,7 @@
-import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'common_ui/common_screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: "Booking Management System",
       debugShowCheckedModeBanner: false,
-      home: SignInScreen(),
+      home: SplashScreen(),
     );
   }
 }

@@ -78,3 +78,21 @@ class SocialMediaLoginModule extends StatelessWidget {
     );
   }
 }
+
+class CustomCircularLoaderModule extends StatelessWidget {
+  const CustomCircularLoaderModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: Get.height,
+      width: Get.width,
+      color: Colors.white30,
+      child: Image.asset(
+        AppImages.loadingAnimationGif,
+        height: Get.width * 0.50,
+        width: Get.width * 0.50,
+      ),
+    );
+  }
+}

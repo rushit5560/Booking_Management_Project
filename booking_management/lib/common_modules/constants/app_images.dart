@@ -1,5 +1,6 @@
 class AppImages {
   static const root = "assets/images/";
+  static const gifRoot = "assets/gifs/";
 
   static const shapeImg = root + "shape.png";
   static const headerLogoImg = root + "header_logo.png";
@@ -37,5 +38,8 @@ class AppImages {
   static const timeImg = root + "time.png";
   static const callingImg = root + "calling.png";
   static const msgImg = root + "msg.png";
+
+  static const splashAnimationGif = gifRoot + "splash_animation.gif";
+  static const loadingAnimationGif = gifRoot + "loading_animation.gif";
 
 }

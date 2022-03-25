@@ -6,6 +6,7 @@ import '../common_ui/common_controller/sign_in_screen_controller/sign_in_screen_
 import '../user_side/controllers/user_conversation_screen_controller/user_conversation_screen_controller.dart';
 import '../user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import '../vendor_side/controllers/vendor_sign_up_screen_controller/vendor_sign_up_screen_controller.dart';
+import '../vendor_side/controllers/vendor_wallet_screen_controller/vendor_wallet_screen_controller.dart';
 import 'common_functions.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_images.dart';
@@ -188,3 +189,23 @@ InputDecoration conversationScreenFieldDecoration(
     ),
   );
 }
+
+
+InputDecoration vendorBankFormFieldDecoration(
+    {required String hintText,
+      int index = 0,
+      required VendorWalletScreenController controller}) {
+  return InputDecoration(
+      hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
+      enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      errorBorder:
+      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      focusedErrorBorder:
+      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      );
+}
+

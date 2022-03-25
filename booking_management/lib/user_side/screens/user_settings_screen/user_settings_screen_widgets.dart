@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/booking_history_screen/booking_history_screen.dart';
 import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
+import 'package:booking_management/user_side/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,6 +68,7 @@ class SettingScreenSingleItemModule extends StatelessWidget {
 
   singleItemOnTap({required UserSettingScreenOption userSettingScreenOption}) {
     if (userSettingScreenOption == UserSettingScreenOption.profile) {
+      Get.to(() => UserProfileScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == UserSettingScreenOption.chat) {
       Get.to(() => const UserChatListScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption ==

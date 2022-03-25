@@ -324,7 +324,7 @@ class OverviewModule extends StatelessWidget {
 
           Obx(()=>
               Container(
-                width: Get.width/1.8,
+                width: Get.width/2.5,
                 padding: const EdgeInsets.only(right: 10),
                 height: 45,
                 decoration: BoxDecoration(
@@ -347,7 +347,7 @@ class OverviewModule extends StatelessWidget {
                       )),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
-                      icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                      icon: Image.asset(AppImages.dropDownArrowImg, scale: 2, color: Colors.black,),
                       isExpanded: true,
                       focusColor: Colors.white,
                       value: screenController.service.value,
@@ -364,11 +364,11 @@ class OverviewModule extends StatelessWidget {
                           value: value,
                           child: Text(
                             value,
-                            style: TextStyle(color: AppColors.colorLightGrey),
+                            style: TextStyle(color: Colors.black),
                           ),
                         );
                       }).toList(),
-                      hint: Text("Ratting", style: TextStyle(color: Colors.black),),
+                      hint: Text("Daily Checkup", style: TextStyle(color: Colors.black),),
                       onChanged: (newValue) {
                         screenController.service.value = newValue!;
                       },

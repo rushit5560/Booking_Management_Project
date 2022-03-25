@@ -1,3 +1,6 @@
+import 'package:booking_management/common_ui/common_screens/forgot_password_screen/forgot_password_screen.dart';
+import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/field_decorations.dart';
@@ -46,7 +49,14 @@ class SignInButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(screenController.signInFormKey.currentState!.validate()){}
+        if(screenController.signInFormKey.currentState!.validate()){
+          if(screenController.emailFieldController.text == "user@gmail.com"){
+            Get.offAll(()=> IndexScreen());
+          } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
+            Get.offAll(()=> VendorIndexScreen());
+          }
+          //
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -80,13 +90,18 @@ class ForgotPasswordTextModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: const Text(
-        'Forgot Password?',
-        style: TextStyle(
-          color: Colors.grey,
-          fontSize: 13,
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=> ForgotPasswordScreen());
+      },
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: const Text(
+          'Forgot Password?',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 13,
+          ),
         ),
       ),
     );

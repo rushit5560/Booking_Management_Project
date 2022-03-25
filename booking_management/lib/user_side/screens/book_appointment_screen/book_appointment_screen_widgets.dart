@@ -410,7 +410,7 @@ class BookButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //Get.to(() => BookAppointMentScreen());
+        Get.to(() => UserCheckoutScreen());
       },
       child: Container(
         alignment: Alignment.center,

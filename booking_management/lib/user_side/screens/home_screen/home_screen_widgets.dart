@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
@@ -69,7 +70,9 @@ class SearchCategoryField extends StatelessWidget {
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           suffixIcon: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => UserSearchResultsScreen());
+            },
             child: const Icon(
                 Icons.search_rounded,
               color: Colors.grey,

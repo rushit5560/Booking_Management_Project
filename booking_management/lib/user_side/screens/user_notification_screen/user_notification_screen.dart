@@ -15,7 +15,7 @@ class UserNotificationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CommonAppBarModule(title: 'Notification', appBarOption: AppBarOption.singleBackButtonOption),
+            const CommonAppBarModule(title: 'Notification'),
             const SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(

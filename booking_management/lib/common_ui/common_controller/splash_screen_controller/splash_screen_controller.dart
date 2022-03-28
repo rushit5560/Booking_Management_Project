@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class SplashScreenController extends GetxController {
 
   goToNextScreen() {
-    Get.offAll(()=> SignInScreen(), transition: Transition.circularReveal);
+    Get.offAll(()=> SignInScreen(), transition: Transition.zoom);
   }
 
   @override

@@ -159,6 +159,33 @@ class BusinessTypeModule extends StatelessWidget {
   }
 }
 
+class FirstNameModule extends StatelessWidget {
+  const FirstNameModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.firstNameFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'First Name', controller: screenController),
+    );
+  }
+}
+
+class LastNameModule extends StatelessWidget {
+  const LastNameModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.lastNameFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Last Name', controller: screenController),
+    );
+  }
+}
 
 class BusinessNameFieldModule extends StatelessWidget {
   const BusinessNameFieldModule({Key? key}) : super(key: key);
@@ -202,16 +229,30 @@ class MobileFieldModule extends StatelessWidget {
   }
 }
 
-class BusinessAddressFieldModule extends StatelessWidget {
-  const BusinessAddressFieldModule({Key? key}) : super(key: key);
+class BusinessAddress1FieldModule extends StatelessWidget {
+  const BusinessAddress1FieldModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.businessAddressFieldController,
+      controller: screenController.businessAddress1FieldController,
       keyboardType: TextInputType.text,
       validator: (value) => FieldValidator().validateFullName(value!),
-      decoration: vendorSignUpFormFieldDecoration(hintText: 'Business Address', controller: screenController),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Address1', controller: screenController),
+    );
+  }
+}
+
+class BusinessAddress2FieldModule extends StatelessWidget {
+  const BusinessAddress2FieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.businessAddress2FieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'Address2', controller: screenController),
     );
   }
 }
@@ -349,8 +390,10 @@ class VendorSignUpButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if(screenController.vendorSignUpFormKey.currentState!.validate()){}
+      onTap: () async{
+        if(screenController.vendorSignUpFormKey.currentState!.validate()){
+          await screenController.vendorSignUpFunction();
+        }
       },
       child: Container(
         decoration: BoxDecoration(

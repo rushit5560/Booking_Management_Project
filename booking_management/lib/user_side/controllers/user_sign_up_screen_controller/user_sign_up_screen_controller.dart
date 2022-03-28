@@ -141,7 +141,7 @@ class UserSignUpScreenController extends GetxController {
 
         if(isStatus.value == 200){
           Fluttertoast.showToast(msg: "${response1.message}");
-          //clearSignUpFieldsFunction();
+          clearSignUpFieldsFunction();
 
         } else {
           // Fluttertoast.showToast(msg: "${response1.message}");
@@ -180,5 +180,6 @@ class UserSignUpScreenController extends GetxController {
     passwordFieldController.clear();
     stateFieldController.clear();
     cityFieldController.clear();
+    genderFieldController.clear();
   }
 }

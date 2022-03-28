@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +22,7 @@ class SignInScreenController extends GetxController {
     isLoading(true);
 
     String url = ApiUrl.signInApi + "?UserName=$userName&Password=$password";
-    print('Url : $url');
+    log('Url : $url');
 
     try{
       // Map<String, dynamic> data = {
@@ -31,6 +33,7 @@ class SignInScreenController extends GetxController {
       //print('data : $data');
 
       http.Response response = await http.post(Uri.parse(url));
+      log('Response : $response');
 
       SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
       isStatus = signInModel.statusCode!.obs;
@@ -40,14 +43,21 @@ class SignInScreenController extends GetxController {
         //print('userToken : $userToken');
        // await sharedPreferenceData.setUserLoginDetailsInPrefs(userToken: "$userToken");
        // await createUserWallet();
-        Get.offAll(() => IndexScreen());
+        if(signInModel.role!.name == "Customer"){
+          log('customer side');
+          Get.offAll(() => IndexScreen());
+        } else if(signInModel.role!.name == "Vendor"){
+          log('Vendor side');
+          Get.offAll(() => VendorIndexScreen());
+        }
+
         Get.snackbar('LoggedIn Successfully.', '');
       } else {
-        print('SignIn False False');
+        log('SignIn False False');
       }
 
     } catch(e) {
-      print('SignIn Error : $e');
+      log('SignIn Error : $e');
     } finally {
       isLoading(false);
     }

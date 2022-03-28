@@ -3,5 +3,6 @@ class ApiUrl {
 
   static const signInApi = apiMainPath + "Login/Login";
   static const userSignUpApi = apiMainPath + "Login/CustomerRegister";
+  static const vendorSignUpApi = apiMainPath + "Login/VendorRegister";
   static const forgotPasswordApi = apiMainPath + "Login/ForgotPassword";
 }

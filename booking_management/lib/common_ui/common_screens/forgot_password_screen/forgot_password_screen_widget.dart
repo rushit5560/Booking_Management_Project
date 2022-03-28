@@ -29,7 +29,11 @@ class SendCodeButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(screenController.forgotPasswordFormKey.currentState!.validate()){}
+        //if(screenController.forgotPasswordFormKey.currentState!.validate()){
+          screenController.forgotPasswordFunction(
+            email: screenController.emailFieldController.text.trim()
+          );
+        //}
       },
       child: Container(
         decoration: BoxDecoration(

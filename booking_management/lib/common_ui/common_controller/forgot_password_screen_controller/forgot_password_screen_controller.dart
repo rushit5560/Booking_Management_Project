@@ -1,16 +1,23 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/common_ui/model/forgot_password_model/forgot_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
+import 'package:http/http.dart' as http;
 
 class ForgotPasswordScreenController extends GetxController {
   RxBool isLoading = false.obs;
-  RxBool isSuccessStatus = false.obs;
+  RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
   RxBool hasError = false.obs;
 
   GlobalKey<FormState> forgotPasswordFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> codeFormKey = GlobalKey<FormState>();
-  final TextEditingController emailFieldController = TextEditingController(text: "demo@gmail.com");
+  final TextEditingController emailFieldController = TextEditingController();
   final TextEditingController codeFieldController = TextEditingController();
   PinDecoration ? pinDecoration;
   PinEntryType pinEntryType = PinEntryType.underline;
@@ -86,6 +93,44 @@ class ForgotPasswordScreenController extends GetxController {
        //  pinDecoration = ExampleDecoration();
       // });
        break;
+    }
+  }
+
+  forgotPasswordFunction({required String email}) async {
+    isLoading(true);
+
+    String url = ApiUrl.forgotPasswordApi + "?Email=$email";
+    log('Url : $url');
+
+    try{
+      // Map<String, dynamic> data = {
+      //   "Email": email,
+      //   "Password": password,
+      // };
+
+      //print('data : $data');
+
+      http.Response response = await http.post(Uri.parse(url));
+
+      ForgotPasswordModel forgotPasswordModel = ForgotPasswordModel.fromJson(json.decode(response.body));
+      isStatus = forgotPasswordModel.statusCode.obs;
+
+      if(isStatus.value == 200) {
+        //String userToken = signInModel.token;
+        //print('userToken : $userToken');
+        // await sharedPreferenceData.setUserLoginDetailsInPrefs(userToken: "$userToken");
+        // await createUserWallet();
+        Get.offAll(() => SignInScreen());
+        Get.snackbar('Forgot Password Successfully.', '');
+        emailFieldController.clear();
+      } else {
+        print('Forgot Password False False');
+      }
+
+    } catch(e) {
+      print('Forgot Password Error : $e');
+    } finally {
+      isLoading(false);
     }
   }
 }

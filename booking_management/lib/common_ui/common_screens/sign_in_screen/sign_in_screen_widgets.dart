@@ -49,7 +49,7 @@ class SignInButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-        if(screenController.signInFormKey.currentState!.validate()){
+        //if(screenController.signInFormKey.currentState!.validate()){
           // if(screenController.emailFieldController.text == "user@gmail.com"){
           //   Get.offAll(()=> IndexScreen());
           // } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
@@ -60,7 +60,7 @@ class SignInButtonModule extends StatelessWidget {
             userName: screenController.unameFieldController.text.trim(),
             password: screenController.passwordFieldController.text.trim(),
           );
-        }
+       // }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -95,8 +95,9 @@ class ForgotPasswordTextModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: ()async {
         Get.to(()=> ForgotPasswordScreen());
+        //await screenController.forgotPasswordFunction();
       },
       child: Container(
         alignment: Alignment.centerRight,

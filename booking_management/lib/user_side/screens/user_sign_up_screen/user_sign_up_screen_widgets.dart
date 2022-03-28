@@ -9,8 +9,8 @@ import '../../controllers/user_sign_up_screen_controller/user_sign_up_screen_con
 
 UserSignUpScreenController screenController = Get.find<UserSignUpScreenController>();
 
-class NameFieldModule extends StatelessWidget {
-  const NameFieldModule({Key? key}) : super(key: key);
+class FirstNameFieldModule extends StatelessWidget {
+  const FirstNameFieldModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,49 @@ class NameFieldModule extends StatelessWidget {
       validator: (value) => FieldValidator().validateFullName(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
-        hintText: 'Name',
+        hintText: 'First Name',
         context: context,
       ),
     );
   }
 }
+
+class LastNameFieldModule extends StatelessWidget {
+  const LastNameFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.lastNameFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: signUpFormFieldDecoration(
+        controller: screenController,
+        hintText: 'Last Name',
+        context: context,
+      ),
+    );
+  }
+}
+
+class GenderFieldModule extends StatelessWidget {
+  const GenderFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.genderFieldController,
+      keyboardType: TextInputType.text,
+      //validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: signUpFormFieldDecoration(
+        controller: screenController,
+        hintText: 'Gender',
+        context: context,
+      ),
+    );
+  }
+}
+
 
 class EmailFieldModule extends StatelessWidget {
   const EmailFieldModule({Key? key}) : super(key: key);
@@ -69,9 +106,9 @@ class AddressFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.addressFieldController,
+      //controller: screenController.addressFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateAddress(value!),
+      //validator: (value) => FieldValidator().validateAddress(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'Address',
@@ -106,9 +143,9 @@ class CPasswordFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.cPasswordFieldController,
+      //controller: screenController.cPasswordFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateConfirmPassword(value!, screenController.passwordFieldController.text.trim()),
+      //validator: (value) => FieldValidator().validateConfirmPassword(value!, screenController.passwordFieldController.text.trim()),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'Confirm Password',
@@ -144,9 +181,9 @@ class CountryFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.countryFieldController,
+      //controller: screenController.countryFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      //validator: (value) => FieldValidator().validateFullName(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'Country',
@@ -198,8 +235,18 @@ class SignUpButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if(screenController.signUpFormKey.currentState!.validate()){}
+      onTap: () async {
+        //if(screenController.signUpFormKey.currentState!.validate()){
+          await screenController.userSignUpFunction(
+              firstName: screenController.nameFieldController.text.trim(),
+              lastName: screenController.lastNameFieldController.text.trim(),
+              state: screenController.stateFieldController.text.trim(),
+              city: screenController.cityFieldController.text.trim(),
+            email: screenController.emailFieldController.text.trim(),
+            password: screenController.passwordFieldController.text.trim(),
+            mobile: screenController.mobileFieldController.text.trim()
+          );
+        //}
       },
       child: Container(
         decoration: BoxDecoration(

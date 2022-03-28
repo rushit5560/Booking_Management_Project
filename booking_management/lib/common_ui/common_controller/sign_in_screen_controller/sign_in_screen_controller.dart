@@ -52,4 +52,5 @@ class SignInScreenController extends GetxController {
       isLoading(false);
     }
   }
+
 }

@@ -17,9 +17,9 @@ class EmailFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.emailFieldController,
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) => FieldValidator().validateEmail(value!),
+      controller: screenController.unameFieldController,
+      keyboardType: TextInputType.text,
+      //validator: (value) => FieldValidator().validateEmail(value!),
       decoration: signInFormFieldDecoration(hintText: 'Email', controller: screenController),
     );
   }
@@ -48,14 +48,18 @@ class SignInButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async{
         if(screenController.signInFormKey.currentState!.validate()){
-          if(screenController.emailFieldController.text == "user@gmail.com"){
-            Get.offAll(()=> IndexScreen());
-          } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
-            Get.offAll(()=> VendorIndexScreen());
-          }
-          //
+          // if(screenController.emailFieldController.text == "user@gmail.com"){
+          //   Get.offAll(()=> IndexScreen());
+          // } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
+          //   Get.offAll(()=> VendorIndexScreen());
+          // }
+
+          await screenController.signInFunction(
+            userName: screenController.unameFieldController.text.trim(),
+            password: screenController.passwordFieldController.text.trim(),
+          );
         }
       },
       child: Container(

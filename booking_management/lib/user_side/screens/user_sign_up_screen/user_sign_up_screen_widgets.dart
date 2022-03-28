@@ -1,3 +1,4 @@
+import 'package:booking_management/vendor_side/screens/vendor_sign_up_screen/vendor_sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -237,7 +238,9 @@ class VendorSignUpTextModule extends StatelessWidget {
       children: [
         const Text('Register as Vendor? '),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => VendorSignUpScreen());
+          },
           child: const Text(
             'Sign Up',
             style: TextStyle(

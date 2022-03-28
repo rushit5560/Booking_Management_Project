@@ -40,6 +40,7 @@ dependencies:
   pin_input_text_field: ^4.1.2
   google_maps_flutter: 2.1.2
   table_calendar: ^3.0.4
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

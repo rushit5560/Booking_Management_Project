@@ -84,6 +84,7 @@ class PendingAppointmentListModule extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i){
         return Container(
+          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
@@ -99,7 +100,7 @@ class PendingAppointmentListModule extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                flex: 70,
+                flex: 68,
                 child: Row(
                   children: [
                     _userImageModule(image: AppImages.vendorImg),
@@ -125,7 +126,7 @@ class PendingAppointmentListModule extends StatelessWidget {
               const SizedBox(width: 5),
 
               Expanded(
-                flex: 30,
+                flex: 32,
                   child: Row(
                     children: [
                       _viewButton(),

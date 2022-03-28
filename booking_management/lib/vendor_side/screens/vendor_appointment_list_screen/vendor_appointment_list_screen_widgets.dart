@@ -304,6 +304,7 @@ class AllAppointmentListModule extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i){
         return Container(
+          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             boxShadow: [

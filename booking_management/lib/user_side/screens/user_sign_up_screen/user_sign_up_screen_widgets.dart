@@ -17,7 +17,7 @@ class FirstNameFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.nameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateFirstName(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'First Name',
@@ -35,7 +35,7 @@ class LastNameFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.lastNameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateLastName(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'Last Name',
@@ -53,7 +53,7 @@ class GenderFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.genderFieldController,
       keyboardType: TextInputType.text,
-      //validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateGender(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'Gender',
@@ -201,7 +201,7 @@ class StateFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.stateFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateState(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'State',
@@ -219,7 +219,7 @@ class CityFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.cityFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateCity(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
         hintText: 'City',
@@ -236,7 +236,7 @@ class SignUpButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        //if(screenController.signUpFormKey.currentState!.validate()){
+        if(screenController.signUpFormKey.currentState!.validate()){
           await screenController.userSignUpFunction(
               firstName: screenController.nameFieldController.text.trim(),
               lastName: screenController.lastNameFieldController.text.trim(),
@@ -246,7 +246,7 @@ class SignUpButtonModule extends StatelessWidget {
             password: screenController.passwordFieldController.text.trim(),
             mobile: screenController.mobileFieldController.text.trim()
           );
-        //}
+        }
       },
       child: Container(
         decoration: BoxDecoration(

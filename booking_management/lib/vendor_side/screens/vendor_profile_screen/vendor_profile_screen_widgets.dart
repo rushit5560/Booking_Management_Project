@@ -61,13 +61,14 @@ class VendorProfileDetailsModule extends StatelessWidget {
   Widget profile(){
     return Stack(
       alignment: Alignment.bottomCenter,
+      clipBehavior: Clip.none,
       children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(AppImages.vendorImg, scale: 8,)),
 
-        Container(
-          margin: EdgeInsets.only(top: 10),
+        Positioned(
+          bottom: -15,
           child: Container(
             height: 35, width: 35,
             decoration: BoxDecoration(
@@ -76,7 +77,7 @@ class VendorProfileDetailsModule extends StatelessWidget {
             ),
             child: const Icon(Icons.edit),
           ),
-        )
+        ),
       ],
     );
   }

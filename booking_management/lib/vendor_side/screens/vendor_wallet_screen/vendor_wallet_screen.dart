@@ -20,18 +20,27 @@ class VendorWalletScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const CommonAppBarModule(title: "Wallet", appBarOption: AppBarOption.singleBackButtonOption),
-              const SizedBox(height: 30),
-              const AvailableBalTextModule(),
-              const SizedBox(height: 15),
-              const BalanceAmountModule(),
-              const WalletSelectableTabModule(),
+              const SizedBox(height: 10),
+
               Expanded(
-                child: vendorWalletScreenController.isTransactionSelected.value == 0
-                ? const TransactionsListModule().commonSymmetricPadding(horizontal: 20)
-                : const BankDetailsFormModule().commonSymmetricPadding(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AvailableBalTextModule(),
+                    const SizedBox(height: 15),
+                    const BalanceAmountModule(),
+                    const WalletSelectableTabModule(),
+                    Expanded(
+                        child: vendorWalletScreenController.isTransactionSelected.value == 0
+                            ? const TransactionsListModule()
+                            : const BankDetailsFormModule()
+                    ),
+                  ],
+                ).commonAllSidePadding(20),
               ),
+
             ],
-          ),
+          )
         ),
       ),
     );

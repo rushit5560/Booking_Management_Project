@@ -27,6 +27,7 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft),
                     child: Container(
+                      margin: EdgeInsets.only(left: 5, right: 5),
                       decoration: shadowDecoration(),
                       // margin: EdgeInsets.all(5),
                       child: Row(
@@ -119,7 +120,7 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                     ).commonSymmetricPadding(vertical: 10),
                   );
                 },
-              ).commonSymmetricPadding(horizontal: 25),
+              ).commonSymmetricPadding(horizontal: 20),
             ),
           ],
         ),

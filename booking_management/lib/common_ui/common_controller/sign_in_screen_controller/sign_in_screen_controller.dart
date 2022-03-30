@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
@@ -13,15 +14,16 @@ class SignInScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
-  GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
   final TextEditingController unameFieldController = TextEditingController();
   final TextEditingController passwordFieldController = TextEditingController();
 
-  signInFunction({required String userName, required String password}) async {
+  signInFunction(/*{required String userName, required String password}*/) async {
     isLoading(true);
 
-    String url = ApiUrl.signInApi + "?UserName=$userName&Password=$password";
+    String url = ApiUrl.signInApi + "?UserName=${unameFieldController.text.trim()}&Password=${passwordFieldController.text.trim()}";
     log('Url : $url');
 
     try{
@@ -36,17 +38,22 @@ class SignInScreenController extends GetxController {
       log('Response : $response');
 
       SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
-      isStatus = signInModel.statusCode!.obs;
+      isStatus = signInModel.statusCode.obs;
 
       if(isStatus.value == 200) {
         //String userToken = signInModel.token;
         //print('userToken : $userToken');
        // await sharedPreferenceData.setUserLoginDetailsInPrefs(userToken: "$userToken");
        // await createUserWallet();
-        if(signInModel.role!.name == "Customer"){
+        String? userId = signInModel.data.id;
+        String ? role = signInModel.role.name;
+        print("UserId: $userId");
+        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: userId, role: role);
+
+        if(signInModel.role.name == "Customer"){
           log('customer side');
           Get.offAll(() => IndexScreen());
-        } else if(signInModel.role!.name == "Vendor"){
+        } else if(signInModel.role.name == "Vendor"){
           log('Vendor side');
           Get.offAll(() => VendorIndexScreen());
         }

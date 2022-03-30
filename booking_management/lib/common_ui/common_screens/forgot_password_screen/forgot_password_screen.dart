@@ -19,19 +19,19 @@ class ForgotPasswordScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 // From Common Widgets
-                const HeaderLogoModule(),
-                const SizedBox(height: 50),
-                const HeaderTextModule(name: "Forgot Password"),
-                const SizedBox(height: 80),
-                const ForgotPasswordScreenEmailFieldModule(),
-                const SizedBox(height: 45),
-                const SendCodeButtonModule(),
-                const SizedBox(height: 45),
+                HeaderLogoModule(),
+                SizedBox(height: 50),
+                HeaderTextModule(name: "Forgot Password"),
+                SizedBox(height: 80),
+                ForgotPasswordScreenEmailFieldModule(),
+                SizedBox(height: 45),
+                SendCodeButtonModule(),
+                SizedBox(height: 45),
                 CodeTextFieldModule(),
-                const SizedBox(height: 45),
-                const ForgotPasswordScreenSubmitButtonModule(),
+                SizedBox(height: 45),
+                ForgotPasswordScreenSubmitButtonModule(),
               ],
             ).commonAllSidePadding(20),
           ),

@@ -167,7 +167,7 @@ class FirstNameModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.firstNameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateFirstName(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'First Name', controller: screenController),
     );
   }
@@ -181,7 +181,7 @@ class LastNameModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.lastNameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateLastName(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Last Name', controller: screenController),
     );
   }
@@ -195,7 +195,7 @@ class BusinessNameFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.businessNameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateBusinessName(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Business Name', controller: screenController),
     );
   }
@@ -237,7 +237,7 @@ class BusinessAddress1FieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.businessAddress1FieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateAddress1(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Address1', controller: screenController),
     );
   }
@@ -251,7 +251,7 @@ class BusinessAddress2FieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.businessAddress2FieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateAddress2(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Address2', controller: screenController),
     );
   }
@@ -265,7 +265,7 @@ class StreetFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.streetFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateStreet(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Street', controller: screenController),
     );
   }
@@ -279,7 +279,7 @@ class StateFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.stateFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateState(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'State', controller: screenController),
     );
   }
@@ -293,7 +293,7 @@ class CountryFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.countryFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateCountryName(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Country', controller: screenController),
     );
   }
@@ -307,7 +307,7 @@ class PostCodeFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.postCodeFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validatePostCode(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Post Code', controller: screenController),
     );
   }
@@ -321,7 +321,7 @@ class SuburbFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.subUrbFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFullName(value!),
+      validator: (value) => FieldValidator().validateSuburb(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Sub urb', controller: screenController),
     );
   }

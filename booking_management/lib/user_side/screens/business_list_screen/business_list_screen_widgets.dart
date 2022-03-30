@@ -26,7 +26,7 @@ class BusinessList extends StatelessWidget {
         Get.to(() => BusinessDetailScreen());
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 20, left: 3, right: 3, top: 7),
+        margin: const EdgeInsets.only(bottom: 12, left: 3, right: 3, top: 7),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,

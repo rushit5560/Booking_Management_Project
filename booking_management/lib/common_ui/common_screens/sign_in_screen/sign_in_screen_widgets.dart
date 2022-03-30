@@ -19,8 +19,8 @@ class EmailFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.unameFieldController,
       keyboardType: TextInputType.text,
-      //validator: (value) => FieldValidator().validateEmail(value!),
-      decoration: signInFormFieldDecoration(hintText: 'Email', controller: screenController),
+      validator: (value) => FieldValidator().validateUserName(value!),
+      decoration: signInFormFieldDecoration(hintText: 'UserName', controller: screenController),
     );
   }
 }
@@ -49,7 +49,7 @@ class SignInButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-        //if(screenController.signInFormKey.currentState!.validate()){
+       // if(screenController.signInFormKey.currentState!.validate()){
           // if(screenController.emailFieldController.text == "user@gmail.com"){
           //   Get.offAll(()=> IndexScreen());
           // } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
@@ -57,8 +57,8 @@ class SignInButtonModule extends StatelessWidget {
           // }
 
           await screenController.signInFunction(
-            userName: screenController.unameFieldController.text.trim(),
-            password: screenController.passwordFieldController.text.trim(),
+            // userName: screenController.unameFieldController.text.trim(),
+            // password: screenController.passwordFieldController.text.trim(),
           );
        // }
       },

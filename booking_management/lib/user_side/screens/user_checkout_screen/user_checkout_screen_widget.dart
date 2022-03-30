@@ -88,29 +88,29 @@ class SelectPaymentMethod extends StatelessWidget {
             ),
         ),
 
-        const SizedBox(height: 10,),
-        Obx(()=>
-            Container(
-              //height: 55,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
-              ),
-              child: ListTile(
-                trailing: Radio<String>(
-                  value: 'Cash',
-                  activeColor: AppColors.colorLightGrey,
-                  groupValue: screenController.payment.value,
-                  onChanged: (value) {
-                    //setState(() {
-                    screenController.payment.value = value!;
-                    // });
-                  },
-                ),
-                title: const Text('Cash', style: TextStyle(color: Colors.black, fontSize: 15),),
-              ),
-            ),
-        )
+        // const SizedBox(height: 10,),
+        // Obx(()=>
+        //     Container(
+        //       //height: 55,
+        //       decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(15),
+        //           border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
+        //       ),
+        //       child: ListTile(
+        //         trailing: Radio<String>(
+        //           value: 'Cash',
+        //           activeColor: AppColors.colorLightGrey,
+        //           groupValue: screenController.payment.value,
+        //           onChanged: (value) {
+        //             //setState(() {
+        //             screenController.payment.value = value!;
+        //             // });
+        //           },
+        //         ),
+        //         title: const Text('Cash', style: TextStyle(color: Colors.black, fontSize: 15),),
+        //       ),
+        //     ),
+        // )
       ],
     );
   }

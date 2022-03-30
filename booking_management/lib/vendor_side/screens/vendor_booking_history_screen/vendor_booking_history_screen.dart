@@ -1,11 +1,11 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/user_side/screens/booking_history_screen/booking_history_screen_widgets.dart';
+import 'package:booking_management/vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen_widgets.dart';
 import 'package:flutter/material.dart';
 
-class BookingHistoryScreen extends StatelessWidget {
-  const BookingHistoryScreen({Key? key}) : super(key: key);
+class VendorBookingHistoryScreen extends StatelessWidget {
+  const VendorBookingHistoryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class BookingHistoryScreen extends StatelessWidget {
             const CommonAppBarModule(title: "Booking History", appBarOption: AppBarOption.singleBackButtonOption),
 
             Expanded(
-              child: const BookingHistoryList().commonAllSidePadding(20),
+              child: const VendorBookingHistoryList().commonAllSidePadding(20),
             )
           ],
         ),

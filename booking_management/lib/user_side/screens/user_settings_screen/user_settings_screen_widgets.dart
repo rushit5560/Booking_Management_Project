@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/booking_history_screen/booking_history_screen.dart';
 import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
@@ -13,12 +14,14 @@ class SettingScreenSingleItemModule extends StatelessWidget {
   final String img;
   final UserSettingScreenOption userSettingScreenOption;
 
-  const SettingScreenSingleItemModule({
+  SettingScreenSingleItemModule({
     Key? key,
     required this.name,
     required this.img,
     required this.userSettingScreenOption,
   }) : super(key: key);
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +80,7 @@ class SettingScreenSingleItemModule extends StatelessWidget {
     } else if (userSettingScreenOption == UserSettingScreenOption.payment) {
     } else if (userSettingScreenOption == UserSettingScreenOption.help) {
     } else if (userSettingScreenOption == UserSettingScreenOption.logOut) {
+      sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);
     }
   }

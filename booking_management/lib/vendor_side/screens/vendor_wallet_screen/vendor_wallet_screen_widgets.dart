@@ -22,7 +22,7 @@ class AvailableBalTextModule extends StatelessWidget {
         fontWeight: FontWeight.bold,
         fontSize: 14,
       ),
-    ).commonSymmetricPadding(horizontal: 30);
+    );
   }
 }
 
@@ -46,7 +46,7 @@ class BalanceAmountModule extends StatelessWidget {
           ),
         ),
       ),
-    ).commonSymmetricPadding(horizontal: 30);
+    );
   }
 }
 
@@ -74,7 +74,7 @@ class WalletSelectableTabModule extends StatelessWidget {
         ()=> Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: screenController.isTransactionSelected.value == 0 ? AppColors.colorLightGrey : Colors.white,
+            color: screenController.isTransactionSelected.value == 0 ? AppColors.colorLightGrey1 : Colors.white,
             boxShadow: [
               BoxShadow(
                 blurRadius: 5,
@@ -106,7 +106,7 @@ class WalletSelectableTabModule extends StatelessWidget {
         ()=> Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: screenController.isTransactionSelected.value == 1 ? AppColors.colorLightGrey : Colors.white,
+            color: screenController.isTransactionSelected.value == 1 ? AppColors.colorLightGrey1 : Colors.white,
             boxShadow: [
               BoxShadow(
                 blurRadius: 5,
@@ -141,52 +141,50 @@ class TransactionsListModule extends StatelessWidget {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Container(
-            decoration: shadowDecoration(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Paid to Lorem Ipsum',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+        return Container(
+          margin: EdgeInsets.only(bottom: 20, top: 5, left: 5, right: 5),
+          decoration: shadowDecoration(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Paid to Lorem Ipsum',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
                       ),
-                      SizedBox(height: 5),
-                      Text(
-                        '12 March 2022 at 12:00 PM',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '12 March 2022 at 12:00 PM',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 5),
-                const Text(
-                  '\$20.00',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
+              ),
+              const SizedBox(width: 5),
+              const Text(
+                '\$20.00',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
                 ),
-              ],
-            ).commonSymmetricPadding(vertical: 12, horizontal: 12),
-          ),
+              ),
+            ],
+          ).commonSymmetricPadding(vertical: 12, horizontal: 12),
         );
       },
-    ).commonSymmetricPadding(horizontal: 20);
+    );
   }
 }
 
@@ -214,7 +212,7 @@ class BankDetailsFormModule extends StatelessWidget {
             _sendToBankButton(),
             const SizedBox(height: 25),
           ],
-        ),
+        ).commonAllSidePadding(15),
       ),
     );
   }

@@ -7,7 +7,6 @@ import '../user_side/controllers/user_conversation_screen_controller/user_conver
 import '../user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import '../vendor_side/controllers/vendor_sign_up_screen_controller/vendor_sign_up_screen_controller.dart';
 import '../vendor_side/controllers/vendor_wallet_screen_controller/vendor_wallet_screen_controller.dart';
-import 'common_functions.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_images.dart';
 

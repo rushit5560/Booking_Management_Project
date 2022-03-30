@@ -93,6 +93,7 @@ class VendorSignUpScreenController extends GetxController {
       request.fields['Postcode'] = postCodeFieldController.text.trim();
       request.fields['CategoryId'] = '1';
       request.fields['BusinessName'] = businessNameFieldController.text.trim();
+      request.fields['BusinessId'] = businessIdFieldController.text.trim();
 
       log('request.fields: ${request.fields}');
       log('request.files: ${request.files}');
@@ -162,5 +163,6 @@ class VendorSignUpScreenController extends GetxController {
     subUrbFieldController.clear();
     postCodeFieldController.clear();
     businessNameFieldController.clear();
+    businessIdFieldController.clear();
   }
 }

@@ -26,63 +26,63 @@ class VendorSettingsScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
-                  children: const [
+                  children: [
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.profileImg,
                       name: 'Profile',
                       vendorSettingScreenOption: VendorSettingScreenOption.profile,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.chatImg,
                       name: 'Chat',
                       vendorSettingScreenOption: VendorSettingScreenOption.chat,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.bookingHistoryImg,
                       name: 'Booking History',
                       vendorSettingScreenOption: VendorSettingScreenOption.bookingHistory,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.paymentImg,
                       name: 'Wallet',
                       vendorSettingScreenOption: VendorSettingScreenOption.wallet,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.resourcesImg,
                       name: 'Resources',
                       vendorSettingScreenOption: VendorSettingScreenOption.resources,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.subscriptionsImg,
                       name: 'Subscriptions',
                       vendorSettingScreenOption: VendorSettingScreenOption.subscription,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.helpImg,
                       name: 'Help',
                       vendorSettingScreenOption: VendorSettingScreenOption.help,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.changePasswordImg,
                       name: 'Change Password',
                       vendorSettingScreenOption: VendorSettingScreenOption.changePassword,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.logoutImg,

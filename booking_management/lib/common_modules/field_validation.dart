@@ -7,6 +7,89 @@ class FieldValidator {
     }
     return null;
   }
+  String? validateAddress1(String value) {
+    if (value.isEmpty) {
+      return 'Address1 is Required';
+    }
+    return null;
+  }
+
+  String? validateAddress2(String value) {
+    if (value.isEmpty) {
+      return 'Address2 is Required';
+    }
+    return null;
+  }
+
+  String? validateStreet(String value) {
+    if (value.isEmpty) {
+      return 'Street is Required';
+    }
+    return null;
+  }
+
+  String? validatePostCode(String value) {
+    if (value.isEmpty) {
+      return 'Post Code is Required';
+    }
+    return null;
+  }
+
+  String? validateSuburb(String value) {
+    if (value.isEmpty) {
+      return 'sub urb is Required';
+    }
+    return null;
+  }
+
+  String? validateBusinessName(String value) {
+    if (value.isEmpty) {
+      return 'Business Name is Required';
+    }
+    return null;
+  }
+
+  String? validateState(String value) {
+    if (value.isEmpty) {
+      return 'State is Required';
+    }
+    return null;
+  }
+
+  String? validateCity(String value) {
+    if (value.isEmpty) {
+      return 'City is Required';
+    }
+    return null;
+  }
+
+  String? validateFirstName(String value) {
+    if (value.isEmpty) {
+      return 'First Name is Required';
+    }
+    return null;
+  }
+
+  String? validateLastName(String value) {
+    if (value.isEmpty) {
+      return 'Last Name is Required';
+    }
+    return null;
+  }
+
+  String? validateGender(String value) {
+    if (value.isEmpty) {
+      return 'Gender is Required';
+    }
+    return null;
+  }
+
+  String? validateUserName(String value) {
+    if (value.isEmpty) {
+      return 'Username is Required';
+    }
+    return null;
+  }
 
   String? validateCityName(String value) {
     if (value.isEmpty) {
@@ -87,6 +170,16 @@ class FieldValidator {
   String ? validatePassword(String value) {
     if (value.isEmpty) {
       return "password is Required";
+    } else if(value.length < 6){
+      return "Password must be at least 6 characters";
+    } else if(!value.contains(RegExp(r'[A-Z]'))){
+      return "Password must be at least one upper case letter";
+    } else if(!value.contains(RegExp(r"[a-z]"))){
+      return "Password must be at least one lower case letter";
+    } else if(!value.contains(RegExp(r"[0-9]"))){
+      return "Password must be at least one alphabetical letter";
+    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+      return "Password must be at least one Special Character";
     } else {
       return null;
     }

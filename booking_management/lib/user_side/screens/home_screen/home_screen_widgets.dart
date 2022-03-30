@@ -150,6 +150,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             return Container(
+              margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
@@ -244,7 +245,7 @@ class FavouriteDoctorsModule extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         SizedBox(
           height: 130,
           child: GridView.builder(
@@ -260,6 +261,7 @@ class FavouriteDoctorsModule extends StatelessWidget {
             ),
             itemBuilder: (context, i) {
               return Container(
+                margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [

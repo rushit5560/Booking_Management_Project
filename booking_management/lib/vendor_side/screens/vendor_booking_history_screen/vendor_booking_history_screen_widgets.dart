@@ -1,11 +1,9 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
-import 'package:booking_management/user_side/screens/booking_details_screen/booking_details_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class BookingHistoryList extends StatelessWidget {
-  const BookingHistoryList({Key? key}) : super(key: key);
+class VendorBookingHistoryList extends StatelessWidget {
+  const VendorBookingHistoryList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +14,21 @@ class BookingHistoryList extends StatelessWidget {
         itemBuilder: (context, index){
           return GestureDetector(
             onTap: (){
-              Get.to(() => const BookingDetailsScreen(), transition: Transition.zoom);
+              //Get.to(() => const BookingDetailsScreen(), transition: Transition.zoom);
             },
             child: Container(
               margin: const EdgeInsets.only(bottom: 10, left: 3, right: 3, top: 3),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.colorLightGrey,
-                    blurStyle: BlurStyle.outer,
-                    blurRadius: 5
-                  )
-                ]
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurStyle: BlurStyle.outer,
+                        blurRadius: 5
+                    )
+                  ]
               ),
-                  //color: AppColors.colorLightGrey1
+              //color: AppColors.colorLightGrey1
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(

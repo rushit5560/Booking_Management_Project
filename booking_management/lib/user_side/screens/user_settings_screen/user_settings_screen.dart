@@ -22,7 +22,7 @@ class UserSettingsScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
-                  children: const [
+                  children: [
 
                     SettingScreenSingleItemModule(
                       img: AppImages.profileImg,

@@ -19,7 +19,7 @@ class UserSignUpScreenController extends GetxController {
 
   File? file;
 
-  GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   final TextEditingController nameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController lastNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController genderFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
@@ -81,14 +81,14 @@ class UserSignUpScreenController extends GetxController {
 
       //log('data : $data');
 
-      var stream = http.ByteStream(file!.openRead());
-      stream.cast();
+      //var stream = http.ByteStream(file!.openRead());
+      //stream.cast();
 
-      var length = await file!.length();
+      //var length = await file!.length();
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      request.files.add(await http.MultipartFile.fromPath("file", file!.path));
+      //request.files.add(await http.MultipartFile.fromPath("file", file!.path));
 
       // request.fields['FirstName'] = "Testing120";
       // request.fields['LastName'] = "Testing";
@@ -121,13 +121,13 @@ class UserSignUpScreenController extends GetxController {
       log('request.fields: ${request.fields}');
       log('request.files: ${request.files}');
 
-      var multiPart = http.MultipartFile(
-        'file',
-        stream,
-        length,
-      );
+      // var multiPart = http.MultipartFile(
+      //   'file',
+      //   stream,
+      //   length,
+      // );
 
-      request.files.add(multiPart);
+     // request.files.add(multiPart);
 
       var response = await request.send();
       log('response: ${response.request}');

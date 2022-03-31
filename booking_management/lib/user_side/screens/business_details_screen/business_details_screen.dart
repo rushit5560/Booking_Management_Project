@@ -26,7 +26,7 @@ class BusinessDetailScreen extends StatelessWidget {
                   Expanded(
                     child: Obx(()=>
                       vendorDetailsScreenController.isOverviewSelected.value ?
-                       const OverviewModule() :  const ReviewModule(),
+                      OverviewModule() :  const ReviewModule(),
                     ),
                   )
                 ],

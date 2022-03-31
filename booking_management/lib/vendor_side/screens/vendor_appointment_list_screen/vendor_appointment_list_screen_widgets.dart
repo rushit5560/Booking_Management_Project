@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/vendor_user_details_screen/vendor_user_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -293,8 +294,612 @@ class AppointmentListTextModule extends StatelessWidget {
 }
 
 class AllAppointmentListModule extends StatelessWidget {
+  const AllAppointmentListModule({Key? key}) : super(key: key);
+
+  //final int count;
+  //const AllAppointmentListModule({Key? key, required this.count}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return screenController.allAppointmentList.isEmpty ?
+    const Center(child: Text("No All Appointment List")) :
+      ListView.builder(
+      itemCount: screenController.allAppointmentList.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i){
+        return Container(
+          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 70,
+                child: Row(
+                  children: [
+                    _userImageModule(i),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(i),
+                          const SizedBox(height: 8),
+
+                          _dateAndTimeModule(i),
+                          const SizedBox(height: 8),
+
+                          _statusModule(i),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 5),
+
+              Expanded(
+                flex: 30,
+                child: Row(
+                  children: [
+                    _viewButton(),
+                    const SizedBox(width: 10),
+                    _confirmButton(),
+                  ],
+                ),
+              ),
+            ],
+          ).commonAllSidePadding(10),
+        );
+      },
+    ).commonSymmetricPadding(horizontal: 15);
+  }
+
+  Widget _userImageModule(i) {
+    /*return Container(
+      height: 65,
+      width: 65,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: AssetImage(image),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );*/
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //child: Image.network(ApiUrl.apiMainPath + screenController.allAppointmentList[i].customerBooking.image),
+      child: Image.asset(AppImages.vendorImg, scale: 15,),
+    );
+  }
+
+  Widget _userNameModule(i) {
+    return Text(
+      screenController.allAppointmentList[i].customerBooking.firstName + " " + screenController.allAppointmentList[i].customerBooking.lastName,
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _dateAndTimeModule(/*{required String date, required String time}*/i) {
+    return Row(
+      children: [
+        Image.asset(
+          AppImages.dateImg,
+          height: 11,
+          width: 11,
+          fit: BoxFit.cover,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          screenController.allAppointmentList[i].customerBooking.dateOfBirth.toString(),
+          style: const TextStyle(fontSize: 9),
+        ),
+
+        /*const SizedBox(width: 10),
+
+        Image.asset(
+          AppImages.timeImg,
+          height: 11,
+          width: 11,
+          fit: BoxFit.cover,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          time,
+          style: const TextStyle(fontSize: 9),
+        ),*/
+      ],
+    );
+  }
+
+  Widget _statusModule(i) {
+    return Text(
+      "Status - " + screenController.allAppointmentList[i].status,
+      style: const TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _viewButton() {
+    return GestureDetector(
+      onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 2,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Text(
+            'View',
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+
+      ),
+    );
+  }
+
+  Widget _confirmButton() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            blurRadius: 2,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(8),
+        child: Text(
+          'Confirm',
+          style: TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+    );
+  }
+
+}
+
+class VendorPendingAppointmentListModule extends StatelessWidget {
+  const VendorPendingAppointmentListModule({Key? key}) : super(key: key);
+
+  //final int count;
+  //const VendorPendingAppointmentListModule({Key? key, required this.count}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return screenController.pendingList.isEmpty ?
+    const Center(child: Text("No Pending Appointment List")) :
+      ListView.builder(
+      itemCount: screenController.pendingList.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i){
+        return Container(
+          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 70,
+                child: Row(
+                  children: [
+                    _userImageModule(i),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(i),
+                          const SizedBox(height: 8),
+
+                          _dateAndTimeModule(i),
+                          const SizedBox(height: 8),
+
+                          _statusModule(i),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 5),
+
+              Expanded(
+                flex: 30,
+                child: Row(
+                  children: [
+                    _viewButton(),
+                    const SizedBox(width: 10),
+                    _confirmButton(),
+                  ],
+                ),
+              ),
+            ],
+          ).commonAllSidePadding(10),
+        );
+      },
+    ).commonSymmetricPadding(horizontal: 15);
+  }
+
+  Widget _userImageModule(i) {
+    /*return Container(
+      height: 65,
+      width: 65,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: AssetImage(image),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );*/
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
+      child: Image.asset(AppImages.vendorImg, scale: 15,),
+    );
+  }
+
+  Widget _userNameModule(i) {
+    return Text(
+      screenController.pendingList[i].customerBooking.firstName + " " + screenController.allAppointmentList[i].customerBooking.lastName,
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _dateAndTimeModule(i) {
+    return Row(
+      children: [
+        Image.asset(
+          AppImages.dateImg,
+          height: 11,
+          width: 11,
+          fit: BoxFit.cover,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          screenController.pendingList[i].customerBooking.dateOfBirth.toString(),
+          style: const TextStyle(fontSize: 9),
+        ),
+
+        /*const SizedBox(width: 10),
+
+        Image.asset(
+          AppImages.timeImg,
+          height: 11,
+          width: 11,
+          fit: BoxFit.cover,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          time,
+          style: const TextStyle(fontSize: 9),
+        ),*/
+      ],
+    );
+  }
+
+  Widget _statusModule(i) {
+    return Text(
+      "Status - " + screenController.pendingList[i].status,
+      style: const TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _viewButton() {
+    return GestureDetector(
+      onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 2,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Text(
+            'View',
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+
+      ),
+    );
+  }
+
+  Widget _confirmButton() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            blurRadius: 2,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(8),
+        child: Text(
+          'Confirm',
+          style: TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+    );
+  }
+
+}
+
+class ConfirmAppointmentListModule extends StatelessWidget {
   final int count;
-  const AllAppointmentListModule({Key? key, required this.count}) : super(key: key);
+  const ConfirmAppointmentListModule({Key? key, required this.count}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: count,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i){
+        return Container(
+          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 70,
+                child: Row(
+                  children: [
+                    _userImageModule(image: AppImages.vendorImg),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(userName: "Mr. John Doe"),
+                          const SizedBox(height: 8),
+
+                          _dateAndTimeModule(date: "22-03-2022", time: "2:00 PM"),
+                          const SizedBox(height: 8),
+
+                          _statusModule(status: "Status - Pending"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 5),
+
+              Expanded(
+                flex: 30,
+                child: Row(
+                  children: [
+                    _viewButton(),
+                    const SizedBox(width: 10),
+                    _confirmButton(),
+                  ],
+                ),
+              ),
+            ],
+          ).commonAllSidePadding(10),
+        );
+      },
+    ).commonSymmetricPadding(horizontal: 15);
+  }
+
+  Widget _userImageModule({required String image}) {
+    return Container(
+      height: 65,
+      width: 65,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: AssetImage(image),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _userNameModule({required String userName}) {
+    return Text(
+      userName,
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _dateAndTimeModule({required String date, required String time}) {
+    return Row(
+      children: [
+        Image.asset(
+          AppImages.dateImg,
+          height: 11,
+          width: 11,
+          fit: BoxFit.cover,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          date,
+          style: const TextStyle(fontSize: 9),
+        ),
+
+        const SizedBox(width: 10),
+
+        Image.asset(
+          AppImages.timeImg,
+          height: 11,
+          width: 11,
+          fit: BoxFit.cover,
+        ),
+        const SizedBox(width: 5),
+        Text(
+          time,
+          style: const TextStyle(fontSize: 9),
+        ),
+      ],
+    );
+  }
+
+  Widget _statusModule({required String status}) {
+    return Text(
+      status,
+      style: const TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _viewButton() {
+    return GestureDetector(
+      onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 2,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Text(
+            'View',
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+
+      ),
+    );
+  }
+
+  Widget _confirmButton() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            blurRadius: 2,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(8),
+        child: Text(
+          'Confirm',
+          style: TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+    );
+  }
+
+}
+
+class DoneAppointmentListModule extends StatelessWidget {
+  final int count;
+  const DoneAppointmentListModule({Key? key, required this.count}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -22,7 +22,12 @@ class VendorHomeScreen extends StatelessWidget {
             const SearchAppointmentField().commonSymmetricPadding(horizontal: 45),
             const SizedBox(height: 30),
             const PendingListTextModule().commonSymmetricPadding(horizontal: 25),
+
+            Obx(()=>
+              vendorHomeScreenController.isLoading.value
+                ? const Center(child: CircularProgressIndicator()) :
             Expanded(child: const PendingAppointmentListModule().commonSymmetricPadding(horizontal: 25)),
+            ),
           ],
         ),
       ),

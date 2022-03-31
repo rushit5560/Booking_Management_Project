@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/vendor_user_details_screen/vendor_user_details_screen.dart';
@@ -78,13 +79,15 @@ class PendingAppointmentListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10,
+    return screenController.pendingList.isEmpty ?
+     const Center(child: Text("No Pending Appointment List"),) :
+    ListView.builder(
+      itemCount: screenController.pendingList.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i){
         return Container(
-          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+          margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
@@ -103,19 +106,19 @@ class PendingAppointmentListModule extends StatelessWidget {
                 flex: 68,
                 child: Row(
                   children: [
-                    _userImageModule(image: AppImages.vendorImg),
+                    _userImageModule(i),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _userNameModule(userName: "Mr. John Doe"),
+                          _userNameModule(i),
                           const SizedBox(height: 8),
 
-                          _dateAndTimeModule(date: "22-03-2022", time: "2:00 PM"),
+                          _dateAndTimeModule(i),
                           const SizedBox(height: 8),
 
-                          _statusModule(status: "Status - Pending"),
+                          _statusModule(i),
                         ],
                       ),
                     ),
@@ -142,23 +145,17 @@ class PendingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _userImageModule({required String image}) {
-    return Container(
-      height: 65,
-      width: 65,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: AssetImage(image),
-          fit: BoxFit.cover,
-        ),
-      ),
+  Widget _userImageModule(i) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
+      child: Image.asset(AppImages.vendorImg, scale: 15,),
     );
   }
 
-  Widget _userNameModule({required String userName}) {
+  Widget _userNameModule(i) {
     return Text(
-      userName,
+      screenController.pendingList[i].customerBooking.firstName + " " + screenController.pendingList[i].customerBooking.lastName,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -166,7 +163,7 @@ class PendingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _dateAndTimeModule({required String date, required String time}) {
+  Widget _dateAndTimeModule(i) {
     return Row(
       children: [
         Image.asset(
@@ -177,30 +174,30 @@ class PendingAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          date,
+          screenController.pendingList[i].appointmentDate.toString(),
           style: const TextStyle(fontSize: 9),
         ),
 
-        const SizedBox(width: 10),
-
-        Image.asset(
-          AppImages.timeImg,
-          height: 11,
-          width: 11,
-          fit: BoxFit.cover,
-        ),
-        const SizedBox(width: 5),
-        Text(
-          time,
-          style: const TextStyle(fontSize: 9),
-        ),
+        // const SizedBox(width: 10),
+        //
+        // Image.asset(
+        //   AppImages.timeImg,
+        //   height: 11,
+        //   width: 11,
+        //   fit: BoxFit.cover,
+        // ),
+        // const SizedBox(width: 5),
+        // Text(
+        //   time,
+        //   style: const TextStyle(fontSize: 9),
+        // ),
       ],
     );
   }
 
-  Widget _statusModule({required String status}) {
+  Widget _statusModule(i) {
     return Text(
-      status,
+      "Status - " + screenController.pendingList[i].status,
       style: const TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.bold,

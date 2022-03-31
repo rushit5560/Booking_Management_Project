@@ -1,4 +1,5 @@
 import 'package:booking_management/user_side/controllers/business_details_screen_controller/business_details_screen_controller.dart';
+import 'package:booking_management/user_side/model/user_business_details_model/user_business_details_model.dart';
 import 'package:booking_management/user_side/screens/user_checkout_screen/user_checkout_screen.dart';
 import 'package:booking_management/user_side/screens/user_map_screen/user_map_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -135,53 +136,56 @@ class TabViewModule extends StatelessWidget {
 }
 
 class OverviewModule extends StatelessWidget {
-  const OverviewModule ({Key? key}) : super(key: key);
+  //OverviewModule ({Key? key}) : super(key: key);
 
+  UserBusinessDetailsModel ? userBusinessDetailsModel;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            vendorName(),
-            const SizedBox(height: 10,),
-            ratting(),
-            const SizedBox(height: 10,),
-            description(),
-            const SizedBox(height: 20,),
-            priceAndLocation(),
-            const SizedBox(height: 25,),
-            viewMapButtonModule(),
-            const SizedBox(height: 25,),
-            serviceDropDown(context),
-            //SizedBox(height: 25,),
-            //ReviewTextFieldAndButtonModule(),
-            const SizedBox(height: 40,),
-            resourcesList()
-            //bookAppointmentButtonModule()
-          ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                vendorName(),
+                const SizedBox(height: 10,),
+                ratting(),
+                const SizedBox(height: 10,),
+                description(),
+                const SizedBox(height: 20,),
+                priceAndLocation(),
+                const SizedBox(height: 25,),
+                viewMapButtonModule(),
+                const SizedBox(height: 25,),
+                serviceDropDown(context),
+                //SizedBox(height: 25,),
+                //ReviewTextFieldAndButtonModule(),
+                const SizedBox(height: 40,),
+                resourcesList()
+                //bookAppointmentButtonModule()
+              ],
+            )
         ),
-      )
     );
   }
 
   Widget vendorName(){
-    return const Text("Lorem Ipsum", style: TextStyle(color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),);
+    return Text(screenController.businessName.isNotEmpty ? screenController.businessName : "123",
+      style: TextStyle(color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold));
   }
 
   Widget ratting(){
     return Row(
       children: [
-        const Text("4.5", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
+        Text(screenController.ratting.toString().isNotEmpty ? screenController.ratting.toString() : "4",
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
         const SizedBox(width: 4,),
         RatingBar.builder(
           initialRating: 5,
           minRating: 1,
           direction: Axis.horizontal,
           allowHalfRating: true,
-          itemCount: 5,
+          itemCount: screenController.ratting,
           itemSize: 28,
           //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
           itemBuilder: (context, _) => const Icon(
@@ -200,7 +204,7 @@ class OverviewModule extends StatelessWidget {
   }
 
   Widget description(){
-    return const Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+    return Text(screenController.description.isNotEmpty ? screenController.description : "Lorem Ipsum",
       style: TextStyle(fontSize: 13, color: Colors.black),);
   }
 
@@ -208,13 +212,13 @@ class OverviewModule extends StatelessWidget {
      return Column(
        children: [
          Row(
-           children: const [
-             Expanded(
+           children: [
+             const Expanded(
                  flex: 1,
                  child: Text("Price -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),)),
              Expanded(
                  flex: 3,
-                 child: Text("\$20 - \$30/Day", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)))
+                 child: Text("Rs." +  screenController.price.toString()  + "/Day", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)))
            ],
          ),
          const SizedBox(height: 15,),
@@ -240,7 +244,7 @@ class OverviewModule extends StatelessWidget {
                    ),
                  ),
                  SizedBox(width: 10,),
-                 Text("+1234567890", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),)
+                 Text(screenController.mobileNo.isNotEmpty ? screenController.mobileNo : "1234567890", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),)
                ],
              ),
              SizedBox(width: 20,),
@@ -271,14 +275,14 @@ class OverviewModule extends StatelessWidget {
 
          const SizedBox(height: 15,),
          Row(
-           children: const [
-             Expanded(
+           children: [
+             const Expanded(
                  flex: 1,
                  child: Text("Location -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),)),
              Expanded(
                  flex: 3,
-                 child: Text("1156, Lorem Soc. simply dummy text of the printing scram printer",
-                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)))
+                 child: Text(screenController.address.isNotEmpty ? screenController.address : "1156, Lorem Soc. simply dummy text",
+                     style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)))
            ],
          ),
        ],

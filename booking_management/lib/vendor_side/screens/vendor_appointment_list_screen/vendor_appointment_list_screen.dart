@@ -26,14 +26,16 @@ class VendorAppointmentListScreen extends StatelessWidget {
             const SearchAppointmentField().commonSymmetricPadding(horizontal: 45, vertical: 40),
             const AppointmentListTextModule().commonSymmetricPadding(horizontal: 25),
             Obx(
-              ()=> Expanded(
+              ()=> vendorAppointmentListScreenController.isLoading.value
+                  ? const Center(child: CircularProgressIndicator()) :
+                  Expanded(
                 child: vendorAppointmentListScreenController.selectedTabIndex.value == 1
-                    ? const AllAppointmentListModule(count: 10)
+                    ? const AllAppointmentListModule()
                 : vendorAppointmentListScreenController.selectedTabIndex.value == 2
-                ? const AllAppointmentListModule(count: 5)
+                ? const VendorPendingAppointmentListModule()
                 : vendorAppointmentListScreenController.selectedTabIndex.value == 3
-                ? const AllAppointmentListModule(count: 7)
-                : const AllAppointmentListModule(count: 20),
+                ? const ConfirmAppointmentListModule(count: 7)
+                : const DoneAppointmentListModule(count: 20),
               ),
             ),
           ],

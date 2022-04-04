@@ -1,18 +1,24 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/user_side/controllers/user_booking_history_screen_controller/user_booking_history_screen_controller.dart';
 import 'package:booking_management/user_side/screens/booking_details_screen/booking_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+UserBookingHistoryScreenController screenController =
+Get.find<UserBookingHistoryScreenController>();
 
 class BookingHistoryList extends StatelessWidget {
   const BookingHistoryList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return screenController.historyList.isEmpty ?
+    const Center(child: Text("No Booking History"),) :
+      ListView.builder(
         shrinkWrap: true,
         physics: const AlwaysScrollableScrollPhysics(),
-        itemCount: 10,
+        itemCount: screenController.historyList.length,
         itemBuilder: (context, index){
           return GestureDetector(
             onTap: (){
@@ -40,14 +46,17 @@ class BookingHistoryList extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(AppImages.vendorImg, scale: 15,),
+                          child: //screenController.historyList[index].customerBooking.image.isNotEmpty ?
+                          //Image.network(screenController.historyList[index].customerBooking.image, height: 60 , width: 60,):
+                          Image.asset(AppImages.vendorImg, scale: 15,),
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
 
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Lorem Ipsum", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
+                            Text(screenController.historyList[index].customerBooking.firstName + " " + screenController.historyList[index].customerBooking.lastName,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
                             SizedBox(height: 7,),
                             Row(
                               children: [
@@ -55,21 +64,21 @@ class BookingHistoryList extends StatelessWidget {
                                   children: [
                                     Image.asset(AppImages.calenderImg),
                                     SizedBox(width: 5,),
-                                    Text("22-03-2022", style: TextStyle(fontSize: 12),)
+                                    Text(screenController.historyList[index].customerBooking.dateOfBirth.toString(), style: TextStyle(fontSize: 12),)
                                   ],
                                 ),
-                                SizedBox(width: 10,),
+                                /*SizedBox(width: 10,),
                                 Row(
                                   children: [
                                     Image.asset(AppImages.clockImg),
                                     SizedBox(width: 5,),
                                     Text("2:00 PM", style: TextStyle(fontSize: 12))
                                   ],
-                                )
+                                )*/
                               ],
                             ),
                             SizedBox(height: 7,),
-                            Text("Status - Done", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
+                            Text("Status - " + screenController.historyList[index].status, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
                           ],
                         )
                       ],

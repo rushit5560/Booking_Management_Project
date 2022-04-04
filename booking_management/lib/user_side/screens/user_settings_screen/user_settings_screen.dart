@@ -60,6 +60,13 @@ class UserSettingsScreen extends StatelessWidget {
                     SizedBox(height: 20),
 
                     SettingScreenSingleItemModule(
+                      img: AppImages.changePasswordImg,
+                      name: 'Change Password',
+                      userSettingScreenOption: UserSettingScreenOption.changePassword,
+                    ),
+                    SizedBox(height: 20),
+
+                    SettingScreenSingleItemModule(
                       img: AppImages.logoutImg,
                       name: 'Logout',
                       userSettingScreenOption: UserSettingScreenOption.logOut,

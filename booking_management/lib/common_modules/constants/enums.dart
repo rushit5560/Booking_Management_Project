@@ -10,6 +10,7 @@ enum UserSettingScreenOption {
    bookingHistory,
    payment,
    help,
+   changePassword,
    logOut
 }
 

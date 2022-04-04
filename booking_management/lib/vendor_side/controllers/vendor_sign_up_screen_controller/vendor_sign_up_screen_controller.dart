@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/vendor_side/model/vendor_sign_up_model/vendor_sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,6 +14,8 @@ class VendorSignUpScreenController extends GetxController {
   RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
   RxBool isCPasswordVisible = true.obs;
+
+
 
   RxString businessType = 'Business'.obs;
   GlobalKey<FormState> vendorSignUpFormKey = GlobalKey<FormState>();
@@ -117,6 +120,8 @@ class VendorSignUpScreenController extends GetxController {
         log('success : ${response1.data}');
 
         if(isStatus.value == 200){
+          //UserDetails().vendorId = response1.data.id;
+          //log("Vendor Id: ${UserDetails().vendorId}");
           Fluttertoast.showToast(msg: "${response1.message}");
           clearSignUpFieldsFunction();
 

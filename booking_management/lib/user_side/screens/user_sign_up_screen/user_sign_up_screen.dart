@@ -28,13 +28,13 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           child: Form(
             key: userSignUpScreenController.signUpFormKey,
             child: Column(
-              children: [
+              children: const [
                 // From Common Widgets
-                const HeaderLogoModule(),
-                const SizedBox(height: 20),
+                HeaderLogoModule(),
+                SizedBox(height: 20),
                 // From Common Widgets
-                const HeaderTextModule(name: "SignUp"),
-                const SizedBox(height: 20),
+                HeaderTextModule(name: "SignUp"),
+                SizedBox(height: 20),
 
                 /*Stack(
                   alignment: Alignment.bottomRight,
@@ -75,17 +75,17 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                   ],
 
                 ),*/
-                const SizedBox(height: 20),
-                const FirstNameFieldModule(),
-                const SizedBox(height: 5),
-                const LastNameFieldModule(),
-                const SizedBox(height: 5),
-                const GenderFieldModule(),
-                const SizedBox(height: 5),
-                const EmailFieldModule(),
-                const SizedBox(height: 5),
-                const MobileFieldModule(),
-                const SizedBox(height: 5),
+                SizedBox(height: 20),
+                UserNameFieldModule(),
+                // const SizedBox(height: 5),
+                // const LastNameFieldModule(),
+                // const SizedBox(height: 5),
+                // const GenderFieldModule(),
+                SizedBox(height: 5),
+                EmailFieldModule(),
+                // const SizedBox(height: 5),
+                // const MobileFieldModule(),
+                // const SizedBox(height: 5),
                 // const AddressFieldModule(),
                 // const SizedBox(height: 5),
                 // DOB & Country Module
@@ -103,34 +103,34 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                 // ),
                 //const SizedBox(height: 5),
                 // State & City Module
-                Row(
-                  children: const  [
-                    Expanded(
-                      child: StateFieldModule(),
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: CityFieldModule(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                const PasswordFieldModule(),
-                // const SizedBox(height: 5),
-                // const CPasswordFieldModule(),
-                const SizedBox(height: 30),
-                const SignUpButtonModule(),
-                const SizedBox(height: 25),
+                // Row(
+                //   children: const  [
+                //     Expanded(
+                //       child: StateFieldModule(),
+                //     ),
+                //     SizedBox(width: 20),
+                //     Expanded(
+                //       child: CityFieldModule(),
+                //     ),
+                //   ],
+                // ),
+                SizedBox(height: 5),
+                PasswordFieldModule(),
+                SizedBox(height: 5),
+                CPasswordFieldModule(),
+                SizedBox(height: 30),
+                SignUpButtonModule(),
+                SizedBox(height: 25),
                 // From Common Widgets
-                const OrTextModule(),
-                const SizedBox(height: 15),
+                OrTextModule(),
+                SizedBox(height: 15),
                 // From Common Widgets
-                const SocialMediaLoginModule(),
-                const SizedBox(height: 40),
-                const VendorSignUpTextModule(),
-                const SizedBox(height: 15),
-                const SignInTextModule(),
-                const SizedBox(height: 5),
+                SocialMediaLoginModule(),
+                SizedBox(height: 40),
+                VendorSignUpTextModule(),
+                SizedBox(height: 15),
+                SignInTextModule(),
+                SizedBox(height: 5),
               ],
             ).commonAllSidePadding(20),
           ),

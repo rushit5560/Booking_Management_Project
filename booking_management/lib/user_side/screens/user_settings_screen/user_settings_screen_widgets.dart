@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/booking_history_screen/booking_history_screen.dart';
+import 'package:booking_management/user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -76,9 +77,11 @@ class SettingScreenSingleItemModule extends StatelessWidget {
       Get.to(() => const UserChatListScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption ==
         UserSettingScreenOption.bookingHistory) {
-      Get.to(() => const BookingHistoryScreen(), transition: Transition.zoom);
+      Get.to(() => BookingHistoryScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == UserSettingScreenOption.payment) {
     } else if (userSettingScreenOption == UserSettingScreenOption.help) {
+    } else if (userSettingScreenOption == UserSettingScreenOption.changePassword) {
+      Get.to(() => UserChangePasswordScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == UserSettingScreenOption.logOut) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);

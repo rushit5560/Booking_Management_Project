@@ -1,3 +1,4 @@
+import 'package:booking_management/user_side/controllers/user_change_password_screen_controller/user_change_password_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -62,19 +63,33 @@ InputDecoration signUpFormFieldDecoration({
           const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
       suffixIcon: index == 1
           ? Obx(
-              () => GestureDetector(
+            () => GestureDetector(
+          onTap: () {
+            controller.isPasswordVisible.value =
+            !controller.isPasswordVisible.value;
+          },
+          child: Icon(
+              controller.isPasswordVisible.value
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded,
+              size: 20,
+              color: Colors.grey),
+        ),
+      ) : index == 3 ?
+                  Obx(
+                  () => GestureDetector(
                 onTap: () {
-                  controller.isPasswordVisible.value =
-                      !controller.isPasswordVisible.value;
+                  controller.isRePasswordVisible.value =
+                  !controller.isRePasswordVisible.value;
                 },
                 child: Icon(
-                    controller.isPasswordVisible.value
+                    controller.isRePasswordVisible.value
                         ? Icons.visibility_off_rounded
                         : Icons.visibility_rounded,
                     size: 20,
                     color: Colors.grey),
               ),
-            )
+              )
           : index == 2
               ? GestureDetector(
                   onTap: () {
@@ -119,6 +134,40 @@ InputDecoration forgotPasswordFormFieldDecoration(
           : null);
 }
 
+InputDecoration changePasswordFormFieldDecoration(
+    {required String hintText,
+      int index = 0,
+      required UserChangePasswordScreenController controller,
+      required BuildContext context}) {
+  return InputDecoration(
+      hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
+      enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black)),
+      errorBorder:
+      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      focusedErrorBorder:
+      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      suffixIcon: index == 1
+          ? Obx(
+            () => GestureDetector(
+          onTap: () {
+            controller.isPasswordVisible.value =
+            !controller.isPasswordVisible.value;
+          },
+          child: Icon(
+              controller.isPasswordVisible.value
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded,
+              size: 20,
+              color: Colors.grey),
+        ),
+      )
+          : null);
+}
+
 InputDecoration vendorSignUpFormFieldDecoration(
     {required String hintText,
     int index = 0,
@@ -148,7 +197,21 @@ InputDecoration vendorSignUpFormFieldDecoration(
                     size: 20,
                     color: Colors.grey),
               ),
-            )
+            ) : index == 3
+          ? Obx(
+            () => GestureDetector(
+          onTap: () {
+            controller.isCPasswordVisible.value =
+            !controller.isCPasswordVisible.value;
+          },
+          child: Icon(
+              controller.isCPasswordVisible.value
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded,
+              size: 20,
+              color: Colors.grey),
+        ),
+      )
           : index == 2
               ? GestureDetector(
                   onTap: () {},

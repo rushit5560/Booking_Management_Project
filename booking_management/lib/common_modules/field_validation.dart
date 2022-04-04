@@ -185,17 +185,60 @@ class FieldValidator {
     }
   }
 
-  String ? validateConfirmPassword(String value, String password) {
+  String ? validateCurrentPassword(String value) {
     if (value.isEmpty) {
-      return "confirm password is Required";
-    } else if (value.length < 6) {
-      return "Length should be 6 character";
-    } else if (value != password){
-      return "Password and Confirm password should be same";
-    } else{
+      return "Current Password is Required";
+    } else if(value.length < 6){
+      return "Password must be at least 6 characters";
+    } else if(!value.contains(RegExp(r'[A-Z]'))){
+      return "Password must be at least one upper case letter";
+    } else if(!value.contains(RegExp(r"[a-z]"))){
+      return "Password must be at least one lower case letter";
+    } else if(!value.contains(RegExp(r"[0-9]"))){
+      return "Password must be at least one alphabetical letter";
+    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+      return "Password must be at least one Special Character";
+    } else {
       return null;
     }
   }
+
+  String ? validateNewPassword(String value) {
+    if (value.isEmpty) {
+      return "New Password is Required";
+    } else if(value.length < 6){
+      return "Password must be at least 6 characters";
+    } else if(!value.contains(RegExp(r'[A-Z]'))){
+      return "Password must be at least one upper case letter";
+    } else if(!value.contains(RegExp(r"[a-z]"))){
+      return "Password must be at least one lower case letter";
+    } else if(!value.contains(RegExp(r"[0-9]"))){
+      return "Password must be at least one alphabetical letter";
+    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+      return "Password must be at least one Special Character";
+    } else {
+      return null;
+    }
+  }
+
+  String ? validateConfirmPassword(String value) {
+    if (value.isEmpty) {
+      return "Confirm Password is Required";
+    } else if(value.length < 6){
+      return "Password must be at least 6 characters";
+    } else if(!value.contains(RegExp(r'[A-Z]'))){
+      return "Password must be at least one upper case letter";
+    } else if(!value.contains(RegExp(r"[a-z]"))){
+      return "Password must be at least one lower case letter";
+    } else if(!value.contains(RegExp(r"[0-9]"))){
+      return "Password must be at least one alphabetical letter";
+    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+      return "Password must be at least one Special Character";
+    } else {
+      return null;
+    }
+  }
+
 
   String ? validateMobile(String value) {
 // Indian Mobile number are of 10 digit only

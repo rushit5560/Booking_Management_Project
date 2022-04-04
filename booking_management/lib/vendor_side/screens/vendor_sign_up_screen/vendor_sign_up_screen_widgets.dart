@@ -159,16 +159,16 @@ class BusinessTypeModule extends StatelessWidget {
   }
 }
 
-class FirstNameModule extends StatelessWidget {
-  const FirstNameModule({Key? key}) : super(key: key);
+class UserNameModule extends StatelessWidget {
+  const UserNameModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: screenController.firstNameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFirstName(value!),
-      decoration: vendorSignUpFormFieldDecoration(hintText: 'First Name', controller: screenController),
+      validator: (value) => FieldValidator().validateUserName(value!),
+      decoration: vendorSignUpFormFieldDecoration(hintText: 'User Name', controller: screenController),
     );
   }
 }
@@ -354,7 +354,7 @@ class PasswordFieldModule extends StatelessWidget {
         obscureText: screenController.isPasswordVisible.value,
         validator: (value) => FieldValidator().validatePassword(value!),
         decoration: vendorSignUpFormFieldDecoration(
-            hintText: 'Password',
+            hintText: 'Create Password',
             controller: screenController,
           index: 1,
         ),
@@ -373,11 +373,30 @@ class ConfirmPasswordFieldModule extends StatelessWidget {
         controller: screenController.cPasswordFieldController,
         keyboardType: TextInputType.text,
         obscureText: screenController.isCPasswordVisible.value,
-        validator: (value) => FieldValidator().validateConfirmPassword(value!, screenController.passwordFieldController.text),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Confirm Password is Required";
+          } else if(value.length < 6){
+            return "Password must be at least 6 characters";
+          } else if(!value.contains(RegExp(r'[A-Z]'))){
+            return "Password must be at least one upper case letter";
+          } else if(!value.contains(RegExp(r"[a-z]"))){
+            return "Password must be at least one lower case letter";
+          } else if(!value.contains(RegExp(r"[0-9]"))){
+            return "Password must be at least one alphabetical letter";
+          } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+            return "Password must be at least one Special Character";
+          } else if(screenController.passwordFieldController.text != screenController.cPasswordFieldController.text){
+            return "Password and Confirm Password Should be Same";
+          }
+          else {
+            return null;
+          }
+        },
         decoration: vendorSignUpFormFieldDecoration(
-            hintText: 'Confirm Password',
+            hintText: 'Re-enter Password',
             controller: screenController,
-          index: 1,
+          index: 3,
         ),
       ),
     );

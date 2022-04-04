@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/user_side/model/get_user_review_model/get_user_review_model.dart';
 import 'package:booking_management/user_side/model/user_business_details_model/user_business_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +27,7 @@ class BusinessDetailsScreenController extends GetxController{
   String address= "";
 
   int vendorId = Get.arguments;
+  List<Datum> reviewList = [];
   //Data ? businessDetailsList;
 
   @override
@@ -32,6 +35,7 @@ class BusinessDetailsScreenController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     businessDetails();
+    getUserReview();
   }
 
   businessDetails()async {
@@ -60,6 +64,33 @@ class BusinessDetailsScreenController extends GetxController{
 
       } else {
         log('Get All Business Else Else');
+      }
+    } catch(e) {
+      log('Error : $e');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  getUserReview()async{
+    isLoading(true);
+    String url = ApiUrl.getReviewApi + "?VendorId=$vendorId";
+    log('vendor Id: ${UserDetails.vendorId}');
+    log('Url : $url');
+    try{
+      http.Response response = await http.get(Uri.parse(url));
+
+      log('Response : ${response.body}');
+
+      GetUserReviewModel getReviewModel = GetUserReviewModel.fromJson(json.decode(response.body));
+      isStatus = getReviewModel.statusCode.obs;
+      log("status : $isStatus");
+
+      if(isStatus.value == 200){
+        reviewList = getReviewModel.data;
+        log('allReviewList : $reviewList');
+      } else {
+        log('Get All Review Else Else');
       }
     } catch(e) {
       log('Error : $e');

@@ -638,7 +638,7 @@ class ReviewModule extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 5,
+        itemCount: screenController.reviewList.length,
         itemBuilder: (context, index){
           return Container(
             margin: const EdgeInsets.only(bottom: 10),
@@ -655,39 +655,44 @@ class ReviewModule extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(AppImages.vendorImg, scale: 20,),
+                        //child: Image.network(screenController.reviewList[index].customer.image),
                       ),
                       const SizedBox(width: 10,),
 
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("Mr. John Doe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                          const SizedBox(height: 3,),
-                          RatingBar.builder(
-                            initialRating: 5,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemSize: 15,
-                            //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            onRatingUpdate: (rating) {
-                              if (kDebugMode) {
-                                print(rating);
-                              }
-                            },
-                          )
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(screenController.reviewList[index].customer.firstName + " " + screenController.reviewList[index].customer.lastName,
+                              maxLines: 1,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                            const SizedBox(height: 3,),
+                            RatingBar.builder(
+                              initialRating: 5,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: screenController.reviewList[index].ratting,
+                              itemSize: 15,
+                              //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (rating) {
+                                if (kDebugMode) {
+                                  print(rating);
+                                }
+                              },
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
                   const SizedBox(height: 10,),
 
-                  const Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry")
+                  Text(screenController.reviewList[index].description)
                 ],
               ),
             ),

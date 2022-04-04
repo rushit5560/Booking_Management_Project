@@ -9,18 +9,18 @@ import '../../controllers/user_sign_up_screen_controller/user_sign_up_screen_con
 
 UserSignUpScreenController screenController = Get.find<UserSignUpScreenController>();
 
-class FirstNameFieldModule extends StatelessWidget {
-  const FirstNameFieldModule({Key? key}) : super(key: key);
+class UserNameFieldModule extends StatelessWidget {
+  const UserNameFieldModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: screenController.nameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateFirstName(value!),
+      validator: (value) => FieldValidator().validateUserName(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
-        hintText: 'First Name',
+        hintText: 'User Name',
         context: context,
       ),
     );
@@ -123,15 +123,24 @@ class PasswordFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: screenController.passwordFieldController,
-      keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validatePassword(value!),
-      decoration: signUpFormFieldDecoration(
-        controller: screenController,
-        hintText: 'Password',
-        index: 1,
-        context: context,
+    /*return TextFormField(
+        controller: screenController.passwordFieldController,
+        keyboardType: TextInputType.text,
+        validator: (value) => FieldValidator().validatePassword(value!),
+        decoration: signUpFormFieldDecoration(
+          controller: screenController,
+          hintText: 'Create Password',
+          index: 1,
+          context: context,
+        ),
+    );*/
+    return Obx(
+          ()=> TextFormField(
+        controller: screenController.passwordFieldController,
+        keyboardType: TextInputType.text,
+        obscureText: screenController.isPasswordVisible.value,
+        validator: (value) => FieldValidator().validatePassword(value!),
+        decoration: signUpFormFieldDecoration(hintText: 'Password', index: 1, controller: screenController, context: context),
       ),
     );
   }
@@ -142,15 +151,37 @@ class CPasswordFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      //controller: screenController.cPasswordFieldController,
-      keyboardType: TextInputType.text,
-      //validator: (value) => FieldValidator().validateConfirmPassword(value!, screenController.passwordFieldController.text.trim()),
-      decoration: signUpFormFieldDecoration(
-        controller: screenController,
-        hintText: 'Confirm Password',
-        index: 1,
-        context: context,
+    return Obx(()=>
+        TextFormField(
+        controller: screenController.cPasswordFieldController,
+        keyboardType: TextInputType.text,
+          obscureText: screenController.isRePasswordVisible.value,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Confirm Password is Required";
+          } else if(value.length < 6){
+            return "Password must be at least 6 characters";
+          } else if(!value.contains(RegExp(r'[A-Z]'))){
+            return "Password must be at least one upper case letter";
+          } else if(!value.contains(RegExp(r"[a-z]"))){
+            return "Password must be at least one lower case letter";
+          } else if(!value.contains(RegExp(r"[0-9]"))){
+            return "Password must be at least one alphabetical letter";
+          } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+            return "Password must be at least one Special Character";
+          } else if(screenController.passwordFieldController.text != screenController.cPasswordFieldController.text){
+            return "Password and Confirm Password Should be Same";
+          }
+          else {
+            return null;
+          }
+        },
+        decoration: signUpFormFieldDecoration(
+          controller: screenController,
+          hintText: 'Re-enter Password',
+          index: 3,
+          context: context,
+        ),
       ),
     );
   }
@@ -238,13 +269,13 @@ class SignUpButtonModule extends StatelessWidget {
       onTap: () async {
         if(screenController.signUpFormKey.currentState!.validate()){
           await screenController.userSignUpFunction(
-              firstName: screenController.nameFieldController.text.trim(),
+              /*firstName: screenController.nameFieldController.text.trim(),
               lastName: screenController.lastNameFieldController.text.trim(),
               state: screenController.stateFieldController.text.trim(),
               city: screenController.cityFieldController.text.trim(),
             email: screenController.emailFieldController.text.trim(),
             password: screenController.passwordFieldController.text.trim(),
-            mobile: screenController.mobileFieldController.text.trim()
+            mobile: screenController.mobileFieldController.text.trim()*/
           );
         }
       },

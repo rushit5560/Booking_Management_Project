@@ -17,6 +17,7 @@ class SplashScreenController extends GetxController {
     UserDetails.isUserLoggedIn = prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
     UserDetails.userId = prefs.getString(sharedPreferenceData.userIdKey) ?? "";
     UserDetails.role = prefs.getString(sharedPreferenceData.roleKey) ?? "";
+    UserDetails.vendorId = prefs.getInt(sharedPreferenceData.vendorIdKey) ?? 0;
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     if(isLoggedIn == true) {
       //Get.offAll(()=> IndexScreen());

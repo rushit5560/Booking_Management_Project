@@ -23,7 +23,7 @@ class VendorHomeScreenController extends GetxController {
 
   pendingAppointMentList() async {
     isLoading(true);
-    String url = ApiUrl.vendorPendingAppointmentApi + "?VendorId=3";
+    String url = ApiUrl.vendorPendingAppointmentApi + "?VendorId=${UserDetails.vendorId}";
     log('Url : $url');
 
     try{

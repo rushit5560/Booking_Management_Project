@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/user_side/model/user_sign_up_model/user_sign_up_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +17,12 @@ class UserSignUpScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
+  RxBool isRePasswordVisible = true.obs;
   RxString selectedDate = ''.obs;
 
   File? file;
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   final TextEditingController nameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
@@ -27,7 +32,7 @@ class UserSignUpScreenController extends GetxController {
   final TextEditingController mobileFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   //final TextEditingController addressFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController passwordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  //final TextEditingController cPasswordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController cPasswordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   TextEditingController dobFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   //TextEditingController countryFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   TextEditingController stateFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
@@ -49,15 +54,14 @@ class UserSignUpScreenController extends GetxController {
     }
   }
 
-  userSignUpFunction(
-      {required String firstName,
+  userSignUpFunction(/*{required String firstName,
         required String lastName,
         required String state,
         required String city,
         required String email,
         required String password,
         required String mobile
-        }) async {
+        }*/) async {
     isLoading(true);
 
     String url = ApiUrl.userSignUpApi;
@@ -132,7 +136,7 @@ class UserSignUpScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.request}');
 
-      response.stream.transform(utf8.decoder).listen((value) {
+      response.stream.transform(utf8.decoder).listen((value)async {
         UserSignUpModel response1 = UserSignUpModel.fromJson(json.decode(value));
         log('response1 ::::::${response1.statusCode}');
         isStatus = response1.statusCode.obs;
@@ -140,6 +144,7 @@ class UserSignUpScreenController extends GetxController {
         log('success : ${response1.data}');
 
         if(isStatus.value == 200){
+          UserDetails.customerId = response1.data.id;
           Fluttertoast.showToast(msg: "${response1.message}");
           clearSignUpFieldsFunction();
 

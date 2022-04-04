@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
@@ -40,15 +41,21 @@ class SignInScreenController extends GetxController {
       SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
       isStatus = signInModel.statusCode.obs;
 
+      log("status: $isStatus");
+
       if(isStatus.value == 200) {
         //String userToken = signInModel.token;
         //print('userToken : $userToken');
        // await sharedPreferenceData.setUserLoginDetailsInPrefs(userToken: "$userToken");
        // await createUserWallet();
-        String? userId = signInModel.data.id;
-        String ? role = signInModel.role.name;
-        print("UserId: $userId");
-        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: userId, role: role);
+        String userId = signInModel.data.id;
+        String role = signInModel.role.name;
+
+        UserDetails.vendorId = signInModel.vendor.id;
+        log("vendorId: ${UserDetails.vendorId}");
+        UserDetails.customerId = signInModel.customer.id;
+        log("customerId: ${UserDetails.customerId}");
+        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: userId, role: role, vendorId: UserDetails.vendorId!, customerId: UserDetails.customerId!);
 
         if(signInModel.role.name == "Customer"){
           log('customer side');

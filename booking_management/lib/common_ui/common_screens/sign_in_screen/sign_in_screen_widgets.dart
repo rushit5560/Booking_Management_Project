@@ -49,18 +49,18 @@ class SignInButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-       // if(screenController.signInFormKey.currentState!.validate()){
+        //if(screenController.signInFormKey.currentState!.validate()){
           // if(screenController.emailFieldController.text == "user@gmail.com"){
           //   Get.offAll(()=> IndexScreen());
           // } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
           //   Get.offAll(()=> VendorIndexScreen());
           // }
-
+          //Get.offAll(()=> IndexScreen());
           await screenController.signInFunction(
             // userName: screenController.unameFieldController.text.trim(),
             // password: screenController.passwordFieldController.text.trim(),
           );
-       // }
+        //}
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:booking_management/user_side/screens/business_list_screen/business_list_screen.dart';
+import 'package:booking_management/user_side/screens/user_appointment_list_screen/user_appointment_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_notification_screen/user_notification_screen.dart';
 import 'package:booking_management/user_side/screens/user_settings_screen/user_settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class IndexScreen extends StatelessWidget {
     if (indexScreenController.menuIndex.value == 0) {
       return HomeScreen();
     } else if (indexScreenController.menuIndex.value == 1) {
-      return BusinessListScreen();
+      return UserAppointmentListScreen();
     } else if (indexScreenController.menuIndex.value == 2) {
       return const UserNotificationScreen();
     } else {

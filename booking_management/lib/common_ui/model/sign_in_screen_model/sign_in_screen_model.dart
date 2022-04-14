@@ -458,17 +458,17 @@ class Vendor {
 class Customer {
   Customer({
     required this.id,
-    required this.state,
-    required this.city,
+    // required this.state,
+    // required this.city,
     required this.email,
     required this.phoneNo,
-    required this.image,
+    //required this.image,
     required this.gender,
-    required this.about,
-    required this.lastVisit,
-    required this.firstName,
-    required this.lastName,
-    required this.faxNumber,
+    //required this.about,
+    //required this.lastVisit,
+    required this.userName,
+    //required this.lastName,
+    //required this.faxNumber,
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
@@ -480,17 +480,17 @@ class Customer {
   });
 
   int id;
-  String state;
-  String city;
+  // String state;
+  // String city;
   String email;
   String phoneNo;
-  String image;
+  //String image;
   String gender;
-  String about;
-  String lastVisit;
-  String firstName;
-  String lastName;
-  String faxNumber;
+  //String about;
+  //String lastVisit;
+  String userName;
+  //String lastName;
+  //String faxNumber;
   String dateOfBirth;
   bool isActive;
   String userId;
@@ -502,17 +502,17 @@ class Customer {
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
     id: json["id"] ?? 0,
-    state: json["state"] ?? "",
-    city: json["city"] ?? "",
+    //state: json["state"] ?? "",
+    //city: json["city"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    image: json["image"] ?? "",
+    //image: json["image"] ?? "",
     gender: json["gender"] ?? "",
-    about: json["about"] ?? "",
-    lastVisit: json["lastVisit"] ?? "",
-    firstName: json["firstName"] ?? "",
-    lastName: json["lastName"] ?? "",
-    faxNumber: json["faxNumber"] ?? "",
+    //about: json["about"] ?? "",
+    //lastVisit: json["lastVisit"] ?? "",
+    userName: json["userName"] ?? "",
+    //lastName: json["lastName"] ?? "",
+    //faxNumber: json["faxNumber"] ?? "",
     dateOfBirth: json["dateOfBirth"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
@@ -525,17 +525,17 @@ class Customer {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "state": state,
-    "city": city,
+    //"state": state,
+    //"city": city,
     "email": email,
     "phoneNo": phoneNo,
-    "image": image,
+    //"image": image,
     "gender": gender,
-    "about": about,
-    "lastVisit": lastVisit,
-    "firstName": firstName,
-    "lastName": lastName,
-    "faxNumber": faxNumber,
+    //"about": about,
+    //"lastVisit": lastVisit,
+    "userName": userName,
+    //"lastName": lastName,
+    //"faxNumber": faxNumber,
     "dateOfBirth": dateOfBirth,
     "isActive": isActive,
     "userId": userId,

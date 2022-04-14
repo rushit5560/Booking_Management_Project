@@ -24,7 +24,7 @@ class VendorProfileScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     VendorProfileDetailsModule(),
                     SizedBox(height: 20,),
                     DateScheduleModule(),

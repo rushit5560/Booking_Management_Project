@@ -32,24 +32,25 @@ class UserChangePasswordScreenController extends GetxController{
         "NewPassword" : "Admin@123",
         "Verifypassword" : "Admin@123"
       };*/
-      // Map<dynamic, dynamic> data = {
-      //   "UserName" : "demotesting0909",
-      //   "CurrentPassword" : "Admin@1234",
+      Map<String, dynamic> data = {
+        "UserName" : userNameController.text.trim(),
+        "CurrentPassword" : currentPasswordController.text.trim(),
+        "NewPassword" : newPasswordController.text.trim(),
+        "Verifypassword" : confirmPasswordController.text.trim()
+      };
+      // Map<String, dynamic> data = {
+      //   "UserName" : "demoVendor0909",
+      //   "CurrentPassword" : "Admin@123",
       //   "NewPassword" : "Admin@123",
       //   "Verifypassword" : "Admin@123"
       // };
-      Map<String, dynamic> data = {
-        "UserName" : "Demotesting0909",
-        "CurrentPassword" : "Admin@1234",
-        "NewPassword" : "Admin@1234",
-        "Verifypassword" : "Admin@1234"
-      };
 
       log('data : $data');
-      http.Response response = await http.post(Uri.parse(url),
-          body: jsonEncode(data));
+      //String data2 = data.toString();
+      //http.Response response = await http.post(Uri.parse(url), body: body);
 
-      // http.Response response = await http.post(Uri.parse(url), body: json.encode(data));
+       http.Response response = await http.post(Uri.parse(url), body: data);
+      log('Status Code : ${response.statusCode}');
       log('Response : ${response.body}');
 
       UserChangePasswordModel userChangePasswordModel = UserChangePasswordModel.fromJson(json.decode(response.body));
@@ -58,11 +59,12 @@ class UserChangePasswordScreenController extends GetxController{
       log("isSuccessStatus : $isSuccessStatus");
 
 
-      if(isSuccessStatus.value) {
-        Get.snackbar(userChangePasswordModel.message, '');
-      } else {
-        log('Change Password False False');
-      }
+       if(isSuccessStatus.value) {
+         print("success true");
+         Get.snackbar(userChangePasswordModel.message, '');
+       } else {
+         log('Change Password False False');
+       }
 
     } catch(e) {
       log('Change Password Error : $e');

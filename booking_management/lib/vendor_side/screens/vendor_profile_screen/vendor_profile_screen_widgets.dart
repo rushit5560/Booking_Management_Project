@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -5,12 +7,15 @@ import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_profile_screen_controller/vendor_profile_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 final screenController = Get.find<VendorProfileScreenController>();
 
 class VendorProfileDetailsModule extends StatelessWidget {
-  const VendorProfileDetailsModule({Key? key}) : super(key: key);
+  VendorProfileDetailsModule({Key? key}) : super(key: key);
+
+  final ImagePicker imagePicker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -67,19 +72,37 @@ class VendorProfileDetailsModule extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(AppImages.vendorImg, scale: 8,)),
 
-        Positioned(
-          bottom: -15,
-          child: Container(
-            height: 35, width: 35,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white
+           GestureDetector(
+            onTap: (){
+              openGallery();
+            },
+            child: Positioned(
+              bottom: -15,
+              child: Container(
+                height: 35, width: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white
+                ),
+                child: const Icon(Icons.edit),
+              ),
             ),
-            child: const Icon(Icons.edit),
           ),
-        ),
       ],
     );
+  }
+
+  void openGallery() async {
+    final image = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      //setState(() {
+        screenController.file = File(image.path);
+        print('Camera File Path : ${screenController.file}');
+        print('Camera Image Path : ${image.path}');
+        //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
+        //renameImage();
+      //});
+    } else {}
   }
 
   Widget nameTextField(){

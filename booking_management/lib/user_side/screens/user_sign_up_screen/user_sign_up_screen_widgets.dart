@@ -15,7 +15,7 @@ class UserNameFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.nameFieldController,
+      controller: screenController.userNameFieldController,
       keyboardType: TextInputType.text,
       validator: (value) => FieldValidator().validateUserName(value!),
       decoration: signUpFormFieldDecoration(

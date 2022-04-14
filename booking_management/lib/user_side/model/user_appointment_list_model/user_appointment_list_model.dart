@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final userBookingHistoryModel = userBookingHistoryModelFromJson(jsonString);
+//     final userAppointmentModel = userAppointmentModelFromJson(jsonString);
 
 import 'dart:convert';
 
-UserBookingHistoryModel userBookingHistoryModelFromJson(String str) => UserBookingHistoryModel.fromJson(json.decode(str));
+UserAppointmentModel userAppointmentModelFromJson(String str) => UserAppointmentModel.fromJson(json.decode(str));
 
-String userBookingHistoryModelToJson(UserBookingHistoryModel data) => json.encode(data.toJson());
+String userAppointmentModelToJson(UserAppointmentModel data) => json.encode(data.toJson());
 
-class UserBookingHistoryModel {
-  UserBookingHistoryModel({
+class UserAppointmentModel {
+  UserAppointmentModel({
     required this.statusCode,
     required this.success,
     required this.data,
@@ -19,7 +19,7 @@ class UserBookingHistoryModel {
   bool success;
   List<Datum> data;
 
-  factory UserBookingHistoryModel.fromJson(Map<String, dynamic> json) => UserBookingHistoryModel(
+  factory UserAppointmentModel.fromJson(Map<String, dynamic> json) => UserAppointmentModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -60,8 +60,6 @@ class Datum {
     required this.customerId,
     required this.status,
     required this.review,
-    required this.avaTime,
-    required this.bookingAvailability,
   });
 
   int id;
@@ -90,15 +88,12 @@ class Datum {
   int customerId;
   String status;
   String review;
-  String avaTime;
-  String bookingAvailability;
-
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"] ?? 0,
     name: json["name"] ?? "",
     categoryId: json["categoryId"] ?? 0,
-    categories: json["categories"] ?? "",//
+    categories: json["categories"] ?? "",
     mobileNo: json["mobileNo"] ?? "",
     description: json["description"] ?? "",
     capacity: json["capacity"] ?? "",
@@ -115,14 +110,12 @@ class Datum {
     modifiedOn: json["modifiedOn"] ?? "",
     applicationUserCreator: json["applicationUserCreator"] ?? "",
     applicationUserModifier: json["applicationUserModifier"] ?? "",
-    vendorBooking: VendorBooking.fromJson(json["vendorBooking"] ?? {}),
+    vendorBooking: VendorBooking.fromJson(json["vendorBooking"]),
     vendorId: json["vendorId"] ?? 0,
-    customerBooking: CustomerBooking.fromJson(json["customerBooking"] ?? {}),
+    customerBooking: CustomerBooking.fromJson(json["customerBooking"]),
     customerId: json["customerId"] ?? 0,
     status: json["status"] ?? "",
     review: json["review"] ?? "",
-    avaTime: json["avaTime"] ?? "",
-    bookingAvailability: json["bookingAvailability"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -152,25 +145,16 @@ class Datum {
     "customerId": customerId,
     "status": status,
     "review": review,
-    "avaTime": avaTime,
-    "bookingAvailability": bookingAvailability,
   };
 }
 
 class CustomerBooking {
   CustomerBooking({
     required this.id,
-    //required this.state,
-    //required this.city,
     required this.email,
     required this.phoneNo,
-    //required this.image,
     required this.gender,
-    //required this.about,
-    //required this.lastVisit,
     required this.userName,
-    //required this.lastName,
-    //required this.faxNumber,
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
@@ -182,17 +166,10 @@ class CustomerBooking {
   });
 
   int id;
-  // String state;
-  // String city;
   String email;
   String phoneNo;
-  //String image;
   String gender;
-  // String about;
-  // String lastVisit;
   String userName;
-  //String lastName;
-  //String faxNumber;
   DateTime dateOfBirth;
   bool isActive;
   String userId;
@@ -204,18 +181,11 @@ class CustomerBooking {
 
   factory CustomerBooking.fromJson(Map<String, dynamic> json) => CustomerBooking(
     id: json["id"] ?? 0,
-    // state: json["state"] ?? "",
-    // city: json["city"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    //image: json["image"] ?? "",
     gender: json["gender"] ?? "",
-    // about: json["about"] ?? "",
-    // lastVisit: json["lastVisit"] ?? "",
     userName: json["userName"] ?? "",
-    //lastName: json["lastName"] ?? "",
-    //faxNumber: json["faxNumber"] ?? "",
-    dateOfBirth: DateTime.parse(json["dateOfBirth"]),
+    dateOfBirth: DateTime.parse(json["dateOfBirth"] ?? DateTime.now()),
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     applicationUser: json["applicationUser"] ?? "",
@@ -227,17 +197,10 @@ class CustomerBooking {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    // "state": state,
-    // "city": city,
     "email": email,
     "phoneNo": phoneNo,
-    //"image": image,
     "gender": gender,
-    // "about": about,
-    // "lastVisit": lastVisit,
     "userName": userName,
-    //"lastName": lastName,
-    //"faxNumber": faxNumber,
     "dateOfBirth": dateOfBirth.toIso8601String(),
     "isActive": isActive,
     "userId": userId,
@@ -254,7 +217,6 @@ class VendorBooking {
     required this.id,
     required this.categories,
     required this.categoryId,
-    //required this.workingHours,
     required this.businessName,
     required this.businessLogo,
     required this.street,
@@ -263,11 +225,9 @@ class VendorBooking {
     required this.state,
     required this.country,
     required this.userName,
-    //required this.lastName,
     required this.email,
     required this.phoneNo,
     required this.address,
-    //required this.address2,
     required this.isActive,
     required this.userId,
     required this.vendorPortal,
@@ -289,7 +249,6 @@ class VendorBooking {
     required this.status,
     required this.category,
     required this.passwordHash,
-    //required this.businessId,
     required this.workingHoursStatus,
     required this.avilableTime,
   });
@@ -297,7 +256,6 @@ class VendorBooking {
   int id;
   String categories;
   int categoryId;
-  //String workingHours;
   String businessName;
   String businessLogo;
   String street;
@@ -306,11 +264,9 @@ class VendorBooking {
   String state;
   String country;
   String userName;
-  //String lastName;
   String email;
   String phoneNo;
   String address;
-  //String address2;
   bool isActive;
   String userId;
   bool vendorPortal;
@@ -321,7 +277,7 @@ class VendorBooking {
   bool resource;
   bool payment;
   bool confirmation;
-  DateTime vendorVerificationDate;
+  String vendorVerificationDate;
   String applicationUser;
   String modifiedBy;
   DateTime modifiedOn;
@@ -332,7 +288,6 @@ class VendorBooking {
   String status;
   String category;
   String passwordHash;
-  //String businessId;
   String workingHoursStatus;
   String avilableTime;
 
@@ -340,7 +295,6 @@ class VendorBooking {
     id: json["id"] ?? 0,
     categories: json["categories"] ?? "",
     categoryId: json["categoryId"] ?? 0,
-    //workingHours: json["workingHours"] ?? "",
     businessName: json["businessName"] ?? "",
     businessLogo: json["businessLogo"] ?? "",
     street: json["street"] ?? "",
@@ -349,11 +303,9 @@ class VendorBooking {
     state: json["state"] ?? "",
     country: json["country"] ?? "",
     userName: json["userName"] ?? "",
-    //lastName: json["lastName"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
     address: json["address"] ?? "",
-    //address2: json["address2"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     vendorPortal: json["vendorPortal"] ?? false,
@@ -364,7 +316,7 @@ class VendorBooking {
     resource: json["resource"] ?? false,
     payment: json["payment"] ?? false,
     confirmation: json["confirmation"] ?? false,
-    vendorVerificationDate: DateTime.parse(json["vendorVerificationDate"] ?? DateTime.now()),
+    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
     applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
@@ -375,7 +327,6 @@ class VendorBooking {
     status: json["status"] ?? "",
     category: json["category"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
-    //businessId: json["businessId"] ?? "",
     workingHoursStatus: json["workingHoursStatus"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
   );
@@ -384,7 +335,6 @@ class VendorBooking {
     "id": id,
     "categories": categories,
     "categoryId": categoryId,
-    //"workingHours": workingHours,
     "businessName": businessName,
     "businessLogo": businessLogo,
     "street": street,
@@ -393,11 +343,9 @@ class VendorBooking {
     "state": state,
     "country": country,
     "userName": userName,
-    //"lastName": lastName,
     "email": email,
     "phoneNo": phoneNo,
     "address": address,
-    //"address2": address2,
     "isActive": isActive,
     "userId": userId,
     "vendorPortal": vendorPortal,
@@ -408,7 +356,7 @@ class VendorBooking {
     "resource": resource,
     "payment": payment,
     "confirmation": confirmation,
-    "vendorVerificationDate": vendorVerificationDate.toIso8601String(),
+    "vendorVerificationDate": vendorVerificationDate,
     "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn.toIso8601String(),

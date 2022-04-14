@@ -155,7 +155,7 @@ class PendingAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(i) {
     return Text(
-      screenController.pendingList[i].customerBooking.firstName + " " + screenController.pendingList[i].customerBooking.lastName,
+      screenController.pendingList[i].customerBooking.userName,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,

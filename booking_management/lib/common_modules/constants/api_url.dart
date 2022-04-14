@@ -11,6 +11,8 @@ class ApiUrl {
   static const userBookingHistoryApi = apiMainPath + "Booking/APIBookingHistory";
   static const getReviewApi = apiMainPath + "Reviews/APIShowReview";
   static const userChangePasswordApi = apiMainPath + "ChangePassword/APIChangePassword";
+  static const userAppointmentListApi = apiMainPath + "CustomerDashboard/APICustomerAppointmentlist";
+  static const userAddReviewApi = apiMainPath + "Reviews/APIAddUpdateReview";
 
   // Vendor API
   static const vendorSignUpApi = apiMainPath + "Login/VendorRegister";

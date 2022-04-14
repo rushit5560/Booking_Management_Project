@@ -25,7 +25,7 @@ class UserSignUpScreenController extends GetxController {
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
-  final TextEditingController nameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController userNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController lastNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController genderFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController emailFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
@@ -108,19 +108,19 @@ class UserSignUpScreenController extends GetxController {
       // request.fields['DateOfBirth'] = "2001-12-01";
       // request.fields['IsActive'] = "true";
 
-      request.fields['FirstName'] = nameFieldController.text.trim();
-      request.fields['LastName'] = lastNameFieldController.text.trim();
-      request.fields['State'] = stateFieldController.text.trim();
-      request.fields['City'] = cityFieldController.text.trim();
+      request.fields['UserName'] = userNameFieldController.text.trim();
+      //request.fields['LastName'] = lastNameFieldController.text.trim();
+      //request.fields['State'] = stateFieldController.text.trim();
+      //request.fields['City'] = cityFieldController.text.trim();
       request.fields['Email'] = emailFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
-      request.fields['PhoneNo'] = mobileFieldController.text.trim();
-      request.fields['Gender'] = genderFieldController.text.trim();
-      request.fields['About'] = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
-      request.fields['LastVisit'] = "2001-12-01";
-      request.fields['FaxNumber'] = "20";
-      request.fields['DateOfBirth'] = "2001-12-01";
-      request.fields['IsActive'] = "true";
+      //request.fields['PhoneNo'] = mobileFieldController.text.trim();
+      //request.fields['Gender'] = genderFieldController.text.trim();
+      //request.fields['About'] = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+      //request.fields['LastVisit'] = "2001-12-01";
+      //request.fields['FaxNumber'] = "20";
+      //request.fields['DateOfBirth'] = "2001-12-01";
+      //request.fields['IsActive'] = "true";
 
       log('request.fields: ${request.fields}');
       log('request.files: ${request.files}');
@@ -178,11 +178,12 @@ class UserSignUpScreenController extends GetxController {
   }
 
   clearSignUpFieldsFunction() {
-    nameFieldController.clear();
+    userNameFieldController.clear();
     lastNameFieldController.clear();
     emailFieldController.clear();
     mobileFieldController.clear();
     passwordFieldController.clear();
+    cPasswordFieldController.clear();
     stateFieldController.clear();
     cityFieldController.clear();
     genderFieldController.clear();

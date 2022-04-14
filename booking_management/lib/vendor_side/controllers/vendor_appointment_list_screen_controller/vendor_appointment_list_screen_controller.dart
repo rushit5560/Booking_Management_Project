@@ -44,7 +44,7 @@ class VendorAppointmentListScreenController extends GetxController {
     try{
       http.Response response = await http.get(Uri.parse(url));
 
-      log('Response : ${response.body}');
+      log('All Appointment Response : ${response.body}');
 
       AllAppointmentListModel allAppointmentModel = AllAppointmentListModel.fromJson(json.decode(response.body));
       isStatus = allAppointmentModel.statusCode.obs;
@@ -52,7 +52,7 @@ class VendorAppointmentListScreenController extends GetxController {
 
       if(isStatus.value == 200){
         allAppointmentList = allAppointmentModel.data;
-        log('allBusinessList : $allAppointmentList');
+        log('allAppointmentList : $allAppointmentList');
       } else {
         log('Get All Business Else Else');
       }
@@ -133,7 +133,7 @@ class VendorAppointmentListScreenController extends GetxController {
 
       if(isStatus.value == 200){
         doneList = doneAppointmentModel.data;
-        log('allDoneList : $confirmList');
+        log('allDoneList : $doneList');
       } else {
         log('Get All Done Else Else');
       }

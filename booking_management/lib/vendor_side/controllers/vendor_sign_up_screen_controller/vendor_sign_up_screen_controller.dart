@@ -19,7 +19,7 @@ class VendorSignUpScreenController extends GetxController {
 
   RxString businessType = 'Business'.obs;
   GlobalKey<FormState> vendorSignUpFormKey = GlobalKey<FormState>();
-  final TextEditingController firstNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController userNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController lastNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController businessNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController emailFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
@@ -82,19 +82,19 @@ class VendorSignUpScreenController extends GetxController {
       // request.fields['DateOfBirth'] = "2001-12-01";
       // request.fields['IsActive'] = "true";
 
-      request.fields['FirstName'] = firstNameFieldController.text.trim();
-      request.fields['LastName'] = lastNameFieldController.text.trim();
+      request.fields['UserName'] = userNameFieldController.text.trim();
+      //request.fields['LastName'] = lastNameFieldController.text.trim();
       request.fields['Email'] = emailFieldController.text.trim();
-      request.fields['PhoneNo'] = mobileFieldController.text.trim();
-      request.fields['Address1'] = businessAddress1FieldController.text.trim();
-      request.fields['Address2'] = businessAddress2FieldController.text.trim();
-      request.fields['State'] = stateFieldController.text.trim();
-      request.fields['Country'] = countryFieldController.text.trim();
+      //request.fields['PhoneNo'] = mobileFieldController.text.trim();
+      //request.fields['Address1'] = businessAddress1FieldController.text.trim();
+      //request.fields['Address2'] = businessAddress2FieldController.text.trim();
+      //request.fields['State'] = stateFieldController.text.trim();
+      //request.fields['Country'] = countryFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
-      request.fields['Street'] = streetFieldController.text.trim();
-      request.fields['Suburb'] = subUrbFieldController.text.trim();
-      request.fields['Postcode'] = postCodeFieldController.text.trim();
-      request.fields['CategoryId'] = '1';
+      //request.fields['Street'] = streetFieldController.text.trim();
+      //request.fields['Suburb'] = subUrbFieldController.text.trim();
+      //request.fields['Postcode'] = postCodeFieldController.text.trim();
+      //request.fields['CategoryId'] = '1';
       request.fields['BusinessName'] = businessNameFieldController.text.trim();
       request.fields['BusinessId'] = businessIdFieldController.text.trim();
 
@@ -155,7 +155,7 @@ class VendorSignUpScreenController extends GetxController {
   }
 
   clearSignUpFieldsFunction() {
-    firstNameFieldController.clear();
+    userNameFieldController.clear();
     lastNameFieldController.clear();
     emailFieldController.clear();
     mobileFieldController.clear();
@@ -164,6 +164,7 @@ class VendorSignUpScreenController extends GetxController {
     stateFieldController.clear();
     countryFieldController.clear();
     passwordFieldController.clear();
+    cPasswordFieldController.clear();
     streetFieldController.clear();
     subUrbFieldController.clear();
     postCodeFieldController.clear();

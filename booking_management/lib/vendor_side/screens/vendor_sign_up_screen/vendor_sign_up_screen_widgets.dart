@@ -165,7 +165,7 @@ class UserNameModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: screenController.firstNameFieldController,
+      controller: screenController.userNameFieldController,
       keyboardType: TextInputType.text,
       validator: (value) => FieldValidator().validateUserName(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'User Name', controller: screenController),
@@ -388,8 +388,7 @@ class ConfirmPasswordFieldModule extends StatelessWidget {
             return "Password must be at least one Special Character";
           } else if(screenController.passwordFieldController.text != screenController.cPasswordFieldController.text){
             return "Password and Confirm Password Should be Same";
-          }
-          else {
+          } else {
             return null;
           }
         },

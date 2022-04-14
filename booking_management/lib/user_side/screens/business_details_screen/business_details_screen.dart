@@ -14,28 +14,32 @@ class BusinessDetailScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          alignment: Alignment.topLeft,
-          children: [
-               Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const ProfileModule(),
-                  const SizedBox(height: 20,),
-                  const TabViewModule(),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: Obx(()=>
-                      vendorDetailsScreenController.isOverviewSelected.value ?
-                      OverviewModule() :  const ReviewModule(),
-                    ),
-                  )
-                ],
-              ),
-            const BackArrow()
+            alignment: Alignment.topLeft,
+            children: [
+                 Obx(()=>
+                 vendorDetailsScreenController.isLoading.value ?
+                      const Center(child: CircularProgressIndicator()) :
+                    Column(
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ProfileModule(),
+                      const SizedBox(height: 20,),
+                      const TabViewModule(),
+                      const SizedBox(height: 20),
+                      Expanded(
+                        child: Obx(()=>
+                          vendorDetailsScreenController.isOverviewSelected.value ?
+                          OverviewModule() :  const ReviewModule(),
+                        ),
+                      )
+                    ],
+                ),
+                 ),
+              const BackArrow()
 
-          ],
+            ],
+          ),
         ),
-      ),
     );
   }
 }

@@ -99,7 +99,7 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.changePassword) {
-       Get.to(()=> UserChangePasswordScreen(), transition: Transition.rightToLeft);
+       //Get.to(()=> UserChangePasswordScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.logout) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);

@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'dart:math';
-
 UserSignUpModel userSignUpModelFromJson(String str) => UserSignUpModel.fromJson(json.decode(str));
 
 String userSignUpModelToJson(UserSignUpModel data) => json.encode(data.toJson());
@@ -31,9 +29,9 @@ class UserSignUpModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode.toString().isEmpty ? 0 : statusCode,
-    "success": success.toString().isEmpty ? false : success,
-    "message": message.isEmpty ? "": message,
+    "statusCode": statusCode,
+    "success": success,
+    "message": message,
     "data": data.toJson(),
   };
 }
@@ -41,17 +39,10 @@ class UserSignUpModel {
 class Data {
   Data({
     required this.id,
-    required this.state,
-    required this.city,
     required this.email,
     required this.phoneNo,
-    required this.image,
     required this.gender,
-    required this.about,
-    required this.lastVisit,
-    required this.firstName,
-    required this.lastName,
-    required this.faxNumber,
+    required this.userName,
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
@@ -63,17 +54,10 @@ class Data {
   });
 
   int id;
-  String state;
-  String city;
   String email;
   String phoneNo;
-  String image;
   String gender;
-  String about;
-  String lastVisit;
-  String firstName;
-  String lastName;
-  String faxNumber;
+  String userName;
   String dateOfBirth;
   bool isActive;
   String userId;
@@ -85,48 +69,34 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"] ?? 0,
-    state: json["state"] ?? "",
-    city: json["city"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    image: json["image"] ?? "",
     gender: json["gender"] ?? "",
-    about: json["about"] ?? "",
-    lastVisit: json["lastVisit"] ?? "",
-    firstName: json["firstName"] ?? "",
-    lastName: json["lastName"] ?? "",
-    faxNumber: json["faxNumber"] ?? "",
+    userName: json["userName"] ?? "",
     dateOfBirth: json["dateOfBirth"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     applicationUser: ApplicationUser.fromJson(json["applicationUser"] ?? {}),
-    modifiedBy: json["modifiedBy"]?? "",
-    modifiedOn: json["modifiedOn"]?? "",
-    applicationUserModifier: json["applicationUserModifier"]?? "",
-    passwordHash: json["passwordHash"]?? "",
+    modifiedBy: json["modifiedBy"] ?? "",
+    modifiedOn: json["modifiedOn"] ?? "",
+    applicationUserModifier: json["applicationUserModifier"] ?? "",
+    passwordHash: json["passwordHash"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id.toString().isEmpty ? 0: id,
-    "state": state.isEmpty ? "": state,
-    "city": city.isEmpty ? "" : city,
-    "email": email.isEmpty ? "" : email,
-    "phoneNo": phoneNo.isEmpty ? "" : phoneNo,
-    "image": image.isEmpty ? "" : image,
-    "gender": gender.isEmpty ? "" : gender,
-    "about": about.isEmpty ? "" : about,
-    "lastVisit": lastVisit,
-    "firstName": firstName.isEmpty ? "": firstName,
-    "lastName": lastName.isEmpty ? "": lastName,
-    "faxNumber": faxNumber.isEmpty ? "": faxNumber,
+    "id": id,
+    "email": email,
+    "phoneNo": phoneNo,
+    "gender": gender,
+    "userName": userName,
     "dateOfBirth": dateOfBirth,
-    "isActive": isActive.toString().isEmpty ? false : isActive,
-    "userId": userId.isEmpty ? "": userId,
+    "isActive": isActive,
+    "userId": userId,
     "applicationUser": applicationUser.toJson(),
-    "modifiedBy": modifiedBy.isEmpty ? "": modifiedBy,
-    "modifiedOn": modifiedOn.isEmpty ? "" : modifiedOn,
-    "applicationUserModifier": applicationUserModifier.isEmpty ? "": applicationUserModifier,
-    "passwordHash": passwordHash.isEmpty ? "": passwordHash,
+    "modifiedBy": modifiedBy,
+    "modifiedOn": modifiedOn,
+    "applicationUserModifier": applicationUserModifier,
+    "passwordHash": passwordHash,
   };
 }
 
@@ -176,9 +146,9 @@ class ApplicationUser {
     normalizedEmail: json["normalizedEmail"] ?? "",
     emailConfirmed: json["emailConfirmed"] ?? false,
     passwordHash: json["passwordHash"] ?? "",
-    securityStamp: json["securityStamp"]?? "",
+    securityStamp: json["securityStamp"] ?? "",
     concurrencyStamp: json["concurrencyStamp"] ?? "",
-    phoneNumber: json["phoneNumber"]?? "",
+    phoneNumber: json["phoneNumber"] ?? "",
     phoneNumberConfirmed: json["phoneNumberConfirmed"] ?? false,
     twoFactorEnabled: json["twoFactorEnabled"] ?? false,
     lockoutEnd: json["lockoutEnd"] ?? "",
@@ -187,21 +157,21 @@ class ApplicationUser {
   );
 
   Map<String, dynamic> toJson() => {
-    "frogotToken": frogotToken.isEmpty ? "": frogotToken,
-    "id": id.isEmpty ? "": id,
-    "userName": userName.isEmpty ? "": userName,
-    "normalizedUserName": normalizedUserName.isEmpty ? "": normalizedUserName,
-    "email": email.isEmpty ? "": email,
-    "normalizedEmail": normalizedEmail.isEmpty ? "": normalizedEmail,
-    "emailConfirmed": emailConfirmed.toString().isEmpty ? false : emailConfirmed,
-    "passwordHash": passwordHash.isEmpty ? "": passwordHash,
-    "securityStamp": securityStamp.isEmpty ? "": securityStamp,
-    "concurrencyStamp": concurrencyStamp.isEmpty ? "": concurrencyStamp,
-    "phoneNumber": phoneNumber.isEmpty ? "": phoneNumber,
-    "phoneNumberConfirmed": phoneNumberConfirmed.toString().isEmpty ?false : phoneNumberConfirmed,
-    "twoFactorEnabled": twoFactorEnabled.toString().isEmpty ? false: twoFactorEnabled,
-    "lockoutEnd": lockoutEnd.isEmpty ? "": lockoutEnd,
-    "lockoutEnabled": lockoutEnabled.toString().isEmpty ? false : lockoutEnabled,
-    "accessFailedCount": accessFailedCount.toString().isEmpty ? 0 : accessFailedCount,
+    "frogotToken": frogotToken,
+    "id": id,
+    "userName": userName,
+    "normalizedUserName": normalizedUserName,
+    "email": email,
+    "normalizedEmail": normalizedEmail,
+    "emailConfirmed": emailConfirmed,
+    "passwordHash": passwordHash,
+    "securityStamp": securityStamp,
+    "concurrencyStamp": concurrencyStamp,
+    "phoneNumber": phoneNumber,
+    "phoneNumberConfirmed": phoneNumberConfirmed,
+    "twoFactorEnabled": twoFactorEnabled,
+    "lockoutEnd": lockoutEnd,
+    "lockoutEnabled": lockoutEnabled,
+    "accessFailedCount": accessFailedCount,
   };
 }

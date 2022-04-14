@@ -107,17 +107,17 @@ class Datum {
 class Customer {
   Customer({
     required this.id,
-    required this.state,
-    required this.city,
+    //required this.state,
+    //required this.city,
     required this.email,
     required this.phoneNo,
-    required this.image,
+    //required this.image,
     required this.gender,
-    required this.about,
-    required this.lastVisit,
-    required this.firstName,
-    required this.lastName,
-    required this.faxNumber,
+    //required this.about,
+    //required this.lastVisit,
+    required this.userName,
+    //required this.lastName,
+    //required this.faxNumber,
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
@@ -129,17 +129,17 @@ class Customer {
   });
 
   int id;
-  String state;
-  String city;
+  // String state;
+  // String city;
   String email;
   String phoneNo;
-  String image;
+  //String image;
   String gender;
-  String about;
-  String lastVisit;
-  String firstName;
-  String lastName;
-  String faxNumber;
+  // String about;
+  // String lastVisit;
+  String userName;
+  //String lastName;
+  //String faxNumber;
   DateTime dateOfBirth;
   bool isActive;
   String userId;
@@ -151,17 +151,17 @@ class Customer {
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
     id: json["id"] ?? 0,
-    state: json["state"] ?? "",
-    city: json["city"] ?? "",
+    // state: json["state"] ?? "",
+    // city: json["city"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    image: json["image"] ?? "",
+   // image: json["image"] ?? "",
     gender: json["gender"] ?? "",
-    about: json["about"] ?? "",
-    lastVisit: json["lastVisit"] ?? "",
-    firstName: json["firstName"] ?? "",
-    lastName: json["lastName"] ?? "",
-    faxNumber: json["faxNumber"] ?? "",
+    // about: json["about"] ?? "",
+    // lastVisit: json["lastVisit"] ?? "",
+    userName: json["userName"] ?? "",
+    // lastName: json["lastName"] ?? "",
+    // faxNumber: json["faxNumber"] ?? "",
     dateOfBirth: DateTime.parse(json["dateOfBirth"] ?? DateTime.now()),
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
@@ -174,17 +174,17 @@ class Customer {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "state": state,
-    "city": city,
+    // "state": state,
+    // "city": city,
     "email": email,
     "phoneNo": phoneNo,
-    "image": image,
+    //"image": image,
     "gender": gender,
-    "about": about,
-    "lastVisit": lastVisit,
-    "firstName": firstName,
-    "lastName": lastName,
-    "faxNumber": faxNumber,
+    // "about": about,
+    // "lastVisit": lastVisit,
+    "userName": userName,
+    // "lastName": lastName,
+    // "faxNumber": faxNumber,
     "dateOfBirth": dateOfBirth.toIso8601String(),
     "isActive": isActive,
     "userId": userId,
@@ -201,7 +201,7 @@ class Vendor {
     required this.id,
     required this.categories,
     required this.categoryId,
-    required this.workingHours,
+    //required this.workingHours,
     required this.businessName,
     required this.businessLogo,
     required this.street,
@@ -209,28 +209,33 @@ class Vendor {
     required this.postcode,
     required this.state,
     required this.country,
-    required this.firstName,
-    required this.lastName,
+    required this.userName,
+    //required this.lastName,
     required this.email,
     required this.phoneNo,
-    required this.address1,
-    required this.address2,
+    required this.address,
+    //required this.address2,
     required this.isActive,
     required this.userId,
     required this.vendorPortal,
     required this.vendorVerification,
     required this.attachPhotoIndentification,
     required this.attachProofofAddress,
+    required this.businessId,
+    required this.resource,
+    required this.payment,
+    required this.confirmation,
+    required this.vendorVerificationDate,
     required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
     required this.applicationUserModifier,
     required this.review,
+    required this.rating,
     required this.vendorWorkingHours,
     required this.status,
     required this.category,
     required this.passwordHash,
-    required this.businessId,
     required this.workingHoursStatus,
     required this.avilableTime,
   });
@@ -238,7 +243,7 @@ class Vendor {
   int id;
   String categories;
   int categoryId;
-  String workingHours;
+  //String workingHours;
   String businessName;
   String businessLogo;
   String street;
@@ -246,28 +251,33 @@ class Vendor {
   String postcode;
   String state;
   String country;
-  String firstName;
-  String lastName;
+  String userName;
+  //String lastName;
   String email;
   String phoneNo;
-  String address1;
-  String address2;
+  String address;
+  //String address2;
   bool isActive;
   String userId;
   bool vendorPortal;
   bool vendorVerification;
   String attachPhotoIndentification;
   String attachProofofAddress;
+  String businessId;
+  bool resource;
+  bool payment;
+  bool confirmation;
+  DateTime vendorVerificationDate;
   String applicationUser;
   String modifiedBy;
   DateTime modifiedOn;
   String applicationUserModifier;
   String review;
+  String rating;
   String vendorWorkingHours;
   String status;
   String category;
   String passwordHash;
-  String businessId;
   String workingHoursStatus;
   String avilableTime;
 
@@ -275,7 +285,7 @@ class Vendor {
     id: json["id"] ?? 0,
     categories: json["categories"] ?? "",
     categoryId: json["categoryId"] ?? 0,
-    workingHours: json["workingHours"] ?? "",
+    //workingHours: json["workingHours"] ?? "",
     businessName: json["businessName"] ?? "",
     businessLogo: json["businessLogo"] ?? "",
     street: json["street"] ?? "",
@@ -283,28 +293,33 @@ class Vendor {
     postcode: json["postcode"] ?? "",
     state: json["state"] ?? "",
     country: json["country"] ?? "",
-    firstName: json["firstName"] ?? "",
-    lastName: json["lastName"] ?? "",
+    userName: json["userName"] ?? "",
+    //lastName: json["lastName"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    address1: json["address1"] ?? "",
-    address2: json["address2"] ?? "",
+    address: json["address"] ?? "",
+    //address2: json["address2"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     vendorPortal: json["vendorPortal"] ?? false,
     vendorVerification: json["vendorVerification"] ?? false,
     attachPhotoIndentification: json["attachPhotoIndentification"] ?? "",
     attachProofofAddress: json["attachProofofAddress"] ?? "",
+    businessId: json["businessId"] ?? "",
+    resource: json["resource"] ?? false,
+    payment: json["payment"] ?? false,
+    confirmation: json["confirmation"] ?? false,
+    vendorVerificationDate: DateTime.parse(json["vendorVerificationDate"] ?? DateTime.now()),
     applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
     applicationUserModifier: json["applicationUserModifier"] ?? "",
     review: json["review"] ?? "",
+    rating: json["rating"] ?? "",
     vendorWorkingHours: json["vendorWorkingHours"] ?? "",
     status: json["status"] ?? "",
     category: json["category"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
-    businessId: json["businessId"] ?? "",
     workingHoursStatus: json["workingHoursStatus"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
   );
@@ -313,7 +328,7 @@ class Vendor {
     "id": id,
     "categories": categories,
     "categoryId": categoryId,
-    "workingHours": workingHours,
+    //"workingHours": workingHours,
     "businessName": businessName,
     "businessLogo": businessLogo,
     "street": street,
@@ -321,28 +336,34 @@ class Vendor {
     "postcode": postcode,
     "state": state,
     "country": country,
-    "firstName": firstName,
-    "lastName": lastName,
+    "userName": userName,
+    //"lastName": lastName,
     "email": email,
     "phoneNo": phoneNo,
-    "address1": address1,
-    "address2": address2,
+    "address": address,
+    //"address2": address2,
     "isActive": isActive,
     "userId": userId,
     "vendorPortal": vendorPortal,
     "vendorVerification": vendorVerification,
     "attachPhotoIndentification": attachPhotoIndentification,
     "attachProofofAddress": attachProofofAddress,
+    "businessId": businessId,
+    "resource": resource,
+    "payment": payment,
+    "confirmation": confirmation,
+    "vendorVerificationDate": vendorVerificationDate.toIso8601String(),
     "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn.toIso8601String(),
     "applicationUserModifier": applicationUserModifier,
     "review": review,
+    "rating": rating,
     "vendorWorkingHours": vendorWorkingHours,
     "status": status,
     "category": category,
     "passwordHash": passwordHash,
-    "businessId": businessId,
+    //"businessId": businessId,
     "workingHoursStatus": workingHoursStatus,
     "avilableTime": avilableTime,
   };

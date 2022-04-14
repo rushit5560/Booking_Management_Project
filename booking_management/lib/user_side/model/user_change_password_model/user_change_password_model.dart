@@ -26,8 +26,8 @@ class UserChangePasswordModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "success": success,
-    "message": message,
+    "statusCode": statusCode.toString().isNotEmpty ? 0 : statusCode,
+    "success": success.toString().isNotEmpty ? false : success,
+    "message": message.isNotEmpty ? "" : message,
   };
 }

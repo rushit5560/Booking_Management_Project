@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/user_side/controllers/business_details_screen_controller/business_details_screen_controller.dart';
 import 'package:booking_management/user_side/model/user_business_details_model/user_business_details_model.dart';
 import 'package:booking_management/user_side/screens/user_checkout_screen/user_checkout_screen.dart';
@@ -56,6 +58,8 @@ class TabViewModule extends StatelessWidget {
             onTap: () {
               screenController.isOverviewSelected.value = true;
               screenController.isReviewSelected.value = false;
+              log('overview : ${screenController.isOverviewSelected.value}');
+              log('Review : ${screenController.isReviewSelected.value}');
             },
             child: Container(
               width: Get.width/4,
@@ -95,6 +99,8 @@ class TabViewModule extends StatelessWidget {
             onTap: () {
               screenController.isOverviewSelected.value = false;
               screenController.isReviewSelected.value = true;
+              log('Review : ${screenController.isReviewSelected.value}');
+              log('Overview : ${screenController.isOverviewSelected.value}');
             },
             child: Container(
               width: Get.width/4,
@@ -135,50 +141,56 @@ class TabViewModule extends StatelessWidget {
   }
 }
 
+
 class OverviewModule extends StatelessWidget {
   //OverviewModule ({Key? key}) : super(key: key);
-
   UserBusinessDetailsModel ? userBusinessDetailsModel;
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                vendorName(),
-                const SizedBox(height: 10,),
-                ratting(),
-                const SizedBox(height: 10,),
-                description(),
-                const SizedBox(height: 20,),
-                priceAndLocation(),
-                const SizedBox(height: 25,),
-                viewMapButtonModule(),
-                const SizedBox(height: 25,),
-                serviceDropDown(context),
-                //SizedBox(height: 25,),
-                //ReviewTextFieldAndButtonModule(),
-                const SizedBox(height: 40,),
-                resourcesList()
-                //bookAppointmentButtonModule()
-              ],
-            )
-        ),
+    return Obx(()=>
+    screenController.isLoading.value
+        ? Center(child: CircularProgressIndicator()):
+       SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      vendorName(),
+                      const SizedBox(height: 10,),
+                      ratting(),
+                      const SizedBox(height: 10,),
+                      description(),
+                      const SizedBox(height: 20,),
+                      priceAndLocation(),
+                      const SizedBox(height: 25,),
+                      viewMapButtonModule(),
+                      const SizedBox(height: 25,),
+                      serviceDropDown(context),
+                      //SizedBox(height: 25,),
+                      //ReviewTextFieldAndButtonModule(),
+                      const SizedBox(height: 40,),
+                      resourcesList()
+                      //bookAppointmentButtonModule()
+                    ],
+                  ),
+            ),
+      ),
     );
   }
 
   Widget vendorName(){
-    return Text(screenController.businessName.isNotEmpty ? screenController.businessName : "123",
-      style: TextStyle(color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold));
+    return Text(screenController.businessName.isNotEmpty ? screenController.businessName : "Abc",
+        style: const TextStyle(color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),
+    );
   }
 
   Widget ratting(){
     return Row(
       children: [
         Text(screenController.ratting.toString().isNotEmpty ? screenController.ratting.toString() : "4",
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
         const SizedBox(width: 4,),
         RatingBar.builder(
           initialRating: 5,
@@ -281,7 +293,7 @@ class OverviewModule extends StatelessWidget {
                  child: Text("Location -", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),)),
              Expanded(
                  flex: 3,
-                 child: Text(screenController.address.isNotEmpty ? screenController.address : "1156, Lorem Soc. simply dummy text",
+                 child: Text(screenController.address,
                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)))
            ],
          ),
@@ -359,6 +371,7 @@ class OverviewModule extends StatelessWidget {
                       style: TextStyle(color: AppColors.colorLightGrey),
                       iconEnabledColor: Colors.black,
                       items: <String>[
+                        //'Service'
                         'Daily Checkup',
                         'Daily Checkup1',
                         'Daily Checkup2'
@@ -526,7 +539,9 @@ class ReviewModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return screenController.isLoading.value ?
+        Center(child: CircularProgressIndicator()) :
+      SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: Column(
@@ -600,7 +615,9 @@ class ReviewModule extends StatelessWidget {
             flex: 1,
             child: GestureDetector(
               onTap: () {
-                if(screenController.reviewFormKey.currentState!.validate()){}
+               // if(screenController.reviewFormKey.currentState!.validate()){
+                  screenController.addReview();
+               // }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -663,7 +680,7 @@ class ReviewModule extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(screenController.reviewList[index].customer.firstName + " " + screenController.reviewList[index].customer.lastName,
+                            Text(screenController.reviewList[index].customer.userName,
                               maxLines: 1,
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                             const SizedBox(height: 3,),

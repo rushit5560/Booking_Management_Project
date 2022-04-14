@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/user_side/controllers/user_booking_history_screen_controller/user_booking_history_screen_controller.dart';
@@ -13,8 +15,9 @@ class BookingHistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenController.historyList.isEmpty ?
-    const Center(child: Text("No Booking History"),) :
+    log('length: ${screenController.historyList.length}');
+    return /*screenController.historyList.isEmpty ?
+    const Center(child: Text("No Booking History")) :*/
       ListView.builder(
         shrinkWrap: true,
         physics: const AlwaysScrollableScrollPhysics(),
@@ -55,7 +58,7 @@ class BookingHistoryList extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(screenController.historyList[index].customerBooking.firstName + " " + screenController.historyList[index].customerBooking.lastName,
+                            Text(screenController.historyList[index].customerBooking.userName ,
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
                             SizedBox(height: 7,),
                             Row(

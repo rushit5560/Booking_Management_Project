@@ -93,9 +93,14 @@ class SearchLocationTextField extends StatelessWidget {
   }
 }
 
-class PopularSearchAndDistance extends StatelessWidget {
+class PopularSearchAndDistance extends StatefulWidget {
   const PopularSearchAndDistance({Key? key}) : super(key: key);
 
+  @override
+  State<PopularSearchAndDistance> createState() => _PopularSearchAndDistanceState();
+}
+
+class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -103,6 +108,7 @@ class PopularSearchAndDistance extends StatelessWidget {
         Expanded(
           child: Container(
             height: 45,
+            //padding: EdgeInsets.all(3),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
@@ -115,14 +121,20 @@ class PopularSearchAndDistance extends StatelessWidget {
               ],
               //border: Border.all(color: AppColors.colorLightGrey)
             ),
-            child: Center(child: Text("Popular Search")),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(width: 17,),
+                Expanded(child: Text("Popular Search", style: TextStyle(fontSize: 12),)),
+
+              ],
+            ),
           ),
         ),
         SizedBox(width: 10,),
         Expanded(
-          child: Obx(()=>
-              Container(
-                padding: const EdgeInsets.only(right: 10),
+          child:Container(
+                padding: const EdgeInsets.only(right: 3),
                 height: 45,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -144,10 +156,10 @@ class PopularSearchAndDistance extends StatelessWidget {
                       )),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
-                      icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                      icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
                       isExpanded: true,
                       focusColor: Colors.white,
-                      value: screenController.distance.value,
+                      value: screenController.distance,
                       //elevation: 5,
                       style: TextStyle(color: AppColors.colorLightGrey),
                       iconEnabledColor: Colors.black,
@@ -166,21 +178,22 @@ class PopularSearchAndDistance extends StatelessWidget {
                           ),
                         );
                       }).toList(),
-                      hint: Text("Distance", style: TextStyle(color: Colors.black),),
+                      hint: Text("Distance", style: TextStyle(color: Colors.black, fontSize: 11),),
                       onChanged: (newValue) {
-                        screenController.distance.value = newValue!;
+                        setState(() {
+                          screenController.distance = newValue!;
+                        });
+
                       },
                     ),
                   ),
                 ),
               ),
-          )
-        ),
+          ),
         SizedBox(width: 10,),
         Expanded(
-            child: Obx(()=>
-                Container(
-                  padding: const EdgeInsets.only(right: 10),
+            child:Container(
+                  padding: const EdgeInsets.only(right: 3),
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -202,10 +215,10 @@ class PopularSearchAndDistance extends StatelessWidget {
                         )),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3,),
                         isExpanded: true,
                         focusColor: Colors.white,
-                        value: screenController.date.value,
+                        value: screenController.date,
                         //elevation: 5,
                         style: TextStyle(color: AppColors.colorLightGrey),
                         iconEnabledColor: Colors.black,
@@ -224,21 +237,22 @@ class PopularSearchAndDistance extends StatelessWidget {
                             ),
                           );
                         }).toList(),
-                        hint: Text("Date", style: TextStyle(color: Colors.black),),
+                        hint: Text("Date", style: TextStyle(color: Colors.black, fontSize: 11),),
                         onChanged: (newValue) {
-                          screenController.date.value = newValue!;
+                          setState(() {
+                            screenController.date = newValue!;
+                          });
+
                         },
                       ),
                     ),
                   ),
                 ),
-            )
         ),
-        SizedBox(width: 10,),
+        const SizedBox(width: 10,),
         Expanded(
-            child: Obx(()=>
-                Container(
-                  padding: const EdgeInsets.only(right: 10),
+            child:Container(
+                  padding: const EdgeInsets.only(right: 3),
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -260,10 +274,10 @@ class PopularSearchAndDistance extends StatelessWidget {
                         )),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
+                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
                         isExpanded: true,
                         focusColor: Colors.white,
-                        value: screenController.ratting.value,
+                        value: screenController.ratting,
                         //elevation: 5,
                         style: TextStyle(color: AppColors.colorLightGrey),
                         iconEnabledColor: Colors.black,
@@ -282,15 +296,17 @@ class PopularSearchAndDistance extends StatelessWidget {
                             ),
                           );
                         }).toList(),
-                        hint: Text("Ratting", style: TextStyle(color: Colors.black),),
+                        hint: Text("Ratting", style: TextStyle(color: Colors.black, fontSize: 11),),
                         onChanged: (newValue) {
-                          screenController.ratting.value = newValue!;
+                          setState(() {
+                            screenController.ratting = newValue!;
+                          });
+
                         },
                       ),
                     ),
                   ),
                 ),
-            )
         ),
       ],
     );

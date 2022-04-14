@@ -37,7 +37,6 @@ class Datum {
     required this.id,
     required this.categories,
     required this.categoryId,
-    required this.workingHours,
     required this.businessName,
     required this.businessLogo,
     required this.street,
@@ -49,14 +48,17 @@ class Datum {
     required this.lastName,
     required this.email,
     required this.phoneNo,
-    required this.address1,
-    required this.address2,
+    required this.address,
     required this.isActive,
     required this.userId,
     required this.vendorPortal,
     required this.vendorVerification,
     required this.attachPhotoIndentification,
     required this.attachProofofAddress,
+    required this.businessId,
+    required this.resource,
+    required this.payment,
+    required this.confirmation,
     required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
@@ -66,7 +68,7 @@ class Datum {
     required this.status,
     required this.category,
     required this.passwordHash,
-    required this.businessId,
+
     required this.workingHoursStatus,
     required this.avilableTime,
   });
@@ -74,7 +76,7 @@ class Datum {
   int id;
   String categories;
   int categoryId;
-  String workingHours;
+  //String workingHours;
   String businessName;
   String businessLogo;
   String street;
@@ -86,14 +88,18 @@ class Datum {
   String lastName;
   String email;
   String phoneNo;
-  String address1;
-  String address2;
+  String address;
+  //String address2;
   bool isActive;
   String userId;
   bool vendorPortal;
   bool vendorVerification;
   String attachPhotoIndentification;
   String attachProofofAddress;
+  String businessId;//add
+  bool resource;//add
+  bool payment;//add
+  bool confirmation;//add
   String applicationUser;
   String modifiedBy;
   String modifiedOn;
@@ -103,7 +109,6 @@ class Datum {
   bool status;
   String category;
   String passwordHash;
-  String businessId;
   bool workingHoursStatus;
   String avilableTime;
 
@@ -111,7 +116,7 @@ class Datum {
     id: json["id"] ?? 0,
     categories: json["categories"] ?? "",
     categoryId: json["categoryId"] ?? 0,
-    workingHours: json["workingHours"] ?? "",
+    //workingHours: json["workingHours"] ?? "",
     businessName: json["businessName"] ?? "",
     businessLogo: json["businessLogo"] ?? "",
     street: json["street"] ?? "",
@@ -123,24 +128,27 @@ class Datum {
     lastName: json["lastName"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    address1: json["address1"] ?? "",
-    address2: json["address2"] ?? "",
+    address: json["address"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     vendorPortal: json["vendorPortal"] ?? false,
     vendorVerification: json["vendorVerification"] ?? false,
     attachPhotoIndentification: json["attachPhotoIndentification"] ?? "",
     attachProofofAddress: json["attachProofofAddress"] ?? "",
+    businessId: json["businessId"] ?? "",
+    resource: json["resource"] ?? false,
+    payment: json["payment"] ?? false,
+    confirmation: json["confirmation"] ?? false,
     applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: /*DateTime.parse(json["modifiedOn"]),*/json["modifiedOn"] ?? "",
+    modifiedOn: /*DateTime.parse(json["modifiedOn"] ?? DateTime.now())*/json["modifiedOn"] ?? "",
     applicationUserModifier: json["applicationUserModifier"] ?? "",
     review: json["review"] ?? "",
     vendorWorkingHours: json["vendorWorkingHours"] ?? 0,
     status: json["status"] ?? false,
     category: json["category"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
-    businessId: json["businessId"] ?? "",
+
     workingHoursStatus: json["workingHoursStatus"] ?? false,
     avilableTime: json["avilableTime"] ?? "",
   );
@@ -149,7 +157,7 @@ class Datum {
     "id": id.toString().isEmpty ? 0 : id,
     "categories": categories.isEmpty ? "": categories,
     "categoryId": categoryId.toString().isEmpty ? 0 : categoryId,
-    "workingHours": workingHours.isEmpty ? "": workingHours,
+    //"workingHours": workingHours.isEmpty ? "": workingHours,
     "businessName": businessName.isEmpty ? "": businessName,
     "businessLogo": businessLogo.isEmpty ? "": businessLogo,
     "street": street.isEmpty ? "": street,
@@ -161,14 +169,18 @@ class Datum {
     "lastName": lastName.isEmpty ? "": lastName,
     "email": email.isEmpty ? "": email,
     "phoneNo": phoneNo.isEmpty ? "": phoneNo,
-    "address1": address1.isEmpty ? "": address1,
-    "address2": address2.isEmpty ? "": address2,
+    "address1": address.isEmpty ? "": address,
+    //"address2": address2.isEmpty ? "": address2,
     "isActive": isActive.toString().isEmpty ? false : isActive,
     "userId": userId.isEmpty ? "": userId,
     "vendorPortal": vendorPortal.toString().isEmpty ? false : vendorPortal,
     "vendorVerification": vendorVerification.toString().isEmpty ? false : vendorVerification,
     "attachPhotoIndentification": attachPhotoIndentification.isEmpty ? "": attachPhotoIndentification,
     "attachProofofAddress": attachProofofAddress.isEmpty ? "": attachProofofAddress,
+    "businessId": businessId.isEmpty ? "": businessId,
+    "resource": resource,
+    "payment": payment,
+    "confirmation": confirmation,
     "applicationUser": applicationUser.isEmpty ? "": applicationUser,
     "modifiedBy": modifiedBy.isEmpty ? "": modifiedBy,
     "modifiedOn": modifiedOn,
@@ -178,7 +190,6 @@ class Datum {
     "status": status.toString().isEmpty ? false : status,
     "category": category.isEmpty ? "": category,
     "passwordHash": passwordHash.isEmpty ? "": passwordHash,
-    "businessId": businessId.isEmpty ? "": businessId,
     "workingHoursStatus": workingHoursStatus.toString().isEmpty ? false : workingHoursStatus,
     "avilableTime": avilableTime.isEmpty ? "": avilableTime,
   };

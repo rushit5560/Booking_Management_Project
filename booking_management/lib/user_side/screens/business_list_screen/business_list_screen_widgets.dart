@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/user_side/controllers/business_list_screen_controller/business_list_screen_controller.dart';
 import 'package:booking_management/user_side/model/user_business_list_model/user_business_list_model.dart';
 import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -14,9 +15,9 @@ import '../../../common_modules/constants/app_images.dart';
 BusinessListScreenController screenController = Get.find<BusinessListScreenController>();
 
 class BusinessList extends StatelessWidget {
-   BusinessList({Key? key}) : super(key: key);
+   const BusinessList({Key? key}) : super(key: key);
 
-  Datum ? datum1;
+  //Datum ? datum1;
   @override
   Widget build(BuildContext context) {
     return screenController.businessList.isEmpty
@@ -164,7 +165,13 @@ class BusinessListModule extends StatelessWidget {
                       flex: 1,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(ApiUrl.apiMainPath + datum.businessLogo),
+                        //child: datum.businessLogo.isNotEmpty ? Image.network(ApiUrl.apiMainPath + datum.businessLogo) : Image.asset(AppImages.vendorImg),
+                        child: CachedNetworkImage(
+                          imageUrl: ApiUrl.apiMainPath + datum.businessLogo,
+                            placeholder: (context, url) {
+                            return Image.asset(AppImages.vendorImg);},
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 15,),
@@ -205,11 +212,11 @@ class BusinessListModule extends StatelessWidget {
                               )
                             ],
                           ),
-                          const SizedBox(height: 3,),
-                          Text(datum.address1, maxLines: 1,style: TextStyle(fontSize: 12)),
-                          const SizedBox(height: 3,),
+                          // const SizedBox(height: 3,),
+                          // Text(datum.address1, maxLines: 1,style: TextStyle(fontSize: 12)),
+                          const SizedBox(height: 5,),
                           //SizedBox(width: 4,),
-                          Text("Location - " +  datum.address2, maxLines: 1,
+                          Text("Location - " +  datum.address, maxLines: 1,
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),),
                         ],
                       ),

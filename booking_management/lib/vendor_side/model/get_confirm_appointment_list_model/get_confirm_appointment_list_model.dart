@@ -60,6 +60,8 @@ class Confirm {
     required this.customerId,
     required this.status,
     required this.review,
+    required this.avaTime,
+    required this.bookingAvailability,
   });
 
   int id;
@@ -88,6 +90,8 @@ class Confirm {
   int customerId;
   String status;
   String review;
+  String avaTime;
+  String bookingAvailability;
 
   factory Confirm.fromJson(Map<String, dynamic> json) => Confirm(
     id: json["id"] ?? 0,
@@ -116,6 +120,8 @@ class Confirm {
     customerId: json["customerId"] ?? 0,
     status: json["status"] ?? "",
     review: json["review"] ?? "",
+    avaTime: json["avaTime"] ?? "",
+    bookingAvailability: json["bookingAvailability"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -145,6 +151,8 @@ class Confirm {
     "customerId": customerId,
     "status": status,
     "review": review,
+    "avaTime": avaTime,
+    "bookingAvailability": bookingAvailability,
   };
 }
 
@@ -215,17 +223,18 @@ class Categories {
 class CustomerBooking {
   CustomerBooking({
     required this.id,
-    required this.state,
-    required this.city,
+    //required this.state,
+    //required this.city,
     required this.email,
     required this.phoneNo,
-    required this.image,
+    //required this.image,
     required this.gender,
-    required this.about,
-    required this.lastVisit,
-    required this.firstName,
-    required this.lastName,
-    required this.faxNumber,
+    required this.userName,
+    // required this.about,
+    // required this.lastVisit,
+    // required this.firstName,
+    // required this.lastName,
+    // required this.faxNumber,
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
@@ -237,17 +246,18 @@ class CustomerBooking {
   });
 
   int id;
-  String state;
-  String city;
+  //String state;
+  //String city;
   String email;
   String phoneNo;
-  String image;
+  //String image;
   String gender;
-  String about;
-  String lastVisit;
-  String firstName;
-  String lastName;
-  String faxNumber;
+  String userName;
+  // String about;
+  // String lastVisit;
+  // String firstName;
+  // String lastName;
+  // String faxNumber;
   DateTime dateOfBirth;
   bool isActive;
   String userId;
@@ -259,17 +269,18 @@ class CustomerBooking {
 
   factory CustomerBooking.fromJson(Map<String, dynamic> json) => CustomerBooking(
     id: json["id"] ?? 0,
-    state: json["state"] ?? "",
-    city: json["city"] ?? "",
+    // state: json["state"] ?? "",
+    // city: json["city"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    image: json["image"] ?? "",
+    //image: json["image"] ?? "",
     gender: json["gender"] ?? "",
-    about: json["about"] ?? "",
-    lastVisit: json["lastVisit"] ?? "",
-    firstName: json["firstName"] ?? "",
-    lastName: json["lastName"] ?? "",
-    faxNumber: json["faxNumber"] ?? "",
+    userName: json["userName"] ?? "",
+    // about: json["about"] ?? "",
+    // lastVisit: json["lastVisit"] ?? "",
+    // firstName: json["firstName"] ?? "",
+    // lastName: json["lastName"] ?? "",
+    // faxNumber: json["faxNumber"] ?? "",
     dateOfBirth: DateTime.parse(json["dateOfBirth"] ?? DateTime.now()),
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
@@ -282,17 +293,18 @@ class CustomerBooking {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "state": state,
-    "city": city,
+    // "state": state,
+    // "city": city,
     "email": email,
     "phoneNo": phoneNo,
-    "image": image,
+    //"image": image,
     "gender": gender,
-    "about": about,
-    "lastVisit": lastVisit,
-    "firstName": firstName,
-    "lastName": lastName,
-    "faxNumber": faxNumber,
+    "userName": userName,
+    //"about": about,
+    // "lastVisit": lastVisit,
+    // "firstName": firstName,
+    // "lastName": lastName,
+    // "faxNumber": faxNumber,
     "dateOfBirth": dateOfBirth.toIso8601String(),
     "isActive": isActive,
     "userId": userId,

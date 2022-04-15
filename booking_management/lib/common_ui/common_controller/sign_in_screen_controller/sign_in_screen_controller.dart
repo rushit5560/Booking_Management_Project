@@ -64,7 +64,7 @@ class SignInScreenController extends GetxController {
           Get.snackbar(signInModel.message, '');
           Get.offAll(() => IndexScreen());
 
-          Get.snackbar(signInModel.message, '');
+          //Get.snackbar(signInModel.message, '');
         } else if(signInModel.role.name == "Vendor"){
           log('Vendor side');
           Get.snackbar(signInModel.message, '');

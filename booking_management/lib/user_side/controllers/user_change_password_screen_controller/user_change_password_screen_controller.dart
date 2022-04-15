@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 
 class UserChangePasswordScreenController extends GetxController{
   RxBool isPasswordVisible = true.obs;
+  RxBool isNewPasswordVisible = true.obs;
+  RxBool isConfirmPasswordVisible = true.obs;
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isSuccessStatus = false.obs;

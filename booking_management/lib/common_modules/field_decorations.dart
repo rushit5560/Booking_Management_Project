@@ -164,6 +164,34 @@ InputDecoration changePasswordFormFieldDecoration(
               size: 20,
               color: Colors.grey),
         ),
+      ): index == 2
+              ? Obx(
+                () => GestureDetector(
+              onTap: () {
+                controller.isNewPasswordVisible.value =
+                !controller.isNewPasswordVisible.value;
+              },
+              child: Icon(
+                  controller.isNewPasswordVisible.value
+                      ? Icons.visibility_off_rounded
+                      : Icons.visibility_rounded,
+                  size: 20,
+                  color: Colors.grey),
+            ),
+          ) :index == 3
+          ? Obx(
+            () => GestureDetector(
+          onTap: () {
+            controller.isConfirmPasswordVisible.value =
+            !controller.isConfirmPasswordVisible.value;
+          },
+          child: Icon(
+              controller.isConfirmPasswordVisible.value
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded,
+              size: 20,
+              color: Colors.grey),
+        ),
       )
           : null);
 }

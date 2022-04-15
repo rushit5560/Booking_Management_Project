@@ -85,6 +85,7 @@ class SettingScreenSingleItemModule extends StatelessWidget {
     } else if (userSettingScreenOption == UserSettingScreenOption.logOut) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);
+      Get.snackbar('You Have Successfully Logout', '');
     }
   }
 }

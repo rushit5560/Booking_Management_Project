@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_appointment_list_screen_controller/user_appointment_list_screen_controller.dart';
 import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
+import 'package:booking_management/user_side/screens/extra/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -373,9 +374,10 @@ class AllAppointmentListModule extends StatelessWidget {
           onTap: (){
             log("id: ${datum.vendorId}");
             Get.to(() => BusinessDetailScreen(), arguments: datum.vendorId);
+            //Get.to(() => DetailsScreen());
           },
           child: Container(
-            margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+            margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [

@@ -25,11 +25,14 @@ class CurrentPasswordTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: screenController.currentPasswordController,
-      keyboardType: TextInputType.visiblePassword,
-      validator: (value) => FieldValidator().validateCurrentPassword(value!),
-      decoration: changePasswordFormFieldDecoration(hintText: 'Current Password', controller: screenController,index: 1, context: context,),
+    return Obx(()=>
+       TextFormField(
+        controller: screenController.currentPasswordController,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: screenController.isPasswordVisible.value,
+        validator: (value) => FieldValidator().validateCurrentPassword(value!),
+        decoration: changePasswordFormFieldDecoration(hintText: 'Current Password', controller: screenController,index: 1, context: context,),
+      ),
     );
   }
 }
@@ -39,11 +42,14 @@ class NewPasswordTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: screenController.newPasswordController,
-      keyboardType: TextInputType.visiblePassword,
-      validator: (value) => FieldValidator().validateNewPassword(value!),
-      decoration: changePasswordFormFieldDecoration(hintText: 'New Password', controller: screenController, context: context),
+    return Obx(()=>
+       TextFormField(
+        controller: screenController.newPasswordController,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: screenController.isNewPasswordVisible.value,
+        validator: (value) => FieldValidator().validateNewPassword(value!),
+        decoration: changePasswordFormFieldDecoration(hintText: 'New Password', controller: screenController,index: 2, context: context),
+      ),
     );
   }
 }
@@ -53,11 +59,14 @@ class ConfirmPasswordTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: screenController.confirmPasswordController,
-      keyboardType: TextInputType.visiblePassword,
-      validator: (value) => FieldValidator().validateConfirmPassword(value!),
-      decoration: changePasswordFormFieldDecoration(hintText: 'Confirm Password', controller: screenController, context: context),
+    return Obx(()=>
+        TextFormField(
+        controller: screenController.confirmPasswordController,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: screenController.isConfirmPasswordVisible.value,
+        validator: (value) => FieldValidator().validateConfirmPassword(value!),
+        decoration: changePasswordFormFieldDecoration(hintText: 'Confirm Password', controller: screenController, index:3, context: context),
+      ),
     );
   }
 }

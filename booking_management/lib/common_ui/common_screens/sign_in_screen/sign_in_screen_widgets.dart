@@ -9,10 +9,11 @@ import '../../../user_side/screens/user_sign_up_screen/user_sign_up_screen.dart'
 import '../../common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
 
 
-SignInScreenController screenController = Get.find<SignInScreenController>();
+
 
 class EmailFieldModule extends StatelessWidget {
-  const EmailFieldModule({Key? key}) : super(key: key);
+  EmailFieldModule({Key? key}) : super(key: key);
+  SignInScreenController screenController = Get.find<SignInScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,8 @@ class EmailFieldModule extends StatelessWidget {
 }
 
 class PasswordFieldModule extends StatelessWidget {
-  const PasswordFieldModule({Key? key}) : super(key: key);
-
+  PasswordFieldModule({Key? key}) : super(key: key);
+  SignInScreenController screenController = Get.find<SignInScreenController>();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -43,13 +44,13 @@ class PasswordFieldModule extends StatelessWidget {
 }
 
 class SignInButtonModule extends StatelessWidget {
-  const SignInButtonModule({Key? key}) : super(key: key);
-
+  SignInButtonModule({Key? key}) : super(key: key);
+  SignInScreenController screenController = Get.find<SignInScreenController>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-        //if(screenController.signInFormKey.currentState!.validate()){
+        if(screenController.signInFormKey.currentState!.validate()){
           // if(screenController.emailFieldController.text == "user@gmail.com"){
           //   Get.offAll(()=> IndexScreen());
           // } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
@@ -60,7 +61,7 @@ class SignInButtonModule extends StatelessWidget {
             // userName: screenController.unameFieldController.text.trim(),
             // password: screenController.passwordFieldController.text.trim(),
           );
-        //}
+        }
       },
       child: Container(
         decoration: BoxDecoration(

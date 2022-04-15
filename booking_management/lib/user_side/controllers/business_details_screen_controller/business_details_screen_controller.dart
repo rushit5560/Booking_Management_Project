@@ -30,7 +30,6 @@ class BusinessDetailsScreenController extends GetxController{
   int vendorId = Get.arguments;
   List<Datum> reviewList = [];
   //Data ? businessDetailsList;
-
   @override
   void onInit() {
     // TODO: implement onInit
@@ -64,6 +63,7 @@ class BusinessDetailsScreenController extends GetxController{
         address = userBusinessDetailsModel.data.vendorBooking.address;
         log('mobile: $mobileNo');
         log('address: $address');
+        log('businessName: $businessName');
         //log('allBusinessList : $pendingList');
 
       } else {

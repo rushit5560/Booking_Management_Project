@@ -14,7 +14,7 @@ import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/field_validation.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
 
-BusinessDetailsScreenController screenController = Get.find<BusinessDetailsScreenController>();
+
 
 class ProfileModule extends StatelessWidget {
   const ProfileModule({Key? key}) : super(key: key);
@@ -45,9 +45,9 @@ class BackArrow extends StatelessWidget {
 }
 
 class TabViewModule extends StatelessWidget {
-  const TabViewModule({Key? key}) : super(key: key);
+  TabViewModule({Key? key}) : super(key: key);
 
-
+  BusinessDetailsScreenController screenController = Get.find<BusinessDetailsScreenController>();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -143,14 +143,18 @@ class TabViewModule extends StatelessWidget {
 
 
 class OverviewModule extends StatelessWidget {
-  //OverviewModule ({Key? key}) : super(key: key);
-  UserBusinessDetailsModel ? userBusinessDetailsModel;
 
+  OverviewModule({Key? key}) : super(key: key);
+  BusinessDetailsScreenController screenController = Get.find<BusinessDetailsScreenController>();
   @override
   Widget build(BuildContext context) {
+    log('overview1: ${screenController.isOverviewSelected.value}');
+    log('review1: ${screenController.isReviewSelected.value}');
     return Obx(()=>
-    screenController.isLoading.value
-        ? Center(child: CircularProgressIndicator()):
+    screenController.isLoading.value ?
+    const Center(child: CircularProgressIndicator()) :
+      /*screenController.businessName.isEmpty ?
+      Center(child: Text("Null")):*/
        SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -176,8 +180,8 @@ class OverviewModule extends StatelessWidget {
                     ],
                   ),
             ),
-      ),
-    );
+      //)
+    ) );
   }
 
   Widget vendorName(){
@@ -535,24 +539,30 @@ class OverviewModule extends StatelessWidget {
 }
 
 class ReviewModule extends StatelessWidget {
-  const ReviewModule({Key? key}) : super(key: key);
-
+  ReviewModule({Key? key}) : super(key: key);
+  BusinessDetailsScreenController screenController = Get.find<BusinessDetailsScreenController>();
   @override
   Widget build(BuildContext context) {
-    return screenController.isLoading.value ?
-        Center(child: CircularProgressIndicator()) :
-      SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ratting(),
-            const SizedBox(height: 20,),
-            reviewTextFieldAndButtonModule(),
-            const SizedBox(height: 20,),
-            showReviewList()
-          ],
+    log('overview1: ${screenController.isOverviewSelected.value}');
+    log('review1: ${screenController.isReviewSelected.value}');
+    return Obx(()=>
+      screenController.isLoading.value ?
+       const Center(child: CircularProgressIndicator()) :
+      /*screenController.reviewList.isEmpty ?
+      Center(child: Center(child: Text("Review is Empty"))):*/
+        SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ratting(),
+              const SizedBox(height: 20,),
+              reviewTextFieldAndButtonModule(),
+              const SizedBox(height: 20,),
+              showReviewList()
+            ],
+          ),
         ),
       ),
     );

@@ -25,17 +25,17 @@ class ProfileDetailsModule extends StatelessWidget {
             const SizedBox(height: 15,),
             emailTextField(),
             const SizedBox(height: 15,),
-            addressTextField(),
+            // addressTextField(),
             const SizedBox(height: 15,),
             mobileTextField(),
             const SizedBox(height: 15,),
             dateOfBirthTextField(context),
             const SizedBox(height: 15,),
-            cityTextField(),
+            // cityTextField(),
             const SizedBox(height: 15,),
-            stateTextField(),
+            // stateTextField(),
             const SizedBox(height: 15,),
-            countryTextField(),
+            // countryTextField(),
             const SizedBox(height: 15,),
             saveButtonModule()
           ],
@@ -58,6 +58,7 @@ class ProfileDetailsModule extends StatelessWidget {
     }
   }
 
+  /// Profile
   Widget profile(){
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -78,6 +79,7 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
+  /// ame Field
   Widget nameTextField(){
     return Row(
       children: [
@@ -148,6 +150,7 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
+  /// Email Field
   Widget emailTextField(){
     return Row(
       children: [
@@ -218,7 +221,8 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
-  Widget addressTextField(){
+  /// Address Field
+  /*Widget addressTextField(){
     return Row(
       children: [
         const Expanded(
@@ -287,8 +291,9 @@ class ProfileDetailsModule extends StatelessWidget {
         )
       ],
     );
-  }
+  }*/
 
+  /// Mobile Number
   Widget mobileTextField(){
     return Row(
       children: [
@@ -359,6 +364,7 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
+  /// DOB Field
   Widget dateOfBirthTextField(context){
     return Row(
       children: [
@@ -415,7 +421,8 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
-  Widget cityTextField(){
+  /// City
+  /*Widget cityTextField(){
     return Row(
       children: [
         const Expanded(
@@ -483,9 +490,10 @@ class ProfileDetailsModule extends StatelessWidget {
         )
       ],
     );
-  }
+  }*/
 
-  Widget stateTextField(){
+  /// State
+  /*Widget stateTextField(){
     return Row(
       children: [
         const Expanded(
@@ -553,9 +561,10 @@ class ProfileDetailsModule extends StatelessWidget {
         )
       ],
     );
-  }
+  }*/
 
-  Widget countryTextField(){
+  /// Country
+  /*Widget countryTextField(){
     return Row(
       children: [
         const Expanded(
@@ -623,8 +632,9 @@ class ProfileDetailsModule extends StatelessWidget {
         )
       ],
     );
-  }
+  }*/
 
+  /// Save Button
   Widget saveButtonModule(){
     return GestureDetector(
       onTap: () {

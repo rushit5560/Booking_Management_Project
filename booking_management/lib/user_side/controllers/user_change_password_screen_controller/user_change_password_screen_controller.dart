@@ -34,7 +34,7 @@ class UserChangePasswordScreenController extends GetxController{
         "NewPassword" : "Admin@123",
         "Verifypassword" : "Admin@123"
       };*/
-      Map<String, dynamic> data = {
+      Map data = {
         "UserName" : userNameController.text.trim(),
         "CurrentPassword" : currentPasswordController.text.trim(),
         "NewPassword" : newPasswordController.text.trim(),
@@ -48,10 +48,12 @@ class UserChangePasswordScreenController extends GetxController{
       // };
 
       log('data : $data');
+      var body1 = jsonEncode(data);
+      log('body : $body1');
       //String data2 = data.toString();
       //http.Response response = await http.post(Uri.parse(url), body: body);
 
-       http.Response response = await http.post(Uri.parse(url), body: data);
+      http.Response response = await http.post(Uri.parse(url), body: body1);
       log('Status Code : ${response.statusCode}');
       log('Response : ${response.body}');
 
@@ -60,14 +62,12 @@ class UserChangePasswordScreenController extends GetxController{
       isSuccessStatus = userChangePasswordModel.success.obs;
       log("isSuccessStatus : $isSuccessStatus");
 
-
-       if(isSuccessStatus.value) {
+      if(isSuccessStatus.value) {
          print("success true");
          Get.snackbar(userChangePasswordModel.message, '');
        } else {
          log('Change Password False False');
        }
-
     } catch(e) {
       log('Change Password Error : $e');
     } finally {

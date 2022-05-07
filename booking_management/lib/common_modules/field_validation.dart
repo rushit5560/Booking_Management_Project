@@ -42,6 +42,13 @@ class FieldValidator {
     return null;
   }
 
+  String? validateBusinessId(String value) {
+    if (value.isEmpty) {
+      return 'Business ID is Required';
+    }
+    return null;
+  }
+
   String? validateBusinessName(String value) {
     if (value.isEmpty) {
       return 'Business Name is Required';

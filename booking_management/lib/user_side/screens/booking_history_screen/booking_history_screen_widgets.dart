@@ -58,7 +58,7 @@ class BookingHistoryList extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(screenController.historyList[index].customerBooking.userName ,
+                            Text(screenController.historyList[index].name ,
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
                             SizedBox(height: 7,),
                             Row(
@@ -67,7 +67,7 @@ class BookingHistoryList extends StatelessWidget {
                                   children: [
                                     Image.asset(AppImages.calenderImg),
                                     SizedBox(width: 5,),
-                                    Text(screenController.historyList[index].customerBooking.dateOfBirth.toString(), style: TextStyle(fontSize: 12),)
+                                    Text(screenController.historyList[index].vendorBooking.vendorVerificationDate.toString(), style: TextStyle(fontSize: 12),)
                                   ],
                                 ),
                                 /*SizedBox(width: 10,),
@@ -81,7 +81,7 @@ class BookingHistoryList extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 7,),
-                            Text("Status - " + screenController.historyList[index].status, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
+                            Text("Status - " + screenController.historyList[index].vendorBooking.status, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
                           ],
                         )
                       ],

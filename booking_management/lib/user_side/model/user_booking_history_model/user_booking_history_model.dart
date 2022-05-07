@@ -40,13 +40,15 @@ class Datum {
     required this.categories,
     required this.mobileNo,
     required this.description,
+    // required this.shortDescription,
+    // required this.longDescription,
     required this.capacity,
     required this.volume,
     required this.isReceivedPayment,
     required this.price,
     required this.isMoreDetails,
     required this.timeDuration,
-    required this.appointmentDate,
+    //required this.appointmentDate,
     required this.isActive,
     required this.createdBy,
     required this.createdOn,
@@ -56,7 +58,7 @@ class Datum {
     required this.applicationUserModifier,
     required this.vendorBooking,
     required this.vendorId,
-    required this.customerBooking,
+    //required this.customerBooking,
     required this.customerId,
     required this.status,
     required this.review,
@@ -70,13 +72,15 @@ class Datum {
   String categories;
   String mobileNo;
   String description;
+  // String shortDescription;
+  // String longDescription;
   String capacity;
   String volume;
   bool isReceivedPayment;
   double price;
   bool isMoreDetails;
   int timeDuration;
-  DateTime appointmentDate;
+  //DateTime appointmentDate;
   bool isActive;
   String createdBy;
   String createdOn;
@@ -86,7 +90,7 @@ class Datum {
   String applicationUserModifier;
   VendorBooking vendorBooking;
   int vendorId;
-  CustomerBooking customerBooking;
+  //CustomerBooking customerBooking;
   int customerId;
   String status;
   String review;
@@ -101,13 +105,15 @@ class Datum {
     categories: json["categories"] ?? "",//
     mobileNo: json["mobileNo"] ?? "",
     description: json["description"] ?? "",
+    // shortDescription: json["shortDescription"] ?? "",
+    // longDescription: json["longDescription"] ?? "",
     capacity: json["capacity"] ?? "",
     volume: json["volume"] ?? "",
     isReceivedPayment: json["isReceivedPayment"] ?? false,
     price: json["price"] ?? 0.0,
     isMoreDetails: json["isMoreDetails"] ?? false,
     timeDuration: json["timeDuration"] ?? 0,
-    appointmentDate: DateTime.parse(json["appointmentDate"] ?? DateTime.now()),
+    //appointmentDate: DateTime.parse(json["appointmentDate"] ?? DateTime.now()),
     isActive: json["isActive"] ?? false,
     createdBy: json["createdBy"] ?? "",
     createdOn: json["createdOn"] ?? "",
@@ -117,7 +123,7 @@ class Datum {
     applicationUserModifier: json["applicationUserModifier"] ?? "",
     vendorBooking: VendorBooking.fromJson(json["vendorBooking"] ?? {}),
     vendorId: json["vendorId"] ?? 0,
-    customerBooking: CustomerBooking.fromJson(json["customerBooking"] ?? {}),
+    //customerBooking: CustomerBooking.fromJson(json["customerBooking"] ?? {}),
     customerId: json["customerId"] ?? 0,
     status: json["status"] ?? "",
     review: json["review"] ?? "",
@@ -132,13 +138,15 @@ class Datum {
     "categories": categories,
     "mobileNo": mobileNo,
     "description": description,
+    // "shortDescription": shortDescription,
+    // "longDescription": longDescription,
     "capacity": capacity,
     "volume": volume,
     "isReceivedPayment": isReceivedPayment,
     "price": price,
     "isMoreDetails": isMoreDetails,
     "timeDuration": timeDuration,
-    "appointmentDate": appointmentDate.toIso8601String(),
+    //"appointmentDate": appointmentDate.toIso8601String(),
     "isActive": isActive,
     "createdBy": createdBy,
     "createdOn": createdOn,
@@ -148,7 +156,7 @@ class Datum {
     "applicationUserModifier": applicationUserModifier,
     "vendorBooking": vendorBooking.toJson(),
     "vendorId": vendorId,
-    "customerBooking": customerBooking.toJson(),
+    //"customerBooking": customerBooking.toJson(),
     "customerId": customerId,
     "status": status,
     "review": review,
@@ -157,7 +165,7 @@ class Datum {
   };
 }
 
-class CustomerBooking {
+/*class CustomerBooking {
   CustomerBooking({
     required this.id,
     //required this.state,
@@ -247,7 +255,7 @@ class CustomerBooking {
     "applicationUserModifier": applicationUserModifier,
     "passwordHash": passwordHash,
   };
-}
+}*/
 
 class VendorBooking {
   VendorBooking({
@@ -321,7 +329,7 @@ class VendorBooking {
   bool resource;
   bool payment;
   bool confirmation;
-  DateTime vendorVerificationDate;
+  String vendorVerificationDate;
   String applicationUser;
   String modifiedBy;
   DateTime modifiedOn;
@@ -364,7 +372,7 @@ class VendorBooking {
     resource: json["resource"] ?? false,
     payment: json["payment"] ?? false,
     confirmation: json["confirmation"] ?? false,
-    vendorVerificationDate: DateTime.parse(json["vendorVerificationDate"] ?? DateTime.now()),
+    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
     applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
@@ -408,7 +416,7 @@ class VendorBooking {
     "resource": resource,
     "payment": payment,
     "confirmation": confirmation,
-    "vendorVerificationDate": vendorVerificationDate.toIso8601String(),
+    "vendorVerificationDate": vendorVerificationDate,
     "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn.toIso8601String(),

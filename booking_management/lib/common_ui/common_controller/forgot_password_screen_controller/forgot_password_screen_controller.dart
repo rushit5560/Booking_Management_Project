@@ -124,11 +124,11 @@ class ForgotPasswordScreenController extends GetxController {
         Get.snackbar('Forgot Password Successfully.', '');
         emailFieldController.clear();
       } else {
-        print('Forgot Password False False');
+        log('Forgot Password False False');
       }
 
     } catch(e) {
-      print('Forgot Password Error : $e');
+      log('Forgot Password Error : $e');
     } finally {
       isLoading(false);
     }

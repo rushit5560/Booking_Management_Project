@@ -242,7 +242,7 @@ class CustomerBooking {
   String phoneNo;
   String gender;
   String userName;
-  DateTime dateOfBirth;
+  String dateOfBirth;
   bool isActive;
   String userId;
   String applicationUser;
@@ -257,7 +257,7 @@ class CustomerBooking {
     phoneNo: json["phoneNo"] ?? "",
     gender: json["gender"] ?? "",
     userName: json["userName"] ?? "",
-    dateOfBirth: DateTime.parse(json["dateOfBirth"] ?? DateTime.now()),
+    dateOfBirth:json["dateOfBirth"] ??  "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     applicationUser: json["applicationUser"] ?? "",
@@ -273,7 +273,7 @@ class CustomerBooking {
     "phoneNo": phoneNo,
     "gender": gender,
     "userName": userName,
-    "dateOfBirth": dateOfBirth.toIso8601String(),
+    "dateOfBirth": dateOfBirth,
     "isActive": isActive,
     "userId": userId,
     "applicationUser": applicationUser,

@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'dart:ffi';
+//import 'dart:ffi';
 
 PendingAppointmentListModel pendingAppointmentListModelFromJson(String str) => PendingAppointmentListModel.fromJson(json.decode(str));
 

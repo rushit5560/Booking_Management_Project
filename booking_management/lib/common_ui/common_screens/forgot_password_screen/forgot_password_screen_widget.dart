@@ -6,10 +6,12 @@ import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
 import '../../common_controller/forgot_password_screen_controller/forgot_password_screen_controller.dart';
 
-ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
+
 
 class ForgotPasswordScreenEmailFieldModule extends StatelessWidget {
-  const ForgotPasswordScreenEmailFieldModule({Key? key}) : super(key: key);
+  ForgotPasswordScreenEmailFieldModule({Key? key}) : super(key: key);
+  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +25,18 @@ class ForgotPasswordScreenEmailFieldModule extends StatelessWidget {
 }
 
 class SendCodeButtonModule extends StatelessWidget {
-  const SendCodeButtonModule({Key? key}) : super(key: key);
+  SendCodeButtonModule({Key? key}) : super(key: key);
+  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //if(screenController.forgotPasswordFormKey.currentState!.validate()){
+        if(screenController.forgotPasswordFormKey.currentState!.validate()){
           screenController.forgotPasswordFunction(
             email: screenController.emailFieldController.text.trim()
           );
-        //}
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -63,7 +66,9 @@ class SendCodeButtonModule extends StatelessWidget {
 }
 
 class CodeTextFieldModule extends StatelessWidget {
-  const CodeTextFieldModule({Key? key}) : super(key: key);
+  CodeTextFieldModule({Key? key}) : super(key: key);
+
+  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
 
   static const int pinLength = 5;
 
@@ -122,7 +127,8 @@ class CodeTextFieldModule extends StatelessWidget {
 }
 
 class ForgotPasswordScreenSubmitButtonModule extends StatelessWidget {
-  const ForgotPasswordScreenSubmitButtonModule({Key? key}) : super(key: key);
+  ForgotPasswordScreenSubmitButtonModule({Key? key}) : super(key: key);
+  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {

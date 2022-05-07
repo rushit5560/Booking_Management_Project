@@ -170,7 +170,7 @@ class CustomerBooking {
   String phoneNo;
   String gender;
   String userName;
-  DateTime dateOfBirth;
+  String dateOfBirth;
   bool isActive;
   String userId;
   String applicationUser;
@@ -185,7 +185,7 @@ class CustomerBooking {
     phoneNo: json["phoneNo"] ?? "",
     gender: json["gender"] ?? "",
     userName: json["userName"] ?? "",
-    dateOfBirth: DateTime.parse(json["dateOfBirth"] ?? DateTime.now()),
+    dateOfBirth: json["dateOfBirth"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     applicationUser: json["applicationUser"] ?? "",
@@ -201,7 +201,7 @@ class CustomerBooking {
     "phoneNo": phoneNo,
     "gender": gender,
     "userName": userName,
-    "dateOfBirth": dateOfBirth.toIso8601String(),
+    "dateOfBirth": dateOfBirth,
     "isActive": isActive,
     "userId": userId,
     "applicationUser": applicationUser,
@@ -277,7 +277,7 @@ class VendorBooking {
   bool resource;
   bool payment;
   bool confirmation;
-  String vendorVerificationDate;
+  DateTime vendorVerificationDate;
   String applicationUser;
   String modifiedBy;
   DateTime modifiedOn;
@@ -316,7 +316,7 @@ class VendorBooking {
     resource: json["resource"] ?? false,
     payment: json["payment"] ?? false,
     confirmation: json["confirmation"] ?? false,
-    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
+    vendorVerificationDate: DateTime.parse(json["vendorVerificationDate"] ?? DateTime.now()),
     applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
@@ -356,7 +356,7 @@ class VendorBooking {
     "resource": resource,
     "payment": payment,
     "confirmation": confirmation,
-    "vendorVerificationDate": vendorVerificationDate,
+    "vendorVerificationDate": vendorVerificationDate.toIso8601String(),
     "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn.toIso8601String(),

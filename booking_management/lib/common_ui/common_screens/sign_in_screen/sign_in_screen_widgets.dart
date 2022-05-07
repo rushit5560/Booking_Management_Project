@@ -34,7 +34,7 @@ class PasswordFieldModule extends StatelessWidget {
     return Obx(
       ()=> TextFormField(
         controller: screenController.passwordFieldController,
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.visiblePassword,
         obscureText: screenController.isPasswordVisible.value,
         validator: (value) => FieldValidator().validatePassword(value!),
         decoration: signInFormFieldDecoration(hintText: 'Password', index: 1, controller: screenController),

@@ -474,7 +474,7 @@ class AllAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.userAppointmentList[i].customerBooking.dateOfBirth.toString(),
+          screenController.userAppointmentList[i].appointmentDate.toString(),
           style: const TextStyle(fontSize: 9),
         ),
 

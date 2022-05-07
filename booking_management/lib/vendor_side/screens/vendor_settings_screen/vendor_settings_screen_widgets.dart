@@ -1,10 +1,14 @@
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_change_password_screen/user_change_password_screen.dart';
+import 'package:booking_management/vendor_side/screens/business_document_screen/business_document_screen.dart';
+import 'package:booking_management/vendor_side/screens/customer_review_screen/customer_review_screen.dart';
+import 'package:booking_management/vendor_side/screens/my_customer_screen/my_customer_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_chat_list_screen/vendor_chat_list_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_profile_screen/vendor_profile_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_resources_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_services_screen/vendor_services_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_plan_screen/vendor_subscription_plan_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +85,8 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
   }) {
     if (vendorSettingScreenOption == VendorSettingScreenOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorSettingScreenOption.myCustomer) {
+      Get.to(()=> const MyCustomerScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.chat) {
        Get.to(()=> const VendorChatListScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
@@ -91,6 +97,16 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.resources) {
       Get.to(()=> const VendorResourcesScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption ==
+        VendorSettingScreenOption.services) {
+      Get.to(()=> const VendorServicesScreen(), transition: Transition.rightToLeft);
+     } else if (vendorSettingScreenOption ==
+        VendorSettingScreenOption.businessDocument) {
+      Get.to(()=> const BusinessDocumentScreen(), transition: Transition.rightToLeft);
+    }
+    else if (vendorSettingScreenOption ==
+        VendorSettingScreenOption.review) {
+      Get.to(()=> const CustomerReviewScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.subscription) {
       Get.to(() => const VendorSubscriptionPlanScreen(),

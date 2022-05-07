@@ -61,7 +61,7 @@ class PendingListTextModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: const [
         Text(
-          'Pending Appointment List',
+          'Today Appointment List',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -74,15 +74,15 @@ class PendingListTextModule extends StatelessWidget {
 }
 
 
-class PendingAppointmentListModule extends StatelessWidget {
-  const PendingAppointmentListModule({Key? key}) : super(key: key);
+class TodayAppointmentListModule extends StatelessWidget {
+  const TodayAppointmentListModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return screenController.pendingList.isEmpty ?
-     const Center(child: Text("No Pending Appointment List"),) :
+    return /*screenController.pendingList.isEmpty ?
+     const Center(child: Text("No Today Appointment List"),) :*/
     ListView.builder(
-      itemCount: screenController.pendingList.length,
+      itemCount: 5,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i){
@@ -103,7 +103,7 @@ class PendingAppointmentListModule extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                flex: 68,
+                //flex: 68,
                 child: Row(
                   children: [
                     _userImageModule(i),
@@ -128,16 +128,7 @@ class PendingAppointmentListModule extends StatelessWidget {
 
               const SizedBox(width: 5),
 
-              Expanded(
-                flex: 32,
-                  child: Row(
-                    children: [
-                      _viewButton(),
-                      const SizedBox(width: 10),
-                      _confirmButton(),
-                    ],
-                  ),
-              ),
+              _viewButton(),
             ],
           ).commonAllSidePadding(10),
         );
@@ -154,9 +145,9 @@ class PendingAppointmentListModule extends StatelessWidget {
   }
 
   Widget _userNameModule(i) {
-    return Text(
-      screenController.pendingList[i].customerBooking.userName,
-      style: const TextStyle(
+    return const Text(
+      "Lorem Ipsum",
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
       ),
@@ -174,7 +165,7 @@ class PendingAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.pendingList[i].appointmentDate.toString(),
+          "23-5-2022 12:22:34",
           style: const TextStyle(fontSize: 9),
         ),
 
@@ -196,9 +187,9 @@ class PendingAppointmentListModule extends StatelessWidget {
   }
 
   Widget _statusModule(i) {
-    return Text(
-      "Status - " + screenController.pendingList[i].status,
-      style: const TextStyle(
+    return const Text(
+      "Status - Pending",
+      style: TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.bold,
       ),

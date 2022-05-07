@@ -16,10 +16,14 @@ enum UserSettingScreenOption {
 
 enum VendorSettingScreenOption {
    profile,
+   myCustomer,
    chat,
    bookingHistory,
    wallet,
    resources,
+   services,
+   businessDocument,
+   review,
    subscription,
    help,
    changePassword,

@@ -36,6 +36,13 @@ class VendorSettingsScreen extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     VendorSettingScreenSingleItemModule(
+                      img: AppImages.profileImg,
+                      name: 'My Customer',
+                      vendorSettingScreenOption: VendorSettingScreenOption.myCustomer,
+                    ),
+                    const SizedBox(height: 20),
+
+                    VendorSettingScreenSingleItemModule(
                       img: AppImages.chatImg,
                       name: 'Chat',
                       vendorSettingScreenOption: VendorSettingScreenOption.chat,
@@ -60,6 +67,27 @@ class VendorSettingsScreen extends StatelessWidget {
                       img: AppImages.resourcesImg,
                       name: 'Resources',
                       vendorSettingScreenOption: VendorSettingScreenOption.resources,
+                    ),
+                    const SizedBox(height: 20),
+
+                    VendorSettingScreenSingleItemModule(
+                      img: AppImages.resourcesImg,
+                      name: 'Services',
+                      vendorSettingScreenOption: VendorSettingScreenOption.services,
+                    ),
+                    const SizedBox(height: 20),
+
+                    VendorSettingScreenSingleItemModule(
+                      img: AppImages.resourcesImg,
+                      name: 'Business Document',
+                      vendorSettingScreenOption: VendorSettingScreenOption.businessDocument,
+                    ),
+                    const SizedBox(height: 20),
+
+                    VendorSettingScreenSingleItemModule(
+                      img: AppImages.resourcesImg,
+                      name: 'Review',
+                      vendorSettingScreenOption: VendorSettingScreenOption.review,
                     ),
                     const SizedBox(height: 20),
 

@@ -26,7 +26,7 @@ class VendorHomeScreen extends StatelessWidget {
             Obx(()=>
               vendorHomeScreenController.isLoading.value
                 ? const Center(child: CircularProgressIndicator()) :
-            Expanded(child: const PendingAppointmentListModule().commonSymmetricPadding(horizontal: 25)),
+            Expanded(child: const TodayAppointmentListModule().commonSymmetricPadding(horizontal: 25)),
             ),
           ],
         ),

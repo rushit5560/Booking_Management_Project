@@ -16,8 +16,14 @@ class VendorServicesScreen extends StatelessWidget {
             const CommonAppBarModule(title: "Services", appBarOption: AppBarOption.singleBackButtonOption),
 
             Expanded(
-              child: ServicesListModule(),
-            ).commonSymmetricPadding(horizontal: 15, vertical: 15)
+              child: Column(
+                children: [
+                  AddServicesButton(),
+                  SizedBox(height: 15),
+                  Expanded(child: ServicesListModule()),
+                ],
+              ).commonSymmetricPadding(horizontal: 15, vertical: 15),
+            )
           ],
         ),
       ),

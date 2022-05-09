@@ -19,33 +19,35 @@ class VendorProfileDetailsModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        key: screenController.vendorProfileFormKey,
-        child: Column(
-          children: [
-            profile(),
-            const SizedBox(height: 30,),
-            nameTextField(),
-            const SizedBox(height: 15,),
-            emailTextField(),
-            const SizedBox(height: 15,),
-            mobileTextField(),
-            const SizedBox(height: 15,),
-            addressTextField(),
-            const SizedBox(height: 15,),
-            cityTextField(),
-            const SizedBox(height: 15,),
-            stateTextField(),
-            const SizedBox(height: 15,),
-            countryTextField(),
-            const SizedBox(height: 15,),
-            slotSelectionRadioButton(),
-            const SizedBox(height: 40,),
-            saveButtonModule(),
-          ],
-        ).commonAllSidePadding(20),
-      ),
+    return Form(
+      key: screenController.vendorProfileFormKey,
+      child: Column(
+        children: [
+          profile(),
+          const SizedBox(height: 30),
+          userNameTextField(),
+          const SizedBox(height: 15),
+          emailTextField(),
+          const SizedBox(height: 15),
+          businessNameTextField(),
+          const SizedBox(height: 15),
+          mobileTextField(),
+          const SizedBox(height: 15),
+          addressTextField(),
+          const SizedBox(height: 15),
+          cityTextField(),
+          const SizedBox(height: 15),
+          stateTextField(),
+          const SizedBox(height: 15),
+          countryTextField(),
+          const SizedBox(height: 15),
+          subUrbTextField(),
+          const SizedBox(height: 15),
+          postCodeTextField(),
+          const SizedBox(height: 40),
+          saveButtonModule(),
+        ],
+      ).commonAllSidePadding(20),
     );
   }
 
@@ -66,7 +68,7 @@ class VendorProfileDetailsModule extends StatelessWidget {
   Widget profile(){
     return Stack(
       alignment: Alignment.bottomCenter,
-      clipBehavior: Clip.none,
+      //clipBehavior: Clip.none,
       children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(10),
@@ -77,7 +79,8 @@ class VendorProfileDetailsModule extends StatelessWidget {
               openGallery();
             },
             child: Positioned(
-              bottom: -15,
+              //bottom: 15,
+              //top: 15,
               child: Container(
                 height: 35, width: 35,
                 decoration: BoxDecoration(
@@ -105,12 +108,12 @@ class VendorProfileDetailsModule extends StatelessWidget {
     } else {}
   }
 
-  Widget nameTextField(){
+  Widget userNameTextField(){
     return Row(
       children: [
         const Expanded(
             flex: 2,
-            child: Text("Name:", style: TextStyle(fontWeight: FontWeight.w500),)
+            child: Text("UserName:", style: TextStyle(fontWeight: FontWeight.w500),)
         ),
         Expanded(
             flex: 4,
@@ -237,6 +240,76 @@ class VendorProfileDetailsModule extends StatelessWidget {
                     // ),
                   ),
                   validator: (value) => FieldValidator().validateEmail(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+
+  Widget businessNameTextField(){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Business Name:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+
+                TextFormField(
+                  controller: screenController.businessNameTextFieldController,
+                  keyboardType: TextInputType.name,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: "Business Name",
+                    hintStyle: TextStyle(color: Colors.black),
+                    //isDense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    //filled: true,
+                    //fillColor: Colors.white,
+                    border: InputBorder.none,
+                    // suffix: IconButton(
+                    //   onPressed: () {},
+                    //   iconSize: 15,
+                    //   icon: Icon(Icons.visibility_off_rounded),
+                    // ),
+                    // suffix: Container(
+                    //   child: index == 0
+                    //       ? null
+                    //       : GestureDetector(
+                    //     onTap: () {
+                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
+                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
+                    //     },
+                    //     child: Obx(
+                    //       ()=> Icon(signInScreenController.isPassVisible.value
+                    //           ? Icons.visibility_rounded
+                    //           : Icons.visibility_off_rounded),
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
+                  validator: (value) => FieldValidator().validateName(value!),
                 ),
               ],
             )
@@ -588,6 +661,146 @@ class VendorProfileDetailsModule extends StatelessWidget {
                     // ),
                   ),
                   validator: (value) => FieldValidator().validateCountryName(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+
+  Widget subUrbTextField(){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Suburb:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+
+                TextFormField(
+                  controller: screenController.subUrbTextFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: "Suburb",
+                    hintStyle: TextStyle(color: Colors.black),
+                    //isDense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    //filled: true,
+                    //fillColor: Colors.white,
+                    border: InputBorder.none,
+                    // suffix: IconButton(
+                    //   onPressed: () {},
+                    //   iconSize: 15,
+                    //   icon: Icon(Icons.visibility_off_rounded),
+                    // ),
+                    // suffix: Container(
+                    //   child: index == 0
+                    //       ? null
+                    //       : GestureDetector(
+                    //     onTap: () {
+                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
+                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
+                    //     },
+                    //     child: Obx(
+                    //       ()=> Icon(signInScreenController.isPassVisible.value
+                    //           ? Icons.visibility_rounded
+                    //           : Icons.visibility_off_rounded),
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
+                  validator: (value) => FieldValidator().validateStateName(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+
+  Widget postCodeTextField(){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Post Code:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+
+                TextFormField(
+                  controller: screenController.postCodeTextFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: "Post Code",
+                    hintStyle: TextStyle(color: Colors.black),
+                    //isDense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    //filled: true,
+                    //fillColor: Colors.white,
+                    border: InputBorder.none,
+                    // suffix: IconButton(
+                    //   onPressed: () {},
+                    //   iconSize: 15,
+                    //   icon: Icon(Icons.visibility_off_rounded),
+                    // ),
+                    // suffix: Container(
+                    //   child: index == 0
+                    //       ? null
+                    //       : GestureDetector(
+                    //     onTap: () {
+                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
+                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
+                    //     },
+                    //     child: Obx(
+                    //       ()=> Icon(signInScreenController.isPassVisible.value
+                    //           ? Icons.visibility_rounded
+                    //           : Icons.visibility_off_rounded),
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
+                  validator: (value) => FieldValidator().validateStateName(value!),
                 ),
               ],
             )

@@ -335,7 +335,7 @@ class BusinessIdFieldModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: screenController.businessIdFieldController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
       validator: (value) => FieldValidator().validateBusinessId(value!),
       decoration: vendorSignUpFormFieldDecoration(hintText: 'Business ID', controller: screenController),
     );

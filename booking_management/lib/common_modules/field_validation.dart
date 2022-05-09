@@ -92,8 +92,15 @@ class FieldValidator {
   }
 
   String? validateUserName(String value) {
+    String  pattern = r'^(?=.*?[A-Z])';
+    RegExp regExp =  RegExp(pattern);
+    //return
     if (value.isEmpty) {
       return 'Username is Required';
+    } else{
+      if(!regExp.hasMatch(value)){
+        return 'AtLeast 1 Uppercase letter is Required';
+      }
     }
     return null;
   }

@@ -79,7 +79,7 @@ class Data {
 
   int id;
   String categories;
-  String categoryId;
+  int categoryId;
   String businessName;
   String businessLogo;
   String street;
@@ -93,7 +93,7 @@ class Data {
   String address;
   bool isActive;
   String userId;
-  String vendorPortal;
+  bool vendorPortal;
   bool vendorVerification;
   String attachPhotoIndentification;
   String attachProofofAddress;
@@ -118,7 +118,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"] ?? 0,
     categories: json["categories"] ?? "",
-    categoryId: json["categoryId"] ?? "",
+    categoryId: json["categoryId"] ?? 0,
     businessName: json["businessName"] ?? "",
     businessLogo: json["businessLogo"] ?? "",
     street: json["street"] ?? "",
@@ -132,14 +132,14 @@ class Data {
     address: json["address"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ??"",
-    vendorPortal: json["vendorPortal"] ?? "",
+    vendorPortal: json["vendorPortal"] ?? false,
     vendorVerification: json["vendorVerification"] ?? false,
     attachPhotoIndentification: json["attachPhotoIndentification"] ?? "",
     attachProofofAddress: json["attachProofofAddress"] ?? "",
     businessId: json["businessId"] ?? "",
     resource: json["resource"] ?? false,
     payment: json["payment"] ?? false,
-    confirmation: json["confirmation"] ?? "",
+    confirmation: json["confirmation"] ?? false,
     vendorVerificationDate: json["vendorVerificationDate"] ?? "",
     applicationUser: ApplicationUser.fromJson(json["applicationUser"] ?? {}),
     modifiedBy: json["modifiedBy"] ?? "",

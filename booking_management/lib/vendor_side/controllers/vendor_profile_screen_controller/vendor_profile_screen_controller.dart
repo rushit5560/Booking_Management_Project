@@ -8,12 +8,15 @@ class VendorProfileScreenController extends GetxController{
   RxString slot = 'Single'.obs;
   GlobalKey<FormState> vendorProfileFormKey = GlobalKey<FormState>();
   final nameTextFieldController = TextEditingController(text: "abc");
+  final businessNameTextFieldController = TextEditingController(text: "abc");
   final emailTextFieldController = TextEditingController(text: "abc@gmail.com");
   final addressTextFieldController = TextEditingController(text: "1156, Lorem Soc.");
   final mobileTextFieldController = TextEditingController(text: "+1234567890");
   final cityTextFieldController = TextEditingController(text: "surat");
   final stateTextFieldController = TextEditingController(text: "Gujarat");
   final countryTextFieldController = TextEditingController(text: "India");
+  final subUrbTextFieldController = TextEditingController(text: "test");
+  final postCodeTextFieldController = TextEditingController(text: "395004");
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
   RxInt selectedPageIndex = 0.obs;
   //RxInt selectedTimeIndex = 0.obs;

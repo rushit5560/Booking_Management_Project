@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/vendor_side/model/vendor_sign_up_model/vendor_sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -80,23 +81,19 @@ class VendorSignUpScreenController extends GetxController {
       // request.fields['LastVisit'] = "2001-12-01";
       // request.fields['FaxNumber'] = "20";
       // request.fields['DateOfBirth'] = "2001-12-01";
-      // request.fields['IsActive'] = "true";
-
+      request.fields['CategoryId'] = "1";
       request.fields['UserName'] = userNameFieldController.text.trim();
-      //request.fields['LastName'] = lastNameFieldController.text.trim();
       request.fields['Email'] = emailFieldController.text.trim();
-      //request.fields['PhoneNo'] = mobileFieldController.text.trim();
-      //request.fields['Address1'] = businessAddress1FieldController.text.trim();
-      //request.fields['Address2'] = businessAddress2FieldController.text.trim();
-      //request.fields['State'] = stateFieldController.text.trim();
-      //request.fields['Country'] = countryFieldController.text.trim();
+      request.fields['PhoneNo'] = mobileFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
-      //request.fields['Street'] = streetFieldController.text.trim();
-      //request.fields['Suburb'] = subUrbFieldController.text.trim();
-      //request.fields['Postcode'] = postCodeFieldController.text.trim();
-      //request.fields['CategoryId'] = '1';
-      request.fields['BusinessName'] = businessNameFieldController.text.trim();
+      request.fields['IsActive'] = "true";
+      request.fields['VendorPortal'] = "true";
       request.fields['BusinessId'] = businessIdFieldController.text.trim();
+      request.fields['IsResource'] = "true";
+      request.fields['IsServiceSlots'] = "true";
+      request.fields['IsPriceDisplay'] = "true";
+      request.fields['BusinessName'] = businessNameFieldController.text.trim();
+
 
       log('request.fields: ${request.fields}');
       log('request.files: ${request.files}');
@@ -122,8 +119,9 @@ class VendorSignUpScreenController extends GetxController {
         if(isStatus.value == 200){
           //UserDetails().vendorId = response1.data.id;
           //log("Vendor Id: ${UserDetails().vendorId}");
-          Fluttertoast.showToast(msg: "${response1.message}");
+          Fluttertoast.showToast(msg: response1.message);
           clearSignUpFieldsFunction();
+          Get.off(SignInScreen(), transition: Transition.zoom);
 
         } else {
           // Fluttertoast.showToast(msg: "${response1.message}");

@@ -5,6 +5,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/common_ui/model/forgot_password_model/forgot_password_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +17,7 @@ class ForgotPasswordScreenController extends GetxController {
   RxBool hasError = false.obs;
 
   GlobalKey<FormState> forgotPasswordFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> codeFormKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> codeFormKey = GlobalKey<FormState>();
   final TextEditingController emailFieldController = TextEditingController();
   final TextEditingController codeFieldController = TextEditingController();
   PinDecoration ? pinDecoration;
@@ -99,16 +100,10 @@ class ForgotPasswordScreenController extends GetxController {
   forgotPasswordFunction({required String email}) async {
     isLoading(true);
 
-    String url = ApiUrl.forgotPasswordApi + "?Email=$email";
+    String url = ApiUrl.forgotPasswordApi + "?Email=${email.toLowerCase()}";
     log('Url : $url');
 
     try{
-      // Map<String, dynamic> data = {
-      //   "Email": email,
-      //   "Password": password,
-      // };
-
-      //print('data : $data');
 
       http.Response response = await http.post(Uri.parse(url));
 
@@ -116,15 +111,13 @@ class ForgotPasswordScreenController extends GetxController {
       isStatus = forgotPasswordModel.statusCode.obs;
 
       if(isStatus.value == 200) {
-        //String userToken = signInModel.token;
-        //print('userToken : $userToken');
-        // await sharedPreferenceData.setUserLoginDetailsInPrefs(userToken: "$userToken");
-        // await createUserWallet();
         Get.offAll(() => SignInScreen());
-        Get.snackbar('Forgot Password Successfully.', '');
+        log("${forgotPasswordModel.workerList}");
+        Get.snackbar('Forgot password confirmation', 'Please check your email to reset your password.');
         emailFieldController.clear();
       } else {
         log('Forgot Password False False');
+        Fluttertoast.showToast(msg: "Something went wrong!");
       }
 
     } catch(e) {

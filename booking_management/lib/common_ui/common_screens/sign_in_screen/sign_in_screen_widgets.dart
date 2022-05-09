@@ -17,7 +17,7 @@ class EmailFieldModule extends StatelessWidget {
       controller: screenController.unameFieldController,
       keyboardType: TextInputType.text,
       validator: (value) => FieldValidator().validateUserName(value!),
-      decoration: signInFormFieldDecoration(hintText: 'UserName', controller: screenController),
+      decoration: signInFormFieldDecoration(hintText: 'User Name', controller: screenController),
     );
   }
 }

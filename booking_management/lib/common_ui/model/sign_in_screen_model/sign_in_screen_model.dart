@@ -201,6 +201,7 @@ class SignInModel {
 
 class Data {
   Data({
+    required this.apiToken,
     required this.frogotToken,
     required this.id,
     required this.userName,
@@ -219,6 +220,7 @@ class Data {
     required this.accessFailedCount,
   });
 
+  String apiToken;
   String frogotToken;
   String id;
   String userName;
@@ -237,6 +239,7 @@ class Data {
   int accessFailedCount;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
+    apiToken: json["apiToken"] ?? "",
     frogotToken: json["frogotToken"] ?? "",
     id: json["id"] ?? "",
     userName: json["userName"] ?? "",

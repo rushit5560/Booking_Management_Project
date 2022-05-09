@@ -15,14 +15,19 @@ class SplashScreenController extends GetxController {
   goToNextScreen()async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserDetails.isUserLoggedIn = prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
-    UserDetails.userId = prefs.getString(sharedPreferenceData.userIdKey) ?? "";
-    UserDetails.role = prefs.getString(sharedPreferenceData.roleKey) ?? "";
-    UserDetails.vendorId = prefs.getInt(sharedPreferenceData.vendorIdKey) ?? 0;
-    UserDetails.customerId = prefs.getInt(sharedPreferenceData.customerIdKey) ?? 0;
+    UserDetails.apiToken = prefs.getString(sharedPreferenceData.apiTokenKey) ?? "";
+    UserDetails.uniqueId = prefs.getString(sharedPreferenceData.uniqueIdKey) ?? "";
+    UserDetails.tableWiseId = prefs.getInt(sharedPreferenceData.tableWiseIdKey) ?? 0;
+    UserDetails.userName = prefs.getString(sharedPreferenceData.userNameKey) ?? "";
+    UserDetails.email = prefs.getString(sharedPreferenceData.emailKey) ?? "";
+    UserDetails.phoneNo = prefs.getString(sharedPreferenceData.phoneNoKey) ?? "";
+    UserDetails.dob = prefs.getString(sharedPreferenceData.dobKey) ?? "";
+    UserDetails.roleName = prefs.getString(sharedPreferenceData.roleNameKey) ?? "";
+
+
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');
     if(isLoggedIn == true) {
-      //Get.offAll(()=> IndexScreen());
       if(UserDetails.role == "Customer"){
         log('customer side');
         Get.offAll(() => IndexScreen(), transition: Transition.zoom);

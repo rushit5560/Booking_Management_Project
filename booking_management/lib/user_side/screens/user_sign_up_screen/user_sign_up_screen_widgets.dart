@@ -279,7 +279,7 @@ class SignUpButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(screenController.signUpFormKey.currentState!.validate()){
+        if(screenController.userSignUpFormKey.currentState!.validate()){
           await screenController.userSignUpFunction();
         }
       },

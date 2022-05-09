@@ -25,7 +25,7 @@ class UserSignUpScreenController extends GetxController {
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
 
-  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> userSignUpFormKey = GlobalKey<FormState>();
   final TextEditingController userNameFieldController = TextEditingController();
   final TextEditingController lastNameFieldController = TextEditingController();
   final TextEditingController genderFieldController = TextEditingController();

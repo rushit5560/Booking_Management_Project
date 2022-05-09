@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pin_input_text_field/pin_input_text_field.dart';
-
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
 import '../../common_controller/forgot_password_screen_controller/forgot_password_screen_controller.dart';
 
 
-
 class ForgotPasswordScreenEmailFieldModule extends StatelessWidget {
   ForgotPasswordScreenEmailFieldModule({Key? key}) : super(key: key);
-  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
+  final screenController = Get.find<ForgotPasswordScreenController>();
 
 
   @override
@@ -24,9 +21,9 @@ class ForgotPasswordScreenEmailFieldModule extends StatelessWidget {
   }
 }
 
-class SendCodeButtonModule extends StatelessWidget {
+/*class SendCodeButtonModule extends StatelessWidget {
   SendCodeButtonModule({Key? key}) : super(key: key);
-  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
+  final screenController = Get.find<ForgotPasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +60,12 @@ class SendCodeButtonModule extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
-class CodeTextFieldModule extends StatelessWidget {
+/*class CodeTextFieldModule extends StatelessWidget {
   CodeTextFieldModule({Key? key}) : super(key: key);
 
-  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
+  final screenController = Get.find<ForgotPasswordScreenController>();
 
   static const int pinLength = 5;
 
@@ -124,17 +121,19 @@ class CodeTextFieldModule extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 class ForgotPasswordScreenSubmitButtonModule extends StatelessWidget {
   ForgotPasswordScreenSubmitButtonModule({Key? key}) : super(key: key);
-  ForgotPasswordScreenController screenController = Get.find<ForgotPasswordScreenController>();
+  final screenController = Get.find<ForgotPasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if(screenController.codeFormKey.currentState!.validate()){}
+      onTap: () async {
+        if(screenController.forgotPasswordFormKey.currentState!.validate()){
+          await screenController.forgotPasswordFunction(email: screenController.emailFieldController.text);
+        }
       },
       child: Container(
         decoration: BoxDecoration(

@@ -3,90 +3,90 @@ class FieldValidator {
 
   String? validateFullName(String value) {
     if (value.isEmpty) {
-      return 'Field is Required';
+      return 'Field is required';
     }
     return null;
   }
   String? validateAddress1(String value) {
     if (value.isEmpty) {
-      return 'Address1 is Required';
+      return 'Address1 is required';
     }
     return null;
   }
 
   String? validateAddress2(String value) {
     if (value.isEmpty) {
-      return 'Address2 is Required';
+      return 'Address2 is required';
     }
     return null;
   }
 
   String? validateStreet(String value) {
     if (value.isEmpty) {
-      return 'Street is Required';
+      return 'Street is required';
     }
     return null;
   }
 
   String? validatePostCode(String value) {
     if (value.isEmpty) {
-      return 'Post Code is Required';
+      return 'Post code is required';
     }
     return null;
   }
 
   String? validateSuburb(String value) {
     if (value.isEmpty) {
-      return 'sub urb is Required';
+      return 'Sub urb is required';
     }
     return null;
   }
 
   String? validateBusinessId(String value) {
     if (value.isEmpty) {
-      return 'Business ID is Required';
+      return 'Business id is required';
     }
     return null;
   }
 
   String? validateBusinessName(String value) {
     if (value.isEmpty) {
-      return 'Business Name is Required';
+      return 'Business name is required';
     }
     return null;
   }
 
   String? validateState(String value) {
     if (value.isEmpty) {
-      return 'State is Required';
+      return 'State is required';
     }
     return null;
   }
 
   String? validateCity(String value) {
     if (value.isEmpty) {
-      return 'City is Required';
+      return 'City is required';
     }
     return null;
   }
 
   String? validateFirstName(String value) {
     if (value.isEmpty) {
-      return 'First Name is Required';
+      return 'First name is required';
     }
     return null;
   }
 
   String? validateLastName(String value) {
     if (value.isEmpty) {
-      return 'Last Name is Required';
+      return 'Last name is required';
     }
     return null;
   }
 
   String? validateGender(String value) {
     if (value.isEmpty) {
-      return 'Gender is Required';
+      return 'Gender is required';
     }
     return null;
   }
@@ -96,10 +96,10 @@ class FieldValidator {
     RegExp regExp =  RegExp(pattern);
     //return
     if (value.isEmpty) {
-      return 'Username is Required';
+      return 'Username is required';
     } else{
       if(!regExp.hasMatch(value)){
-        return 'AtLeast 1 Uppercase letter is Required';
+        return 'AtLeast 1 uppercase letter is required';
       }
     }
     return null;
@@ -107,56 +107,56 @@ class FieldValidator {
 
   String? validateCityName(String value) {
     if (value.isEmpty) {
-      return 'City is Required';
+      return 'City is required';
     }
     return null;
   }
 
   String? validateStateName(String value) {
     if (value.isEmpty) {
-      return 'State is Required';
+      return 'State is required';
     }
     return null;
   }
 
   String? validateCountryName(String value) {
     if (value.isEmpty) {
-      return 'Country is Required';
+      return 'Country is required';
     }
     return null;
   }
 
   String? validateName(String value) {
     if (value.isEmpty) {
-      return 'Name is Required';
+      return 'Name is required';
     }
     return null;
   }
 
   String? validateColor(String value) {
     if (value.isEmpty) {
-      return 'Color is Required';
+      return 'Color is required';
     }
     return null;
   }
 
   String? validateDescription(String value) {
     if (value.isEmpty) {
-      return 'Description is Required';
+      return 'Description is required';
     }
     return null;
   }
 
   String? validatePrice(String value) {
     if (value.isEmpty) {
-      return 'Price is Required';
+      return 'Price is required';
     }
     return null;
   }
 
   String? validateLocation(String value) {
     if (value.isEmpty) {
-      return 'Location is Required';
+      return 'Location is required';
     }
     return null;
   }
@@ -164,18 +164,18 @@ class FieldValidator {
 
   String? validateAge(String value) {
     if (value.isEmpty) {
-      return 'Age is Required';
+      return 'Age is required';
     }
     return null;
   }
 
   String ? validateEmail(String value) {
     if (value.isEmpty) {
-      return "Email is Required";
+      return "Email is required";
     } else if (!isNumeric(value) &&
         !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
             .hasMatch(value)) {
-      return "Invalid Email";
+      return "Invalid email";
     } else {
       return null;
     }
@@ -183,17 +183,17 @@ class FieldValidator {
 
   String ? validatePassword(String value) {
     if (value.isEmpty) {
-      return "password is Required";
-    } else if(value.length < 6){
-      return "Password must be at least 6 characters";
+      return "Password is required";
+    } else if(value.length < 8){
+      return "Password must be at least 8 characters";
     } else if(!value.contains(RegExp(r'[A-Z]'))){
       return "Password must be at least one upper case letter";
     } else if(!value.contains(RegExp(r"[a-z]"))){
       return "Password must be at least one lower case letter";
     } else if(!value.contains(RegExp(r"[0-9]"))){
-      return "Password must be at least one alphabetical letter";
+      return "Password must be at least one numerical letter";
     } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-      return "Password must be at least one Special Character";
+      return "Password must be at least one special character";
     } else {
       return null;
     }
@@ -201,7 +201,7 @@ class FieldValidator {
 
   String ? validateCurrentPassword(String value) {
     if (value.isEmpty) {
-      return "Current Password is Required";
+      return "Current password is required";
     } else if(value.length < 6){
       return "Password must be at least 6 characters";
     } else if(!value.contains(RegExp(r'[A-Z]'))){

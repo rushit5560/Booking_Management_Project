@@ -169,4 +169,5 @@ class VendorSignUpScreenController extends GetxController {
     businessNameFieldController.clear();
     businessIdFieldController.clear();
   }
+
 }

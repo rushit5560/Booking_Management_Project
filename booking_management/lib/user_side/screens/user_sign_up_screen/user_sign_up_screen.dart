@@ -25,7 +25,7 @@ class UserSignUpScreen extends StatelessWidget {
               : SafeArea(
                   child: SingleChildScrollView(
                     child: Form(
-                      key: userSignUpScreenController.signUpFormKey,
+                      key: userSignUpScreenController.userSignUpFormKey,
                       child: Column(
                         children: [
                           /// From Common Widgets

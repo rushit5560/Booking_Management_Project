@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -6,6 +7,7 @@ import 'package:booking_management/user_side/controllers/user_profile_screen_con
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 
 final screenController = Get.find<UserProfileScreenController>();
 
@@ -21,23 +23,25 @@ class ProfileDetailsModule extends StatelessWidget {
           children: [
             // profile(),
             // SizedBox(height: 30,),
-            nameTextField(),
-            const SizedBox(height: 15,),
+            // nameTextField(),
+            // const SizedBox(height: 15),
             emailTextField(),
-            const SizedBox(height: 15,),
+            const SizedBox(height: 15),
             // addressTextField(),
-            const SizedBox(height: 15,),
+            // const SizedBox(height: 15,),
             mobileTextField(),
-            const SizedBox(height: 15,),
+            const SizedBox(height: 15),
             dateOfBirthTextField(context),
-            const SizedBox(height: 15,),
+            const SizedBox(height: 15),
+            _radioButton(),
+            const SizedBox(height: 15),
             // cityTextField(),
-            const SizedBox(height: 15,),
+            const SizedBox(height: 15),
             // stateTextField(),
-            const SizedBox(height: 15,),
+            const SizedBox(height: 15),
             // countryTextField(),
-            const SizedBox(height: 15,),
-            saveButtonModule()
+            const SizedBox(height: 15),
+            saveButtonModule(),
           ],
         ).commonAllSidePadding(20),
       ),
@@ -48,12 +52,13 @@ class ProfileDetailsModule extends StatelessWidget {
     final DateTime? d = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015),
+      firstDate: DateTime(1995),
       lastDate: DateTime(2025),
     );
     if (d != null) {
       //setState(() {
-      screenController.selectedDate.value = DateFormat.yMMMMd("en_US").format(d);
+      screenController.selectedDate.value = DateFormat.yMd("en_US").format(d);
+      log(screenController.selectedDate.value);
       //});
     }
   }
@@ -183,6 +188,7 @@ class ProfileDetailsModule extends StatelessWidget {
                   controller: screenController.emailTextFieldController,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.black,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "Email",
                     hintStyle: TextStyle(color: Colors.black),
@@ -212,7 +218,7 @@ class ProfileDetailsModule extends StatelessWidget {
                     //   ),
                     // ),
                   ),
-                  validator: (value) => FieldValidator().validateEmail(value!),
+                  // validator: (value) => FieldValidator().validateEmail(value!),
                 ),
               ],
             )
@@ -634,12 +640,50 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }*/
 
+  /// Radio Button
+  Widget _radioButton() {
+    return Obx(()=>
+        Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                leading: Radio<String>(
+                  value: 'Male',
+                  activeColor: Colors.black,
+                  groupValue: screenController.gender.value,
+                  onChanged: (value) {
+                    screenController.gender.value = value!;
+                    log(value);
+                  },
+                ),
+                title: const Text('Male', style: TextStyle(color: Colors.black, fontSize: 15),),
+              ),
+            ),
+            Expanded(
+              child: ListTile(
+                leading: Radio<String>(
+                  value: 'Female',
+                  activeColor: Colors.black,
+                  groupValue: screenController.gender.value,
+                  onChanged: (value) {
+                    screenController.gender.value = value!;
+                    log(value);
+                  },
+                ),
+                title: const Text('Female', style: TextStyle(color: Colors.black, fontSize: 15),),
+              ),
+            ),
+          ],
+        ),
+    );
+  }
+
   /// Save Button
   Widget saveButtonModule(){
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if(screenController.profileFormKey.currentState!.validate()){
-
+          await screenController.updateUserProfileFunction();
         }
       },
       child: Container(

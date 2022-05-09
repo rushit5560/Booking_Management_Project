@@ -6,39 +6,62 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferenceData{
 
   String isUserLoggedInKey = "isUserLoggedInKey";
-  String userIdKey = "userIdKey";
-  String roleKey = "userIdKey";
-  String vendorIdKey = "vendorIdKey";
-  String customerIdKey = "customerIdKey";
+  String apiTokenKey = "apiTokenKey";
+  String uniqueIdKey = "uniqueIdKey";
+  String tableWiseIdKey = "tableWiseIdKey";
+  String userNameKey = "userNameKey";
+  String emailKey = "emailKey";
+  String phoneNoKey = "phoneNoKey";
+  String dobKey = "dobKey";
+  String roleNameKey = "roleNameKey";
 
 
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
-  setUserLoginDetailsInPrefs({required String userId, required String role, required int vendorId, required int customerId}) async {
+  setUserLoginDetailsInPrefs({
+        required String apiToken,
+        required String uniqueId,
+        required int tableWiseId,
+        required String userName,
+        required String email,
+        required String phoneNo,
+        required String dob,
+        required String roleName,
+      }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //Remove Old Id & Token
-    prefs.remove(userIdKey);
-    prefs.remove(roleKey);
-    prefs.remove(vendorIdKey);
-    prefs.remove(customerIdKey);
+    prefs.setBool(isUserLoggedInKey, false);
+    prefs.remove(apiTokenKey);
+    prefs.remove(uniqueIdKey);
+    prefs.remove(tableWiseIdKey);
+    prefs.remove(userNameKey);
+    prefs.remove(emailKey);
+    prefs.remove(phoneNoKey);
+    prefs.remove(dobKey);
+    prefs.remove(roleNameKey);
 
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, true);
-    prefs.setString(userIdKey, userId);
-    prefs.setString(roleKey, role);
-    prefs.setInt(vendorIdKey, vendorId);
-    prefs.setInt(customerIdKey, customerId);
+    prefs.setString(apiTokenKey, apiToken);
+    prefs.setString(uniqueIdKey, uniqueId);
+    prefs.setInt(tableWiseIdKey, tableWiseId);
+    prefs.setString(userNameKey, userName);
+    prefs.setString(emailKey, email);
+    prefs.setString(phoneNoKey, phoneNo);
+    prefs.setString(dobKey, dob);
+    prefs.setString(roleNameKey, roleName);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
-    UserDetails.userId = prefs.getString(userIdKey) ?? "";
-    UserDetails.role = prefs.getString(roleKey) ?? "";
-    UserDetails.vendorId = prefs.getInt(vendorIdKey) ?? 0;
-    UserDetails.customerId = prefs.getInt(customerIdKey) ?? 0;
+    UserDetails.apiToken = prefs.getString(apiTokenKey) ?? "";
+    UserDetails.uniqueId = prefs.getString(uniqueIdKey) ?? "";
+    UserDetails.tableWiseId = prefs.getInt(tableWiseIdKey) ?? 0;
+    UserDetails.userName = prefs.getString(userNameKey) ?? "";
+    UserDetails.email = prefs.getString(emailKey) ?? "";
+    UserDetails.phoneNo = prefs.getString(phoneNoKey) ?? "";
+    UserDetails.dob = prefs.getString(dobKey) ?? "";
+    UserDetails.roleName = prefs.getString(roleNameKey) ?? "";
 
-    log('UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}');
-    log('UserDetails.userId : ${UserDetails.userId}');
-    log('UserDetails.vendorId : ${UserDetails.vendorId}');
 
   }
 
@@ -49,14 +72,6 @@ class SharedPreferenceData{
 
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, false);
-    prefs.setString(userIdKey, "");
-    prefs.setString(roleKey, "");
-    prefs.setInt(vendorIdKey, 0);
-    prefs.setInt(customerIdKey, 0);
-    // print('Clear isUserLoggedInKey : ${prefs.getBool(isUserLoggedInKey)}');
-    // print('Clear userIdKey : ${prefs.getString(userIdKey)}');
-    // print('Clear userRoleKey : ${prefs.getString(userRoleKey)}');
-    // print('Clear userTokenKey : ${prefs.getString(userTokenKey)}');
-    // print('Clear userWalletIdKey : ${prefs.getString(userWalletIdKey)}');
+
   }
 }

@@ -70,7 +70,7 @@ class SettingScreenSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({required UserSettingScreenOption userSettingScreenOption}) {
+  singleItemOnTap({required UserSettingScreenOption userSettingScreenOption}) async {
     if (userSettingScreenOption == UserSettingScreenOption.profile) {
       Get.to(() => UserProfileScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == UserSettingScreenOption.chat) {
@@ -83,7 +83,7 @@ class SettingScreenSingleItemModule extends StatelessWidget {
     } else if (userSettingScreenOption == UserSettingScreenOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == UserSettingScreenOption.logOut) {
-      sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+      await sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);
       Get.snackbar('You Have Successfully Logout', '');
     }

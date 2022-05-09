@@ -14,5 +14,6 @@ class UserDetails {
   static String phoneNo = "";
   static String dob = "";
   static String roleName = "";
+  static String gender = "";
 
 }

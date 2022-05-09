@@ -202,16 +202,16 @@ class FieldValidator {
   String ? validateCurrentPassword(String value) {
     if (value.isEmpty) {
       return "Current password is required";
-    } else if(value.length < 6){
-      return "Password must be at least 6 characters";
+    } else if(value.length < 8){
+      return "Password must be at least 8 characters";
     } else if(!value.contains(RegExp(r'[A-Z]'))){
       return "Password must be at least one upper case letter";
     } else if(!value.contains(RegExp(r"[a-z]"))){
       return "Password must be at least one lower case letter";
     } else if(!value.contains(RegExp(r"[0-9]"))){
-      return "Password must be at least one alphabetical letter";
+      return "Password must be at least one numerical letter";
     } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-      return "Password must be at least one Special Character";
+      return "Password must be at least one special character";
     } else {
       return null;
     }
@@ -219,35 +219,27 @@ class FieldValidator {
 
   String ? validateNewPassword(String value) {
     if (value.isEmpty) {
-      return "New Password is Required";
-    } else if(value.length < 6){
-      return "Password must be at least 6 characters";
+      return "New password is required";
+    } else if(value.length < 8){
+      return "Password must be at least 8 characters";
     } else if(!value.contains(RegExp(r'[A-Z]'))){
       return "Password must be at least one upper case letter";
     } else if(!value.contains(RegExp(r"[a-z]"))){
       return "Password must be at least one lower case letter";
     } else if(!value.contains(RegExp(r"[0-9]"))){
-      return "Password must be at least one alphabetical letter";
+      return "Password must be at least one numerical letter";
     } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-      return "Password must be at least one Special Character";
+      return "Password must be at least one special character";
     } else {
       return null;
     }
   }
 
-  String ? validateConfirmPassword(String value) {
+  String ? validateConfirmPassword(String value, String value2) {
     if (value.isEmpty) {
-      return "Confirm Password is Required";
-    } else if(value.length < 6){
-      return "Password must be at least 6 characters";
-    } else if(!value.contains(RegExp(r'[A-Z]'))){
-      return "Password must be at least one upper case letter";
-    } else if(!value.contains(RegExp(r"[a-z]"))){
-      return "Password must be at least one lower case letter";
-    } else if(!value.contains(RegExp(r"[0-9]"))){
-      return "Password must be at least one alphabetical letter";
-    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-      return "Password must be at least one Special Character";
+      return "Confirm password is required";
+    }  else if(value != value2){
+      return "Password must be at least one special character";
     } else {
       return null;
     }
@@ -257,10 +249,10 @@ class FieldValidator {
   String ? validateMobile(String value) {
 // Indian Mobile number are of 10 digit only
     if (value.isEmpty) {
-      return "Mobile number is Required";
+      return "Mobile number is required";
     }
     else if (value.length != 10){
-      return 'Mobile Number must be of 10 digit';
+      return 'Mobile number must be of 10 digit';
     }
     else{
       return null;
@@ -277,14 +269,14 @@ class FieldValidator {
 
   String? validateAddress(String value) {
     if (value.isEmpty) {
-      return 'Address is Required';
+      return 'Address is required';
     }
     return null;
   }
 
   String? validateReview(String value) {
     if (value.isEmpty) {
-      return 'Review is Required';
+      return 'Review is required';
     }
     return null;
   }

@@ -67,4 +67,14 @@ class UserProfileScreenController extends GetxController{
 
   }
 
+  @override
+  void onInit() {
+    nameTextFieldController.text = UserDetails.userName;
+    mobileTextFieldController.text = UserDetails.phoneNo;
+    selectedDate.value = UserDetails.dob;
+    emailTextFieldController.text = UserDetails.email;
+    gender.value = UserDetails.gender;
+    super.onInit();
+  }
+
 }

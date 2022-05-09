@@ -65,7 +65,7 @@ class UserSignUpScreenController extends GetxController {
       request.fields['UserName'] = userNameFieldController.text.trim();
       request.fields['Email'] = emailFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
-      request.fields['PhoneNo'] = mobileFieldController.text.trim();
+      // request.fields['PhoneNo'] = mobileFieldController.text.trim();
 
       log('request.fields: ${request.fields}');
 

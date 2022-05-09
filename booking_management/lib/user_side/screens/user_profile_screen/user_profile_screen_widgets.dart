@@ -23,7 +23,7 @@ class ProfileDetailsModule extends StatelessWidget {
           children: [
             // profile(),
             // SizedBox(height: 30,),
-            // nameTextField(),
+            nameTextField(),
             // const SizedBox(height: 15),
             emailTextField(),
             const SizedBox(height: 15),

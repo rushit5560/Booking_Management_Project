@@ -165,19 +165,9 @@ class CPasswordFieldModule extends StatelessWidget {
           obscureText: screenController.isRePasswordVisible.value,
         validator: (value) {
           if (value!.isEmpty) {
-            return "Confirm Password is Required";
-          } else if(value.length < 6){
-            return "Password must be at least 6 characters";
-          } else if(!value.contains(RegExp(r'[A-Z]'))){
-            return "Password must be at least one upper case letter";
-          } else if(!value.contains(RegExp(r"[a-z]"))){
-            return "Password must be at least one lower case letter";
-          } else if(!value.contains(RegExp(r"[0-9]"))){
-            return "Password must be at least one alphabetical letter";
-          } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-            return "Password must be at least one Special Character";
+            return "Confirm password is required";
           } else if(screenController.passwordFieldController.text != screenController.cPasswordFieldController.text){
-            return "Password and Confirm Password Should be Same";
+            return "Password and confirm password should be same";
           }
           else {
             return null;

@@ -15,10 +15,19 @@ class SplashScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Image.asset(
-            AppImages.splashAnimationGif,
+            AppImages.headerLogoImg,
             width: Get.width * 0.50,
             height: Get.width * 0.50,
           ),
+          // child: Text(
+          //   "Splash Screen",
+          //   maxLines: 1,
+          //   overflow: TextOverflow.ellipsis,
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 20
+          //   ),
+          // ),
         ),
       ),
     );

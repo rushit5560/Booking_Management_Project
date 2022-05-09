@@ -35,84 +35,10 @@ class UserSignUpScreen extends StatelessWidget {
                           const HeaderTextModule(name: "SignUp"),
                           const SizedBox(height: 20),
 
-                          /*Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        userSignUpScreenController.file != null ?
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(80.0),
-                          child: Image.file(userSignUpScreenController.file!, height: 100 ,width: 100, fit: BoxFit.fill ),
-                        )
-                            :
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(80.0),
-                          child: Container(
-
-                            height: 100 ,width: 100,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              color: Colors.white,
-                            ),
-                            //child: FlutterLogo(),
-                          ),
-                        ),
-
-                        GestureDetector(
-                          onTap: (){
-                            gallery();
-                          },
-                          child: Container(
-                            height: 25, width: 25,
-                            margin: EdgeInsets.only(bottom: 5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: AppColors.colorLightGrey1
-                            ),
-                            child: Icon(Icons.camera_alt, color: Colors.white,size: 15,),
-                          ),
-                        ),
-                      ],
-
-                    ),*/
                           const SizedBox(height: 20),
                           UserNameFieldModule(),
-                          // const SizedBox(height: 5),
-                          // const LastNameFieldModule(),
-                          // const SizedBox(height: 5),
-                          // const GenderFieldModule(),
                           const SizedBox(height: 5),
                           EmailFieldModule(),
-                          const SizedBox(height: 5),
-                          MobileFieldModule(),
-                          // const SizedBox(height: 5),
-                          // const AddressFieldModule(),
-                          // const SizedBox(height: 5),
-                          // DOB & Country Module
-                          // const DOBFieldModule(),
-                          // Row(
-                          //   children: const  [
-                          //     Expanded(
-                          //       child: DOBFieldModule(),
-                          //     ),
-                          //     SizedBox(width: 20),
-                          //     Expanded(
-                          //       child: CountryFieldModule(),
-                          //     ),
-                          //   ],
-                          // ),
-                          //const SizedBox(height: 5),
-                          // State & City Module
-                          // Row(
-                          //   children: const  [
-                          //     Expanded(
-                          //       child: StateFieldModule(),
-                          //     ),
-                          //     SizedBox(width: 20),
-                          //     Expanded(
-                          //       child: CityFieldModule(),
-                          //     ),
-                          //   ],
-                          // ),
                           const SizedBox(height: 5),
                           PasswordFieldModule(),
                           const SizedBox(height: 5),

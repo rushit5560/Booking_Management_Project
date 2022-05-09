@@ -6,6 +6,7 @@ import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,9 +40,9 @@ class SignInScreenController extends GetxController {
 
       if(isStatus.value == 200) {
 
-        Get.snackbar(signInModel.message, '');
-
-        if(signInModel.role.name == "Customer"){
+        if(signInModel.message.toString().contains("not Verified")) {
+          Get.snackbar(signInModel.message, '');
+        } else if(signInModel.role.name == "Customer"){
           log('customer side');
           Get.snackbar(signInModel.message, '');
           sharedPreferenceData.setUserLoginDetailsInPrefs(
@@ -53,6 +54,7 @@ class SignInScreenController extends GetxController {
             phoneNo: signInModel.data.phoneNumber,
             dob: signInModel.customer.dateOfBirth,
             roleName: signInModel.role.name,
+            gender: signInModel.customer.gender,
           );
           Get.offAll(() => IndexScreen());
 
@@ -69,6 +71,7 @@ class SignInScreenController extends GetxController {
             phoneNo: signInModel.data.phoneNumber,
             dob: "",
             roleName: signInModel.role.name,
+            gender: "",
           );
           Get.offAll(() => VendorIndexScreen());
           //Get.snackbar('LoggedIn Successfully.', '');
@@ -82,6 +85,7 @@ class SignInScreenController extends GetxController {
 
     } catch(e) {
       log('SignIn Error : $e');
+      Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       isLoading(false);
     }

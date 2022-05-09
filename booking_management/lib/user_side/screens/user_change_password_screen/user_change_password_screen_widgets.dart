@@ -6,6 +6,23 @@ import 'package:get/get.dart';
 
 UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
 
+class BackButtonModule extends StatelessWidget {
+  const BackButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        Get.back();
+      },
+      child: Container(
+        alignment: Alignment.topLeft,
+        child: const Icon(Icons.arrow_back),
+      ),
+    );
+  }
+}
+
 class UserNameModule extends StatelessWidget {
   const UserNameModule({Key? key}) : super(key: key);
 
@@ -64,7 +81,7 @@ class ConfirmPasswordTextFieldModule extends StatelessWidget {
         controller: screenController.confirmPasswordController,
         keyboardType: TextInputType.visiblePassword,
         obscureText: screenController.isConfirmPasswordVisible.value,
-        validator: (value) => FieldValidator().validateConfirmPassword(value!),
+        validator: (value) => FieldValidator().validateConfirmPassword(value!, screenController.newPasswordController.text),
         decoration: changePasswordFormFieldDecoration(hintText: 'Confirm Password', controller: screenController, index:3, context: context),
       ),
     );

@@ -101,11 +101,11 @@ class VendorProfileScreenController extends GetxController{
       request.fields['State'] = stateTextFieldController.text.trim();
       request.fields['Country'] = countryTextFieldController.text.trim();
       request.fields['Address'] = addressTextFieldController.text.trim();
-      request.fields['ModifiedBy'] = UserDetails.userId;
+      request.fields['ModifiedBy'] = UserDetails.uniqueId;
       request.fields['Duration'] = slotDurationValue.value;
       request.fields['StartTime'] = "09-05-2022 19:30:00";
       request.fields['EndTime'] = "09-05-2022 19:30:00";
-      request.fields['Id'] = "${UserDetails.vendorId}";
+      request.fields['Id'] = UserDetails.tableWiseId.toString();
 
 
       log('request.fields: ${request.fields}');

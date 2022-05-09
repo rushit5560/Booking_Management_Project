@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:booking_management/common_modules/constants/app_colors.dart';
@@ -12,9 +13,14 @@ import 'package:intl/intl.dart';
 
 final screenController = Get.find<VendorProfileScreenController>();
 
-class VendorProfileDetailsModule extends StatelessWidget {
+class VendorProfileDetailsModule extends StatefulWidget {
   VendorProfileDetailsModule({Key? key}) : super(key: key);
 
+  @override
+  State<VendorProfileDetailsModule> createState() => _VendorProfileDetailsModuleState();
+}
+
+class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule> {
   final ImagePicker imagePicker = ImagePicker();
 
   @override
@@ -44,6 +50,12 @@ class VendorProfileDetailsModule extends StatelessWidget {
           subUrbTextField(),
           const SizedBox(height: 15),
           postCodeTextField(),
+          const SizedBox(height: 15),
+          slotDurationTextField(context),
+          const SizedBox(height: 15),
+          startTimeTextField(context),
+          const SizedBox(height: 15),
+          endTimeTextField(context),
           const SizedBox(height: 40),
           saveButtonModule(),
         ],
@@ -70,9 +82,13 @@ class VendorProfileDetailsModule extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       //clipBehavior: Clip.none,
       children: [
+        screenController.file != null ?
         ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(AppImages.vendorImg, scale: 8,)),
+            child: Image.file(screenController.file!, height: 100, width: 100, fit: BoxFit.fill)) :
+        ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(AppImages.profileImg, height: 100, width: 100, fit: BoxFit.fill)),
 
            GestureDetector(
             onTap: (){
@@ -100,8 +116,9 @@ class VendorProfileDetailsModule extends StatelessWidget {
     if (image != null) {
       //setState(() {
         screenController.file = File(image.path);
-        print('Camera File Path : ${screenController.file}');
-        print('Camera Image Path : ${image.path}');
+        screenController.loadUI();
+        log('Camera File Path : ${screenController.file}');
+        log('Camera Image Path : ${image.path}');
         //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
         //renameImage();
       //});
@@ -464,7 +481,7 @@ class VendorProfileDetailsModule extends StatelessWidget {
       children: [
         const Expanded(
             flex: 2,
-            child: Text("City:", style: TextStyle(fontWeight: FontWeight.w500),)
+            child: Text("Street:", style: TextStyle(fontWeight: FontWeight.w500),)
         ),
         Expanded(
             flex: 4,
@@ -488,11 +505,11 @@ class VendorProfileDetailsModule extends StatelessWidget {
                 ),
 
                 TextFormField(
-                  controller: screenController.cityTextFieldController,
+                  controller: screenController.streetTextFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
-                    hintText: "City",
+                    hintText: "Street",
                     hintStyle: TextStyle(color: Colors.black),
                     //isDense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -809,6 +826,210 @@ class VendorProfileDetailsModule extends StatelessWidget {
     );
   }
 
+  Widget slotDurationTextField(context){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Timing Slot Duration:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+
+                Obx(() =>
+                      Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        width: Get.width, //gives the width of the dropdown button
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          //color: Colors.grey.shade200,
+                        ),
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            canvasColor: Colors.grey.shade100,
+                            buttonTheme: ButtonTheme.of(context).copyWith(
+                              alignedDropdown: true,
+                            ),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+
+                              value: screenController.slotDurationValue.value,
+
+                              items: <String>[
+                                '15',
+                                '30',
+                                '45',
+                                '1',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              }).toList(),
+
+                              onChanged: (value){
+                                screenController.isLoading(true);
+                                screenController.slotDurationValue.value = value!;
+                                screenController.isLoading(false);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+
+
+
+  Widget startTimeTextField(context){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Start Time:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child:Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                     Text("${screenController.selectedStartTime.hour}:${screenController.selectedStartTime.minute}"),
+                    GestureDetector(
+                      onTap: (){
+                        _selectStartTime(context);
+                      },
+                        child: Icon(Icons.access_time))
+                  ],
+                ),
+              ),
+                ),
+
+            )
+      ],
+    );
+  }
+
+  Widget endTimeTextField(context){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("End Time:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+          flex: 4,
+          child:Container(
+            height: 45,
+            decoration: BoxDecoration(
+              //color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              //border: Border.all(color: AppColors.colorLightGrey),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.colorLightGrey,
+                  blurRadius: 5,
+                  //spreadRadius: 5,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("${screenController.selectedEndTime.hour}:${screenController.selectedEndTime.minute}"),
+                  GestureDetector(
+                      onTap: (){
+                        _selectEndTime(context);
+                      },
+                      child: Icon(Icons.access_time))
+                ],
+              ),
+            ),
+          ),
+
+        )
+      ],
+    );
+  }
+
+  _selectStartTime(BuildContext context) async {
+
+    final TimeOfDay ? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: screenController.selectedStartTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+
+    );
+    if(timeOfDay != null && timeOfDay != screenController.selectedStartTime)
+    {
+      setState(() {
+        screenController.selectedStartTime = timeOfDay;
+      });
+    }
+  }
+
+  _selectEndTime(BuildContext context) async {
+
+    final TimeOfDay ? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: screenController.selectedEndTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+
+    );
+    if(timeOfDay != null && timeOfDay != screenController.selectedEndTime)
+    {
+      setState(() {
+        screenController.selectedEndTime = timeOfDay;
+      });
+    }
+  }
+
   Widget slotSelectionRadioButton(){
     return Row(
       children: [
@@ -892,7 +1113,7 @@ class VendorProfileDetailsModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if(screenController.vendorProfileFormKey.currentState!.validate()){
-
+          screenController.vendorEditProfileFunction();
         }
       },
       child: Container(

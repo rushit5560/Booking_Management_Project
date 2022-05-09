@@ -21,17 +21,21 @@ class VendorProfileScreen extends StatelessWidget {
             CommonAppBarModule(title: "Profile", appBarOption: AppBarOption.singleBackButtonOption),
 
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    VendorProfileDetailsModule(),
-                    SizedBox(height: 20,),
-                    DateScheduleModule(),
-                    SizedBox(height: 20,),
-                    TimeSlots()
-                  ],
-                ).commonAllSidePadding(20),
+              child: Obx(()=>
+              vendorProfileScreenController.isLoading.value ?
+                  Center(child: const CircularProgressIndicator()):
+                 SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      VendorProfileDetailsModule(),
+                      // SizedBox(height: 20,),
+                      // DateScheduleModule(),
+                      // SizedBox(height: 20,),
+                      // TimeSlots()
+                    ],
+                  ).commonAllSidePadding(20),
+                ),
               ),
             )
           ],

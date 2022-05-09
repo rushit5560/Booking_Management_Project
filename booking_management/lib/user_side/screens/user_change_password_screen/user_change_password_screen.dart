@@ -21,6 +21,8 @@ class UserChangePasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   // From Common Widgets
+                  BackButtonModule(),
+                  SizedBox(height: 5),
                   HeaderLogoModule(),
                   SizedBox(height: 50),
                   HeaderTextModule(name: "Change Password"),

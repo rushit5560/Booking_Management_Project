@@ -23,7 +23,7 @@ class VendorProfileScreen extends StatelessWidget {
             Expanded(
               child: Obx(()=>
               vendorProfileScreenController.isLoading.value ?
-                  Center(child: const CircularProgressIndicator()):
+                  const Center(child: CircularProgressIndicator()):
                  SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -7,6 +7,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_profile_screen_controller/vendor_profile_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -1113,7 +1114,12 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
     return GestureDetector(
       onTap: () {
         if(screenController.vendorProfileFormKey.currentState!.validate()){
-          screenController.vendorEditProfileFunction();
+          if(screenController.file == null){
+            Fluttertoast.showToast(msg: "Please Select Profile");
+          } else{
+            screenController.vendorEditProfileFunction();
+          }
+
         }
       },
       child: Container(

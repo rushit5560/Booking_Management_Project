@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/user_side/model/user_change_password_model/user_change_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -68,7 +69,7 @@ class UserChangePasswordScreenController extends GetxController{
       // request.fields['LastVisit'] = "2001-12-01";
       // request.fields['FaxNumber'] = "20";
       // request.fields['DateOfBirth'] = "2001-12-01";
-      request.fields['UserName'] = userNameController.text.trim();
+      request.fields['UserName'] = UserDetails.userName;
       request.fields['CurrentPassword'] = currentPasswordController.text.trim();
       request.fields['NewPassword'] = newPasswordController.text.trim();
       request.fields['Verifypassword'] = confirmPasswordController.text.trim();

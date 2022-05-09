@@ -78,9 +78,9 @@ class SaveButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-        //if(screenController.changePasswordFormKey.currentState!.validate()){
+        if(screenController.changePasswordFormKey.currentState!.validate()){
          await screenController.changePasswordFunction();
-        //}
+        }
       },
       child: Container(
         decoration: BoxDecoration(

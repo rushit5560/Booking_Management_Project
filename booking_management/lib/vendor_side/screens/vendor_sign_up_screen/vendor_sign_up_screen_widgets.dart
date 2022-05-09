@@ -402,6 +402,107 @@ class ConfirmPasswordFieldModule extends StatelessWidget {
   }
 }
 
+class VendorPortalCheckboxModule extends StatelessWidget {
+  const VendorPortalCheckboxModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(()=>
+          Checkbox(
+              value: screenController.vendorPortal.value,
+              activeColor: AppColors.colorLightGrey,
+              onChanged:(bool ? newValue){
+                //setState(() {
+                screenController.vendorPortal.value = newValue!;
+                //});
+                Text('Vendor Portal', style: TextStyle(color: Colors.black),);
+              }),
+        ),
+
+        Text("Are You registering for Vendor portal?")
+      ],
+    );
+  }
+}
+
+class AnyResourcesCheckboxModule extends StatelessWidget {
+  const AnyResourcesCheckboxModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(()=>
+            Checkbox(
+                value: screenController.anyResourcesCheckBox.value,
+                activeColor: AppColors.colorLightGrey,
+                onChanged:(bool ? newValue){
+                  //setState(() {
+                  screenController.anyResourcesCheckBox.value = newValue!;
+                  //});
+                  Text('Resources', style: TextStyle(color: Colors.black),);
+                }),
+        ),
+
+        Text("Do you have any resources?")
+      ],
+    );
+  }
+}
+
+class PriceCheckboxModule extends StatelessWidget {
+  const PriceCheckboxModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(()=>
+            Checkbox(
+                value: screenController.priceCheckBox.value,
+                activeColor: AppColors.colorLightGrey,
+                onChanged:(bool ? newValue){
+                  //setState(() {
+                  screenController.priceCheckBox.value = newValue!;
+                  //});
+                  Text('Resources', style: TextStyle(color: Colors.black),);
+                }),
+        ),
+
+        const Text("Price Display?")
+      ],
+    );
+  }
+}
+
+class AnyServiceCheckboxModule extends StatelessWidget {
+  const AnyServiceCheckboxModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(()=>
+            Checkbox(
+                value: screenController.serviceCheckBox.value,
+                activeColor: Colors.green,
+                onChanged:(bool ? newValue){
+                  //setState(() {
+                  screenController.serviceCheckBox.value = newValue!;
+                  //});
+                  Text('Service', style: TextStyle(color: Colors.black),);
+                }),
+        ),
+
+        const Text("Do you have any Service?")
+      ],
+    );
+  }
+}
+
+
 class VendorSignUpButtonModule extends StatelessWidget {
   const VendorSignUpButtonModule({Key? key}) : super(key: key);
 

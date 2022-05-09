@@ -64,7 +64,11 @@ class VendorSignUpScreen extends StatelessWidget {
                 SizedBox(height: 5),
                 ConfirmPasswordFieldModule(),
                 SizedBox(height: 20),
-
+                //VendorPortalCheckboxModule(),
+                AnyResourcesCheckboxModule(),
+                PriceCheckboxModule(),
+                AnyServiceCheckboxModule(),
+                SizedBox(height: 20),
                 VendorSignUpButtonModule(),
                 SizedBox(height: 50),
 

@@ -35,6 +35,10 @@ class VendorSignUpScreenController extends GetxController {
   final TextEditingController businessIdFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController passwordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController cPasswordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  RxBool vendorPortal = false.obs;
+  RxBool anyResourcesCheckBox = false.obs;
+  RxBool priceCheckBox = false.obs;
+  RxBool serviceCheckBox = false.obs;
 
   vendorSignUpFunction() async {
     isLoading(true);
@@ -89,9 +93,9 @@ class VendorSignUpScreenController extends GetxController {
       request.fields['IsActive'] = "true";
       request.fields['VendorPortal'] = "true";
       request.fields['BusinessId'] = businessIdFieldController.text.trim();
-      request.fields['IsResource'] = "true";
-      request.fields['IsServiceSlots'] = "true";
-      request.fields['IsPriceDisplay'] = "true";
+      request.fields['IsResource'] = anyResourcesCheckBox.toString();
+      request.fields['IsServiceSlots'] = serviceCheckBox.toString();
+      request.fields['IsPriceDisplay'] = priceCheckBox.toString();
       request.fields['BusinessName'] = businessNameFieldController.text.trim();
 
 

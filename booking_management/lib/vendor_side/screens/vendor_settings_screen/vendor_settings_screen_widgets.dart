@@ -1,10 +1,10 @@
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_change_password_screen/user_change_password_screen.dart';
-import 'package:booking_management/vendor_side/screens/business_document_screen/business_document_screen.dart';
 import 'package:booking_management/vendor_side/screens/customer_review_screen/customer_review_screen.dart';
 import 'package:booking_management/vendor_side/screens/my_customer_screen/my_customer_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_chat_list_screen/vendor_chat_list_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_profile_screen/vendor_profile_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_resources_screen.dart';
@@ -102,7 +102,7 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
       Get.to(()=> const VendorServicesScreen(), transition: Transition.rightToLeft);
      } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.businessDocument) {
-      Get.to(()=> const BusinessDocumentScreen(), transition: Transition.rightToLeft);
+      Get.to(()=> VendorBusinessDocumentScreen(), transition: Transition.rightToLeft);
     }
     else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.review) {

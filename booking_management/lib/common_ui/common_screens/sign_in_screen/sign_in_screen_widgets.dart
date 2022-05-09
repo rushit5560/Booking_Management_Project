@@ -1,6 +1,4 @@
 import 'package:booking_management/common_ui/common_screens/forgot_password_screen/forgot_password_screen.dart';
-import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
-import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/field_decorations.dart';
@@ -9,11 +7,9 @@ import '../../../user_side/screens/user_sign_up_screen/user_sign_up_screen.dart'
 import '../../common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
 
 
-
-
 class EmailFieldModule extends StatelessWidget {
   EmailFieldModule({Key? key}) : super(key: key);
-  SignInScreenController screenController = Get.find<SignInScreenController>();
+  final screenController = Get.find<SignInScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,7 @@ class EmailFieldModule extends StatelessWidget {
 
 class PasswordFieldModule extends StatelessWidget {
   PasswordFieldModule({Key? key}) : super(key: key);
-  SignInScreenController screenController = Get.find<SignInScreenController>();
+  final screenController = Get.find<SignInScreenController>();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -45,7 +41,7 @@ class PasswordFieldModule extends StatelessWidget {
 
 class SignInButtonModule extends StatelessWidget {
   SignInButtonModule({Key? key}) : super(key: key);
-  SignInScreenController screenController = Get.find<SignInScreenController>();
+  final screenController = Get.find<SignInScreenController>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -125,7 +121,7 @@ class SignUpTextModule extends StatelessWidget {
         const Text("Don't have an account? "),
         GestureDetector(
           onTap: () {
-            Get.off(()=> UserSignUpScreen());
+            Get.to(()=> UserSignUpScreen());
           },
           child: const Text(
             'Sign Up',

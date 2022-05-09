@@ -11,7 +11,8 @@ class SharedPreferenceData{
   String vendorIdKey = "vendorIdKey";
   String customerIdKey = "customerIdKey";
 
-  // This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
+
+  /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({required String userId, required String role, required int vendorId, required int customerId}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

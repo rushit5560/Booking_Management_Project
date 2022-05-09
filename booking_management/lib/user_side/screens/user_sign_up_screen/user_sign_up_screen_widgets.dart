@@ -7,10 +7,10 @@ import '../../../common_modules/field_validation.dart';
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 
-UserSignUpScreenController screenController = Get.find<UserSignUpScreenController>();
 
 class UserNameFieldModule extends StatelessWidget {
-  const UserNameFieldModule({Key? key}) : super(key: key);
+  UserNameFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,8 @@ class UserNameFieldModule extends StatelessWidget {
 }
 
 class LastNameFieldModule extends StatelessWidget {
-  const LastNameFieldModule({Key? key}) : super(key: key);
+  LastNameFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,8 @@ class LastNameFieldModule extends StatelessWidget {
 }
 
 class GenderFieldModule extends StatelessWidget {
-  const GenderFieldModule({Key? key}) : super(key: key);
+  GenderFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +65,9 @@ class GenderFieldModule extends StatelessWidget {
   }
 }
 
-
 class EmailFieldModule extends StatelessWidget {
-  const EmailFieldModule({Key? key}) : super(key: key);
+  EmailFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +85,15 @@ class EmailFieldModule extends StatelessWidget {
 }
 
 class MobileFieldModule extends StatelessWidget {
-  const MobileFieldModule({Key? key}) : super(key: key);
+  MobileFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: screenController.mobileFieldController,
       keyboardType: TextInputType.phone,
+      maxLength: 10,
       validator: (value) => FieldValidator().validateMobile(value!),
       decoration: signUpFormFieldDecoration(
         controller: screenController,
@@ -101,7 +105,8 @@ class MobileFieldModule extends StatelessWidget {
 }
 
 class AddressFieldModule extends StatelessWidget {
-  const AddressFieldModule({Key? key}) : super(key: key);
+  AddressFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +124,8 @@ class AddressFieldModule extends StatelessWidget {
 }
 
 class PasswordFieldModule extends StatelessWidget {
-  const PasswordFieldModule({Key? key}) : super(key: key);
+  PasswordFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +153,8 @@ class PasswordFieldModule extends StatelessWidget {
 }
 
 class CPasswordFieldModule extends StatelessWidget {
-  const CPasswordFieldModule({Key? key}) : super(key: key);
+  CPasswordFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +195,8 @@ class CPasswordFieldModule extends StatelessWidget {
 }
 
 class DOBFieldModule extends StatelessWidget {
-  const DOBFieldModule({Key? key}) : super(key: key);
+  DOBFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +215,8 @@ class DOBFieldModule extends StatelessWidget {
 }
 
 class CountryFieldModule extends StatelessWidget {
-  const CountryFieldModule({Key? key}) : super(key: key);
+  CountryFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +234,8 @@ class CountryFieldModule extends StatelessWidget {
 }
 
 class StateFieldModule extends StatelessWidget {
-  const StateFieldModule({Key? key}) : super(key: key);
+  StateFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +253,8 @@ class StateFieldModule extends StatelessWidget {
 }
 
 class CityFieldModule extends StatelessWidget {
-  const CityFieldModule({Key? key}) : super(key: key);
+  CityFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -261,22 +272,15 @@ class CityFieldModule extends StatelessWidget {
 }
 
 class SignUpButtonModule extends StatelessWidget {
-  const SignUpButtonModule({Key? key}) : super(key: key);
+  SignUpButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
         if(screenController.signUpFormKey.currentState!.validate()){
-          await screenController.userSignUpFunction(
-              /*firstName: screenController.nameFieldController.text.trim(),
-              lastName: screenController.lastNameFieldController.text.trim(),
-              state: screenController.stateFieldController.text.trim(),
-              city: screenController.cityFieldController.text.trim(),
-            email: screenController.emailFieldController.text.trim(),
-            password: screenController.passwordFieldController.text.trim(),
-            mobile: screenController.mobileFieldController.text.trim()*/
-          );
+          await screenController.userSignUpFunction();
         }
       },
       child: Container(
@@ -317,7 +321,7 @@ class VendorSignUpTextModule extends StatelessWidget {
         const Text('Register as Vendor? '),
         GestureDetector(
           onTap: () {
-            Get.to(() => VendorSignUpScreen());
+            Get.off(() => VendorSignUpScreen());
           },
           child: const Text(
             'Sign Up',

@@ -53,6 +53,7 @@ InputDecoration signUpFormFieldDecoration({
   return InputDecoration(
       hintText: hintText,
       hintStyle: const TextStyle(color: Colors.grey),
+      counterText: "",
       enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black)),
       focusedBorder: const UnderlineInputBorder(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../common_modules/field_decorations.dart';
 import '../../../../common_modules/field_validation.dart';
 import '../../../controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
 
@@ -27,7 +28,7 @@ class ServiceNameFieldModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
+        const Text(
           "Name",
           style: TextStyle(
             fontSize: 18,
@@ -39,7 +40,7 @@ class ServiceNameFieldModule extends StatelessWidget {
           controller: vendorResourcesScreenController.serviceNameFieldController,
           keyboardType: TextInputType.text,
           validator: (value) => FieldValidator().validateServiceName(value!),
-          decoration: vendorSignUpFormFieldDecoration(hintText: 'User Name', controller: screenController),
+          decoration: serviceFormFieldDecoration(hintText: 'Service Name'),
         )
       ],
     );

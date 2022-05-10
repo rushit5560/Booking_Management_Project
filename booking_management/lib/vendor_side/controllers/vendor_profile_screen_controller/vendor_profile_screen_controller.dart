@@ -63,17 +63,23 @@ class VendorProfileScreenController extends GetxController{
     String url = ApiUrl.vendorEditProfileApi;
     log('Url : $url');
 
+    Map<String, String> headers= <String,String>{
+      'Authorization': UserDetails.apiToken
+    };
+    log('UserDetails.apiToken: ${UserDetails.apiToken}');
+
     try{
-      if(file != null){
+      //if(file != null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        var stream = http.ByteStream(file!.openRead());
-        stream.cast();
+        //var stream = http.ByteStream(file!.openRead());
+        //stream.cast();
 
-        var length = await file!.length();
+        //var length = await file!.length();
 
-        request.files.add(
-            await http.MultipartFile.fromPath("file", file!.path));
+        request.headers.addAll(headers);
+        // request.files.add(
+        //     await http.MultipartFile.fromPath("file", file!.path));
 
         request.fields['CategoryId'] = "1";
         request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
@@ -93,7 +99,7 @@ class VendorProfileScreenController extends GetxController{
 
         log('request.fields: ${request.fields}');
         log('request.files: ${request.files}');
-
+        log('request.headers: ${request.headers}');
         // var multiPart = http.MultipartFile(
         //   'file',
         //   stream,
@@ -102,8 +108,8 @@ class VendorProfileScreenController extends GetxController{
 
         //request.files.add(multiPart);
 
-        var multiPart = http.MultipartFile('file', stream, length);
-        request.files.add(multiPart);
+        //var multiPart = http.MultipartFile('file', stream, length);
+        //request.files.add(multiPart);
         var response = await request.send();
         log('response: ${response.request}');
 
@@ -126,7 +132,7 @@ class VendorProfileScreenController extends GetxController{
             log('False False');
           }
         });
-      } else if(file == null){
+     /* } else if(file == null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         //var stream = http.ByteStream(file!.openRead());
@@ -136,6 +142,8 @@ class VendorProfileScreenController extends GetxController{
 
         // request.files.add(
         //     await http.MultipartFile.fromPath("file", file!.path));
+
+        request.headers.addAll(headers);
 
         request.fields['CategoryId'] = "1";
         request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
@@ -188,7 +196,7 @@ class VendorProfileScreenController extends GetxController{
             log('False False');
           }
         });
-      }
+      }*/
 
 
       // http.Response response = await http.post(Uri.parse(url));

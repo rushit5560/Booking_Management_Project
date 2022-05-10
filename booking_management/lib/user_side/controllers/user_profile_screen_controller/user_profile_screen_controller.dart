@@ -30,8 +30,15 @@ class UserProfileScreenController extends GetxController{
     String url = ApiUrl.userProfileApi;
     log("Update User Profile : $url");
 
+    Map<String, String> headers= <String,String>{
+      'Authorization': UserDetails.apiToken
+    };
+    log('UserDetails.apiToken: ${UserDetails.apiToken}');
+
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      request.headers.addAll(headers);
 
       request.fields['Id'] = UserDetails.tableWiseId.toString();
       request.fields['PhoneNo'] = mobileTextFieldController.text.trim();

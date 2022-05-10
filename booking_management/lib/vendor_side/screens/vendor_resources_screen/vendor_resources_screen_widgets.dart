@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common_modules/container_decorations.dart';
+import '../../controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
 
 class VendorResourcesListModule extends StatelessWidget {
-  const VendorResourcesListModule({Key? key}) : super(key: key);
+  VendorResourcesListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class VendorResourcesListModule extends StatelessWidget {
             Get.to(() => ChooseCourtScreen());
           },
           child: Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
+            margin: const EdgeInsets.only(left: 5, right: 5),
             decoration: shadowDecoration(),
             child: Padding(
               padding: const EdgeInsets.all(5),

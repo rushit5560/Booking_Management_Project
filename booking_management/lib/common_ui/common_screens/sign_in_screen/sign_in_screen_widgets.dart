@@ -121,7 +121,7 @@ class SignUpTextModule extends StatelessWidget {
         const Text("Don't have an account? "),
         GestureDetector(
           onTap: () {
-            Get.to(()=> UserSignUpScreen());
+            Get.off(()=> UserSignUpScreen());
           },
           child: const Text(
             'Sign Up',

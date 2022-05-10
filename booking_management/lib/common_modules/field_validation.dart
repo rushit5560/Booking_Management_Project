@@ -105,6 +105,20 @@ class FieldValidator {
     return null;
   }
 
+  String? validateServiceName(String value) {
+    String  pattern = r'^(?=.*?[A-Z])';
+    RegExp regExp =  RegExp(pattern);
+    //return
+    if (value.isEmpty) {
+      return 'Servicename is required';
+    } else{
+      if(!regExp.hasMatch(value)){
+        return 'AtLeast 1 uppercase letter is required';
+      }
+    }
+    return null;
+  }
+
   String? validateCityName(String value) {
     if (value.isEmpty) {
       return 'City is required';

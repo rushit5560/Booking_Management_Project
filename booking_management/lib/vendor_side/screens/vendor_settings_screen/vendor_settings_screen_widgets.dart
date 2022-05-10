@@ -96,7 +96,7 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
       Get.to(() => VendorWalletScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.resources) {
-      Get.to(()=> const VendorResourcesScreen(), transition: Transition.rightToLeft);
+      Get.to(()=> VendorResourcesScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.services) {
       Get.to(()=> const VendorServicesScreen(), transition: Transition.rightToLeft);

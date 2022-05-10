@@ -300,3 +300,6 @@ InputDecoration vendorBankFormFieldDecoration(
       );
 }
 
+InputDecoration serviceFormFieldDecoration() {
+  return
+}

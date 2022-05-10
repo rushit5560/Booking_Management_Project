@@ -1,4 +1,3 @@
-import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,7 +47,7 @@ class ServicesListModule extends StatelessWidget {
     return ListView.builder(
         itemCount: 6,
         shrinkWrap: true,
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, i){
           return Container(
             margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
@@ -70,8 +69,8 @@ class ServicesListModule extends StatelessWidget {
                   //flex: 68,
                   child: Row(
                     children: [
-                      _userImageModule(i),
-                      const SizedBox(width: 10),
+                      // _userImageModule(i),
+                      // const SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,15 +93,27 @@ class ServicesListModule extends StatelessWidget {
                   ),
                 ),
 
-                Row(
-                  children: const [
-                    Icon(Icons.edit),
-                    SizedBox(width: 10),
-                    Icon(Icons.delete)
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.edit,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                    ),
                   ],
                 ),
 
-                 const SizedBox(width: 5),
+                const SizedBox(width: 5),
 
                 //_viewButton(),
               ],
@@ -111,13 +122,13 @@ class ServicesListModule extends StatelessWidget {
         });
   }
 
-  Widget _userImageModule(i) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
-      child: Image.asset(AppImages.vendorImg, scale: 15,),
-    );
-  }
+  // Widget _userImageModule(i) {
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.circular(10),
+  //     //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
+  //     child: Image.asset(AppImages.vendorImg, scale: 15,),
+  //   );
+  // }
 
   Widget _categoryModule(i) {
     return const Text(
@@ -148,4 +159,15 @@ class ServicesListModule extends StatelessWidget {
     return const Text("1 Hour",
         style: TextStyle(fontSize: 12));
   }
+
+  showBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+        builder: (context) {
+        return Container();
+        }
+    );
+  }
+
+
 }

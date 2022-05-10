@@ -106,16 +106,16 @@ class FieldValidator {
   }
 
   String? validateServiceName(String value) {
-    String  pattern = r'^(?=.*?[A-Z])';
-    RegExp regExp =  RegExp(pattern);
+    // String  pattern = r'^(?=.*?[A-Z])';
+    // RegExp regExp =  RegExp(pattern);
     //return
     if (value.isEmpty) {
       return 'Servicename is required';
-    } else{
+    } /*else{
       if(!regExp.hasMatch(value)){
         return 'AtLeast 1 uppercase letter is required';
       }
-    }
+    }*/
     return null;
   }
 
@@ -157,6 +157,20 @@ class FieldValidator {
   String? validateDescription(String value) {
     if (value.isEmpty) {
       return 'Description is required';
+    }
+    return null;
+  }
+
+  String? validateShortDescription(String value) {
+    if (value.isEmpty) {
+      return 'Short description is required';
+    }
+    return null;
+  }
+
+  String? validateLongDescription(String value) {
+    if (value.isEmpty) {
+      return 'Long description is required';
     }
     return null;
   }

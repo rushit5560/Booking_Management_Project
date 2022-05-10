@@ -304,13 +304,15 @@ InputDecoration serviceFormFieldDecoration({required String hintText}) {
   return InputDecoration(
     hintText: hintText,
     hintStyle: const TextStyle(color: Colors.grey),
-    enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
-    focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
-    errorBorder:
-    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-    focusedErrorBorder:
-    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+    border: InputBorder.none,
+    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+    // enabledBorder: const UnderlineInputBorder(
+    //     borderSide: BorderSide(color: Colors.black)),
+    // focusedBorder: const UnderlineInputBorder(
+    //     borderSide: BorderSide(color: Colors.black)),
+    // errorBorder:
+    // const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+    // focusedErrorBorder:
+    // const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
   );
 }

@@ -3,9 +3,13 @@ import 'package:booking_management/common_modules/custom_appbar/custom_appbar.da
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/vendor_services_screen/vendor_services_screen_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/vendor_services_screen_controller/vendor_services_screen_controller.dart';
 
 class VendorServicesScreen extends StatelessWidget {
-  const VendorServicesScreen({Key? key}) : super(key: key);
+  VendorServicesScreen({Key? key}) : super(key: key);
+  final vendorServicesScreenController = Get.put(VendorServicesScreenController());
 
   @override
   Widget build(BuildContext context) {

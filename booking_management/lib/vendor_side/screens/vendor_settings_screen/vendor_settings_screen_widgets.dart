@@ -100,7 +100,7 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
       Get.to(()=> VendorResourcesScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.services) {
-      Get.to(()=> const VendorServicesScreen(), transition: Transition.rightToLeft);
+      Get.to(()=> VendorServicesScreen(), transition: Transition.rightToLeft);
      } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.businessDocument) {
       Get.to(()=> VendorBusinessDocumentScreen(), transition: Transition.rightToLeft);

@@ -24,4 +24,9 @@ class ApiUrl {
   static const vendorConfirmAppointmentApi = apiMainPath + "Appointments/APIAppointmentConfirm";
   static const vendorDoneAppointmentApi = apiMainPath + "Appointments/APIAppointmentDone";
   static const vendorEditProfileApi = apiMainPath + "API/VendorProfile";
+
+  static const vendorAddAndUpdateServiceApi = apiMainPath + "API/ServiceUpsert";
+  static const vendorGetAllResourcesApi = apiMainPath + "API/ServiceIndex";
+  static const vendorGetServiceDetailsApi = apiMainPath + "API/ResourceGetById";
+  static const vendorDeleteServiceApi = apiMainPath + "API/ServiceDelete";
 }

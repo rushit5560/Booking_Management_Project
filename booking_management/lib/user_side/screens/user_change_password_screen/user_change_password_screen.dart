@@ -13,32 +13,30 @@ class UserChangePasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Form(
-          child: SingleChildScrollView(
-            child: Form(
-              key: userChangePasswordScreenController.changePasswordFormKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  // From Common Widgets
-                  BackButtonModule(),
-                  SizedBox(height: 5),
-                  HeaderLogoModule(),
-                  SizedBox(height: 50),
-                  HeaderTextModule(name: "Change Password"),
-                  SizedBox(height: 80),
-                  // UserNameModule(),
-                  // SizedBox(height: 5),
-                  CurrentPasswordTextFieldModule(),
-                  SizedBox(height: 5),
-                  NewPasswordTextFieldModule(),
-                  SizedBox(height: 5),
-                  ConfirmPasswordTextFieldModule(),
-                  SizedBox(height: 45),
-                  SaveButtonModule(),
-                ],
-              ).commonAllSidePadding(20),
-            ),
+        child: SingleChildScrollView(
+          child: Form(
+            key: userChangePasswordScreenController.changePasswordFormKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // From Common Widgets
+                const BackButtonModule(),
+                const SizedBox(height: 5),
+                const HeaderLogoModule(),
+                const SizedBox(height: 50),
+                const HeaderTextModule(name: "Change Password"),
+                const SizedBox(height: 80),
+                // UserNameModule(),
+                // SizedBox(height: 5),
+                CurrentPasswordTextFieldModule(),
+                const SizedBox(height: 5),
+                NewPasswordTextFieldModule(),
+                const SizedBox(height: 5),
+                ConfirmPasswordTextFieldModule(),
+                const SizedBox(height: 45),
+                SaveButtonModule(),
+              ],
+            ).commonAllSidePadding(20),
           ),
         ),
       ),

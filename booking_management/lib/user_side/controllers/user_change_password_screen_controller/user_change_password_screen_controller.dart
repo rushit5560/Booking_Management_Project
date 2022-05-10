@@ -30,8 +30,15 @@ class UserChangePasswordScreenController extends GetxController{
     String url = ApiUrl.userChangePasswordApi;
     log('Url : $url');
 
+    Map<String, String> headers= <String,String>{
+      'Authorization': UserDetails.apiToken
+    };
+    log('UserDetails.apiToken: ${UserDetails.apiToken}');
+
     try{
       var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      request.headers.addAll(headers);
 
       request.fields['UserName'] = UserDetails.userName;
       request.fields['CurrentPassword'] = currentPasswordController.text.trim();

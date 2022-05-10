@@ -27,8 +27,8 @@ class VendorEditProfileModel {
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     message: json["message"] ?? "",
-    dataVendor: DataVendor.fromJson(json["dataVendor"]),
-    dataWorkingHours: DataWorkingHours.fromJson(json["dataWorkingHours"]),
+    dataVendor: DataVendor.fromJson(json["dataVendor"] ?? {}),
+    dataWorkingHours: DataWorkingHours.fromJson(json["dataWorkingHours"] ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
@@ -68,10 +68,10 @@ class DataVendor {
     required this.latitude,
     required this.longitude,
     required this.vendorVerificationDate,
-    required this.applicationUser,
+    //required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
-    required this.applicationUserModifier,
+    //required this.applicationUserModifier,
     required this.review,
     required this.rating,
     required this.vendorWorkingHours,
@@ -112,10 +112,10 @@ class DataVendor {
   int latitude;
   int longitude;
   String vendorVerificationDate;
-  ApplicationUser applicationUser;
+ // ApplicationUser applicationUser;
   String modifiedBy;
-  DateTime modifiedOn;
-  String applicationUserModifier;
+  String modifiedOn;
+  //String applicationUserModifier;
   String review;
   String rating;
   String vendorWorkingHours;
@@ -156,10 +156,10 @@ class DataVendor {
     latitude: json["latitude"] ?? 0,
     longitude: json["longitude"] ?? 0,
     vendorVerificationDate: json["vendorVerificationDate"] ?? "",
-    applicationUser: ApplicationUser.fromJson(json["applicationUser"] ?? {}),
+    //applicationUser: ApplicationUser.fromJson(json["applicationUser"] ?? {}),
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
-    applicationUserModifier: json["applicationUserModifier"] ?? "",
+    modifiedOn: json["modifiedOn"] ?? "",
+    //applicationUserModifier: json["applicationUserModifier"] ?? "",
     review: json["review"] ?? "",
     rating: json["rating"] ?? "",
     vendorWorkingHours: json["vendorWorkingHours"] ?? "",
@@ -201,10 +201,10 @@ class DataVendor {
     "latitude": latitude,
     "longitude": longitude,
     "vendorVerificationDate": vendorVerificationDate,
-    "applicationUser": applicationUser.toJson(),
+   // "applicationUser": applicationUser.toJson(),
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn.toIso8601String(),
-    "applicationUserModifier": applicationUserModifier,
+    "modifiedOn": modifiedOn,
+   // "applicationUserModifier": applicationUserModifier,
     "review": review,
     "rating": rating,
     "vendorWorkingHours": vendorWorkingHours,
@@ -312,8 +312,8 @@ class DataWorkingHours {
     required this.createdOn,
     required this.modifiedBy,
     required this.modifiedOn,
-    required this.applicationUserCreator,
-    required this.applicationUserModifier,
+   // required this.applicationUserCreator,
+   // required this.applicationUserModifier,
     required this.timeDuration,
     required this.duration,
     required this.slot,
@@ -327,15 +327,15 @@ class DataWorkingHours {
   int id;
   int vendorId;
   DataVendor vendors;
-  DateTime startTime;
-  DateTime endTime;
+  String startTime;
+  String endTime;
   bool isActive;
   String createdBy;
   String createdOn;
   String modifiedBy;
-  DateTime modifiedOn;
-  String applicationUserCreator;
-  String applicationUserModifier;
+  String modifiedOn;
+  //String applicationUserCreator;
+  //String applicationUserModifier;
   int timeDuration;
   int duration;
   String slot;
@@ -349,15 +349,15 @@ class DataWorkingHours {
     id: json["id"] ?? 0,
     vendorId: json["vendorId"] ?? 0,
     vendors: DataVendor.fromJson(json["vendors"] ?? {}),
-    startTime: DateTime.parse(json["startTime"] ?? DateTime.now()),
-    endTime: DateTime.parse(json["endTime"] ?? DateTime.now()),
+    startTime: json["startTime"] ?? "",
+    endTime: json["endTime"] ?? "",
     isActive: json["isActive"] ?? false,
     createdBy: json["createdBy"] ?? "",
     createdOn: json["createdOn"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
-    applicationUserCreator: json["applicationUserCreator"] ?? "",
-    applicationUserModifier: json["applicationUserModifier"] ?? "",
+    modifiedOn: json["modifiedOn"] ?? "",
+    //applicationUserCreator: json["applicationUserCreator"] ?? "",
+   // applicationUserModifier: json["applicationUserModifier"] ?? "",
     timeDuration: json["timeDuration"] ?? 0,
     duration: json["duration"] ?? 0,
     slot: json["slot"] ?? "",
@@ -372,15 +372,15 @@ class DataWorkingHours {
     "id": id,
     "vendorId": vendorId,
     "vendors": vendors.toJson(),
-    "startTime": startTime.toIso8601String(),
-    "endTime": endTime.toIso8601String(),
+    "startTime": startTime,
+    "endTime": endTime,
     "isActive": isActive,
     "createdBy": createdBy,
     "createdOn": createdOn,
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn.toIso8601String(),
-    "applicationUserCreator": applicationUserCreator,
-    "applicationUserModifier": applicationUserModifier,
+    "modifiedOn": modifiedOn,
+    //"applicationUserCreator": applicationUserCreator,
+   // "applicationUserModifier": applicationUserModifier,
     "timeDuration": timeDuration,
     "duration": duration,
     "slot": slot,

@@ -4,7 +4,7 @@ import 'package:booking_management/user_side/controllers/user_change_password_sc
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
+
 
 class BackButtonModule extends StatelessWidget {
   const BackButtonModule({Key? key}) : super(key: key);
@@ -24,7 +24,8 @@ class BackButtonModule extends StatelessWidget {
 }
 
 class UserNameModule extends StatelessWidget {
-  const UserNameModule({Key? key}) : super(key: key);
+   UserNameModule({Key? key}) : super(key: key);
+   UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,8 @@ class UserNameModule extends StatelessWidget {
 }
 
 class CurrentPasswordTextFieldModule extends StatelessWidget {
-  const CurrentPasswordTextFieldModule({Key? key}) : super(key: key);
+  CurrentPasswordTextFieldModule({Key? key}) : super(key: key);
+  UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,8 @@ class CurrentPasswordTextFieldModule extends StatelessWidget {
 }
 
 class NewPasswordTextFieldModule extends StatelessWidget {
-  const NewPasswordTextFieldModule({Key? key}) : super(key: key);
+  NewPasswordTextFieldModule({Key? key}) : super(key: key);
+  UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,8 @@ class NewPasswordTextFieldModule extends StatelessWidget {
 }
 
 class ConfirmPasswordTextFieldModule extends StatelessWidget {
-  const ConfirmPasswordTextFieldModule({Key? key}) : super(key: key);
+  ConfirmPasswordTextFieldModule({Key? key}) : super(key: key);
+  UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +93,8 @@ class ConfirmPasswordTextFieldModule extends StatelessWidget {
 }
 
 class SaveButtonModule extends StatelessWidget {
-  const SaveButtonModule({Key? key}) : super(key: key);
+  SaveButtonModule({Key? key}) : super(key: key);
+  UserChangePasswordScreenController screenController = Get.find<UserChangePasswordScreenController>();
 
   @override
   Widget build(BuildContext context) {

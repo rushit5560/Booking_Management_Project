@@ -60,89 +60,132 @@ class VendorProfileScreenController extends GetxController{
     log('Url : $url');
 
     try{
-      /*Map<String, dynamic> data = {
-        "FirstName": firstName,
-        "LastName": lastName,
-        "State" : state,
-        "City" : city,
-        "Email" : email,
-        "PasswordHash" : password,
-        "PhoneNo" : mobile,
-        // "Gender" : "Male",
-        // "About" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-        // "FaxNumber" : "20",
-        // "IsActive": "true",
-        //"DateOfBirth" : dobFieldController.text.trim()
-      };*/
+      if(file != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      //log('data : $data');
+        var stream = http.ByteStream(file!.openRead());
+        stream.cast();
 
-      //var stream = http.ByteStream(file!.openRead());
-      //stream.cast();
+        var length = await file!.length();
 
-      //var length = await file!.length();
+        request.files.add(
+            await http.MultipartFile.fromPath("file", file!.path));
 
-      var request = http.MultipartRequest('POST', Uri.parse(url));
-
-      var stream = http.ByteStream(file!.openRead());
-      stream.cast();
-
-      var length = await file!.length();
-
-      request.files.add(
-          await http.MultipartFile.fromPath("file", file!.path));
-
-      request.fields['CategoryId'] = "1";
-      request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
-      request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
-      request.fields['Street'] = streetTextFieldController.text.trim();
-      request.fields['Suburb'] = subUrbTextFieldController.text.trim();
-      request.fields['Postcode'] = postCodeTextFieldController.text.trim();
-      request.fields['State'] = stateTextFieldController.text.trim();
-      request.fields['Country'] = countryTextFieldController.text.trim();
-      request.fields['Address'] = addressTextFieldController.text.trim();
-      request.fields['ModifiedBy'] = UserDetails.uniqueId;
-      request.fields['Duration'] = slotDurationValue.value;
-      request.fields['StartTime'] = "09-05-2022 19:30:00";
-      request.fields['EndTime'] = "09-05-2022 19:30:00";
-      request.fields['Id'] = UserDetails.tableWiseId.toString();
+        request.fields['CategoryId'] = "1";
+        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
+        request.fields['Street'] = streetTextFieldController.text.trim();
+        request.fields['Suburb'] = subUrbTextFieldController.text.trim();
+        request.fields['Postcode'] = postCodeTextFieldController.text.trim();
+        request.fields['State'] = stateTextFieldController.text.trim();
+        request.fields['Country'] = countryTextFieldController.text.trim();
+        request.fields['Address'] = addressTextFieldController.text.trim();
+        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['Duration'] = slotDurationValue.value;
+        request.fields['StartTime'] = "09-05-2022 19:30:00";
+        request.fields['EndTime'] = "09-05-2022 19:30:00";
+        request.fields['Id'] = UserDetails.tableWiseId.toString();
 
 
-      log('request.fields: ${request.fields}');
-      log('request.files: ${request.files}');
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
 
-      // var multiPart = http.MultipartFile(
-      //   'file',
-      //   stream,
-      //   length,
-      // );
+        // var multiPart = http.MultipartFile(
+        //   'file',
+        //   stream,
+        //   length,
+        // );
 
-      //request.files.add(multiPart);
+        //request.files.add(multiPart);
 
-      var multiPart = http.MultipartFile('file', stream, length);
-      request.files.add(multiPart);
-      var response = await request.send();
-      log('response: ${response.request}');
+        var multiPart = http.MultipartFile('file', stream, length);
+        request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
 
-      response.stream.transform(utf8.decoder).listen((value) {
-        VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
-        log('response1 ::::::${response1.statusCode}');
-        isStatus = response1.statusCode.obs;
-        log('status : $isStatus');
-        log('success : ${response1.statusCode}');
+        response.stream.transform(utf8.decoder).listen((value) {
+          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.statusCode}');
+          isStatus = response1.statusCode.obs;
+          log('status : $isStatus');
+          log('success : ${response1.statusCode}');
 
-        if(isStatus.value == 200){
-          //UserDetails().vendorId = response1.data.id;
-          //log("Vendor Id: ${UserDetails().vendorId}");
-          Fluttertoast.showToast(msg: response1.message);
-          //clearSignUpFieldsFunction();
-          //Get.off(SignInScreen(), transition: Transition.zoom);
+          if(isStatus.value == 200){
+            //UserDetails().vendorId = response1.data.id;
+            //log("Vendor Id: ${UserDetails().vendorId}");
+            Fluttertoast.showToast(msg: response1.message);
+            //clearSignUpFieldsFunction();
+            //Get.off(SignInScreen(), transition: Transition.zoom);
 
-        } else {
-          // Fluttertoast.showToast(msg: "${response1.message}");
-          log('False False');
-        }
-      });
+          } else {
+            // Fluttertoast.showToast(msg: "${response1.message}");
+            log('False False');
+          }
+        });
+      } else if(file == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(file!.openRead());
+        //stream.cast();
+
+        //var length = await file!.length();
+
+        // request.files.add(
+        //     await http.MultipartFile.fromPath("file", file!.path));
+
+        request.fields['CategoryId'] = "1";
+        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
+        request.fields['Street'] = streetTextFieldController.text.trim();
+        request.fields['Suburb'] = subUrbTextFieldController.text.trim();
+        request.fields['Postcode'] = postCodeTextFieldController.text.trim();
+        request.fields['State'] = stateTextFieldController.text.trim();
+        request.fields['Country'] = countryTextFieldController.text.trim();
+        request.fields['Address'] = addressTextFieldController.text.trim();
+        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['Duration'] = slotDurationValue.value;
+        request.fields['StartTime'] = "09-05-2022 19:30:00";
+        request.fields['EndTime'] = "09-05-2022 19:30:00";
+        request.fields['Id'] = UserDetails.tableWiseId.toString();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'file',
+        //   stream,
+        //   length,
+        // );
+
+        //request.files.add(multiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+       // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.statusCode}');
+          isStatus = response1.statusCode.obs;
+          log('status : $isStatus');
+          log('success : ${response1.statusCode}');
+
+          if(isStatus.value == 200){
+            //UserDetails().vendorId = response1.data.id;
+            //log("Vendor Id: ${UserDetails().vendorId}");
+            Fluttertoast.showToast(msg: response1.message);
+            //clearSignUpFieldsFunction();
+            //Get.off(SignInScreen(), transition: Transition.zoom);
+
+          } else {
+            // Fluttertoast.showToast(msg: "${response1.message}");
+            log('False False');
+          }
+        });
+      }
+
 
       // http.Response response = await http.post(Uri.parse(url));
       //
@@ -170,5 +213,22 @@ class VendorProfileScreenController extends GetxController{
   loadUI() {
     isLoading(true);
     isLoading(false);
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    nameTextFieldController.text = UserDetails.userName;
+    mobileTextFieldController.text = UserDetails.phoneNo;
+    emailTextFieldController.text = UserDetails.email;
+    businessNameTextFieldController.text = UserDetails.businessName;
+    addressTextFieldController.text = UserDetails.address;
+    streetTextFieldController.text = UserDetails.street;
+    stateTextFieldController.text = UserDetails.state;
+    countryTextFieldController.text = UserDetails.country;
+    subUrbTextFieldController.text = UserDetails.subUrb;
+    postCodeTextFieldController.text = UserDetails.postCode;
+    //file = File(UserDetails.vendorProfile);
   }
 }

@@ -172,6 +172,9 @@ class VendorSignUpScreenController extends GetxController {
     postCodeFieldController.clear();
     businessNameFieldController.clear();
     businessIdFieldController.clear();
+    anyResourcesCheckBox(false);
+    priceCheckBox(false);
+    serviceCheckBox(false);
   }
 
 }

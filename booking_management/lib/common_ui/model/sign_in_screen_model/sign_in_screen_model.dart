@@ -323,8 +323,8 @@ class Vendor {
     required this.lastName,
     required this.email,
     required this.phoneNo,
-    required this.address1,
-    required this.address2,
+    required this.address,
+    //required this.address2,
     required this.isActive,
     required this.userId,
     required this.vendorPortal,
@@ -360,8 +360,8 @@ class Vendor {
   String lastName;
   String email;
   String phoneNo;
-  String address1;
-  String address2;
+  String address;
+  //String address2;
   bool isActive;
   String userId;
   bool vendorPortal;
@@ -397,8 +397,8 @@ class Vendor {
     lastName: json["lastName"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
-    address1: json["address1"] ?? "",
-    address2: json["address2"] ?? "",
+    address: json["address"] ?? "",
+    //address2: json["address2"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     vendorPortal: json["vendorPortal"] ?? false,
@@ -435,8 +435,8 @@ class Vendor {
     "lastName": lastName,
     "email": email,
     "phoneNo": phoneNo,
-    "address1": address1,
-    "address2": address2,
+    "address": address,
+   // "address2": address2,
     "isActive": isActive,
     "userId": userId,
     "vendorPortal": vendorPortal,

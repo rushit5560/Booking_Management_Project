@@ -30,8 +30,8 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
       key: screenController.vendorProfileFormKey,
       child: Column(
         children: [
-          profile(),
-          const SizedBox(height: 30),
+          //profile(),
+          //const SizedBox(height: 30),
           userNameTextField(),
           const SizedBox(height: 15),
           emailTextField(),

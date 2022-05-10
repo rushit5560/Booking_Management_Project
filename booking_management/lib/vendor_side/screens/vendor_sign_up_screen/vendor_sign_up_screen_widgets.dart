@@ -354,7 +354,7 @@ class PasswordFieldModule extends StatelessWidget {
         obscureText: screenController.isPasswordVisible.value,
         validator: (value) => FieldValidator().validatePassword(value!),
         decoration: vendorSignUpFormFieldDecoration(
-            hintText: 'Create Password',
+            hintText: 'Password',
             controller: screenController,
           index: 1,
         ),
@@ -487,7 +487,7 @@ class AnyServiceCheckboxModule extends StatelessWidget {
         Obx(()=>
             Checkbox(
                 value: screenController.serviceCheckBox.value,
-                activeColor: Colors.green,
+                activeColor: AppColors.colorLightGrey,
                 onChanged:(bool ? newValue){
                   //setState(() {
                   screenController.serviceCheckBox.value = newValue!;
@@ -509,7 +509,7 @@ class VendorSignUpButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async{
+      onTap: () async {
         if(screenController.vendorSignUpFormKey.currentState!.validate()){
           await screenController.vendorSignUpFunction();
         }

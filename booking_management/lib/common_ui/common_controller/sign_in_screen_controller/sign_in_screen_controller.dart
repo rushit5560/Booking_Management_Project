@@ -42,7 +42,7 @@ class SignInScreenController extends GetxController {
           Get.snackbar(signInModel.message, '');
         } else if (signInModel.message.contains("Invalid login attempt")) {
           Get.snackbar(signInModel.message, '');
-        } else if (signInModel.role.name == "Customer") {
+        } else if (signInModel.role[0] == "Customer") {
           log('customer side');
           Get.snackbar(signInModel.message, '');
           sharedPreferenceData.setUserLoginDetailsInPrefs(
@@ -53,7 +53,7 @@ class SignInScreenController extends GetxController {
             email: signInModel.data.email,
             phoneNo: signInModel.data.phoneNumber,
             dob: signInModel.customer.dateOfBirth,
-            roleName: signInModel.role.name,
+            roleName: signInModel.role[0],
             gender: signInModel.customer.gender,
             businessName: "",
             address: "",
@@ -66,7 +66,7 @@ class SignInScreenController extends GetxController {
           Get.offAll(() => IndexScreen());
 
           //Get.snackbar(signInModel.message, '');
-        } else if (signInModel.role.name == "Vendor") {
+        } else if (signInModel.role[0] == "Vendor") {
           log('Vendor side');
           Get.snackbar(signInModel.message, '');
           sharedPreferenceData.setUserLoginDetailsInPrefs(
@@ -77,7 +77,7 @@ class SignInScreenController extends GetxController {
             email: signInModel.data.email,
             phoneNo: signInModel.data.phoneNumber,
             dob: "",
-            roleName: signInModel.role.name,
+            roleName: signInModel.role[0],
             gender: "",
             businessName: signInModel.vendor.businessName,
             address: signInModel.vendor.address,

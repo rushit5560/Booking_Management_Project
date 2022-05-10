@@ -168,24 +168,27 @@ class SignInModel {
     required this.role,
     required this.vendor,
     required this.customer,
+    required this.apiToken
   });
 
   int statusCode;
   bool success;
   String message;
   Data data;
-  Role role;
+  List<String> role;
   Vendor vendor;
   Customer customer;
+  String apiToken;
 
   factory SignInModel.fromJson(Map<String, dynamic> json) => SignInModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     message: json["message"] ?? "",
     data: Data.fromJson(json["data"] ?? {}),
-    role: Role.fromJson(json["role"] ?? {}),
+    role: List<String>.from(json["role"].map((x) => x)),
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
     customer: Customer.fromJson(json["customer"] ?? {}),
+    apiToken: json["apiToken"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -193,9 +196,10 @@ class SignInModel {
     "success": success,
     "message": message,
     "data": data.toJson(),
-    "role": role.toJson(),
+    "role": List<dynamic>.from(role.map((x) => x)),
     "vendor": vendor.toJson(),
     "customer": customer.toJson(),
+    "apiToken": apiToken,
   };
 }
 
@@ -278,40 +282,12 @@ class Data {
   };
 }
 
-class Role {
-  Role({
-    required this.id,
-    required this.name,
-    required this.normalizedName,
-    required this.concurrencyStamp,
-  });
-
-  String id;
-  String name;
-  String normalizedName;
-  String concurrencyStamp;
-
-  factory Role.fromJson(Map<String, dynamic> json) => Role(
-    id: json["id"] ?? "",
-    name: json["name"] ?? "",
-    normalizedName: json["normalizedName"] ?? "",
-    concurrencyStamp: json["concurrencyStamp"] ?? "",
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "normalizedName": normalizedName,
-    "concurrencyStamp": concurrencyStamp,
-  };
-}
-
 class Vendor {
   Vendor({
     required this.id,
     required this.categories,
     required this.categoryId,
-    required this.workingHours,
+    //required this.workingHours,
     required this.businessName,
     required this.businessLogo,
     required this.street,
@@ -319,8 +295,8 @@ class Vendor {
     required this.postcode,
     required this.state,
     required this.country,
-    required this.firstName,
-    required this.lastName,
+    required this.userName,
+    //required this.lastName,
     required this.email,
     required this.phoneNo,
     required this.address,
@@ -329,26 +305,36 @@ class Vendor {
     required this.userId,
     required this.vendorPortal,
     required this.vendorVerification,
-    required this.attachPhotoIndentification,
-    required this.attachProofofAddress,
+    required this.businessId,
+    required this.isResource,
+    required this.isPriceDisplay,
+    required this.confirmation,
+    required this.isServiceSlots,
+    required this.latitude,
+    required this.longitude,
+    required this.vendorVerificationDate,
     required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
     required this.applicationUserModifier,
     required this.review,
+    required this.rating,
     required this.vendorWorkingHours,
     required this.status,
     required this.category,
     required this.passwordHash,
-    required this.businessId,
     required this.workingHoursStatus,
     required this.avilableTime,
+    required this.dDate,
+    required this.duration,
+    required this.startTime,
+    required this.endTime,
   });
 
   int id;
   String categories;
   int categoryId;
-  String workingHours;
+  //String workingHours;
   String businessName;
   String businessLogo;
   String street;
@@ -356,8 +342,7 @@ class Vendor {
   String postcode;
   String state;
   String country;
-  String firstName;
-  String lastName;
+  String userName;
   String email;
   String phoneNo;
   String address;
@@ -366,26 +351,36 @@ class Vendor {
   String userId;
   bool vendorPortal;
   bool vendorVerification;
-  String attachPhotoIndentification;
-  String attachProofofAddress;
+  String businessId;
+  bool isResource;
+  bool isPriceDisplay;
+  bool confirmation;
+  bool isServiceSlots;
+  int latitude;
+  int longitude;
+  String vendorVerificationDate;
   Data applicationUser;
   String modifiedBy;
   String modifiedOn;
   Data applicationUserModifier;
   String review;
+  String rating;
   String vendorWorkingHours;
   String status;
   String category;
   String passwordHash;
-  String businessId;
   String workingHoursStatus;
   String avilableTime;
+  String dDate;
+  String duration;
+  String startTime;
+  String endTime;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
     id: json["id"] ?? 0,
     categories: json["categories"] ?? "",
     categoryId: json["categoryId"] ?? 0,
-    workingHours: json["workingHours"] ?? "",
+    //workingHours: json["workingHours"] ?? "",
     businessName: json["businessName"] ?? "",
     businessLogo: json["businessLogo"] ?? "",
     street: json["street"] ?? "",
@@ -393,8 +388,8 @@ class Vendor {
     postcode: json["postcode"] ?? "",
     state: json["state"] ?? "",
     country: json["country"] ?? "",
-    firstName: json["firstName"] ?? "",
-    lastName: json["lastName"] ?? "",
+    userName: json["userName"] ?? "",
+    //lastName: json["lastName"] ?? "",
     email: json["email"] ?? "",
     phoneNo: json["phoneNo"] ?? "",
     address: json["address"] ?? "",
@@ -403,27 +398,37 @@ class Vendor {
     userId: json["userId"] ?? "",
     vendorPortal: json["vendorPortal"] ?? false,
     vendorVerification: json["vendorVerification"] ?? false,
-    attachPhotoIndentification: json["attachPhotoIndentification"] ?? "",
-    attachProofofAddress: json["attachProofofAddress"] ?? "",
+    businessId: json["businessId"] ?? "",
+    isResource: json["isResource"] ?? false,
+    isPriceDisplay: json["isPriceDisplay"] ?? false,
+    confirmation: json["confirmation"] ?? false,
+    isServiceSlots: json["isServiceSlots"] ?? false,
+    latitude: json["latitude"] ?? 0,
+    longitude: json["longitude"] ?? 0,
+    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
     applicationUser: Data.fromJson(json["applicationUser"] ?? {}),
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"]  ?? "",
+    modifiedOn: json["modifiedOn"] ?? "",
     applicationUserModifier: Data.fromJson(json["applicationUserModifier"] ?? {}),
     review: json["review"] ?? "",
+    rating: json["rating"] ?? "",
     vendorWorkingHours: json["vendorWorkingHours"] ?? "",
     status: json["status"] ?? "",
     category: json["category"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
-    businessId: json["businessId"] ?? "",
     workingHoursStatus: json["workingHoursStatus"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
+    dDate: json["dDate"] ?? "",
+    duration: json["duration"] ?? "",
+    startTime: json["startTime"] ?? "",
+    endTime: json["endTime"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "categories": categories,
     "categoryId": categoryId,
-    "workingHours": workingHours,
+    //"workingHours": workingHours,
     "businessName": businessName,
     "businessLogo": businessLogo,
     "street": street,
@@ -431,8 +436,8 @@ class Vendor {
     "postcode": postcode,
     "state": state,
     "country": country,
-    "firstName": firstName,
-    "lastName": lastName,
+    "userName": userName,
+    //"lastName": lastName,
     "email": email,
     "phoneNo": phoneNo,
     "address": address,
@@ -441,20 +446,30 @@ class Vendor {
     "userId": userId,
     "vendorPortal": vendorPortal,
     "vendorVerification": vendorVerification,
-    "attachPhotoIndentification": attachPhotoIndentification,
-    "attachProofofAddress": attachProofofAddress,
+    "businessId": businessId,
+    "isResource": isResource,
+    "isPriceDisplay": isPriceDisplay,
+    "confirmation": confirmation,
+    "isServiceSlots": isServiceSlots,
+    "latitude": latitude,
+    "longitude": longitude,
+    "vendorVerificationDate": vendorVerificationDate,
     "applicationUser": applicationUser.toJson(),
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
     "applicationUserModifier": applicationUserModifier.toJson(),
     "review": review,
+    "rating": rating,
     "vendorWorkingHours": vendorWorkingHours,
     "status": status,
     "category": category,
     "passwordHash": passwordHash,
-    "businessId": businessId,
     "workingHoursStatus": workingHoursStatus,
     "avilableTime": avilableTime,
+    "dDate": dDate,
+    "duration": duration,
+    "startTime": startTime,
+    "endTime": endTime,
   };
 }
 
@@ -468,15 +483,15 @@ class Customer {
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
-    // required this.applicationUser,
-    // required this.modifiedBy,
-    // required this.modifiedOn,
-    // required this.applicationUserModifier,
-    // required this.passwordHash,
-    // required this.notes,
-    // required this.bookingId,
-    // required this.bookingAvailabilityId,
-    // required this.isPriceDisplay,
+    required this.applicationUser,
+    required this.modifiedBy,
+    required this.modifiedOn,
+    required this.applicationUserModifier,
+    required this.passwordHash,
+    required this.notes,
+    required this.bookingId,
+    required this.bookingAvailabilityId,
+    required this.isPriceDisplay,
   });
 
   int id;
@@ -487,15 +502,15 @@ class Customer {
   String dateOfBirth;
   bool isActive;
   String userId;
-  // ApplicationUser applicationUser;
-  // String modifiedBy;
-  // String modifiedOn;
-  // ApplicationUser applicationUserModifier;
-  // String passwordHash;
-  // String notes;
-  // String bookingId;
-  // String bookingAvailabilityId;
-  // bool isPriceDisplay;
+  Data applicationUser;
+  String modifiedBy;
+  String modifiedOn;
+  String applicationUserModifier;
+  String passwordHash;
+  String notes;
+  String bookingId;
+  String bookingAvailabilityId;
+  bool isPriceDisplay;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
     id: json["id"] ?? 0,
@@ -506,15 +521,15 @@ class Customer {
     dateOfBirth: json["dateOfBirth"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
-    // applicationUser: ApplicationUser.fromJson(json["applicationUser"] ?? {}),
-    // modifiedBy: json["modifiedBy"] ?? "",
-    // modifiedOn: json["modifiedOn"] ?? "",
-    // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"] ?? {}),
-    // passwordHash: json["passwordHash"] ?? "",
-    // notes: json["notes"] ?? "",
-    // bookingId: json["bookingId"] ?? "",
-    // bookingAvailabilityId: json["bookingAvailabilityId"] ?? "",
-    // isPriceDisplay: json["isPriceDisplay"] ?? false,
+    applicationUser: Data.fromJson(json["applicationUser"] ?? {}),
+    modifiedBy: json["modifiedBy"] ?? "",
+    modifiedOn: json["modifiedOn"] ?? "",
+    applicationUserModifier: json["applicationUserModifier"] ?? "",
+    passwordHash: json["passwordHash"] ?? "",
+    notes: json["notes"] ?? "",
+    bookingId: json["bookingId"] ?? "",
+    bookingAvailabilityId: json["bookingAvailabilityId"] ?? "",
+    isPriceDisplay: json["isPriceDisplay"] ?? false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -526,15 +541,15 @@ class Customer {
     "dateOfBirth": dateOfBirth,
     "isActive": isActive,
     "userId": userId,
-    // "applicationUser": applicationUser.toJson(),
-    // "modifiedBy": modifiedBy,
-    // "modifiedOn": modifiedOn,
-    // "applicationUserModifier": applicationUserModifier.toJson(),
-    // "passwordHash": passwordHash,
-    // "notes": notes,
-    // "bookingId": bookingId,
-    // "bookingAvailabilityId": bookingAvailabilityId,
-    // "isPriceDisplay": isPriceDisplay,
+    "applicationUser": applicationUser.toJson(),
+    "modifiedBy": modifiedBy,
+    "modifiedOn": modifiedOn,
+    "applicationUserModifier": applicationUserModifier,
+    "passwordHash": passwordHash,
+    "notes": notes,
+    "bookingId": bookingId,
+    "bookingAvailabilityId": bookingAvailabilityId,
+    "isPriceDisplay": isPriceDisplay,
   };
 }
 

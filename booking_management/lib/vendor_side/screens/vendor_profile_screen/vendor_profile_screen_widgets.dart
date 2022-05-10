@@ -158,6 +158,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   controller: screenController.nameTextFieldController,
                   keyboardType: TextInputType.name,
                   cursorColor: Colors.black,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "Name",
                     hintStyle: TextStyle(color: Colors.black),
@@ -228,6 +229,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   controller: screenController.emailTextFieldController,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.black,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "Email",
                     hintStyle: TextStyle(color: Colors.black),

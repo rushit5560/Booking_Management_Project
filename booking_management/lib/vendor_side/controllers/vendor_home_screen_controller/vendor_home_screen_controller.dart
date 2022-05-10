@@ -18,7 +18,7 @@ class VendorHomeScreenController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    pendingAppointMentList();
+    // pendingAppointMentList();
   }
 
   pendingAppointMentList() async {
@@ -29,7 +29,7 @@ class VendorHomeScreenController extends GetxController {
     try{
       http.Response response = await http.get(Uri.parse(url));
 
-      log('Response : ${response.body}');
+      // log('Response : ${response.body}');
 
       PendingAppointmentListModel pendingAppointmentModel = PendingAppointmentListModel.fromJson(json.decode(response.body));
       isStatus = pendingAppointmentModel.statusCode.obs;

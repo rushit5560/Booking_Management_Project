@@ -12,7 +12,117 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-final screenController = Get.find<VendorProfileScreenController>();
+import '../../../common_modules/constants/enums.dart';
+
+
+class VendorProfileAppBarModule extends StatelessWidget {
+  final String title;
+  final AppBarOption? appBarOption;
+
+  //Function? onTap;
+
+  VendorProfileAppBarModule({Key? key, required this.title, this.appBarOption})
+      : super(key: key);
+
+  final screenController = Get.find<VendorProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 55,
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+          color: AppColors.colorLightGrey
+        //color: Colors.grey
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            leftSideButton(),
+            appBarOption == AppBarOption.userConversationScreen
+                ? Row(
+              children: [
+                Container(
+                  height: 38,
+                  width: 38,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: const DecorationImage(
+                      image: AssetImage(AppImages.vendorImg),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ],
+            )
+                : Text(
+              title,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            ),
+            rightSideButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget leftSideButton() {
+    return GestureDetector(
+      onTap: () {
+        screenController.isLoading(true);
+        screenController.nameTextFieldController.clear();
+        screenController.mobileTextFieldController.clear();
+        screenController.emailTextFieldController.clear();
+        screenController.businessNameTextFieldController.clear();
+        screenController.addressTextFieldController.clear();
+        screenController.streetTextFieldController.clear();
+        screenController.stateTextFieldController.clear();
+        screenController.countryTextFieldController.clear();
+        screenController.subUrbTextFieldController.clear();
+        screenController.postCodeTextFieldController.clear();
+        log("Dispose Method Call");
+        screenController.isLoading(false);
+        Get.back();
+      },
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: appBarOption == AppBarOption.singleBackButtonOption
+            ? Image.asset(AppImages.backArrowImg)
+            : appBarOption == AppBarOption.userConversationScreen
+            ? Image.asset(AppImages.backArrowImg)
+            : appBarOption == AppBarOption.none
+            ? null
+            : Container(),
+      ),
+    );
+  }
+
+  Widget rightSideButton() {
+    return const SizedBox(
+      height: 50,
+      width: 50,
+    );
+  }
+}
+
 
 class VendorProfileDetailsModule extends StatefulWidget {
   VendorProfileDetailsModule({Key? key}) : super(key: key);
@@ -20,9 +130,9 @@ class VendorProfileDetailsModule extends StatefulWidget {
   @override
   State<VendorProfileDetailsModule> createState() => _VendorProfileDetailsModuleState();
 }
-
 class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule> {
   final ImagePicker imagePicker = ImagePicker();
+  final screenController = Get.find<VendorProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -1151,8 +1261,10 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
   }
 }
 
+
 class DateScheduleModule extends StatelessWidget {
-  const DateScheduleModule({Key? key}) : super(key: key);
+  DateScheduleModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -1238,8 +1350,10 @@ class DateScheduleModule extends StatelessWidget {
   }
 }
 
+
 class TimeSlots extends StatelessWidget {
-  const TimeSlots({Key? key}) : super(key: key);
+  TimeSlots({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {

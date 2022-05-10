@@ -114,7 +114,7 @@ class VendorSettingsScreen extends StatelessWidget {
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.logoutImg,
-                      name: 'logout',
+                      name: 'Logout',
                       vendorSettingScreenOption: VendorSettingScreenOption.logout,
                     ),
                     // SizedBox(height: 20),

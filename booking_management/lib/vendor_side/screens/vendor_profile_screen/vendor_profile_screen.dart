@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 class VendorProfileScreen extends StatelessWidget {
   VendorProfileScreen({Key? key}) : super(key: key);
 
-  final vendorProfileScreenController = Get.put(VendorProfileScreenController());
+  final vendorProfileScreenController =
+      Get.put(VendorProfileScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,24 +19,17 @@ class VendorProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CommonAppBarModule(title: "Profile", appBarOption: AppBarOption.singleBackButtonOption),
-
+            VendorProfileAppBarModule(
+              title: "Profile",
+              appBarOption: AppBarOption.singleBackButtonOption,
+            ),
             Expanded(
-              child: Obx(()=>
-              vendorProfileScreenController.isLoading.value ?
-                  const Center(child: CircularProgressIndicator()):
-                 SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VendorProfileDetailsModule(),
-                      // SizedBox(height: 20,),
-                      // DateScheduleModule(),
-                      // SizedBox(height: 20,),
-                      // TimeSlots()
-                    ],
-                  ).commonAllSidePadding(20),
-                ),
+              child: Obx(
+                () => vendorProfileScreenController.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : SingleChildScrollView(
+                        child: VendorProfileDetailsModule().commonAllSidePadding(20),
+                      ),
               ),
             )
           ],

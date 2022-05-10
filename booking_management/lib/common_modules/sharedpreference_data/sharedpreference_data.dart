@@ -103,6 +103,24 @@ class SharedPreferenceData{
     UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
 
+    log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
+    log("UserDetails.apiToken : ${UserDetails.apiToken}");
+    log("UserDetails.uniqueId : ${UserDetails.uniqueId}");
+    log("UserDetails.tableWiseId : ${UserDetails.tableWiseId}");
+    log("UserDetails.userName : ${UserDetails.userName}");
+    log("UserDetails.email : ${UserDetails.email}");
+    log("UserDetails.phoneNo : ${UserDetails.phoneNo}");
+    log("UserDetails.dob : ${UserDetails.dob}");
+    log("UserDetails.roleName : ${UserDetails.roleName}");
+    log("UserDetails.gender : ${UserDetails.gender}");
+    log("UserDetails.businessName : ${UserDetails.businessName}");
+    log("UserDetails.address : ${UserDetails.address}");
+    log("UserDetails.street : ${UserDetails.street}");
+    log("UserDetails.state : ${UserDetails.state}");
+    log("UserDetails.country : ${UserDetails.country}");
+    log("UserDetails.subUrb : ${UserDetails.subUrb}");
+    log("UserDetails.postCode : ${UserDetails.postCode}");
+
 
   }
 

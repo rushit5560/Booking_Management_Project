@@ -17,13 +17,13 @@ class VendorSignUpScreen extends StatelessWidget {
           child: Form(
             key: vendorSignUpScreenController.vendorSignUpFormKey,
             child: Column(
-              children: const [
+              children: [
                 // From Common Widgets
-                HeaderLogoModule(),
-                SizedBox(height: 20),
+                const HeaderLogoModule(),
+                const SizedBox(height: 20),
                 // From Common Widgets
-                HeaderTextModule(name: "Sign Up"),
-                SizedBox(height: 20),
+                const HeaderTextModule(name: "Sign Up"),
+                const SizedBox(height: 20),
 
                 //AddPhotosModule(),
                 //SizedBox(height: 12),
@@ -32,9 +32,9 @@ class VendorSignUpScreen extends StatelessWidget {
                 // BusinessTypeModule(),
                 // SizedBox(height: 5),
                 UserNameModule(),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 EmailFieldModule(),
-                 SizedBox(height: 5),
+                const SizedBox(height: 5),
                 MobileFieldModule(),
 
                 BusinessIdFieldModule(),
@@ -59,23 +59,23 @@ class VendorSignUpScreen extends StatelessWidget {
                 // SuburbFieldModule(),
                 // SizedBox(height: 5),
 
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 PasswordFieldModule(),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 ConfirmPasswordFieldModule(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //VendorPortalCheckboxModule(),
                 AnyResourcesCheckboxModule(),
                 PriceCheckboxModule(),
                 AnyServiceCheckboxModule(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 VendorSignUpButtonModule(),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
 
-                CustomerSignUpTextModule(),
-                SizedBox(height: 15),
-                VendorSignInTextModule(),
-                SizedBox(height: 5),
+                const CustomerSignUpTextModule(),
+                const SizedBox(height: 15),
+                const VendorSignInTextModule(),
+                const SizedBox(height: 5),
 
               ],
             ).commonAllSidePadding(20),

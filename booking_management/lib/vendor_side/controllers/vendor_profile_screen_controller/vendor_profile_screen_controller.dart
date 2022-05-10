@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_update_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VendorProfileScreenController extends GetxController{
   RxString selectedDate = 'DOB'.obs;
@@ -25,6 +27,8 @@ class VendorProfileScreenController extends GetxController{
   final subUrbTextFieldController = TextEditingController();
   final postCodeTextFieldController = TextEditingController();
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
@@ -49,7 +53,7 @@ class VendorProfileScreenController extends GetxController{
     pageController.nextPage(duration: 300.milliseconds, curve: Curves.ease);
   }
 
-  vendorEditProfileFunction() async{
+  vendorEditProfileFunction() async {
     isLoading(true);
     log('UserDetails.userId : ${UserDetails.userId}');
     print('selectedStartTime : $selectedStartTime');
@@ -216,19 +220,71 @@ class VendorProfileScreenController extends GetxController{
   }
 
   @override
-  void onInit() {
-    // TODO: implement onInit
+  void dispose() {
+    nameTextFieldController.clear();
+    mobileTextFieldController.clear();
+    emailTextFieldController.clear();
+    businessNameTextFieldController.clear();
+    addressTextFieldController.clear();
+    streetTextFieldController.clear();
+    stateTextFieldController.clear();
+    countryTextFieldController.clear();
+    subUrbTextFieldController.clear();
+    postCodeTextFieldController.clear();
+    log("Dispose Method Call");
+    super.dispose();
+  }
+
+
+  getDataFromPrefs() async {
+    isLoading(true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
+    prefs.getString(sharedPreferenceData.apiTokenKey) ?? "";
+    prefs.getString(sharedPreferenceData.uniqueIdKey) ?? "";
+    prefs.getInt(sharedPreferenceData.tableWiseIdKey) ?? 0;
+    nameTextFieldController.text = prefs.getString(sharedPreferenceData.userNameKey) ?? "";
+    emailTextFieldController.text = prefs.getString(sharedPreferenceData.emailKey) ?? "";
+    mobileTextFieldController.text = prefs.getString(sharedPreferenceData.phoneNoKey) ?? "";
+    prefs.getString(sharedPreferenceData.dobKey) ?? "";
+    prefs.getString(sharedPreferenceData.roleNameKey) ?? "";
+    prefs.getString(sharedPreferenceData.genderKey) ?? "";
+    businessNameTextFieldController.text = prefs.getString(sharedPreferenceData.businessNameKey) ?? "";
+    addressTextFieldController.text = prefs.getString(sharedPreferenceData.addressKey) ?? "";
+    streetTextFieldController.text = prefs.getString(sharedPreferenceData.streetKey) ?? "";
+    stateTextFieldController.text = prefs.getString(sharedPreferenceData.stateKey) ?? "";
+    countryTextFieldController.text = prefs.getString(sharedPreferenceData.countryKey) ?? "";
+    subUrbTextFieldController.text = prefs.getString(sharedPreferenceData.subUrbKey) ?? "";
+    postCodeTextFieldController.text = prefs.getString(sharedPreferenceData.postCodeKey) ?? "";
+
+    log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
+    log("UserDetails.apiToken : ${UserDetails.apiToken}");
+    log("UserDetails.uniqueId : ${UserDetails.uniqueId}");
+    log("UserDetails.tableWiseId : ${UserDetails.tableWiseId}");
+    log("UserDetails.userName : ${UserDetails.userName}");
+    log("UserDetails.email : ${UserDetails.email}");
+    log("UserDetails.phoneNo : ${UserDetails.phoneNo}");
+    log("UserDetails.dob : ${UserDetails.dob}");
+    log("UserDetails.roleName : ${UserDetails.roleName}");
+    log("UserDetails.gender : ${UserDetails.gender}");
+    log("UserDetails.businessName : ${UserDetails.businessName}");
+    log("UserDetails.address : ${UserDetails.address}");
+    log("UserDetails.street : ${UserDetails.street}");
+    log("UserDetails.state : ${UserDetails.state}");
+    log("UserDetails.country : ${UserDetails.country}");
+    log("UserDetails.subUrb : ${UserDetails.subUrb}");
+    log("UserDetails.postCode : ${UserDetails.postCode}");
+
+
+    isLoading(false);
+    loadUI();
+  }
+
+
+  @override
+  void onInit() async {
+    await getDataFromPrefs();
     super.onInit();
-    nameTextFieldController.text = UserDetails.userName;
-    mobileTextFieldController.text = UserDetails.phoneNo;
-    emailTextFieldController.text = UserDetails.email;
-    businessNameTextFieldController.text = UserDetails.businessName;
-    addressTextFieldController.text = UserDetails.address;
-    streetTextFieldController.text = UserDetails.street;
-    stateTextFieldController.text = UserDetails.state;
-    countryTextFieldController.text = UserDetails.country;
-    subUrbTextFieldController.text = UserDetails.subUrb;
-    postCodeTextFieldController.text = UserDetails.postCode;
-    //file = File(UserDetails.vendorProfile);
+
   }
 }

@@ -18,6 +18,7 @@ import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../controllers/vendor_settings_screen_controller/vendor_settings_screen_controller.dart';
 
+
 VendorSettingsScreenController screenController = Get.find<VendorSettingsScreenController>();
 
 class VendorSettingScreenSingleItemModule extends StatelessWidget {

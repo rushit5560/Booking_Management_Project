@@ -1,7 +1,9 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'vendor_add_service_screen/vendor_add_service_screen.dart';
+
 
 class AddServicesButton extends StatelessWidget {
   const AddServicesButton({Key? key}) : super(key: key);
@@ -9,11 +11,7 @@ class AddServicesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        //if(screenController.vendorProfileFormKey.currentState!.validate()){
-
-       // }
-      },
+      onTap: () => Get.to(()=> VendorAddServiceScreen(), transition: Transition.zoom),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

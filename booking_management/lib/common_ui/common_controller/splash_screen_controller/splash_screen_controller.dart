@@ -23,16 +23,23 @@ class SplashScreenController extends GetxController {
     UserDetails.phoneNo = prefs.getString(sharedPreferenceData.phoneNoKey) ?? "";
     UserDetails.dob = prefs.getString(sharedPreferenceData.dobKey) ?? "";
     UserDetails.roleName = prefs.getString(sharedPreferenceData.roleNameKey) ?? "";
+    UserDetails.businessName = prefs.getString(sharedPreferenceData.businessNameKey) ?? "";
+    UserDetails.address = prefs.getString(sharedPreferenceData.addressKey) ?? "";
+    UserDetails.street = prefs.getString(sharedPreferenceData.streetKey) ?? "";
+    UserDetails.state = prefs.getString(sharedPreferenceData.stateKey) ?? "";
+    UserDetails.country = prefs.getString(sharedPreferenceData.countryKey) ?? "";
+    UserDetails.subUrb = prefs.getString(sharedPreferenceData.subUrbKey) ?? "";
+    UserDetails.postCode = prefs.getString(sharedPreferenceData.postCodeKey) ?? "";
 
 
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');
     if(isLoggedIn == true) {
-      if(UserDetails.role == "Customer"){
-        log('customer side');
+      if(UserDetails.roleName == "Customer") {
+        log('Role Name : ${UserDetails.roleName}');
         Get.offAll(() => IndexScreen(), transition: Transition.zoom);
-      } else if(UserDetails.role == "Vendor"){
-        log('Vendor side');
+      } else if(UserDetails.roleName == "Vendor") {
+        log('Role Name : ${UserDetails.roleName}');
         Get.offAll(() => VendorIndexScreen(), transition: Transition.zoom);
       }
     } else {
@@ -43,7 +50,7 @@ class SplashScreenController extends GetxController {
 
   @override
   void onInit() {
-    Timer(const Duration(seconds: 5), () => goToNextScreen());
+    Timer(const Duration(seconds: 1), () => goToNextScreen());
     super.onInit();
   }
 }

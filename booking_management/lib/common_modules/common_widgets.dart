@@ -84,7 +84,8 @@ class CustomCircularLoaderModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return const Center(child: CircularProgressIndicator());
+    /*return Container(
       height: Get.height,
       width: Get.width,
       color: Colors.white30,
@@ -93,6 +94,6 @@ class CustomCircularLoaderModule extends StatelessWidget {
         height: Get.width * 0.50,
         width: Get.width * 0.50,
       ),
-    );
+    );*/
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../common_modules/constants/app_images.dart';
 import '../../common_controller/splash_screen_controller/splash_screen_controller.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,24 +8,24 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
-          child: Image.asset(
+          /*child: Image.asset(
             AppImages.headerLogoImg,
             width: Get.width * 0.50,
             height: Get.width * 0.50,
+          ),*/
+          child: Text(
+            "Booking Management",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20
+            ),
           ),
-          // child: Text(
-          //   "Splash Screen",
-          //   maxLines: 1,
-          //   overflow: TextOverflow.ellipsis,
-          //   style: TextStyle(
-          //     fontWeight: FontWeight.bold,
-          //     fontSize: 20
-          //   ),
-          // ),
         ),
       ),
     );

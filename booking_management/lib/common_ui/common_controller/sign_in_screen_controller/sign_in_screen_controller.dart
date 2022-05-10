@@ -10,8 +10,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-
-
 class SignInScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
@@ -25,24 +23,26 @@ class SignInScreenController extends GetxController {
   signInFunction() async {
     isLoading(true);
 
-    String url = ApiUrl.signInApi + "?UserName=${unameFieldController.text.trim()}&Password=${passwordFieldController.text.trim()}";
+    String url = ApiUrl.signInApi +
+        "?UserName=${unameFieldController.text.trim()}&Password=${passwordFieldController.text.trim()}";
     log('Url : $url');
 
-    try{
-
+    try {
       http.Response response = await http.post(Uri.parse(url));
       log('Response : $response');
 
-      SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
+      SignInModel signInModel =
+          SignInModel.fromJson(json.decode(response.body));
       isStatus = signInModel.statusCode.obs;
 
       log("status: $isStatus");
 
-      if(isStatus.value == 200) {
-
-        if(signInModel.message.toString().contains("not Verified")) {
+      if (isStatus.value == 200) {
+        if (signInModel.message.toString().contains("not Verified")) {
           Get.snackbar(signInModel.message, '');
-        } else if(signInModel.role.name == "Customer"){
+        } else if (signInModel.message.contains("Invalid login attempt")) {
+          Get.snackbar(signInModel.message, '');
+        } else if (signInModel.role.name == "Customer") {
           log('customer side');
           Get.snackbar(signInModel.message, '');
           sharedPreferenceData.setUserLoginDetailsInPrefs(
@@ -55,11 +55,18 @@ class SignInScreenController extends GetxController {
             dob: signInModel.customer.dateOfBirth,
             roleName: signInModel.role.name,
             gender: signInModel.customer.gender,
+            businessName: "",
+            address: "",
+            street: "",
+            state: "",
+            country: "",
+            subUrb: "",
+            postCode: "",
           );
           Get.offAll(() => IndexScreen());
 
           //Get.snackbar(signInModel.message, '');
-        } else if(signInModel.role.name == "Vendor"){
+        } else if (signInModel.role.name == "Vendor") {
           log('Vendor side');
           Get.snackbar(signInModel.message, '');
           sharedPreferenceData.setUserLoginDetailsInPrefs(
@@ -72,23 +79,26 @@ class SignInScreenController extends GetxController {
             dob: "",
             roleName: signInModel.role.name,
             gender: "",
+            businessName: signInModel.vendor.businessName,
+            address: signInModel.vendor.address,
+            street: signInModel.vendor.street,
+            state: signInModel.vendor.state,
+            country: signInModel.vendor.country,
+            subUrb: signInModel.vendor.suburb,
+            postCode: signInModel.vendor.postcode,
           );
           Get.offAll(() => VendorIndexScreen());
           //Get.snackbar('LoggedIn Successfully.', '');
         }
-
-
       } else {
         log('SignIn False False');
         Get.snackbar(signInModel.message, '');
       }
-
-    } catch(e) {
+    } catch (e) {
       log('SignIn Error : $e');
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       isLoading(false);
     }
   }
-
 }

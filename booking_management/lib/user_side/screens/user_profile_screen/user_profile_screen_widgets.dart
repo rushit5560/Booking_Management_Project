@@ -117,6 +117,7 @@ class ProfileDetailsModule extends StatelessWidget {
                   controller: screenController.nameTextFieldController,
                   keyboardType: TextInputType.name,
                   cursorColor: Colors.black,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "Name",
                     hintStyle: TextStyle(color: Colors.black),

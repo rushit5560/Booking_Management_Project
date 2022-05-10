@@ -14,6 +14,14 @@ class SharedPreferenceData{
   String roleNameKey = "roleNameKey";
   String genderKey = "genderKey";
 
+  String businessNameKey = "businessNameKey";
+  String addressKey = "addressKey";
+  String streetKey = "streetKey";
+  String stateKey = "stateKey";
+  String countryKey = "countryKey";
+  String subUrbKey = "subUrbKey";
+  String postCodeKey = "postCodeKey";
+
 
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
@@ -26,6 +34,13 @@ class SharedPreferenceData{
         required String dob,
         required String roleName,
         required String gender,
+        required String businessName,
+        required String address,
+        required String street,
+        required String state,
+        required String country,
+        required String subUrb,
+        required String postCode,
       }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -40,6 +55,13 @@ class SharedPreferenceData{
     prefs.remove(dobKey);
     prefs.remove(roleNameKey);
     prefs.remove(genderKey);
+    prefs.remove(businessNameKey);
+    prefs.remove(addressKey);
+    prefs.remove(streetKey);
+    prefs.remove(stateKey);
+    prefs.remove(countryKey);
+    prefs.remove(subUrbKey);
+    prefs.remove(postCodeKey);
 
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, true);
@@ -52,6 +74,13 @@ class SharedPreferenceData{
     prefs.setString(dobKey, dob);
     prefs.setString(roleNameKey, roleName);
     prefs.setString(genderKey, gender);
+    prefs.setString(businessNameKey, businessName);
+    prefs.setString(addressKey, address);
+    prefs.setString(streetKey, street);
+    prefs.setString(stateKey, state);
+    prefs.setString(countryKey, country);
+    prefs.setString(subUrbKey, subUrb);
+    prefs.setString(postCodeKey, postCode);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -64,6 +93,13 @@ class SharedPreferenceData{
     UserDetails.dob = prefs.getString(dobKey) ?? "";
     UserDetails.roleName = prefs.getString(roleNameKey) ?? "";
     UserDetails.gender = prefs.getString(genderKey) ?? "";
+    UserDetails.businessName = prefs.getString(businessNameKey) ?? "";
+    UserDetails.address = prefs.getString(addressKey) ?? "";
+    UserDetails.street = prefs.getString(streetKey) ?? "";
+    UserDetails.state = prefs.getString(stateKey) ?? "";
+    UserDetails.country = prefs.getString(countryKey) ?? "";
+    UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
+    UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
 
 
   }
@@ -84,6 +120,15 @@ class SharedPreferenceData{
     prefs.setString(dobKey, "");
     prefs.setString(roleNameKey, "");
     prefs.setString(genderKey, "");
+    prefs.setString(businessNameKey, "");
+    prefs.setString(addressKey, "");
+    prefs.setString(streetKey, "");
+    prefs.setString(stateKey, "");
+    prefs.setString(countryKey, "");
+    prefs.setString(subUrbKey, "");
+    prefs.setString(postCodeKey, "");
+
+
 
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
     UserDetails.apiToken = prefs.getString(apiTokenKey) ?? "";
@@ -95,6 +140,13 @@ class SharedPreferenceData{
     UserDetails.dob = prefs.getString(dobKey) ?? "";
     UserDetails.roleName = prefs.getString(roleNameKey) ?? "";
     UserDetails.gender = prefs.getString(genderKey) ?? "";
+    UserDetails.businessName = prefs.getString(businessNameKey) ?? "";
+    UserDetails.address = prefs.getString(addressKey) ?? "";
+    UserDetails.street = prefs.getString(streetKey) ?? "";
+    UserDetails.state = prefs.getString(stateKey) ?? "";
+    UserDetails.country = prefs.getString(countryKey) ?? "";
+    UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
+    UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
 
   }
 }

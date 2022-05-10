@@ -16,4 +16,12 @@ class UserDetails {
   static String roleName = "";
   static String gender = "";
 
+  static String businessName = "";
+  static String address = "";
+  static String street = "";
+  static String state = "";
+  static String country = "";
+  static String subUrb = "";
+  static String postCode = "";
+
 }

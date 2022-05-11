@@ -26,7 +26,12 @@ class ApiUrl {
   static const vendorEditProfileApi = apiMainPath + "API/VendorProfile";
 
   static const vendorAddAndUpdateServiceApi = apiMainPath + "API/ServiceUpsert";
-  static const vendorGetAllResourcesApi = apiMainPath + "API/ServiceIndex";
-  static const vendorGetServiceDetailsApi = apiMainPath + "API/ResourceGetById";
+  static const vendorGetAllServicesApi = apiMainPath + "API/ServiceIndex";
+  static const vendorGetServiceDetailsApi = apiMainPath + "API/ServiceGetById";
   static const vendorDeleteServiceApi = apiMainPath + "API/ServiceDelete";
+
+  static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
+
+  static const vendorGetAllResourcesApi = apiMainPath + "API/ResourceIndex";
+  static const vendorAddResourcesApi = apiMainPath + "API/ResourceUpsert";
 }

@@ -63,6 +63,7 @@ class SignInScreenController extends GetxController {
             subUrb: "",
             postCode: "",
             //slotDuration: ""
+            businessId: ""
           );
           Get.offAll(() => IndexScreen());
 
@@ -88,6 +89,7 @@ class SignInScreenController extends GetxController {
             subUrb: signInModel.vendor.suburb,
             postCode: signInModel.vendor.postcode,
             //slotDuration: ""
+            businessId: signInModel.vendor.businessId
           );
           Get.offAll(() => VendorIndexScreen());
           //Get.snackbar('LoggedIn Successfully.', '');

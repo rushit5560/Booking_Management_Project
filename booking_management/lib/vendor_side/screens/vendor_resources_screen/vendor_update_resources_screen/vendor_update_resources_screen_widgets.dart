@@ -11,36 +11,37 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddResourceFormModule extends StatelessWidget {
-  AddResourceFormModule({Key? key}) : super(key: key);
+class UpdateResourceFormModule extends StatelessWidget {
   final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
-        key: vendorResourcesScreenController.resourceAddFormKey,
+        key: vendorResourcesScreenController.resourceUpdateFormKey,
         child: Column(
           children: [
             ResourceProfileModule(),
             const SizedBox(height: 20),
             ResourceNameFieldModule(),
             const SizedBox(height: 20),
-             ResourceDetailsModule(),
+            ResourceDetailsModule(),
             const SizedBox(height: 20),
             ResourcePriceFieldModule(),
             // const SizedBox(height: 20),
             // ServiceShortDesFieldModule(),
             // const SizedBox(height: 20),
             // ServiceLongDesFieldModule(),
-             const SizedBox(height: 30),
-            ResourceCreateButton(),
+            const SizedBox(height: 30),
+            ResourceUpdateButton(),
             const SizedBox(height: 10),
           ],
         ),
       ).commonAllSidePadding(10),
     );
   }
+
+
 }
 
 class ResourceProfileModule extends StatelessWidget {
@@ -136,10 +137,10 @@ class ResourceNameFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.resourceNameFieldController,
+              controller: vendorResourcesScreenController.updateResourceNameFieldController,
               keyboardType: TextInputType.text,
               validator: (value) => FieldValidator().validateResourceName(value!),
-              decoration: resourceFormFieldDecoration(hintText: 'Resource Name'),
+              decoration: serviceFormFieldDecoration(hintText: 'Resource Name'),
             ),
           ],
         )
@@ -185,7 +186,7 @@ class ResourceDetailsModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.resourceDetailsFieldController,
+              controller: vendorResourcesScreenController.updateResourceDetailsFieldController,
               keyboardType: TextInputType.text,
               validator: (value) => FieldValidator().validateResourceDetail(value!),
               decoration: serviceFormFieldDecoration(hintText: 'Resource Details'),
@@ -234,7 +235,7 @@ class ResourcePriceFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.resourcePriceFieldController,
+              controller: vendorResourcesScreenController.updateResourcePriceFieldController,
               keyboardType: TextInputType.number,
               validator: (value) => FieldValidator().validatePrice(value!),
               decoration: serviceFormFieldDecoration(hintText: 'Resource Price'),
@@ -246,17 +247,16 @@ class ResourcePriceFieldModule extends StatelessWidget {
   }
 }
 
-
-class ResourceCreateButton extends StatelessWidget {
-  ResourceCreateButton({Key? key}) : super(key: key);
+class ResourceUpdateButton extends StatelessWidget {
+  ResourceUpdateButton({Key? key}) : super(key: key);
   final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(vendorResourcesScreenController.resourceAddFormKey.currentState!.validate()) {
-          await vendorResourcesScreenController.addVendorResourcesFunction();
+        if(vendorResourcesScreenController.resourceUpdateFormKey.currentState!.validate()) {
+          await vendorResourcesScreenController.updateVendorResourceFunction();
         }
       },
       child: Container(

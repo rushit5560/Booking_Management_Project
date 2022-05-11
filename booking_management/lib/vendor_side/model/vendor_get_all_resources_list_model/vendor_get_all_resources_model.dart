@@ -39,8 +39,8 @@ class WorkerList {
     required this.details,
     required this.image,
     required this.isActive,
-    required this.applicationUserCreator,
-    required this.applicationUserModifier,
+    // required this.applicationUserCreator,
+    // required this.applicationUserModifier,
     required this.orderBy,
     required this.createdBy,
     required this.createdOn,
@@ -60,8 +60,8 @@ class WorkerList {
   String details;
   String image;
   bool isActive;
-  ApplicationUserCreator applicationUserCreator;
-  String applicationUserModifier;
+  // ApplicationUserCreator applicationUserCreator;
+  // String applicationUserModifier;
   String orderBy;
   String createdBy;
   DateTime createdOn;
@@ -81,8 +81,8 @@ class WorkerList {
     details: json["details"] ?? "",
     image: json["image"] ?? "",
     isActive: json["isActive"] ?? false,
-    applicationUserCreator: ApplicationUserCreator.fromJson(json["applicationUserCreator"] ?? {}),
-    applicationUserModifier: json["applicationUserModifier"] ?? "",
+    // applicationUserCreator: ApplicationUserCreator.fromJson(json["applicationUserCreator"] ?? {}),
+    // applicationUserModifier: json["applicationUserModifier"] ?? "",
     orderBy: json["orderBy"] ?? "",
     createdBy: json["createdBy"] ?? "",
     createdOn: DateTime.parse(json["createdOn"] ?? DateTime.now()),
@@ -103,8 +103,8 @@ class WorkerList {
     "details": details,
     "image": image,
     "isActive": isActive,
-    "applicationUserCreator": applicationUserCreator.toJson(),
-    "applicationUserModifier": applicationUserModifier,
+    // "applicationUserCreator": applicationUserCreator.toJson(),
+    // "applicationUserModifier": applicationUserModifier,
     "orderBy": orderBy,
     "createdBy": createdBy,
     "createdOn": createdOn.toIso8601String(),

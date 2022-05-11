@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/choose_court_screen/choose_court_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_scren.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -96,7 +99,7 @@ class VendorResourcesListModule extends StatelessWidget {
                         SizedBox(height: 8),
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               'price:',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -105,12 +108,12 @@ class VendorResourcesListModule extends StatelessWidget {
                                 fontWeight: FontWeight.bold
                               ),
                             ),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Text(
                               '${screenController.getResourceList[i].price}',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 15,
                               ),
                             ),
@@ -121,10 +124,27 @@ class VendorResourcesListModule extends StatelessWidget {
                   ),
 
                   Row(
-                    children: const [
-                      Icon(Icons.edit),
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          //screenController.file = File(screenController.getResourceList[i].image);
+                          screenController.updateResourceNameFieldController.text = screenController.getResourceList[i].resourceName;
+                          screenController.updateResourceDetailsFieldController.text = screenController.getResourceList[i].details;
+                          screenController.updateResourcePriceFieldController.text = screenController.getResourceList[i].price.toString();
+
+                          Get.to(() => VendorUpdateResourcesScreen(),
+                            transition: Transition.zoom,
+                          );
+                        },
+                          child: const Icon(Icons.edit)),
+
                       SizedBox(width: 10),
-                      Icon(Icons.delete, color: Colors.red,)
+
+                      GestureDetector(
+                        onTap: ()async{
+                          await screenController.deleteVendorResourceFunction(resourceId: "${screenController.getResourceList[i].id}");
+                        },
+                          child: Icon(Icons.delete, color: Colors.red,))
                     ],
                   ),
                 ],

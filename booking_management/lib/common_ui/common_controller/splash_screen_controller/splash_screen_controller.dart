@@ -30,6 +30,7 @@ class SplashScreenController extends GetxController {
     UserDetails.country = prefs.getString(sharedPreferenceData.countryKey) ?? "";
     UserDetails.subUrb = prefs.getString(sharedPreferenceData.subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(sharedPreferenceData.postCodeKey) ?? "";
+    UserDetails.businessId = prefs.getString(sharedPreferenceData.businessIdKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -48,7 +49,7 @@ class SplashScreenController extends GetxController {
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
-
+    log("UserDetails.businessId : ${UserDetails.businessId}");
 
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');

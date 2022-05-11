@@ -20,9 +20,9 @@ class AddVendorResourceModel {
   String message;
 
   factory AddVendorResourceModel.fromJson(Map<String, dynamic> json) => AddVendorResourceModel(
-    statusCode: json["statusCode"],
-    success: json["success"],
-    message: json["message"],
+    statusCode: json["statusCode"] ?? 0,
+    success: json["success"] ?? false,
+    message: json["message"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

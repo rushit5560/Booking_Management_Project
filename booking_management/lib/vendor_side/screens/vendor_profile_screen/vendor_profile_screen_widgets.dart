@@ -1225,7 +1225,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
-                    hintText: "Suburb",
+                    hintText: "Business Id",
                     hintStyle: TextStyle(color: Colors.black),
                     //isDense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),

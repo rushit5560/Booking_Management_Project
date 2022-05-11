@@ -13,12 +13,12 @@ class GetAllVendorServiceModel {
 
   int statusCode;
   bool success;
-  List<WorkerList> workerList;
+  List<WorkerList1> workerList;
 
   factory GetAllVendorServiceModel.fromJson(Map<String, dynamic> json) => GetAllVendorServiceModel(
     statusCode: json["statusCode"],
     success: json["success"],
-    workerList: List<WorkerList>.from(json["workerList"].map((x) => WorkerList.fromJson(x))),
+    workerList: List<WorkerList1>.from(json["workerList"].map((x) => WorkerList1.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +28,8 @@ class GetAllVendorServiceModel {
   };
 }
 
-class WorkerList {
-  WorkerList({
+class WorkerList1 {
+  WorkerList1({
     required this.id,
     required this.name,
     required this.categoryId,
@@ -71,7 +71,7 @@ class WorkerList {
   String vendor;
   String review;
 
-  factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
+  factory WorkerList1.fromJson(Map<String, dynamic> json) => WorkerList1(
     id: json["id"] ?? 0,
     name: json["name"] ?? "",
     categoryId: json["categoryId"] ?? 0,

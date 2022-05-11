@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -8,26 +9,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/vendor_service_screen_model/add_vendor_service_model.dart';
+import '../../model/vendor_service_screen_model/delete_vendor_service_model.dart';
 import '../../model/vendor_service_screen_model/get_vendor_service_model.dart';
+import '../../model/vendor_service_screen_model/update_vendor_service_model.dart';
 
 class VendorServicesScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
 
+  /// Add New Service Fields
   GlobalKey<FormState> serviceAddFormKey = GlobalKey();
   TextEditingController serviceNameFieldController = TextEditingController();
-  // TextEditingController serviceTimeDurationFieldController = TextEditingController();
   TextEditingController servicePriceFieldController = TextEditingController();
   TextEditingController serviceShortDesFieldController = TextEditingController();
   TextEditingController serviceLongDesFieldController = TextEditingController();
-
-  List<WorkerList> allResourcesList = [];
-
   RxInt selectTimeDuration = 15.obs;
-  List<int> timeDurationList = [
-    15, 30, 45, 1
-  ];
+
+  /// Update Service Fields
+  GlobalKey<FormState> serviceUpdateFormKey = GlobalKey();
+  TextEditingController updateServiceNameFieldController = TextEditingController();
+  TextEditingController updateServicePriceFieldController = TextEditingController();
+  TextEditingController updateServiceShortDesFieldController = TextEditingController();
+  TextEditingController updateServiceLongDesFieldController = TextEditingController();
+  RxInt updateTimeDuration = 15.obs;
+  int selectedItemId = 0;
+
+
+  List<WorkerList1> allResourcesList = [];
+  ApiHeader apiHeader = ApiHeader();
+
+
+  List<int> timeDurationList = [15, 30, 45, 1];
 
 
   /// Get All Services
@@ -37,33 +50,23 @@ class VendorServicesScreenController extends GetxController {
     log("Get All Service API URL : $url");
 
     try {
-      Map<String, String> headers = <String,String>{
-        'Authorization': UserDetails.apiToken
-      };
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': UserDetails.apiToken
+      // };
 
-      var request = http.MultipartRequest('GET', Uri.parse(url));
-      request.headers.addAll(headers);
-      // request.fields['VendorId'] = "${UserDetails.tableWiseId}";
-      log("headers : $headers");
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Response : $response');
 
-      var response = await request.send();
+      GetAllVendorServiceModel getAllVendorServiceModel = GetAllVendorServiceModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getAllVendorServiceModel.success.obs;
+      log("Code : ${getAllVendorServiceModel.statusCode}");
 
-      response.stream.transform(utf8.decoder).listen((value) {
-        GetAllVendorServiceModel getAllVendorServiceModel = GetAllVendorServiceModel.fromJson(json.decode(value));
-        isSuccessStatus = getAllVendorServiceModel.success.obs;
-        log("Code : ${getAllVendorServiceModel.statusCode}");
+      if (isSuccessStatus.value) {
+        allResourcesList = getAllVendorServiceModel.workerList;
 
-
-        if(isSuccessStatus.value) {
-          allResourcesList = getAllVendorServiceModel.workerList;
-          log("List $allResourcesList");
-          Get.back();
-        } else {
-          Fluttertoast.showToast(msg: "Something wnt wrong!");
-
-        }
-      });
-
+      } else {
+        Fluttertoast.showToast(msg: "Something wnt wrong!");
+      }
     } catch(e) {
       log("getAllVendorServiceFunction Error ::: $e");
     } finally {
@@ -73,19 +76,19 @@ class VendorServicesScreenController extends GetxController {
   }
 
   /// Add New Service
-  addVendorResourcesFunction() async {
+  addVendorServiceFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorAddAndUpdateServiceApi;
     log("Add Resources API URL : $url");
 
     try {
-      Map<String, String> headers = <String,String>{
-        'Authorization': UserDetails.apiToken
-      };
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': UserDetails.apiToken
+      // };
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      request.headers.addAll(headers);
+      request.headers.addAll(apiHeader.headers);
 
       request.fields['Name'] = serviceNameFieldController.text.trim();
       request.fields['ShortDescription'] = serviceShortDesFieldController.text.trim();
@@ -95,16 +98,8 @@ class VendorServicesScreenController extends GetxController {
       request.fields['CreatedBy'] = UserDetails.uniqueId;
       request.fields['VendorId'] = "${UserDetails.tableWiseId}";
 
-      // request.fields['Name'] = "Shaving";
-      // request.fields['ShortDescription'] = "Lorem Ipsum is simply dummy text of the printing.";
-      // request.fields['Price'] = "123.50";
-      // request.fields['LongDescription'] = "Lorem Ipsum is simply dummy text of the printing.";
-      // request.fields['TimeDuration'] = "30";
-      // request.fields['CreatedBy'] = UserDetails.uniqueId;
-      // request.fields['VendorId'] = "${UserDetails.tableWiseId}";
-
       log("Fields : ${request.fields}");
-      log("headers : $headers");
+      log("headers : ${apiHeader.headers}");
 
       var response = await request.send();
 
@@ -131,6 +126,94 @@ class VendorServicesScreenController extends GetxController {
     } finally {
       isLoading(false);
     }
+
+  }
+
+  /// Delete Service
+  deleteVendorServiceFunction({required String resourceId}) async {
+    isLoading(true);
+    String url = ApiUrl.vendorDeleteServiceApi + "?id=$resourceId";
+    log("Delete Vendor Resources API URL : $url");
+
+    try {
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': UserDetails.apiToken
+      // };
+
+      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers);
+      log("response : ${response.body}");
+
+      DeleteServiceServiceModel deleteServiceServiceModel = DeleteServiceServiceModel.fromJson(json.decode(response.body));
+      isSuccessStatus = deleteServiceServiceModel.success.obs;
+      log("Code : ${deleteServiceServiceModel.statusCode}");
+
+      if (isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: deleteServiceServiceModel.message);
+        await getAllVendorServiceFunction();
+      } else {
+        Fluttertoast.showToast(msg: "Something wnt wrong!");
+      }
+
+    } catch(e) {
+      log("deleteVendorResourcesFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
+  }
+
+  /// Update Service
+  updateVendorServiceFunction() async {
+    isLoading(true);
+    String url = ApiUrl.vendorAddAndUpdateServiceApi;
+    log("Update Resources API URL : $url");
+
+    try {
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': UserDetails.apiToken
+      // };
+
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['Name'] = updateServiceNameFieldController.text.trim();
+      request.fields['ShortDescription'] = updateServiceShortDesFieldController.text.trim();
+      request.fields['Price'] = updateServicePriceFieldController.text.trim();
+      request.fields['LongDescription'] = updateServiceLongDesFieldController.text.trim();
+      request.fields['TimeDuration'] = "${updateTimeDuration.value}";
+      request.fields['ModifiedBy'] = UserDetails.uniqueId;
+      request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+      request.fields['Id'] = "$selectedItemId";
+
+      log("Fields : ${request.fields}");
+      log("headers : ${apiHeader.headers}");
+
+      var response = await request.send();
+
+      response.stream.transform(utf8.decoder).listen((value) {
+        UpdateVendorServiceModel updateVendorServiceModel = UpdateVendorServiceModel.fromJson(json.decode(value));
+        isSuccessStatus = updateVendorServiceModel.success.obs;
+        log("Code : ${updateVendorServiceModel.statusCode}");
+
+
+        if(isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: updateVendorServiceModel.message);
+          // removeFieldData();
+          getAllVendorServiceFunction();
+          Get.back();
+        } else {
+          log("addVendorResourcesFunction Else Else ${updateVendorServiceModel.message}");
+          Fluttertoast.showToast(msg: "Something wnt wrong!");
+
+        }
+      });
+
+    } catch(e) {
+      log("");
+    } finally {
+      isLoading(false);
+    }
+
 
   }
 

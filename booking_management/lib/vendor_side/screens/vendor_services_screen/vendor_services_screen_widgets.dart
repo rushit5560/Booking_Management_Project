@@ -1,9 +1,13 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/screens/vendor_services_screen/vendor_update_service_screen/vendor_update_service_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/vendor_services_screen_controller/vendor_services_screen_controller.dart';
+import '../../model/vendor_service_screen_model/get_vendor_service_model.dart';
 import 'vendor_add_service_screen/vendor_add_service_screen.dart';
 
 
+/// Add Service Button
 class AddServicesButton extends StatelessWidget {
   const AddServicesButton({Key? key}) : super(key: key);
 
@@ -38,17 +42,19 @@ class AddServicesButton extends StatelessWidget {
   }
 }
 
-
+/// Service List Module
 class ServicesListModule extends StatelessWidget {
-  const ServicesListModule({Key? key}) : super(key: key);
+  ServicesListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorServicesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: 6,
+        itemCount: screenController.allResourcesList.length,
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, i){
+          WorkerList1 singleItem = screenController.allResourcesList[i];
           return Container(
             margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
             decoration: BoxDecoration(
@@ -69,23 +75,21 @@ class ServicesListModule extends StatelessWidget {
                   //flex: 68,
                   child: Row(
                     children: [
-                      // _userImageModule(i),
-                      // const SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _categoryModule(i),
+                            _categoryModule(singleItem),
                             const SizedBox(height: 8),
 
-                            _serviceModule(i),
+                            _serviceModule(singleItem),
                             const SizedBox(height: 8),
 
-                            _userMobileNoModule(),
+                            _userMobileNoModule(singleItem),
                             const SizedBox(height: 8),
-                            _priceModule(),
+                            _priceModule(singleItem),
                             const SizedBox(height: 8),
-                            _timeDurationModule(),
+                            _timeDurationModule(singleItem),
                           ],
                         ),
                       ),
@@ -96,7 +100,20 @@ class ServicesListModule extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+
+                        screenController.selectedItemId = singleItem.id;
+                        screenController.updateServiceNameFieldController.text = singleItem.name;
+                        screenController.updateServicePriceFieldController.text = singleItem.price.toString();
+                        screenController.updateServiceShortDesFieldController.text = singleItem.shortDescription;
+                        screenController.updateServiceLongDesFieldController.text = singleItem.longDescription;
+                        screenController.updateTimeDuration.value = singleItem.timeDuration;
+
+                        Get.to(
+                          () => VendorUpdateServiceScreen(),
+                          transition: Transition.zoom,
+                        );
+                      },
                       child: const Icon(
                         Icons.edit,
                         color: Colors.grey,
@@ -104,7 +121,9 @@ class ServicesListModule extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        await screenController.deleteVendorServiceFunction(resourceId: "${singleItem.id}");
+                      },
                       child: const Icon(
                         Icons.delete,
                         color: Colors.red,
@@ -130,34 +149,38 @@ class ServicesListModule extends StatelessWidget {
   //   );
   // }
 
-  Widget _categoryModule(i) {
-    return const Text(
-      "Category Name",
-      style: TextStyle(
+  Widget _categoryModule(WorkerList1 singleItem) {
+    return Text(
+      singleItem.name,
+      style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
-  Widget _serviceModule(i) {
-    return const Text("Saloon",
-        style: TextStyle(fontSize: 12));
+  Widget _serviceModule(WorkerList1 singleItem) {
+    return Text(
+        singleItem.categories.name,
+        style: const TextStyle(fontSize: 12));
   }
 
-  Widget _userMobileNoModule(){
-    return const Text("7875984532",
-        style: TextStyle(fontSize: 12));
+  Widget _userMobileNoModule(WorkerList1 singleItem){
+    return Text(
+        singleItem.mobileNo,
+        style: const TextStyle(fontSize: 12));
   }
 
-  Widget _priceModule(){
-    return const Text("Rs. 100.00",
-        style: TextStyle(fontSize: 12));
+  Widget _priceModule(WorkerList1 singleItem){
+    return Text(
+        singleItem.price.toString(),
+        style: const TextStyle(fontSize: 12));
   }
 
-  Widget _timeDurationModule(){
-    return const Text("1 Hour",
-        style: TextStyle(fontSize: 12));
+  Widget _timeDurationModule(WorkerList1 singleItem){
+    return Text(
+        "Time Duration : ${singleItem.timeDuration.toString()}",
+        style: const TextStyle(fontSize: 12));
   }
 
   showBottomSheet(BuildContext context) {

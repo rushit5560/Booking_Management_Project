@@ -139,7 +139,7 @@ class ResourceNameFieldModule extends StatelessWidget {
               controller: vendorResourcesScreenController.resourceNameFieldController,
               keyboardType: TextInputType.text,
               validator: (value) => FieldValidator().validateResourceName(value!),
-              decoration: resourceFormFieldDecoration(hintText: 'Resource Name'),
+              decoration: serviceFormFieldDecoration(hintText: 'Resource Name'),
             ),
           ],
         )

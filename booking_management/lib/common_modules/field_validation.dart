@@ -7,6 +7,7 @@ class FieldValidator {
     }
     return null;
   }
+
   String? validateAddress1(String value) {
     if (value.isEmpty) {
       return 'Address1 is required';
@@ -92,13 +93,13 @@ class FieldValidator {
   }
 
   String? validateUserName(String value) {
-    String  pattern = r'^(?=.*?[A-Z])';
-    RegExp regExp =  RegExp(pattern);
+    String pattern = r'^(?=.*?[A-Z])';
+    RegExp regExp = RegExp(pattern);
     //return
     if (value.isEmpty) {
       return 'Username is required';
-    } else{
-      if(!regExp.hasMatch(value)){
+    } else {
+      if (!regExp.hasMatch(value)) {
         return 'AtLeast 1 uppercase letter is required';
       }
     }
@@ -111,7 +112,23 @@ class FieldValidator {
     //return
     if (value.isEmpty) {
       return 'Servicename is required';
-    } /*else{
+    }
+    /*else{
+      if(!regExp.hasMatch(value)){
+        return 'AtLeast 1 uppercase letter is required';
+      }
+    }*/
+    return null;
+  }
+
+  String? validateAdditionalSlotName(String value) {
+    // String  pattern = r'^(?=.*?[A-Z])';
+    // RegExp regExp =  RegExp(pattern);
+    //return
+    if (value.isEmpty) {
+      return 'Additional slot is required';
+    }
+    /*else{
       if(!regExp.hasMatch(value)){
         return 'AtLeast 1 uppercase letter is required';
       }
@@ -189,7 +206,6 @@ class FieldValidator {
     return null;
   }
 
-
   String? validateAge(String value) {
     if (value.isEmpty) {
       return 'Age is required';
@@ -197,7 +213,7 @@ class FieldValidator {
     return null;
   }
 
-  String ? validateEmail(String value) {
+  String? validateEmail(String value) {
     if (value.isEmpty) {
       return "Email is required";
     } else if (!isNumeric(value) &&
@@ -209,83 +225,79 @@ class FieldValidator {
     }
   }
 
-  String ? validatePassword(String value) {
+  String? validatePassword(String value) {
     if (value.isEmpty) {
       return "Password is required";
-    } else if(value.length < 8){
+    } else if (value.length < 8) {
       return "Password must be at least 8 characters";
-    } else if(!value.contains(RegExp(r'[A-Z]'))){
+    } else if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must be at least one upper case letter";
-    } else if(!value.contains(RegExp(r"[a-z]"))){
+    } else if (!value.contains(RegExp(r"[a-z]"))) {
       return "Password must be at least one lower case letter";
-    } else if(!value.contains(RegExp(r"[0-9]"))){
+    } else if (!value.contains(RegExp(r"[0-9]"))) {
       return "Password must be at least one numerical letter";
-    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+    } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return "Password must be at least one special character";
     } else {
       return null;
     }
   }
 
-  String ? validateCurrentPassword(String value) {
+  String? validateCurrentPassword(String value) {
     if (value.isEmpty) {
       return "Current password is required";
-    } else if(value.length < 8){
+    } else if (value.length < 8) {
       return "Password must be at least 8 characters";
-    } else if(!value.contains(RegExp(r'[A-Z]'))){
+    } else if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must be at least one upper case letter";
-    } else if(!value.contains(RegExp(r"[a-z]"))){
+    } else if (!value.contains(RegExp(r"[a-z]"))) {
       return "Password must be at least one lower case letter";
-    } else if(!value.contains(RegExp(r"[0-9]"))){
+    } else if (!value.contains(RegExp(r"[0-9]"))) {
       return "Password must be at least one numerical letter";
-    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+    } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return "Password must be at least one special character";
     } else {
       return null;
     }
   }
 
-  String ? validateNewPassword(String value) {
+  String? validateNewPassword(String value) {
     if (value.isEmpty) {
       return "New password is required";
-    } else if(value.length < 8){
+    } else if (value.length < 8) {
       return "Password must be at least 8 characters";
-    } else if(!value.contains(RegExp(r'[A-Z]'))){
+    } else if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must be at least one upper case letter";
-    } else if(!value.contains(RegExp(r"[a-z]"))){
+    } else if (!value.contains(RegExp(r"[a-z]"))) {
       return "Password must be at least one lower case letter";
-    } else if(!value.contains(RegExp(r"[0-9]"))){
+    } else if (!value.contains(RegExp(r"[0-9]"))) {
       return "Password must be at least one numerical letter";
-    } else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+    } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return "Password must be at least one special character";
     } else {
       return null;
     }
   }
 
-  String ? validateConfirmPassword(String value, String value2) {
+  String? validateConfirmPassword(String value, String value2) {
     if (value.isEmpty) {
       return "Confirm password is required";
-    }  else if(value != value2){
+    } else if (value != value2) {
       return "Password must be at least one special character";
     } else {
       return null;
     }
   }
 
-
-  String ? validateMobile(String value) {
+  String? validateMobile(String value) {
 // Indian Mobile number are of 10 digit only
     if (value.isEmpty) {
       return "Mobile number is required";
-    }
-    else if (value.length != 10){
+    } else if (value.length != 10) {
       return 'Mobile number must be of 10 digit';
-    }
-    else{
+    } else {
       return null;
     }
-
   }
 
   bool isNumeric(String s) {
@@ -308,5 +320,22 @@ class FieldValidator {
     }
     return null;
   }
+
+  String? validateResourceName(String value) {
+
+    if (value.isEmpty) {
+      return 'Resource Name is required';
+    }
+    return null;
+  }
+
+  String? validateResourceDetail(String value) {
+
+    if (value.isEmpty) {
+      return 'Resource Details is required';
+    }
+    return null;
+  }
+
 
 }

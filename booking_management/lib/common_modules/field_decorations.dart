@@ -305,6 +305,7 @@ InputDecoration serviceFormFieldDecoration({required String hintText}) {
     hintText: hintText,
     hintStyle: const TextStyle(color: Colors.grey),
     border: InputBorder.none,
+    counterText: "",
     contentPadding: EdgeInsets.symmetric(horizontal: 15),
     // enabledBorder: const UnderlineInputBorder(
     //     borderSide: BorderSide(color: Colors.black)),

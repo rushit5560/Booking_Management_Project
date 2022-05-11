@@ -25,13 +25,23 @@ class ApiUrl {
   static const vendorDoneAppointmentApi = apiMainPath + "Appointments/APIAppointmentDone";
   static const vendorEditProfileApi = apiMainPath + "API/VendorProfile";
 
-  static const vendorAddAndUpdateServiceApi = apiMainPath + "API/ServiceUpsert";
-  static const vendorGetAllServicesApi = apiMainPath + "API/ServiceIndex";
-  static const vendorGetServiceDetailsApi = apiMainPath + "API/ServiceGetById";
-  static const vendorDeleteServiceApi = apiMainPath + "API/ServiceDelete";
+  /// Vendor - Services
+  static const vendorAddAndUpdateServiceApi = apiMainPath + "API/ServiceUpsert"; // Add & Update
+  static const vendorGetAllServicesApi = apiMainPath + "API/ServiceIndex"; // Get All
+  static const vendorGetServiceDetailsApi = apiMainPath + "API/ServiceGetById"; // Get By Id
+  static const vendorDeleteServiceApi = apiMainPath + "API/ServiceDelete"; // Delete
+
+  /// Vendor - Additional Slot
+  static const vendorGetAllAdditionalSlotApi = apiMainPath + "API/AdditionalSlotIndex"; // Get All
+  static const vendorAddAdditionalSlotApi = apiMainPath + "API/AdditionalSlotUpsert"; // Add
+  static const vendorUpdateAdditionalSlotApi = apiMainPath + "API/AdditionalSlotUpsert"; // Update
+  static const vendorDeleteAdditionalSlotApi = apiMainPath + "API/AdditionalSlotDelete"; // Delete
+  static const vendorGetAdditionalDetailsByIdApi = apiMainPath + "API/AdditionalSlotGetById"; // Get By Id
+
 
   static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
 
   static const vendorGetAllResourcesApi = apiMainPath + "API/ResourceIndex";
-  static const vendorAddResourcesApi = apiMainPath + "API/ResourceUpsert";
+  static const vendorAddAndUpdateResourcesApi = apiMainPath + "API/ResourceUpsert";
+  static const vendorDeleteResourcesApi = apiMainPath + "API/ResourceDelete"; //delete
 }

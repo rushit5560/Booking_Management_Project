@@ -3,6 +3,7 @@ import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_
 import 'package:booking_management/user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import 'package:booking_management/vendor_side/screens/customer_review_screen/customer_review_screen.dart';
 import 'package:booking_management/vendor_side/screens/my_customer_screen/my_customer_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_additional_slot_screen/vendor_additional_slot_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_chat_list_screen/vendor_chat_list_screen.dart';
@@ -86,28 +87,36 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
   }) {
     if (vendorSettingScreenOption == VendorSettingScreenOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption == VendorSettingScreenOption.myCustomer) {
-      Get.to(()=> const MyCustomerScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption ==
+        VendorSettingScreenOption.myCustomer) {
+      Get.to(() => const MyCustomerScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.chat) {
-       Get.to(()=> const VendorChatListScreen(), transition: Transition.rightToLeft);
+      Get.to(() => const VendorChatListScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.bookingHistory) {
-       Get.to(()=> const VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
+      Get.to(() => const VendorBookingHistoryScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.wallet) {
       Get.to(() => VendorWalletScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.resources) {
-      Get.to(()=> VendorResourcesScreen(), transition: Transition.rightToLeft);
+      Get.to(() => VendorResourcesScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.services) {
-      Get.to(()=> VendorServicesScreen(), transition: Transition.rightToLeft);
-     } else if (vendorSettingScreenOption ==
+      Get.to(() => VendorServicesScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption ==
+        VendorSettingScreenOption.additionalSlot) {
+      Get.to(() => VendorAdditionalSlotScreen(),
+          transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.businessDocument) {
-      Get.to(()=> VendorBusinessDocumentScreen(), transition: Transition.rightToLeft);
-    }
-    else if (vendorSettingScreenOption ==
-        VendorSettingScreenOption.review) {
-      Get.to(()=> const CustomerReviewScreen(), transition: Transition.rightToLeft);
+      Get.to(() => VendorBusinessDocumentScreen(),
+          transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorSettingScreenOption.review) {
+      Get.to(() => const CustomerReviewScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.subscription) {
       Get.to(() => const VendorSubscriptionPlanScreen(),
@@ -116,7 +125,8 @@ class VendorSettingScreenSingleItemModule extends StatelessWidget {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorSettingScreenOption.changePassword) {
-       Get.to(()=> UserChangePasswordScreen(), transition: Transition.rightToLeft);
+      Get.to(() => UserChangePasswordScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorSettingScreenOption.logout) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);

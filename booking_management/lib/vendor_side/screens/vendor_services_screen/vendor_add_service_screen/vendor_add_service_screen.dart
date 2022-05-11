@@ -21,7 +21,7 @@ class VendorAddServiceScreen extends StatelessWidget {
             ? const CustomCircularLoaderModule()
           : Column(
             children: [
-              const CommonAppBarModule(title: "Resources", appBarOption: AppBarOption.singleBackButtonOption),
+              const CommonAppBarModule(title: "Add Service", appBarOption: AppBarOption.singleBackButtonOption),
               const SizedBox(height: 10),
               Expanded(child: AddServiceFormModule()),
             ],

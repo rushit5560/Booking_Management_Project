@@ -103,7 +103,7 @@ class VendorServicesScreenController extends GetxController {
 
       var response = await request.send();
 
-      response.stream.transform(utf8.decoder).listen((value) {
+      response.stream.transform(utf8.decoder).listen((value) async {
         AddVendorServiceModel addVendorServiceModel = AddVendorServiceModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorServiceModel.success.obs;
         log("Code : ${addVendorServiceModel.statusCode}");
@@ -112,7 +112,7 @@ class VendorServicesScreenController extends GetxController {
         if(isSuccessStatus.value) {
           Fluttertoast.showToast(msg: addVendorServiceModel.message);
           removeFieldData();
-          getAllVendorServiceFunction();
+          await getAllVendorServiceFunction();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addVendorServiceModel.message}");

@@ -79,6 +79,13 @@ class VendorSettingsScreen extends StatelessWidget {
 
                     VendorSettingScreenSingleItemModule(
                       img: AppImages.resourcesImg,
+                      name: 'Additional Slot',
+                      vendorSettingScreenOption: VendorSettingScreenOption.additionalSlot,
+                    ),
+                    const SizedBox(height: 20),
+
+                    VendorSettingScreenSingleItemModule(
+                      img: AppImages.resourcesImg,
                       name: 'Business Document',
                       vendorSettingScreenOption: VendorSettingScreenOption.businessDocument,
                     ),

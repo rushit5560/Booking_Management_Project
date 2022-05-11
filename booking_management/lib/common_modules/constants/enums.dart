@@ -22,6 +22,7 @@ enum VendorSettingScreenOption {
    wallet,
    resources,
    services,
+   additionalSlot,
    businessDocument,
    review,
    subscription,

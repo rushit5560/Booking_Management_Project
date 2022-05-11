@@ -35,7 +35,7 @@ class UpdateAdditionalFormModule extends StatelessWidget {
             const SizedBox(height: 10),
           ],
         ),
-      ),
+      ).commonAllSidePadding(10),
     );
   }
 }

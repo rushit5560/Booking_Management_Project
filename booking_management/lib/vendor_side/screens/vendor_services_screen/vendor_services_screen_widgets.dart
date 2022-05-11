@@ -100,14 +100,15 @@ class ServicesListModule extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
 
-                        screenController.selectedItemId = singleItem.id;
-                        screenController.updateServiceNameFieldController.text = singleItem.name;
-                        screenController.updateServicePriceFieldController.text = singleItem.price.toString();
-                        screenController.updateServiceShortDesFieldController.text = singleItem.shortDescription;
-                        screenController.updateServiceLongDesFieldController.text = singleItem.longDescription;
-                        screenController.updateTimeDuration.value = singleItem.timeDuration;
+                        await screenController.getAdditionalDetailsByIdFunction(id: singleItem.id);
+                        // screenController.selectedItemId = singleItem.id;
+                        // screenController.updateServiceNameFieldController.text = singleItem.name;
+                        // screenController.updateServicePriceFieldController.text = singleItem.price.toString();
+                        // screenController.updateServiceShortDesFieldController.text = singleItem.shortDescription;
+                        // screenController.updateServiceLongDesFieldController.text = singleItem.longDescription;
+                        // screenController.updateTimeDuration.value = singleItem.timeDuration;
 
                         Get.to(
                           () => VendorUpdateServiceScreen(),

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../../model/vendor_service_screen_model/add_vendor_service_model.dart';
 import '../../model/vendor_service_screen_model/delete_vendor_service_model.dart';
+import '../../model/vendor_service_screen_model/get_vendor_service_details_model.dart';
 import '../../model/vendor_service_screen_model/get_vendor_service_model.dart';
 import '../../model/vendor_service_screen_model/update_vendor_service_model.dart';
 
@@ -46,13 +47,10 @@ class VendorServicesScreenController extends GetxController {
   /// Get All Services
   getAllVendorServiceFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorGetAllResourcesApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorGetAllServicesApi + "?VendorId=${UserDetails.tableWiseId}";
     log("Get All Service API URL : $url");
 
     try {
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': UserDetails.apiToken
-      // };
 
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Response : $response');
@@ -82,9 +80,6 @@ class VendorServicesScreenController extends GetxController {
     log("Add Resources API URL : $url");
 
     try {
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': UserDetails.apiToken
-      // };
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
@@ -136,9 +131,6 @@ class VendorServicesScreenController extends GetxController {
     log("Delete Vendor Resources API URL : $url");
 
     try {
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': UserDetails.apiToken
-      // };
 
       http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers);
       log("response : ${response.body}");
@@ -169,9 +161,6 @@ class VendorServicesScreenController extends GetxController {
     log("Update Resources API URL : $url");
 
     try {
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': UserDetails.apiToken
-      // };
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
@@ -215,6 +204,38 @@ class VendorServicesScreenController extends GetxController {
     }
 
 
+  }
+
+  /// Get Service Details By Id
+  getAdditionalDetailsByIdFunction({required int id}) async {
+    isLoading(true);
+    String url = ApiUrl.vendorGetServiceDetailsApi + "?id=$id";
+    log("Get Service By ID API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Response : ${response.body}');
+
+      GetServiceDetailsModel getServiceDetailsModel = GetServiceDetailsModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getServiceDetailsModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        selectedItemId = getServiceDetailsModel.workerList.id;
+        updateServiceNameFieldController.text = getServiceDetailsModel.workerList.name;
+        updateServiceShortDesFieldController.text = getServiceDetailsModel.workerList.shortDescription;
+        updateServiceLongDesFieldController.text = getServiceDetailsModel.workerList.longDescription;
+        updateServicePriceFieldController.text = getServiceDetailsModel.workerList.price.toString();
+        updateTimeDuration = getServiceDetailsModel.workerList.timeDuration.obs;
+
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getAdditionalDetailsByIdFunction Else Else");
+      }
+    } catch(e) {
+      log("getAdditionalDetailsByIdFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
   }
 
 

@@ -8,23 +8,26 @@ import 'package:get/get.dart';
 class VendorUpdateResourcesScreen extends StatelessWidget {
   VendorUpdateResourcesScreen({Key? key}) : super(key: key);
 
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Obx(()=>
-        vendorResourcesScreenController.isLoading.value ?
-        const CircularProgressIndicator() :
-        Column(
-          children: [
-            const CommonAppBarModule(title: "Update Resources", appBarOption: AppBarOption.singleBackButtonOption),
-            const SizedBox(height: 10),
-            Expanded(child: UpdateResourceFormModule()),
-          ],
-        ),
-        ),
+      body: Obx(
+        () => vendorResourcesScreenController.isLoading.value
+            ? const CircularProgressIndicator()
+            : SafeArea(
+                child: Column(
+                  children: [
+                    const CommonAppBarModule(
+                        title: "Update Resources",
+                        appBarOption: AppBarOption.singleBackButtonOption),
+                    const SizedBox(height: 10),
+                    UpdateResourceFormModule(),
+                  ],
+                ),
+              ),
       ),
     );
   }

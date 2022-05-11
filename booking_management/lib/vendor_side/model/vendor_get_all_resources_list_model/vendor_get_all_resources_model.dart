@@ -39,8 +39,6 @@ class WorkerList1 {
     required this.details,
     required this.image,
     required this.isActive,
-    // required this.applicationUserCreator,
-    // required this.applicationUserModifier,
     required this.orderBy,
     required this.createdBy,
     required this.createdOn,
@@ -60,11 +58,9 @@ class WorkerList1 {
   String details;
   String image;
   bool isActive;
-  // ApplicationUserCreator applicationUserCreator;
-  // String applicationUserModifier;
   String orderBy;
   String createdBy;
-  DateTime createdOn;
+  String createdOn;
   String modifiedBy;
   String modifiedOn;
   String vendorBooking;
@@ -81,16 +77,14 @@ class WorkerList1 {
     details: json["details"] ?? "",
     image: json["image"] ?? "",
     isActive: json["isActive"] ?? false,
-    // applicationUserCreator: ApplicationUserCreator.fromJson(json["applicationUserCreator"] ?? {}),
-    // applicationUserModifier: json["applicationUserModifier"] ?? "",
     orderBy: json["orderBy"] ?? "",
     createdBy: json["createdBy"] ?? "",
-    createdOn: DateTime.parse(json["createdOn"] ?? DateTime.now()),
+    createdOn: json["createdOn"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: json["modifiedOn"] ?? "",
     vendorBooking: json["vendorBooking"] ?? "",
     vendorId: json["vendorId"] ?? 0,
-    price: json["price"] ?? 0.0,
+    price: double.parse(json["price"].toString()),
     dDate: json["dDate"] ?? "",
     duration: json["duration"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
@@ -103,11 +97,9 @@ class WorkerList1 {
     "details": details,
     "image": image,
     "isActive": isActive,
-    // "applicationUserCreator": applicationUserCreator.toJson(),
-    // "applicationUserModifier": applicationUserModifier,
     "orderBy": orderBy,
     "createdBy": createdBy,
-    "createdOn": createdOn.toIso8601String(),
+    "createdOn": createdOn,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
     "vendorBooking": vendorBooking,
@@ -120,82 +112,4 @@ class WorkerList1 {
   };
 }
 
-/*class ApplicationUserCreator {
-  ApplicationUserCreator({
-    required this.apiToken,
-    required this.frogotToken,
-    required this.id,
-    required this.userName,
-    required this.normalizedUserName,
-    required this.email,
-    required this.normalizedEmail,
-    required this.emailConfirmed,
-    required this.passwordHash,
-    required this.securityStamp,
-    required this.concurrencyStamp,
-    required this.phoneNumber,
-    required this.phoneNumberConfirmed,
-    required this.twoFactorEnabled,
-    required this.lockoutEnd,
-    required this.lockoutEnabled,
-    required this.accessFailedCount,
-  });
 
-  String apiToken;
-  String frogotToken;
-  String id;
-  String userName;
-  String normalizedUserName;
-  String email;
-  String normalizedEmail;
-  bool emailConfirmed;
-  String passwordHash;
-  String securityStamp;
-  String concurrencyStamp;
-  String phoneNumber;
-  bool phoneNumberConfirmed;
-  bool twoFactorEnabled;
-  String lockoutEnd;
-  bool lockoutEnabled;
-  int accessFailedCount;
-
-  factory ApplicationUserCreator.fromJson(Map<String, dynamic> json) => ApplicationUserCreator(
-    apiToken: json["apiToken"] ?? "",
-    frogotToken: json["frogotToken"] ?? "",
-    id: json["id"] ?? "",
-    userName: json["userName"] ?? "",
-    normalizedUserName: json["normalizedUserName"] ?? "",
-    email: json["email"] ?? "",
-    normalizedEmail: json["normalizedEmail"] ?? "",
-    emailConfirmed: json["emailConfirmed"] ?? false,
-    passwordHash: json["passwordHash"] ?? "",
-    securityStamp: json["securityStamp"] ?? "",
-    concurrencyStamp: json["concurrencyStamp"] ?? "",
-    phoneNumber: json["phoneNumber"] ?? "",
-    phoneNumberConfirmed: json["phoneNumberConfirmed"] ?? false,
-    twoFactorEnabled: json["twoFactorEnabled"] ?? false,
-    lockoutEnd: json["lockoutEnd"] ?? "",
-    lockoutEnabled: json["lockoutEnabled"] ?? false,
-    accessFailedCount: json["accessFailedCount"] ?? 0,
-  );
-
-  Map<String, dynamic> toJson() => {
-    "apiToken": apiToken,
-    "frogotToken": frogotToken,
-    "id": id,
-    "userName": userName,
-    "normalizedUserName": normalizedUserName,
-    "email": email,
-    "normalizedEmail": normalizedEmail,
-    "emailConfirmed": emailConfirmed,
-    "passwordHash": passwordHash,
-    "securityStamp": securityStamp,
-    "concurrencyStamp": concurrencyStamp,
-    "phoneNumber": phoneNumber,
-    "phoneNumberConfirmed": phoneNumberConfirmed,
-    "twoFactorEnabled": twoFactorEnabled,
-    "lockoutEnd": lockoutEnd,
-    "lockoutEnabled": lockoutEnabled,
-    "accessFailedCount": accessFailedCount,
-  };
-}*/

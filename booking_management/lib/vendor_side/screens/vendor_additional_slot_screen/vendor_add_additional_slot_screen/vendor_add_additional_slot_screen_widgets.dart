@@ -82,7 +82,7 @@ class AdditionalSlotNameFieldModule extends StatelessWidget {
             TextFormField(
               controller: vendorAdditionalSlotScreenController.additionalNameFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateServiceName(value!),
+              validator: (value) => FieldValidator().validateAdditionalSlotName(value!),
               decoration: serviceFormFieldDecoration(hintText: 'Additional Slot Name'),
             ),
           ],
@@ -278,13 +278,13 @@ class AdditionalSlotTimeDurationModule extends StatelessWidget {
               ),
               Obx(
                     ()=> DropdownButtonHideUnderline(
-                  child: DropdownButton<int>(
+                  child: DropdownButton<double>(
                     value: vendorAdditionalSlotScreenController.selectAdditionalTimeDuration.value,
                     items:vendorAdditionalSlotScreenController.timeDurationList
-                        .map<DropdownMenuItem<int>>((int value) {
-                      return DropdownMenuItem<int>(
+                        .map<DropdownMenuItem<double>>((double value) {
+                      return DropdownMenuItem<double>(
                         value: value,
-                        child: Text("$value Minutes",style: const TextStyle(color:Colors.black),),
+                        child: Text("$value",style: const TextStyle(color:Colors.black),),
                       );
                     }).toList(),
                     onChanged: (newValue) {

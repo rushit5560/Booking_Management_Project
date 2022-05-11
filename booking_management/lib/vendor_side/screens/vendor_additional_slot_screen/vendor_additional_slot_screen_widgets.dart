@@ -84,8 +84,8 @@ class AdditionalSlotListModule extends StatelessWidget {
                             _serviceModule(singleItem),
                             const SizedBox(height: 8),
 
-                            _userMobileNoModule(singleItem),
-                            const SizedBox(height: 8),
+                            // _userMobileNoModule(singleItem),
+                            // const SizedBox(height: 8),
                             _priceModule(singleItem),
                             const SizedBox(height: 8),
                             _timeDurationModule(singleItem),
@@ -156,11 +156,11 @@ class AdditionalSlotListModule extends StatelessWidget {
         style: const TextStyle(fontSize: 12));
   }
 
-  Widget _userMobileNoModule(AdditionalSlotWorkerList singleItem){
-    return Text(
-        singleItem.mobileNo,
-        style: const TextStyle(fontSize: 12));
-  }
+  // Widget _userMobileNoModule(AdditionalSlotWorkerList singleItem){
+  //   return Text(
+  //       singleItem.mobileNo,
+  //       style: const TextStyle(fontSize: 12));
+  // }
 
   Widget _priceModule(AdditionalSlotWorkerList singleItem){
     return Text(

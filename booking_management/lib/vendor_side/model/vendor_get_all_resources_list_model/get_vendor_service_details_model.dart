@@ -65,9 +65,9 @@ class WorkerList {
   //ApplicationUser applicationUserModifier;
   String orderBy;
   String createdBy;
-  DateTime createdOn;
+  String createdOn;
   String modifiedBy;
-  DateTime modifiedOn;
+  String modifiedOn;
   String vendorBooking;
   int vendorId;
   double price;
@@ -87,9 +87,9 @@ class WorkerList {
    // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"] ?? {}),
     orderBy: json["orderBy"] ?? "",
     createdBy: json["createdBy"] ?? "",
-    createdOn: DateTime.parse(json["createdOn"] ?? DateTime.now()),
+    createdOn: json["createdOn"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
+    modifiedOn: json["modifiedOn"] ?? "",
     vendorBooking: json["vendorBooking"] ?? "",
     vendorId: json["vendorId"] ?? 0,
     price: json["price"] ?? 0.0,
@@ -110,9 +110,9 @@ class WorkerList {
     //"applicationUserModifier": applicationUserModifier.toJson(),
     "orderBy": orderBy,
     "createdBy": createdBy,
-    "createdOn": createdOn.toIso8601String(),
+    "createdOn": createdOn,
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn.toIso8601String(),
+    "modifiedOn": modifiedOn,
     "vendorBooking": vendorBooking,
     "vendorId": vendorId,
     "price": price,

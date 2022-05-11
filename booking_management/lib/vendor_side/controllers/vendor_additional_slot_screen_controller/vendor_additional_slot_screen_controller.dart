@@ -20,7 +20,16 @@ class VendorAdditionalSlotScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
   List<AdditionalSlotWorkerList> allAdditionalSlotList = [];
-  List<int> timeDurationList = [15, 30, 45, 1];
+  List<double> timeDurationList = [
+    0.5,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    3.5,
+    4,
+  ];
 
   /// Add Additional Form Field
   GlobalKey<FormState> additionalSlotAddFormKey = GlobalKey();
@@ -28,7 +37,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
   TextEditingController additionalPriceFieldController =TextEditingController();
   TextEditingController additionalShortDescriptionFieldController =TextEditingController();
   TextEditingController additionalLongDescriptionFieldController =TextEditingController();
-  RxInt selectAdditionalTimeDuration = 15.obs;
+  RxDouble selectAdditionalTimeDuration =0.5.obs;
 
   /// Update Additional Form Field
   GlobalKey<FormState> additionalSlotUpdateFormKey = GlobalKey();
@@ -36,7 +45,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
   TextEditingController updateAdditionalPriceFieldController =TextEditingController();
   TextEditingController updateAdditionalShortDescriptionFieldController =TextEditingController();
   TextEditingController updateAdditionalLongDescriptionFieldController =TextEditingController();
-  RxInt updateAdditionalTimeDuration = 15.obs;
+  RxDouble updateAdditionalTimeDuration = 0.5.obs;
   int selectedUpdateItemId = 0;
 
 
@@ -223,7 +232,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
         updateAdditionalShortDescriptionFieldController.text = getAdditionalSlotDetailsModel.workerList.shortDescription;
         updateAdditionalLongDescriptionFieldController.text = getAdditionalSlotDetailsModel.workerList.longDescription;
         updateAdditionalPriceFieldController.text = getAdditionalSlotDetailsModel.workerList.price.toString();
-        updateAdditionalTimeDuration = getAdditionalSlotDetailsModel.workerList.timeDuration.obs;
+        updateAdditionalTimeDuration.value = double.parse(getAdditionalSlotDetailsModel.workerList.timeDuration.toString());
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
@@ -248,7 +257,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
     additionalPriceFieldController.clear();
     additionalShortDescriptionFieldController.clear();
     additionalLongDescriptionFieldController.clear();
-    selectAdditionalTimeDuration = 15.obs;
+    selectAdditionalTimeDuration = 0.5.obs;
   }
 
 }

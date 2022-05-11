@@ -111,7 +111,7 @@ class FieldValidator {
     // RegExp regExp =  RegExp(pattern);
     //return
     if (value.isEmpty) {
-      return 'Servicename is required';
+      return 'Service name is required';
     }
     /*else{
       if(!regExp.hasMatch(value)){

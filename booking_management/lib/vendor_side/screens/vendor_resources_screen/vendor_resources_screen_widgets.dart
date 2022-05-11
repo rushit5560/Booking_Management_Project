@@ -6,7 +6,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/choose_court_screen/choose_court_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen.dart';
-import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_scren.dart';
+import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -129,7 +129,7 @@ class VendorResourcesListModule extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () async{
-                          await screenController.getAdditionalDetailsByIdFunction(id: screenController.getResourceList[i].id);
+                          await screenController.getResourcesDetailsByIdFunction(id: screenController.getResourceList[i].id);
                           //screenController.selectedItemId = screenController.getResourceList[i].id;
                           //screenController.updateResourceNameFieldController.text = screenController.getResourceList[i].resourceName;
                           //screenController.updateResourceDetailsFieldController.text = screenController.getResourceList[i].details;

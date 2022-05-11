@@ -85,8 +85,8 @@ class ServicesListModule extends StatelessWidget {
                             _serviceModule(singleItem),
                             const SizedBox(height: 8),
 
-                            _userMobileNoModule(singleItem),
-                            const SizedBox(height: 8),
+                            // _userMobileNoModule(singleItem),
+                            // const SizedBox(height: 8),
                             _priceModule(singleItem),
                             const SizedBox(height: 8),
                             _timeDurationModule(singleItem),
@@ -166,11 +166,11 @@ class ServicesListModule extends StatelessWidget {
         style: const TextStyle(fontSize: 12));
   }
 
-  Widget _userMobileNoModule(WorkerList1 singleItem){
-    return Text(
-        singleItem.mobileNo,
-        style: const TextStyle(fontSize: 12));
-  }
+  // Widget _userMobileNoModule(WorkerList1 singleItem){
+  //   return Text(
+  //       singleItem.mobileNo,
+  //       style: const TextStyle(fontSize: 12));
+  // }
 
   Widget _priceModule(WorkerList1 singleItem){
     return Text(

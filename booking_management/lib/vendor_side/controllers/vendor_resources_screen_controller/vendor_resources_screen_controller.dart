@@ -311,7 +311,7 @@ class VendorResourcesScreenController extends GetxController {
   }
 
   /// Get Resources Details By Id
-  getAdditionalDetailsByIdFunction({required int id}) async {
+  getResourcesDetailsByIdFunction({required int id}) async {
     isLoading(true);
     String url = ApiUrl.vendorGetResourceDetailsApi + "?id=$id";
     log("Get Service By ID API URL : $url");
@@ -339,10 +339,10 @@ class VendorResourcesScreenController extends GetxController {
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
-        log("getAdditionalDetailsByIdFunction Else Else");
+        log("getResourcesDetailsByIdFunction Else Else");
       }
     } catch(e) {
-      log("getAdditionalDetailsByIdFunction Error ::: $e");
+      log("getResourcesDetailsByIdFunction Error ::: $e");
     } finally {
       isLoading(false);
     }

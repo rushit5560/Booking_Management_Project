@@ -17,29 +17,27 @@ class UpdateResourceFormModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        key: vendorResourcesScreenController.resourceUpdateFormKey,
-        child: Column(
-          children: [
-            ResourceProfileModule(),
-            const SizedBox(height: 20),
-            ResourceNameFieldModule(),
-            const SizedBox(height: 20),
-            ResourceDetailsModule(),
-            const SizedBox(height: 20),
-            ResourcePriceFieldModule(),
-            // const SizedBox(height: 20),
-            // ServiceShortDesFieldModule(),
-            // const SizedBox(height: 20),
-            // ServiceLongDesFieldModule(),
-            const SizedBox(height: 30),
-            ResourceUpdateButton(),
-            const SizedBox(height: 10),
-          ],
-        ),
-      ).commonAllSidePadding(10),
-    );
+    return Form(
+      key: vendorResourcesScreenController.resourceUpdateFormKey,
+      child: Column(
+        children: [
+          ResourceProfileModule(),
+          const SizedBox(height: 20),
+          ResourceNameFieldModule(),
+          const SizedBox(height: 20),
+          ResourceDetailsModule(),
+          const SizedBox(height: 20),
+          ResourcePriceFieldModule(),
+          // const SizedBox(height: 20),
+          // ServiceShortDesFieldModule(),
+          // const SizedBox(height: 20),
+          // ServiceLongDesFieldModule(),
+          const SizedBox(height: 30),
+          ResourceUpdateButton(),
+          const SizedBox(height: 10),
+        ],
+      ),
+    ).commonAllSidePadding(10);
   }
 
 
@@ -54,13 +52,13 @@ class ResourceProfileModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      //clipBehavior: Clip.none,
+      clipBehavior: Clip.none,
       children: [
-        vendorResourcesScreenController.file != null ?
-        ClipRRect(
+        vendorResourcesScreenController.file != null
+            ? ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill)) :
-        ClipRRect(
+            child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill))
+            : ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(/*ApiUrl.apiMainPath + */vendorResourcesScreenController.updatePhotoUrl,
                 height: 100, width: 100, fit: BoxFit.fill)),
@@ -69,17 +67,13 @@ class ResourceProfileModule extends StatelessWidget {
           onTap: (){
             openGallery();
           },
-          child: Positioned(
-            //bottom: 15,
-            //top: 15,
-            child: Container(
-              height: 35, width: 35,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white
-              ),
-              child: const Icon(Icons.edit),
+          child: Container(
+            height: 35, width: 35,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white
             ),
+            child: const Icon(Icons.edit),
           ),
         ),
       ],

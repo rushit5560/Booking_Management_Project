@@ -30,7 +30,11 @@ class VendorServicesScreen extends StatelessWidget {
                         children: [
                           const AddServicesButton(),
                           const SizedBox(height: 15),
-                          Expanded(child: ServicesListModule()),
+                          Expanded(
+                            child: vendorServicesScreenController.allResourcesList.isEmpty
+                                ? const Center(child: Text("No Data Available"))
+                                : ServicesListModule(),
+                          ),
                         ],
                       ).commonSymmetricPadding(horizontal: 15, vertical: 15),
                     )

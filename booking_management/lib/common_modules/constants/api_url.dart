@@ -38,6 +38,11 @@ class ApiUrl {
   static const vendorDeleteAdditionalSlotApi = apiMainPath + "API/AdditionalSlotDelete"; // Delete
   static const vendorGetAdditionalDetailsByIdApi = apiMainPath + "API/AdditionalSlotGetById"; // Get By Id
 
+  /// Vendor - Business Documents
+  static const vendorGetAllDocumentsApi = apiMainPath + "API/VendorDocumentIndex"; // Get All Doc
+  static const vendorAddDocumentsApi = apiMainPath + "API/VendorDocumentAddVerify"; // Add Doc
+  static const vendorGetSingleDocumentByIdApi = apiMainPath + "API/VendorDocumentGetById"; // Get Single Doc By Id
+
 
   static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
 

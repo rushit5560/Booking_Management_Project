@@ -23,7 +23,7 @@ class SharedPreferenceData{
   String countryKey = "countryKey";
   String subUrbKey = "subUrbKey";
   String postCodeKey = "postCodeKey";
-
+  //String slotDurationKey = "slotDurationKey";
 
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
@@ -43,6 +43,7 @@ class SharedPreferenceData{
         required String country,
         required String subUrb,
         required String postCode,
+    //required String slotDuration
       }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -64,6 +65,7 @@ class SharedPreferenceData{
     prefs.remove(countryKey);
     prefs.remove(subUrbKey);
     prefs.remove(postCodeKey);
+    //prefs.remove(slotDurationKey);
 
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, true);
@@ -83,6 +85,7 @@ class SharedPreferenceData{
     prefs.setString(countryKey, country);
     prefs.setString(subUrbKey, subUrb);
     prefs.setString(postCodeKey, postCode);
+    //prefs.setString(slotDurationKey, slotDuration);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -102,6 +105,7 @@ class SharedPreferenceData{
     UserDetails.country = prefs.getString(countryKey) ?? "";
     UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
+    //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -120,7 +124,7 @@ class SharedPreferenceData{
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
-
+    //log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
 
   }
 
@@ -147,7 +151,7 @@ class SharedPreferenceData{
     prefs.setString(countryKey, "");
     prefs.setString(subUrbKey, "");
     prefs.setString(postCodeKey, "");
-
+    //prefs.setString(slotDurationKey, "");
 
 
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -167,6 +171,7 @@ class SharedPreferenceData{
     UserDetails.country = prefs.getString(countryKey) ?? "";
     UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
+    //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -185,6 +190,6 @@ class SharedPreferenceData{
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
-
+   // log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
   }
 }

@@ -9,7 +9,8 @@ import 'vendor_resources_screen_widgets.dart';
 
 class VendorResourcesScreen extends StatelessWidget {
   VendorResourcesScreen({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.put(VendorResourcesScreenController());
+  final vendorResourcesScreenController =
+      Get.put(VendorResourcesScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,23 @@ class VendorResourcesScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const CommonAppBarModule(title: "Resources", appBarOption: AppBarOption.singleBackButtonOption),
-
-            Expanded(child: VendorResourcesListModule().commonAllSidePadding(20)),
+            const CommonAppBarModule(
+                title: "Resources",
+                appBarOption: AppBarOption.singleBackButtonOption),
+            Expanded(
+                child: Obx(
+              () => vendorResourcesScreenController.isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
+                      children: [
+                        const AddResourcesButton(),
+                        const SizedBox(height: 15),
+                        Expanded(
+                            child: VendorResourcesListModule()
+                                ),
+                      ],
+                    ).commonSymmetricPadding(horizontal: 15, vertical: 15),
+            )),
           ],
         ),
       ),

@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
+import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_update_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,13 +28,14 @@ class VendorProfileScreenController extends GetxController{
   final countryTextFieldController = TextEditingController();
   final subUrbTextFieldController = TextEditingController();
   final postCodeTextFieldController = TextEditingController();
+  final businessIdTextFieldController = TextEditingController();
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
-
+  RxBool isSuccessStatus = false.obs;
   RxInt selectedPageIndex = 0.obs;
   //RxInt selectedTimeIndex = 0.obs;
   RxInt selectedDateIndex = 0.obs;
@@ -42,8 +45,14 @@ class VendorProfileScreenController extends GetxController{
 
   File? file;
   RxString slotDurationValue = '15'.obs;
+  RxString businessTypeValue = 'Saloon'.obs;
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
+
+  RxList<Datum> businessTypeLists = [Datum(name: "Select Business Type")].obs;
+  Datum? businessDropDownValue;
+
+  ApiHeader apiHeader = ApiHeader();
 
   selectDatePreviousClick({required PageController pageController}) {
     pageController.previousPage(duration: 300.milliseconds, curve: Curves.ease);
@@ -80,8 +89,8 @@ class VendorProfileScreenController extends GetxController{
         request.headers.addAll(headers);
         // request.files.add(
         //     await http.MultipartFile.fromPath("file", file!.path));
-
-        request.fields['CategoryId'] = "1";
+        request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
+        request.fields['CategoryId'] = "$businessDropDownValue";
         request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         request.fields['Street'] = streetTextFieldController.text.trim();
@@ -92,8 +101,8 @@ class VendorProfileScreenController extends GetxController{
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['ModifiedBy'] = UserDetails.uniqueId;
         request.fields['Duration'] = slotDurationValue.value;
-        request.fields['StartTime'] = "09-05-2022 19:30:00";
-        request.fields['EndTime'] = "09-05-2022 19:30:00";
+        request.fields['StartTime'] = "${selectedStartTime.hour}:${selectedStartTime.minute}";
+        request.fields['EndTime'] = "${selectedEndTime.hour}:${selectedEndTime.minute}";
         request.fields['Id'] = UserDetails.tableWiseId.toString();
 
 
@@ -288,11 +297,47 @@ class VendorProfileScreenController extends GetxController{
     loadUI();
   }
 
+  getAllBusinessTypeList() async {
+    isLoading(true);
+    String url = ApiUrl.vendorBusinessTypeApi;
+    log('Url : $url');
+
+    try{
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': "d/R2zvBXjM3qrWn65cE2IDjYC6MJhMkfuqKpRP4Z9Eg="
+      // };
+
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Get All Business Type List Response : ${response.body}');
+
+      GetAllBusinessTypeModel getAllBusinessTypeModel = GetAllBusinessTypeModel.fromJson(json.decode(response.body));
+      log('allBusinessModel : $getAllBusinessTypeModel');
+      isSuccessStatus = getAllBusinessTypeModel.success!.obs;
+      log('allBusinessModelStatus : $isSuccessStatus');
+
+      if(isSuccessStatus.value){
+        log("Success");
+        businessTypeLists.addAll(getAllBusinessTypeModel.data!);
+        businessDropDownValue = businessTypeLists[0];
+        log('businessLists : ${businessTypeLists.length}');
+      } else {
+        log('Get All Business Else Else');
+      }
+
+    } catch(e) {
+      log('Get All Business False False: $e');
+    } finally {
+      isLoading(false);
+    }
+  }
 
   @override
   void onInit() async {
     await getDataFromPrefs();
+    getAllBusinessTypeList();
     super.onInit();
 
   }
+
+
 }

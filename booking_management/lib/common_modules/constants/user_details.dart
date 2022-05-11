@@ -23,5 +23,5 @@ class UserDetails {
   static String country = "";
   static String subUrb = "";
   static String postCode = "";
-
+  static String slotDuration = "";
 }

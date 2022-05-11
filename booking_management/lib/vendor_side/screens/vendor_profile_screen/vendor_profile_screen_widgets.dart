@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
 
 import '../../../common_modules/constants/enums.dart';
 
@@ -167,6 +168,10 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
           startTimeTextField(context),
           const SizedBox(height: 15),
           endTimeTextField(context),
+          const SizedBox(height: 15),
+          businessTypeDropDown(),
+          const SizedBox(height: 15),
+          businessIdTextField(),
           const SizedBox(height: 40),
           saveButtonModule(),
         ],
@@ -1106,6 +1111,152 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
             ),
           ),
 
+        )
+      ],
+    );
+  }
+
+  Widget businessTypeDropDown(){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Business Type:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+
+                Obx(() =>
+                    Container(
+                      padding: const EdgeInsets.only(left: 10),
+                      width: Get.width, //gives the width of the dropdown button
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        //color: Colors.grey.shade200,
+                      ),
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          canvasColor: Colors.grey.shade100,
+                          buttonTheme: ButtonTheme.of(context).copyWith(
+                            alignedDropdown: true,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<Datum>(
+
+                            value: screenController.businessDropDownValue,
+
+                            items: screenController.businessTypeLists
+                                .map<DropdownMenuItem<Datum>>((Datum value) {
+                              return DropdownMenuItem<Datum>(
+                                value: value,
+                                child: Text(
+                                  value.name!,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+
+                            onChanged: (value){
+                              screenController.businessDropDownValue = value!;
+                              log("businessDropDownValue : ${screenController.businessDropDownValue}");
+                              screenController.loadUI();
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+
+  Widget businessIdTextField(){
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Business Id:", style: TextStyle(fontWeight: FontWeight.w500),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+
+                TextFormField(
+                  controller: screenController.businessIdTextFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: "Suburb",
+                    hintStyle: TextStyle(color: Colors.black),
+                    //isDense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    //filled: true,
+                    //fillColor: Colors.white,
+                    border: InputBorder.none,
+                    // suffix: IconButton(
+                    //   onPressed: () {},
+                    //   iconSize: 15,
+                    //   icon: Icon(Icons.visibility_off_rounded),
+                    // ),
+                    // suffix: Container(
+                    //   child: index == 0
+                    //       ? null
+                    //       : GestureDetector(
+                    //     onTap: () {
+                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
+                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
+                    //     },
+                    //     child: Obx(
+                    //       ()=> Icon(signInScreenController.isPassVisible.value
+                    //           ? Icons.visibility_rounded
+                    //           : Icons.visibility_off_rounded),
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
+                  validator: (value) => FieldValidator().validateStateName(value!),
+                ),
+              ],
+            )
         )
       ],
     );

@@ -1,11 +1,50 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/choose_court_screen/choose_court_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common_modules/container_decorations.dart';
 import '../../controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
+
+class AddResourcesButton extends StatelessWidget {
+  const AddResourcesButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        //if(screenController.vendorProfileFormKey.currentState!.validate()){
+        Get.to(() => VendorAddResourceScreen());
+        // }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Add Resource',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class VendorResourcesListModule extends StatelessWidget {
   VendorResourcesListModule({Key? key}) : super(key: key);
@@ -13,8 +52,10 @@ class VendorResourcesListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 8,
+    return screenController.getResourceList.isEmpty ?
+    const Center(child: Text("There is no resources list")) :
+      ListView.builder(
+      itemCount: screenController.getResourceList.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i){
@@ -23,30 +64,19 @@ class VendorResourcesListModule extends StatelessWidget {
             Get.to(() => ChooseCourtScreen());
           },
           child: Container(
-            margin: const EdgeInsets.only(left: 5, right: 5),
+            //margin: const EdgeInsets.only(left: 5, right: 5),
             decoration: shadowDecoration(),
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Row(
                 children: [
-                  Container(
-                    height: 65,
-                    width: 65,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: const DecorationImage(
-                        image: AssetImage(AppImages.vendorImg),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 15),
+
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'Lorem Ipsum',
+                          screenController.getResourceList[i].resourceName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -56,18 +86,49 @@ class VendorResourcesListModule extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'Lorem Ipsum is dummy text of the printng.',
+                          screenController.getResourceList[i].details,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: 15,
                           ),
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text(
+                              'price:',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '${screenController.getResourceList[i].price}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
+
+                  Row(
+                    children: const [
+                      Icon(Icons.edit),
+                      SizedBox(width: 10),
+                      Icon(Icons.delete, color: Colors.red,)
+                    ],
+                  ),
                 ],
-              ).commonSymmetricPadding(vertical: 5),
+              ),
             ),
           ).commonSymmetricPadding(vertical: 10),
         );

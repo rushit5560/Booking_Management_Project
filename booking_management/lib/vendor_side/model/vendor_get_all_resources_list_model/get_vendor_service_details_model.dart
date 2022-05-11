@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final getAllResorcesListModel = getAllResorcesListModelFromJson(jsonString);
+//     final getResourceDetailsModel = getResourceDetailsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-GetAllResorcesListModel getAllResorcesListModelFromJson(String str) => GetAllResorcesListModel.fromJson(json.decode(str));
+GetResourceDetailsModel getResourceDetailsModelFromJson(String str) => GetResourceDetailsModel.fromJson(json.decode(str));
 
-String getAllResorcesListModelToJson(GetAllResorcesListModel data) => json.encode(data.toJson());
+String getResourceDetailsModelToJson(GetResourceDetailsModel data) => json.encode(data.toJson());
 
-class GetAllResorcesListModel {
-  GetAllResorcesListModel({
+class GetResourceDetailsModel {
+  GetResourceDetailsModel({
     required this.statusCode,
     required this.success,
     required this.workerList,
@@ -17,30 +17,30 @@ class GetAllResorcesListModel {
 
   int statusCode;
   bool success;
-  List<WorkerList1> workerList;
+  WorkerList workerList;
 
-  factory GetAllResorcesListModel.fromJson(Map<String, dynamic> json) => GetAllResorcesListModel(
+  factory GetResourceDetailsModel.fromJson(Map<String, dynamic> json) => GetResourceDetailsModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
-    workerList: List<WorkerList1>.from(json["workerList"].map((x) => WorkerList1.fromJson(x)) ?? {}),
+    workerList: WorkerList.fromJson(json["workerList"] ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
-    "workerList": List<dynamic>.from(workerList.map((x) => x.toJson())),
+    "workerList": workerList.toJson(),
   };
 }
 
-class WorkerList1 {
-  WorkerList1({
+class WorkerList {
+  WorkerList({
     required this.id,
     required this.resourceName,
     required this.details,
     required this.image,
     required this.isActive,
-    // required this.applicationUserCreator,
-    // required this.applicationUserModifier,
+    //required this.applicationUserCreator,
+    //required this.applicationUserModifier,
     required this.orderBy,
     required this.createdBy,
     required this.createdOn,
@@ -52,6 +52,7 @@ class WorkerList1 {
     required this.dDate,
     required this.duration,
     required this.avilableTime,
+    required this.vendor,
     required this.bookingAvailability,
   });
 
@@ -60,40 +61,42 @@ class WorkerList1 {
   String details;
   String image;
   bool isActive;
-  // ApplicationUserCreator applicationUserCreator;
-  // String applicationUserModifier;
+  //ApplicationUser applicationUserCreator;
+  //ApplicationUser applicationUserModifier;
   String orderBy;
   String createdBy;
   DateTime createdOn;
   String modifiedBy;
-  String modifiedOn;
+  DateTime modifiedOn;
   String vendorBooking;
   int vendorId;
   double price;
   String dDate;
   String duration;
   String avilableTime;
+  String vendor;
   String bookingAvailability;
 
-  factory WorkerList1.fromJson(Map<String, dynamic> json) => WorkerList1(
+  factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
     id: json["id"] ?? 0,
     resourceName: json["resourceName"] ?? "",
     details: json["details"] ?? "",
     image: json["image"] ?? "",
     isActive: json["isActive"] ?? false,
-    // applicationUserCreator: ApplicationUserCreator.fromJson(json["applicationUserCreator"] ?? {}),
-    // applicationUserModifier: json["applicationUserModifier"] ?? "",
+    //applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"] ?? {}),
+   // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"] ?? {}),
     orderBy: json["orderBy"] ?? "",
     createdBy: json["createdBy"] ?? "",
     createdOn: DateTime.parse(json["createdOn"] ?? DateTime.now()),
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
+    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
     vendorBooking: json["vendorBooking"] ?? "",
     vendorId: json["vendorId"] ?? 0,
     price: json["price"] ?? 0.0,
     dDate: json["dDate"] ?? "",
     duration: json["duration"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
+    vendor: json["vendor"] ?? "",
     bookingAvailability: json["bookingAvailability"] ?? "",
   );
 
@@ -103,25 +106,26 @@ class WorkerList1 {
     "details": details,
     "image": image,
     "isActive": isActive,
-    // "applicationUserCreator": applicationUserCreator.toJson(),
-    // "applicationUserModifier": applicationUserModifier,
+    //"applicationUserCreator": applicationUserCreator.toJson(),
+    //"applicationUserModifier": applicationUserModifier.toJson(),
     "orderBy": orderBy,
     "createdBy": createdBy,
     "createdOn": createdOn.toIso8601String(),
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
+    "modifiedOn": modifiedOn.toIso8601String(),
     "vendorBooking": vendorBooking,
     "vendorId": vendorId,
     "price": price,
     "dDate": dDate,
     "duration": duration,
     "avilableTime": avilableTime,
+    "vendor": vendor,
     "bookingAvailability": bookingAvailability,
   };
 }
 
-/*class ApplicationUserCreator {
-  ApplicationUserCreator({
+/*class ApplicationUser {
+  ApplicationUser({
     required this.apiToken,
     required this.frogotToken,
     required this.id,
@@ -159,7 +163,7 @@ class WorkerList1 {
   bool lockoutEnabled;
   int accessFailedCount;
 
-  factory ApplicationUserCreator.fromJson(Map<String, dynamic> json) => ApplicationUserCreator(
+  factory ApplicationUser.fromJson(Map<String, dynamic> json) => ApplicationUser(
     apiToken: json["apiToken"] ?? "",
     frogotToken: json["frogotToken"] ?? "",
     id: json["id"] ?? "",
@@ -170,7 +174,7 @@ class WorkerList1 {
     emailConfirmed: json["emailConfirmed"] ?? false,
     passwordHash: json["passwordHash"] ?? "",
     securityStamp: json["securityStamp"] ?? "",
-    concurrencyStamp: json["concurrencyStamp"] ?? "",
+    concurrencyStamp: json["concurrencyStamp"] ??"",
     phoneNumber: json["phoneNumber"] ?? "",
     phoneNumberConfirmed: json["phoneNumberConfirmed"] ?? false,
     twoFactorEnabled: json["twoFactorEnabled"] ?? false,

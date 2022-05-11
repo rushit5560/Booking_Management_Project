@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/choose_court_screen/choose_court_screen.dart';
@@ -126,12 +128,17 @@ class VendorResourcesListModule extends StatelessWidget {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          //screenController.file = File(screenController.getResourceList[i].image);
-                          screenController.updateResourceNameFieldController.text = screenController.getResourceList[i].resourceName;
-                          screenController.updateResourceDetailsFieldController.text = screenController.getResourceList[i].details;
-                          screenController.updateResourcePriceFieldController.text = screenController.getResourceList[i].price.toString();
-
+                        onTap: () async{
+                          await screenController.getAdditionalDetailsByIdFunction(id: screenController.getResourceList[i].id);
+                          //screenController.selectedItemId = screenController.getResourceList[i].id;
+                          //screenController.updateResourceNameFieldController.text = screenController.getResourceList[i].resourceName;
+                          //screenController.updateResourceDetailsFieldController.text = screenController.getResourceList[i].details;
+                          //screenController.updateResourcePriceFieldController.text = screenController.getResourceList[i].price.toString();
+                          //screenController.updatePhotoUrl = "http://5.189.147.159:9600///images//Resource//9188f689-6c67-4fae-9045-a55a32888891.png";
+                          //screenController.updatePhotoUrl = "http://5.189.147.159:9600/""${screenController.getResourceList[i].image}";
+                          //log("http://5.189.147.159:9600/" +screenController.getResourceList[i].image );
+                          //log('screenController.updatePhotoUrl : ${screenController.updatePhotoUrl}');
+                          //log('image: ${screenController.getResourceList[i].image}');
                           Get.to(() => VendorUpdateResourcesScreen(),
                             transition: Transition.zoom,
                           );

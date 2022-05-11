@@ -41,7 +41,8 @@ class ApiUrl {
 
   static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
 
-  static const vendorGetAllResourcesApi = apiMainPath + "API/ResourceIndex";
-  static const vendorAddAndUpdateResourcesApi = apiMainPath + "API/ResourceUpsert";
+  static const vendorGetAllResourcesApi = apiMainPath + "API/ResourceIndex"; // Get ALL
+  static const vendorAddAndUpdateResourcesApi = apiMainPath + "API/ResourceUpsert"; // Add & Update
   static const vendorDeleteResourcesApi = apiMainPath + "API/ResourceDelete"; //delete
+  static const vendorGetResourceDetailsApi = apiMainPath + "API/ResourceGetById"; // Get By Id
 }

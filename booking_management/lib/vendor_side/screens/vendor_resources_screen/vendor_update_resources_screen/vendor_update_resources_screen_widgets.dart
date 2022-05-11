@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -61,7 +62,8 @@ class ResourceProfileModule extends StatelessWidget {
             child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill)) :
         ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(AppImages.profileImg, height: 100, width: 100, fit: BoxFit.fill)),
+            child: Image.network(/*ApiUrl.apiMainPath + */vendorResourcesScreenController.updatePhotoUrl,
+                height: 100, width: 100, fit: BoxFit.fill)),
 
         GestureDetector(
           onTap: (){
@@ -274,7 +276,7 @@ class ResourceUpdateButton extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
-            'Create',
+            'Update',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,

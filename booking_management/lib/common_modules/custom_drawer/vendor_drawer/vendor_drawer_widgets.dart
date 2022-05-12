@@ -36,8 +36,10 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          singleItemOnTap(vendorSettingScreenOption: vendorDrawerOption),
+      onTap: () {
+        Get.back();
+        singleItemOnTap(vendorSettingScreenOption: vendorDrawerOption);
+        },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../common_ui/common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
 import 'constants/app_images.dart';
 
 class HeaderLogoModule extends StatelessWidget {
@@ -46,31 +47,42 @@ class OrTextModule extends StatelessWidget {
 
 
 class SocialMediaLoginModule extends StatelessWidget {
-  const SocialMediaLoginModule({Key? key}) : super(key: key);
+  final SignInScreenController signInScreenController;
+  const SocialMediaLoginModule({Key? key, required this.signInScreenController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          height: 30,
-          width: 30,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AppImages.googleLoginImg),
-              fit: BoxFit.cover,
+        GestureDetector(
+          onTap: () async {
+            await signInScreenController.signInWithGoogleFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.googleLoginImg),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
         const SizedBox(width: 60),
-        Container(
-          height: 30,
-          width: 30,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AppImages.fbLoginImg),
-              fit: BoxFit.cover,
+        GestureDetector(
+          onTap: () async {
+            await signInScreenController.signInWithFacebookFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.fbLoginImg),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

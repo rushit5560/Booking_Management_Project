@@ -10,7 +10,6 @@ import '../../../user_side/screens/user_profile_screen/user_profile_screen.dart'
 import '../../constants/app_images.dart';
 import '../../sharedpreference_data/sharedpreference_data.dart';
 
-
 class CustomerDrawerSingleItemModule extends StatelessWidget {
   final String name;
   final String img;
@@ -28,8 +27,10 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          singleItemOnTap(userSettingScreenOption: customerDrawerOption),
+      onTap: () {
+        Get.back();
+        singleItemOnTap(userSettingScreenOption: customerDrawerOption);
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -71,13 +72,13 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({required CustomerDrawerOption userSettingScreenOption}) async {
+  singleItemOnTap(
+      {required CustomerDrawerOption userSettingScreenOption}) async {
     if (userSettingScreenOption == CustomerDrawerOption.profile) {
       Get.to(() => UserProfileScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == CustomerDrawerOption.chat) {
       Get.to(() => const UserChatListScreen(), transition: Transition.zoom);
-    } else if (userSettingScreenOption ==
-        CustomerDrawerOption.bookingHistory) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.bookingHistory) {
       Get.to(() => BookingHistoryScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == CustomerDrawerOption.payment) {
     } else if (userSettingScreenOption == CustomerDrawerOption.help) {

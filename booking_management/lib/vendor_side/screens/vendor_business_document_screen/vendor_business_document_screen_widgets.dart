@@ -98,7 +98,7 @@ class BusinessDocumentList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               GestureDetector(
-                // onTap: () => _bottomSheetModule(context),
+                onTap: () => _bottomSheetModule(context, singleItem),
                 child: Text(
                   "View",
                   maxLines: 1,
@@ -135,55 +135,53 @@ class BusinessDocumentList extends StatelessWidget {
   }
 
   /// Bottom Sheet
-// Future _bottomSheetModule(BuildContext context) {
-//   return showModalBottomSheet(
-//       context: context,
-//       builder: (context) {
-//         return Column(
-//           mainAxisSize: MainAxisSize.min,
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _heading("Verification"),
-//             const Divider(thickness: 1),
-//             _vendorNameModule(),
-//           ],
-//         ).commonAllSidePadding(20);
-//       });
-// }
+  Future _bottomSheetModule(BuildContext context, DocumentWorkerList singleItem) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _heading("Verification"),
+              const Divider(thickness: 1),
+              _vendorNameModule(singleItem),
+            ],
+          ).commonAllSidePadding(20);
+        });
+  }
 
-// Widget _heading(String heading) {
-//   return Text(
-//     heading,
-//     style: const TextStyle(
-//       fontWeight: FontWeight.bold,
-//       fontSize: 20,
-//     ),
-//   );
-// }
-//
-// Widget _vendorNameModule() {
-//   return Column(
-//     mainAxisSize: MainAxisSize.min,
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: [
-//       const Text(
-//         "UserName",
-//         style: TextStyle(
-//           fontWeight: FontWeight.bold,
-//           fontSize: 16,
-//         ),
-//       ),
-//       const SizedBox(height: 10),
-//       Container(
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(15),
-//           color: AppColors.colorLightGrey1,
-//         ),
-//         child: Text(
-//           "Vendor Name",
-//         ),
-//       ),
-//     ],
-//   );
-// }
+  Widget _heading(String heading) {
+    return Text(
+      heading,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+    );
+  }
+
+  Widget _vendorNameModule(DocumentWorkerList singleItem) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "UserName",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: AppColors.colorLightGrey1,
+          ),
+          child: Text(UserDetails.userName),
+        ),
+      ],
+    );
+  }
 }

@@ -42,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         const OrTextModule(),
                         const SizedBox(height: 15),
-                        const SocialMediaLoginModule(),
+                        SocialMediaLoginModule(signInScreenController: signInScreenController),
                         const SizedBox(height: 40),
                         const SignUpTextModule(),
                         const SizedBox(height: 10),

@@ -5,16 +5,24 @@ import 'package:booking_management/common_modules/sharedpreference_data/sharedpr
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+
+  /// Fb Login
+  FacebookUserProfile? profile;
+  final FacebookLogin  plugin = FacebookLogin(debug: true);
 
   final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
   final TextEditingController unameFieldController = TextEditingController();
@@ -105,4 +113,89 @@ class SignInScreenController extends GetxController {
       isLoading(false);
     }
   }
+
+  Future signInWithGoogleFunction() async {
+    isLoading(true);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    googleSignIn.signOut();
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+
+      // Getting users credential
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      // User? user = result.user;
+      log("Email: ${result.user!.email}");
+      log("Username: ${result.user!.displayName}");
+      log("User Id: ${result.user!.uid}");
+
+      //login = prefs.getString('userId');
+      //print(login);
+      if (result != null) {
+        // prefs.setString('userId', result.user!.uid);
+        // prefs.setString('userName', result.user!.displayName!);
+        // prefs.setString('email', result.user!.email!);
+        // prefs.setString('photo', result.user!.photoURL!);
+        // prefs.setBool('isLoggedIn', false);
+
+        // Get.offAll(() => IndexScreen());
+
+      }
+    }
+    isLoading(false);
+  }
+
+  Future signInWithFacebookFunction() async {
+    await plugin.logIn(
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ],
+    );
+
+    await subPartOfFacebookLogin();
+    await plugin.logOut();
+
+  }
+
+  subPartOfFacebookLogin() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    final plugin1 = plugin;
+    final token = await plugin1.accessToken;
+
+    String? email;
+    String? imageUrl;
+
+    if (token != null) {
+      log("token===$token");
+      profile = await plugin1.getUserProfile();
+      log("profile===$profile");
+      if (token.permissions.contains(FacebookPermission.email.name)) {
+        email = await plugin1.getUserEmail();
+      }
+      imageUrl = await plugin1.getProfileImageUrl(width: 100);
+      if(profile != null) {
+        if(profile!.userId.isNotEmpty){
+          // prefs.setString('userId', profile!.userId);
+          // prefs.setString('userName', profile!.firstName!);
+          // prefs.setString('email', email!);
+          // prefs.setString('photo', imageUrl!.toString());
+
+          // String ? userId = prefs.getString('userId');
+          // String ? uName = prefs.getString('userName');
+          // String ? uEmail = prefs.getString('email');
+          // String ? uPhotoUrl = prefs.getString('photo');
+          // log('id: $userId, username : $uName, email : $uEmail, photo : $uPhotoUrl');
+        }
+      }
+
+    }
+  }
+
 }

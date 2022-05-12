@@ -1,34 +1,35 @@
-import 'package:booking_management/common_modules/constants/app_images.dart';
-import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
-import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
-import 'package:booking_management/user_side/screens/booking_history_screen/booking_history_screen.dart';
-import 'package:booking_management/user_side/screens/user_change_password_screen/user_change_password_screen.dart';
-import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
-import 'package:booking_management/user_side/screens/user_profile_screen/user_profile_screen.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common_modules/constants/enums.dart';
+import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import '../../../user_side/screens/booking_history_screen/booking_history_screen.dart';
+import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
+import '../../../user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
+import '../../../user_side/screens/user_profile_screen/user_profile_screen.dart';
+import '../../constants/app_images.dart';
+import '../../sharedpreference_data/sharedpreference_data.dart';
 
-class SettingScreenSingleItemModule extends StatelessWidget {
+
+class CustomerDrawerSingleItemModule extends StatelessWidget {
   final String name;
   final String img;
-  final UserSettingScreenOption userSettingScreenOption;
+  final CustomerDrawerOption customerDrawerOption;
 
-  SettingScreenSingleItemModule({
+  CustomerDrawerSingleItemModule({
     Key? key,
     required this.name,
     required this.img,
-    required this.userSettingScreenOption,
+    required this.customerDrawerOption,
   }) : super(key: key);
 
-  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  final SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () =>
-          singleItemOnTap(userSettingScreenOption: userSettingScreenOption),
+          singleItemOnTap(userSettingScreenOption: customerDrawerOption),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -70,19 +71,19 @@ class SettingScreenSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({required UserSettingScreenOption userSettingScreenOption}) async {
-    if (userSettingScreenOption == UserSettingScreenOption.profile) {
+  singleItemOnTap({required CustomerDrawerOption userSettingScreenOption}) async {
+    if (userSettingScreenOption == CustomerDrawerOption.profile) {
       Get.to(() => UserProfileScreen(), transition: Transition.zoom);
-    } else if (userSettingScreenOption == UserSettingScreenOption.chat) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.chat) {
       Get.to(() => const UserChatListScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption ==
-        UserSettingScreenOption.bookingHistory) {
+        CustomerDrawerOption.bookingHistory) {
       Get.to(() => BookingHistoryScreen(), transition: Transition.zoom);
-    } else if (userSettingScreenOption == UserSettingScreenOption.payment) {
-    } else if (userSettingScreenOption == UserSettingScreenOption.help) {
-    } else if (userSettingScreenOption == UserSettingScreenOption.changePassword) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.payment) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.help) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(), transition: Transition.zoom);
-    } else if (userSettingScreenOption == UserSettingScreenOption.logOut) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.logOut) {
       await sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);
       Get.snackbar('You Have Successfully Logout', '');

@@ -16,8 +16,8 @@ class UserChatListScreen extends StatelessWidget {
         child: Column(
           children: [
             const CommonAppBarModule(
-              title: 'Chat List',
-              appBarOption: AppBarOption.singleBackButtonOption,
+              title: 'Chat',
+              appBarOption: AppBarOption.none,
             ),
             Expanded(
               child: ListView.builder(

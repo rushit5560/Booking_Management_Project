@@ -1,14 +1,14 @@
 import 'dart:developer';
-import 'package:booking_management/user_side/screens/business_list_screen/business_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_appointment_list_screen/user_appointment_list_screen.dart';
+import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_notification_screen/user_notification_screen.dart';
-import 'package:booking_management/user_side/screens/user_settings_screen/user_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/index_screen_controller/index_screen_controller.dart';
 import '../home_screen/home_screen.dart';
+
 
 
 class IndexScreen extends StatelessWidget {
@@ -41,7 +41,7 @@ class IndexScreen extends StatelessWidget {
     } else if (indexScreenController.menuIndex.value == 2) {
       return const UserNotificationScreen();
     } else {
-      return const UserSettingsScreen();
+      return const UserChatListScreen();
     }
   }
 
@@ -125,8 +125,8 @@ class IndexScreen extends StatelessWidget {
               width: 30,
               child: Image.asset(
                 indexScreenController.menuIndex.value == 3
-                    ? AppImages.menuSettingImg
-                    : AppImages.menuSetting1Img,
+                    ? AppImages.chatImg
+                    : AppImages.chatImg,
                   scale: 0.9
               ),
             ),

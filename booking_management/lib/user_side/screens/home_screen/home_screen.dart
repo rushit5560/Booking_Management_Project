@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/custom_drawer/customer_drawer/customer_drawer.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
 import 'home_screen_widgets.dart';
 
@@ -12,12 +13,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      drawer: CustomerDrawer(),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               const HeaderModule(),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               Column(
                 children: const [
                   SearchCategoryField(),
@@ -25,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   SearchLocationField(),
                 ],
               ).commonSymmetricPadding(horizontal: 45),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
               const UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20),
               // const SizedBox(height: 30),

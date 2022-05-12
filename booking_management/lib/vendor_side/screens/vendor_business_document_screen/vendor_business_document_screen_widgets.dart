@@ -56,12 +56,14 @@ class BusinessDocumentList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: screenController.businessDocumentList.length,
         itemBuilder: (context, i) {
-          DocumentWorkerList singleItem = screenController.businessDocumentList[i];
+          DocumentWorkerList singleItem =
+              screenController.businessDocumentList[i];
           return _businessDocumentListTile(context, singleItem);
         });
   }
 
-  Widget _businessDocumentListTile(BuildContext context, DocumentWorkerList singleItem) {
+  Widget _businessDocumentListTile(
+      BuildContext context, DocumentWorkerList singleItem) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -77,14 +79,16 @@ class BusinessDocumentList extends StatelessWidget {
                   UserDetails.userName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   singleItem.documentType,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ],
             ),
@@ -107,12 +111,20 @@ class BusinessDocumentList extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                singleItem.isVerify ? "Verified" : "Unverified",
+                singleItem.isVerify
+                    ? "Verified"
+                    : singleItem.isCancel
+                        ? "Rejected"
+                        : "Pending",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: singleItem.isVerify ? Colors.green : Colors.red,
+                  fontWeight: FontWeight.bold,
+                  color: singleItem.isVerify
+                      ? Colors.green
+                      : singleItem.isCancel
+                          ? Colors.red
+                          : Colors.grey,
                 ),
               ),
             ],
@@ -123,55 +135,55 @@ class BusinessDocumentList extends StatelessWidget {
   }
 
   /// Bottom Sheet
-  // Future _bottomSheetModule(BuildContext context) {
-  //   return showModalBottomSheet(
-  //       context: context,
-  //       builder: (context) {
-  //         return Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             _heading("Verification"),
-  //             const Divider(thickness: 1),
-  //             _vendorNameModule(),
-  //           ],
-  //         ).commonAllSidePadding(20);
-  //       });
-  // }
+// Future _bottomSheetModule(BuildContext context) {
+//   return showModalBottomSheet(
+//       context: context,
+//       builder: (context) {
+//         return Column(
+//           mainAxisSize: MainAxisSize.min,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _heading("Verification"),
+//             const Divider(thickness: 1),
+//             _vendorNameModule(),
+//           ],
+//         ).commonAllSidePadding(20);
+//       });
+// }
 
-  // Widget _heading(String heading) {
-  //   return Text(
-  //     heading,
-  //     style: const TextStyle(
-  //       fontWeight: FontWeight.bold,
-  //       fontSize: 20,
-  //     ),
-  //   );
-  // }
-  //
-  // Widget _vendorNameModule() {
-  //   return Column(
-  //     mainAxisSize: MainAxisSize.min,
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       const Text(
-  //         "UserName",
-  //         style: TextStyle(
-  //           fontWeight: FontWeight.bold,
-  //           fontSize: 16,
-  //         ),
-  //       ),
-  //       const SizedBox(height: 10),
-  //       Container(
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(15),
-  //           color: AppColors.colorLightGrey1,
-  //         ),
-  //         child: Text(
-  //           "Vendor Name",
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+// Widget _heading(String heading) {
+//   return Text(
+//     heading,
+//     style: const TextStyle(
+//       fontWeight: FontWeight.bold,
+//       fontSize: 20,
+//     ),
+//   );
+// }
+//
+// Widget _vendorNameModule() {
+//   return Column(
+//     mainAxisSize: MainAxisSize.min,
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: [
+//       const Text(
+//         "UserName",
+//         style: TextStyle(
+//           fontWeight: FontWeight.bold,
+//           fontSize: 16,
+//         ),
+//       ),
+//       const SizedBox(height: 10),
+//       Container(
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(15),
+//           color: AppColors.colorLightGrey1,
+//         ),
+//         child: Text(
+//           "Vendor Name",
+//         ),
+//       ),
+//     ],
+//   );
+// }
 }

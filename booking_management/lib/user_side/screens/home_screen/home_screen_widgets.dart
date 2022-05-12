@@ -15,23 +15,42 @@ class HeaderModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height * 0.25,
+      height: Get.height * 0.15,
       child: Stack(
+        alignment: Alignment.topCenter,
         children: [
           Container(
-            height: Get.height * 0.25,
+            height: Get.height * 0.15,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.shapeImg),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
+            height: Get.height * 0.07,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.headerLogoImg),
                 scale: 0.9,
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: 10,
+            left: 10,
+            child: GestureDetector(
+              onTap: () {
+                log("Clk");
+                // Scaffold.of(context).openDrawer();
+                Scaffold.of(context).openDrawer();
+              },
+              child: Icon(
+                Icons.menu_rounded,
+                color: Colors.grey.shade600,
+                size: 28,
               ),
             ),
           ),

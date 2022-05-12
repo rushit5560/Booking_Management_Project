@@ -1,13 +1,11 @@
 import 'dart:developer';
-
 import 'package:booking_management/vendor_side/screens/vendor_appointment_list_screen/vendor_appointment_list_screen.dart';
-import 'package:booking_management/vendor_side/screens/vendor_settings_screen/vendor_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/vendor_index_screen_controller/vendor_index_screen_controller.dart';
+import '../vendor_chat_list_screen/vendor_chat_list_screen.dart';
 import '../vendor_home_screen/vendor_home_screen.dart';
 import '../vendor_notification_screen/vendor_notification_screen.dart';
 
@@ -37,9 +35,9 @@ class VendorIndexScreen extends StatelessWidget {
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 1) {
       return VendorAppointmentListScreen();
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 2) {
-      return VendorNotificationScreen();
+      return const VendorNotificationScreen();
     } else {
-      return VendorSettingsScreen();
+      return const VendorChatListScreen();
     }
   }
 
@@ -123,8 +121,8 @@ class VendorIndexScreen extends StatelessWidget {
               width: 30,
               child: Image.asset(
                   vendorIndexScreenController.vendorMenuIndex.value == 3
-                      ? AppImages.menuSettingImg
-                      : AppImages.menuSetting1Img,
+                      ? AppImages.chatImg
+                      : AppImages.chatImg,
                   scale: 0.9
               ),
             ),

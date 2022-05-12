@@ -21,7 +21,6 @@ class VendorBusinessDocumentScreenController extends GetxController {
   File? file;
 
   /// Add Doc Fields
-  // GlobalKey<FormState> addDocFormKey = GlobalKey();
   RxString selectedDocTypeValue = "Attach photo identification".obs;
   List<String> docTypeList = [
     "Attach photo identification",

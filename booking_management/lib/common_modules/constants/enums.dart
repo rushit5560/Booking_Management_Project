@@ -4,7 +4,7 @@ enum AppBarOption {
    userConversationScreen,
 }
 
-enum UserSettingScreenOption {
+enum CustomerDrawerOption {
    profile,
    chat,
    bookingHistory,
@@ -14,7 +14,7 @@ enum UserSettingScreenOption {
    logOut
 }
 
-enum VendorSettingScreenOption {
+enum VendorDrawerOption {
    profile,
    myCustomer,
    chat,

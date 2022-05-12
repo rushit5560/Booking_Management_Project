@@ -1,4 +1,3 @@
-import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/vendor_user_details_screen/vendor_user_details_screen.dart';
@@ -6,11 +5,60 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 
-VendorHomeScreenController screenController = Get.find<VendorHomeScreenController>();
 
+
+/// Header Module
+class VendorHeaderModule extends StatelessWidget {
+  VendorHeaderModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorHomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: Get.height * 0.15,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Container(
+            height: Get.height * 0.15,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.shapeImg),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Container(
+            height: Get.height * 0.07,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.headerLogoImg),
+                scale: 0.9,
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: 10,
+            left: 10,
+            child: GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: Icon(
+                Icons.menu_rounded,
+                color: Colors.grey.shade600,
+                size: 28,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
 
 class SearchAppointmentField extends StatelessWidget {
-  const SearchAppointmentField({Key? key}) : super(key: key);
+  SearchAppointmentField({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorHomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +101,8 @@ class SearchAppointmentField extends StatelessWidget {
 }
 
 class PendingListTextModule extends StatelessWidget {
-  const PendingListTextModule({Key? key}) : super(key: key);
+  PendingListTextModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorHomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +122,9 @@ class PendingListTextModule extends StatelessWidget {
   }
 }
 
-
 class TodayAppointmentListModule extends StatelessWidget {
-  const TodayAppointmentListModule({Key? key}) : super(key: key);
+  TodayAppointmentListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorHomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -164,9 +213,9 @@ class TodayAppointmentListModule extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         const SizedBox(width: 5),
-        Text(
+        const Text(
           "23-5-2022 12:22:34",
-          style: const TextStyle(fontSize: 9),
+          style: TextStyle(fontSize: 9),
         ),
 
         // const SizedBox(width: 10),
@@ -198,7 +247,7 @@ class TodayAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton() {
     return GestureDetector(
-      onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+      onTap: () => Get.to(()=> const VendorUserDetailsScreen(), transition: Transition.zoom),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -226,7 +275,7 @@ class TodayAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  /*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -251,6 +300,6 @@ class TodayAppointmentListModule extends StatelessWidget {
       ),
 
     );
-  }
+  }*/
 
 }

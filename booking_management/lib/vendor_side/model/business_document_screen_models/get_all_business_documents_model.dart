@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final getAllBusinessDocumentsModel = getAllBusinessDocumentsModelFromJson(jsonString);
-
 import 'dart:convert';
 
 GetAllBusinessDocumentsModel getAllBusinessDocumentsModelFromJson(String str) => GetAllBusinessDocumentsModel.fromJson(json.decode(str));
@@ -17,12 +13,12 @@ class GetAllBusinessDocumentsModel {
 
   int statusCode;
   bool success;
-  List<WorkerList> workerList;
+  List<DocumentWorkerList> workerList;
 
   factory GetAllBusinessDocumentsModel.fromJson(Map<String, dynamic> json) => GetAllBusinessDocumentsModel(
     statusCode: json["statusCode"],
     success: json["success"],
-    workerList: List<WorkerList>.from(json["workerList"].map((x) => WorkerList.fromJson(x))),
+    workerList: List<DocumentWorkerList>.from(json["workerList"].map((x) => DocumentWorkerList.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +28,8 @@ class GetAllBusinessDocumentsModel {
   };
 }
 
-class WorkerList {
-  WorkerList({
+class DocumentWorkerList {
+  DocumentWorkerList({
     required this.id,
     required this.vendorId,
     // this.vendor,
@@ -63,7 +59,7 @@ class WorkerList {
   String cancelOn;
   String notes;
 
-  factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
+  factory DocumentWorkerList.fromJson(Map<String, dynamic> json) => DocumentWorkerList(
     id: json["id"] ?? 0,
     vendorId: json["vendorId"] ?? 0,
     // vendor: json["vendor"],

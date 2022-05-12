@@ -150,6 +150,13 @@ class FieldValidator {
     return null;
   }
 
+  // String? validateBusinessId(String value) {
+  //   if (value.isEmpty) {
+  //     return 'Business id is required';
+  //   }
+  //   return null;
+  // }
+
   String? validateCountryName(String value) {
     if (value.isEmpty) {
       return 'Country is required';
@@ -324,7 +331,7 @@ class FieldValidator {
   String? validateResourceName(String value) {
 
     if (value.isEmpty) {
-      return 'Resource Name is required';
+      return 'Resource name is required';
     }
     return null;
   }
@@ -332,7 +339,7 @@ class FieldValidator {
   String? validateResourceDetail(String value) {
 
     if (value.isEmpty) {
-      return 'Resource Details is required';
+      return 'Resource details is required';
     }
     return null;
   }

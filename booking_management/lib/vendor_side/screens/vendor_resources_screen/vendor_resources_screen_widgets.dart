@@ -66,7 +66,7 @@ class VendorResourcesListModule extends StatelessWidget {
       itemBuilder: (context, i){
         return GestureDetector(
           onTap: (){
-            Get.to(() => ChooseCourtScreen());
+            //Get.to(() => ChooseCourtScreen());
           },
           child: Container(
             //margin: const EdgeInsets.only(left: 5, right: 5),

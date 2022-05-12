@@ -15,7 +15,7 @@ class VendorAddResourceScreen extends StatelessWidget {
       body: SafeArea(
         child: Obx(()=>
         vendorResourcesScreenController.isLoading.value ?
-            const CircularProgressIndicator() :
+            const Center(child: CircularProgressIndicator()) :
            Column(
             children: [
               const CommonAppBarModule(title: "Add Resources", appBarOption: AppBarOption.singleBackButtonOption),

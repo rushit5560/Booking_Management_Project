@@ -1254,7 +1254,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                     //   ),
                     // ),
                   ),
-                  validator: (value) => FieldValidator().validateStateName(value!),
+                  validator: (value) => FieldValidator().validateBusinessId(value!),
                 ),
               ],
             )

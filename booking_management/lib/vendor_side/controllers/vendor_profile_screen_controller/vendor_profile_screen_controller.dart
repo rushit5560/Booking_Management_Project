@@ -46,14 +46,16 @@ class VendorProfileScreenController extends GetxController{
 
   File? file;
   RxString slotDurationValue = '15'.obs;
-  RxString businessTypeValue = 'Saloon'.obs;
+  //RxString businessTypeValue = 'Saloon'.obs;
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
 
-  RxList<Datum> businessTypeLists = [Datum(name: "Select Business Type")].obs;
-  Datum? businessDropDownValue;
+  RxList<Datum> businessTypeLists = [Datum(name: "")].obs;
+  Datum ? businessDropDownValue;
 
   ApiHeader apiHeader = ApiHeader();
+
+  //String ? slotDuration;
 
   selectDatePreviousClick({required PageController pageController}) {
     pageController.previousPage(duration: 300.milliseconds, curve: Curves.ease);
@@ -133,6 +135,7 @@ class VendorProfileScreenController extends GetxController{
           if(isStatus.value == 200){
             //UserDetails().vendorId = response1.data.id;
             //log("Vendor Id: ${UserDetails().vendorId}");
+            getUserDetailsById();
             Fluttertoast.showToast(msg: response1.message);
             //clearSignUpFieldsFunction();
             //Get.off(SignInScreen(), transition: Transition.zoom);
@@ -349,10 +352,11 @@ class VendorProfileScreenController extends GetxController{
 
       GetUserDetailsByIdModel getUserDetailsByIdModel = GetUserDetailsByIdModel.fromJson(json.decode(response.body));
       //log('getUserDetailsByIdModel : ${getUserDetailsByIdModel.data}');
-      isSuccessStatus = getUserDetailsByIdModel.success.obs;
-      log('getUserDetailsByIdModelStatus : $isSuccessStatus');
+      isStatus = getUserDetailsByIdModel.statusCode.obs;
+      log('getUserDetailsByIdModel: ${getUserDetailsByIdModel.success}');
+      log('getUserDetailsByIdModelStatus : $isStatus');
 
-      if(isSuccessStatus.value){
+      if(isStatus.value == 200){
         log("Success");
         businessIdTextFieldController.text = getUserDetailsByIdModel.data.businessId;
         nameTextFieldController.text = getUserDetailsByIdModel.data.userName;
@@ -365,8 +369,23 @@ class VendorProfileScreenController extends GetxController{
         countryTextFieldController.text = getUserDetailsByIdModel.data.country;
         subUrbTextFieldController.text = getUserDetailsByIdModel.data.suburb;
         postCodeTextFieldController.text = getUserDetailsByIdModel.data.postcode;
-        //mobileTextFieldController.text = getUserDetailsByIdModel.data.phoneNo;
+        slotDurationValue.value = getUserDetailsByIdModel.data.duration.toString();
+        businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
         //log('businessLists : ${businessTypeLists.length}');
+
+        log('businessIdTextFieldController.text : ${businessIdTextFieldController.text}');
+        log('nameTextFieldController.text : ${nameTextFieldController.text}');
+        log('emailTextFieldController.text : ${emailTextFieldController.text}');
+        log('businessNameTextFieldController.text : ${businessNameTextFieldController.text}');
+        log('mobileTextFieldController.text : ${mobileTextFieldController.text}');
+        log('addressTextFieldController.text : ${addressTextFieldController.text}');
+        log('streetTextFieldController.text : ${streetTextFieldController.text}');
+        log('stateTextFieldController.text : ${stateTextFieldController.text}');
+        log('countryTextFieldController.text : ${countryTextFieldController.text}');
+        log('subUrbTextFieldController.text : ${subUrbTextFieldController.text}');
+        log('postCodeTextFieldController.text : ${postCodeTextFieldController.text}');
+        log('slotDurationValue.value : ${slotDurationValue.value}');
+        log('businessDropDownValue : ${businessDropDownValue!.name}');
       } else {
         log('Get All User Details Else Else');
       }
@@ -384,7 +403,6 @@ class VendorProfileScreenController extends GetxController{
     getAllBusinessTypeList();
     getUserDetailsById();
     super.onInit();
-
   }
 
 

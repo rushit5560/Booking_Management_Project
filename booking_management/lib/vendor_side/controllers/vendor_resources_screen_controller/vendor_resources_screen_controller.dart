@@ -33,6 +33,7 @@ class VendorResourcesScreenController extends GetxController {
   TextEditingController updateResourceDetailsFieldController = TextEditingController();
   TextEditingController updateResourcePriceFieldController = TextEditingController();
 
+  File? addFile;
   File? file;
   String updatePhotoUrl = "";
 
@@ -98,10 +99,10 @@ class VendorResourcesScreenController extends GetxController {
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      var stream = http.ByteStream(file!.openRead());
+      var stream = http.ByteStream(addFile!.openRead());
       stream.cast();
 
-      var length = await file!.length();
+      var length = await addFile!.length();
 
       request.headers.addAll(headers);
 
@@ -251,7 +252,8 @@ class VendorResourcesScreenController extends GetxController {
 
           }
         });
-      } else if(file == null){
+      }
+      else if(file == null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         //var stream = http.ByteStream(file!.openRead());
@@ -354,6 +356,7 @@ class VendorResourcesScreenController extends GetxController {
     resourceDetailsFieldController.clear();
     resourcePriceFieldController.clear();
     file!.delete();
+    addFile!.deleteSync();
     //updatePhotoUrl = "";
   }
 

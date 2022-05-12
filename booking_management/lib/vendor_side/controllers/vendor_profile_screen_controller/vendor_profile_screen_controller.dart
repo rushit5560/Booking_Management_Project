@@ -7,6 +7,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
+import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_get_user_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_update_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -101,8 +102,8 @@ class VendorProfileScreenController extends GetxController{
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['ModifiedBy'] = UserDetails.uniqueId;
         request.fields['Duration'] = slotDurationValue.value;
-        request.fields['StartTime'] = "${selectedStartTime.hour}:${selectedStartTime.minute}";
-        request.fields['EndTime'] = "${selectedEndTime.hour}:${selectedEndTime.minute}";
+        // request.fields['StartTime'] = "${selectedStartTime.hour}:${selectedStartTime.minute}";
+        // request.fields['EndTime'] = "${selectedEndTime.hour}:${selectedEndTime.minute}";
         request.fields['Id'] = UserDetails.tableWiseId.toString();
 
 
@@ -248,6 +249,7 @@ class VendorProfileScreenController extends GetxController{
     countryTextFieldController.clear();
     subUrbTextFieldController.clear();
     postCodeTextFieldController.clear();
+    businessIdTextFieldController.clear();
     log("Dispose Method Call");
     super.dispose();
   }
@@ -273,6 +275,7 @@ class VendorProfileScreenController extends GetxController{
     countryTextFieldController.text = prefs.getString(sharedPreferenceData.countryKey) ?? "";
     subUrbTextFieldController.text = prefs.getString(sharedPreferenceData.subUrbKey) ?? "";
     postCodeTextFieldController.text = prefs.getString(sharedPreferenceData.postCodeKey) ?? "";
+    businessIdTextFieldController.text = prefs.getString(sharedPreferenceData.businessIdKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -291,7 +294,7 @@ class VendorProfileScreenController extends GetxController{
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
-
+    log("UserDetails.businessId : ${UserDetails.businessId}");
 
     isLoading(false);
     loadUI();
@@ -331,10 +334,55 @@ class VendorProfileScreenController extends GetxController{
     }
   }
 
+  getUserDetailsById()async {
+    isLoading(true);
+    String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.tableWiseId}";
+    log('Url : $url');
+
+    try{
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': "d/R2zvBXjM3qrWn65cE2IDjYC6MJhMkfuqKpRP4Z9Eg="
+      // };
+
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Get All User Details Response : ${response.body}');
+
+      GetUserDetailsByIdModel getUserDetailsByIdModel = GetUserDetailsByIdModel.fromJson(json.decode(response.body));
+      //log('getUserDetailsByIdModel : ${getUserDetailsByIdModel.data}');
+      isSuccessStatus = getUserDetailsByIdModel.success.obs;
+      log('getUserDetailsByIdModelStatus : $isSuccessStatus');
+
+      if(isSuccessStatus.value){
+        log("Success");
+        businessIdTextFieldController.text = getUserDetailsByIdModel.data.businessId;
+        nameTextFieldController.text = getUserDetailsByIdModel.data.userName;
+        emailTextFieldController.text = getUserDetailsByIdModel.data.email;
+        businessNameTextFieldController.text = getUserDetailsByIdModel.data.businessName;
+        mobileTextFieldController.text = getUserDetailsByIdModel.data.phoneNo;
+        addressTextFieldController.text = getUserDetailsByIdModel.data.address;
+        streetTextFieldController.text = getUserDetailsByIdModel.data.street;
+        stateTextFieldController.text = getUserDetailsByIdModel.data.state;
+        countryTextFieldController.text = getUserDetailsByIdModel.data.country;
+        subUrbTextFieldController.text = getUserDetailsByIdModel.data.suburb;
+        postCodeTextFieldController.text = getUserDetailsByIdModel.data.postcode;
+        //mobileTextFieldController.text = getUserDetailsByIdModel.data.phoneNo;
+        //log('businessLists : ${businessTypeLists.length}');
+      } else {
+        log('Get All User Details Else Else');
+      }
+
+    } catch(e) {
+      log('Get All User Details False False: $e');
+    } finally {
+      isLoading(false);
+    }
+  }
+
   @override
   void onInit() async {
-    await getDataFromPrefs();
+    //await getDataFromPrefs();
     getAllBusinessTypeList();
+    getUserDetailsById();
     super.onInit();
 
   }

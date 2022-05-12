@@ -52,7 +52,7 @@ class ResourceProfileModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      //clipBehavior: Clip.none,
+      clipBehavior: Clip.none,
       children: [
         vendorResourcesScreenController.file != null ?
         ClipRRect(
@@ -66,17 +66,13 @@ class ResourceProfileModule extends StatelessWidget {
           onTap: (){
             openGallery();
           },
-          child: Positioned(
-            //bottom: 15,
-            //top: 15,
-            child: Container(
-              height: 35, width: 35,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white
-              ),
-              child: const Icon(Icons.edit),
+          child: Container(
+            height: 35, width: 35,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white
             ),
+            child: const Icon(Icons.edit),
           ),
         ),
       ],

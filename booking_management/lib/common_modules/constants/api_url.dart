@@ -45,6 +45,7 @@ class ApiUrl {
 
 
   static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
+  static const getUserDetailsByIdApi = apiMainPath + "API/GetUserDetailById";
 
   static const vendorGetAllResourcesApi = apiMainPath + "API/ResourceIndex"; // Get ALL
   static const vendorAddAndUpdateResourcesApi = apiMainPath + "API/ResourceUpsert"; // Add & Update

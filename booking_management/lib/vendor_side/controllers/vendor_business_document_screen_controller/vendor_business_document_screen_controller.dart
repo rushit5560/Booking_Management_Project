@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/api_header.dart';
 import '../../model/business_document_screen_models/add_business_document_model.dart';
 import '../../model/business_document_screen_models/get_all_business_documents_model.dart';
+
 
 class VendorBusinessDocumentScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -75,6 +74,8 @@ class VendorBusinessDocumentScreenController extends GetxController {
       stream.cast();
       var length = await file!.length();
 
+      request.files.add(await http.MultipartFile.fromPath("DocumentPath", file!.path));
+
       request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = UserDetails.tableWiseId.toString();
@@ -105,6 +106,7 @@ class VendorBusinessDocumentScreenController extends GetxController {
           selectedDocTypeValue.value = "Attach photo identification";
           file!.delete();
           await getAllBusinessDocumentsByIdFunction();
+          Get.back();
         } else {
           log("addBusinessDocumentFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");

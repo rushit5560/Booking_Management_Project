@@ -13,8 +13,7 @@ import '../../../controllers/vendor_business_document_screen_controller/vendor_b
 
 class AddBusinessDocumentFormModule extends StatelessWidget {
   AddBusinessDocumentFormModule({Key? key}) : super(key: key);
-  final vendorBusinessDocumentScreenController =
-      Get.find<VendorBusinessDocumentScreenController>();
+  final vendorBusinessDocumentScreenController = Get.find<VendorBusinessDocumentScreenController>();
 
   @override
   Widget build(BuildContext context) {

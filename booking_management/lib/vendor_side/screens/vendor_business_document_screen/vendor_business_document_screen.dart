@@ -33,7 +33,9 @@ class VendorBusinessDocumentScreen extends StatelessWidget {
                           const AddBusinessDocButtonModule(),
                           const SizedBox(height: 15),
                           Expanded(
-                            child: const BusinessDocumentList()
+                            child: vendorBusinessDocumentScreenController.businessDocumentList.isEmpty
+                              ? const Center(child: Text("No data available!"))
+                            : BusinessDocumentList()
                                 .commonSymmetricPadding(
                                     horizontal: 15, vertical: 15),
                           ),

@@ -1,8 +1,11 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/vendor_business_document_screen_controller/vendor_business_document_screen_controller.dart';
+import '../../model/business_document_screen_models/get_all_business_documents_model.dart';
 import 'vendor_add_business_document_screen/vendor_add_business_document_screen.dart';
 
 class AddBusinessDocButtonModule extends StatelessWidget {
@@ -43,20 +46,22 @@ class AddBusinessDocButtonModule extends StatelessWidget {
 }
 
 class BusinessDocumentList extends StatelessWidget {
-  const BusinessDocumentList({Key? key}) : super(key: key);
+  BusinessDocumentList({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorBusinessDocumentScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return _businessDocumentListTile(context);
+        itemCount: screenController.businessDocumentList.length,
+        itemBuilder: (context, i) {
+          DocumentWorkerList singleItem = screenController.businessDocumentList[i];
+          return _businessDocumentListTile(context, singleItem);
         });
   }
 
-  Widget _businessDocumentListTile(BuildContext context) {
+  Widget _businessDocumentListTile(BuildContext context, DocumentWorkerList singleItem) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -67,19 +72,19 @@ class BusinessDocumentList extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  "Vendor Name",
+                  UserDetails.userName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
-                  "Document Type",
+                  singleItem.documentType,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ],
             ),
@@ -89,7 +94,7 @@ class BusinessDocumentList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: () => _bottomSheetModule(context),
+                // onTap: () => _bottomSheetModule(context),
                 child: Text(
                   "View",
                   maxLines: 1,
@@ -101,12 +106,14 @@ class BusinessDocumentList extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                "Verified",
+              Text(
+                singleItem.isVerify ? "Verified" : "Unverified",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: singleItem.isVerify ? Colors.green : Colors.red,
+                ),
               ),
             ],
           ),
@@ -115,55 +122,56 @@ class BusinessDocumentList extends StatelessWidget {
     );
   }
 
-  Future _bottomSheetModule(BuildContext context) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _heading("Verification"),
-              const Divider(thickness: 1),
-              _vendorNameModule(),
-            ],
-          ).commonAllSidePadding(20);
-        });
-  }
+  /// Bottom Sheet
+  // Future _bottomSheetModule(BuildContext context) {
+  //   return showModalBottomSheet(
+  //       context: context,
+  //       builder: (context) {
+  //         return Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             _heading("Verification"),
+  //             const Divider(thickness: 1),
+  //             _vendorNameModule(),
+  //           ],
+  //         ).commonAllSidePadding(20);
+  //       });
+  // }
 
-  Widget _heading(String heading) {
-    return Text(
-      heading,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-      ),
-    );
-  }
-
-  Widget _vendorNameModule() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "UserName",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.colorLightGrey1,
-          ),
-          child: Text(
-            "Vendor Name",
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _heading(String heading) {
+  //   return Text(
+  //     heading,
+  //     style: const TextStyle(
+  //       fontWeight: FontWeight.bold,
+  //       fontSize: 20,
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _vendorNameModule() {
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       const Text(
+  //         "UserName",
+  //         style: TextStyle(
+  //           fontWeight: FontWeight.bold,
+  //           fontSize: 16,
+  //         ),
+  //       ),
+  //       const SizedBox(height: 10),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.circular(15),
+  //           color: AppColors.colorLightGrey1,
+  //         ),
+  //         child: Text(
+  //           "Vendor Name",
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

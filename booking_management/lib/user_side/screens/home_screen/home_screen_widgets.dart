@@ -1,11 +1,13 @@
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
+import '../../model/home_screen_models/get_all_category_model.dart';
 
 HomeScreenController screenController = Get.find<HomeScreenController>();
 
@@ -345,7 +347,8 @@ class FavouriteDoctorsModule extends StatelessWidget {
 }
 
 class PartialCategoryListModule extends StatelessWidget {
-  const PartialCategoryListModule({Key? key}) : super(key: key);
+  PartialCategoryListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -363,7 +366,7 @@ class PartialCategoryListModule extends StatelessWidget {
         SizedBox(
           height: 150,
           child: GridView.builder(
-            itemCount: 10,
+            itemCount: screenController.allCategoryList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -373,7 +376,8 @@ class PartialCategoryListModule extends StatelessWidget {
               mainAxisSpacing: 10,
             ),
             itemBuilder: (context, i) {
-              return _categoryListModule();
+              CategoryDatum singleItem = screenController.allCategoryList[i];
+              return _categoryListModule(singleItem);
             },
           ),
         ),
@@ -381,7 +385,8 @@ class PartialCategoryListModule extends StatelessWidget {
     );
   }
 
-  Widget _categoryListModule() {
+  Widget _categoryListModule(CategoryDatum singleItem) {
+    String imgUrl = ApiUrl.apiMainPath + singleItem.image;
     return GestureDetector(
       onTap: () {
         log("Category Name");
@@ -404,21 +409,21 @@ class PartialCategoryListModule extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    image: AssetImage(AppImages.vendorImg),
+                  image: DecorationImage(
+                    image: NetworkImage(imgUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
               ).commonAllSidePadding(10),
             ),
-            const Expanded(
+            Expanded(
               flex: 25,
               child: Center(
                 child: Text(
-                  "Category Name",
+                  singleItem.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ),

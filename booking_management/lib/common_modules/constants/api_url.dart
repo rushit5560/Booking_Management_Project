@@ -17,6 +17,9 @@ class ApiUrl {
   static const userAppointmentListApi = apiMainPath + "CustomerDashboard/APICustomerAppointmentlist";
   static const userAddReviewApi = apiMainPath + "Reviews/APIAddUpdateReview";
 
+  /// Customer - Category
+  static const getAllCategoryApi = apiMainPath + "API/APIBusinesstypelist";
+
   /// Vendor API
   static const vendorSignUpApi = apiMainPath + "API/VendorRegister";
   static const vendorPendingAppointmentApi = apiMainPath + "Appointments/APIAppointmentPending";

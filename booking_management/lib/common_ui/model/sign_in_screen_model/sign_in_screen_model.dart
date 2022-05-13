@@ -486,7 +486,7 @@ class Customer {
     required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
-    required this.applicationUserModifier,
+    // required this.applicationUserModifier,
     required this.passwordHash,
     required this.notes,
     required this.bookingId,
@@ -505,7 +505,7 @@ class Customer {
   Data applicationUser;
   String modifiedBy;
   String modifiedOn;
-  String applicationUserModifier;
+  // String applicationUserModifier;
   String passwordHash;
   String notes;
   String bookingId;
@@ -524,7 +524,7 @@ class Customer {
     applicationUser: Data.fromJson(json["applicationUser"] ?? {}),
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: json["modifiedOn"] ?? "",
-    applicationUserModifier: json["applicationUserModifier"] ?? "",
+    // applicationUserModifier: json["applicationUserModifier"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
     notes: json["notes"] ?? "",
     bookingId: json["bookingId"] ?? "",
@@ -544,7 +544,7 @@ class Customer {
     "applicationUser": applicationUser.toJson(),
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
-    "applicationUserModifier": applicationUserModifier,
+    // "applicationUserModifier": applicationUserModifier,
     "passwordHash": passwordHash,
     "notes": notes,
     "bookingId": bookingId,

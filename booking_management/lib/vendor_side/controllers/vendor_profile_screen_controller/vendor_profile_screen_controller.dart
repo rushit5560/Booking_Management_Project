@@ -50,7 +50,7 @@ class VendorProfileScreenController extends GetxController{
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
 
-  RxList<Datum> businessTypeLists = [Datum(name: "")].obs;
+  RxList<Datum> businessTypeLists = [Datum(name: "Select Business List")].obs;
   Datum ? businessDropDownValue;
 
   ApiHeader apiHeader = ApiHeader();
@@ -324,7 +324,8 @@ class VendorProfileScreenController extends GetxController{
       if(isSuccessStatus.value){
         log("Success");
         businessTypeLists.addAll(getAllBusinessTypeModel.data!);
-        businessDropDownValue = businessTypeLists[0];
+         businessDropDownValue = businessTypeLists[0];
+         log('businessDropDownValue: ${businessDropDownValue!.name}');
         log('businessLists : ${businessTypeLists.length}');
       } else {
         log('Get All Business Else Else');
@@ -334,6 +335,7 @@ class VendorProfileScreenController extends GetxController{
       log('Get All Business False False: $e');
     } finally {
       isLoading(false);
+      //getUserDetailsById();
     }
   }
 
@@ -370,6 +372,7 @@ class VendorProfileScreenController extends GetxController{
         subUrbTextFieldController.text = getUserDetailsByIdModel.data.suburb;
         postCodeTextFieldController.text = getUserDetailsByIdModel.data.postcode;
         slotDurationValue.value = getUserDetailsByIdModel.data.duration.toString();
+
         businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
         //log('businessLists : ${businessTypeLists.length}');
 

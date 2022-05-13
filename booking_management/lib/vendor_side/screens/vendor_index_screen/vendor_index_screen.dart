@@ -35,7 +35,7 @@ class VendorIndexScreen extends StatelessWidget {
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 1) {
       return VendorAppointmentListScreen();
     } else if (vendorIndexScreenController.vendorMenuIndex.value == 2) {
-      return const VendorNotificationScreen();
+      return VendorNotificationScreen();
     } else {
       return const VendorChatListScreen();
     }

@@ -1,4 +1,6 @@
+import 'package:booking_management/vendor_side/controllers/vendor_notification_screen_controller/vendor_notification_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../common_modules/constants/app_images.dart';
 
@@ -20,7 +22,9 @@ class VendorNotificationHeaderModule extends StatelessWidget {
 
 class VendorNotificationListModule extends StatelessWidget {
   final int count;
-  const VendorNotificationListModule({Key? key, required this.count}) : super(key: key);
+  VendorNotificationListModule({Key? key, required this.count}) : super(key: key);
+
+  final screenController = Get.find<VendorNotificationScreenController>();
 
   @override
   Widget build(BuildContext context) {

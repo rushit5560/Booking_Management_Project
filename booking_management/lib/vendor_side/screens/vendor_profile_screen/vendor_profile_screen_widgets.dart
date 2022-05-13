@@ -1177,7 +1177,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
 
                             onChanged: (value){
                               screenController.businessDropDownValue = value!;
-                              log("businessDropDownValue : ${screenController.businessDropDownValue}");
+                              //log("businessDropDownValue : ${screenController.businessDropDownValue}");
                               screenController.loadUI();
                             },
                           ),

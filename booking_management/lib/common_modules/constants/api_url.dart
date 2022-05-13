@@ -43,6 +43,9 @@ class ApiUrl {
   static const vendorAddDocumentsApi = apiMainPath + "API/VendorDocumentAddVerify"; // Add Doc
   static const vendorGetSingleDocumentByIdApi = apiMainPath + "API/VendorDocumentGetById"; // Get Single Doc By Id
 
+  /// Vendor - Review
+  static const vendorGetAllReviewApi = apiMainPath + "API/APIShowReview";
+
 
   static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
   static const getUserDetailsByIdApi = apiMainPath + "API/GetUserDetailById";

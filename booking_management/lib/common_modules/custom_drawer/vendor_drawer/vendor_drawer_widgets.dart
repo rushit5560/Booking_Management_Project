@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
-import '../../../vendor_side/screens/customer_review_screen/customer_review_screen.dart';
 import '../../../vendor_side/screens/my_customer_screen/my_customer_screen.dart';
+import '../../../vendor_side/screens/review_screen/review_screen.dart';
 import '../../../vendor_side/screens/vendor_additional_slot_screen/vendor_additional_slot_screen.dart';
 import '../../../vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen.dart';
 import '../../../vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
@@ -114,7 +114,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => VendorBusinessDocumentScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.review) {
-      Get.to(() => const CustomerReviewScreen(),
+      Get.to(() => ReviewScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.subscription) {

@@ -316,7 +316,7 @@ class Vendor {
     required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
-    required this.applicationUserModifier,
+    // required this.applicationUserModifier,
     required this.review,
     required this.rating,
     required this.vendorWorkingHours,
@@ -362,7 +362,7 @@ class Vendor {
   Data applicationUser;
   String modifiedBy;
   String modifiedOn;
-  Data applicationUserModifier;
+  // Data applicationUserModifier;
   String review;
   String rating;
   String vendorWorkingHours;
@@ -409,7 +409,7 @@ class Vendor {
     applicationUser: Data.fromJson(json["applicationUser"] ?? {}),
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: json["modifiedOn"] ?? "",
-    applicationUserModifier: Data.fromJson(json["applicationUserModifier"] ?? {}),
+    // applicationUserModifier: Data.fromJson(json["applicationUserModifier"] ?? {}),
     review: json["review"] ?? "",
     rating: json["rating"] ?? "",
     vendorWorkingHours: json["vendorWorkingHours"] ?? "",
@@ -457,7 +457,7 @@ class Vendor {
     "applicationUser": applicationUser.toJson(),
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
-    "applicationUserModifier": applicationUserModifier.toJson(),
+    // "applicationUserModifier": applicationUserModifier.toJson(),
     "review": review,
     "rating": rating,
     "vendorWorkingHours": vendorWorkingHours,

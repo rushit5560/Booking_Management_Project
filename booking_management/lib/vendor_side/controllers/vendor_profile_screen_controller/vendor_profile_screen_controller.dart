@@ -49,8 +49,9 @@ class VendorProfileScreenController extends GetxController{
   //RxString businessTypeValue = 'Saloon'.obs;
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
-
+  
   RxList<Datum> businessTypeLists = [Datum(name: "Select Business List")].obs;
+
   Datum ? businessDropDownValue;
 
   ApiHeader apiHeader = ApiHeader();

@@ -110,21 +110,28 @@ class BusinessDocumentList extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
-                singleItem.isVerify
-                    ? "Verified"
-                    : singleItem.isCancel
-                        ? "Rejected"
-                        : "Pending",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: singleItem.isVerify
-                      ? Colors.green
+              GestureDetector(
+                onTap: () {
+                  if(singleItem.isVerify == false && singleItem.isCancel == true) {
+                    _rejectBottomSheet(context, singleItem);
+                  }
+                },
+                child: Text(
+                  singleItem.isVerify
+                      ? "Verified"
                       : singleItem.isCancel
-                          ? Colors.red
-                          : Colors.grey,
+                          ? "Rejected"
+                          : "Pending",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: singleItem.isVerify
+                        ? Colors.green
+                        : singleItem.isCancel
+                            ? Colors.red
+                            : Colors.grey,
+                  ),
                 ),
               ),
             ],
@@ -145,7 +152,9 @@ class BusinessDocumentList extends StatelessWidget {
             children: [
               _heading("Verification"),
               const Divider(thickness: 1),
-              _vendorNameModule(singleItem),
+              _vendorNameModule(),
+              const SizedBox(height: 10),
+              _vendorDocTypeModule(singleItem),
             ],
           ).commonAllSidePadding(20);
         });
@@ -161,7 +170,7 @@ class BusinessDocumentList extends StatelessWidget {
     );
   }
 
-  Widget _vendorNameModule(DocumentWorkerList singleItem) {
+  Widget _vendorNameModule() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +182,7 @@ class BusinessDocumentList extends StatelessWidget {
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -184,4 +193,71 @@ class BusinessDocumentList extends StatelessWidget {
       ],
     );
   }
+
+  Widget _vendorDocTypeModule(DocumentWorkerList singleItem) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Document Type",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: AppColors.colorLightGrey1,
+          ),
+          child: Text(singleItem.documentType),
+        ),
+      ],
+    );
+  }
+
+  Future _rejectBottomSheet(BuildContext context, DocumentWorkerList singleItem) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _heading("Rejection Reason"),
+              const Divider(thickness: 1),
+              _vendorRejectTextModule(singleItem),
+              // const SizedBox(height: 10),
+              // _vendorDocTypeModule(singleItem),
+            ],
+          ).commonAllSidePadding(20);
+        });
+  }
+
+  Widget _vendorRejectTextModule(DocumentWorkerList singleItem) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Issue",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: AppColors.colorLightGrey1,
+          ),
+          child: Text(singleItem.notes),
+        ),
+      ],
+    );
+  }
+
 }

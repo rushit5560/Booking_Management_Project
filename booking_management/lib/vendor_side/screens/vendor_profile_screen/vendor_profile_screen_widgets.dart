@@ -1170,7 +1170,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                                 value: value,
                                 child: Text(
                                   value.name!,
-                                  style: TextStyle(color: Colors.black),
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                               );
                             }).toList(),

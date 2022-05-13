@@ -50,6 +50,9 @@ class ApiUrl {
   static const vendorGetAllOrdersApi = apiMainPath + "API/InvoiceIndex";
   static const vendorOrderDetailsApi = apiMainPath + "API/InvoiceView";
 
+  /// Vendor - Subscription Plan
+  static const vendorSubscriptionPlan = apiMainPath + "API/SubscriptionGetAll";
+
 
   /// Vendor - Customer
   static const vendorMyCustomerApi = apiMainPath + "API/MycustomerIndex";

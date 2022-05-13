@@ -90,7 +90,7 @@ class VendorDrawer extends StatelessWidget {
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
-                name: 'Orders',
+                name: 'Invoices',
                 vendorDrawerOption: VendorDrawerOption.invoices,
               ),
               const SizedBox(height: 20),

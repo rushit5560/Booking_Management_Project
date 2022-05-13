@@ -25,8 +25,7 @@ class MyCustomerScreen extends StatelessWidget {
                         title: "My Customer",
                         appBarOption: AppBarOption.singleBackButtonOption),
                     Expanded(
-                      child: vendorMyCustomerScreenController
-                              .allCustomerList.isEmpty
+                      child: vendorMyCustomerScreenController.allCustomerList.isEmpty
                           ? const Center(child: Text("No Data Available!"))
                           : CustomerList().commonSymmetricPadding(
                               horizontal: 15,

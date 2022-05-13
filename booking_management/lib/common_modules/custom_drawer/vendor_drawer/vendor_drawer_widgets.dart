@@ -118,7 +118,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.subscription) {
-      Get.to(() => const VendorSubscriptionPlanScreen(),
+      Get.to(() => VendorSubscriptionPlanScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.help) {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);

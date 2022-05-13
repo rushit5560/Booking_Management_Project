@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/container_decorations.dart';
@@ -7,124 +8,155 @@ import 'package:booking_management/vendor_side/screens/vendor_checkout_screen/ve
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/constants/api_url.dart';
+import '../../controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
+import '../../model/vendor_subscription_plan_screen_models/get_all_subscription_model.dart';
+
 class VendorSubscriptionPlanScreen extends StatelessWidget {
-  const VendorSubscriptionPlanScreen({Key? key}) : super(key: key);
+  VendorSubscriptionPlanScreen({Key? key}) : super(key: key);
+  final vendorSubscriptionPlanScreenController = Get.put(VendorSubscriptionPlanScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const CommonAppBarModule(title: "Subscription Plan", appBarOption: AppBarOption.singleBackButtonOption,),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, i){
-                  return GestureDetector(
-                    onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      decoration: shadowDecoration(),
-                      // margin: EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                const Text(
-                                  '\$49 / Mon',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-
-                                const Text(
-                                  '\$49 / Mon',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      '- ',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 3),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      '- ',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "Lorem Ipsum has been the industry's standard",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 3),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      '- ',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "Lorem Ipsum has been the industry's standard",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                          Image.asset(AppImages.rightArrowImg),
-                        ],
-                      ).commonAllSidePadding(10),
-                    ).commonSymmetricPadding(vertical: 10),
-                  );
-                },
-              ).commonSymmetricPadding(horizontal: 20),
-            ),
-          ],
+      body: Obx(
+        ()=> vendorSubscriptionPlanScreenController.isLoading.value
+        ? const CustomCircularLoaderModule()
+        : SafeArea(
+          child: Column(
+            children: [
+              const CommonAppBarModule(title: "Subscription Plan", appBarOption: AppBarOption.singleBackButtonOption,),
+              const SizedBox(height: 20),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: vendorSubscriptionPlanScreenController.allSubscriptionList.length,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, i){
+                    SubscriptionWorkerList singleItem = vendorSubscriptionPlanScreenController.allSubscriptionList[i];
+                    return _subscriptionPlanLitTile(singleItem);
+                  },
+                ).commonSymmetricPadding(horizontal: 20),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+
+  Widget _subscriptionPlanLitTile(SubscriptionWorkerList singleItem) {
+    return GestureDetector(
+      onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft),
+      child: Container(
+        margin: const EdgeInsets.only(left: 5, right: 5),
+        decoration: shadowDecoration(),
+        // margin: EdgeInsets.all(5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+            Container(
+              height: 70,
+              width: 70,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "${ApiUrl.apiMainPath}${singleItem.image}"
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Text(
+                    singleItem.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  Text(
+                    'From \$${singleItem.price} / ${singleItem.days}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '- ',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Expanded(
+                        child: Text(
+                          singleItem.detail,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // const SizedBox(height: 3),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: const [
+                  //     Text(
+                  //       '- ',
+                  //       style: TextStyle(fontSize: 12),
+                  //     ),
+                  //     Expanded(
+                  //       child: Text(
+                  //         "Lorem Ipsum has been the industry's standard",
+                  //         maxLines: 2,
+                  //         overflow: TextOverflow.ellipsis,
+                  //         style: TextStyle(fontSize: 12),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  //
+                  // const SizedBox(height: 3),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: const [
+                  //     Text(
+                  //       '- ',
+                  //       style: TextStyle(fontSize: 12),
+                  //     ),
+                  //     Expanded(
+                  //       child: Text(
+                  //         "Lorem Ipsum has been the industry's standard",
+                  //         maxLines: 2,
+                  //         overflow: TextOverflow.ellipsis,
+                  //         style: TextStyle(fontSize: 12),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 15),
+            Image.asset(AppImages.rightArrowImg),
+          ],
+        ).commonAllSidePadding(10),
+      ).commonSymmetricPadding(vertical: 10),
     );
   }
 }

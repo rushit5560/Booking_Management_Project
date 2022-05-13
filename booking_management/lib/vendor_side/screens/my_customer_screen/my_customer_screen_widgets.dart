@@ -1,9 +1,12 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_my_customer_list_screen_controller/vendor_my_customer_list_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomerList extends StatelessWidget {
-  const CustomerList({Key? key}) : super(key: key);
+  CustomerList({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorMyCustomerScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +35,8 @@ class CustomerList extends StatelessWidget {
                   //flex: 68,
                   child: Row(
                     children: [
-                      _userImageModule(i),
-                      const SizedBox(width: 10),
+                      //_userImageModule(i),
+                      //const SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

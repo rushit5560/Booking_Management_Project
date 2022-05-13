@@ -1,11 +1,14 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_my_customer_list_screen_controller/vendor_my_customer_list_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/my_customer_screen/my_customer_screen_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyCustomerScreen extends StatelessWidget {
-  const MyCustomerScreen({Key? key}) : super(key: key);
+  MyCustomerScreen({Key? key}) : super(key: key);
+  final vendorMyCustomerScreenController = Get.put(VendorMyCustomerScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class MyCustomerScreen extends StatelessWidget {
           children: [
             const CommonAppBarModule(title: "My Customer", appBarOption: AppBarOption.singleBackButtonOption),
 
-            const Expanded(
+             Expanded(
               child: CustomerList(),
             ).commonSymmetricPadding(horizontal: 15, vertical: 15)
           ],

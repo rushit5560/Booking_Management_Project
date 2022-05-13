@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../vendor_side/screens/my_customer_screen/my_customer_screen.dart';
@@ -9,6 +8,7 @@ import '../../../vendor_side/screens/vendor_additional_slot_screen/vendor_additi
 import '../../../vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen.dart';
 import '../../../vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
 import '../../../vendor_side/screens/vendor_chat_list_screen/vendor_chat_list_screen.dart';
+import '../../../vendor_side/screens/vendor_invoice_list_screen/vendor_invoice_list_screen.dart';
 import '../../../vendor_side/screens/vendor_profile_screen/vendor_profile_screen.dart';
 import '../../../vendor_side/screens/vendor_resources_screen/vendor_resources_screen.dart';
 import '../../../vendor_side/screens/vendor_services_screen/vendor_services_screen.dart';
@@ -88,7 +88,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.myCustomer) {
-      Get.to(() => const MyCustomerScreen(),
+      Get.to(() => MyCustomerScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
       Get.to(() => const VendorChatListScreen(),
@@ -126,7 +126,10 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
         VendorDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(),
           transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption == VendorDrawerOption.logout) {
+    } else if(vendorSettingScreenOption == VendorDrawerOption.invoices) {
+      Get.to(() => VendorInvoiceListScreen(),
+          transition: Transition.rightToLeft);
+    }else if (vendorSettingScreenOption == VendorDrawerOption.logout) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);
       Get.snackbar('You Have Successfully Logout', '');

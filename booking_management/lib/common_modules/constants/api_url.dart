@@ -46,6 +46,13 @@ class ApiUrl {
   /// Vendor - Review
   static const vendorGetAllReviewApi = apiMainPath + "API/APIShowReview";
 
+  /// Vendor - Orders (All Invoice)
+  static const vendorGetAllOrdersApi = apiMainPath + "API/InvoiceIndex";
+  static const vendorOrderDetailsApi = apiMainPath + "API/InvoiceView";
+
+
+  /// Vendor - Customer
+  static const vendorMyCustomerApi = apiMainPath + "API/MycustomerIndex";
 
   static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
   static const getUserDetailsByIdApi = apiMainPath + "API/GetUserDetailById";

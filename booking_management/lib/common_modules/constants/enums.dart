@@ -25,6 +25,7 @@ enum VendorDrawerOption {
    additionalSlot,
    businessDocument,
    review,
+   invoices,
    subscription,
    help,
    changePassword,

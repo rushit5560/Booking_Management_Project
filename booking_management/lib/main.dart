@@ -143,6 +143,8 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: "Booking Management System",
       debugShowCheckedModeBanner: false,
+
+
       home: SplashScreen(),
     );
   }

@@ -21,16 +21,10 @@ class ReviewScreen extends StatelessWidget {
                 title: "Review",
                 appBarOption: AppBarOption.singleBackButtonOption),
             Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: reviewScreenController.reviewList.isEmpty
-                        ? const Center(child: Text("No Data Available!"))
-                        : ReviewListModule(),
-                  ),
-                ],
-              ).commonSymmetricPadding(horizontal: 15, vertical: 15),
-            )
+              child: reviewScreenController.reviewList.isEmpty
+                  ? const Center(child: Text("No Data Available!"))
+                  : ReviewListModule(),
+            ).commonSymmetricPadding(horizontal: 15, vertical: 15)
           ],
         ),
       ),

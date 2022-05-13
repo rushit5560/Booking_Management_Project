@@ -1,8 +1,10 @@
-import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_my_customer_list_screen_controller/vendor_my_customer_list_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../model/vendor_my_customer_model/vendor_my_customer_model.dart';
+
+
 
 class CustomerList extends StatelessWidget {
   CustomerList({Key? key}) : super(key: key);
@@ -11,12 +13,14 @@ class CustomerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5,
+        itemCount: screenController.allCustomerList.length,
         shrinkWrap: true,
-        physics: const AlwaysScrollableScrollPhysics(),
-        itemBuilder: (context, i){
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, i) {
+          CustomerDatum singleItem = screenController.allCustomerList[i];
           return Container(
-            margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+            margin:
+                const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
@@ -31,30 +35,25 @@ class CustomerList extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  //flex: 68,
-                  child: Row(
-                    children: [
-                      //_userImageModule(i),
-                      //const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _userNameModule(i),
-                            const SizedBox(height: 8),
+                Row(
+                  children: [
+                    //_userImageModule(i),
+                    //const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _userNameModule(singleItem),
+                        const SizedBox(height: 8),
 
-                            _userEmailModule(i),
-                            const SizedBox(height: 8),
+                        _userEmailModule(singleItem),
+                        const SizedBox(height: 8),
 
-                            _userMobileNoModule(),
-                            // const SizedBox(height: 8),
-                            // _statusModule(i),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                        _userMobileNoModule(singleItem),
+                        // const SizedBox(height: 8),
+                        // _statusModule(i),
+                      ],
+                    ),
+                  ],
                 ),
 
                 const SizedBox(width: 5),
@@ -66,35 +65,39 @@ class CustomerList extends StatelessWidget {
         });
   }
 
-  Widget _userImageModule(i) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
-      child: Image.asset(AppImages.vendorImg, scale: 15,),
-    );
-  }
+  // Widget _userImageModule(i) {
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.circular(10),
+  //     //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
+  //     child: Image.asset(AppImages.vendorImg, scale: 15,),
+  //   );
+  // }
 
-  Widget _userNameModule(i) {
-    return const Text(
-      "Lorem Ipsum",
-      style: TextStyle(
+  Widget _userNameModule(CustomerDatum singleItem) {
+    return Text(
+      singleItem.customer.userName,
+      style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
-  Widget _userEmailModule(i) {
-    return const Text("demotesting0909@gmail.com",
-      style: TextStyle(fontSize: 12));
+  Widget _userEmailModule(CustomerDatum singleItem) {
+    return Text(
+      singleItem.customer.email,
+      style: const TextStyle(fontSize: 12),
+    );
   }
 
-  Widget _userMobileNoModule(){
-    return const Text("7875984532",
-        style: TextStyle(fontSize: 12));
+  Widget _userMobileNoModule(CustomerDatum singleItem) {
+    return Text(
+      singleItem.customer.phoneNo,
+      style: const TextStyle(fontSize: 12),
+    );
   }
 
-  Widget _statusModule(i) {
+  /*Widget _statusModule(i) {
     return const Text(
       "Status - Pending",
       style: TextStyle(
@@ -102,9 +105,9 @@ class CustomerList extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
     );
-  }
+  }*/
 
-  /*Widget _viewButton() {
+/*Widget _viewButton() {
     return GestureDetector(
       onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
       child: Container(

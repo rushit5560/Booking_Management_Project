@@ -12,7 +12,7 @@ class VendorMyCustomerScreenController extends GetxController{
 
   RxBool isLoading = false.obs;
   RxBool isStatus = false.obs;
-  List<Datum> allCustomerList = [];
+  List<CustomerDatum> allCustomerList = [];
 
   ApiHeader apiHeader = ApiHeader();
 

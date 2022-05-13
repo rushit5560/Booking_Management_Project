@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -8,21 +9,33 @@ import 'package:get/get.dart';
 
 class MyCustomerScreen extends StatelessWidget {
   MyCustomerScreen({Key? key}) : super(key: key);
-  final vendorMyCustomerScreenController = Get.put(VendorMyCustomerScreenController());
+  final vendorMyCustomerScreenController =
+      Get.put(VendorMyCustomerScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const CommonAppBarModule(title: "My Customer", appBarOption: AppBarOption.singleBackButtonOption),
-
-             Expanded(
-              child: CustomerList(),
-            ).commonSymmetricPadding(horizontal: 15, vertical: 15)
-          ],
-        ),
+      body: Obx(
+        () => vendorMyCustomerScreenController.isLoading.value
+            ? const CustomCircularLoaderModule()
+            : SafeArea(
+                child: Column(
+                  children: [
+                    const CommonAppBarModule(
+                        title: "My Customer",
+                        appBarOption: AppBarOption.singleBackButtonOption),
+                    Expanded(
+                      child: vendorMyCustomerScreenController
+                              .allCustomerList.isEmpty
+                          ? const Center(child: Text("No Data Available!"))
+                          : CustomerList().commonSymmetricPadding(
+                              horizontal: 15,
+                              vertical: 15,
+                            ),
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }

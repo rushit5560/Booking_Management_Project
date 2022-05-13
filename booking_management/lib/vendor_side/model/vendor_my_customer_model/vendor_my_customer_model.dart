@@ -17,12 +17,12 @@ class GetMyCustomerModel {
 
   int statusCode;
   bool success;
-  List<Datum> data;
+  List<CustomerDatum> data;
 
   factory GetMyCustomerModel.fromJson(Map<String, dynamic> json) => GetMyCustomerModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x)) ?? {}),
+    data: List<CustomerDatum>.from(json["data"].map((x) => CustomerDatum.fromJson(x)) ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class GetMyCustomerModel {
   };
 }
 
-class Datum {
-  Datum({
+class CustomerDatum {
+  CustomerDatum({
     required this.id,
     required this.bookingId,
     required this.vendorId,
@@ -71,7 +71,7 @@ class Datum {
   String bookingItems;
   String serviceName;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory CustomerDatum.fromJson(Map<String, dynamic> json) => CustomerDatum(
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     vendorId: json["vendorId"] ?? 0,

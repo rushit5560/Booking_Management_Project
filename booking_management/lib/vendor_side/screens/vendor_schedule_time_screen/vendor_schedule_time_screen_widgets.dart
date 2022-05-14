@@ -1,0 +1,388 @@
+import 'dart:developer';
+
+import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+import '../../../common_modules/constants/app_colors.dart';
+import '../../controllers/vendor_schedule_time_screen_controller/vendor_schedule_time_screen_controller.dart';
+import '../../model/vendor_get_all_resources_list_model/vendor_get_all_resources_model.dart';
+
+class ResourcesDropDownModule extends StatelessWidget {
+  ResourcesDropDownModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<WorkerList1>(
+          value: screenController.selectResourceValue,
+          items: screenController.getResourceList
+              .map<DropdownMenuItem<WorkerList1>>((WorkerList1 value) {
+            return DropdownMenuItem<WorkerList1>(
+              value: value,
+              child: Text(
+                value.resourceName!,
+                style: const TextStyle(color: Colors.black),
+              ),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            screenController.isLoading(true);
+            screenController.selectResourceValue = newValue!;
+            log("selectTimeDuration : ${screenController.selectResourceValue}");
+            // vendorServicesScreenController.loadUI();
+            screenController.isLoading(false);
+          },
+        ),
+      ).commonSymmetricPadding(horizontal: 5),
+    );
+  }
+}
+
+class TableModule extends StatelessWidget {
+  TableModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            screenController.selectedDate.value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              screenController.isCalenderShow.value =
+                  !screenController.isCalenderShow.value;
+            },
+            child: const Icon(Icons.calendar_month),
+          ),
+        ],
+      ).commonSymmetricPadding(vertical: 12, horizontal: 10),
+    );
+  }
+}
+
+class ResourcesSelectDateModule extends StatelessWidget {
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Select Date",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+                screenController.selectedDate.value =
+                    "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.isCalenderShow.value =
+                    !screenController.isCalenderShow.value;
+                screenController.loadUI();
+                // log('selectedDay :: $selectedDay');
+                // log('focusedDay :: $focusedDay');
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                    // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                    color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class ScheduleListModule extends StatelessWidget {
+  ScheduleListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(child: Container()),
+            const Expanded(
+              child: Text(
+                "Start Time",
+              ),
+            ),
+            const Expanded(
+              child: Text(
+                "End Time",
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        ListView.builder(
+          itemCount: screenController.allScheduleTimeList.length - 1,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, i) {
+
+            // String time = screenController.allScheduleTimeList[i];
+            // // log("time : $time");
+            // String timeMinute = time.substring(2, time.length-3);
+            // // log("timeMinute$timeMinute");
+            //
+            // String timeHour = time.substring(0, time.length-6);
+            // // log("timeHour$timeHour");
+            //
+            // String fMinute = timeMinute + UserDetails.slotDuration;
+            // log("fMinute$fMinute");
+
+
+
+            return /*screenController.allScheduleTimeList.length == i - 1
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: Checkbox(
+                          value: true,
+                          onChanged: (bool? value) {},
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          screenController.allScheduleTimeList[i],
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          screenController.allScheduleTimeList[i + 1],
+                        ),
+                      ),
+                    ],
+                  )
+                : */Row(
+                    children: [
+                      Expanded(
+                        child: Checkbox(
+                          value: true,
+                          onChanged: (bool? value) {},
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          screenController.allScheduleTimeList[i],
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          screenController.allScheduleTimeList[i + 1],
+                        ),
+                      ),
+                    ],
+                  );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+/// Submit Button
+class SubmitButtonModule extends StatelessWidget {
+  SubmitButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        if (screenController.selectedDate.value == "") {
+          Fluttertoast.showToast(msg: "Please select date!");
+        } else {
+          await screenController.getAllSLotsFunction();
+        }
+      },
+      child: Container(
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Submit',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// save Button
+class SaveButtonModule extends StatelessWidget {
+  SaveButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        // if(screenController.selectedDate.value == "") {
+        //   Fluttertoast.showToast(msg: "Please select date!");
+        // } else {
+        //   await screenController.getAllSLotsFunction();
+        // }
+      },
+      child: Container(
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Save',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

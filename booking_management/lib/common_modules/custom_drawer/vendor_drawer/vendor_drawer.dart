@@ -90,6 +90,20 @@ class VendorDrawer extends StatelessWidget {
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
+                name: 'Schedule Time',
+                vendorDrawerOption: VendorDrawerOption.scheduleTime,
+              ),
+              const SizedBox(height: 20),
+
+              VendorDrawerSingleItemModule(
+                img: AppImages.resourcesImg,
+                name: 'Available Time',
+                vendorDrawerOption: VendorDrawerOption.availableTime,
+              ),
+              const SizedBox(height: 20),
+
+              VendorDrawerSingleItemModule(
+                img: AppImages.resourcesImg,
                 name: 'Invoices',
                 vendorDrawerOption: VendorDrawerOption.invoices,
               ),
@@ -102,12 +116,12 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              VendorDrawerSingleItemModule(
-                img: AppImages.helpImg,
-                name: 'Help',
-                vendorDrawerOption: VendorDrawerOption.help,
-              ),
-              const SizedBox(height: 20),
+              // VendorDrawerSingleItemModule(
+              //   img: AppImages.helpImg,
+              //   name: 'Help',
+              //   vendorDrawerOption: VendorDrawerOption.help,
+              // ),
+              // const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
                 img: AppImages.changePasswordImg,

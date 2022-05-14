@@ -82,17 +82,10 @@ class VendorProfileScreenController extends GetxController{
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
     try{
-      //if(file != null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        //var stream = http.ByteStream(file!.openRead());
-        //stream.cast();
-
-        //var length = await file!.length();
-
         request.headers.addAll(headers);
-        // request.files.add(
-        //     await http.MultipartFile.fromPath("file", file!.path));
+
         request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
         request.fields['CategoryId'] = "$businessDropDownValue";
         request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
@@ -105,24 +98,14 @@ class VendorProfileScreenController extends GetxController{
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['ModifiedBy'] = UserDetails.uniqueId;
         request.fields['Duration'] = slotDurationValue.value;
-        // request.fields['StartTime'] = "${selectedStartTime.hour}:${selectedStartTime.minute}";
-        // request.fields['EndTime'] = "${selectedEndTime.hour}:${selectedEndTime.minute}";
+
         request.fields['Id'] = UserDetails.tableWiseId.toString();
 
 
         log('request.fields: ${request.fields}');
         log('request.files: ${request.files}');
         log('request.headers: ${request.headers}');
-        // var multiPart = http.MultipartFile(
-        //   'file',
-        //   stream,
-        //   length,
-        // );
 
-        //request.files.add(multiPart);
-
-        //var multiPart = http.MultipartFile('file', stream, length);
-        //request.files.add(multiPart);
         var response = await request.send();
         log('response: ${response.request}');
 
@@ -134,100 +117,18 @@ class VendorProfileScreenController extends GetxController{
           log('success : ${response1.statusCode}');
 
           if(isStatus.value == 200){
-            //UserDetails().vendorId = response1.data.id;
-            //log("Vendor Id: ${UserDetails().vendorId}");
+
             getUserDetailsById();
+            log("response1.message : ${response1.message}");
             Fluttertoast.showToast(msg: response1.message);
-            //clearSignUpFieldsFunction();
-            //Get.off(SignInScreen(), transition: Transition.zoom);
+
 
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
           }
         });
-     /* } else if(file == null){
-        var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        //var stream = http.ByteStream(file!.openRead());
-        //stream.cast();
-
-        //var length = await file!.length();
-
-        // request.files.add(
-        //     await http.MultipartFile.fromPath("file", file!.path));
-
-        request.headers.addAll(headers);
-
-        request.fields['CategoryId'] = "1";
-        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
-        request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
-        request.fields['Street'] = streetTextFieldController.text.trim();
-        request.fields['Suburb'] = subUrbTextFieldController.text.trim();
-        request.fields['Postcode'] = postCodeTextFieldController.text.trim();
-        request.fields['State'] = stateTextFieldController.text.trim();
-        request.fields['Country'] = countryTextFieldController.text.trim();
-        request.fields['Address'] = addressTextFieldController.text.trim();
-        request.fields['ModifiedBy'] = UserDetails.uniqueId;
-        request.fields['Duration'] = slotDurationValue.value;
-        request.fields['StartTime'] = "09-05-2022 19:30:00";
-        request.fields['EndTime'] = "09-05-2022 19:30:00";
-        request.fields['Id'] = UserDetails.tableWiseId.toString();
-
-
-        log('request.fields: ${request.fields}');
-        log('request.files: ${request.files}');
-
-        // var multiPart = http.MultipartFile(
-        //   'file',
-        //   stream,
-        //   length,
-        // );
-
-        //request.files.add(multiPart);
-
-        //var multiPart = http.MultipartFile('file', stream, length);
-       // request.files.add(multiPart);
-        var response = await request.send();
-        log('response: ${response.request}');
-
-        response.stream.transform(utf8.decoder).listen((value) {
-          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
-          log('response1 ::::::${response1.statusCode}');
-          isStatus = response1.statusCode.obs;
-          log('status : $isStatus');
-          log('success : ${response1.statusCode}');
-
-          if(isStatus.value == 200){
-            //UserDetails().vendorId = response1.data.id;
-            //log("Vendor Id: ${UserDetails().vendorId}");
-            Fluttertoast.showToast(msg: response1.message);
-            //clearSignUpFieldsFunction();
-            //Get.off(SignInScreen(), transition: Transition.zoom);
-
-          } else {
-            // Fluttertoast.showToast(msg: "${response1.message}");
-            log('False False');
-          }
-        });
-      }*/
-
-
-      // http.Response response = await http.post(Uri.parse(url));
-      //
-      // UserSignUpModel userSignUpModel = UserSignUpModel.fromJson(json.decode(response.body));
-      // isStatus = userSignUpModel.statusCode!.obs;
-      //
-      // if(isStatus.value == 200) {
-      //   //String userToken = signInModel.token;
-      //   //print('userToken : $userToken');
-      //   // await sharedPreferenceData.setUserLoginDetailsInPrefs(userToken: "$userToken");
-      //   // await createUserWallet();
-      //   Get.offAll(() => IndexScreen());
-      //   Get.snackbar('User Register Successfully.', '');
-      // } else {
-      //   print('SignUp False False');
-      // }
 
     } catch(e) {
       log('SignUp Error : $e');
@@ -310,9 +211,6 @@ class VendorProfileScreenController extends GetxController{
     log('Url : $url');
 
     try{
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': "d/R2zvBXjM3qrWn65cE2IDjYC6MJhMkfuqKpRP4Z9Eg="
-      // };
 
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get All Business Type List Response : ${response.body}');
@@ -335,8 +233,8 @@ class VendorProfileScreenController extends GetxController{
     } catch(e) {
       log('Get All Business False False: $e');
     } finally {
-      isLoading(false);
-      //getUserDetailsById();
+      // isLoading(false);
+      await getUserDetailsById();
     }
   }
 
@@ -346,9 +244,6 @@ class VendorProfileScreenController extends GetxController{
     log('Url : $url');
 
     try{
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': "d/R2zvBXjM3qrWn65cE2IDjYC6MJhMkfuqKpRP4Z9Eg="
-      // };
 
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get All User Details Response : ${response.body}');
@@ -405,7 +300,7 @@ class VendorProfileScreenController extends GetxController{
   void onInit() async {
     //await getDataFromPrefs();
     getAllBusinessTypeList();
-    getUserDetailsById();
+    // getUserDetailsById();
     super.onInit();
   }
 

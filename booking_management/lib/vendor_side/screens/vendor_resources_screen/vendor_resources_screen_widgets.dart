@@ -81,17 +81,17 @@ class VendorResourcesListModule extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          screenController.getResourceList[i].resourceName,
+                          screenController.getResourceList[i].resourceName!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
                           ),
                         ),
                         SizedBox(height: 8),
                         Text(
-                          screenController.getResourceList[i].details,
+                          screenController.getResourceList[i].details!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -129,7 +129,7 @@ class VendorResourcesListModule extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () async{
-                          await screenController.getResourcesDetailsByIdFunction(id: screenController.getResourceList[i].id);
+                          await screenController.getResourcesDetailsByIdFunction(id: screenController.getResourceList[i].id!);
                           //screenController.selectedItemId = screenController.getResourceList[i].id;
                           //screenController.updateResourceNameFieldController.text = screenController.getResourceList[i].resourceName;
                           //screenController.updateResourceDetailsFieldController.text = screenController.getResourceList[i].details;

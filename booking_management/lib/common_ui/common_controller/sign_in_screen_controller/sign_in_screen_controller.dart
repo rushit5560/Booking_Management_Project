@@ -96,7 +96,7 @@ class SignInScreenController extends GetxController {
             country: signInModel.vendor.country,
             subUrb: signInModel.vendor.suburb,
             postCode: signInModel.vendor.postcode,
-            //slotDuration: ""
+            // slotDuration: signInModel.vendor.
             businessId: signInModel.vendor.businessId
           );
           Get.offAll(() => VendorIndexScreen());

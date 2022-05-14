@@ -1,3 +1,5 @@
+import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
@@ -122,6 +124,12 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.help) {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
+    } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleTime) {
+      Get.to(() => VendorScheduleTimeScreen(),
+          transition: Transition.rightToLeft);
+    } else if(vendorSettingScreenOption == VendorDrawerOption.availableTime) {
+      Get.to(() => VendorAvailableTimeScreen(),
+          transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(),

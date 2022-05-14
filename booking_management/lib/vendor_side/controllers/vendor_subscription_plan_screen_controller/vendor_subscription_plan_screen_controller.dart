@@ -19,7 +19,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
 
   getAllSubscriptionPlanFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorSubscriptionPlan;
+    String url = ApiUrl.vendorSubscriptionPlanApi;
     log("Get All Subscription Plan API URL : $url");
 
     try {

@@ -54,9 +54,14 @@ class ApiUrl {
   static const vendorOrderDetailsApi = apiMainPath + "API/InvoiceView";
 
   /// Vendor - Subscription Plan
-  static const vendorSubscriptionPlan = apiMainPath + "API/SubscriptionGetAll";
+  static const vendorSubscriptionPlanApi = apiMainPath + "API/SubscriptionGetAll";
 
+  /// vendor - Available Time
+  static const vendorAvailableTimeApi = apiMainPath + "API/AvailableTimingsGetALL";
+  static const vendorSetAvailableTimeApi = apiMainPath + "API/AvailableTimings";
 
+  /// Vendor - Schedule Time
+  static const vendorGetAllScheduleSlotApi = apiMainPath + "API/ScheduleTimings";
   /// Vendor - Customer
   static const vendorMyCustomerApi = apiMainPath + "API/MycustomerIndex";
 

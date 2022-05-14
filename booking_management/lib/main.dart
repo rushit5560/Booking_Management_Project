@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/app_theme.dart';
 import 'package:booking_management/common_ui/common_screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -144,6 +145,7 @@ class _MyAppState extends State<MyApp> {
       title: "Booking Management System",
       debugShowCheckedModeBanner: false,
 
+      theme: appThemeData(),
 
       home: SplashScreen(),
     );

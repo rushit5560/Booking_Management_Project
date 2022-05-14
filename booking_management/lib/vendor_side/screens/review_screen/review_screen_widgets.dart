@@ -1,13 +1,12 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/app_colors.dart';
-import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-
 import '../../controllers/review_screen_controller/review_screen_controller.dart';
 import '../../model/review_screen_model/get_all_reviews_model.dart';
+
+
 
 class ReviewListModule extends StatelessWidget {
   ReviewListModule({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class ReviewListModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: screenController.reviewList.length,
         itemBuilder: (context, i){
           ReviewWorkerList singleItem = screenController.reviewList[i];

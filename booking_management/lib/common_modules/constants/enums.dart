@@ -25,9 +25,29 @@ enum VendorDrawerOption {
    additionalSlot,
    businessDocument,
    review,
+   scheduleTime,
+   availableTime,
    invoices,
    subscription,
    help,
    changePassword,
    logout
 }
+
+enum AvailableTimeDay {
+   sundayStartTime,
+   sundayEndTime,
+   mondayStartTime,
+   mondayEndTime,
+   tuesdayStartTime,
+   tuesdayEndTime,
+   wednesdayStartTime,
+   wednesdayEndTime,
+   thursdayStartTime,
+   thursdayEndTime,
+   fridayStartTime,
+   fridayEndTime,
+   saturdayStartTime,
+   saturdayEndTime
+}
+

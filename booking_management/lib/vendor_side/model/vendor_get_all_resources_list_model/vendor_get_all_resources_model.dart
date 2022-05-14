@@ -34,42 +34,42 @@ class GetAllResorcesListModel {
 
 class WorkerList1 {
   WorkerList1({
-    required this.id,
-    required this.resourceName,
-    required this.details,
-    required this.image,
-    required this.isActive,
-    required this.orderBy,
-    required this.createdBy,
-    required this.createdOn,
-    required this.modifiedBy,
-    required this.modifiedOn,
-    required this.vendorBooking,
-    required this.vendorId,
-    required this.price,
-    required this.dDate,
-    required this.duration,
-    required this.avilableTime,
-    required this.bookingAvailability,
+    this.id,
+    this.resourceName,
+    this.details,
+    this.image,
+    this.isActive,
+    this.orderBy,
+    this.createdBy,
+    this.createdOn,
+    this.modifiedBy,
+    this.modifiedOn,
+    this.vendorBooking,
+    this.vendorId,
+    this.price,
+    this.dDate,
+    this.duration,
+    this.avilableTime,
+    this.bookingAvailability,
   });
 
-  int id;
-  String resourceName;
-  String details;
-  String image;
-  bool isActive;
-  String orderBy;
-  String createdBy;
-  String createdOn;
-  String modifiedBy;
-  String modifiedOn;
-  String vendorBooking;
-  int vendorId;
-  double price;
-  String dDate;
-  String duration;
-  String avilableTime;
-  String bookingAvailability;
+  int? id;
+  String? resourceName;
+  String? details;
+  String? image;
+  bool? isActive;
+  String? orderBy;
+  String? createdBy;
+  String? createdOn;
+  String? modifiedBy;
+  String? modifiedOn;
+  String? vendorBooking;
+  int? vendorId;
+  double? price;
+  String? dDate;
+  String? duration;
+  String? avilableTime;
+  String? bookingAvailability;
 
   factory WorkerList1.fromJson(Map<String, dynamic> json) => WorkerList1(
     id: json["id"] ?? 0,

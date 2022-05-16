@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
+import '../../model/home_screen_models/get_all_appointment_list_model.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
+import 'upcoming_appointment_details_screen/upcoming_appointment_details_screen.dart';
 
-HomeScreenController screenController = Get.find<HomeScreenController>();
+
 
 class HeaderModule extends StatelessWidget {
   const HeaderModule({Key? key}) : super(key: key);
@@ -62,8 +64,10 @@ class HeaderModule extends StatelessWidget {
   }
 }
 
+/// Search Field (Category & Name)
 class SearchCategoryField extends StatelessWidget {
-  const SearchCategoryField({Key? key}) : super(key: key);
+  SearchCategoryField({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +98,11 @@ class SearchCategoryField extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           suffixIcon: GestureDetector(
             onTap: () {
-              Get.to(() => UserSearchResultsScreen());
+              // if(screenController.categoryFieldController.text.isNotEmpty) {
+                Get.to(() => UserSearchResultsScreen(),
+                  arguments: screenController.categoryFieldController.text,
+                );
+              // }
             },
             child: const Icon(
                 Icons.search_rounded,
@@ -108,7 +116,8 @@ class SearchCategoryField extends StatelessWidget {
 }
 
 class SearchLocationField extends StatelessWidget {
-  const SearchLocationField({Key? key}) : super(key: key);
+  SearchLocationField({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +160,8 @@ class SearchLocationField extends StatelessWidget {
 }
 
 class UpcomingAppointmentModule extends StatelessWidget {
-  const UpcomingAppointmentModule({Key? key}) : super(key: key);
+  UpcomingAppointmentModule({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -168,89 +178,102 @@ class UpcomingAppointmentModule extends StatelessWidget {
         const SizedBox(height: 15),
 
         ListView.builder(
-          itemCount: 2,
+          itemCount: screenController.allUpcomingAppointmentList.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 3,
-                    blurRadius: 5,
-                    color: Colors.grey.shade300,
-                    blurStyle: BlurStyle.outer,
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 55,
-                            width: 55,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: const DecorationImage(
-                                image: AssetImage(AppImages.vendorImg),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Lorem Ipsum',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Lorem Ipsum dummy Text for Printing asasa asa ',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(AppImages.rightArrowImg),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
+            UpcomingAppointmentDatum singleItem = screenController.allUpcomingAppointmentList[i];
+            return _upcomingAppointmentListTile(singleItem);
           },
         ),
       ],
     );
   }
+
+  Widget _upcomingAppointmentListTile(UpcomingAppointmentDatum singleItem) {
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  /*Container(
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: const DecorationImage(
+                        image: AssetImage(AppImages.vendorImg),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),*/
+                  // const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          singleItem.bookingFor,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          singleItem.startDateTime,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await screenController.getUpcomingAppointmentDetailsFunction(id: singleItem.id);
+                Get.to(()=> UpcomingAppointmentDetailsScreen(), transition: Transition.zoom);
+              },
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.rightArrowImg),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
 
 class FavouriteDoctorsModule extends StatelessWidget {

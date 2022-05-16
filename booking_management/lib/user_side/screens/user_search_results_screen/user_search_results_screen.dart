@@ -18,8 +18,8 @@ class UserSearchResultsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CommonAppBarModule(title: "Search Results", appBarOption: AppBarOption.singleBackButtonOption),
-            SizedBox(height: 20,),
+            const CommonAppBarModule(title: "Search Results", appBarOption: AppBarOption.singleBackButtonOption),
+            const SizedBox(height: 20),
 
             Expanded(
               child: SingleChildScrollView(
@@ -28,11 +28,11 @@ class UserSearchResultsScreen extends StatelessWidget {
                   children: const [
                     SearchCategoryTextField(),
                     SizedBox(height: 20,),
-                    SearchLocationTextField(),
-                    SizedBox(height: 30,),
+                    // SearchLocationTextField(),
+                    // SizedBox(height: 30,),
                     PopularSearchAndDistance(),
                     SizedBox(height: 30,),
-                    BusinessListModule()
+                    BusinessListModule(),
                   ],
                 ).commonAllSidePadding(20),
               ),

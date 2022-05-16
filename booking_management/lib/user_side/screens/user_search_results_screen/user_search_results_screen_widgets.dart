@@ -26,7 +26,7 @@ class SearchCategoryTextField extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        //controller: screenController.categoryFieldController,
+        controller: screenController.categoryFieldController,
         cursorColor: Colors.grey,
         decoration: InputDecoration(
           hintText: 'Search category or Name',
@@ -50,7 +50,7 @@ class SearchCategoryTextField extends StatelessWidget {
   }
 }
 
-class SearchLocationTextField extends StatelessWidget {
+/*class SearchLocationTextField extends StatelessWidget {
   const SearchLocationTextField({Key? key}) : super(key: key);
 
   @override
@@ -91,7 +91,7 @@ class SearchLocationTextField extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 class PopularSearchAndDistance extends StatefulWidget {
   const PopularSearchAndDistance({Key? key}) : super(key: key);
@@ -99,18 +99,45 @@ class PopularSearchAndDistance extends StatefulWidget {
   @override
   State<PopularSearchAndDistance> createState() => _PopularSearchAndDistanceState();
 }
-
 class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // Expanded(
+        //   child: Container(
+        //     height: 45,
+        //     //padding: EdgeInsets.all(3),
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(10),
+        //       boxShadow: [
+        //         BoxShadow(
+        //           color: AppColors.colorLightGrey.withOpacity(0.5),
+        //           blurRadius: 5,
+        //           //spreadRadius: 5,
+        //           blurStyle: BlurStyle.outer,
+        //         ),
+        //       ],
+        //       //border: Border.all(color: AppColors.colorLightGrey)
+        //     ),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         SizedBox(width: 17,),
+        //         Expanded(child: Text("Popular Search", style: TextStyle(fontSize: 12),)),
+        //
+        //       ],
+        //     ),
+        //   ),
+        // ),
+
+        const SizedBox(width: 10),
         Expanded(
-          child: Container(
+          child:Container(
+            padding: const EdgeInsets.only(right: 3),
             height: 45,
-            //padding: EdgeInsets.all(3),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.colorLightGrey.withOpacity(0.5),
@@ -119,19 +146,51 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              //border: Border.all(color: AppColors.colorLightGrey)
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(width: 17,),
-                Expanded(child: Text("Popular Search", style: TextStyle(fontSize: 12),)),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                  canvasColor: Colors.grey.shade100,
+                  // background color for the dropdown items
+                  buttonTheme: ButtonTheme.of(context).copyWith(
+                    alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
+                  )),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
+                  isExpanded: true,
+                  focusColor: Colors.white,
+                  value: screenController.ratting,
+                  //elevation: 5,
+                  style: TextStyle(color: AppColors.colorLightGrey),
+                  iconEnabledColor: Colors.black,
+                  items: <String>[
+                    '1',
+                    '2',
+                    '3',
+                    '4','5'
+                  ].
+                  map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: AppColors.colorLightGrey),
+                      ),
+                    );
+                  }).toList(),
+                  hint: const Text("Ratting", style: TextStyle(color: Colors.black, fontSize: 11),),
+                  onChanged: (newValue) {
+                    setState(() {
+                      screenController.ratting = newValue!;
+                    });
 
-              ],
+                  },
+                ),
+              ),
             ),
           ),
         ),
-        SizedBox(width: 10,),
+        const SizedBox(width: 10),
         Expanded(
           child:Container(
                 padding: const EdgeInsets.only(right: 3),
@@ -190,7 +249,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                 ),
               ),
           ),
-        SizedBox(width: 10,),
+        const SizedBox(width: 10),
         Expanded(
             child:Container(
                   padding: const EdgeInsets.only(right: 3),
@@ -237,7 +296,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                             ),
                           );
                         }).toList(),
-                        hint: Text("Date", style: TextStyle(color: Colors.black, fontSize: 11),),
+                        hint: const Text("Date", style: TextStyle(color: Colors.black, fontSize: 11),),
                         onChanged: (newValue) {
                           setState(() {
                             screenController.date = newValue!;
@@ -249,65 +308,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                   ),
                 ),
         ),
-        const SizedBox(width: 10,),
-        Expanded(
-            child:Container(
-                  padding: const EdgeInsets.only(right: 3),
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.colorLightGrey.withOpacity(0.5),
-                        blurRadius: 5,
-                        //spreadRadius: 5,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                  ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                        canvasColor: Colors.grey.shade100,
-                        // background color for the dropdown items
-                        buttonTheme: ButtonTheme.of(context).copyWith(
-                          alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
-                        )),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
-                        isExpanded: true,
-                        focusColor: Colors.white,
-                        value: screenController.ratting,
-                        //elevation: 5,
-                        style: TextStyle(color: AppColors.colorLightGrey),
-                        iconEnabledColor: Colors.black,
-                        items: <String>[
-                          '1',
-                          '2',
-                          '3',
-                          '4','5'
-                        ].
-                        map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(color: AppColors.colorLightGrey),
-                            ),
-                          );
-                        }).toList(),
-                        hint: Text("Ratting", style: TextStyle(color: Colors.black, fontSize: 11),),
-                        onChanged: (newValue) {
-                          setState(() {
-                            screenController.ratting = newValue!;
-                          });
 
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-        ),
       ],
     );
   }
@@ -441,6 +442,7 @@ class BusinessListModule extends StatelessWidget {
                                             allowHalfRating: true,
                                             itemCount: 5,
                                             itemSize: 20,
+                                            ignoreGestures: true,
                                             //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                                             itemBuilder: (context, _) => const Icon(
                                               Icons.star,

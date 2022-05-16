@@ -1,16 +1,16 @@
 import 'dart:developer';
-
-import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../controllers/vendor_schedule_time_screen_controller/vendor_schedule_time_screen_controller.dart';
 import '../../model/vendor_get_all_resources_list_model/vendor_get_all_resources_model.dart';
+import '../../model/vendor_schedule_time_screen_model/get_all_resource_by_vendor_id_model.dart';
+
+
 
 class ResourcesDropDownModule extends StatelessWidget {
   ResourcesDropDownModule({Key? key}) : super(key: key);
@@ -245,20 +245,6 @@ class ScheduleListModule extends StatelessWidget {
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, i) {
-
-            // String time = screenController.allScheduleTimeList[i];
-            // // log("time : $time");
-            // String timeMinute = time.substring(2, time.length-3);
-            // // log("timeMinute$timeMinute");
-            //
-            // String timeHour = time.substring(0, time.length-6);
-            // // log("timeHour$timeHour");
-            //
-            // String fMinute = timeMinute + UserDetails.slotDuration;
-            // log("fMinute$fMinute");
-
-
-
             return /*screenController.allScheduleTimeList.length == i - 1
                 ? Row(
                     children: [
@@ -280,26 +266,31 @@ class ScheduleListModule extends StatelessWidget {
                       ),
                     ],
                   )
-                : */Row(
-                    children: [
-                      Expanded(
-                        child: Checkbox(
-                          value: true,
-                          onChanged: (bool? value) {},
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          screenController.allScheduleTimeList[i],
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          screenController.allScheduleTimeList[i + 1],
-                        ),
-                      ),
-                    ],
-                  );
+                : */
+                Row(
+              children: [
+                Expanded(
+                  child: Checkbox(
+                    value: screenController.checkScheduleTimeList[i],
+                    onChanged: (bool? value) {
+                      screenController.checkScheduleTimeList[i] =
+                          !screenController.checkScheduleTimeList[i];
+                      screenController.loadUI();
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    screenController.allScheduleTimeList[i],
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    screenController.allScheduleTimeList[i + 1],
+                  ),
+                ),
+              ],
+            );
           },
         ),
       ],
@@ -356,11 +347,7 @@ class SaveButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // if(screenController.selectedDate.value == "") {
-        //   Fluttertoast.showToast(msg: "Please select date!");
-        // } else {
-        //   await screenController.getAllSLotsFunction();
-        // }
+        await screenController.setSelectedScheduleTimeFunction();
       },
       child: Container(
         decoration:
@@ -384,5 +371,119 @@ class SaveButtonModule extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ResourcesListModule extends StatelessWidget {
+  ResourcesListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: screenController.getAllResourcesList.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i) {
+        AllResourcesWorkerList singleItem = screenController.getAllResourcesList[i];
+        return _resourcesListTile(singleItem);
+      },
+    );
+  }
+
+  Widget _resourcesListTile(AllResourcesWorkerList singleItem) {
+    String imgUrl = ApiUrl.apiMainPath + singleItem.image;
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(imgUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      singleItem.resourceName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      singleItem.details,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "\$${singleItem.price}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          singleItem.timingList.isEmpty
+          ? Container()
+          : GridView.builder(
+            itemCount: singleItem.timingList.length,
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              childAspectRatio: 2
+            ),
+            itemBuilder: (context, i) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Colors.grey.shade300,
+                      blurStyle: BlurStyle.outer,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  singleItem.timingList[i],
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
+              ).commonAllSidePadding(3);
+            },
+          ),
+        ],
+      ).commonAllSidePadding(8),
+    ).commonSymmetricPadding(vertical: 8);
   }
 }

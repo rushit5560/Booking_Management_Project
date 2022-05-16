@@ -27,25 +27,29 @@ class VendorScheduleTimeScreen extends StatelessWidget {
                       appBarOption: AppBarOption.singleBackButtonOption,
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          ResourcesDropDownModule(),
-                          const SizedBox(height: 10),
-                          TableModule(),
-                          vendorScheduleTimeScreenController.isCalenderShow.value
-                              ? ResourcesSelectDateModule()
-                              : Container(),
-                          const SizedBox(height: 20),
-                          SubmitButtonModule(),
-                          const SizedBox(height: 20),
-                          vendorScheduleTimeScreenController.allScheduleTimeList.isEmpty
-                              ? Container()
-                              : ScheduleListModule(),
-                          vendorScheduleTimeScreenController.allScheduleTimeList.isEmpty
-                              ? Container()
-                              : SaveButtonModule(),
-                        ],
-                      ).commonAllSidePadding(10),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ResourcesDropDownModule(),
+                            const SizedBox(height: 10),
+                            TableModule(),
+                            vendorScheduleTimeScreenController.isCalenderShow.value
+                                ? ResourcesSelectDateModule()
+                                : Container(),
+                            const SizedBox(height: 20),
+                            SubmitButtonModule(),
+                            const SizedBox(height: 20),
+                            vendorScheduleTimeScreenController.allScheduleTimeList.isEmpty
+                                ? Container()
+                                : ScheduleListModule(),
+                            vendorScheduleTimeScreenController.allScheduleTimeList.isEmpty
+                                ? Container()
+                                : SaveButtonModule(),
+                            const SizedBox(height: 20),
+                            ResourcesListModule(),
+                          ],
+                        ).commonAllSidePadding(10),
+                      ),
                     ),
                   ],
                 ),

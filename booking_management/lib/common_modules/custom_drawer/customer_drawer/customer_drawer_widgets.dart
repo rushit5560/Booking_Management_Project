@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/booking_history_screen/booking_history_screen.dart';
+import '../../../user_side/screens/customer_order_list_screen/customer_order_list_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import '../../../user_side/screens/user_profile_screen/user_profile_screen.dart';
@@ -78,7 +79,11 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => UserProfileScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == CustomerDrawerOption.chat) {
       Get.to(() => const UserChatListScreen(), transition: Transition.zoom);
-    } else if (userSettingScreenOption == CustomerDrawerOption.bookingHistory) {
+    }
+    else if (userSettingScreenOption == CustomerDrawerOption.orderList) {
+      Get.to(() => CustomerOrderListScreen(), transition: Transition.zoom);
+    }
+    else if (userSettingScreenOption == CustomerDrawerOption.bookingHistory) {
       Get.to(() => BookingHistoryScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == CustomerDrawerOption.payment) {
     } else if (userSettingScreenOption == CustomerDrawerOption.help) {

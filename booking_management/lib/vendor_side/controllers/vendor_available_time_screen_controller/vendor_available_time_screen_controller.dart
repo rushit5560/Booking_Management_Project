@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
-
-import '../../model/vendor_available_time_screen_models/day_add_model.dart';
 import '../../model/vendor_available_time_screen_models/get_all_vendor_available_time_model.dart';
 import '../../model/vendor_available_time_screen_models/set_vendor_available_time_model.dart';
 
@@ -177,35 +175,26 @@ class VendorAvailableTimeScreenController extends GetxController {
 
   setVendorAvailableTimeFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorSetAvailableTimeApi;
+    String url = "http://5.189.147.159:9600/API/AvailableTimings"/*ApiUrl.vendorSetAvailableTimeApi*/;
     log("Set Vendor Avail Time API URL : $url");
     
     try {
 
-      // Map<String, dynamic> singleData = {
-      //   "Day": "Sunday",
-      //   "StartTime": sundayStartTime.value,
-      //   "EndTime": sundayEndTime.value
-      // };
       List trueList = [];
 
-      // if(isSundayOn.value) {
-      //   DayAddModel data1 = DayAddModel(day: "Sunday", startTime: sundayStartTime.value, endTime: sundayEndTime.value);
-      //   trueList.add(data1);
-      // }
 
       // if(isSundayOn.value) {
       //   trueList.add({
       //     "Day": "Sunday",
-      //     "StartTime": sundayStartTime.value,
-      //     "EndTime": sundayEndTime.value
+      //     "StartTime": "${sundayStartTime.value}",
+      //     "EndTime": "${sundayEndTime.value}"
       //   });
       // }
       // if(isMondayOn.value) {
       //   trueList.add({
       //     "Day": "Monday",
-      //     "StartTime": mondayStartTime.value,
-      //     "EndTime": mondayEndTime.value
+      //     "StartTime": "${mondayStartTime.value}",
+      //     "EndTime": "${mondayEndTime.value}"
       //   });
       // }
       // if(isTuesdayOn.value) {
@@ -244,10 +233,10 @@ class VendorAvailableTimeScreenController extends GetxController {
       //   }));
       // }
 
-      // Map<String, dynamic> data = {
-      //   "VendorAvailabilityList" : trueList,
-      //   "VendorId" : UserDetails.tableWiseId
-      // };
+      Map<String, dynamic> newData = {
+        "VendorAvailabilityList" : trueList,
+        "VendorId" : UserDetails.tableWiseId
+      };
 
       Map<String, dynamic> data = {
         "VendorAvailabilityList" : [
@@ -260,12 +249,37 @@ class VendorAvailableTimeScreenController extends GetxController {
             "Day" : "Monday",
             "StartTime" : "09:00",
             "EndTime" : "10:00"
+          },
+          {
+            "Day" : "Tuesday",
+            "StartTime" : "09:00",
+            "EndTime" : "10:00"
+          },
+          {
+            "Day" : "Wednesday",
+            "StartTime" : "09:00",
+            "EndTime" : "10:00"
+          },
+          {
+            "Day" : "Thursday",
+            "StartTime" : "09:00",
+            "EndTime" : "10:00"
+          },
+          {
+            "Day" : "Friday",
+            "StartTime" : "09:00",
+            "EndTime" : "10:00"
+          },
+          {
+            "Day" : "Saturday",
+            "StartTime" : "09:00",
+            "EndTime" : "10:00"
           }
         ],
         "VendorId" : 46
       };
       log("Data : $data");
-
+      log("Header : ${apiHeader.headers}");
 
       http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: json.encode(data));
       log("Set Data Response : ${response.statusCode}");

@@ -4,21 +4,31 @@ class ApiUrl {
   static const signInApi = apiMainPath + "API/Login";
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";
 
-  /// User API
+  /// Customer API
   static const userSignUpApi = apiMainPath + "API/CustomerRegister";
   static const userBusinessListApi = apiMainPath + "Searching/APIBusinesslist";
   static const userProfileApi = apiMainPath + "API/CustomerProfile";
 
 
   static const userBusinessDetailsApi = apiMainPath + "Searching/APIBusinessDetails";
-  static const userBookingHistoryApi = apiMainPath + "Booking/APIBookingHistory";
+  static const userBookingHistoryListApi = apiMainPath + "API/CustomerOrderListIndex";
   static const getReviewApi = apiMainPath + "Reviews/APIShowReview";
   static const userChangePasswordApi = apiMainPath + "API/APIChangePassword";
   static const userAppointmentListApi = apiMainPath + "CustomerDashboard/APICustomerAppointmentlist";
   static const userAddReviewApi = apiMainPath + "Reviews/APIAddUpdateReview";
 
-  /// Customer - Category
+  /// Customer - Home Screen API
   static const getAllCategoryApi = apiMainPath + "API/APIBusinesstypelist";
+  static const getAllUpcomingAppointment = apiMainPath + "API/customerdashboard";
+  static const searchVendorApi = apiMainPath + "";
+  static const upcomingAppointmentDetailsApi = apiMainPath + "API/customerdashboardView";
+
+  /// Cst - Search Filter API
+  static const searchFilterApi = apiMainPath + "API/Searchbussinesstype";
+
+
+  /// Cst - Order List
+  static const getAllCustomerOrderList = apiMainPath + "API/customerorderList";
 
   /// Vendor API
   static const vendorSignUpApi = apiMainPath + "API/VendorRegister";
@@ -62,6 +72,10 @@ class ApiUrl {
 
   /// Vendor - Schedule Time
   static const vendorGetAllScheduleSlotApi = apiMainPath + "API/ScheduleTimings";
+  static const vendorSetScheduleTimeApi = apiMainPath + "API/ScheduleTimingsUpsertslot";
+  static const getAllResourcesByVendorIdApi = apiMainPath + "API/GetALLResourceByVendorId";
+  static const getResourcesTimeSlotApi  = apiMainPath + "API/BookingResourceSchedule";
+
   /// Vendor - Customer
   static const vendorMyCustomerApi = apiMainPath + "API/MycustomerIndex";
 

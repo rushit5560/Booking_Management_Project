@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -9,7 +10,8 @@ import 'package:get/get.dart';
 class BookingHistoryScreen extends StatelessWidget {
   BookingHistoryScreen({Key? key}) : super(key: key);
 
-  final userBookingHistoryScreenController = Get.put(UserBookingHistoryScreenController());
+  final userBookingHistoryScreenController =
+      Get.put(UserBookingHistoryScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +20,18 @@ class BookingHistoryScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CommonAppBarModule(title: "Booking History", appBarOption: AppBarOption.singleBackButtonOption),
-
-            Obx(()=>
-            userBookingHistoryScreenController.isLoading.value
-                ? const Center(child: CircularProgressIndicator()) :
-              Expanded(
-                child: const BookingHistoryList().commonAllSidePadding(20),
+            const CommonAppBarModule(
+                title: "Booking History",
+                appBarOption: AppBarOption.singleBackButtonOption),
+            Expanded(
+              child: Obx(
+                () => userBookingHistoryScreenController.isLoading.value
+                    ? const CustomCircularLoaderModule()
+                    : userBookingHistoryScreenController.historyList.isEmpty
+                        ? const Center(child: Text("No Data Available"))
+                        : const BookingHistoryList().commonAllSidePadding(20),
               ),
-            )
+            ),
           ],
         ),
       ),

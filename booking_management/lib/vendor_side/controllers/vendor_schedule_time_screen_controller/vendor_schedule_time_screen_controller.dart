@@ -8,7 +8,10 @@ import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/user_details.dart';
 import '../../model/vendor_get_all_resources_list_model/vendor_get_all_resources_model.dart';
+import '../../model/vendor_schedule_time_screen_model/get_all_resource_by_vendor_id_model.dart';
 import '../../model/vendor_schedule_time_screen_model/get_all_schedule_time_model.dart';
+import '../../model/vendor_schedule_time_screen_model/get_all_time_list_by_resource_id_model.dart';
+import '../../model/vendor_schedule_time_screen_model/set_schedule_time_model.dart';
 
 
 class VendorScheduleTimeScreenController extends GetxController {
@@ -24,6 +27,9 @@ class VendorScheduleTimeScreenController extends GetxController {
   RxString selectedDate = "".obs;
 
   List<String> allScheduleTimeList = [];
+  List<bool> checkScheduleTimeList = [];
+
+  List<AllResourcesWorkerList> getAllResourcesList = [];
 
 
 
@@ -51,6 +57,10 @@ class VendorScheduleTimeScreenController extends GetxController {
         getResourceList = getAllResorcesListModelModel.workerList;
         selectResourceValue = getResourceList[0];
         log('getResourceList: $getResourceList');
+
+        // for(int i = 0; i < getResourceList.length; i++) {
+        //   await getResourcesTimeListFunction(resId: getResourceList[i].id.toString());
+        // }
       } else {
         log('SignIn False False');
         Get.snackbar("${getAllResorcesListModelModel.success}", '');
@@ -58,7 +68,8 @@ class VendorScheduleTimeScreenController extends GetxController {
     } catch (e) {
       log('SignIn Error : $e');
     } finally {
-      isLoading(false);
+      // isLoading(false);
+      await getAllResourcesByIdFunction();
     }
   }
 
@@ -95,6 +106,10 @@ class VendorScheduleTimeScreenController extends GetxController {
           allScheduleTimeList = getAllScheduleTimeModel.workerList;
           log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
 
+          for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
+            checkScheduleTimeList.add(true);
+          }
+
         } else {
           log("getAllSLotsFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
@@ -105,6 +120,133 @@ class VendorScheduleTimeScreenController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  /// Set Selected Schedule Timing
+  setSelectedScheduleTimeFunction() async {
+    isLoading(true);
+    String url = ApiUrl.vendorSetScheduleTimeApi;
+    log("Set Schedule Time API URL : $url");
+
+    try {
+      List listData = [];
+
+      for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
+        if(checkScheduleTimeList[i] == true) {
+
+          Map<String, dynamic> singleData = {
+            "ResourceId" : selectResourceValue.id,
+            "ScheduleDate" : selectedDate.value,
+            "start" : allScheduleTimeList[i],
+            "end" : allScheduleTimeList[i+1],
+          };
+
+          listData.add(singleData);
+        }
+      }
+
+      log("listData : $listData");
+
+
+      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: jsonEncode(listData));
+      log("response : ${response.statusCode}");
+      log("response : ${response.body}");
+
+      SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(response.body));
+      isSuccessStatus = setScheduleTimeModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+      } else {
+        log("setSelectedScheduleTimeFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+
+    } catch(e) {
+      log("setSelectedScheduleTimeFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Get Resources Time
+  getResourcesTimeListFunction({required String resId}) async {
+    DateTime dateTime = DateTime.now();
+    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
+    List<String> timeList = [];
+    isLoading(true);
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${dateModule}T$timeModule&Duration&Time";
+    log("Get Resources Time List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Resource Time List : ${response.body}");
+
+      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
+
+      if(isSuccessStatus.value) {
+
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
+          String t = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList.length-3);
+          timeList.add(t);
+        }
+
+        log("Time List : $timeList");
+
+      } else {
+        log("getResourcesTimeListFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+    } catch(e) {
+      log("getResourcesTimeListFunction Error ::: $e");
+    } finally {
+      isLoading(true);
+    }
+
+    return timeList;
+  }
+
+
+  /// Get All Resources By Id
+  getAllResourcesByIdFunction() async {
+    DateTime dateTime = DateTime.now();
+    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
+    isLoading(true);
+    String url = ApiUrl.getAllResourcesByVendorIdApi + "?Id=${UserDetails.tableWiseId}&dDate=${dateModule}T$timeModule&Duration&Time";
+    log("Get All Resources By Id API URL ::: $url");
+
+
+   try {
+     http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+     log("All Resources API Response : ${response.body}");
+
+     GetAllResourceByVendorIdModel getAllResourceByVendorIdModel = GetAllResourceByVendorIdModel.fromJson(json.decode(response.body));
+     isSuccessStatus = getAllResourceByVendorIdModel.success.obs;
+
+     if(isSuccessStatus.value) {
+       getAllResourcesList.clear();
+
+       getAllResourcesList = getAllResourceByVendorIdModel.workerList;
+       log("getAllResourcesList : ${getAllResourcesList.length}");
+
+       for(int i = 0; i < getAllResourcesList.length; i++) {
+         getAllResourcesList[i].timingList = await getResourcesTimeListFunction(resId: getResourceList[i].id.toString());
+       }
+
+     } else {
+       log("getAllResourcesByIdFunction Else Else");
+       Fluttertoast.showToast(msg: "Something went wrong!");
+     }
+   } catch(e) {
+     log("getAllResourcesByIdFunction Error ::: $e");
+   } finally {
+     isLoading(false);
+   }
   }
 
   @override

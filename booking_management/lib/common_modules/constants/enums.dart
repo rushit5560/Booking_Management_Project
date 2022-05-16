@@ -7,6 +7,7 @@ enum AppBarOption {
 enum CustomerDrawerOption {
    profile,
    chat,
+   orderList,
    bookingHistory,
    payment,
    help,

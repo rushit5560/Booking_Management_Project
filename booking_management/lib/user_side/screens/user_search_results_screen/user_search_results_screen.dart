@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -14,31 +15,37 @@ class UserSearchResultsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CommonAppBarModule(title: "Search Results", appBarOption: AppBarOption.singleBackButtonOption),
-            const SizedBox(height: 20),
+      body: Obx(
+        ()=> userSearchResultsScreenController.isLoading.value
+        ? const CustomCircularLoaderModule()
+        : SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CommonAppBarModule(title: "Search Results", appBarOption: AppBarOption.singleBackButtonOption),
+              const SizedBox(height: 20),
 
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    SearchCategoryTextField(),
-                    SizedBox(height: 20,),
-                    // SearchLocationTextField(),
-                    // SizedBox(height: 30,),
-                    PopularSearchAndDistance(),
-                    SizedBox(height: 30,),
-                    BusinessListModule(),
-                  ],
-                ).commonAllSidePadding(20),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SearchCategoryTextField(),
+                      const SizedBox(height: 20),
+                      // SearchLocationTextField(),
+                      // SizedBox(height: 30,),
+                      PopularSearchAndDistance(),
+                      const SizedBox(height: 30),
+                      userSearchResultsScreenController.searchVendorList.isEmpty
+                      ? const Center(child: Text("No Data Available"))
+                      : BusinessListModule(),
+                    ],
+                  ).commonAllSidePadding(20),
+                ),
               ),
-            ),
 
-          ],
+            ],
+          ),
         ),
       ),
     );

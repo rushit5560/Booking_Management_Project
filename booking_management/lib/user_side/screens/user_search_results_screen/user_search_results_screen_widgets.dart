@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-final screenController = Get.find<UserSearchResultsScreenController>();
+import '../../../common_modules/constants/api_url.dart';
+import '../../model/user_search_results_screen_model/get_all_search_vendor_model.dart';
+
+
 
 class SearchCategoryTextField extends StatelessWidget {
-  const SearchCategoryTextField({Key? key}) : super(key: key);
+  SearchCategoryTextField({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSearchResultsScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +104,8 @@ class PopularSearchAndDistance extends StatefulWidget {
   State<PopularSearchAndDistance> createState() => _PopularSearchAndDistanceState();
 }
 class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
+  final screenController = Get.find<UserSearchResultsScreenController>();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -167,7 +173,8 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                     '1',
                     '2',
                     '3',
-                    '4','5'
+                    '4',
+                    '5',
                   ].
                   map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -179,10 +186,13 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                     );
                   }).toList(),
                   hint: const Text("Ratting", style: TextStyle(color: Colors.black, fontSize: 11),),
-                  onChanged: (newValue) {
+                  onChanged: (newValue) async {
                     setState(() {
                       screenController.ratting = newValue!;
                     });
+                    await screenController.getAllSearchVendorListRatingWiseFunction(
+                      searchText: screenController.categoryFieldController.text,
+                    );
 
                   },
                 ),
@@ -315,7 +325,8 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
 }
 
 class BusinessListModule extends StatelessWidget {
-  const BusinessListModule({Key? key}) : super(key: key);
+  BusinessListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSearchResultsScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -327,29 +338,38 @@ class BusinessListModule extends StatelessWidget {
         const SizedBox(height: 20,),
 
         ListView.builder(
-          itemCount: 6,
+          itemCount: screenController.searchVendorList.length,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index){
-              return Container(
-                margin: const EdgeInsets.only(bottom: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.colorLightGrey.withOpacity(0.5),
-                      blurRadius: 5,
-                      //spreadRadius: 5,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      /*Expanded(
+              SearchVendorDatum singleItem = screenController.searchVendorList[index];
+              return _vendorListTile(singleItem);
+            })
+      ],
+    );
+  }
+
+  Widget _vendorListTile(SearchVendorDatum singleItem) {
+    String imgUrl = ApiUrl.apiMainPath + singleItem.businessLogo;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey.withOpacity(0.5),
+            blurRadius: 5,
+            //spreadRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            /*Expanded(
                         flex: 4,
                         child: Row(
                           children: [
@@ -409,114 +429,123 @@ class BusinessListModule extends StatelessWidget {
                         flex: 1,
                         child: Image.asset(AppImages.rightArrowImg),
                       )*/
+            Expanded(
+              flex: 2,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(imgUrl),
+              ),
+            ),
+            const SizedBox(width: 7,),
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Expanded(
-                        flex: 2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(AppImages.vendorImg),
-                        ),
-                      ),
-                      const SizedBox(width: 7,),
-                      Expanded(
-                        flex: 5,
+                        flex:3,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              singleItem.businessName,
+                              style: const TextStyle(fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(
-                                  flex:3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Lorem Ipsum", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
-                                      const SizedBox(height: 3,),
-                                      Row(
-                                        children: [
-                                          const Text("4.5", style: TextStyle(fontSize: 12),),
-                                          const SizedBox(width: 5,),
-                                          RatingBar.builder(
-                                            initialRating: 5,
-                                            minRating: 1,
-                                            direction: Axis.horizontal,
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemSize: 20,
-                                            ignoreGestures: true,
-                                            //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                            itemBuilder: (context, _) => const Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                            ),
-                                            onRatingUpdate: (rating) {
-                                              // if (kDebugMode) {
-                                              //   print(rating);
-                                              // }
-                                            },
-                                          )
-
-                                        ],
-                                      ),
-                                      const SizedBox(height: 3,),
-                                      const Text("Lorem Ipsum is simply dummy text of the printing", maxLines: 1),
-                                      const SizedBox(height: 3,),
-                                      const Text("Location - 1156, Lorem Soc. simply dummy text of the printing", maxLines: 1,
-                                        style: TextStyle(fontWeight: FontWeight.w500),),
-
-
-                                    ],
-                                  ),
+                                Text(
+                                  singleItem.rating.toString(),
+                                  style: const TextStyle(fontSize: 12),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Image.asset(AppImages.rightArrowImg),
+                                const SizedBox(width: 5),
+                                RatingBar.builder(
+                                  initialRating: double.parse(singleItem.rating.toString()),
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemSize: 20,
+                                  ignoreGestures: true,
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (rating) {},
                                 )
+
                               ],
                             ),
+                            const SizedBox(height: 3),
+                            /*Text(
+                                "Lorem Ipsum is simply dummy text of the printing",
+                                maxLines: 1,
+                            ),*/
+                            // const SizedBox(height: 3),
+                            Text("Location - ${singleItem.address}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                              ),
+                            ),
 
-                            Row(
-                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 8,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex:1,
-                                        child: Container(
-                                          height:8, width: 8,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5),
-                                            color: Colors.green
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5,),
-                                      const Expanded(
-                                        flex: 20,
-                                          child: Text("Open - Available Time 08.30 AM",maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),))
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Text("0.5 km away", style: TextStyle(
-                                      fontSize: 12
-                                  ),),
-                                )
-                              ],
-                            )
+
                           ],
                         ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Image.asset(AppImages.rightArrowImg),
                       )
                     ],
                   ),
-                ),
-              );
-            })
-      ],
+
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex:1,
+                              child: Container(
+                                height:8, width: 8,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.green
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            const Expanded(
+                                flex: 20,
+                                child: Text("Open - Available Time 08.30 AM",maxLines: 1, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),))
+                          ],
+                        ),
+                      ),
+                      const Expanded(
+                        flex: 2,
+                        child: Text("0.5 km away", style: TextStyle(
+                            fontSize: 12
+                        ),),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
+
 }
 
 

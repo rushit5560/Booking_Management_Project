@@ -20,7 +20,7 @@ class ApiUrl {
   /// Customer - Home Screen API
   static const getAllCategoryApi = apiMainPath + "API/APIBusinesstypelist";
   static const getAllUpcomingAppointment = apiMainPath + "API/customerdashboard";
-  static const searchVendorApi = apiMainPath + "";
+  static const searchVendorApi = apiMainPath + "API/Searchbussinesstype";
   static const upcomingAppointmentDetailsApi = apiMainPath + "API/customerdashboardView";
 
   /// Cst - Search Filter API

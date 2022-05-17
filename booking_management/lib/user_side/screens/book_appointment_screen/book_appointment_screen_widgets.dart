@@ -1,117 +1,317 @@
+import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/user_checkout_screen/user_checkout_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/app_colors.dart';
-import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
+import '../../model/book_appointment_screen_model/get_booking_resources_model.dart';
+import '../../model/book_appointment_screen_model/get_booking_service_model.dart';
 
-final screenController = Get.find<BookAppointmentScreenController>();
 
-/*class SelectDateModule extends StatelessWidget {
-  const SelectDateModule({Key? key}) : super(key: key);
+/// Vendor Details Module
+class VendorDetailsModule extends StatelessWidget {
+  VendorDetailsModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    String imgUrl = screenController.bookVendorDetails!.vendor.categories.image;
+    return Row(
+      children: [
+        Expanded(
+          flex: 35,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imgUrl),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 65,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  screenController.bookVendorDetails!.vendor.businessName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              // const SizedBox(height: 5),
+
+              RatingBar.builder(
+                initialRating: double.parse(screenController.bookVendorDetails!.ratting.toString()),
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 20,
+                ignoreGestures: true,
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {},
+              ),
+
+              // const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "${screenController.bookVendorDetails!.vendor.state}, ",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Text(
+                      screenController.bookVendorDetails!.vendor.country,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Vendor Booking Service
+class BookingServicesListModule extends StatelessWidget {
+  BookingServicesListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Select Date", style: TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold
-        ),),
-        const SizedBox(height: 10,),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
+        const Text(
+          "Select Services",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 7, right: 7),
-            child: Row(
-              children: [
-                GestureDetector(
-                    onTap: () {screenController.selectDatePreviousClick(pageController: screenController.selectDatePageController);},
-                    child:  const LeftArrowButtonModule()),
-                const SizedBox(width: 10,),
-                Expanded(
-                  child: SizedBox(
-                    height: 100,
-                    child: PageView.builder(
-                      padEnds: false,
-                      controller: screenController.selectDatePageController,
-                      onPageChanged: screenController.selectedPageIndex,
-                      itemCount: screenController.dateList.length,
-                      itemBuilder: (context, index) {
-                        //int i =1;
-                        return Obx(()=>
-                          GestureDetector(
-                            onTap: (){
-                              screenController.selectedDateIndex.value = index;
-                            },
-                            child: Column(
-                              //crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Mar", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
-                                const SizedBox(height: 3,),
-                                Text(index.toString(), style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
-                                const SizedBox(height: 3,),
-                                Text("Fri", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),)
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10,),
-                GestureDetector(
-                    onTap: () {screenController.selectDateNextClick(pageController: screenController.selectDatePageController);},
-                    child:  const RightArrowButtonModule()),
-              ],
-            ),
-          ),
-        )
+        ),
+
+        ListView.builder(
+          itemCount: screenController.allServicesList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, i) {
+            BookServiceWorkerList singleItem = screenController.allServicesList[i];
+            return _bookingServiceListTile(singleItem);
+          },
+        ),
       ],
     );
   }
 
+  Widget _bookingServiceListTile(BookServiceWorkerList singleItem) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Checkbox(
+            value: singleItem.isSelect,
+            onChanged: (value) {
+              singleItem.isSelect = !singleItem.isSelect;
+              screenController.loadUI();
+            },
+          ),
+          const SizedBox(width: 15),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  singleItem.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "From \$${singleItem.price} / ${singleItem.timeDuration} mins"
+                ),
+              ],
+            ),
+          ),
+        ],
+      ).commonAllSidePadding(5),
+    ).commonSymmetricPadding(vertical: 6);
+  }
+
 }
 
-class LeftArrowButtonModule extends StatelessWidget {
-  const LeftArrowButtonModule({Key? key}) : super(key: key);
+/// Vendor Resources List
+class BookingResourcesListModule extends StatelessWidget {
+  BookingResourcesListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Image.asset(AppImages.backArrowImg)
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Select Resources",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        ListView.builder(
+          itemCount: screenController.allResourcesList.length,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, i) {
+            BookingResourceWorkerData singleItem = screenController.allResourcesList[i];
+            return _resourcesListTile(singleItem);
+          },
+        ),
+      ],
     );
   }
-}
 
-class RightArrowButtonModule extends StatelessWidget {
-  const RightArrowButtonModule({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Image.asset(AppImages.rightArrowImg)
-    );
+  Widget _resourcesListTile(BookingResourceWorkerData singleItem) {
+    String imgUrl = ApiUrl.apiMainPath + singleItem.image;
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(imgUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      singleItem.resourceName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      singleItem.details,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "\$${singleItem.price}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          singleItem.timingList.isEmpty
+              ? Container()
+              : GridView.builder(
+            itemCount: singleItem.timingList.length,
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                childAspectRatio: 2
+            ),
+            itemBuilder: (context, i) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Colors.grey.shade300,
+                      blurStyle: BlurStyle.outer,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  singleItem.timingList[i],
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
+              ).commonAllSidePadding(3);
+            },
+          ),
+        ],
+      ).commonAllSidePadding(8),
+    ).commonSymmetricPadding(vertical: 8);
   }
-}*/
 
-
-class SelectDateModule extends StatefulWidget {
-  const SelectDateModule({Key? key}) : super(key: key);
-
-  @override
-  State<SelectDateModule> createState() => _SelectDateModuleState();
 }
-class _SelectDateModuleState extends State<SelectDateModule> {
+
+
+
+
+
+
+class SelectDateModule extends StatelessWidget {
+  final screenController = Get.find<BookAppointmentScreenController>();
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -140,12 +340,10 @@ class _SelectDateModuleState extends State<SelectDateModule> {
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                setState(() {
                   selectedDay = selectDay;
                   focusedDay = focusDay;
-                });
-                print('\nselectedDay :: $selectedDay');
-                print('focusedDay :: $focusedDay\n');
+
+                  screenController.loadUI();
               },
 
               // Day Changed
@@ -215,7 +413,8 @@ class _SelectDateModuleState extends State<SelectDateModule> {
 
 
 class SelectTimeModule extends StatelessWidget {
-  const SelectTimeModule({Key? key}) : super(key: key);
+  SelectTimeModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -260,6 +459,50 @@ class SelectTimeModule extends StatelessWidget {
     );
   }
 }
+
+
+
+class BookButtonModule extends StatelessWidget {
+  const BookButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => UserCheckoutScreen());
+      },
+      child: Container(
+        alignment: Alignment.center,
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  color: Colors.grey.shade300,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ]
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              'Book',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
 
 /*class SelectSlot extends StatelessWidget {
   const SelectSlot({Key? key}) : super(key: key);
@@ -402,48 +645,97 @@ class SelectTimeModule extends StatelessWidget {
   }
 }*/
 
-class BookButtonModule extends StatelessWidget {
-  const BookButtonModule({Key? key}) : super(key: key);
+/*class SelectDateModule extends StatelessWidget {
+  const SelectDateModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => UserCheckoutScreen());
-      },
-      child: Container(
-        alignment: Alignment.center,
-        child: Container(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Select Date", style: TextStyle(
+          color: Colors.black, fontWeight: FontWeight.bold
+        ),),
+        const SizedBox(height: 10,),
+        Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  spreadRadius: 3,
-                  blurRadius: 5,
-                  color: Colors.grey.shade300,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ]
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Text(
-              'Book',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 7, right: 7),
+            child: Row(
+              children: [
+                GestureDetector(
+                    onTap: () {screenController.selectDatePreviousClick(pageController: screenController.selectDatePageController);},
+                    child:  const LeftArrowButtonModule()),
+                const SizedBox(width: 10,),
+                Expanded(
+                  child: SizedBox(
+                    height: 100,
+                    child: PageView.builder(
+                      padEnds: false,
+                      controller: screenController.selectDatePageController,
+                      onPageChanged: screenController.selectedPageIndex,
+                      itemCount: screenController.dateList.length,
+                      itemBuilder: (context, index) {
+                        //int i =1;
+                        return Obx(()=>
+                          GestureDetector(
+                            onTap: (){
+                              screenController.selectedDateIndex.value = index;
+                            },
+                            child: Column(
+                              //crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Mar", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
+                                const SizedBox(height: 3,),
+                                Text(index.toString(), style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
+                                const SizedBox(height: 3,),
+                                Text("Fri", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),)
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                GestureDetector(
+                    onTap: () {screenController.selectDateNextClick(pageController: screenController.selectDatePageController);},
+                    child:  const RightArrowButtonModule()),
+              ],
             ),
           ),
-        ),
-      ),
+        )
+      ],
+    );
+  }
+
+}
+
+class LeftArrowButtonModule extends StatelessWidget {
+  const LeftArrowButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: Image.asset(AppImages.backArrowImg)
     );
   }
 }
 
+class RightArrowButtonModule extends StatelessWidget {
+  const RightArrowButtonModule({Key? key}) : super(key: key);
 
-
-
-
-
-
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: Image.asset(AppImages.rightArrowImg)
+    );
+  }
+}*/

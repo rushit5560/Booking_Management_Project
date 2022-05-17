@@ -177,12 +177,13 @@ class OverviewModule extends StatelessWidget {
                   // serviceDropDown(context),
                   //SizedBox(height: 25,),
                   //ReviewTextFieldAndButtonModule(),
-                  const SizedBox(height: 40),
+                  // const SizedBox(height: 10),
                   // resourcesList(),
-                  bookAppointmentButtonModule(),
+                  businessHoursModule(),
 
                   const SizedBox(height: 40),
-                  businessHoursModule(),
+                  bookAppointmentButtonModule(),
+
                 ],
               ),
             ),
@@ -461,7 +462,9 @@ class OverviewModule extends StatelessWidget {
   Widget bookAppointmentButtonModule() {
     return GestureDetector(
       onTap: () {
-        Get.to(() => BookAppointMentScreen());
+        Get.to(() => BookAppointmentScreen(),
+          arguments: screenController.vendorId
+        );
       },
       child: Container(
         alignment: Alignment.center,
@@ -571,7 +574,7 @@ class OverviewModule extends StatelessWidget {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              Get.to(() => BookAppointMentScreen());
+                              Get.to(() => BookAppointmentScreen());
                             },
                             child: Container(
                               alignment: Alignment.center,

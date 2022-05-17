@@ -34,6 +34,11 @@ class ApiUrl {
   static const customerGiveReviewApi = apiMainPath + "API/customerAddReview";
   static const vendorBusinessHoursApi = apiMainPath + "API/Vendorworkinghours";
 
+  /// Cst - Booking API
+  static const vendorBookingDetailsApi = apiMainPath + "API/BookingVendorDetail";
+  static const vendorServicesApi = apiMainPath + "API/BookingServiceByVendorId";
+  static const vendorBookingResourcesApi = apiMainPath + "API/GetALLResourceByVendorId";
+
 
   /// Cst - Order List
   static const getAllCustomerOrderList = apiMainPath + "API/customerorderList";

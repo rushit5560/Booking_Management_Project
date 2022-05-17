@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../common_modules/constants/api_url.dart';
 import '../../model/user_search_results_screen_model/get_all_search_vendor_model.dart';
+import '../book_appointment_screen/book_appointment_screen.dart';
 
 
 
@@ -482,7 +483,7 @@ class BusinessListModule extends StatelessWidget {
                                       color: Colors.amber,
                                     ),
                                     onRatingUpdate: (rating) {},
-                                  )
+                                  ),
 
                                 ],
                               ),
@@ -572,7 +573,11 @@ class BusinessListModule extends StatelessWidget {
 
                     const SizedBox(height: 8),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => BookAppointmentScreen(),
+                            arguments: singleItem.id,
+                        );
+                      },
                       child: Container(
                         alignment: Alignment.centerRight,
                         child: Container(

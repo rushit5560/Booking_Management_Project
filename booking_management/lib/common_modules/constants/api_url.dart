@@ -26,6 +26,14 @@ class ApiUrl {
   /// Cst - Search Filter API
   static const searchFilterApi = apiMainPath + "API/Searchbussinesstype";
 
+  /// Cst - Vendor Details
+  static const vendorDetailsApi = apiMainPath + "API/getvendordetails";
+
+  /// Cst - Get Vendor ReviewList
+  static const vendorReviewApi = apiMainPath + "API/customerReviewList";
+  static const customerGiveReviewApi = apiMainPath + "API/customerAddReview";
+  static const vendorBusinessHoursApi = apiMainPath + "API/Vendorworkinghours";
+
 
   /// Cst - Order List
   static const getAllCustomerOrderList = apiMainPath + "API/customerorderList";

@@ -100,7 +100,7 @@ class AdditionalSlotListModule extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        await screenController.getAdditionalDetailsByIdFunction(id: singleItem.id);
+                        await screenController.getAdditionalDetailsByIdFunction(id: singleItem.id!);
                         // screenController.selectedUpdateItemId = singleItem.id;
                         // screenController.updateAdditionalNameFieldController.text = singleItem.name;
                         // screenController.updateAdditionalPriceFieldController.text = singleItem.price.toString();
@@ -142,7 +142,7 @@ class AdditionalSlotListModule extends StatelessWidget {
 
   Widget _categoryModule(AdditionalSlotWorkerList singleItem) {
     return Text(
-      singleItem.name,
+      singleItem.name!,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class AdditionalSlotListModule extends StatelessWidget {
 
   Widget _serviceModule(AdditionalSlotWorkerList singleItem) {
     return Text(
-        singleItem.categories.name,
+        singleItem.categories!.name,
         style: const TextStyle(fontSize: 12));
   }
 

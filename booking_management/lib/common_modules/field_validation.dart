@@ -171,6 +171,13 @@ class FieldValidator {
     return null;
   }
 
+  String? validateNotes(String value) {
+    if (value.isEmpty) {
+      return 'Notes is required';
+    }
+    return null;
+  }
+
   String? validateColor(String value) {
     if (value.isEmpty) {
       return 'Color is required';

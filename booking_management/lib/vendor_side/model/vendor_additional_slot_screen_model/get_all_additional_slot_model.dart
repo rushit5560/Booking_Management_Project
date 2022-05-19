@@ -30,44 +30,44 @@ class GetAllAdditionalSlotModel {
 
 class AdditionalSlotWorkerList {
   AdditionalSlotWorkerList({
-    required this.id,
-    required this.name,
-    required this.categoryId,
-    required this.categories,
-    required this.mobileNo,
-    required this.shortDescription,
-    required this.longDescription,
-    required this.price,
-    required this.timeDuration,
-    required this.isActive,
-    required this.createdBy,
-    required this.createdOn,
-    required this.modifiedBy,
-    required this.modifiedOn,
-    required this.vendorBooking,
-    required this.vendorId,
-    required this.category,
-    required this.vendor,
+    this.id,
+    this.name,
+    this.categoryId,
+    this.categories,
+    this.mobileNo,
+    this.shortDescription,
+    this.longDescription,
+    this.price,
+    this.timeDuration,
+    this.isActive,
+    this.createdBy,
+    this.createdOn,
+    this.modifiedBy,
+    this.modifiedOn,
+    this.vendorBooking,
+    this.vendorId,
+    this.category,
+    this.vendor,
   });
 
-  int id;
-  String name;
-  int categoryId;
-  Categories categories;
-  String mobileNo;
-  String shortDescription;
-  String longDescription;
-  double price;
-  int timeDuration;
-  bool isActive;
-  String createdBy;
-  String createdOn;
-  String modifiedBy;
-  String modifiedOn;
-  String vendorBooking;
-  int vendorId;
-  String category;
-  String vendor;
+  int? id;
+  String? name;
+  int? categoryId;
+  Categories? categories;
+  String? mobileNo;
+  String? shortDescription;
+  String? longDescription;
+  double? price;
+  int? timeDuration;
+  bool? isActive;
+  String? createdBy;
+  String? createdOn;
+  String? modifiedBy;
+  String? modifiedOn;
+  String? vendorBooking;
+  int? vendorId;
+  String? category;
+  String? vendor;
 
   factory AdditionalSlotWorkerList.fromJson(Map<String, dynamic> json) => AdditionalSlotWorkerList(
     id: json["id"] ?? 0,
@@ -94,7 +94,7 @@ class AdditionalSlotWorkerList {
     "id": id,
     "name": name,
     "categoryId": categoryId,
-    "categories": categories.toJson(),
+    "categories": categories!.toJson(),
     "mobileNo": mobileNo,
     "shortDescription": shortDescription,
     "longDescription": longDescription,

@@ -78,7 +78,7 @@ class BookingResourceWorkerData {
   String avilableTime;
   String vendor;
   String bookingAvailability;
-  List<String> timingList;
+  List<TimingSlot> timingList;
 
   factory BookingResourceWorkerData.fromJson(Map<String, dynamic> json) =>
       BookingResourceWorkerData(
@@ -317,4 +317,45 @@ class VendorBooking {
         "vendorList": vendorList,
         "additionalSlot": additionalSlot,
       };
+}
+
+
+class TimingSlot {
+  TimingSlot({
+    required this.id,
+    required this.resourceId,
+    required this.startDateTime,
+    required this.endDateTime,
+    required this.isActive,
+    required this.booking,
+    required this.isSelected,
+  });
+
+  int id;
+  int resourceId;
+  String startDateTime;
+  String endDateTime;
+  bool isActive;
+  bool booking;
+  bool isSelected;
+
+  factory TimingSlot.fromJson(Map<String, dynamic> json) => TimingSlot(
+    id: json["id"] ?? 0,
+    resourceId: json["resourceId"] ?? 0,
+    startDateTime: json["startDateTime"] ?? "",
+    endDateTime: json["endDateTime"] ?? "",
+    isActive: json["isActive"] ?? false,
+    booking: json["booking"] ?? false,
+    isSelected: json["isSelected"] ?? false,
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "resourceId": resourceId,
+    "startDateTime": startDateTime,
+    "endDateTime": endDateTime,
+    "isActive": isActive,
+    "booking": booking,
+    "isSelected": isSelected,
+  };
 }

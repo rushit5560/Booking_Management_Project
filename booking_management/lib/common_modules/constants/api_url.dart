@@ -38,10 +38,19 @@ class ApiUrl {
   static const vendorBookingDetailsApi = apiMainPath + "API/BookingVendorDetail";
   static const vendorServicesApi = apiMainPath + "API/BookingServiceByVendorId";
   static const vendorBookingResourcesApi = apiMainPath + "API/GetALLResourceByVendorId";
+  static const bookSelectedSlotApi = apiMainPath + "API/AddBookingSchedule";
+  static const bookSelectedAvailableTimeSlotApi = apiMainPath + "API/AddBookingScheduleResource";
+
+  /// Cst - Checkout
+  static const customerCheckoutApi = apiMainPath + "API/Checkout";
+  static const customerCheckoutSummaryApi = apiMainPath + "API/BookingSummary";
+  static const checkoutSubmitApi = apiMainPath + "API/CheckoutUpsert";
+  static const invoiceDetailsApi = apiMainPath + "API/InvoiceDetails";
 
 
   /// Cst - Order List
   static const getAllCustomerOrderList = apiMainPath + "API/customerorderList";
+  static const bookingSuccessApi = apiMainPath + "API/BookingSuccess";
 
   /// Vendor API
   static const vendorSignUpApi = apiMainPath + "API/VendorRegister";

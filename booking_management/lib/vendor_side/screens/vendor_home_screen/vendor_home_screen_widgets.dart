@@ -4,8 +4,7 @@ import 'package:booking_management/vendor_side/screens/vendor_user_details_scree
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
-
-
+import '../../model/vendor_appointment_list_screen_models/appointment_list_model.dart';
 
 /// Header Module
 class VendorHeaderModule extends StatelessWidget {
@@ -37,7 +36,6 @@ class VendorHeaderModule extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             top: 10,
             left: 10,
@@ -86,7 +84,8 @@ class SearchAppointmentField extends StatelessWidget {
           ),
           border: InputBorder.none,
           isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           suffixIcon: GestureDetector(
             onTap: () {},
             child: const Icon(
@@ -128,82 +127,83 @@ class TodayAppointmentListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return /*screenController.pendingList.isEmpty ?
-     const Center(child: Text("No Today Appointment List"),) :*/
-    ListView.builder(
-      itemCount: 5,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i){
-        return Container(
-          margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
+    return screenController.pendingAppointmentList.isEmpty
+        ? const Center(child: Text("No Today Appointment List"))
+        : ListView.builder(
+            itemCount: screenController.pendingAppointmentList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, i) {
+              AppointmentListModule singleItem = screenController.pendingAppointmentList[i];
+              return _pendingListTile(singleItem);
+            },
+          );
+  }
+
+  Widget _pendingListTile(AppointmentListModule singleItem) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                //flex: 68,
-                child: Row(
-                  children: [
-                    _userImageModule(i),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _userNameModule(i),
-                          const SizedBox(height: 8),
-
-                          _dateAndTimeModule(i),
-                          const SizedBox(height: 8),
-
-                          _statusModule(i),
-                        ],
-                      ),
-                    ),
-                  ],
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            //flex: 68,
+            child: Row(
+              children: [
+                // _userImageModule(singleItem),
+                // const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _userNameModule(singleItem),
+                      const SizedBox(height: 8),
+                      _dateAndTimeModule(singleItem),
+                      const SizedBox(height: 8),
+                      _statusModule(singleItem),
+                    ],
+                  ),
                 ),
-              ),
-
-              const SizedBox(width: 5),
-
-              _viewButton(),
-            ],
-          ).commonAllSidePadding(10),
-        );
-      },
+              ],
+            ),
+          ),
+          const SizedBox(width: 5),
+          _viewButton(),
+        ],
+      ).commonAllSidePadding(10),
     );
   }
 
-  Widget _userImageModule(i) {
+  /*Widget _userImageModule(AppointmentListModule singleItem) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       //child: Image.network(ApiUrl.apiMainPath + screenController.pendingList[i].customerBooking.image),
-      child: Image.asset(AppImages.vendorImg, scale: 15,),
+      child: Image.network(singleItem.customer., scale: 15,),
     );
-  }
+  }*/
 
-  Widget _userNameModule(i) {
-    return const Text(
-      "Lorem Ipsum",
-      style: TextStyle(
+  Widget _userNameModule(AppointmentListModule singleItem) {
+    return Text(
+      singleItem.customer.userName,
+      style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
-  Widget _dateAndTimeModule(i) {
+  Widget _dateAndTimeModule(AppointmentListModule singleItem) {
     return Row(
       children: [
         Image.asset(
@@ -213,9 +213,9 @@ class TodayAppointmentListModule extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         const SizedBox(width: 5),
-        const Text(
-          "23-5-2022 12:22:34",
-          style: TextStyle(fontSize: 9),
+        Text(
+          singleItem.startDateTime,
+          style: const TextStyle(fontSize: 9),
         ),
 
         // const SizedBox(width: 10),
@@ -235,10 +235,10 @@ class TodayAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _statusModule(i) {
-    return const Text(
-      "Status - Pending",
-      style: TextStyle(
+  Widget _statusModule(AppointmentListModule singleItem) {
+    return Text(
+      "Status - ${singleItem.status}",
+      style: const TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.bold,
       ),
@@ -247,7 +247,8 @@ class TodayAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton() {
     return GestureDetector(
-      onTap: () => Get.to(()=> const VendorUserDetailsScreen(), transition: Transition.zoom),
+      onTap: () => Get.to(() => const VendorUserDetailsScreen(),
+          transition: Transition.zoom),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -270,12 +271,11 @@ class TodayAppointmentListModule extends StatelessWidget {
             ),
           ),
         ),
-
       ),
     );
   }
 
-  /*Widget _confirmButton() {
+/*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

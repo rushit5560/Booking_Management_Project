@@ -147,20 +147,42 @@ class VendorScheduleTimeScreenController extends GetxController {
 
       log("listData : $listData");
 
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
 
-      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: jsonEncode(listData));
-      log("response : ${response.statusCode}");
-      log("response : ${response.body}");
+      request.fields['bookings'] = json.encode(listData);
 
-      SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(response.body));
-      isSuccessStatus = setScheduleTimeModel.success.obs;
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
 
-      if(isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: setScheduleTimeModel.message);
-      } else {
-        log("setSelectedScheduleTimeFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
-      }
+      var response = await request.send();
+      log('response: ${response.statusCode}');
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(value));
+        isSuccessStatus = setScheduleTimeModel.success.obs;
+
+        if(isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+        } else {
+          log("setSelectedScheduleTimeFunction Else Else");
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+      });
+
+      // http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: jsonEncode(listData));
+      // log("response : ${response.statusCode}");
+      // log("response : ${response.body}");
+      //
+      // SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(response.body));
+      // isSuccessStatus = setScheduleTimeModel.success.obs;
+      //
+      // if(isSuccessStatus.value) {
+      //   Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+      // } else {
+      //   log("setSelectedScheduleTimeFunction Else Else");
+      //   Fluttertoast.showToast(msg: "Something went wrong!");
+      // }
 
 
     } catch(e) {

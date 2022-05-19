@@ -112,9 +112,7 @@ class ResourcesSelectDateModule extends StatelessWidget {
           "Select Date",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Material(
           elevation: 2,
           borderRadius: BorderRadius.circular(10),
@@ -132,8 +130,34 @@ class ResourcesSelectDateModule extends StatelessWidget {
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
+                String month = "";
+                if(selectedDay.month == 1) {
+                  month = "january";
+                } else if(selectedDay.month == 2){
+                  month = "February";
+                } else if(selectedDay.month == 3){
+                  month = "March";
+                } else if(selectedDay.month == 4){
+                  month = "April";
+                } else if(selectedDay.month == 5){
+                  month = "May";
+                } else if(selectedDay.month == 6){
+                  month = "June";
+                } else if(selectedDay.month == 7){
+                  month = "July";
+                } else if(selectedDay.month == 8){
+                  month = "August";
+                } else if(selectedDay.month == 9){
+                  month = "September";
+                } else if(selectedDay.month == 10){
+                  month = "October";
+                } else if(selectedDay.month == 11){
+                  month = "November";
+                } else if(selectedDay.month == 12){
+                  month = "December";
+                }
                 screenController.selectedDate.value =
-                    "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                    "${selectedDay.day}-$month-${selectedDay.year}";
                 screenController.isCalenderShow.value =
                     !screenController.isCalenderShow.value;
                 screenController.loadUI();

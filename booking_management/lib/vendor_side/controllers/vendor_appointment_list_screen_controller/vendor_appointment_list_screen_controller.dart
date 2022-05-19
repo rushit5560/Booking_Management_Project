@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
-import 'package:booking_management/vendor_side/model/done_appointment_list_model/done_appointment_list_model.dart';
-import 'package:booking_management/vendor_side/model/get_all_appointment_list_model/get_all_appointment_list_model.dart';
-import 'package:booking_management/vendor_side/model/get_confirm_appointment_list_model/get_confirm_appointment_list_model.dart';
-import 'package:booking_management/vendor_side/model/pending_appointment_list_model/pending_appointment_list_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../../model/vendor_appointment_list_screen_models/appointment_list_model.dart';
 
 class VendorAppointmentListScreenController extends GetxController {
   RxInt selectedTabIndex = 1.obs;
@@ -18,130 +18,93 @@ class VendorAppointmentListScreenController extends GetxController {
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
 
   RxBool isLoading = false.obs;
+  RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
-  List<Datum> allAppointmentList = [];
-  List<Pending> pendingList = [];
-  List<Confirm> confirmList = [];
-  List<Done> doneList = [];
+  ApiHeader apiHeader = ApiHeader();
+  // List<Datum> allAppointmentList = [];
+  // List<Pending> pendingList = [];
+  // List<Confirm> confirmList = [];
+  // List<Done> doneList = [];
   SignInModel ? signInModel;
   //int vendorId = Get.arguments;
 
+  /// All Filter List
+  List<AppointmentListModule> allAppointmentList = [];
+  List<AppointmentListModule> pendingAppointmentList = [];
+  List<AppointmentListModule> confirmAppointmentList = [];
+  List<AppointmentListModule> doneAppointmentList = [];
+  List<AppointmentListModule> cancelAppointmentList = [];
+  List<AppointmentListModule> processingAppointmentList = [];
+  List<AppointmentListModule> scheduledAppointmentList = [];
+
+
+
+  /// Get All Appointment List
+  getAppointmentListFunction() async {
+    isLoading(true);
+    String url = ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}";
+    log("Appointment List APi ULR : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Appointment List Response : ${response.body}");
+
+      AppointmentListModel appointmentListModel = AppointmentListModel.fromJson(json.decode(response.body));
+      isSuccessStatus = appointmentListModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        allAppointmentList.clear();
+        allAppointmentList = appointmentListModel.data;
+
+        for(int i = 0; i < allAppointmentList.length; i++) {
+          if(allAppointmentList[i].status == "Pending") {
+            pendingAppointmentList.add(allAppointmentList[i]);
+          }
+          if(allAppointmentList[i].status == "Confirm") {
+            confirmAppointmentList.add(allAppointmentList[i]);
+          }
+          if(allAppointmentList[i].status == "Done") {
+            doneAppointmentList.add(allAppointmentList[i]);
+          }
+          if(allAppointmentList[i].status == "Cancel") {
+            cancelAppointmentList.add(allAppointmentList[i]);
+          }
+          if(allAppointmentList[i].status == "Processing") {
+            processingAppointmentList.add(allAppointmentList[i]);
+          }
+          if(allAppointmentList[i].status == "Scheduled") {
+            scheduledAppointmentList.add(allAppointmentList[i]);
+          }
+        }
+
+        log("allAppointmentList : ${allAppointmentList.length}");
+        log("pendingAppointmentList : ${pendingAppointmentList.length}");
+        log("confirmAppointmentList : ${confirmAppointmentList.length}");
+        log("doneAppointmentList : ${doneAppointmentList.length}");
+        log("cancelAppointmentList : ${cancelAppointmentList.length}");
+        log("processingAppointmentList : ${processingAppointmentList.length}");
+        log("scheduledAppointmentList : ${scheduledAppointmentList.length}");
+
+
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getAppointmentListFunction Else Else");
+      }
+
+
+    } catch(e) {
+      log("getAppointmentListFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
+
   @override
   void onInit() {
-    // TODO: implement onInit
+    getAppointmentListFunction();
     super.onInit();
-    getAllAppointmentList();
-    getPendingAppointMentList();
-    getConfirmAppointList();
-    getDoneAppointList();
-  }
-
-  getAllAppointmentList()async {
-    isLoading(true);
-    String url = ApiUrl.vendorAllAppointmentApi + "?VendorId=${UserDetails.vendorId}";
-    log('Url : $url');
-
-    try{
-      http.Response response = await http.get(Uri.parse(url));
-
-      log('All Appointment Response : ${response.body}');
-
-      AllAppointmentListModel allAppointmentModel = AllAppointmentListModel.fromJson(json.decode(response.body));
-      isStatus = allAppointmentModel.statusCode.obs;
-      log("status : $isStatus");
-
-      if(isStatus.value == 200){
-        allAppointmentList = allAppointmentModel.data;
-        //log('allAppointmentList : $allAppointmentList');
-      } else {
-        log('Get All Business Else Else');
-      }
-    } catch(e) {
-      log('Error : $e');
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  getPendingAppointMentList() async {
-    isLoading(true);
-    String url = ApiUrl.vendorPendingAppointmentApi + "?VendorId=${UserDetails.vendorId}";
-    log('Url : $url');
-
-    try{
-      http.Response response = await http.get(Uri.parse(url));
-
-      log('Pending Appointment Response : ${response.body}');
-
-      PendingAppointmentListModel pendingAppointmentModel = PendingAppointmentListModel.fromJson(json.decode(response.body));
-      isStatus = pendingAppointmentModel.statusCode.obs;
-      log("status : $isStatus");
-
-      if(isStatus.value == 200){
-        pendingList = pendingAppointmentModel.data;
-        //log('allPendingList : $pendingList');
-      } else {
-        log('Get All Pending Else Else');
-      }
-    } catch(e) {
-      log('Error : $e');
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  getConfirmAppointList() async {
-    isLoading(true);
-    String url = ApiUrl.vendorConfirmAppointmentApi + "?VendorId=${UserDetails.vendorId}";
-    log('Url : $url');
-
-    try{
-      http.Response response = await http.get(Uri.parse(url));
-
-      log('All Confirm Response : ${response.body}');
-
-      ConfirmAppointmentListModel confirmAppointmentModel = ConfirmAppointmentListModel.fromJson(json.decode(response.body));
-      isStatus = confirmAppointmentModel.statusCode.obs;
-      log("status : $isStatus");
-
-      if(isStatus.value == 200){
-        confirmList = confirmAppointmentModel.data;
-        //log('allConfirmList : $confirmList');
-      } else {
-        log('Get All Confirm Else Else');
-      }
-    } catch(e) {
-      log('Error : $e');
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  getDoneAppointList() async {
-    isLoading(true);
-    String url = ApiUrl.vendorDoneAppointmentApi + "?VendorId=${UserDetails.vendorId}";
-    log('Vendor Id: ${UserDetails.vendorId}');
-    log('Url : $url');
-    try{
-      http.Response response = await http.get(Uri.parse(url));
-
-      log('All Done Response : ${response.body}');
-
-      DoneAppointmentListModel doneAppointmentModel = DoneAppointmentListModel.fromJson(json.decode(response.body));
-      isStatus = doneAppointmentModel.statusCode.obs;
-      log("status : $isStatus");
-
-      if(isStatus.value == 200){
-        doneList = doneAppointmentModel.data;
-        //log('allDoneList : $doneList');
-      } else {
-        log('Get All Done Else Else');
-      }
-    } catch(e) {
-      log('Error : $e');
-    } finally {
-      isLoading(false);
-    }
   }
 
 }

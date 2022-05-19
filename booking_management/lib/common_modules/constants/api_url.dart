@@ -92,6 +92,10 @@ class ApiUrl {
   static const vendorAvailableTimeApi = apiMainPath + "API/AvailableTimingsGetALL";
   static const vendorSetAvailableTimeApi = apiMainPath + "API/AvailableTimings";
 
+  /// Vendor - Appointment List
+  static const vendorAppointmentList = apiMainPath + "API/APIAppointmentlist";
+
+
   /// Vendor - Schedule Time
   static const vendorGetAllScheduleSlotApi = apiMainPath + "API/ScheduleTimings";
   static const vendorSetScheduleTimeApi = apiMainPath + "API/ScheduleTimingsUpsertslot";

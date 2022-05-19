@@ -84,6 +84,7 @@ class VendorAvailableTimeScreenController extends GetxController {
 
 
 
+  /// Get Available Time
   getVendorAvailableTimeFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorAvailableTimeApi + "?VendorId=${UserDetails.tableWiseId}";
@@ -175,7 +176,7 @@ class VendorAvailableTimeScreenController extends GetxController {
 
   setVendorAvailableTimeFunction() async {
     isLoading(true);
-    String url = "http://5.189.147.159:9600/API/AvailableTimings"/*ApiUrl.vendorSetAvailableTimeApi*/;
+    String url = ApiUrl.vendorSetAvailableTimeApi;
     log("Set Vendor Avail Time API URL : $url");
     
     try {
@@ -183,116 +184,147 @@ class VendorAvailableTimeScreenController extends GetxController {
       List trueList = [];
 
 
-      // if(isSundayOn.value) {
-      //   trueList.add({
-      //     "Day": "Sunday",
-      //     "StartTime": "${sundayStartTime.value}",
-      //     "EndTime": "${sundayEndTime.value}"
-      //   });
-      // }
-      // if(isMondayOn.value) {
-      //   trueList.add({
-      //     "Day": "Monday",
-      //     "StartTime": "${mondayStartTime.value}",
-      //     "EndTime": "${mondayEndTime.value}"
-      //   });
-      // }
-      // if(isTuesdayOn.value) {
-      //   trueList.add(json.encode({
-      //     "Day": "Tuesday",
-      //     "StartTime": tuesdayStartTime.value,
-      //     "EndTime": tuesdayEndTime.value
-      //   }));
-      // }
-      // if(isWednesdayOn.value) {
-      //   trueList.add(json.encode({
-      //     "Day": "Wednesday",
-      //     "StartTime": wednesdayStartTime.value,
-      //     "EndTime": wednesdayEndTime.value
-      //   }));
-      // }
-      // if(isThursdayOn.value) {
-      //   trueList.add(json.encode({
-      //     "Day": "Thursday",
-      //     "StartTime": thursdayStartTime.value,
-      //     "EndTime": thursdayEndTime.value
-      //   }));
-      // }
-      // if(isFridayOn.value) {
-      //   trueList.add(json.encode({
-      //     "Day": "Friday",
-      //     "StartTime": fridayStartTime.value,
-      //     "EndTime": fridayEndTime.value
-      //   }));
-      // }
-      // if(isSaturdayOn.value) {
-      //   trueList.add(json.encode({
-      //     "Day": "Saturday",
-      //     "StartTime": saturdayStartTime.value,
-      //     "EndTime": saturdayEndTime.value
-      //   }));
-      // }
-
-      Map<String, dynamic> newData = {
-        "VendorAvailabilityList" : trueList,
-        "VendorId" : UserDetails.tableWiseId
-      };
-
-      Map<String, dynamic> data = {
-        "VendorAvailabilityList" : [
-          {
-            "Day" : "Sunday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          },
-          {
-            "Day" : "Monday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          },
-          {
-            "Day" : "Tuesday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          },
-          {
-            "Day" : "Wednesday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          },
-          {
-            "Day" : "Thursday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          },
-          {
-            "Day" : "Friday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          },
-          {
-            "Day" : "Saturday",
-            "StartTime" : "09:00",
-            "EndTime" : "10:00"
-          }
-        ],
-        "VendorId" : 46
-      };
-      log("Data : $data");
-      log("Header : ${apiHeader.headers}");
-
-      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: json.encode(data));
-      log("Set Data Response : ${response.statusCode}");
-
-      SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(response.body));
-      isSuccessStatus = setVendorAvailableTimeModel.success.obs;
-
-      if(isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: setVendorAvailableTimeModel.data);
-      } else {
-        log("setVendorAvailableTimeFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+      if(isSundayOn.value) {
+        trueList.add({
+          "Day" : "Sunday",
+          "StartTime" : sundayStartTime.value,
+          "EndTime" : sundayEndTime.value
+        });
       }
+      /*if(isMondayOn.value) {
+        trueList.add({
+          "Day": "Monday",
+          "StartTime": mondayStartTime.value,
+          "EndTime": mondayEndTime.value
+        });
+      }
+      if(isTuesdayOn.value) {
+        trueList.add({
+          "Day": "Tuesday",
+          "StartTime": tuesdayStartTime.value,
+          "EndTime": tuesdayEndTime.value
+        });
+      }
+      if(isWednesdayOn.value) {
+        trueList.add({
+          "Day": "Wednesday",
+          "StartTime": wednesdayStartTime.value,
+          "EndTime": wednesdayEndTime.value
+        });
+      }
+      if(isThursdayOn.value) {
+        trueList.add({
+          "Day": "Thursday",
+          "StartTime": thursdayStartTime.value,
+          "EndTime": thursdayEndTime.value
+        });
+      }
+      if(isFridayOn.value) {
+        trueList.add({
+          "Day": "Friday",
+          "StartTime": fridayStartTime.value,
+          "EndTime": fridayEndTime.value
+        });
+      }
+      if(isSaturdayOn.value) {
+        trueList.add({
+          "Day": "Saturday",
+          "StartTime": saturdayStartTime.value,
+          "EndTime": saturdayEndTime.value
+        });
+      }*/
+
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['available'] = jsonEncode([
+        {
+          "Day" : "Sunday",
+          "StartTime" : "09:00",
+          "EndTime" : "10:00"
+        }
+      ]);
+      request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
+
+      var response = await request.send();
+      log('response: ${response.statusCode}');
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(value));
+        isSuccessStatus = setVendorAvailableTimeModel.success.obs;
+
+        if(isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: setVendorAvailableTimeModel.data);
+        } else {
+          log("setVendorAvailableTimeFunction Else Else");
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+
+      });
+
+      // Map<String, dynamic> newData = {
+      //   "VendorAvailabilityList" : trueList,
+      //   "VendorId" : UserDetails.tableWiseId
+      // };
+      //
+      // Map<String, dynamic> data = {
+      //   "VendorAvailabilityList" : [
+      //     {
+      //       "Day" : "Sunday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     },
+      //     {
+      //       "Day" : "Monday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     },
+      //     {
+      //       "Day" : "Tuesday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     },
+      //     {
+      //       "Day" : "Wednesday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     },
+      //     {
+      //       "Day" : "Thursday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     },
+      //     {
+      //       "Day" : "Friday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     },
+      //     {
+      //       "Day" : "Saturday",
+      //       "StartTime" : "09:00",
+      //       "EndTime" : "10:00"
+      //     }
+      //   ],
+      //   "VendorId" : 46
+      // };
+      // log("Data : $data");
+      // log("Header : ${apiHeader.headers}");
+      //
+      // http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: json.encode(data));
+      // log("Set Data Response : ${response.statusCode}");
+      //
+      // SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(response.body));
+      // isSuccessStatus = setVendorAvailableTimeModel.success.obs;
+      //
+      // if(isSuccessStatus.value) {
+      //   Fluttertoast.showToast(msg: setVendorAvailableTimeModel.data);
+      // } else {
+      //   log("setVendorAvailableTimeFunction Else Else");
+      //   Fluttertoast.showToast(msg: "Something went wrong!");
+      // }
 
     } catch(e) {
       log("setVendorAvailableTimeFunction Error ::: $e");

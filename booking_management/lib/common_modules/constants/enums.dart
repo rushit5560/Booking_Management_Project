@@ -52,3 +52,7 @@ enum AvailableTimeDay {
    saturdayEndTime
 }
 
+enum SearchType {
+   categoryWise,
+   none
+}

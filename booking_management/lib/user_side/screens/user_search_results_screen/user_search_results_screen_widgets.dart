@@ -1,16 +1,13 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/user_side/controllers/user_search_results_screen_controller/user_search_results_screen_controller.dart';
 import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-
-import '../../../common_modules/constants/api_url.dart';
 import '../../model/user_search_results_screen_model/get_all_search_vendor_model.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
-
-
 
 class SearchCategoryTextField extends StatelessWidget {
   SearchCategoryTextField({Key? key}) : super(key: key);
@@ -42,9 +39,14 @@ class SearchCategoryTextField extends StatelessWidget {
           ),
           border: InputBorder.none,
           isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           suffixIcon: GestureDetector(
-            onTap: () {},
+            onTap: () async {
+              await screenController.getAllSearchVendorListFunction(
+                searchText: screenController.categoryFieldController.text.trim(),
+              );
+            },
             child: const Icon(
               Icons.search_rounded,
               color: Colors.grey,
@@ -103,8 +105,10 @@ class PopularSearchAndDistance extends StatefulWidget {
   const PopularSearchAndDistance({Key? key}) : super(key: key);
 
   @override
-  State<PopularSearchAndDistance> createState() => _PopularSearchAndDistanceState();
+  State<PopularSearchAndDistance> createState() =>
+      _PopularSearchAndDistanceState();
 }
+
 class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
   final screenController = Get.find<UserSearchResultsScreenController>();
 
@@ -141,7 +145,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
 
         const SizedBox(width: 10),
         Expanded(
-          child:Container(
+          child: Container(
             padding: const EdgeInsets.only(right: 3),
             height: 45,
             decoration: BoxDecoration(
@@ -160,7 +164,8 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                   canvasColor: Colors.grey.shade100,
                   // background color for the dropdown items
                   buttonTheme: ButtonTheme.of(context).copyWith(
-                    alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
+                    alignedDropdown:
+                        true, //If false (the default), then the dropdown's menu will be wider than its button.
                   )),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
@@ -177,8 +182,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                     '3',
                     '4',
                     '5',
-                  ].
-                  map<DropdownMenuItem<String>>((String value) {
+                  ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
@@ -187,15 +191,25 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                       ),
                     );
                   }).toList(),
-                  hint: const Text("Ratting", style: TextStyle(color: Colors.black, fontSize: 11),),
+                  hint: const Text(
+                    "Ratting",
+                    style: TextStyle(color: Colors.black, fontSize: 11),
+                  ),
                   onChanged: (newValue) async {
                     setState(() {
                       screenController.ratting = newValue!;
                     });
-                    await screenController.getAllSearchVendorListRatingWiseFunction(
-                      searchText: screenController.categoryFieldController.text,
-                    );
 
+                    if (screenController.searchType ==
+                        SearchType.categoryWise) {
+                      await screenController
+                          .getSearchCategoryWithRatingWiseFunction();
+                    } else if (screenController.searchType == SearchType.none) {
+                      await screenController
+                          .getAllSearchVendorListRatingWiseFunction(
+                              searchText: screenController
+                                  .categoryFieldController.text);
+                    }
                   },
                 ),
               ),
@@ -204,123 +218,121 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child:Container(
-                padding: const EdgeInsets.only(right: 3),
-                height: 45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.colorLightGrey.withOpacity(0.5),
-                      blurRadius: 5,
-                      //spreadRadius: 5,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
+          child: Container(
+            padding: const EdgeInsets.only(right: 3),
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.colorLightGrey.withOpacity(0.5),
+                  blurRadius: 5,
+                  //spreadRadius: 5,
+                  blurStyle: BlurStyle.outer,
                 ),
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                      canvasColor: Colors.grey.shade100,
-                      // background color for the dropdown items
-                      buttonTheme: ButtonTheme.of(context).copyWith(
-                        alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
-                      )),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
-                      isExpanded: true,
-                      focusColor: Colors.white,
-                      value: screenController.distance,
-                      //elevation: 5,
-                      style: TextStyle(color: AppColors.colorLightGrey),
-                      iconEnabledColor: Colors.black,
-                      items: <String>[
-                        '1',
-                        '2',
-                        '3',
-                        '4','5'
-                      ].
-                      map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: AppColors.colorLightGrey),
-                          ),
-                        );
-                      }).toList(),
-                      hint: Text("Distance", style: TextStyle(color: Colors.black, fontSize: 11),),
-                      onChanged: (newValue) {
-                        setState(() {
-                          screenController.distance = newValue!;
-                        });
-
-                      },
-                    ),
+              ],
+            ),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                  canvasColor: Colors.grey.shade100,
+                  // background color for the dropdown items
+                  buttonTheme: ButtonTheme.of(context).copyWith(
+                    alignedDropdown:
+                        true, //If false (the default), then the dropdown's menu will be wider than its button.
+                  )),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
+                  isExpanded: true,
+                  focusColor: Colors.white,
+                  value: screenController.distance,
+                  //elevation: 5,
+                  style: TextStyle(color: AppColors.colorLightGrey),
+                  iconEnabledColor: Colors.black,
+                  items: <String>['1', '2', '3', '4', '5']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: AppColors.colorLightGrey),
+                      ),
+                    );
+                  }).toList(),
+                  hint: const Text(
+                    "Distance",
+                    style: TextStyle(color: Colors.black, fontSize: 11),
                   ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      screenController.distance = newValue!;
+                    });
+                  },
                 ),
               ),
+            ),
           ),
+        ),
         const SizedBox(width: 10),
         Expanded(
-            child:Container(
-                  padding: const EdgeInsets.only(right: 3),
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.colorLightGrey.withOpacity(0.5),
-                        blurRadius: 5,
-                        //spreadRadius: 5,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                  ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                        canvasColor: Colors.grey.shade100,
-                        // background color for the dropdown items
-                        buttonTheme: ButtonTheme.of(context).copyWith(
-                          alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
-                        )),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3,),
-                        isExpanded: true,
-                        focusColor: Colors.white,
-                        value: screenController.date,
-                        //elevation: 5,
-                        style: TextStyle(color: AppColors.colorLightGrey),
-                        iconEnabledColor: Colors.black,
-                        items: <String>[
-                          '1',
-                          '2',
-                          '3',
-                          '4','5'
-                        ].
-                        map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(color: AppColors.colorLightGrey),
-                            ),
-                          );
-                        }).toList(),
-                        hint: const Text("Date", style: TextStyle(color: Colors.black, fontSize: 11),),
-                        onChanged: (newValue) {
-                          setState(() {
-                            screenController.date = newValue!;
-                          });
-
-                        },
-                      ),
-                    ),
-                  ),
+          child: Container(
+            padding: const EdgeInsets.only(right: 3),
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.colorLightGrey.withOpacity(0.5),
+                  blurRadius: 5,
+                  //spreadRadius: 5,
+                  blurStyle: BlurStyle.outer,
                 ),
+              ],
+            ),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                  canvasColor: Colors.grey.shade100,
+                  // background color for the dropdown items
+                  buttonTheme: ButtonTheme.of(context).copyWith(
+                    alignedDropdown:
+                        true, //If false (the default), then the dropdown's menu will be wider than its button.
+                  )),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  icon: Image.asset(
+                    AppImages.dropDownArrowImg,
+                    scale: 3,
+                  ),
+                  isExpanded: true,
+                  focusColor: Colors.white,
+                  value: screenController.date,
+                  //elevation: 5,
+                  style: TextStyle(color: AppColors.colorLightGrey),
+                  iconEnabledColor: Colors.black,
+                  items: <String>['1', '2', '3', '4', '5']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: AppColors.colorLightGrey),
+                      ),
+                    );
+                  }).toList(),
+                  hint: const Text(
+                    "Date",
+                    style: TextStyle(color: Colors.black, fontSize: 11),
+                  ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      screenController.date = newValue!;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
         ),
-
       ],
     );
   }
@@ -335,16 +347,21 @@ class BusinessListModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Business", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
-
-        const SizedBox(height: 20,),
-
+        const Text(
+          "Business",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         ListView.builder(
-          itemCount: screenController.searchVendorList.length,
+            itemCount: screenController.searchVendorList.length,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemBuilder: (context, index){
-              SearchVendorDatum singleItem = screenController.searchVendorList[index];
+            itemBuilder: (context, index) {
+              SearchVendorDatum singleItem =
+                  screenController.searchVendorList[index];
               return _vendorListTile(singleItem);
             })
       ],
@@ -352,12 +369,11 @@ class BusinessListModule extends StatelessWidget {
   }
 
   Widget _vendorListTile(SearchVendorDatum singleItem) {
-    String imgUrl = ApiUrl.apiMainPath + singleItem.businessLogo;
+    // String imgUrl = ApiUrl.apiMainPath + singleItem.businessLogo;
     return GestureDetector(
-        onTap: () {
-            Get.to(()=> BusinessDetailScreen(),
-            arguments: singleItem.id);
-          },
+      onTap: () {
+        Get.to(() => BusinessDetailScreen(), arguments: singleItem.id);
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
@@ -440,7 +456,7 @@ class BusinessListModule extends StatelessWidget {
                 flex: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(imgUrl),
+                  child: Image.network(singleItem.businessLogo),
                 ),
               ),
               const SizedBox(width: 7),
@@ -458,7 +474,8 @@ class BusinessListModule extends StatelessWidget {
                             children: [
                               Text(
                                 singleItem.businessName,
-                                style: const TextStyle(fontSize: 17,
+                                style: const TextStyle(
+                                  fontSize: 17,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -471,7 +488,8 @@ class BusinessListModule extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 5),
                                   RatingBar.builder(
-                                    initialRating: double.parse(singleItem.rating.toString()),
+                                    initialRating: double.parse(
+                                        singleItem.rating.toString()),
                                     minRating: 1,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
@@ -484,31 +502,33 @@ class BusinessListModule extends StatelessWidget {
                                     ),
                                     onRatingUpdate: (rating) {},
                                   ),
-
                                 ],
                               ),
-
                               const SizedBox(height: 3),
-                              Text("Location - ${singleItem.address}",
+                              Text(
+                                "Location - ${singleItem.address}",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               const SizedBox(height: 3),
                               Row(
                                 children: [
                                   Expanded(
-                                    flex:1,
+                                    flex: 1,
                                     child: Container(
-                                      height:10, width: 10,
+                                      height: 10,
+                                      width: 10,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
-                                          color: singleItem.workingHoursStatus == "Close"
-                                          ? Colors.red
-                                          : Colors.green
-                                      ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color:
+                                              singleItem.workingHoursStatus ==
+                                                      "Close"
+                                                  ? Colors.red
+                                                  : Colors.green),
                                     ),
                                   ),
                                   const SizedBox(width: 5),
@@ -516,12 +536,15 @@ class BusinessListModule extends StatelessWidget {
                                       flex: 20,
                                       child: Text(
                                         singleItem.workingHoursStatus == "Close"
-                                        ? "Close"
-                                        : "Open",
-                                        maxLines: 1, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),))
+                                            ? "Close"
+                                            : "Open",
+                                        maxLines: 1,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12),
+                                      ))
                                 ],
                               ),
-
                             ],
                           ),
                         ),
@@ -574,8 +597,9 @@ class BusinessListModule extends StatelessWidget {
                     const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => BookAppointmentScreen(),
-                            arguments: singleItem.id,
+                        Get.to(
+                          () => BookAppointmentScreen(),
+                          arguments: singleItem.id,
                         );
                       },
                       child: Container(
@@ -613,7 +637,4 @@ class BusinessListModule extends StatelessWidget {
       ),
     );
   }
-
 }
-
-

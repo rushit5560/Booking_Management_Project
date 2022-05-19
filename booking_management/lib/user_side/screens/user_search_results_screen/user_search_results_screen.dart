@@ -23,15 +23,22 @@ class UserSearchResultsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const CommonAppBarModule(title: "Search Results", appBarOption: AppBarOption.singleBackButtonOption),
-              const SizedBox(height: 20),
+              // userSearchResultsScreenController.searchType == SearchType.categoryWise
+              //     ? Container()
+              //     : const SizedBox(height: 0),
 
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SearchCategoryTextField(),
-                      const SizedBox(height: 20),
+                      userSearchResultsScreenController.searchType == SearchType.categoryWise
+                      ? Container()
+                      : SearchCategoryTextField(),
+                      userSearchResultsScreenController.searchType == SearchType.categoryWise
+                          ? Container()
+                          : const SizedBox(height: 20),
+
                       // SearchLocationTextField(),
                       // SizedBox(height: 30,),
                       PopularSearchAndDistance(),

@@ -1,12 +1,11 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/common_functions.dart';
-import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
+import '../../../common_modules/constants/enums.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
 import '../../model/home_screen_models/get_all_appointment_list_model.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
@@ -101,7 +100,7 @@ class SearchCategoryField extends StatelessWidget {
             onTap: () {
               // if(screenController.categoryFieldController.text.isNotEmpty) {
                 Get.to(() => UserSearchResultsScreen(),
-                  arguments: screenController.categoryFieldController.text,
+                  arguments: [screenController.categoryFieldController.text,SearchType.none],
                 );
                 hideKeyboard();
               // }
@@ -411,10 +410,12 @@ class PartialCategoryListModule extends StatelessWidget {
   }
 
   Widget _categoryListModule(CategoryDatum singleItem) {
-    String imgUrl = ApiUrl.apiMainPath + singleItem.image;
+    // String imgUrl = ApiUrl.apiMainPath + singleItem.image;
     return GestureDetector(
       onTap: () {
-        log("Category Name");
+        Get.to(()=> UserSearchResultsScreen(),
+        transition: Transition.zoom,
+        arguments: [singleItem.id.toString(), SearchType.categoryWise]);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -432,10 +433,12 @@ class PartialCategoryListModule extends StatelessWidget {
             Expanded(
               flex: 75,
               child: Container(
+                height: 50,
+                width: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: NetworkImage(imgUrl),
+                    image: NetworkImage(singleItem.image),
                     fit: BoxFit.cover,
                   ),
                 ),

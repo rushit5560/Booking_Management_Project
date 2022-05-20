@@ -98,7 +98,7 @@ class ApiUrl {
 
   /// Vendor - Schedule Time
   static const vendorGetAllScheduleSlotApi = apiMainPath + "API/ScheduleTimings";
-  static const vendorSetScheduleTimeApi = apiMainPath + "API/ScheduleTimingsUpsertslot";
+  static const vendorSetScheduleTimeApi = apiMainPath + "API/ScheduleTimingsUpsertslotJson";
   static const getAllResourcesByVendorIdApi = apiMainPath + "API/GetALLResourceByVendorId";
   static const getResourcesTimeSlotApi  = apiMainPath + "API/BookingResourceSchedule";
 

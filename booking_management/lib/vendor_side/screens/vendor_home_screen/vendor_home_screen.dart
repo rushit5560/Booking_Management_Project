@@ -25,14 +25,15 @@ class VendorHomeScreen extends StatelessWidget {
                     children: [
                       VendorHeaderModule(),
                       const SizedBox(height: 10),
-                      SearchAppointmentField().commonSymmetricPadding(horizontal: 45),
-                      const SizedBox(height: 20),
+                      // SearchAppointmentField().commonSymmetricPadding(horizontal: 45),
+                      // const SizedBox(height: 20),
                       PendingListTextModule().commonSymmetricPadding(horizontal: 25),
                       Obx(
                         () => vendorHomeScreenController.isLoading.value
                             ? const Center(child: CircularProgressIndicator())
                             : Expanded(
-                                child: TodayAppointmentListModule().commonSymmetricPadding(horizontal: 25)),
+                                child: TodayAppointmentListModule().commonSymmetricPadding(horizontal: 25),
+                        ),
                       ),
                     ],
                   ),

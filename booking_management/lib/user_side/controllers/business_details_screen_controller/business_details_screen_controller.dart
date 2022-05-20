@@ -32,7 +32,7 @@ class BusinessDetailsScreenController extends GetxController {
   String mobileNo= "";
   String address= "";
 
-  RxDouble selectRating = 1.0.obs;
+  RxInt selectRating = 1.obs;
 
   List<ReviewDatum> reviewList = [];
   List<BusinessHoursDatum> businessHoursList = [];
@@ -147,14 +147,42 @@ class BusinessDetailsScreenController extends GetxController {
   /// Add Customer Review
   addCustomerReviewFunction() async {
     DateTime date = DateTime.now();
-    String fDate = "${date.day}/${date.month}/${date.year}";
+    String fDate = "${date.day}-${date.month}-${date.year}";
 
     isLoading(true);
-    String url = ApiUrl.customerGiveReviewApi + "?id=$vendorId";
+    String url = ApiUrl.customerGiveReviewApi;
     log("Add Review API URL : $url");
 
     try {
-      Map<String, dynamic> data = {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['VendorId'] = "$vendorId";
+      request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
+      request.fields['Description'] = reviewFieldController.text.trim();
+      request.fields['Ratting'] = jsonEncode(selectRating.value);
+      request.fields['Date'] = fDate;
+
+      log("Fields : ${request.fields}");
+      log("Headers : ${request.headers}");
+
+      var response = await request.send();
+      log("response : ${response.statusCode}");
+
+      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) async {
+        AddCustomerReviewsModel addCustomerReviewsModel = AddCustomerReviewsModel.fromJson(json.decode(dataLine));
+        isSuccessStatus = addCustomerReviewsModel.success.obs;
+
+        if(isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: addCustomerReviewsModel.data);
+          await getVendorReviewFunction();
+        } else {
+          log("addCustomerReviewFunction Else Else");
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+      });
+
+      /*Map<String, dynamic> data = {
         "VendorId" : "$vendorId",
         "CustomerId" : "${UserDetails.tableWiseId}",
         "Description" : reviewFieldController.text.trim(),
@@ -176,7 +204,7 @@ class BusinessDetailsScreenController extends GetxController {
       } else {
         log("addCustomerReviewFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
-      }
+      }*/
 
     } catch(e) {
       log("addCustomerReviewFunction Error ::: $e");

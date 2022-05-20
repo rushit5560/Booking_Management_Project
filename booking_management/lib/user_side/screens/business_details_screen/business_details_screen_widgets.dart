@@ -700,10 +700,10 @@ class ReviewModule extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         RatingBar.builder(
-          initialRating: screenController.selectRating.value,
+          initialRating: double.parse(screenController.selectRating.value.toString()),
           minRating: 1,
           direction: Axis.horizontal,
-          allowHalfRating: true,
+          allowHalfRating: false,
           itemCount: 5,
           itemSize: 35,
           glow: false,
@@ -713,7 +713,8 @@ class ReviewModule extends StatelessWidget {
             color: Colors.amber,
           ),
           onRatingUpdate: (rating) {
-            screenController.selectRating.value = rating;
+            screenController.selectRating.value = rating.toInt();
+
           },
         )
       ],

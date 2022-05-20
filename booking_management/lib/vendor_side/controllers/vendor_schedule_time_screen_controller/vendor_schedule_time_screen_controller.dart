@@ -134,14 +134,19 @@ class VendorScheduleTimeScreenController extends GetxController {
       for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
         if(checkScheduleTimeList[i] == true) {
 
-          Map<String, dynamic> singleData = {
-            "ResourceId" : selectResourceValue.id,
-            "ScheduleDate" : selectedDate.value,
-            "start" : allScheduleTimeList[i],
-            "end" : allScheduleTimeList[i+1],
-          };
+          // Map<String, dynamic> singleData = {
+          //   "ResourceId" : selectResourceValue.id,
+          //   "ScheduleDate" : selectedDate.value,
+          //   "start" : allScheduleTimeList[i],
+          //   "end" : allScheduleTimeList[i+1],
+          // };
 
-          listData.add(singleData);
+          listData.add({
+            "ResourceId": "${selectResourceValue.id}",
+            "ScheduleDate": selectedDate.value,
+            "start": allScheduleTimeList[i],
+            "end": allScheduleTimeList[i+1],
+          });
         }
       }
 
@@ -150,17 +155,19 @@ class VendorScheduleTimeScreenController extends GetxController {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['bookings'] = json.encode(listData);
+      request.fields['bookings'] = jsonEncode(listData);
 
       log("Fields : ${request.fields}");
-      log('request.headers: ${request.headers}');
+      // log('request.headers: ${request.headers}');
 
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
-        SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(value));
+      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) {
+        SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(dataLine));
         isSuccessStatus = setScheduleTimeModel.success.obs;
+        log("setScheduleTimeModel.success : ${setScheduleTimeModel.success}");
+        log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
 
         if(isSuccessStatus.value) {
           Fluttertoast.showToast(msg: setScheduleTimeModel.message);

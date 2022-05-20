@@ -272,66 +272,6 @@ class VendorAvailableTimeScreenController extends GetxController {
 
       });*/
 
-      // Map<String, dynamic> newData = {
-      //   "VendorAvailabilityList" : trueList,
-      //   "VendorId" : UserDetails.tableWiseId
-      // };
-      //
-      // Map<String, dynamic> data = {
-      //   "VendorAvailabilityList" : [
-      //     {
-      //       "Day" : "Sunday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     },
-      //     {
-      //       "Day" : "Monday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     },
-      //     {
-      //       "Day" : "Tuesday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     },
-      //     {
-      //       "Day" : "Wednesday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     },
-      //     {
-      //       "Day" : "Thursday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     },
-      //     {
-      //       "Day" : "Friday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     },
-      //     {
-      //       "Day" : "Saturday",
-      //       "StartTime" : "09:00",
-      //       "EndTime" : "10:00"
-      //     }
-      //   ],
-      //   "VendorId" : 46
-      // };
-      // log("Data : $data");
-      // log("Header : ${apiHeader.headers}");
-      //
-      // http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: json.encode(data));
-      // log("Set Data Response : ${response.statusCode}");
-      //
-      // SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(response.body));
-      // isSuccessStatus = setVendorAvailableTimeModel.success.obs;
-      //
-      // if(isSuccessStatus.value) {
-      //   Fluttertoast.showToast(msg: setVendorAvailableTimeModel.data);
-      // } else {
-      //   log("setVendorAvailableTimeFunction Else Else");
-      //   Fluttertoast.showToast(msg: "Something went wrong!");
-      // }
 
     } catch(e) {
       log("setVendorAvailableTimeFunction Error ::: $e");

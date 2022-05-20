@@ -16,3 +16,10 @@ extension CustomWidgets on Widget {
     );
   }
 }
+
+
+extension CustomString on String {
+  String wordCapitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}

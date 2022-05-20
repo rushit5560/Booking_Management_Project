@@ -50,8 +50,8 @@ class UserSignUpScreen extends StatelessWidget {
                           const OrTextModule(),
                           const SizedBox(height: 15),
                           /// From Common Widgets
-                          // const SocialMediaLoginModule(),
-                          // const SizedBox(height: 40),
+                          SocialMediaLoginModule(userSignUpScreenController: userSignUpScreenController),
+                          const SizedBox(height: 40),
                           const VendorSignUpTextModule(),
                           const SizedBox(height: 15),
                           const SignInTextModule(),

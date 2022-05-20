@@ -1,3 +1,4 @@
+import 'package:booking_management/user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,8 +48,8 @@ class OrTextModule extends StatelessWidget {
 
 
 class SocialMediaLoginModule extends StatelessWidget {
-  final SignInScreenController signInScreenController;
-  const SocialMediaLoginModule({Key? key, required this.signInScreenController}) : super(key: key);
+  final UserSignUpScreenController userSignUpScreenController;
+  const SocialMediaLoginModule({Key? key, required this.userSignUpScreenController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class SocialMediaLoginModule extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () async {
-            await signInScreenController.signInWithGoogleFunction();
+            await userSignUpScreenController.signInWithGoogleFunction();
           },
           child: Container(
             height: 30,
@@ -73,7 +74,7 @@ class SocialMediaLoginModule extends StatelessWidget {
         const SizedBox(width: 60),
         GestureDetector(
           onTap: () async {
-            await signInScreenController.signInWithFacebookFunction();
+            await userSignUpScreenController.signInWithFacebookFunction();
           },
           child: Container(
             height: 30,

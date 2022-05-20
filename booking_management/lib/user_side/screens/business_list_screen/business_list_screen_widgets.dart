@@ -191,9 +191,9 @@ class BusinessListModule extends StatelessWidget {
                               Text(datum.review, style: const TextStyle(fontSize: 12),) :
                               const Text("4.5", style: TextStyle(fontSize: 12),),
 
-                              const SizedBox(width: 4,),
+                              const SizedBox(width: 4),
                               RatingBar.builder(
-                                initialRating: 5,
+                                initialRating: double.parse(datum.review),
                                 minRating: 1,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,

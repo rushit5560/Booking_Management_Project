@@ -29,6 +29,7 @@ class BookAppointmentScreenController extends GetxController {
 
   List<BookServiceWorkerList> allServicesList = [];
   List<BookingResourceWorkerData> allResourcesList = [];
+
   /// DD - Additional Slot
   List<AdditionalSlotWorkerList> allAdditionalSlotList = [];
   AdditionalSlotWorkerList additionalSlotWorkerList = AdditionalSlotWorkerList();
@@ -156,10 +157,15 @@ class BookAppointmentScreenController extends GetxController {
             allResourcesList[i].timingList =
             await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
           }
-        } else {
+        } else if(searchType2 == SearchType2.none) {
           for(int i = 0; i < allResourcesList.length; i++) {
             allResourcesList[i].timingList =
             await getResourcesTimeListFunction(resId: allResourcesList[i].id.toString());
+          }
+        } else if(searchType2 == SearchType2.additionalType) {
+          for(int i = 0; i < allResourcesList.length; i++) {
+            allResourcesList[i].timingList =
+            await getAdditionalDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
           }
         }
 
@@ -187,7 +193,33 @@ class BookAppointmentScreenController extends GetxController {
   /// Get Resources Time
   getResourcesTimeListFunction({required String resId}) async {
     DateTime dateTime = DateTime.now();
-    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String month = '';
+    if(dateTime.month == 1) {
+      month == "january";
+    } else if(dateTime.month == 2) {
+      month == "february";
+    } else if(dateTime.month == 3) {
+      month == "March";
+    } else if(dateTime.month == 4) {
+      month == "April";
+    } else if(dateTime.month == 5) {
+      month == "May";
+    } else if(dateTime.month == 6) {
+      month == "June";
+    } else if(dateTime.month == 7) {
+      month == "July";
+    } else if(dateTime.month == 8) {
+      month == "August";
+    } else if(dateTime.month == 9) {
+      month == "September";
+    } else if(dateTime.month == 10) {
+      month == "October";
+    } else if(dateTime.month == 11) {
+      month == "November";
+    } else if(dateTime.month == 12) {
+      month == "December";
+    }
+    String dateModule = "${dateTime.day}-$month-${dateTime.year}";
     String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
     List<TimingSlot> timeList = [];
     isLoading(true);
@@ -286,10 +318,61 @@ class BookAppointmentScreenController extends GetxController {
     return timeList;
   }
 
+  /// Get Additional Date & Time Wise
+  getAdditionalDateAndTimeListFunction({required String resId}) async {
+    List<TimingSlot> timeList = [];
+
+    isLoading(true);
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time=$selectedTimeValue";
+    log("Get Resources Time List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      // log("Resource Time List : ${response.body}");
+
+      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
+
+      if(isSuccessStatus.value) {
+
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+
+          timeList.add(TimingSlot(
+            id: getAllTimeListByResourceIdModel.workerList[i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isSelected: false,
+          ));
+        }
+
+        log("Time List : ${timeList.length}");
+
+      } else {
+        log("getResourcesTimeListFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+    } catch(e) {
+      log("getResourcesTimeListFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      isLoading(true);
+    }
+
+    return timeList;
+
+  }
+
+
   /// Additional Slot
   getAllAdditionalSlotFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorGetAllAdditionalSlotApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorGetAllAdditionalSlotApi + "?VendorId=$vendorId";
     log("Get All Additional Slot API URL : $url");
 
     try {
@@ -301,8 +384,7 @@ class BookAppointmentScreenController extends GetxController {
       log("Status Code : ${getAllAdditionalSlotModel.statusCode}");
 
       if (isSuccessStatus.value) {
-        // allAdditionalSlotList.clear();
-        allAdditionalSlotList = [];
+        allAdditionalSlotList.clear();
 
         // if(getAllAdditionalSlotModel.workerList.isEmpty){
         //   allAdditionalSlotList.add(AdditionalSlotWorkerList(
@@ -310,18 +392,18 @@ class BookAppointmentScreenController extends GetxController {
         //     id: 0,
         //   ));
         // } else {
-          allAdditionalSlotList = getAllAdditionalSlotModel.workerList;
-          for (int i = 0; i < allAdditionalSlotList.length; i++) {
-            log("allAdditionalSlotList : ${allAdditionalSlotList[i].name}");
-          }
+        allAdditionalSlotList = getAllAdditionalSlotModel.workerList;
+        for (int i = 0; i < allAdditionalSlotList.length; i++) {
+          log("allAdditionalSlotList : ${allAdditionalSlotList[i].name}");
+        }
+        additionalSlotWorkerList = allAdditionalSlotList[0];
+        log("allAdditionalSlotList : ${allAdditionalSlotList.length}");
         // }
 
       } else {
         log("Something went wrong!");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-
     } catch(e) {
       log("getAllAdditionalSlotFunction Error ::: $e");
     } finally {

@@ -28,7 +28,7 @@ class ReviewListModule extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+          borderRadius: BorderRadius.circular(20),
           color: AppColors.colorLightGrey1
       ),
       child: Padding(

@@ -134,13 +134,6 @@ class VendorScheduleTimeScreenController extends GetxController {
       for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
         if(checkScheduleTimeList[i] == true) {
 
-          // Map<String, dynamic> singleData = {
-          //   "ResourceId" : selectResourceValue.id,
-          //   "ScheduleDate" : selectedDate.value,
-          //   "start" : allScheduleTimeList[i],
-          //   "end" : allScheduleTimeList[i+1],
-          // };
-
           listData.add({
             "ResourceId": "${selectResourceValue.id}",
             "ScheduleDate": selectedDate.value,
@@ -156,6 +149,7 @@ class VendorScheduleTimeScreenController extends GetxController {
       request.headers.addAll(apiHeader.headers);
 
       request.fields['bookings'] = jsonEncode(listData);
+      request.fields['VendorId'] = "a";
 
       log("Fields : ${request.fields}");
       // log('request.headers: ${request.headers}');
@@ -166,6 +160,7 @@ class VendorScheduleTimeScreenController extends GetxController {
       response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) {
         SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(dataLine));
         isSuccessStatus = setScheduleTimeModel.success.obs;
+        log("setScheduleTimeModel.statusCode : ${setScheduleTimeModel.statusCode}");
         log("setScheduleTimeModel.success : ${setScheduleTimeModel.success}");
         log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
 

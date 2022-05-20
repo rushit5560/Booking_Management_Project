@@ -102,7 +102,7 @@ class Customer {
     required this.dateOfBirth,
     required this.isActive,
     required this.userId,
-    required this.applicationUser,
+    // required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
     required this.passwordHash,
@@ -120,7 +120,7 @@ class Customer {
   String dateOfBirth;
   bool isActive;
   String userId;
-  String applicationUser;
+  // String applicationUser;
   String modifiedBy;
   String modifiedOn;
   String passwordHash;
@@ -138,7 +138,7 @@ class Customer {
     dateOfBirth: json["dateOfBirth"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
-    applicationUser: json["applicationUser"] ?? "",
+    // applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: json["modifiedOn"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
@@ -157,7 +157,7 @@ class Customer {
     "dateOfBirth": dateOfBirth,
     "isActive": isActive,
     "userId": userId,
-    "applicationUser": applicationUser,
+    // "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
     "passwordHash": passwordHash,
@@ -196,7 +196,7 @@ class Vendor {
     required this.latitude,
     required this.longitude,
     required this.vendorVerificationDate,
-    required this.applicationUser,
+    // required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
     required this.review,
@@ -240,7 +240,7 @@ class Vendor {
   int latitude;
   int longitude;
   String vendorVerificationDate;
-  String applicationUser;
+  // String applicationUser;
   String modifiedBy;
   String modifiedOn;
   // dynamic applicationUserModifier;
@@ -285,7 +285,7 @@ class Vendor {
     latitude: json["latitude"] ?? 0,
     longitude: json["longitude"] ?? 0,
     vendorVerificationDate: json["vendorVerificationDate"] ?? "",
-    applicationUser: json["applicationUser"] ?? "",
+    // applicationUser: json["applicationUser"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: json["modifiedOn"] ?? "",
     // applicationUserModifier: json["applicationUserModifier"],
@@ -331,7 +331,7 @@ class Vendor {
     "latitude": latitude,
     "longitude": longitude,
     "vendorVerificationDate": vendorVerificationDate,
-    "applicationUser": applicationUser,
+    // "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
     // "applicationUserModifier": applicationUserModifier,

@@ -59,5 +59,6 @@ enum SearchType {
 
 enum SearchType2 {
    dateTimeWise,
+   additionalType,
    none
 }

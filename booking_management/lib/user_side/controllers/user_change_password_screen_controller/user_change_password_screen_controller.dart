@@ -47,7 +47,7 @@ class UserChangePasswordScreenController extends GetxController{
 
 
       log('request.fields: ${request.fields}');
-      log('request.files: ${request.files}');
+      // log('request.files: ${request.files}');
 
 
       var response = await request.send();

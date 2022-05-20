@@ -382,6 +382,7 @@ class AdditionalSlotModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       ()=> Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TableModule(),
           screenController.isCalenderShow.value
@@ -391,13 +392,57 @@ class AdditionalSlotModule extends StatelessWidget {
           AnytimeDropDownModule(),
           const SizedBox(height: 10),
           AdditionalSlotDropDownModule(),
-          const SizedBox(height: 10),
+          const SizedBox(height: 15),
+          AdditionalSlotSubmitButton(),
           // SubmitButtonModule(),
         ],
       ),
     );
   }
 }
+
+class AdditionalSlotSubmitButton extends StatelessWidget {
+  AdditionalSlotSubmitButton({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        if(screenController.selectedDate.value == "") {
+         Fluttertoast.showToast(msg: "Please select date!");
+        } else {
+          await screenController.getAllResourcesListByIdFunction(
+              searchType2: SearchType2.additionalType);
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Text(
+            'Submit',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 
 class TableModule extends StatelessWidget {

@@ -129,17 +129,6 @@ class PasswordFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return TextFormField(
-        controller: screenController.passwordFieldController,
-        keyboardType: TextInputType.text,
-        validator: (value) => FieldValidator().validatePassword(value!),
-        decoration: signUpFormFieldDecoration(
-          controller: screenController,
-          hintText: 'Create Password',
-          index: 1,
-          context: context,
-        ),
-    );*/
     return Obx(
           ()=> TextFormField(
         controller: screenController.passwordFieldController,

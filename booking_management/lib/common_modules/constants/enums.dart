@@ -56,3 +56,8 @@ enum SearchType {
    categoryWise,
    none
 }
+
+enum SearchType2 {
+   dateTimeWise,
+   none
+}

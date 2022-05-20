@@ -35,6 +35,22 @@ class BookAppointmentScreen extends StatelessWidget {
                     children: [
                       VendorDetailsModule(),
                       const SizedBox(height: 10),
+                      Row(
+                       children: [
+                         Expanded(child: TableModule()),
+                         const SizedBox(width: 25),
+                         SubmitButtonModule(),
+                       ],
+                      ),
+
+                      const SizedBox(height: 10),
+                      bookAppointmentScreenController.isCalenderShow.value
+                          ? SelectDateModule()
+                          : Container(),
+
+                      bookAppointmentScreenController.isCalenderShow.value
+                          ? const SizedBox(height: 10)
+                          : Container(),
 
                       /// If Service True then show
                       bookAppointmentScreenController.isServiceSlot.value

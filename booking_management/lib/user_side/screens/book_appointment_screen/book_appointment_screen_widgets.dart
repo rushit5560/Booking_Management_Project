@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -397,6 +398,8 @@ class AdditionalSlotModule extends StatelessWidget {
     );
   }
 }
+
+
 class TableModule extends StatelessWidget {
   TableModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookAppointmentScreenController>();
@@ -440,7 +443,6 @@ class TableModule extends StatelessWidget {
   }
 }
 
-
 class SelectDateModule extends StatelessWidget {
   final screenController = Get.find<BookAppointmentScreenController>();
   CalendarFormat format = CalendarFormat.month;
@@ -474,10 +476,9 @@ class SelectDateModule extends StatelessWidget {
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
-                screenController.selectedDate.value =
-                "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
-                screenController.isCalenderShow.value =
-                !screenController.isCalenderShow.value;
+                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+                screenController.isCalenderShow.value = !screenController.isCalenderShow.value;
                 screenController.loadUI();
                 // log('selectedDay :: $selectedDay');
                 // log('focusedDay :: $focusedDay');
@@ -557,6 +558,47 @@ class SelectDateModule extends StatelessWidget {
     );
   }
 }
+
+class SubmitButtonModule extends StatelessWidget {
+  SubmitButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.dateTimeWise);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  color: Colors.grey.shade300,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ]
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              'Book',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 class AnytimeDropDownModule extends StatelessWidget {
   AnytimeDropDownModule({Key? key}) : super(key: key);

@@ -811,6 +811,7 @@ class ReviewModule extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -876,7 +877,10 @@ class ReviewModule extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Text(screenController.reviewList[index].description)
+                  Text(
+                      screenController.reviewList[index].description,
+                    // textAlign: TextAlign.start,
+                  ),
                 ],
               ),
             ),

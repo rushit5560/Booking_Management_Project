@@ -191,7 +191,7 @@ class VendorAvailableTimeScreenController extends GetxController {
           "EndTime" : sundayEndTime.value
         });
       }
-      /*if(isMondayOn.value) {
+      if(isMondayOn.value) {
         trueList.add({
           "Day": "Monday",
           "StartTime": mondayStartTime.value,
@@ -232,18 +232,12 @@ class VendorAvailableTimeScreenController extends GetxController {
           "StartTime": saturdayStartTime.value,
           "EndTime": saturdayEndTime.value
         });
-      }*/
+      }
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['available'] = jsonEncode([
-        {
-          "Day" : "Sunday",
-          "StartTime" : "09:00",
-          "EndTime" : "10:00"
-        }
-      ]);
+      request.fields['available'] = jsonEncode(trueList);
       request.fields['VendorId'] = "${UserDetails.tableWiseId}";
 
       log("Fields : ${request.fields}");
@@ -252,7 +246,20 @@ class VendorAvailableTimeScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) {
+        SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(dataLine));
+        isSuccessStatus = setVendorAvailableTimeModel.success.obs;
+
+        if(isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: setVendorAvailableTimeModel.message);
+        } else {
+          log("setVendorAvailableTimeFunction Else Else");
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+
+      });
+
+      /*response.stream.transform(utf8.decoder).listen((value) async {
         SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(value));
         isSuccessStatus = setVendorAvailableTimeModel.success.obs;
 
@@ -263,7 +270,7 @@ class VendorAvailableTimeScreenController extends GetxController {
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
 
-      });
+      });*/
 
       // Map<String, dynamic> newData = {
       //   "VendorAvailabilityList" : trueList,

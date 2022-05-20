@@ -8,22 +8,22 @@ class SetVendorAvailableTimeModel {
   SetVendorAvailableTimeModel({
     required this.statusCode,
     required this.success,
-    required this.data,
+    required this.message,
   });
 
   int statusCode;
   bool success;
-  String data;
+  String message;
 
   factory SetVendorAvailableTimeModel.fromJson(Map<String, dynamic> json) => SetVendorAvailableTimeModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
-    data: json["data"] ?? "",
+    message: json["message"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
-    "data": data,
+    "message": message,
   };
 }

@@ -7,13 +7,10 @@ import 'business_details_screen_widgets.dart';
 
 class BusinessDetailScreen extends StatelessWidget {
   BusinessDetailScreen({Key? key}) : super(key: key);
-  final vendorDetailsScreenController =
-      Get.put(BusinessDetailsScreenController());
+  final vendorDetailsScreenController = Get.put(BusinessDetailsScreenController());
 
   @override
   Widget build(BuildContext context) {
-    log('overview: ${vendorDetailsScreenController.isOverviewSelected.value}');
-    log('review: ${vendorDetailsScreenController.isReviewSelected.value}');
     return Scaffold(
       body: SafeArea(
         child: Stack(

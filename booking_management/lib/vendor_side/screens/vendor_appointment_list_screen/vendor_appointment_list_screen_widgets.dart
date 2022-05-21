@@ -67,7 +67,7 @@ class AppointmentListTextModule extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 25),
         _selectableTabsModule(),
         const SizedBox(height: 25),
       ],
@@ -80,7 +80,7 @@ class AppointmentListTextModule extends StatelessWidget {
       child: ListView.builder(
         itemCount: 1,
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Obx(
@@ -502,7 +502,7 @@ class AllAppointmentListModule extends StatelessWidget {
                         children: [
                           _viewButton(),
                           const SizedBox(width: 10),
-                          _confirmButton(),
+                          _confirmButton(i),
                         ],
                       ),
                     ),
@@ -553,7 +553,7 @@ class AllAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.allAppointmentList[i].customer.dateOfBirth,
+          screenController.allAppointmentList[i].startDateTime,
           style: const TextStyle(fontSize: 9),
         ),
 
@@ -614,7 +614,7 @@ class AllAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  Widget _confirmButton(i) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -627,11 +627,11 @@ class AllAppointmentListModule extends StatelessWidget {
           ),
         ],
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
         child: Text(
-          'Confirm',
-          style: TextStyle(
+          screenController.allAppointmentList[i].status,
+          style: const TextStyle(
             fontSize: 9,
             fontWeight: FontWeight.bold,
           ),
@@ -887,8 +887,8 @@ class ConfirmAppointmentListModule extends StatelessWidget {
                 child: Row(
                   children: [
                     _viewButton(),
-                    const SizedBox(width: 10),
-                    _confirmButton(),
+                    // const SizedBox(width: 10),
+                    // _confirmButton(),
                   ],
                 ),
               ),
@@ -1000,7 +1000,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  /*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -1024,7 +1024,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }
 
 /// Cancel Appointment Module
@@ -1080,8 +1080,8 @@ class CancelAppointmentListModule extends StatelessWidget {
                 child: Row(
                   children: [
                     _viewButton(),
-                    const SizedBox(width: 10),
-                    _confirmButton(),
+                    // const SizedBox(width: 10),
+                    // _confirmButton(),
                   ],
                 ),
               ),
@@ -1193,7 +1193,7 @@ class CancelAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  /*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -1217,7 +1217,7 @@ class CancelAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }
 
 /// Done Appointment Module
@@ -1273,8 +1273,8 @@ class DoneAppointmentListModule extends StatelessWidget {
                 child: Row(
                   children: [
                     _viewButton(),
-                    const SizedBox(width: 10),
-                    _confirmButton(),
+                    // const SizedBox(width: 10),
+                    // _confirmButton(),
                   ],
                 ),
               ),
@@ -1386,7 +1386,7 @@ class DoneAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  /*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -1410,7 +1410,7 @@ class DoneAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }
 
 /// Processing Appointment Module
@@ -1466,8 +1466,8 @@ class ProcessingAppointmentListModule extends StatelessWidget {
                 child: Row(
                   children: [
                     _viewButton(),
-                    const SizedBox(width: 10),
-                    _confirmButton(),
+                    // const SizedBox(width: 10),
+                    // _confirmButton(),
                   ],
                 ),
               ),
@@ -1579,7 +1579,7 @@ class ProcessingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  /*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -1603,7 +1603,7 @@ class ProcessingAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }
 
 /// Schedule Appointment Module
@@ -1659,8 +1659,8 @@ class ScheduledAppointmentListModule extends StatelessWidget {
                 child: Row(
                   children: [
                     _viewButton(),
-                    const SizedBox(width: 10),
-                    _confirmButton(),
+                    // const SizedBox(width: 10),
+                    // _confirmButton(),
                   ],
                 ),
               ),
@@ -1772,7 +1772,7 @@ class ScheduledAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
+  /*Widget _confirmButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -1796,7 +1796,7 @@ class ScheduledAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }
 
 

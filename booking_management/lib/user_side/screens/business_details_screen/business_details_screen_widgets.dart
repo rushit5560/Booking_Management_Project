@@ -202,6 +202,7 @@ class OverviewModule extends StatelessWidget {
   }
 
   Widget ratting() {
+    double rating = double.parse(screenController.vendorDetailsData!.ratting.toString());
     return Row(
       children: [
         Text(
@@ -212,13 +213,12 @@ class OverviewModule extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         RatingBar.builder(
-          initialRating: double.parse(
-              screenController.vendorDetailsData!.ratting.toString()),
+          initialRating: screenController.vendorDetailsData!.ratting.toDouble(),
           minRating: 1,
           direction: Axis.horizontal,
-          allowHalfRating: true,
-          itemCount: screenController.ratting,
-          itemSize: 28,
+          // allowHalfRating: true,
+          itemCount: screenController.vendorDetailsData!.ratting,
+          itemSize: 25,
           itemBuilder: (context, _) => const Icon(
             Icons.star,
             color: Colors.amber,

@@ -168,6 +168,24 @@ class VendorAdditionalSlotScreenController extends GetxController {
     log("Update Resources API URL : $url");
 
     try {
+      int timeDuration = 0;
+      if(updateAdditionalTimeDuration.value == 0.5) {
+        timeDuration = 30;
+      } else if(updateAdditionalTimeDuration.value == 1) {
+        timeDuration = 60;
+      } else if(updateAdditionalTimeDuration.value == 1.5) {
+        timeDuration = 90;
+      } else if(updateAdditionalTimeDuration.value == 2) {
+        timeDuration = 120;
+      } else if(updateAdditionalTimeDuration.value == 2.5) {
+        timeDuration = 150;
+      } else if(updateAdditionalTimeDuration.value == 3) {
+        timeDuration = 180;
+      } else if(updateAdditionalTimeDuration.value == 3.5) {
+        timeDuration = 210;
+      } else if(updateAdditionalTimeDuration.value == 4) {
+        timeDuration = 240;
+      }
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
@@ -176,7 +194,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
       request.fields['ShortDescription'] = updateAdditionalShortDescriptionFieldController.text.trim();
       request.fields['Price'] = updateAdditionalPriceFieldController.text.trim();
       request.fields['LongDescription'] = updateAdditionalLongDescriptionFieldController.text.trim();
-      request.fields['TimeDuration'] = "${updateAdditionalTimeDuration.value}";
+      request.fields['TimeDuration'] = "$timeDuration";
       request.fields['ModifiedBy'] = UserDetails.uniqueId;
       request.fields['VendorId'] = "${UserDetails.tableWiseId}";
       request.fields['Id'] = "$selectedUpdateItemId";
@@ -232,7 +250,26 @@ class VendorAdditionalSlotScreenController extends GetxController {
         updateAdditionalShortDescriptionFieldController.text = getAdditionalSlotDetailsModel.workerList.shortDescription;
         updateAdditionalLongDescriptionFieldController.text = getAdditionalSlotDetailsModel.workerList.longDescription;
         updateAdditionalPriceFieldController.text = getAdditionalSlotDetailsModel.workerList.price.toString();
-        updateAdditionalTimeDuration.value = double.parse(getAdditionalSlotDetailsModel.workerList.timeDuration.toString());
+        // updateAdditionalTimeDuration.value = double.parse(getAdditionalSlotDetailsModel.workerList.timeDuration.toString());
+
+        if(getAdditionalSlotDetailsModel.workerList.timeDuration > 0 && getAdditionalSlotDetailsModel.workerList.timeDuration <=30) {
+          updateAdditionalTimeDuration.value = 0.5;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 30 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 60) {
+          updateAdditionalTimeDuration.value = 1;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 60 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 90) {
+          updateAdditionalTimeDuration.value = 1.5;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 90 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 120) {
+          updateAdditionalTimeDuration.value = 2;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 120 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 150) {
+          updateAdditionalTimeDuration.value = 2.5;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 150 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 180) {
+          updateAdditionalTimeDuration.value = 3;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 180 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 210) {
+          updateAdditionalTimeDuration.value = 3.5;
+        } else if (getAdditionalSlotDetailsModel.workerList.timeDuration > 210 && getAdditionalSlotDetailsModel.workerList.timeDuration <= 240) {
+          updateAdditionalTimeDuration.value = 4;
+        }
+
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");

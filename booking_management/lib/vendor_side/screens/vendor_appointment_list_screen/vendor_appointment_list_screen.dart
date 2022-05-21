@@ -21,6 +21,7 @@ class VendorAppointmentListScreen extends StatelessWidget {
               title: 'Appointment list',
               appBarOption: AppBarOption.none,
             ),
+            const SizedBox(height: 10),
 
             // SearchAppointmentField().commonSymmetricPadding(horizontal: 45, vertical: 40),
             AppointmentListTextModule().commonSymmetricPadding(horizontal: 20),

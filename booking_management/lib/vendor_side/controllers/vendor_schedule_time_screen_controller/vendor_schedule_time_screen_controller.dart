@@ -129,27 +129,34 @@ class VendorScheduleTimeScreenController extends GetxController {
     log("Set Schedule Time API URL : $url");
 
     try {
-      List listData = [];
+      List trueList = [];
 
       for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
         if(checkScheduleTimeList[i] == true) {
 
-          listData.add({
-            "ResourceId": "${selectResourceValue.id}",
-            "ScheduleDate": selectedDate.value,
-            "start": allScheduleTimeList[i],
-            "end": allScheduleTimeList[i+1],
+          String startTime = allScheduleTimeList[i];
+          String endTime = allScheduleTimeList[i+1];
+
+          /// Remove AM & PM
+          String start = startTime.substring(0, startTime.length - 3);
+          String end = endTime.substring(0, endTime.length - 3);
+
+          trueList.add({
+            "ResourceId": selectResourceValue.id,
+            "ScheduleDate": selectedDate.value.toString(),
+            "start": start,
+            "end": end,
           });
         }
       }
 
-      log("listData : $listData");
+      log("listData : $trueList");
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['bookings'] = jsonEncode(listData);
-      request.fields['VendorId'] = "a";
+      request.fields['bookings'] = jsonEncode(trueList);
+      request.fields['VendorId'] = "${UserDetails.tableWiseId}";
 
       log("Fields : ${request.fields}");
       // log('request.headers: ${request.headers}');

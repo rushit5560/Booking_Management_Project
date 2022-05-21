@@ -4,9 +4,7 @@ import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/constants/user_details.dart';
 import '../../../vendor_side/model/vendor_additional_slot_screen_model/get_all_additional_slot_model.dart';
@@ -16,6 +14,7 @@ import '../../model/book_appointment_screen_model/get_booking_resources_model.da
 import '../../model/book_appointment_screen_model/get_booking_service_model.dart';
 import '../../model/book_appointment_screen_model/get_vendor_booking_model.dart';
 import '../../screens/user_checkout_screen/user_checkout_screen.dart';
+
 
 class BookAppointmentScreenController extends GetxController {
   int vendorId = Get.arguments;
@@ -39,33 +38,18 @@ class BookAppointmentScreenController extends GetxController {
   List<int> selectedServiceList = [];
   RxString selectedDate = "".obs;
   RxString selectedTime = "".obs;
+  RxBool isServiceCalenderShow = false.obs;
   RxBool isCalenderShow = false.obs;
-
-  var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
-  RxInt selectedPageIndex = 0.obs;
   RxInt selectedTimeIndex = 0.obs;
-  RxInt selectedDateIndex = 0.obs;
-  //List<String> serviceLists = ['2.5 Km', '2.5 Km', '2.5 Km', '2.5 Km'];
-  // List<String> dateList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-  //   '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', '31'];
-  List<String> timeList = [
+
+
+  List<String> timeList = [ 'Any Time',
     '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30',
     '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
     '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
     '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
-    '22:00', '22:30', '23:00', '23:30'
-  ];
-  RxString selectedTimeValue = "06:00".obs;
-  RxString date = '23-Mar-2022'.obs;
-  RxString time = '6:35 PM'.obs;
-
-  selectDatePreviousClick({required PageController pageController}) {
-    pageController.previousPage(duration: 300.milliseconds, curve: Curves.ease);
-  }
-
-  selectDateNextClick({required PageController pageController}) {
-    pageController.nextPage(duration: 300.milliseconds, curve: Curves.ease);
-  }
+    '22:00', '22:30', '23:00', '23:30'];
+  RxString selectedTimeValue = "Any Time".obs;
 
 
   /// Get Booking Vendor
@@ -121,7 +105,6 @@ class BookAppointmentScreenController extends GetxController {
         allServicesList.clear();
 
         allServicesList = getBookingServiceModel.workerList;
-        // log("allServicesList : ${allServicesList.length}");
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getServicesListByIdFunction Else Else");
@@ -152,22 +135,41 @@ class BookAppointmentScreenController extends GetxController {
         allResourcesList = getBookingResourcesModel.workerList;
         log("allResourcesList : ${allResourcesList.length}");
 
-        if(searchType2 == SearchType2.dateTimeWise) {
-          for(int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList =
-            await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
-          }
-        } else if(searchType2 == SearchType2.none) {
+        if(searchType2 == SearchType2.none) {
+          log("searchType2 : $searchType2");
           for(int i = 0; i < allResourcesList.length; i++) {
             allResourcesList[i].timingList =
             await getResourcesTimeListFunction(resId: allResourcesList[i].id.toString());
           }
-        } else if(searchType2 == SearchType2.additionalType) {
+        }
+        else if(searchType2 == SearchType2.anyTimeWithAdditionalSlotWise) {
+          log("searchType2 : $searchType2");
           for(int i = 0; i < allResourcesList.length; i++) {
             allResourcesList[i].timingList =
-            await getAdditionalDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
+            await getResourcesAdditionalSlotAndAnytimeFunction(resId: allResourcesList[i].id.toString());
           }
         }
+        else if(searchType2 == SearchType2.anyTimeWise) {
+          log("searchType2 : $searchType2");
+          for(int i = 0; i < allResourcesList.length; i++) {
+            allResourcesList[i].timingList =
+            await getResourcesAndAnytimeFunction(resId: allResourcesList[i].id.toString());
+          }
+        }
+        else if(searchType2 == SearchType2.additionalSlotWise) {
+          log("searchType2 : $searchType2");
+          for(int i = 0; i < allResourcesList.length; i++) {
+            allResourcesList[i].timingList =
+            await getResourcesAdditionalSlotFunction(resId: allResourcesList[i].id.toString());
+          }
+        }
+        /*else if(searchType2 == SearchType2.dateTimeWise) {
+          log("searchType2 : $searchType2");
+          for(int i = 0; i < allResourcesList.length; i++) {
+            allResourcesList[i].timingList =
+            await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
+          }
+        }*/
 
       } else {
         log("getAllResourcesListByIdFunction Else Else");
@@ -178,46 +180,46 @@ class BookAppointmentScreenController extends GetxController {
       log("getAllResourcesListByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
-      log("!isServiceSlot.value : ${!isServiceSlot.value}");
+      log("isServiceSlot.value : ${isServiceSlot.value}");
 
-      if(!isServiceSlot.value) {
-        await getAllAdditionalSlotFunction();
-      } else {
+      if(isServiceSlot.value == true) {
         isLoading(false);
+      } else if(isServiceSlot.value == false){
+        await getAllAdditionalSlotFunction();
       }
 
     }
 
   }
 
-  /// Get Resources Time
+  /// Get Resources Time List
   getResourcesTimeListFunction({required String resId}) async {
     DateTime dateTime = DateTime.now();
     String month = '';
     if(dateTime.month == 1) {
-      month == "january";
+      month = "january";
     } else if(dateTime.month == 2) {
-      month == "february";
+      month = "february";
     } else if(dateTime.month == 3) {
-      month == "March";
+      month = "March";
     } else if(dateTime.month == 4) {
-      month == "April";
+      month = "April";
     } else if(dateTime.month == 5) {
-      month == "May";
+      month = "May";
     } else if(dateTime.month == 6) {
-      month == "June";
+      month = "June";
     } else if(dateTime.month == 7) {
-      month == "July";
+      month = "July";
     } else if(dateTime.month == 8) {
-      month == "August";
+      month = "August";
     } else if(dateTime.month == 9) {
-      month == "September";
+      month = "September";
     } else if(dateTime.month == 10) {
-      month == "October";
+      month = "October";
     } else if(dateTime.month == 11) {
-      month == "November";
+      month = "November";
     } else if(dateTime.month == 12) {
-      month == "December";
+      month = "December";
     }
     String dateModule = "${dateTime.day}-$month-${dateTime.year}";
     String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
@@ -267,8 +269,8 @@ class BookAppointmentScreenController extends GetxController {
     return timeList;
   }
 
-  /// Get Resources Date & Time Wise
-  getResourcesDateAndTimeListFunction({required String resId}) async {
+  /// Get Resources Date & Time Wise List
+  /*getResourcesDateAndTimeListFunction({required String resId}) async {
     // DateTime dateTime = DateTime.now();
     // String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     // String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
@@ -316,14 +318,114 @@ class BookAppointmentScreenController extends GetxController {
     }
 
     return timeList;
-  }
+  }*/
 
-  /// Get Additional Date & Time Wise
-  getAdditionalDateAndTimeListFunction({required String resId}) async {
+  /// Get Resources Additional Slot & Anny Time Wise List
+  getResourcesAdditionalSlotAndAnytimeFunction({required String resId}) async {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time=$selectedTimeValue";
+    log("Get Resources Time List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      // log("Resource Time List : ${response.body}");
+
+      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
+
+      if(isSuccessStatus.value) {
+
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+
+          timeList.add(TimingSlot(
+            id: getAllTimeListByResourceIdModel.workerList[i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isSelected: false,
+          ));
+        }
+
+        log("Time List : ${timeList.length}");
+
+      } else {
+        log("getResourcesTimeListFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+    } catch(e) {
+      log("getResourcesTimeListFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      isLoading(true);
+    }
+
+    return timeList;
+
+  }
+
+  /// Get Resources Any Time Wise List
+  getResourcesAndAnytimeFunction({required String resId}) async {
+    List<TimingSlot> timeList = [];
+
+    isLoading(true);
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration&Time=$selectedTimeValue";
+    log("Get Resources Time List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      // log("Resource Time List : ${response.body}");
+
+      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
+
+      if(isSuccessStatus.value) {
+
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+
+          timeList.add(TimingSlot(
+            id: getAllTimeListByResourceIdModel.workerList[i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isSelected: false,
+          ));
+        }
+
+        log("Time List : ${timeList.length}");
+
+      } else {
+        log("getResourcesTimeListFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+    } catch(e) {
+      log("getResourcesTimeListFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      isLoading(true);
+    }
+
+    return timeList;
+
+  }
+
+  /// Get Resources Additional Slot Wise List
+  getResourcesAdditionalSlotFunction({required String resId}) async {
+    List<TimingSlot> timeList = [];
+
+    isLoading(true);
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -386,18 +488,12 @@ class BookAppointmentScreenController extends GetxController {
       if (isSuccessStatus.value) {
         allAdditionalSlotList.clear();
 
-        // if(getAllAdditionalSlotModel.workerList.isEmpty){
-        //   allAdditionalSlotList.add(AdditionalSlotWorkerList(
-        //     name: "Select Additional Time Slot",
-        //     id: 0,
-        //   ));
-        // } else {
-        allAdditionalSlotList = getAllAdditionalSlotModel.workerList;
-        for (int i = 0; i < allAdditionalSlotList.length; i++) {
-          log("allAdditionalSlotList : ${allAdditionalSlotList[i].name}");
-        }
+        /// Add Initial Value
+        allAdditionalSlotList.add(AdditionalSlotWorkerList(id: 0, name: "Select Additional Slot"));
+        /// Add Backend values
+        allAdditionalSlotList.addAll(getAllAdditionalSlotModel.workerList);
+        /// Set First Value of list in DD Value Object
         additionalSlotWorkerList = allAdditionalSlotList[0];
-        log("allAdditionalSlotList : ${allAdditionalSlotList.length}");
         // }
 
       } else {
@@ -407,11 +503,7 @@ class BookAppointmentScreenController extends GetxController {
     } catch(e) {
       log("getAllAdditionalSlotFunction Error ::: $e");
     } finally {
-      // if(!isServiceSlot.value){
-      //   await getVendorAllAdditionalSlotFunction();
-      // } else {
         isLoading(false);
-      // }
     }
 
   }
@@ -486,45 +578,12 @@ class BookAppointmentScreenController extends GetxController {
   }
 
 
-  /// Get All Additional Slot
-  // getVendorAllAdditionalSlotFunction() async {
-  //   isLoading(true);
-  //   String url = ApiUrl.vendorGetAllAdditionalSlotApi + "?VendorId=${UserDetails.tableWiseId}";
-  //   log("Get All Additional Slot API URL : $url");
-  //
-  //   try {
-  //     http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-  //     log('Response : $response');
-  //
-  //     GetAllAdditionalSlotModel getAllAdditionalSlotModel = GetAllAdditionalSlotModel.fromJson(json.decode(response.body));
-  //     isSuccessStatus = getAllAdditionalSlotModel.success.obs;
-  //     log("Status Code : ${getAllAdditionalSlotModel.statusCode}");
-  //
-  //     if (isSuccessStatus.value) {
-  //       // allAdditionalSlotList.clear();
-  //       allAdditionalSlotList = [];
-  //       allAdditionalSlotList = getAllAdditionalSlotModel.workerList;
-  //       for(int i = 0; i < allAdditionalSlotList.length; i++) {
-  //         log("allAdditionalSlotList : ${allAdditionalSlotList[i].name}");
-  //       }
-  //     } else {
-  //       log("Something went wrong!");
-  //       Fluttertoast.showToast(msg: "Something went wrong!");
-  //     }
-  //
-  //
-  //   } catch(e) {
-  //     log("getAllAdditionalSlotFunction Error ::: $e");
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  //
-  // }
-
 
   @override
   void onInit() {
     getBookVendorDetailsByIdFunction();
+    /// Get Today Date Only
+    getTodayDateFunction();
     super.onInit();
   }
 
@@ -533,4 +592,38 @@ class BookAppointmentScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
+
+  getTodayDateFunction() {
+    DateTime dateTime = DateTime.now();
+    String month = '';
+    if(dateTime.month == 1) {
+      month = "january";
+    } else if(dateTime.month == 2) {
+      month = "february";
+    } else if(dateTime.month == 3) {
+      month = "March";
+    } else if(dateTime.month == 4) {
+      month = "April";
+    } else if(dateTime.month == 5) {
+      month = "May";
+    } else if(dateTime.month == 6) {
+      month = "June";
+    } else if(dateTime.month == 7) {
+      month = "July";
+    } else if(dateTime.month == 8) {
+      month = "August";
+    } else if(dateTime.month == 9) {
+      month = "September";
+    } else if(dateTime.month == 10) {
+      month = "October";
+    } else if(dateTime.month == 11) {
+      month = "November";
+    } else if(dateTime.month == 12) {
+      month = "December";
+    }
+
+    selectedDate.value = "${dateTime.day}-$month-${dateTime.year}";
+    log("selectedDate : ${selectedDate.value}");
+  }
+
 }

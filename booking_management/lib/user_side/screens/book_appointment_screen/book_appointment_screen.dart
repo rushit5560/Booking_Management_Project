@@ -34,24 +34,28 @@ class BookAppointmentScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// Always Show
                             VendorDetailsModule(),
                             const SizedBox(height: 10),
+
+                            /// If Service True then show
                             bookAppointmentScreenController.isServiceSlot.value
                                 ? Row(
                                     children: [
-                                      Expanded(child: TableModule()),
+                                      Expanded(child: CalenderTableModule()),
                                       const SizedBox(width: 25),
                                       SubmitButtonModule(),
                                     ],
                                   )
                                 : Container(),
-
                             const SizedBox(height: 10),
-                            bookAppointmentScreenController.isCalenderShow.value
+
+
+                            bookAppointmentScreenController.isServiceCalenderShow.value
                                 ? SelectDateModule()
                                 : Container(),
 
-                            bookAppointmentScreenController.isCalenderShow.value
+                            bookAppointmentScreenController.isServiceCalenderShow.value
                                 ? const SizedBox(height: 10)
                                 : Container(),
 
@@ -61,6 +65,7 @@ class BookAppointmentScreen extends StatelessWidget {
                                 : AdditionalSlotModule(),
                             const SizedBox(height: 10),
 
+                            /// Always Show
                             BookingResourcesListModule(),
                             const SizedBox(height: 40),
 

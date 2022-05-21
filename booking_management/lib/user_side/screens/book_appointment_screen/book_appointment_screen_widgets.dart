@@ -384,7 +384,7 @@ class AdditionalSlotModule extends StatelessWidget {
       ()=> Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          TableModule(),
+          ResourceCalenderTableModule(),
           screenController.isCalenderShow.value
           ? SelectDateModule()
           : Container(),
@@ -409,11 +409,17 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(screenController.selectedDate.value == "") {
-         Fluttertoast.showToast(msg: "Please select date!");
-        } else {
-          await screenController.getAllResourcesListByIdFunction(
-              searchType2: SearchType2.additionalType);
+        if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction();
+        }
+        else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWithAdditionalSlotWise);
+        }
+        else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWise);
+        }
+        else if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.additionalSlotWise);
         }
       },
       child: Container(
@@ -445,8 +451,55 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
 
 
 
-class TableModule extends StatelessWidget {
-  TableModule({Key? key}) : super(key: key);
+class CalenderTableModule extends StatelessWidget {
+  CalenderTableModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+
+          /// Show Date as Text
+          Text(
+            screenController.selectedDate.value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+
+          /// Calender Image Button
+          GestureDetector(
+            onTap: () {
+              screenController.isServiceCalenderShow.value =
+              !screenController.isServiceCalenderShow.value;
+
+              log("screenController.isCalenderShow.value : ${screenController.isServiceCalenderShow.value}");
+            },
+            child: const Icon(Icons.calendar_month),
+          ),
+        ],
+      ).commonSymmetricPadding(vertical: 12, horizontal: 10),
+    );
+  }
+}
+
+class ResourceCalenderTableModule extends StatelessWidget {
+  ResourceCalenderTableModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookAppointmentScreenController>();
 
   @override
@@ -521,12 +574,38 @@ class SelectDateModule extends StatelessWidget {
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
-                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+
+                String month = '';
+                if(selectedDay.month == 1) {
+                  month = "january";
+                } else if(selectedDay.month == 2) {
+                  month = "february";
+                } else if(selectedDay.month == 3) {
+                  month = "March";
+                } else if(selectedDay.month == 4) {
+                  month = "April";
+                } else if(selectedDay.month == 5) {
+                  month = "May";
+                } else if(selectedDay.month == 6) {
+                  month = "June";
+                } else if(selectedDay.month == 7) {
+                  month = "July";
+                } else if(selectedDay.month == 8) {
+                  month = "August";
+                } else if(selectedDay.month == 9) {
+                  month = "September";
+                } else if(selectedDay.month == 10) {
+                  month = "October";
+                } else if(selectedDay.month == 11) {
+                  month = "November";
+                } else if(selectedDay.month == 12) {
+                  month = "December";
+                }
+
+                screenController.selectedDate.value = "${selectedDay.day}-$month-${selectedDay.year}";
                 screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
-                screenController.isCalenderShow.value = !screenController.isCalenderShow.value;
+                screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
                 screenController.loadUI();
-                // log('selectedDay :: $selectedDay');
-                // log('focusedDay :: $focusedDay');
               },
 
               // Day Changed
@@ -631,7 +710,7 @@ class SubmitButtonModule extends StatelessWidget {
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
-              'Book',
+              'Submit',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -726,109 +805,6 @@ class AdditionalSlotDropDownModule extends StatelessWidget {
 }
 
 
-
-// class SelectDateModule extends StatelessWidget {
-//   final screenController = Get.find<BookAppointmentScreenController>();
-//   CalendarFormat format = CalendarFormat.month;
-//   DateTime selectedDay = DateTime.now();
-//   DateTime focusedDay = DateTime.now();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         const Text("Select Date", style: TextStyle(
-//             color: Colors.black, fontWeight: FontWeight.bold
-//         ),),
-//         const SizedBox(height: 10,),
-//         Material(
-//           elevation: 2,
-//           borderRadius: BorderRadius.circular(10),
-//           color: Colors.white,
-//           child: Container(
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//             child: TableCalendar(
-//               focusedDay: focusedDay,
-//               firstDay: DateTime(2020),
-//               lastDay: DateTime(2050),
-//               calendarFormat: format,
-//               rangeStartDay: DateTime.now(),
-//               onDaySelected: (DateTime selectDay, DateTime focusDay) {
-//                   selectedDay = selectDay;
-//                   focusedDay = focusDay;
-//
-//                   screenController.loadUI();
-//               },
-//
-//               // Day Changed
-//               selectedDayPredicate: (DateTime date) {
-//                 return isSameDay(selectedDay, date);
-//               },
-//               // Style the Calender
-//               calendarStyle: CalendarStyle(
-//                 isTodayHighlighted: false,
-//                 outsideDecoration:
-//                 BoxDecoration(borderRadius: BorderRadius.circular(10)),
-//                 defaultTextStyle: const TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold),
-//                 weekendTextStyle: const TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold),
-//                 selectedTextStyle: const TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold),
-//                 todayTextStyle: const TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold),
-//                 defaultDecoration: const BoxDecoration(
-//                    // borderRadius: BorderRadius.circular(10),
-//                     shape: BoxShape.circle, color: Colors.white),
-//                 weekendDecoration: const BoxDecoration(
-//                     //borderRadius: BorderRadius.circular(10),
-//                     shape: BoxShape.circle, color: Colors.white),
-//                 todayDecoration: const BoxDecoration(
-//                     //borderRadius: BorderRadius.circular(10),
-//                     shape: BoxShape.circle, color: Colors.transparent),
-//                 selectedDecoration: BoxDecoration(
-//                   //borderRadius: BorderRadius.circular(10),
-//                     shape: BoxShape.circle, color: AppColors.colorLightGrey1),
-//               ),
-//               // Week Style
-//               daysOfWeekStyle: const DaysOfWeekStyle(
-//                 // dowTextFormatter: (dowTextFormat, dynamic) {
-//                 //   return DateFormat.E(locale).format(dowTextFormat)[0];
-//                 // },
-//                 decoration: BoxDecoration(color: Colors.transparent),
-//                 weekdayStyle: TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
-//
-//                 weekendStyle: TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
-//               ),
-//               // Month Style
-//               headerStyle: HeaderStyle(
-//                 headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
-//                 formatButtonVisible: false,
-//                 titleCentered: true,
-//                 decoration: const BoxDecoration(color: Colors.white),
-//                 formatButtonDecoration:
-//                 BoxDecoration(borderRadius: BorderRadius.circular(10)),
-//                 titleTextStyle: const TextStyle(
-//                     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-//                 leftChevronIcon:
-//                 const Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
-//                 rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
-//                     color: Colors.black),
-//               ),
-//             ),
-//           ),
-//         )
-//       ],
-//     );
-//   }
-// }
-
-
 class SelectTimeModule extends StatelessWidget {
   SelectTimeModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookAppointmentScreenController>();
@@ -865,7 +841,7 @@ class SelectTimeModule extends StatelessWidget {
                         border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
                     ),
                     child: Center(
-                      child: Text(screenController.timeList[i], style: TextStyle(fontWeight: FontWeight.bold),),
+                      child: Text(screenController.timeList[i], style: const TextStyle(fontWeight: FontWeight.bold),),
                     ),
                   ),
               ),
@@ -928,241 +904,3 @@ class BookButtonModule extends StatelessWidget {
   }
 }
 
-
-
-
-/*class SelectSlot extends StatelessWidget {
-  const SelectSlot({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Select Your Slot", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-        SizedBox(height: 15,),
-
-        Row(
-          children: [
-            Expanded(child: dateSlotDropDownModule(context)),
-            const SizedBox(width: 15,),
-            Expanded(child: timeSlotDropDownModule(context))
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget dateSlotDropDownModule(BuildContext context){
-    return Obx(()=>
-        Container(
-          padding: const EdgeInsets.only(right: 10),
-          height: 45,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.colorLightGrey,
-                blurRadius: 5,
-                //spreadRadius: 5,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-          child: Theme(
-            data: Theme.of(context).copyWith(
-                canvasColor: Colors.grey.shade100,
-                // background color for the dropdown items
-                buttonTheme: ButtonTheme.of(context).copyWith(
-                  alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
-                )),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
-                isExpanded: true,
-                focusColor: Colors.white,
-                value: screenController.date.value,
-                //elevation: 5,
-                style: TextStyle(color: AppColors.colorLightGrey),
-                iconEnabledColor: Colors.black,
-                items: <String>[
-                  '23-Mar-2022',
-                  '24-Mar-2022',
-                  '25-Mar-2022',
-                  '26-Mar-2022',
-                  '27-Mar-2022'
-                ].
-                map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-                hint: Text("Date", style: const TextStyle(color: Colors.black),),
-                onChanged: (newValue) {
-                  screenController.date.value = newValue!;
-                },
-              ),
-            ),
-          ),
-        ),
-    );
-  }
-
-  Widget timeSlotDropDownModule(BuildContext context){
-    return Obx(()=>
-        Container(
-          padding: const EdgeInsets.only(right: 10),
-          height: 45,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.colorLightGrey,
-                blurRadius: 5,
-                //spreadRadius: 5,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-          child: Theme(
-            data: Theme.of(context).copyWith(
-                canvasColor: Colors.grey.shade100,
-                // background color for the dropdown items
-                buttonTheme: ButtonTheme.of(context).copyWith(
-                  alignedDropdown: true, //If false (the default), then the dropdown's menu will be wider than its button.
-                )),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                icon: Image.asset(AppImages.dropDownArrowImg, scale: 2,),
-                isExpanded: true,
-                focusColor: Colors.white,
-                value: screenController.time.value,
-                //elevation: 5,
-                style: TextStyle(color: AppColors.colorLightGrey),
-                iconEnabledColor: Colors.black,
-                items: <String>[
-                  '6:35 PM',
-                  '7:00 PM',
-                  '8:00 PM',
-                  '9:00 PM',
-                  '10:00 PM'
-                ].
-                map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-                hint: Text("Time", style: const TextStyle(color: Colors.black),),
-                onChanged: (newValue) {
-                  screenController.time.value = newValue!;
-                },
-              ),
-            ),
-          ),
-        ),
-    );
-  }
-}*/
-
-/*class SelectDateModule extends StatelessWidget {
-  const SelectDateModule({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Select Date", style: TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold
-        ),),
-        const SizedBox(height: 10,),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 7, right: 7),
-            child: Row(
-              children: [
-                GestureDetector(
-                    onTap: () {screenController.selectDatePreviousClick(pageController: screenController.selectDatePageController);},
-                    child:  const LeftArrowButtonModule()),
-                const SizedBox(width: 10,),
-                Expanded(
-                  child: SizedBox(
-                    height: 100,
-                    child: PageView.builder(
-                      padEnds: false,
-                      controller: screenController.selectDatePageController,
-                      onPageChanged: screenController.selectedPageIndex,
-                      itemCount: screenController.dateList.length,
-                      itemBuilder: (context, index) {
-                        //int i =1;
-                        return Obx(()=>
-                          GestureDetector(
-                            onTap: (){
-                              screenController.selectedDateIndex.value = index;
-                            },
-                            child: Column(
-                              //crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Mar", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
-                                const SizedBox(height: 3,),
-                                Text(index.toString(), style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),),
-                                const SizedBox(height: 3,),
-                                Text("Fri", style: TextStyle(fontSize: 14, fontWeight: screenController.selectedDateIndex.value == index ? FontWeight.bold : FontWeight.normal),)
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10,),
-                GestureDetector(
-                    onTap: () {screenController.selectDateNextClick(pageController: screenController.selectDatePageController);},
-                    child:  const RightArrowButtonModule()),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-}
-
-class LeftArrowButtonModule extends StatelessWidget {
-  const LeftArrowButtonModule({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Image.asset(AppImages.backArrowImg)
-    );
-  }
-}
-
-class RightArrowButtonModule extends StatelessWidget {
-  const RightArrowButtonModule({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Image.asset(AppImages.rightArrowImg)
-    );
-  }
-}*/

@@ -58,7 +58,9 @@ enum SearchType {
 }
 
 enum SearchType2 {
+   none,
    dateTimeWise,
-   additionalType,
-   none
+   anyTimeWise,
+   additionalSlotWise,
+   anyTimeWithAdditionalSlotWise
 }

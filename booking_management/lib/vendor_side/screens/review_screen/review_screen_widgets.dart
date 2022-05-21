@@ -19,12 +19,12 @@ class ReviewListModule extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: screenController.reviewList.length,
         itemBuilder: (context, i){
-          ReviewWorkerList singleItem = screenController.reviewList[i];
+          VendorReviewObject singleItem = screenController.reviewList[i];
           return _reviewListTile(singleItem);
         });
   }
 
-  Widget _reviewListTile(ReviewWorkerList singleItem) {
+  Widget _reviewListTile(VendorReviewObject singleItem) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -34,6 +34,7 @@ class ReviewListModule extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [

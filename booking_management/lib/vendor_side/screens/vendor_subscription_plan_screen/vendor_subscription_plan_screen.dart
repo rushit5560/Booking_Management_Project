@@ -104,8 +104,8 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                       Expanded(
                         child: Text(
                           singleItem.detail,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          // maxLines: 10,
+                          // overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 12),
                         ),
                       ),

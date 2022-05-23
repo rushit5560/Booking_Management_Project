@@ -1,9 +1,9 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/vendor_side/screens/vendor_user_details_screen/vendor_user_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
+import '../appointment_details_screen/appointment_details_screen.dart';
 
 class AppointmentListSearchAppointmentField extends StatelessWidget {
   AppointmentListSearchAppointmentField({Key? key}) : super(key: key);
@@ -75,7 +75,7 @@ class AppointmentListTextModule extends StatelessWidget {
   }
 
   Widget _selectableTabsModule() {
-    return Container(
+    return SizedBox(
       height: Get.height / 23,
       child: ListView.builder(
         itemCount: 1,
@@ -499,10 +499,11 @@ class AllAppointmentListModule extends StatelessWidget {
                     Expanded(
                       flex: 30,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          _viewButton(),
-                          const SizedBox(width: 10),
-                          _confirmButton(i),
+                          _viewButton(i),
+                          // const SizedBox(width: 10),
+                          // _confirmButton(i),
                         ],
                       ),
                     ),
@@ -584,10 +585,13 @@ class AllAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
-      onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+      onTap: () => Get.to(
+        ()=> AppointmentDetailsScreen(),
+        transition: Transition.zoom,
+        arguments: screenController.allAppointmentList[i].id,
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -614,7 +618,7 @@ class AllAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton(i) {
+  /*Widget _confirmButton(i) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -638,7 +642,7 @@ class AllAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }
 
 /// Pending Appointment Module
@@ -693,7 +697,7 @@ class PendingAppointmentListModule extends StatelessWidget {
                 flex: 30,
                 child: Row(
                   children: [
-                    _viewButton(),
+                    _viewButton(i),
                     const SizedBox(width: 10),
                     _confirmButton(),
                   ],
@@ -777,10 +781,14 @@ class PendingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
       onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+          Get.to(
+                  () => AppointmentDetailsScreen(),
+              transition: Transition.zoom,
+            arguments: screenController.pendingAppointmentList[i].id
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -886,7 +894,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
                 flex: 30,
                 child: Row(
                   children: [
-                    _viewButton(),
+                    _viewButton(i),
                     // const SizedBox(width: 10),
                     // _confirmButton(),
                   ],
@@ -970,10 +978,14 @@ class ConfirmAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
       onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+          Get.to(
+                  () => AppointmentDetailsScreen(),
+              transition: Transition.zoom,
+              arguments: screenController.pendingAppointmentList[i].id
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1079,7 +1091,7 @@ class CancelAppointmentListModule extends StatelessWidget {
                 flex: 30,
                 child: Row(
                   children: [
-                    _viewButton(),
+                    _viewButton(i),
                     // const SizedBox(width: 10),
                     // _confirmButton(),
                   ],
@@ -1163,10 +1175,14 @@ class CancelAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
       onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+          Get.to(
+                  () => AppointmentDetailsScreen(),
+              transition: Transition.zoom,
+              arguments: screenController.pendingAppointmentList[i].id
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1272,7 +1288,7 @@ class DoneAppointmentListModule extends StatelessWidget {
                 flex: 30,
                 child: Row(
                   children: [
-                    _viewButton(),
+                    _viewButton(i),
                     // const SizedBox(width: 10),
                     // _confirmButton(),
                   ],
@@ -1356,10 +1372,14 @@ class DoneAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
       onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+          Get.to(
+                  () => AppointmentDetailsScreen(),
+              transition: Transition.zoom,
+              arguments: screenController.pendingAppointmentList[i].id
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1465,7 +1485,7 @@ class ProcessingAppointmentListModule extends StatelessWidget {
                 flex: 30,
                 child: Row(
                   children: [
-                    _viewButton(),
+                    _viewButton(i),
                     // const SizedBox(width: 10),
                     // _confirmButton(),
                   ],
@@ -1549,10 +1569,14 @@ class ProcessingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
       onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+          Get.to(
+                  () => AppointmentDetailsScreen(),
+              transition: Transition.zoom,
+              arguments: screenController.pendingAppointmentList[i].id
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1658,7 +1682,7 @@ class ScheduledAppointmentListModule extends StatelessWidget {
                 flex: 30,
                 child: Row(
                   children: [
-                    _viewButton(),
+                    _viewButton(i),
                     // const SizedBox(width: 10),
                     // _confirmButton(),
                   ],
@@ -1742,10 +1766,14 @@ class ScheduledAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(i) {
     return GestureDetector(
       onTap: () =>
-          Get.to(() => VendorUserDetailsScreen(), transition: Transition.zoom),
+          Get.to(
+                  () => AppointmentDetailsScreen(),
+              transition: Transition.zoom,
+              arguments: screenController.pendingAppointmentList[i].id
+          ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

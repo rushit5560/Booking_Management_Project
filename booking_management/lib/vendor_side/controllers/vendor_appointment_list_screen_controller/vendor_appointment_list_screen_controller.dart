@@ -17,16 +17,12 @@ class VendorAppointmentListScreenController extends GetxController {
   TextEditingController searchAppointmentFieldController = TextEditingController();
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
 
+
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
   ApiHeader apiHeader = ApiHeader();
-  // List<Datum> allAppointmentList = [];
-  // List<Pending> pendingList = [];
-  // List<Confirm> confirmList = [];
-  // List<Done> doneList = [];
   SignInModel ? signInModel;
-  //int vendorId = Get.arguments;
 
   /// All Filter List
   List<AppointmentListModule> allAppointmentList = [];

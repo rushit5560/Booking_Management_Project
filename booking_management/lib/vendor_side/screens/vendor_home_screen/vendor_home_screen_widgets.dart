@@ -1,10 +1,10 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/vendor_side/screens/vendor_user_details_screen/vendor_user_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import '../../model/vendor_appointment_list_screen_models/appointment_list_model.dart';
+import '../appointment_details_screen/appointment_details_screen.dart';
 
 /// Header Module
 class VendorHeaderModule extends StatelessWidget {
@@ -247,7 +247,7 @@ class TodayAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton() {
     return GestureDetector(
-      onTap: () => Get.to(() => const VendorUserDetailsScreen(),
+      onTap: () => Get.to(() => AppointmentDetailsScreen(),
           transition: Transition.zoom),
       child: Container(
         decoration: BoxDecoration(

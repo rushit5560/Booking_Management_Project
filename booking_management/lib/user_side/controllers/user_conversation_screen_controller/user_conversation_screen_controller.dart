@@ -1,8 +1,11 @@
-import 'package:booking_management/common_modules/common_functions.dart';
+import 'dart:async';
+import 'dart:developer';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/send_message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+
 
 class UserConversationScreenController extends GetxController {
   String roomId = Get.arguments[0];
@@ -11,19 +14,12 @@ class UserConversationScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-  List<SendMessageModel> userNewChatList = [];
+  StreamSubscription? _streamSubscriptionChat;
+
+  List<SendMessageModel> userChatList = [];
+  // List<SendMessageModel> userReversedChatList = [];
 
   final TextEditingController messageFieldController = TextEditingController();
-
-  List<UserChatMessageModel> userChatList = [
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type "),
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
-    UserChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
-  ];
 
 
 
@@ -43,11 +39,42 @@ class UserConversationScreenController extends GetxController {
     loadUI();
   }
 
+  /// Get All Messages From Firebase
+  fetchChatFromFirebase() async {
+    isLoading(true);
+
+    var ref = FirebaseFirestore.instance.collection("Chats")
+    .where("room_id", isEqualTo: roomId)
+    .orderBy("created_at", descending: true)
+    .snapshots().asBroadcastStream();
+
+    var value = ref.map((event) => event.docs.map((e) => SendMessageModel.fromJson(e.data())).toList());
+
+    if(_streamSubscriptionChat == null) {
+      _streamSubscriptionChat = value.listen((event) {
+        userChatList = event;
+      });
+
+      // userChatList.reversed;
+    }
+
+    isLoading(false);
+    loadUI();
+    log("userChatList : ${userChatList.length}");
+  }
+
 
   /// Load UI
   loadUI() {
     isLoading(true);
     isLoading(false);
+  }
+
+  @override
+  void onInit() {
+    /// Get Old Messages
+    fetchChatFromFirebase();
+    super.onInit();
   }
 }
 

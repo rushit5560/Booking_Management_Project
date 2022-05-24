@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/user_conversation_screen_controller/user_conversation_screen_controller.dart';
+import '../../model/user_conversation_screen_model/send_message_model.dart';
 import 'user_conversation_screen_widgets.dart';
 
 class UserConversationScreen extends StatelessWidget {
@@ -30,10 +31,11 @@ class UserConversationScreen extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: userConversationScreenController.userChatList.length,
                         itemBuilder: (context, i) {
-                          return SingleMessageBubble(
-                            isSendByMe: userConversationScreenController.userChatList[i].isSendByMe,
-                            message: userConversationScreenController.userChatList[i].message,
-                          );
+
+                          SendMessageModel singleMsg = userConversationScreenController.userChatList[i];
+
+
+                          return SingleMessageBubble(singleMsg: singleMsg);
                         },
                       ).commonAllSidePadding(20),
                     ),

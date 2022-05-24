@@ -289,7 +289,7 @@ InputDecoration conversationScreenFieldDecoration(
           );
 
           /// Insert this Msg in Current List
-          controller.userNewChatList.insert(0, sendMsg);
+          controller.userChatList.insert(0, sendMsg);
 
           /// Msg Store in Firebase
           await controller.sendMessageFunction(sendMsg);

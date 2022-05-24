@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/user_side/screens/user_map_screen/user_map_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -9,9 +11,11 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/field_validation.dart';
+import '../../../firebase_database/firebase_database.dart';
 import '../../controllers/business_details_screen_controller/business_details_screen_controller.dart';
 import '../../model/user_business_details_model/get_business_hours_model.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
+import '../user_conversation_screen/user_conversation_screen.dart';
 
 class ProfileModule extends StatelessWidget {
   ProfileModule({Key? key}) : super(key: key);
@@ -151,6 +155,7 @@ class TabViewModule extends StatelessWidget {
 class OverviewModule extends StatelessWidget {
   OverviewModule({Key? key}) : super(key: key);
   final screenController = Get.find<BusinessDetailsScreenController>();
+  final FirebaseDatabase firebaseDatabase = FirebaseDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +207,7 @@ class OverviewModule extends StatelessWidget {
   }
 
   Widget ratting() {
-    double rating = double.parse(screenController.vendorDetailsData!.ratting.toString());
+    // double rating = double.parse(screenController.vendorDetailsData!.ratting.toString());
     return Row(
       children: [
         Text(
@@ -299,19 +304,45 @@ class OverviewModule extends StatelessWidget {
             const SizedBox(width: 20),
             Row(
               children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppColors.colorLightGrey,
-                            blurStyle: BlurStyle.outer,
-                            blurRadius: 5,),
-                      ]),
-                  child: Center(
-                    child: Image.asset(AppImages.msgImg),
+                GestureDetector(
+                  onTap: () {
+                    Timestamp timeStamp = Timestamp.now();
+
+                    /// CharRoom Id Generate
+                    String charRoomId = "${UserDetails.uniqueId}_${screenController.vendorUniqueId}";
+
+                    /// ChatRoom Data
+                    Map<String, dynamic> chatRoomData = {
+                      "createdAt" : timeStamp,
+                      "createdBy" : UserDetails.email.toLowerCase(),
+                      "peerId" : screenController.vendorEmail.toLowerCase(),
+                      "roomId" : charRoomId,
+                      "users" : [UserDetails.email, screenController.vendorEmail]
+                    };
+
+                    log("chatRoomData : $chatRoomData");
+
+                    /// Create ChatRoom Function
+                    firebaseDatabase.createChatRoomOfTwoUsers(charRoomId, chatRoomData);
+
+                    Get.to(()=> UserConversationScreen(),
+                    transition: Transition.zoom);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: AppColors.colorLightGrey,
+                              blurStyle: BlurStyle.outer,
+                              blurRadius: 5,
+                          ),
+                        ]),
+                    child: Center(
+                      child: Image.asset(AppImages.msgImg),
+                    ),
                   ),
                 ),
                 // const SizedBox(width: 10),
@@ -498,21 +529,19 @@ class OverviewModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "Resources -",
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
         ),
-        SizedBox(
-          height: 30,
-        ),
+        const  SizedBox(height: 30),
         ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: 2,
             itemBuilder: (context, index) {
               return Container(
-                margin: EdgeInsets.only(bottom: 15, left: 3, right: 3, top: 3),
+                margin: const EdgeInsets.only(bottom: 15, left: 3, right: 3, top: 3),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
@@ -538,9 +567,7 @@ class OverviewModule extends StatelessWidget {
                                 child: Image.asset(AppImages.vendorImg),
                               ),
                             ),
-                            SizedBox(
-                              width: 15,
-                            ),
+                            const SizedBox(width: 15),
                             Expanded(
                               flex: 2,
                               child: Column(

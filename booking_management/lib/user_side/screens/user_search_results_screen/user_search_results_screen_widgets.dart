@@ -369,10 +369,9 @@ class BusinessListModule extends StatelessWidget {
   }
 
   Widget _vendorListTile(SearchVendorDatum singleItem) {
-    // String imgUrl = ApiUrl.apiMainPath + singleItem.businessLogo;
     return GestureDetector(
       onTap: () {
-        Get.to(() => BusinessDetailScreen(), arguments: singleItem.id);
+        Get.to(() => BusinessDetailScreen(), arguments: [singleItem.id, singleItem.userId, singleItem.email]);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 15),

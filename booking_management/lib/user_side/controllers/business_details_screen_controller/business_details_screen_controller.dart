@@ -15,7 +15,9 @@ import '../../model/vendor_details_screen_models/vendor_details_model.dart';
 
 
 class BusinessDetailsScreenController extends GetxController {
-  int vendorId = Get.arguments;
+  int vendorId = Get.arguments[0];
+  String vendorUniqueId = Get.arguments[1];
+  String vendorEmail = Get.arguments[2];
   final TextEditingController reviewFieldController = TextEditingController();
   GlobalKey<FormState> reviewFormKey = GlobalKey<FormState>();
   RxBool isOverviewSelected = true.obs;

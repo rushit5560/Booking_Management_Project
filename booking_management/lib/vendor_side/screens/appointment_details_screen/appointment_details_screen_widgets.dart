@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
@@ -172,18 +173,61 @@ class UserDetailsModule extends StatelessWidget {
 class ConfirmAppointmentButtonModule extends StatelessWidget {
   ConfirmAppointmentButtonModule({Key? key}) : super(key: key);
   final screenController = Get.find<AppointmentDetailsScreenController>();
+  final vendorAppointmentListScreenController = Get.find<VendorAppointmentListScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: shadowDecoration(),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
-        child: Text(
-          'Confirm Appointment',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 11,
+    return GestureDetector(
+      onTap: () async {
+        await screenController.confirmAppointmentByIdFunction();
+        await vendorAppointmentListScreenController.getAppointmentListFunction();
+      },
+      child: Container(
+        decoration: shadowDecoration(),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+          child: Text(
+            'Confirm Appointment',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Cancel Button
+class CancelAppointmentButtonModule extends StatelessWidget {
+  CancelAppointmentButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<AppointmentDetailsScreenController>();
+  final vendorAppointmentListScreenController = Get.find<VendorAppointmentListScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        await screenController.cancelAppointmentByIdFunction();
+        await vendorAppointmentListScreenController.getAppointmentListFunction();
+      },
+      child: Container(
+        decoration: shadowDecoration(),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+          child: Text(
+            'Cancel Appointment',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+            ),
           ),
         ),
       ),

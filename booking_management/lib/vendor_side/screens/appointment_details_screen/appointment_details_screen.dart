@@ -39,9 +39,19 @@ class AppointmentDetailsScreen extends StatelessWidget {
                           ).commonAllSidePadding(10),
                           Positioned(
                             bottom: 40,
-                            right: 40,
+                            // right: 40,
                             child: appointmentDetailsScreenController.appointmentDetailsData.status == "Pending"
-                                ? ConfirmAppointmentButtonModule()
+                                ? SizedBox(
+                                  height: 50,
+                                  width: Get.width,
+                                  child: Row(
+                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(child: ConfirmAppointmentButtonModule().commonSymmetricPadding(horizontal: 15)),
+                                        Expanded(child: CancelAppointmentButtonModule().commonSymmetricPadding(horizontal: 15)),
+                                      ],
+                                    ),
+                                )
                                 : Container(),
                           ),
                         ],

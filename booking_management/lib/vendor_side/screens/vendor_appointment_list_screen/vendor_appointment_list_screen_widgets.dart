@@ -447,7 +447,6 @@ class AppointmentListTextModule extends StatelessWidget {
   }
 }
 
-
 /// All Appointment List
 class AllAppointmentListModule extends StatelessWidget {
   AllAppointmentListModule({Key? key}) : super(key: key);
@@ -696,10 +695,11 @@ class PendingAppointmentListModule extends StatelessWidget {
               Expanded(
                 flex: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _viewButton(i),
                     const SizedBox(width: 10),
-                    _confirmButton(),
+                    _confirmButton(i),
                   ],
                 ),
               ),
@@ -815,26 +815,33 @@ class PendingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _confirmButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'Confirm',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
+  Widget _confirmButton(i) {
+    return GestureDetector(
+      onTap: () async {
+        await screenController.confirmAppointmentByIdFunction(
+          appointmentId: screenController.pendingAppointmentList[i].id,
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 2,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(8),
+          child: Text(
+            'Confirm',
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -893,6 +900,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
               Expanded(
                 flex: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _viewButton(i),
                     // const SizedBox(width: 10),
@@ -1090,6 +1098,7 @@ class CancelAppointmentListModule extends StatelessWidget {
               Expanded(
                 flex: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _viewButton(i),
                     // const SizedBox(width: 10),
@@ -1287,6 +1296,7 @@ class DoneAppointmentListModule extends StatelessWidget {
               Expanded(
                 flex: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _viewButton(i),
                     // const SizedBox(width: 10),
@@ -1484,6 +1494,7 @@ class ProcessingAppointmentListModule extends StatelessWidget {
               Expanded(
                 flex: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _viewButton(i),
                     // const SizedBox(width: 10),
@@ -1681,6 +1692,7 @@ class ScheduledAppointmentListModule extends StatelessWidget {
               Expanded(
                 flex: 30,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _viewButton(i),
                     // const SizedBox(width: 10),

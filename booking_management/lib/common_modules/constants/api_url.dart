@@ -95,6 +95,7 @@ class ApiUrl {
   /// Vendor - Appointment List & Details
   static const vendorAppointmentList = apiMainPath + "API/APIAppointmentlist";
   static const vendorAppointmentDetailsApi = apiMainPath + "API/ViewAppointment";
+  static const vendorAppointmentStatusChangeApi = apiMainPath + "API/AppointmentAcceptorcancel";
 
 
   /// Vendor - Schedule Time

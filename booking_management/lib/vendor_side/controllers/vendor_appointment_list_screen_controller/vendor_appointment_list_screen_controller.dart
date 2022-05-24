@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/vendor_appointment_list_screen_models/appointment_list_model.dart';
+import '../../model/vendor_appointment_list_screen_models/appointment_status_change_model.dart';
 
 class VendorAppointmentListScreenController extends GetxController {
   RxInt selectedTabIndex = 1.obs;
@@ -50,6 +51,13 @@ class VendorAppointmentListScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         allAppointmentList.clear();
+        pendingAppointmentList.clear();
+        confirmAppointmentList.clear();
+        doneAppointmentList.clear();
+        cancelAppointmentList.clear();
+        processingAppointmentList.clear();
+        scheduledAppointmentList.clear();
+
         allAppointmentList = appointmentListModel.data;
 
         for(int i = 0; i < allAppointmentList.length; i++) {
@@ -90,6 +98,35 @@ class VendorAppointmentListScreenController extends GetxController {
 
     } catch(e) {
       log("getAppointmentListFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
+  /// Appointment for Confirm
+  confirmAppointmentByIdFunction({required int appointmentId}) async {
+    isLoading(true);
+    String url = ApiUrl.vendorAppointmentStatusChangeApi + "?status=Confirm&id=$appointmentId";
+    log("Appointment Status Change API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Appointment Details API Response : ${response.body}");
+
+      AppointmentStatusChangeModel appointmentStatusChangeModel = AppointmentStatusChangeModel.fromJson(json.decode(response.body));
+      isSuccessStatus = appointmentStatusChangeModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: "Appointment Confirmed!");
+        Get.back();
+      } else {
+        log("confirmAppointmentByIdFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+    } catch(e) {
+      log("confirmAppointmentByIdFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       isLoading(false);
     }

@@ -1,12 +1,10 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../controllers/user_conversation_screen_controller/user_conversation_screen_controller.dart';
 
-UserConversationScreenController screenController = Get.find<UserConversationScreenController>();
 
 class SingleMessageBubble extends StatelessWidget {
   final bool isSendByMe;
@@ -64,7 +62,8 @@ class SingleMessageBubble extends StatelessWidget {
 }
 
 class MessageWriteTextFieldModule extends StatelessWidget {
-  const MessageWriteTextFieldModule({Key? key}) : super(key: key);
+  MessageWriteTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserConversationScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +80,13 @@ class MessageWriteTextFieldModule extends StatelessWidget {
         child: TextFormField(
           cursorColor: Colors.grey,
           controller: screenController.messageFieldController,
-          decoration: conversationScreenFieldDecoration(hintText: 'Type a message', controller: screenController),
+          decoration: conversationScreenFieldDecoration(
+            hintText: 'Type a message',
+            controller: screenController,
+            roomId: screenController.roomId,
+            senderEmail: UserDetails.email,
+            receiverEmail: screenController.receiverEmail,
+          ),
         ),
       ),
     );

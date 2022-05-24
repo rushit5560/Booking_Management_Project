@@ -1,4 +1,5 @@
 import 'package:booking_management/user_side/controllers/user_change_password_screen_controller/user_change_password_screen_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,7 @@ import '../common_ui/common_controller/forgot_password_screen_controller/forgot_
 import '../common_ui/common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
 import '../user_side/controllers/user_conversation_screen_controller/user_conversation_screen_controller.dart';
 import '../user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
+import '../user_side/model/user_conversation_screen_model/send_message_model.dart';
 import '../vendor_side/controllers/vendor_sign_up_screen_controller/vendor_sign_up_screen_controller.dart';
 import '../vendor_side/controllers/vendor_wallet_screen_controller/vendor_wallet_screen_controller.dart';
 import 'constants/app_colors.dart';
@@ -252,7 +254,10 @@ InputDecoration vendorSignUpFormFieldDecoration(
 
 InputDecoration conversationScreenFieldDecoration(
     {required String hintText,
-    required UserConversationScreenController controller}) {
+    required UserConversationScreenController controller,
+    required String roomId,
+    required String senderEmail,
+    required String receiverEmail}) {
   return InputDecoration(
     hintText: hintText,
     hintStyle: const TextStyle(color: Colors.grey),
@@ -269,8 +274,27 @@ InputDecoration conversationScreenFieldDecoration(
     isDense: true,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     suffixIcon: GestureDetector(
-      onTap: () {
-        controller.messageFieldController.clear();
+      onTap: () async {
+        // controller.messageFieldController.clear();
+        if(controller.messageFieldController.text.isNotEmpty) {
+
+          /// Create Message Model Wise
+          SendMessageModel sendMsg = SendMessageModel(
+            roomId: roomId,
+            senderId: senderEmail,
+            receiverId: receiverEmail,
+            message: controller.messageFieldController.text,
+            createdAt: Timestamp.now(),
+            seen: false
+          );
+
+          /// Insert this Msg in Current List
+          controller.userNewChatList.insert(0, sendMsg);
+
+          /// Msg Store in Firebase
+          await controller.sendMessageFunction(sendMsg);
+
+        }
       },
       child: Image.asset(AppImages.sendImg, scale: 0.75),
     ),
@@ -322,7 +346,7 @@ InputDecoration serviceFormFieldDecoration({required String hintText}) {
     hintStyle: const TextStyle(color: Colors.grey),
     border: InputBorder.none,
     counterText: "",
-    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
     // enabledBorder: const UnderlineInputBorder(
     //     borderSide: BorderSide(color: Colors.black)),
     // focusedBorder: const UnderlineInputBorder(

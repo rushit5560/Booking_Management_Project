@@ -326,7 +326,8 @@ class OverviewModule extends StatelessWidget {
                     firebaseDatabase.createChatRoomOfTwoUsers(charRoomId, chatRoomData);
 
                     Get.to(()=> UserConversationScreen(),
-                    transition: Transition.zoom);
+                    transition: Transition.zoom,
+                    arguments: [charRoomId, screenController.vendorEmail]);
                   },
                   child: Container(
                     height: 40,

@@ -93,7 +93,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => MyCustomerScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
-      Get.to(() => const VendorChatListScreen(),
+      Get.to(() => VendorChatListScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.bookingHistory) {

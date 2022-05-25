@@ -1,13 +1,17 @@
-
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/vendor_side/screens/vendor_chat_list_screen/vendor_chat_list_screen_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../common_modules/common_widgets.dart';
+import '../../../user_side/model/user_chat_list_screen_model/user_chat_list_screen_model.dart';
+import '../../../user_side/screens/user_conversation_screen/user_conversation_screen.dart';
+import '../../controllers/vendor_chat_list_screen_controller/vendor_chat_list_screen_controller.dart';
 
 
 class VendorChatListScreen extends StatelessWidget {
-  const VendorChatListScreen({Key? key}) : super(key: key);
+  VendorChatListScreen({Key? key}) : super(key: key);
+  final vendorChatListScreenController = Get.put(VendorChatListScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +23,128 @@ class VendorChatListScreen extends StatelessWidget {
               title: 'Chat',
               appBarOption: AppBarOption.none,
             ),
+            // Expanded(
+            //   child: const VendorChatList().commonAllSidePadding(20),
+            // ),
             Expanded(
-              child: const VendorChatList().commonAllSidePadding(20),
+              child: StreamBuilder<List<UserChatRoomListModel>>(
+                stream: vendorChatListScreenController.getChatRoomListFunction(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text("Something went wrong! ${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    final chatList = snapshot.data;
+                    return ListView.builder(
+                      itemCount: chatList!.length,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, i) {
+                        UserChatRoomListModel singleMsg = chatList[i];
+
+                        return _chatListTile(singleMsg);
+                      },
+                    ).commonAllSidePadding(15);
+                    // return ListView(
+                    //   physics: const BouncingScrollPhysics(),
+                    //   children: categories!.map((val) {
+                    //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+                    //   }).toList(),
+                    // ).commonAllSidePadding(padding: 15);
+                  } else {
+                    return const CustomCircularLoaderModule();
+                  }
+                },
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  Widget _chatListTile(UserChatRoomListModel singleMsg) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () => Get.to(()=> UserConversationScreen(),
+            transition: Transition.zoom,
+            arguments: [
+              singleMsg.roomId,
+              singleMsg.peerId,
+              // screenController.userChatList,
+            ]),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: 8, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      /*Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: const DecorationImage(
+                            image: AssetImage(AppImages.vendorImg),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),*/
+                      // const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              singleMsg.createdName!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            // const SizedBox(height: 5),
+                            // Text(
+                            //   'Lorem Ipsum dummy Text for printing',
+                            //   maxLines: 1,
+                            //   overflow: TextOverflow.ellipsis,
+                            //   style: TextStyle(fontSize: 11),
+                            // ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // const Text(
+                //   '12:00 PM',
+                //   style: TextStyle(fontSize: 11),
+                // ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

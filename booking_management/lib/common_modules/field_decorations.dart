@@ -293,15 +293,14 @@ InputDecoration conversationScreenFieldDecoration(
 
           /// Msg Store in Firebase
           await controller.sendMessageFunction(sendMsg);
-
         }
       },
       child: Image.asset(AppImages.sendImg, scale: 0.75),
     ),
-    prefixIcon: GestureDetector(
+    /*prefixIcon: GestureDetector(
       onTap: () {},
       child: Image.asset(AppImages.emojiImg, scale: 0.75),
-    ),
+    ),*/
   );
 }
 

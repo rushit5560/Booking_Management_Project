@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/send_message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +9,15 @@ import 'package:get/get.dart';
 class UserConversationScreenController extends GetxController {
   String roomId = Get.arguments[0];
   String receiverEmail = Get.arguments[1];
+  // List<SendMessageModel> userNewChatList = Get.arguments[2];
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
   StreamSubscription? _streamSubscriptionChat;
 
-  List<SendMessageModel> userChatList = [];
+  List<SendMessageModel>? userChatList;
+  // List<SendMessageModel> userNewChatList = [];
   // List<SendMessageModel> userReversedChatList = [];
 
   final TextEditingController messageFieldController = TextEditingController();
@@ -39,14 +40,15 @@ class UserConversationScreenController extends GetxController {
     loadUI();
   }
 
-  /// Get All Messages From Firebase
+  /// Get All Messages From Firebase -> Return Chat List
   fetchChatFromFirebase() async {
     isLoading(true);
 
     var ref = FirebaseFirestore.instance.collection("Chats")
-    .where("room_id", isEqualTo: roomId)
-    .orderBy("created_at", descending: true)
-    .snapshots().asBroadcastStream();
+        .where("room_id", isEqualTo: roomId)
+        .orderBy("created_at", descending: true)
+        .snapshots()
+        .asBroadcastStream();
 
     var value = ref.map((event) => event.docs.map((e) => SendMessageModel.fromJson(e.data())).toList());
 
@@ -54,13 +56,22 @@ class UserConversationScreenController extends GetxController {
       _streamSubscriptionChat = value.listen((event) {
         userChatList = event;
       });
-
-      // userChatList.reversed;
     }
 
     isLoading(false);
     loadUI();
-    log("userChatList : ${userChatList.length}");
+    // log("userChatList : ${userChatList.length}");
+
+  }
+
+  Stream<List<SendMessageModel>> fetchChatFromFirebase1() {
+    return FirebaseFirestore.instance.collection("Chats")
+        .where("room_id", isEqualTo: roomId)
+        .orderBy("created_at", descending: false)
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => SendMessageModel.fromJson(doc.data()))
+            .toList());
   }
 
 
@@ -70,12 +81,6 @@ class UserConversationScreenController extends GetxController {
     isLoading(false);
   }
 
-  @override
-  void onInit() {
-    /// Get Old Messages
-    fetchChatFromFirebase();
-    super.onInit();
-  }
 }
 
 

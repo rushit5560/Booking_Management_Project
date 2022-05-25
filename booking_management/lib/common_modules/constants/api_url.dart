@@ -1,6 +1,6 @@
 class ApiUrl {
   // static const apiMainPath = "http://5.189.147.159:9600/";
-  static const apiMainPath = "http://192.168.0.102:8080/";
+  static const apiMainPath = "http://192.168.29.218:8080/";
   /// Common API
   static const signInApi = apiMainPath + "API/Login";
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";

@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import '../../../common_modules/constants/api_header.dart';
 import '../../model/user_business_details_model/add_customer_review_model.dart';
 import '../../model/user_business_details_model/get_business_hours_model.dart';
 import '../../model/user_business_details_model/get_vendor_reviews_model.dart';
+import '../../model/user_conversation_screen_model/send_message_model.dart';
 import '../../model/vendor_details_screen_models/vendor_details_model.dart';
 
 
@@ -39,6 +42,9 @@ class BusinessDetailsScreenController extends GetxController {
   List<ReviewDatum> reviewList = [];
   List<BusinessHoursDatum> businessHoursList = [];
   //Data ? businessDetailsList;
+
+  List<SendMessageModel> userChatList = [];
+  StreamSubscription? _streamSubscriptionChat;
 
 
   VendorDetailsData? vendorDetailsData;
@@ -240,9 +246,39 @@ class BusinessDetailsScreenController extends GetxController {
     } catch(e) {
       log("getBusinessHoursFunction Error ::: $e");
     } finally {
-      isLoading(false);
+      // isLoading(false);
+      await fetchChatFromFirebase();
     }
 
+  }
+
+  /// Get All Messages From Firebase
+  Future<void> fetchChatFromFirebase() async {
+    String roomId = "${UserDetails.uniqueId}_$vendorUniqueId";
+    isLoading(true);
+
+    var ref = FirebaseFirestore.instance.collection("Chats")
+        .where("room_id", isEqualTo: roomId)
+        .orderBy("created_at", descending: true)
+        .snapshots()
+        .asBroadcastStream();
+
+    var value = ref.map((event) => event.docs.map((e) => SendMessageModel.fromJson(e.data())).toList());
+
+    if(_streamSubscriptionChat == null) {
+      _streamSubscriptionChat = value.listen((event) {
+        userChatList = event;
+      });
+
+      // userChatList.reversed;
+      // for(int i = userChatList.length - 1; i > 0; i--) {
+      //   userNewChatList.add(userChatList[i]);
+      // }
+    }
+
+    isLoading(false);
+    loadUI();
+    log("userChatList : ${userChatList.length}");
   }
 
   // getUserReview()async{
@@ -323,6 +359,11 @@ class BusinessDetailsScreenController extends GetxController {
     super.onInit();
     getVendorDetailsByIdFunction();
     // getUserReview();
+  }
+
+  loadUI() {
+    isLoading(true);
+    isLoading(false);
   }
 
 }

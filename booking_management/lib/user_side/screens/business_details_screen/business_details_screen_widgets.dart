@@ -327,7 +327,11 @@ class OverviewModule extends StatelessWidget {
 
                     Get.to(()=> UserConversationScreen(),
                     transition: Transition.zoom,
-                    arguments: [charRoomId, screenController.vendorEmail]);
+                    arguments: [
+                      charRoomId,
+                      screenController.vendorEmail,
+                      // screenController.userChatList,
+                    ]);
                   },
                   child: Container(
                     height: 40,

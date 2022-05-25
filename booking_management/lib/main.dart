@@ -3,7 +3,6 @@ import 'package:booking_management/common_modules/constants/app_theme.dart';
 import 'package:booking_management/common_ui/common_screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -32,7 +31,7 @@ void main() async {
   /// For Background
   //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  if (!kIsWeb) {
+  /*if (!kIsWeb) {
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -59,7 +58,7 @@ void main() async {
       badge: true,
       sound: true,
     );
-  }
+  }*/
 
   //firebaseMessaging.setForegroundNotificationPresentationOptions(sound: true);
 
@@ -81,25 +80,25 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    firebaseMessaging.getToken().then((token) {
+    /*firebaseMessaging.getToken().then((token) {
       log("token token $token");
       // Firebasetoken = token;
       //prefs.setString('apiToken', token);
       //SharedUserPreferences().setDeviceToken(token);
-    });
+    });*/
     //checkForInitialMessage();
-    FirebaseMessaging.instance
+    /*FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage ? message) {
       if (message != null) {
         print('we can now navigate to specific screen');
-        /*Navigator.pushNamed(context, '/message',
-            arguments: MessageArguments(message, true));*/
+        *//*Navigator.pushNamed(context, '/message',
+            arguments: MessageArguments(message, true));*//*
       }
-    });
+    });*/
 
     /// For Forground Notification
-    FirebaseMessaging.onMessage.listen((RemoteMessage ? message) {
+    /*FirebaseMessaging.onMessage.listen((RemoteMessage ? message) {
       RemoteNotification ? notification = message!.notification;
       AndroidNotification ? android = message.notification!.android;
       if (notification != null && android != null && !kIsWeb) {
@@ -118,18 +117,18 @@ class _MyAppState extends State<MyApp> {
               ),
             ));
       }
-    });
+    });*/
 
     ///Background notification
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    /*FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published!');
-      /* Navigator.pushNamed(context, '/message',
-          arguments: MessageArguments(message, true));*/
-    });
+      *//* Navigator.pushNamed(context, '/message',
+          arguments: MessageArguments(message, true));*//*
+    });*/
   }
 
   // For handling notification when the app is in terminated state
-  checkForInitialMessage() async {
+  /*checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage =
     await FirebaseMessaging.instance.getInitialMessage();
@@ -137,7 +136,7 @@ class _MyAppState extends State<MyApp> {
     if (initialMessage != null) {
       print('For handling notification when the app is in terminated state');
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

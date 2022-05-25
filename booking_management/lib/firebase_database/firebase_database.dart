@@ -14,4 +14,13 @@ class FirebaseDatabase {
           log('Create ChatRoom Error ::: $e');
     });
   }
+
+
+  /// Get ChatRoom List
+  getChatRooms(String userEmail) async {
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .where("users", arrayContains: userEmail)
+        .snapshots();
+  }
 }

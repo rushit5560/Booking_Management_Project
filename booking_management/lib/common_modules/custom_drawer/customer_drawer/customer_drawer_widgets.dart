@@ -78,7 +78,7 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     if (userSettingScreenOption == CustomerDrawerOption.profile) {
       Get.to(() => UserProfileScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == CustomerDrawerOption.chat) {
-      Get.to(() => const UserChatListScreen(), transition: Transition.zoom);
+      Get.to(() => UserChatListScreen(), transition: Transition.zoom);
     }
     else if (userSettingScreenOption == CustomerDrawerOption.orderList) {
       Get.to(() => CustomerOrderListScreen(), transition: Transition.zoom);

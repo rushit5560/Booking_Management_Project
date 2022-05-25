@@ -317,6 +317,8 @@ class OverviewModule extends StatelessWidget {
                       "createdBy" : UserDetails.email.toLowerCase(),
                       "peerId" : screenController.vendorEmail.toLowerCase(),
                       "roomId" : charRoomId,
+                      "createdName" : UserDetails.userName,
+                      "peerName" : screenController.vendorBusinessName,
                       "users" : [UserDetails.email, screenController.vendorEmail]
                     };
 

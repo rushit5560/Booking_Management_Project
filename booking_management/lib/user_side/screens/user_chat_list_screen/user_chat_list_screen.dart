@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/common_widgets.dart';
-import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/user_chat_list_screen_controller/user_chat_list_screen_controller.dart';
 import '../../model/user_chat_list_screen_model/user_chat_list_screen_model.dart';
+
+
 
 class UserChatListScreen extends StatelessWidget {
   UserChatListScreen({Key? key}) : super(key: key);
@@ -71,7 +72,13 @@ class UserChatListScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () => Get.to(()=> UserConversationScreen(), transition: Transition.rightToLeft),
+        onTap: () => Get.to(()=> UserConversationScreen(),
+            transition: Transition.zoom,
+            arguments: [
+              singleMsg.roomId,
+              singleMsg.peerId,
+              // screenController.userChatList,
+            ]),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),

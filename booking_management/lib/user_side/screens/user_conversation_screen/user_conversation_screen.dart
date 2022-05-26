@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
@@ -9,14 +8,14 @@ import '../../controllers/user_conversation_screen_controller/user_conversation_
 import '../../model/user_conversation_screen_model/send_message_model.dart';
 import 'user_conversation_screen_widgets.dart';
 
+
+
 class UserConversationScreen extends StatelessWidget {
   UserConversationScreen({Key? key}) : super(key: key);
-  final userConversationScreenController =
-      Get.put(UserConversationScreenController());
+  final userConversationScreenController = Get.put(UserConversationScreenController());
 
   @override
   Widget build(BuildContext context) {
-    // log("Chat List Length Build : ${userConversationScreenController.userChatList.length}");
     return Scaffold(
       body: Obx(
         () => userConversationScreenController.isLoading.value
@@ -40,7 +39,7 @@ class UserConversationScreen extends StatelessWidget {
                         },
                       ).commonAllSidePadding(20),*/
                       child: StreamBuilder<List<SendMessageModel>>(
-                        stream: userConversationScreenController.fetchChatFromFirebase1(),
+                        stream: userConversationScreenController.fetchChatFromFirebase(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return Text("Something went wrong! ${snapshot.error}");

@@ -26,6 +26,8 @@ class ApiUrl {
 
   /// Cst - Search Filter API
   static const searchFilterApi = apiMainPath + "API/Searchbussinesstype";
+  static const favouriteVendorListApi = apiMainPath + "API/FavouritesVendor";
+  static const addFavouriteVendorApi = apiMainPath + "API/Favourites";
 
   /// Cst - Vendor Details
   static const vendorDetailsApi = apiMainPath + "API/getvendordetails";

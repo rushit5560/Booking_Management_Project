@@ -6,19 +6,19 @@ import '../../../common_modules/field_decorations.dart';
 import '../../controllers/user_conversation_screen_controller/user_conversation_screen_controller.dart';
 import '../../model/user_conversation_screen_model/send_message_model.dart';
 
-
 class SingleMessageBubble extends StatelessWidget {
   final SendMessageModel singleMsg;
 
-  SingleMessageBubble({Key? key, required this.singleMsg}) : super(key: key);
+  const SingleMessageBubble({Key? key, required this.singleMsg})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     bool isSendByMe;
 
     singleMsg.senderId == UserDetails.email
-    ? isSendByMe = true
-    : isSendByMe = false;
+        ? isSendByMe = true
+        : isSendByMe = false;
 
     return Container(
       margin: const EdgeInsets.all(5),

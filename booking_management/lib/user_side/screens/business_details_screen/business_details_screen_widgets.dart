@@ -233,7 +233,24 @@ class OverviewModule extends StatelessWidget {
               print(rating);
             }
           },
-        )
+        ),
+
+        Expanded(child: Container()),
+
+        IconButton(
+          onPressed: () async {
+            await screenController.addVendorInFavoriteFunction();
+            // screenController.loadUI();
+          },
+          icon: Icon(
+              screenController.vendorDetailsData!.favourites == true
+              ? Icons.favorite_rounded
+              : Icons.favorite_border_rounded
+          ),
+          color: screenController.vendorDetailsData!.favourites == true
+          ? Colors.red
+          : Colors.grey,
+        ),
       ],
     );
   }

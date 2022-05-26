@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-VendorDetailsModel vendorDetailsModelFromJson(String str) => VendorDetailsModel.fromJson(json.decode(str));
+GetFavouriteVendorModel getFavouriteVendorModelFromJson(String str) => GetFavouriteVendorModel.fromJson(json.decode(str));
 
-String vendorDetailsModelToJson(VendorDetailsModel data) => json.encode(data.toJson());
+String getFavouriteVendorModelToJson(GetFavouriteVendorModel data) => json.encode(data.toJson());
 
-class VendorDetailsModel {
-  VendorDetailsModel({
+class GetFavouriteVendorModel {
+  GetFavouriteVendorModel({
     required this.statusCode,
     required this.success,
     required this.data,
@@ -13,101 +13,25 @@ class VendorDetailsModel {
 
   int statusCode;
   bool success;
-  VendorDetailsData data;
+  List<FavouriteVendorDetails> data;
 
-  factory VendorDetailsModel.fromJson(Map<String, dynamic> json) => VendorDetailsModel(
+  factory GetFavouriteVendorModel.fromJson(Map<String, dynamic> json) => GetFavouriteVendorModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
-    data: VendorDetailsData.fromJson(json["data"] ?? {}),
+    data: List<FavouriteVendorDetails>.from(json["data"].map((x) => FavouriteVendorDetails.fromJson(x)) ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
-    "data": data.toJson(),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
 }
 
-class VendorDetailsData {
-  VendorDetailsData({
+class FavouriteVendorDetails {
+  FavouriteVendorDetails({
     required this.id,
-    required this.vendor,
-    required this.vendorId,
-    required this.customer,
-    required this.customerId,
-    required this.description,
-    required this.ratting,
-    required this.date,
-    required this.isActive,
-    required this.createdBy,
-    required this.createdOn,
-    required this.modifiedBy,
-    required this.modifiedOn,
-    required this.favourites,
-    // this.applicationUserCreator,
-    // this.applicationUserModifier,
-  });
-
-  int id;
-  Vendor vendor;
-  int vendorId;
-  String customer;
-  int customerId;
-  String description;
-  int ratting;
-  String date;
-  bool isActive;
-  String createdBy;
-  String createdOn;
-  String modifiedBy;
-  String modifiedOn;
-  bool favourites;
-  // dynamic applicationUserCreator;
-  // dynamic applicationUserModifier;
-
-  factory VendorDetailsData.fromJson(Map<String, dynamic> json) => VendorDetailsData(
-    id: json["id"] ?? 0,
-    vendor: Vendor.fromJson(json["vendor"] ?? {}),
-    vendorId: json["vendorId"] ?? 0,
-    customer: json["customer"] ?? "",
-    customerId: json["customerId"] ?? 0,
-    description: json["description"] ?? "",
-    ratting: json["ratting"] ?? 0,
-    date: json["date"] ?? "",
-    isActive: json["isActive"] ?? false,
-    createdBy: json["createdBy"] ?? "",
-    createdOn: json["createdOn"] ?? "",
-    modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
-    favourites: json["favourites"] ?? false
-    // applicationUserCreator: json["applicationUserCreator"],
-    // applicationUserModifier: json["applicationUserModifier"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "vendor": vendor.toJson(),
-    "vendorId": vendorId,
-    "customer": customer,
-    "customerId": customerId,
-    "description": description,
-    "ratting": ratting,
-    "date": date,
-    "isActive": isActive,
-    "createdBy": createdBy,
-    "createdOn": createdOn,
-    "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
-    "favourites": favourites
-    // "applicationUserCreator": applicationUserCreator,
-    // "applicationUserModifier": applicationUserModifier,
-  };
-}
-
-class Vendor {
-  Vendor({
-    required this.id,
-    // this.categories,
+    // required this.categories,
     required this.categoryId,
     required this.businessName,
     required this.businessLogo,
@@ -132,10 +56,10 @@ class Vendor {
     required this.latitude,
     required this.longitude,
     required this.vendorVerificationDate,
-    required this.applicationUser,
+    // required this.applicationUser,
     required this.modifiedBy,
     required this.modifiedOn,
-    // this.applicationUserModifier,
+    // required this.applicationUserModifier,
     required this.review,
     required this.rating,
     required this.vendorWorkingHours,
@@ -150,10 +74,12 @@ class Vendor {
     required this.endTime,
     required this.vendorList,
     required this.additionalSlot,
+    required this.resourceList,
+    required this.resourceId,
   });
 
   int id;
-  // dynamic categories;
+  // String categories;
   int categoryId;
   String businessName;
   String businessLogo;
@@ -178,12 +104,12 @@ class Vendor {
   int latitude;
   int longitude;
   String vendorVerificationDate;
-  String applicationUser;
+  // String applicationUser;
   String modifiedBy;
   String modifiedOn;
-  // dynamic applicationUserModifier;
+  // String applicationUserModifier;
   String review;
-  String rating;
+  int rating;
   String vendorWorkingHours;
   String status;
   String category;
@@ -196,8 +122,10 @@ class Vendor {
   String endTime;
   String vendorList;
   String additionalSlot;
+  String resourceList;
+  String resourceId;
 
-  factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+  factory FavouriteVendorDetails.fromJson(Map<String, dynamic> json) => FavouriteVendorDetails(
     id: json["id"] ?? 0,
     // categories: json["categories"],
     categoryId: json["categoryId"] ?? 0,
@@ -224,12 +152,12 @@ class Vendor {
     latitude: json["latitude"] ?? 0,
     longitude: json["longitude"] ?? 0,
     vendorVerificationDate: json["vendorVerificationDate"] ?? "",
-    applicationUser: json["applicationUser"] ?? "",
+    // applicationUser: json["applicationUser"],
     modifiedBy: json["modifiedBy"] ?? "",
     modifiedOn: json["modifiedOn"] ?? "",
     // applicationUserModifier: json["applicationUserModifier"],
     review: json["review"] ?? "",
-    rating: json["rating"] ?? "0",
+    rating: json["rating"] ?? 0,
     vendorWorkingHours: json["vendorWorkingHours"] ?? "",
     status: json["status"] ?? "",
     category: json["category"] ?? "",
@@ -242,6 +170,8 @@ class Vendor {
     endTime: json["endTime"] ?? "",
     vendorList: json["vendorList"] ?? "",
     additionalSlot: json["additionalSlot"] ?? "",
+    resourceList: json["resourceList"] ?? "",
+    resourceId: json["resourceId"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -271,7 +201,7 @@ class Vendor {
     "latitude": latitude,
     "longitude": longitude,
     "vendorVerificationDate": vendorVerificationDate,
-    "applicationUser": applicationUser,
+    // "applicationUser": applicationUser,
     "modifiedBy": modifiedBy,
     "modifiedOn": modifiedOn,
     // "applicationUserModifier": applicationUserModifier,
@@ -289,5 +219,7 @@ class Vendor {
     "endTime": endTime,
     "vendorList": vendorList,
     "additionalSlot": additionalSlot,
+    "resourceList": resourceList,
+    "resourceId": resourceId,
   };
 }

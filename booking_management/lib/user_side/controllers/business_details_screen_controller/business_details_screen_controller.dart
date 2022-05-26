@@ -10,12 +10,11 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_header.dart';
 import '../../model/user_business_details_model/add_customer_review_model.dart';
+import '../../model/user_business_details_model/add_vendor_in_favourite_model.dart';
 import '../../model/user_business_details_model/get_business_hours_model.dart';
 import '../../model/user_business_details_model/get_vendor_reviews_model.dart';
 import '../../model/user_conversation_screen_model/send_message_model.dart';
 import '../../model/vendor_details_screen_models/vendor_details_model.dart';
-
-
 
 class BusinessDetailsScreenController extends GetxController {
   /// From Search Result List Screen
@@ -27,7 +26,7 @@ class BusinessDetailsScreenController extends GetxController {
   GlobalKey<FormState> reviewFormKey = GlobalKey<FormState>();
   RxBool isOverviewSelected = true.obs;
   RxBool isReviewSelected = false.obs;
-  RxString service= 'Daily Checkup'.obs;
+  RxString service = 'Daily Checkup'.obs;
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -36,23 +35,22 @@ class BusinessDetailsScreenController extends GetxController {
   int ratting = 0;
   String description = "";
   double price = 0.0;
-  String mobileNo= "";
-  String address= "";
+  String mobileNo = "";
+  String address = "";
 
   RxInt selectRating = 1.obs;
 
   List<ReviewDatum> reviewList = [];
   List<BusinessHoursDatum> businessHoursList = [];
+
   //Data ? businessDetailsList;
 
   List<SendMessageModel> userChatList = [];
   StreamSubscription? _streamSubscriptionChat;
 
-
   VendorDetailsData? vendorDetailsData;
 
   ApiHeader apiHeader = ApiHeader();
-
 
   /// Get Vendor Details By Id
   getVendorDetailsByIdFunction() async {
@@ -61,21 +59,22 @@ class BusinessDetailsScreenController extends GetxController {
     log("Vendor Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Vendor Details Response : ${response.body}");
 
-      VendorDetailsModel vendorDetailsModel = VendorDetailsModel.fromJson(json.decode(response.body));
+      VendorDetailsModel vendorDetailsModel =
+          VendorDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = vendorDetailsModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         vendorDetailsData = vendorDetailsModel.data;
         log("vendorDetailsData : $vendorDetailsData");
       } else {
         log("getVendorDetailsByIdFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getVendorDetailsByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
@@ -129,13 +128,15 @@ class BusinessDetailsScreenController extends GetxController {
     log("Vendor Review API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("vendor Review API Response : ${response.body}");
 
-      GetVendorReviewsModel getVendorReviewsModel = GetVendorReviewsModel.fromJson(json.decode(response.body));
+      GetVendorReviewsModel getVendorReviewsModel =
+          GetVendorReviewsModel.fromJson(json.decode(response.body));
       isSuccessStatus = getVendorReviewsModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         reviewList.clear();
 
         reviewList = getVendorReviewsModel.data;
@@ -144,14 +145,12 @@ class BusinessDetailsScreenController extends GetxController {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getVendorReviewFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getVendorReviewFunction Error ::: $e");
     } finally {
       // isLoading(false);
       await getBusinessHoursFunction();
     }
-
   }
 
   /// Add Customer Review
@@ -179,11 +178,15 @@ class BusinessDetailsScreenController extends GetxController {
       var response = await request.send();
       log("response : ${response.statusCode}");
 
-      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) async {
-        AddCustomerReviewsModel addCustomerReviewsModel = AddCustomerReviewsModel.fromJson(json.decode(dataLine));
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((dataLine) async {
+        AddCustomerReviewsModel addCustomerReviewsModel =
+            AddCustomerReviewsModel.fromJson(json.decode(dataLine));
         isSuccessStatus = addCustomerReviewsModel.success.obs;
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: addCustomerReviewsModel.data);
           await getVendorReviewFunction();
         } else {
@@ -216,9 +219,9 @@ class BusinessDetailsScreenController extends GetxController {
         Fluttertoast.showToast(msg: "Something went wrong!");
       }*/
 
-    } catch(e) {
+    } catch (e) {
       log("addCustomerReviewFunction Error ::: $e");
-    } finally{
+    } finally {
       isLoading(false);
     }
   }
@@ -230,28 +233,27 @@ class BusinessDetailsScreenController extends GetxController {
     log("Get Business Hours API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Business Hours API URL : ${response.body}");
 
-      GetBusinessHoursModel getBusinessHoursModel = GetBusinessHoursModel.fromJson(json.decode(response.body));
+      GetBusinessHoursModel getBusinessHoursModel =
+          GetBusinessHoursModel.fromJson(json.decode(response.body));
       isSuccessStatus.value = getBusinessHoursModel.success;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         businessHoursList = getBusinessHoursModel.data;
         log("businessHoursList : ${businessHoursList.length}");
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getBusinessHoursFunction Else Else");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getBusinessHoursFunction Error ::: $e");
     } finally {
       // isLoading(false);
       await fetchChatFromFirebase();
     }
-
   }
 
   /// Get All Messages From Firebase
@@ -259,15 +261,17 @@ class BusinessDetailsScreenController extends GetxController {
     String roomId = "${UserDetails.uniqueId}_$vendorUniqueId";
     isLoading(true);
 
-    var ref = FirebaseFirestore.instance.collection("Chats")
+    var ref = FirebaseFirestore.instance
+        .collection("Chats")
         .where("room_id", isEqualTo: roomId)
         .orderBy("created_at", descending: true)
         .snapshots()
         .asBroadcastStream();
 
-    var value = ref.map((event) => event.docs.map((e) => SendMessageModel.fromJson(e.data())).toList());
+    var value = ref.map((event) =>
+        event.docs.map((e) => SendMessageModel.fromJson(e.data())).toList());
 
-    if(_streamSubscriptionChat == null) {
+    if (_streamSubscriptionChat == null) {
       _streamSubscriptionChat = value.listen((event) {
         userChatList = event;
       });
@@ -281,6 +285,52 @@ class BusinessDetailsScreenController extends GetxController {
     isLoading(false);
     loadUI();
     log("userChatList : ${userChatList.length}");
+  }
+
+  /// Add Vendor in Favorite
+  addVendorInFavoriteFunction() async {
+    // isLoading(true);
+    String url = ApiUrl.addFavouriteVendorApi;
+    log("Add Vendor in Favourite API URL : $url");
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['VendorId'] = "$vendorId";
+      request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
+
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
+
+      var response = await request.send();
+      log('response: ${response.statusCode}');
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        AddVendorInFavouriteModel addVendorInFavouriteModel =
+            AddVendorInFavouriteModel.fromJson(json.decode(value));
+        isSuccessStatus = addVendorInFavouriteModel.success.obs;
+        log("Body : ${addVendorInFavouriteModel.statusCode}");
+
+        if (isSuccessStatus.value) {
+          vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
+          if(vendorDetailsData!.favourites) {
+            Fluttertoast.showToast(msg: "Added in favourite");
+          } else {
+            Fluttertoast.showToast(msg: "Removed from favourite");
+          }
+        } else {
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+      });
+    } catch (e) {
+      log("addVendorInFavoriteFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      // isLoading(false);
+      loadUI();
+    }
   }
 
   // getUserReview()async{
@@ -355,7 +405,6 @@ class BusinessDetailsScreenController extends GetxController {
   //   }
   // }
 
-
   @override
   void onInit() {
     super.onInit();
@@ -367,5 +416,4 @@ class BusinessDetailsScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
 }

@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/user_details.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_appointment_details_model.dart';
+import '../../model/home_screen_models/get_favourite_vendor_model.dart';
 import '../../model/home_screen_models/search_vendor_model.dart';
 
 class HomeScreenController extends GetxController {
@@ -24,6 +25,7 @@ class HomeScreenController extends GetxController {
 
   List<CategoryDatum> allCategoryList = [];
   List<UpcomingAppointmentDatum> allUpcomingAppointmentList = [];
+  List<FavouriteVendorDetails> favouriteVendorList = [];
 
   AppointDetailsData? appointDetailsData;
 
@@ -86,7 +88,8 @@ class HomeScreenController extends GetxController {
     } catch(e) {
       log("getAllUpcomingAppointment Error ::: $e");
     } finally {
-      isLoading(false);
+      // isLoading(false);
+      await getFavouriteVendorByIdFunction();
     }
 
   }
@@ -152,6 +155,34 @@ class HomeScreenController extends GetxController {
 
   }
 
+  /// Get Favourite Vendor List
+  getFavouriteVendorByIdFunction() async {
+    isLoading(true);
+    String url = ApiUrl.favouriteVendorListApi + "?cutomerid=${UserDetails.tableWiseId}";
+    log("Favourite vendor List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Favourite Vendor Response : ${response.body}");
+
+      GetFavouriteVendorModel getFavouriteVendorModel = GetFavouriteVendorModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getFavouriteVendorModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        favouriteVendorList.clear();
+        favouriteVendorList = getFavouriteVendorModel.data;
+        log("favouriteVendorList : ${favouriteVendorList.length}");
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getFavouriteVendorByIdFunction Else Else");
+      }
+
+    } catch(e) {
+      log("getFavouriteVendorByIdFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
 
   @override
   void onInit() {

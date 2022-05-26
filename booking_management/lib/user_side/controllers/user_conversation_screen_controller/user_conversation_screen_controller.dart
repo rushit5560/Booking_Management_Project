@@ -41,7 +41,7 @@ class UserConversationScreenController extends GetxController {
   }
 
   /// Get All Messages From Firebase -> Return Chat List
-  fetchChatFromFirebase() async {
+  /*fetchChatFromFirebase() async {
     isLoading(true);
 
     var ref = FirebaseFirestore.instance.collection("Chats")
@@ -62,9 +62,10 @@ class UserConversationScreenController extends GetxController {
     loadUI();
     // log("userChatList : ${userChatList.length}");
 
-  }
+  }*/
 
-  Stream<List<SendMessageModel>> fetchChatFromFirebase1() {
+  /// Get All Messages From Firebase -> Return Chat List
+  Stream<List<SendMessageModel>> fetchChatFromFirebase() {
     return FirebaseFirestore.instance.collection("Chats")
         .where("room_id", isEqualTo: roomId)
         .orderBy("created_at", descending: false)

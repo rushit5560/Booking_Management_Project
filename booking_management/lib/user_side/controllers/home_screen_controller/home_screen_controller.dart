@@ -163,7 +163,7 @@ class HomeScreenController extends GetxController {
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Favourite Vendor Response : ${response.body}");
+      // log("Favourite Vendor Response : ${response.body}");
 
       GetFavouriteVendorModel getFavouriteVendorModel = GetFavouriteVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFavouriteVendorModel.success.obs;
@@ -171,7 +171,7 @@ class HomeScreenController extends GetxController {
       if(isSuccessStatus.value) {
         favouriteVendorList.clear();
         favouriteVendorList = getFavouriteVendorModel.data;
-        log("favouriteVendorList : ${favouriteVendorList.length}");
+        // log("favouriteVendorList : ${favouriteVendorList.length}");
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getFavouriteVendorByIdFunction Else Else");

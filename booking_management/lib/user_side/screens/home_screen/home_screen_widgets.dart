@@ -9,10 +9,11 @@ import '../../../common_modules/constants/enums.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
 import '../../model/home_screen_models/get_all_appointment_list_model.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
+import '../../model/home_screen_models/get_favourite_vendor_model.dart';
 import 'upcoming_appointment_details_screen/upcoming_appointment_details_screen.dart';
 
 
-
+/// Header Logo Module
 class HeaderModule extends StatelessWidget {
   const HeaderModule({Key? key}) : super(key: key);
 
@@ -116,6 +117,7 @@ class SearchCategoryField extends StatelessWidget {
   }
 }
 
+/// Search Location Wise
 class SearchLocationField extends StatelessWidget {
   SearchLocationField({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
@@ -160,6 +162,7 @@ class SearchLocationField extends StatelessWidget {
   }
 }
 
+/// Upcoming Appointment
 class UpcomingAppointmentModule extends StatelessWidget {
   UpcomingAppointmentModule({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
@@ -277,99 +280,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
 
 }
 
-class FavouriteDoctorsModule extends StatelessWidget {
-  const FavouriteDoctorsModule({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Favourites',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 130,
-          child: GridView.builder(
-            itemCount: 4,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 10,
-              childAspectRatio: 1.1,
-            ),
-            itemBuilder: (context, i) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      color: Colors.grey.shade400,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 60,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: const DecorationImage(
-                            image: AssetImage(AppImages.vendorImg),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 40,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            'Dr. John Doe',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13
-                            ),
-                          ),
-                          Text(
-                            'Lorem Ipsum',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ).commonAllSidePadding(5),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
+/// All Category List
 class PartialCategoryListModule extends StatelessWidget {
   PartialCategoryListModule({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
@@ -377,7 +288,7 @@ class PartialCategoryListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
           'Categories',
@@ -414,8 +325,8 @@ class PartialCategoryListModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(()=> UserSearchResultsScreen(),
-        transition: Transition.zoom,
-        arguments: [singleItem.id.toString(), SearchType.categoryWise]);
+            transition: Transition.zoom,
+            arguments: [singleItem.id.toString(), SearchType.categoryWise]);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -462,4 +373,107 @@ class PartialCategoryListModule extends StatelessWidget {
   }
 
 }
+
+/// Favourite Vendor List
+class FavouriteDoctorsModule extends StatelessWidget {
+  FavouriteDoctorsModule({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Favourites Vendor',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 130,
+          child: GridView.builder(
+            itemCount: screenController.favouriteVendorList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 10,
+              childAspectRatio: 1.1,
+            ),
+            itemBuilder: (context, i) {
+              FavouriteVendorDetails singleVendor = screenController.favouriteVendorList[i];
+              return _favouriteVendorListTile(singleVendor);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _favouriteVendorListTile(FavouriteVendorDetails singleVendor) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            blurRadius: 5,
+            color: Colors.grey.shade400,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 60,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                image: DecorationImage(
+                  image: NetworkImage(singleVendor.businessLogo),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 40,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  singleVendor.businessName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13
+                  ),
+                ),
+                /*Text(
+                  'Lorem Ipsum',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 10,
+                  ),
+                ),*/
+              ],
+            ).commonAllSidePadding(5),
+          ),
+        ],
+      ),
+    );
+  }
+
+}
+
+
 

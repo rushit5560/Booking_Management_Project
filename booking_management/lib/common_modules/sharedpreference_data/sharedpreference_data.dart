@@ -26,6 +26,9 @@ class SharedPreferenceData{
   //String slotDurationKey = "slotDurationKey";
   String businessIdKey = "businessIdKey";
 
+  String latitudeKey = "latitudeKey";
+  String longitudeKey = "longitudeKey";
+
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
         required String apiToken,
@@ -199,4 +202,27 @@ class SharedPreferenceData{
    // log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
   }
+
+
+  /// Set Latitude & Longitude
+  setLatAndLongInPrefs({required String lat, required String long}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(latitudeKey, lat);
+    prefs.setString(longitudeKey, long);
+
+    UserDetails.latitude = prefs.getString(latitudeKey) ?? "";
+    UserDetails.longitude = prefs.getString(longitudeKey) ?? "";
+  }
+
+
+  /// Clear Lat & Long
+  clearLatAndLongFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(latitudeKey);
+    prefs.remove(longitudeKey);
+
+    prefs.setString(latitudeKey, "");
+    prefs.setString(longitudeKey, "");
+  }
+
 }

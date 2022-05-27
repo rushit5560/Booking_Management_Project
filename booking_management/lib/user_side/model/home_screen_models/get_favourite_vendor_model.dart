@@ -101,8 +101,8 @@ class FavouriteVendorDetails {
   bool isPriceDisplay;
   bool confirmation;
   bool isServiceSlots;
-  int latitude;
-  int longitude;
+  String latitude;
+  String longitude;
   String vendorVerificationDate;
   // String applicationUser;
   String modifiedBy;
@@ -149,8 +149,8 @@ class FavouriteVendorDetails {
     isPriceDisplay: json["isPriceDisplay"] ?? false,
     confirmation: json["confirmation"] ?? false,
     isServiceSlots: json["isServiceSlots"] ?? false,
-    latitude: json["latitude"] ?? 0,
-    longitude: json["longitude"] ?? 0,
+    latitude: json["latitude"] ?? "",
+    longitude: json["longitude"] ?? "",
     vendorVerificationDate: json["vendorVerificationDate"] ?? "",
     // applicationUser: json["applicationUser"],
     modifiedBy: json["modifiedBy"] ?? "",

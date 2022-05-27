@@ -38,7 +38,10 @@ class HomeScreen extends StatelessWidget {
                       PartialCategoryListModule()
                           .commonSymmetricPadding(horizontal: 20),
                       const SizedBox(height: 15),
-                      FavouriteDoctorsModule()
+
+                      homeScreenController.favouriteVendorList.isEmpty
+                      ? Container()
+                      : FavouriteDoctorsModule()
                           .commonSymmetricPadding(horizontal: 20),
                       const SizedBox(height: 20),
                     ],

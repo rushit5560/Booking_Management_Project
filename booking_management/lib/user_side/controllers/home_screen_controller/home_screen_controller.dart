@@ -7,12 +7,12 @@ import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/user_details.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_appointment_details_model.dart';
 import '../../model/home_screen_models/get_favourite_vendor_model.dart';
-import '../../model/home_screen_models/search_vendor_model.dart';
+
+
 
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;

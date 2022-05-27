@@ -88,28 +88,18 @@ class SearchCategoryField extends StatelessWidget {
       child: TextFormField(
         controller: screenController.categoryFieldController,
         cursorColor: Colors.grey,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Search category or Name',
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             color: Colors.grey,
             fontSize: 15,
           ),
           border: InputBorder.none,
           isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-          suffixIcon: GestureDetector(
-            onTap: () {
-              // if(screenController.categoryFieldController.text.isNotEmpty) {
-                Get.to(() => UserSearchResultsScreen(),
-                  arguments: [screenController.categoryFieldController.text,SearchType.none],
-                );
-                hideKeyboard();
-              // }
-            },
-            child: const Icon(
-                Icons.search_rounded,
-              color: Colors.grey,
-            ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          prefixIcon: Icon(
+              Icons.search_rounded,
+            color: Colors.grey,
           ),
         ),
       ),
@@ -140,20 +130,66 @@ class SearchLocationField extends StatelessWidget {
       child: TextFormField(
         controller: screenController.locationFieldController,
         cursorColor: Colors.grey,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Search Location',
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             color: Colors.grey,
             fontSize: 15,
           ),
           border: InputBorder.none,
           isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-          suffixIcon: GestureDetector(
-            onTap: () {},
-            child: const Icon(
-              Icons.search_rounded,
-              color: Colors.grey,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          prefixIcon: Icon(
+            Icons.search_rounded,
+            color: Colors.grey,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Search Button
+class SearchButtonModule extends StatelessWidget {
+  SearchButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // if(screenController.categoryFieldController.text.isNotEmpty) {
+        Get.to(() => UserSearchResultsScreen(),
+          arguments: [
+            screenController.categoryFieldController.text,
+            screenController.locationFieldController.text,
+            SearchType.none,
+          ],
+        );
+        hideKeyboard();
+        // }
+      },
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  // spreadRadius: 3,
+                  blurRadius: 5,
+                  color: Colors.grey.shade300,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ]),
+          child: const Padding(
+            padding: EdgeInsets.all(12),
+            child: Text(
+              'Search',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
         ),
@@ -161,6 +197,7 @@ class SearchLocationField extends StatelessWidget {
     );
   }
 }
+
 
 /// Upcoming Appointment
 class UpcomingAppointmentModule extends StatelessWidget {
@@ -324,9 +361,15 @@ class PartialCategoryListModule extends StatelessWidget {
     // String imgUrl = ApiUrl.apiMainPath + singleItem.image;
     return GestureDetector(
       onTap: () {
-        Get.to(()=> UserSearchResultsScreen(),
-            transition: Transition.zoom,
-            arguments: [singleItem.id.toString(), SearchType.categoryWise]);
+        Get.to(
+          () => UserSearchResultsScreen(),
+          transition: Transition.zoom,
+          arguments: [
+            singleItem.id.toString(),
+            "",
+            SearchType.categoryWise,
+          ],
+        );
       },
       child: Container(
         decoration: BoxDecoration(

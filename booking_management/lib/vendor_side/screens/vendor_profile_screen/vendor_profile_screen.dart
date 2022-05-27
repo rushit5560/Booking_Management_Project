@@ -1,5 +1,4 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
-import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_profile_screen_controller/vendor_profile_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/vendor_profile_screen/vendor_profile_screen_widgets.dart';
@@ -27,9 +26,11 @@ class VendorProfileScreen extends StatelessWidget {
               child: Obx(
                 () => vendorProfileScreenController.isLoading.value
                     ? const Center(child: CircularProgressIndicator())
-                    : SingleChildScrollView(
-                        child: VendorProfileDetailsModule().commonAllSidePadding(20),
-                      ),
+                    : vendorProfileScreenController.isMapShow.value
+                        ? MapShowModule()
+                        : SingleChildScrollView(
+                            child: VendorProfileDetailsModule().commonAllSidePadding(20),
+                          ),
               ),
             )
           ],

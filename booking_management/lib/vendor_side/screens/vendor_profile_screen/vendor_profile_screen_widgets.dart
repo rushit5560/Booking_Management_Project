@@ -1,19 +1,19 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_profile_screen_controller/vendor_profile_screen_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
-
 import '../../../common_modules/constants/enums.dart';
+
+
 
 
 class VendorProfileAppBarModule extends StatelessWidget {
@@ -117,9 +117,15 @@ class VendorProfileAppBarModule extends StatelessWidget {
   }
 
   Widget rightSideButton() {
-    return const SizedBox(
-      height: 50,
-      width: 50,
+    return GestureDetector(
+      onTap: () {
+        screenController.isMapShow.value = !screenController.isMapShow.value;
+      },
+      child: const SizedBox(
+        height: 50,
+        width: 50,
+        child: Icon(Icons.map),
+      ),
     );
   }
 }
@@ -996,13 +1002,17 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                                 '15',
                                 '30',
                                 '45',
-                                '1',
+                                '60',
+                                '75',
+                                '90',
+                                '105',
+                                '120',
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 );
                               }).toList(),
@@ -1412,6 +1422,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
       ),
     );
   }
+
 }
 
 
@@ -1502,7 +1513,6 @@ class DateScheduleModule extends StatelessWidget {
     );
   }
 }
-
 
 class TimeSlots extends StatelessWidget {
   TimeSlots({Key? key}) : super(key: key);
@@ -1774,6 +1784,85 @@ class TimeSlots extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class MapShowModule extends StatelessWidget {
+  MapShowModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: Get.height * 0.50,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: screenController.kGooglePlex!,
+              onMapCreated: (GoogleMapController controller) {
+                screenController.mapController.complete(controller);
+              },
+              myLocationEnabled: true,
+              compassEnabled: true,
+              myLocationButtonEnabled: true,
+              onTap: (latLong) {
+                log("latLong : $latLong");
+                screenController.selectedLatitude.value = latLong.latitude.toString();
+                screenController.selectedLongitude.value = latLong.longitude.toString();
+              },
+            ),
+          ),
+        ).commonAllSidePadding(10),
+
+        const SizedBox(height: 15),
+        MapSaveButtonModule(),
+      ],
+    );
+  }
+}
+
+
+class MapSaveButtonModule extends StatelessWidget {
+  MapSaveButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        log(screenController.selectedLatitude.value);
+        log(screenController.selectedLongitude.value);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Save Location',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:booking_management/user_side/screens/user_search_results_screen/
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
+
 class UserSearchResultsScreen extends StatelessWidget {
   UserSearchResultsScreen({Key? key}) : super(key: key);
 
@@ -32,12 +34,12 @@ class UserSearchResultsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      userSearchResultsScreenController.searchType == SearchType.categoryWise
+                      /*userSearchResultsScreenController.searchType == SearchType.categoryWise
                       ? Container()
                       : SearchCategoryTextField(),
                       userSearchResultsScreenController.searchType == SearchType.categoryWise
                           ? Container()
-                          : const SizedBox(height: 20),
+                          : const SizedBox(height: 20),*/
 
                       // SearchLocationTextField(),
                       // SizedBox(height: 30,),

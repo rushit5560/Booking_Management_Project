@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -12,6 +13,7 @@ import 'package:booking_management/vendor_side/model/vendor_update_profile_model
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,6 +36,9 @@ class VendorProfileScreenController extends GetxController{
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
+  String defaultLatitude = "";
+  String defaultLongitude = "";
+
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isSuccessStatus = false.obs;
@@ -41,7 +46,8 @@ class VendorProfileScreenController extends GetxController{
   //RxInt selectedTimeIndex = 0.obs;
   RxInt selectedDateIndex = 0.obs;
   RxString timeSlots = 'Hour'.obs;
-  List<String> dateList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+  List<String> dateList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
     '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', '31'];
 
   File? file;
@@ -51,12 +57,17 @@ class VendorProfileScreenController extends GetxController{
   TimeOfDay selectedEndTime = TimeOfDay.now();
 
   RxList<Datum> businessTypeLists = [Datum(name: "Select Business List")].obs;
-
-  Datum ? businessDropDownValue;
-
+  Datum? businessDropDownValue;
   ApiHeader apiHeader = ApiHeader();
 
-  //String ? slotDuration;
+  /// Map Module
+  RxBool isMapShow = false.obs;
+  RxString selectedLatitude = "".obs;
+  RxString selectedLongitude = "".obs;
+  Completer<GoogleMapController> mapController = Completer();
+  late CameraPosition? kGooglePlex;
+
+
 
   selectDatePreviousClick({required PageController pageController}) {
     pageController.previousPage(duration: 300.milliseconds, curve: Curves.ease);
@@ -268,23 +279,31 @@ class VendorProfileScreenController extends GetxController{
         subUrbTextFieldController.text = getUserDetailsByIdModel.data.suburb;
         postCodeTextFieldController.text = getUserDetailsByIdModel.data.postcode;
         slotDurationValue.value = getUserDetailsByIdModel.data.duration.toString();
-
         businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
+
+        defaultLatitude = getUserDetailsByIdModel.data.latitude;
+        defaultLongitude = getUserDetailsByIdModel.data.longitude;
+
+        kGooglePlex = CameraPosition(
+          target: LatLng(double.parse(defaultLatitude), double.parse(defaultLongitude)),
+          zoom: 14,
+        );
+
         //log('businessLists : ${businessTypeLists.length}');
 
-        log('businessIdTextFieldController.text : ${businessIdTextFieldController.text}');
-        log('nameTextFieldController.text : ${nameTextFieldController.text}');
-        log('emailTextFieldController.text : ${emailTextFieldController.text}');
-        log('businessNameTextFieldController.text : ${businessNameTextFieldController.text}');
-        log('mobileTextFieldController.text : ${mobileTextFieldController.text}');
-        log('addressTextFieldController.text : ${addressTextFieldController.text}');
-        log('streetTextFieldController.text : ${streetTextFieldController.text}');
-        log('stateTextFieldController.text : ${stateTextFieldController.text}');
-        log('countryTextFieldController.text : ${countryTextFieldController.text}');
-        log('subUrbTextFieldController.text : ${subUrbTextFieldController.text}');
-        log('postCodeTextFieldController.text : ${postCodeTextFieldController.text}');
-        log('slotDurationValue.value : ${slotDurationValue.value}');
-        log('businessDropDownValue : ${businessDropDownValue!.name}');
+        // log('businessIdTextFieldController.text : ${businessIdTextFieldController.text}');
+        // log('nameTextFieldController.text : ${nameTextFieldController.text}');
+        // log('emailTextFieldController.text : ${emailTextFieldController.text}');
+        // log('businessNameTextFieldController.text : ${businessNameTextFieldController.text}');
+        // log('mobileTextFieldController.text : ${mobileTextFieldController.text}');
+        // log('addressTextFieldController.text : ${addressTextFieldController.text}');
+        // log('streetTextFieldController.text : ${streetTextFieldController.text}');
+        // log('stateTextFieldController.text : ${stateTextFieldController.text}');
+        // log('countryTextFieldController.text : ${countryTextFieldController.text}');
+        // log('subUrbTextFieldController.text : ${subUrbTextFieldController.text}');
+        // log('postCodeTextFieldController.text : ${postCodeTextFieldController.text}');
+        // log('slotDurationValue.value : ${slotDurationValue.value}');
+        // log('businessDropDownValue : ${businessDropDownValue!.name}');
       } else {
         log('Get All User Details Else Else');
       }
@@ -298,6 +317,7 @@ class VendorProfileScreenController extends GetxController{
 
   @override
   void onInit() async {
+
     //await getDataFromPrefs();
     getAllBusinessTypeList();
     // getUserDetailsById();

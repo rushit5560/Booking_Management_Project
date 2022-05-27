@@ -200,15 +200,10 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                       screenController.ratting = newValue!;
                     });
 
-                    if (screenController.searchType ==
-                        SearchType.categoryWise) {
-                      await screenController
-                          .getSearchCategoryWithRatingWiseFunction();
+                    if (screenController.searchType == SearchType.categoryWise) {
+                      await screenController.getSearchCategoryWithRatingWiseFunction();
                     } else if (screenController.searchType == SearchType.none) {
-                      await screenController
-                          .getAllSearchVendorListRatingWiseFunction(
-                              searchText: screenController
-                                  .categoryFieldController.text);
+                      await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
                     }
                   },
                 ),
@@ -263,10 +258,17 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                     "Distance",
                     style: TextStyle(color: Colors.black, fontSize: 11),
                   ),
-                  onChanged: (newValue) {
-                    setState(() {
-                      screenController.distance = newValue!;
-                    });
+                  onChanged: (newValue) async {
+                      setState(() {
+                        screenController.distance = newValue!;
+                      });
+
+                      if (screenController.searchType == SearchType.categoryWise) {
+                        await screenController.getSearchCategoryWithRatingWiseFunction();
+                      } else if (screenController.searchType == SearchType.none) {
+                        await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+                      }
+
                   },
                 ),
               ),

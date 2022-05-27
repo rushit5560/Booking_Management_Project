@@ -27,10 +27,12 @@ class HomeScreen extends StatelessWidget {
                       Column(
                         children: [
                           SearchCategoryField(),
-                          // const SizedBox(height: 20),
-                          // SearchLocationField(),
+                          const SizedBox(height: 20),
+                          SearchLocationField(),
+                          const SizedBox(height: 20),
+                          SearchButtonModule(),
                         ],
-                      ).commonSymmetricPadding(horizontal: 45),
+                      ).commonSymmetricPadding(horizontal: 15),
                       const SizedBox(height: 20),
 
                       UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20),

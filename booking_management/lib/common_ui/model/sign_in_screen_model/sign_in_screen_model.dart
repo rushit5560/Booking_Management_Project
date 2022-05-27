@@ -356,8 +356,8 @@ class Vendor {
   bool isPriceDisplay;
   bool confirmation;
   bool isServiceSlots;
-  int latitude;
-  int longitude;
+  String latitude;
+  String longitude;
   String vendorVerificationDate;
   Data applicationUser;
   String modifiedBy;
@@ -403,8 +403,8 @@ class Vendor {
     isPriceDisplay: json["isPriceDisplay"] ?? false,
     confirmation: json["confirmation"] ?? false,
     isServiceSlots: json["isServiceSlots"] ?? false,
-    latitude: json["latitude"] ?? 0,
-    longitude: json["longitude"] ?? 0,
+    latitude: json["latitude"] ?? "",
+    longitude: json["longitude"] ?? "",
     vendorVerificationDate: json["vendorVerificationDate"] ?? "",
     applicationUser: Data.fromJson(json["applicationUser"] ?? {}),
     modifiedBy: json["modifiedBy"] ?? "",

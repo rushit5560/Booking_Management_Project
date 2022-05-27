@@ -8,11 +8,15 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/enums.dart';
+import '../../../common_modules/constants/user_details.dart';
 import '../../model/user_search_results_screen_model/get_all_search_vendor_model.dart';
 
 class UserSearchResultsScreenController extends GetxController {
+  /// Getting From Home Screen
   String searchText = Get.arguments[0];
-  SearchType searchType = Get.arguments[1];
+  String locationText = Get.arguments[1];
+  SearchType searchType = Get.arguments[2];
+
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
@@ -23,6 +27,9 @@ class UserSearchResultsScreenController extends GetxController {
   String ? distance;
   String ? date;
   String ? ratting;
+
+  String latitude = "";
+  String longitude = "";
 
   /// Search Vendor List
   getAllSearchVendorListFunction({required String searchText}) async {
@@ -60,7 +67,7 @@ class UserSearchResultsScreenController extends GetxController {
   /// Search Vendor Rating Wise
   getAllSearchVendorListRatingWiseFunction({required String searchText}) async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting";
+    String url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
     log("Search Vendor List API URL : $url");
 
     try {
@@ -77,11 +84,11 @@ class UserSearchResultsScreenController extends GetxController {
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
-        log("getAllSearchVendorListFunction Else Else");
+        log("getAllSearchVendorListRatingWiseFunction Else Else");
       }
 
     } catch(e) {
-      log("getAllSearchVendorListFunction Error ::: $e");
+      log("getAllSearchVendorListRatingWiseFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
@@ -89,22 +96,8 @@ class UserSearchResultsScreenController extends GetxController {
   }
 
 
-  /// Search Filter
-  /*searchFilterListFunction() async {
-    isLoading(true);
-    String url = ApiUrl.searchFilterApi + "?rating=$ratting";
-    log("Search Filter API URL : $url");
 
-    try {
-      http.Response response = await http.get(
-          Uri.parse(url), headers: apiHeader.headers);
-      log("Search Filter API URL : ${response.body}");
-    } catch (e) {
-      log("searchFilterListFunction Error ::: $e");
-    } finally {
-      isLoading(false);
-    }
-  }*/
+
 
 
   /// Category Search
@@ -128,11 +121,11 @@ class UserSearchResultsScreenController extends GetxController {
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
-        log("getAllSearchVendorListFunction Else Else");
+        log("getSearchCategoryWiseFunction Else Else");
       }
 
     } catch(e) {
-      log("getAllSearchVendorListFunction Error ::: $e");
+      log("getSearchCategoryWiseFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
@@ -142,7 +135,7 @@ class UserSearchResultsScreenController extends GetxController {
   /// Category With Rating Search
   getSearchCategoryWithRatingWiseFunction() async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting";
+    String url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
     log("Search Category And Rating Wise API URL : $url");
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
@@ -159,11 +152,11 @@ class UserSearchResultsScreenController extends GetxController {
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
-        log("getAllSearchVendorListFunction Else Else");
+        log("getSearchCategoryWithRatingWiseFunction Else Else");
       }
 
     } catch(e) {
-      log("getAllSearchVendorListFunction Error ::: $e");
+      log("getSearchCategoryWithRatingWiseFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
@@ -174,6 +167,8 @@ class UserSearchResultsScreenController extends GetxController {
   @override
   void onInit() {
     categoryFieldController.text = searchText;
+    latitude = UserDetails.latitude;
+    longitude = UserDetails.longitude;
 
     if(searchType == SearchType.categoryWise) {
       getSearchCategoryWiseFunction(catId: searchText);

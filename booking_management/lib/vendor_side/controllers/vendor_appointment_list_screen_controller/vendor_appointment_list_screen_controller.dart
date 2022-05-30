@@ -33,8 +33,8 @@ class VendorAppointmentListScreenController extends GetxController {
   List<AppointmentListModule> confirmAppointmentList = [];
   List<AppointmentListModule> doneAppointmentList = [];
   List<AppointmentListModule> cancelAppointmentList = [];
-  List<AppointmentListModule> processingAppointmentList = [];
-  List<AppointmentListModule> scheduledAppointmentList = [];
+  // List<AppointmentListModule> processingAppointmentList = [];
+  // List<AppointmentListModule> scheduledAppointmentList = [];
 
 
 
@@ -59,8 +59,8 @@ class VendorAppointmentListScreenController extends GetxController {
         confirmAppointmentList.clear();
         doneAppointmentList.clear();
         cancelAppointmentList.clear();
-        processingAppointmentList.clear();
-        scheduledAppointmentList.clear();
+        // processingAppointmentList.clear();
+        // scheduledAppointmentList.clear();
 
         allAppointmentList = appointmentListModel.data;
 
@@ -77,12 +77,12 @@ class VendorAppointmentListScreenController extends GetxController {
           if(allAppointmentList[i].status == "Cancel") {
             cancelAppointmentList.add(allAppointmentList[i]);
           }
-          if(allAppointmentList[i].status == "Processing") {
-            processingAppointmentList.add(allAppointmentList[i]);
-          }
-          if(allAppointmentList[i].status == "Scheduled") {
-            scheduledAppointmentList.add(allAppointmentList[i]);
-          }
+          // if(allAppointmentList[i].status == "Processing") {
+          //   processingAppointmentList.add(allAppointmentList[i]);
+          // }
+          // if(allAppointmentList[i].status == "Scheduled") {
+          //   scheduledAppointmentList.add(allAppointmentList[i]);
+          // }
         }
 
         log("allAppointmentList : ${allAppointmentList.length}");
@@ -90,8 +90,8 @@ class VendorAppointmentListScreenController extends GetxController {
         log("confirmAppointmentList : ${confirmAppointmentList.length}");
         log("doneAppointmentList : ${doneAppointmentList.length}");
         log("cancelAppointmentList : ${cancelAppointmentList.length}");
-        log("processingAppointmentList : ${processingAppointmentList.length}");
-        log("scheduledAppointmentList : ${scheduledAppointmentList.length}");
+        // log("processingAppointmentList : ${processingAppointmentList.length}");
+        // log("scheduledAppointmentList : ${scheduledAppointmentList.length}");
 
 
       } else {

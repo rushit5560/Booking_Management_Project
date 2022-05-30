@@ -34,7 +34,7 @@ class CommonAppBarModule extends StatelessWidget {
             appBarOption == AppBarOption.userConversationScreen
                 ? Row(
                     children: [
-                      Container(
+                      /*Container(
                         height: 38,
                         width: 38,
                         decoration: BoxDecoration(
@@ -44,7 +44,7 @@ class CommonAppBarModule extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 10),*/
                       Text(
                         title,
                         maxLines: 1,

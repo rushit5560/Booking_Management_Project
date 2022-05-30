@@ -3,9 +3,12 @@ import 'package:booking_management/common_modules/constants/app_theme.dart';
 import 'package:booking_management/common_ui/common_screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+
+import 'common_modules/constants/user_details.dart';
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -29,9 +32,9 @@ void main() async {
   await Firebase.initializeApp();
 
   /// For Background
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  /*if (!kIsWeb) {
+  if (!kIsWeb) {
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -58,9 +61,9 @@ void main() async {
       badge: true,
       sound: true,
     );
-  }*/
+  }
 
-  //firebaseMessaging.setForegroundNotificationPresentationOptions(sound: true);
+  firebaseMessaging.setForegroundNotificationPresentationOptions(sound: true);
 
   runApp(const MyApp());
 }
@@ -78,27 +81,27 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    /*firebaseMessaging.getToken().then((token) {
-      log("token token $token");
-      // Firebasetoken = token;
+    firebaseMessaging.getToken().then((token) {
+      log("FcmToken $token");
+      UserDetails.fcmToken = token!;
+      // FirebaseToken = token;
       //prefs.setString('apiToken', token);
       //SharedUserPreferences().setDeviceToken(token);
-    });*/
+    });
     //checkForInitialMessage();
-    /*FirebaseMessaging.instance
+    FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage ? message) {
       if (message != null) {
-        print('we can now navigate to specific screen');
-        *//*Navigator.pushNamed(context, '/message',
-            arguments: MessageArguments(message, true));*//*
+        log('we can now navigate to specific screen');
+        // Navigator.pushNamed(context, '/message',
+        //     arguments: MessageArguments(message, true));
       }
-    });*/
+    });
 
-    /// For Forground Notification
-    /*FirebaseMessaging.onMessage.listen((RemoteMessage ? message) {
+    /// For Foreground Notification
+    FirebaseMessaging.onMessage.listen((RemoteMessage ? message) {
       RemoteNotification ? notification = message!.notification;
       AndroidNotification ? android = message.notification!.android;
       if (notification != null && android != null && !kIsWeb) {
@@ -111,32 +114,31 @@ class _MyAppState extends State<MyApp> {
                 channel.id,
                 channel.name,
                 //channel.description,
-                // TODO add a proper drawable resource to android, for now using
                 //      one that already exists in example app.
                 icon: 'launch_background',
               ),
             ));
       }
-    });*/
+    });
 
     ///Background notification
-    /*FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-      *//* Navigator.pushNamed(context, '/message',
-          arguments: MessageArguments(message, true));*//*
-    });*/
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      log('A new onMessageOpenedApp event was published!');
+       // Navigator.pushNamed(context, '/message',
+       //    arguments: MessageArguments(message, true));
+    });
   }
 
-  // For handling notification when the app is in terminated state
-  /*checkForInitialMessage() async {
+  /// For handling notification when the app is in terminated state
+  checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage =
     await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
-      print('For handling notification when the app is in terminated state');
+      log('For handling notification when the app is in terminated state');
     }
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {

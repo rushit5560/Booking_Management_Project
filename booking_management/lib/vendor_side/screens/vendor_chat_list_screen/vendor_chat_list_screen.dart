@@ -71,6 +71,7 @@ class VendorChatListScreen extends StatelessWidget {
             arguments: [
               singleMsg.roomId,
               singleMsg.peerId,
+              singleMsg.createdName,
               // screenController.userChatList,
             ]),
         child: Container(

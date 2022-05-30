@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:searchfield/searchfield.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
@@ -73,7 +74,7 @@ class SearchCategoryField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42,
+      // height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
@@ -85,6 +86,42 @@ class SearchCategoryField extends StatelessWidget {
           ),
         ],
       ),
+      /*child: SearchField<String>(
+        suggestions: ['abc', 'xyz', 'name1', 'name2']
+            .map(
+              (e) => SearchFieldListItem<String>(
+            e,
+            item: e,
+          ),
+        )
+            .toList(),
+        onSubmit: (value) {
+          log(value);
+        },
+      ),*/
+      /*child: SearchField<String>(
+        suggestions: <String>[
+          "Abc",
+          "Xyz",
+          "Name1",
+          "Name2",
+        ].map((e) => SearchFieldListItem<String>(
+                e,
+                item: e,
+              ),
+            ).toList(),
+      ),*/
+      /*child: SearchField<String>(
+        suggestions: [
+          SearchFieldListItem("Abc"),
+          SearchFieldListItem("Xyz"),
+          SearchFieldListItem("Name1"),
+          SearchFieldListItem("Name2"),
+        ],
+        hint: "Search category or name",
+
+        // searchInputDecoration: InputDecoration,
+      ),*/
       child: TextFormField(
         controller: screenController.categoryFieldController,
         cursorColor: Colors.grey,

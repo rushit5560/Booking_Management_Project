@@ -336,7 +336,8 @@ class OverviewModule extends StatelessWidget {
                       "roomId" : charRoomId,
                       "createdName" : UserDetails.userName,
                       "peerName" : screenController.vendorBusinessName,
-                      "users" : [UserDetails.email, screenController.vendorEmail]
+                      "users" : [UserDetails.email, screenController.vendorEmail],
+                      "customerid" : UserDetails.uniqueId,
                     };
 
                     log("chatRoomData : $chatRoomData");

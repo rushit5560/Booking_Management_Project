@@ -28,4 +28,6 @@ class UserDetails {
 
   static String latitude = "";
   static String longitude = "";
+
+  static String fcmToken = "";
 }

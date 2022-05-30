@@ -52,7 +52,19 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                       ],
                                     ),
                                 )
-                                : Container(),
+                                : appointmentDetailsScreenController.appointmentDetailsData.status == "Confirm"
+                            ? SizedBox(
+                              height: 50,
+                              width: Get.width,
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(child: DoneAppointmentButtonModule().commonSymmetricPadding(horizontal: 15)),
+                                  Expanded(child: CancelAppointmentButtonModule().commonSymmetricPadding(horizontal: 15)),
+                                ],
+                              ),
+                            )
+                            : Container(),
                           ),
                         ],
                       ),

@@ -39,9 +39,7 @@ class VendorAppointmentListScreen extends StatelessWidget {
                                       ? CancelAppointmentListModule()
                                       : vendorAppointmentListScreenController.selectedTabIndex.value == 5
                                           ? DoneAppointmentListModule()
-                                          : vendorAppointmentListScreenController.selectedTabIndex.value == 6
-                                              ? ProcessingAppointmentListModule()
-                                              : ScheduledAppointmentListModule(),
+                                          : Container(),
                     ),
             ),
           ],

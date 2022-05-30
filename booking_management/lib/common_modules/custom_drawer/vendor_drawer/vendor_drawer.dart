@@ -39,12 +39,12 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),*/
 
-              VendorDrawerSingleItemModule(
+              /*VendorDrawerSingleItemModule(
                 img: AppImages.bookingHistoryImg,
                 name: 'Booking History',
                 vendorDrawerOption: VendorDrawerOption.bookingHistory,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20),*/
 
               VendorDrawerSingleItemModule(
                 img: AppImages.paymentImg,

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/constants/user_details.dart';
 import '../../model/review_screen_model/get_all_reviews_model.dart';
 
 class ReviewScreenController extends GetxController {
@@ -18,7 +19,7 @@ class ReviewScreenController extends GetxController {
 
   getAllReviewsFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorGetAllReviewApi + "?VendorId=3"; // /*${UserDetails.tableWiseId}*/
+    String url = ApiUrl.vendorGetAllReviewApi + "?VendorId=${UserDetails.tableWiseId}"; // /*${UserDetails.tableWiseId}*/
     log("Get All Review List API URL : $url");
 
     try {

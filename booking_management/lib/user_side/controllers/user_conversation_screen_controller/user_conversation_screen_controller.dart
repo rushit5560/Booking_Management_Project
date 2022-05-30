@@ -1,14 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/send_message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import '../../../common_modules/constants/api_url.dart';
 
 
 
 class UserConversationScreenController extends GetxController {
   String roomId = Get.arguments[0];
   String receiverEmail = Get.arguments[1];
+  String headerName = Get.arguments[2];
   // List<SendMessageModel> userNewChatList = Get.arguments[2];
 
   RxBool isLoading = false.obs;
@@ -26,7 +32,7 @@ class UserConversationScreenController extends GetxController {
 
   /// Send Message on Send Button Click
   Future<void> sendMessageFunction(SendMessageModel sendMsg) async {
-    messageFieldController.clear();
+
 
     var documentReference = FirebaseFirestore.instance
     .collection("Chats").doc(DateTime.now().millisecondsSinceEpoch.toString());
@@ -34,9 +40,17 @@ class UserConversationScreenController extends GetxController {
     /// Set Data in Firebase
     documentReference.set(sendMsg.toJson());
 
+    /// Send Chat Notification
+    sendGeneralNotification(
+      fcmToken: UserDetails.fcmToken,
+      title: UserDetails.userName,
+      body: messageFieldController.text.trim(),
+      type: 0,
+    );
+
     /// Hide Keyboard
     // hideKeyboard();
-
+    messageFieldController.clear();
     loadUI();
   }
 
@@ -68,7 +82,7 @@ class UserConversationScreenController extends GetxController {
   Stream<List<SendMessageModel>> fetchChatFromFirebase() {
     return FirebaseFirestore.instance.collection("Chats")
         .where("room_id", isEqualTo: roomId)
-        .orderBy("created_at", descending: false)
+        .orderBy("created_at", descending: true)
         .snapshots()
         .map((snapshot) =>
         snapshot.docs.map((doc) => SendMessageModel.fromJson(doc.data()))
@@ -82,12 +96,60 @@ class UserConversationScreenController extends GetxController {
     isLoading(false);
   }
 
+  static void sendGeneralNotification({
+    required String fcmToken,
+    required String body,
+    required String title,
+    required int type,
+  }) async {
+
+    log("fcmToken : $fcmToken");
+    log("body : $body");
+    log("title : $title");
+
+    final response = await http.post(
+      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': "Key=${ApiUrl.serverApiKey}",
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': body,
+            'title': title,
+            'type': '$type'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '10',
+            "sound": "default",
+            'status': 'done'
+          },
+          'to': fcmToken,
+        },
+      ),
+    );
+    log("response : ${response.body}");
+    if (response.statusCode == 200) {
+      // on success do
+      log("General Notification Sent to $fcmToken");
+    } else {
+      // on failure do
+      log("General Notification Failed");
+    }
+
+    // Get.back();
+  }
+
 }
 
 
-class UserChatMessageModel {
-  final bool isSendByMe;
-  final String message;
+// class UserChatMessageModel {
+//   final bool isSendByMe;
+//   final String message;
+//
+//   UserChatMessageModel({required this.isSendByMe, required this.message});
+// }
 
-  UserChatMessageModel({required this.isSendByMe, required this.message});
-}

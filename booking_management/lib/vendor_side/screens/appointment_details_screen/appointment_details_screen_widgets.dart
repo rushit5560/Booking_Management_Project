@@ -202,6 +202,40 @@ class ConfirmAppointmentButtonModule extends StatelessWidget {
   }
 }
 
+
+/// Done Button
+class DoneAppointmentButtonModule extends StatelessWidget {
+  DoneAppointmentButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<AppointmentDetailsScreenController>();
+  final vendorAppointmentListScreenController = Get.find<VendorAppointmentListScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        await screenController.doneAppointmentByIdFunction();
+        await vendorAppointmentListScreenController.getAppointmentListFunction();
+      },
+      child: Container(
+        decoration: shadowDecoration(),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+          child: Text(
+            'Done Appointment',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Cancel Button
 class CancelAppointmentButtonModule extends StatelessWidget {
   CancelAppointmentButtonModule({Key? key}) : super(key: key);

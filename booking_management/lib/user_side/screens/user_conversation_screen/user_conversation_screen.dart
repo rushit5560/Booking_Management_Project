@@ -23,8 +23,8 @@ class UserConversationScreen extends StatelessWidget {
             : SafeArea(
                 child: Column(
                   children: [
-                    const CommonAppBarModule(
-                      title: 'Dr. John Doe',
+                    CommonAppBarModule(
+                      title: userConversationScreenController.headerName,
                       appBarOption: AppBarOption.userConversationScreen,
                     ),
                     Expanded(
@@ -47,6 +47,7 @@ class UserConversationScreen extends StatelessWidget {
                             final chatList = snapshot.data;
                             return ListView.builder(
                               itemCount: chatList!.length,
+                              reverse: true,
                               itemBuilder: (context, i) {
 
                                 SendMessageModel singleMsg = chatList[i];

@@ -24,6 +24,8 @@ class VendorAppointmentListScreenController extends GetxController {
   RxInt isStatus = 0.obs;
   ApiHeader apiHeader = ApiHeader();
   SignInModel ? signInModel;
+  RxString selectedDate = "".obs;
+  RxBool isAppointmentListCalenderShow = false.obs;
 
   /// All Filter List
   List<AppointmentListModule> allAppointmentList = [];
@@ -39,7 +41,9 @@ class VendorAppointmentListScreenController extends GetxController {
   /// Get All Appointment List
   getAppointmentListFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}";
+    String url = selectedDate.value == ""
+    ? ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}"
+    : ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}&Status=&dDate=$selectedDate";
     log("Appointment List APi ULR : $url");
 
     try {
@@ -138,6 +142,11 @@ class VendorAppointmentListScreenController extends GetxController {
   void onInit() {
     getAppointmentListFunction();
     super.onInit();
+  }
+
+  loadUI() {
+    isLoading(true);
+    isLoading(false);
   }
 
 }

@@ -677,7 +677,7 @@ class SelectDateModule extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

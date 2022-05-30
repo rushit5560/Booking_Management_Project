@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
+import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import '../appointment_details_screen/appointment_details_screen.dart';
@@ -54,6 +59,9 @@ class AppointmentListSearchAppointmentField extends StatelessWidget {
 class AppointmentListTextModule extends StatelessWidget {
   AppointmentListTextModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorAppointmentListScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +76,209 @@ class AppointmentListTextModule extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 25),
+        _selectDateModule(),
+        const SizedBox(height: 25),
+
+        screenController.isAppointmentListCalenderShow.value == true
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _calenderModule(),
+                  const SizedBox(height: 25),
+                ],
+              )
+            : Container(),
+
         _selectableTabsModule(),
         const SizedBox(height: 25),
       ],
+    );
+  }
+
+  Widget _selectDateModule() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.colorLightGrey,
+                  blurRadius: 5,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                /// Show Date as Text
+                Text(
+                  screenController.selectedDate.value,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+
+                /// Calender Image Button
+                GestureDetector(
+                  onTap: () {
+                    screenController.isAppointmentListCalenderShow.value =
+                    !screenController.isAppointmentListCalenderShow.value;
+                    screenController.loadUI();
+
+                    log("screenController.isCalenderShow.value : ${screenController.isAppointmentListCalenderShow.value}");
+                  },
+                  child: const Icon(Icons.calendar_month),
+                ),
+              ],
+            ).commonSymmetricPadding(vertical: 12, horizontal: 10),
+          ),
+        ),
+        const SizedBox(width: 20),
+        GestureDetector(
+          onTap: () async {
+            screenController.selectedDate.value = "";
+            await screenController.getAppointmentListFunction();
+          },
+          child: const Text(
+            "Clear",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _calenderModule() {
+    return Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: TableCalendar(
+          focusedDay: focusedDay,
+          firstDay: DateTime(2020),
+          lastDay: DateTime(2050),
+          calendarFormat: format,
+          rangeStartDay: DateTime.now(),
+          onDaySelected: (DateTime selectDay, DateTime focusDay) async {
+            selectedDay = selectDay;
+            focusedDay = focusDay;
+
+            String month = '';
+            if(selectedDay.month == 1) {
+              month = "january";
+            } else if(selectedDay.month == 2) {
+              month = "february";
+            } else if(selectedDay.month == 3) {
+              month = "March";
+            } else if(selectedDay.month == 4) {
+              month = "April";
+            } else if(selectedDay.month == 5) {
+              month = "May";
+            } else if(selectedDay.month == 6) {
+              month = "June";
+            } else if(selectedDay.month == 7) {
+              month = "July";
+            } else if(selectedDay.month == 8) {
+              month = "August";
+            } else if(selectedDay.month == 9) {
+              month = "September";
+            } else if(selectedDay.month == 10) {
+              month = "October";
+            } else if(selectedDay.month == 11) {
+              month = "November";
+            } else if(selectedDay.month == 12) {
+              month = "December";
+            }
+
+            screenController.selectedDate.value = "${selectedDay.day}/$month/${selectedDay.year}";
+            // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+            screenController.isAppointmentListCalenderShow.value = !screenController.isAppointmentListCalenderShow.value;
+            screenController.loadUI();
+            await screenController.getAppointmentListFunction();
+          },
+
+          // Day Changed
+          selectedDayPredicate: (DateTime date) {
+            return isSameDay(selectedDay, date);
+          },
+          // Style the Calender
+          calendarStyle: CalendarStyle(
+            isTodayHighlighted: false,
+            outsideDecoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            defaultTextStyle: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold),
+            weekendTextStyle: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold),
+            selectedTextStyle: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold),
+            todayTextStyle: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold),
+            defaultDecoration: const BoxDecoration(
+              // borderRadius: BorderRadius.circular(10),
+                shape: BoxShape.circle,
+                color: Colors.white),
+            weekendDecoration: const BoxDecoration(
+              //borderRadius: BorderRadius.circular(10),
+                shape: BoxShape.circle,
+                color: Colors.white),
+            todayDecoration: const BoxDecoration(
+              //borderRadius: BorderRadius.circular(10),
+                shape: BoxShape.circle,
+                color: Colors.transparent),
+            selectedDecoration: BoxDecoration(
+              //borderRadius: BorderRadius.circular(10),
+                shape: BoxShape.circle,
+                color: AppColors.colorLightGrey1),
+          ),
+          // Week Style
+          daysOfWeekStyle: const DaysOfWeekStyle(
+            // dowTextFormatter: (dowTextFormat, dynamic) {
+            //   return DateFormat.E(locale).format(dowTextFormat)[0];
+            // },
+            decoration: BoxDecoration(color: Colors.transparent),
+            weekdayStyle: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 15),
+
+            weekendStyle: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 15),
+          ),
+          // Month Style
+          headerStyle: HeaderStyle(
+            headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+            formatButtonVisible: false,
+            titleCentered: true,
+            decoration: const BoxDecoration(color: Colors.white),
+            formatButtonDecoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            titleTextStyle: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+            leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                color: Colors.black),
+            rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                color: Colors.black),
+          ),
+        ),
+      ),
     );
   }
 
@@ -2329,7 +2537,8 @@ class ScheduledAppointmentListModule extends StatelessWidget {
         Text(
           time,
           style: const TextStyle(fontSize: 9),
-        ),*//*
+        ),*/
+/*
       ],
     );
   }
@@ -2510,7 +2719,8 @@ class ScheduledAppointmentListModule extends StatelessWidget {
           style: const TextStyle(fontSize: 9),
         ),
 
-        *//* const SizedBox(width: 10),
+        */
+/* const SizedBox(width: 10),
 
         Image.asset(
           AppImages.timeImg,

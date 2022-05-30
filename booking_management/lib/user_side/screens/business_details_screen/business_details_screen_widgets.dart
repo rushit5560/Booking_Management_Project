@@ -410,7 +410,13 @@ class OverviewModule extends StatelessWidget {
   Widget viewMapButtonModule() {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const UserMapScreen());
+        Get.to(
+                () => UserMapScreen(),
+          arguments: [
+            screenController.vendorDetailsData!.vendor.latitude,
+            screenController.vendorDetailsData!.vendor.longitude,
+          ],
+        );
       },
       child: Container(
         decoration:

@@ -1,28 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../controllers/user_map_screen_controller/user_map_screen_controller.dart';
 
 class GoogleMapView extends StatelessWidget {
   GoogleMapView({Key? key}) : super(key: key);
 
-  Completer<GoogleMapController> _controller = Completer();
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  final screenController = Get.find<UserMapScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      myLocationEnabled: true,
-      compassEnabled: false,
-      //markers: _markers,
-      //onCameraMove: _onCameraMove,
-      initialCameraPosition: _kGooglePlex,
+      myLocationEnabled: false,
+      compassEnabled: true,
+      initialCameraPosition: screenController.kGooglePlex!,
       zoomGesturesEnabled: true,
       onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
+        screenController.controller.complete(controller);
       },
     );
   }

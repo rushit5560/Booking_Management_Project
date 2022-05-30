@@ -17,6 +17,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/vendor_profile_screen_model/save_vendor_lat_long_model.dart';
+
 class VendorProfileScreenController extends GetxController{
   RxString selectedDate = 'DOB'.obs;
   RxString slot = 'Single'.obs;
@@ -249,6 +251,7 @@ class VendorProfileScreenController extends GetxController{
     }
   }
 
+  /// Get User Details By Id
   getUserDetailsById()async {
     isLoading(true);
     String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.tableWiseId}";
@@ -286,8 +289,9 @@ class VendorProfileScreenController extends GetxController{
 
         kGooglePlex = CameraPosition(
           target: LatLng(double.parse(defaultLatitude), double.parse(defaultLongitude)),
-          zoom: 14,
+          zoom: 16,
         );
+        log("kGooglePlex : $kGooglePlex");
 
         //log('businessLists : ${businessTypeLists.length}');
 
@@ -313,6 +317,37 @@ class VendorProfileScreenController extends GetxController{
     } finally {
       isLoading(false);
     }
+  }
+
+
+  saveVendorLatLongFunction() async {
+    isLoading(true);
+    String url = ApiUrl.vendorSaveLatLongApi
+        + "?CurrentLatitude=${selectedLatitude.value}"
+        + "&CurrentLongitude=${selectedLongitude.value}"
+        + "&id=${UserDetails.tableWiseId}";
+    log("save Vendor API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Save Vendor Response : ${response.body}");
+
+      SaveVendorLatLongModel saveVendorLatLongModel = SaveVendorLatLongModel.fromJson(json.decode(response.body));
+      isSuccessStatus = saveVendorLatLongModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: "Location Saved");
+        await getAllBusinessTypeList();
+      } else {
+        log("saveVendorLatLongFunction Else Else");
+      }
+
+    } catch(e) {
+      log("saveVendorLatLongFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
   }
 
   @override

@@ -62,6 +62,7 @@ class ApiUrl {
   static const vendorConfirmAppointmentApi = apiMainPath + "Appointments/APIAppointmentConfirm";
   static const vendorDoneAppointmentApi = apiMainPath + "Appointments/APIAppointmentDone";
   static const vendorEditProfileApi = apiMainPath + "API/VendorProfile";
+  static const vendorSaveLatLongApi = apiMainPath + "API/SaveLatitudeLongitude";
 
   /// Vendor - Services
   static const vendorAddAndUpdateServiceApi = apiMainPath + "API/ServiceUpsert"; // Add & Update

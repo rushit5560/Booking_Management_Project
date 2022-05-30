@@ -185,7 +185,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
+  /*Future<void> _selectDate(BuildContext context) async {
     final DateTime? d = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -197,7 +197,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
       screenController.selectedDate.value = DateFormat.yMMMMd("en_US").format(d);
       //});
     }
-  }
+  }*/
 
   Widget profile(){
     return Stack(
@@ -213,7 +213,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
             child: Image.asset(AppImages.profileImg, height: 100, width: 100, fit: BoxFit.fill)),
 
            GestureDetector(
-            onTap: (){
+            onTap: () {
               openGallery();
             },
             child: Positioned(
@@ -1034,8 +1034,6 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
     );
   }
 
-
-
   Widget startTimeTextField(context){
     return Row(
       children: [
@@ -1070,7 +1068,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                       onTap: (){
                         _selectStartTime(context);
                       },
-                        child: Icon(Icons.access_time))
+                        child: const Icon(Icons.access_time))
                   ],
                 ),
               ),
@@ -1115,7 +1113,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                       onTap: (){
                         _selectEndTime(context);
                       },
-                      child: Icon(Icons.access_time))
+                      child: const Icon(Icons.access_time)),
                 ],
               ),
             ),
@@ -1816,10 +1814,47 @@ class MapShowModule extends StatelessWidget {
                 log("latLong : $latLong");
                 screenController.selectedLatitude.value = latLong.latitude.toString();
                 screenController.selectedLongitude.value = latLong.longitude.toString();
+                screenController.loadUI();
               },
             ),
           ),
         ).commonAllSidePadding(10),
+
+        const SizedBox(height: 15),
+
+        Row(
+          children: [
+            const Expanded(
+              flex: 4,
+              child: Text(
+                  "Latitude :",
+                textAlign: TextAlign.end,
+              ),
+            ),
+            const SizedBox(width: 15),
+            Expanded(
+              flex: 6,
+              child: Text(screenController.selectedLatitude.value),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+
+        Row(
+          children: [
+            const Expanded(
+              flex: 4,
+              child: Text("Longitude :",
+                textAlign: TextAlign.end,
+              ),
+            ),
+            const SizedBox(width: 15),
+            Expanded(
+              flex: 6,
+              child: Text(screenController.selectedLongitude.value),
+            ),
+          ],
+        ),
 
         const SizedBox(height: 15),
         MapSaveButtonModule(),
@@ -1836,9 +1871,8 @@ class MapSaveButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        log(screenController.selectedLatitude.value);
-        log(screenController.selectedLongitude.value);
+      onTap: () async {
+        await screenController.saveVendorLatLongFunction();
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/user_details.dart';
@@ -9,9 +10,52 @@ import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendo
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common_modules/constants/api_url.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../common_modules/constants/app_logos.dart';
+import '../../model/splash_screen_model/get_logo_model.dart';
+
 class SplashScreenController extends GetxController {
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  RxBool isLoading = false.obs;
+  RxBool isSuccessStatus = false.obs;
 
+  /// Get App Logo
+  getAppLogoFunction() async {
+    isLoading(true);
+    String url = ApiUrl.logoApi;
+    log("App Logo API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      log("Logo API Response : ${response.body}");
+
+      GetLogoModel getLogoModel = GetLogoModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getLogoModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        AppLogo.splashLogo = getLogoModel.workerList.splashLogo;
+        AppLogo.homeLogo = getLogoModel.workerList.homeLogo;
+        AppLogo.mainLogo = getLogoModel.workerList.mainLogo;
+        AppLogo.smallLogo = getLogoModel.workerList.smallLogo;
+
+        log("AppLogo.splashLogo : ${AppLogo.splashLogo}");
+      } else {
+        log("getAppLogoFunction Else Else");
+      }
+
+
+    } catch(e) {
+      log("Get Application Logo Error ::: $e");
+    } finally {
+      isLoading(false);
+      Timer(const Duration(seconds: 2), () => goToNextScreen());
+    }
+  }
+
+
+  /// Go To Next Screen
   goToNextScreen()async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserDetails.isUserLoggedIn = prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
@@ -69,7 +113,7 @@ class SplashScreenController extends GetxController {
 
   @override
   void onInit() {
-    Timer(const Duration(seconds: 1), () => goToNextScreen());
+    getAppLogoFunction();
     super.onInit();
   }
 }

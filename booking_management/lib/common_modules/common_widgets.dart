@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,8 +11,8 @@ class HeaderLogoModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      AppImages.headerLogoImg,
+    return Image.network(
+      AppLogo.homeLogo,
       height: Get.height * 0.10,
       scale: 0.9,
     );

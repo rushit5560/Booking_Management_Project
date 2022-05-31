@@ -26,6 +26,8 @@ class BookAppointmentScreenController extends GetxController {
   VendorBookingWorkerList? bookVendorDetails;
   RxBool isServiceSlot = false.obs;
 
+  String resourcePrefix = "";
+
   List<BookServiceWorkerList> allServicesList = [];
   List<BookingResourceWorkerData> allResourcesList = [];
 
@@ -67,6 +69,7 @@ class BookAppointmentScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         bookVendorDetails = getVendorBookingModel.workerList;
+        resourcePrefix = getVendorBookingModel.workerList.vendor.categories.prefix;
         isServiceSlot.value = getVendorBookingModel.workerList.vendor.isServiceSlots;
         log("isServiceSlot : ${isServiceSlot.value}");
 
@@ -164,13 +167,13 @@ class BookAppointmentScreenController extends GetxController {
             await getResourcesAdditionalSlotFunction(resId: allResourcesList[i].id.toString());
           }
         }
-        /*else if(searchType2 == SearchType2.dateTimeWise) {
+        else if(searchType2 == SearchType2.dateTimeWise) {
           log("searchType2 : $searchType2");
           for(int i = 0; i < allResourcesList.length; i++) {
             allResourcesList[i].timingList =
             await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
           }
-        }*/
+        }
 
       } else {
         log("getAllResourcesListByIdFunction Else Else");
@@ -273,7 +276,7 @@ class BookAppointmentScreenController extends GetxController {
   }
 
   /// Get Resources Date & Time Wise List
-  /*getResourcesDateAndTimeListFunction({required String resId}) async {
+  getResourcesDateAndTimeListFunction({required String resId}) async {
     // DateTime dateTime = DateTime.now();
     // String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     // String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
@@ -321,7 +324,7 @@ class BookAppointmentScreenController extends GetxController {
     }
 
     return timeList;
-  }*/
+  }
 
   /// Get Resources Additional Slot & Anny Time Wise List
   getResourcesAdditionalSlotAndAnytimeFunction({required String resId}) async {
@@ -626,7 +629,7 @@ class BookAppointmentScreenController extends GetxController {
     }
 
     /// todo - Date Format
-    selectedDate.value = "${dateTime.day}-$month-${dateTime.year}";
+    selectedDate.value = "${dateTime.year}/${dateTime.month}/${dateTime.day}";
     log("selectedDate : ${selectedDate.value}");
   }
 

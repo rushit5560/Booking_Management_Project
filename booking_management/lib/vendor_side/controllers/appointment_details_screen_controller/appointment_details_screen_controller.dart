@@ -21,6 +21,7 @@ class AppointmentDetailsScreenController extends GetxController {
 
   AppointmentDetailsData appointmentDetailsData = AppointmentDetailsData();
 
+  String oppositeUserUniqueId = "";
 
   /// Get Appointment Details
   getAppointmentDetailsByIdFunction() async {
@@ -37,6 +38,7 @@ class AppointmentDetailsScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         appointmentDetailsData = appointmentDetailsModel.data;
+        oppositeUserUniqueId = appointmentDetailsModel.data.customer!.userId;
         log("appointmentDetailsData :: $appointmentDetailsData");
       } else {
         log("getAppointmentDetailsByIdFunction Else Else");
@@ -68,7 +70,7 @@ class AppointmentDetailsScreenController extends GetxController {
         Fluttertoast.showToast(msg: "Appointment Confirmed!");
         /// Confirm Notification Send
         sendGeneralNotification(
-          UserDetails.fcmToken,
+          oppositeUserUniqueId,
           "Appointment Confirmed!",
           "Title",
           0,
@@ -101,7 +103,7 @@ class AppointmentDetailsScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Done!");
-        /// Confirm Noti Send
+        /// Done Noti Send
         sendGeneralNotification(
           UserDetails.fcmToken,
           "Appointment Done!",

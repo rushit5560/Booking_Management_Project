@@ -193,9 +193,9 @@ class BookingResourcesListModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Select Resources",
-          style: TextStyle(
+        Text(
+          "Select ${screenController.resourcePrefix}",
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -573,35 +573,112 @@ class SelectDateModule extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-                String month = '';
-                if(selectedDay.month == 1) {
-                  month = "january";
-                } else if(selectedDay.month == 2) {
-                  month = "february";
-                } else if(selectedDay.month == 3) {
-                  month = "March";
-                } else if(selectedDay.month == 4) {
-                  month = "April";
-                } else if(selectedDay.month == 5) {
-                  month = "May";
-                } else if(selectedDay.month == 6) {
-                  month = "June";
-                } else if(selectedDay.month == 7) {
-                  month = "July";
-                } else if(selectedDay.month == 8) {
-                  month = "August";
-                } else if(selectedDay.month == 9) {
-                  month = "September";
-                } else if(selectedDay.month == 10) {
-                  month = "October";
-                } else if(selectedDay.month == 11) {
-                  month = "November";
-                } else if(selectedDay.month == 12) {
-                  month = "December";
+                // String month = '';
+                // if(selectedDay.month == 1) {
+                //   month = "01";
+                // } else if(selectedDay.month == 2) {
+                //   month = "02";
+                // } else if(selectedDay.month == 3) {
+                //   month = "03";
+                // } else if(selectedDay.month == 4) {
+                //   month = "04";
+                // } else if(selectedDay.month == 5) {
+                //   month = "05";
+                // } else if(selectedDay.month == 6) {
+                //   month = "06";
+                // } else if(selectedDay.month == 7) {
+                //   month = "07";
+                // } else if(selectedDay.month == 8) {
+                //   month = "08";
+                // } else if(selectedDay.month == 9) {
+                //   month = "09";
+                // } else if(selectedDay.month == 10) {
+                //   month = "10";
+                // } else if(selectedDay.month == 11) {
+                //   month = "11";
+                // } else if(selectedDay.month == 12) {
+                //   month = "12";
+                // }
+
+                String day = "";
+                if(selectedDay.day == 1) {
+                  day = "01";
+                } else if(selectedDay.day == 2) {
+                  day = "02";
+                } else if(selectedDay.day == 3) {
+                  day = "03";
+                } else if(selectedDay.day == 4) {
+                  day = "04";
+                } else if(selectedDay.day == 5) {
+                  day = "05";
+                } else if(selectedDay.day == 6) {
+                  day = "06";
+                } else if(selectedDay.day == 7) {
+                  day = "07";
+                } else if(selectedDay.day == 8) {
+                  day = "08";
+                } else if(selectedDay.day == 9) {
+                  day = "09";
+                } else if(selectedDay.day == 10) {
+                  day = "10";
+                } else if(selectedDay.day == 11) {
+                  day = "11";
+                } else if(selectedDay.day == 12) {
+                  day = "12";
+                } else if(selectedDay.day == 13) {
+                  day = "13";
+                } else if(selectedDay.day == 14) {
+                  day = "14";
+                } else if(selectedDay.day == 15) {
+                  day = "15";
+                } else if(selectedDay.day == 16) {
+                  day = "16";
+                } else if(selectedDay.day == 17) {
+                  day = "17";
+                } else if(selectedDay.day == 18) {
+                  day = "18";
+                } else if(selectedDay.day == 19) {
+                  day = "19";
+                } else if(selectedDay.day == 20) {
+                  day = "20";
+                } else if(selectedDay.day == 21) {
+                  day = "21";
+                } else if(selectedDay.day == 22) {
+                  day = "22";
+                } else if(selectedDay.day == 23) {
+                  day = "23";
+                } else if(selectedDay.day == 24) {
+                  day = "24";
+                } else if(selectedDay.day == 25) {
+                  day = "25";
+                } else if(selectedDay.day == 26) {
+                  day = "26";
+                } else if(selectedDay.day == 27) {
+                  day = "27";
+                } else if(selectedDay.day == 28) {
+                  day = "28";
+                } else if(selectedDay.day == 29) {
+                  day = "29";
+                } else if(selectedDay.day == 30) {
+                  day = "30";
+                } else if(selectedDay.day == 31) {
+                  day = "31";
                 }
 
-                screenController.selectedDate.value = "${selectedDay.day}/$month/${selectedDay.year}";
-                screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+                DateTime bufferDate = DateTime.now();
+                log("bufferDate : $bufferDate");
+                log("selectedDay : $selectedDay");
+
+                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-$day";
+                if(selectedDay == bufferDate) {
+                      screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+                } else {
+                  screenController.selectedTime.value = "00:00:00";
+                }
+
+                log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
+                // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+
                 screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
                 screenController.loadUI();
               },

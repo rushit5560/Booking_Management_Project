@@ -351,7 +351,8 @@ class OverviewModule extends StatelessWidget {
                     arguments: [
                       charRoomId,
                       screenController.vendorEmail,
-                      // screenController.userChatList,
+                      screenController.vendorBusinessName,
+                      screenController.vendorUniqueId,
                     ]);
                   },
                   child: Container(

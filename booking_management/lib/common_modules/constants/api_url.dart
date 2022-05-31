@@ -6,6 +6,7 @@ class ApiUrl {
   static const signInApi = apiMainPath + "API/Login";
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";
   static const logoApi = apiMainPath + "API/Logo";
+  static const getFcmTokenApi = apiMainPath + "API/GetFCM";
 
   /// Customer API
   static const userSignUpApi = apiMainPath + "API/CustomerRegister";

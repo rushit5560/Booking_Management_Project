@@ -337,7 +337,7 @@ class BookingResourcesListModule extends StatelessWidget {
                         ),
                       ),
 
-                      Text(
+                      /*Text(
                         "-",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -346,9 +346,9 @@ class BookingResourcesListModule extends StatelessWidget {
                               ? Colors.white
                               : Colors.black,
                         ),
-                      ).commonSymmetricPadding(horizontal: 5),
+                      ).commonSymmetricPadding(horizontal: 5),*/
 
-                      Text(
+                      /*Text(
                         singleItem.timingList[i].endDateTime,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -357,7 +357,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                 ? Colors.white
                                 : Colors.black,
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ).commonAllSidePadding(3),

@@ -223,7 +223,8 @@ class BookAppointmentScreenController extends GetxController {
     } else if(dateTime.month == 12) {
       month = "December";
     }
-    String dateModule = "${dateTime.day}/$month/${dateTime.year}";
+    // String dateModule = "${dateTime.day}/$month/${dateTime.year}";
+    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
     List<TimingSlot> timeList = [];
     isLoading(true);

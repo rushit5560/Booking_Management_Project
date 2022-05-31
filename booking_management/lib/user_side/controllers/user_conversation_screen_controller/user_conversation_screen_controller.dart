@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/send_message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_url.dart';
+import '../../model/user_conversation_screen_model/get_fcm_token_model.dart';
 
 
 
@@ -15,7 +17,13 @@ class UserConversationScreenController extends GetxController {
   String roomId = Get.arguments[0];
   String receiverEmail = Get.arguments[1];
   String headerName = Get.arguments[2];
+  String peerUniqueId = Get.arguments[3];
   // List<SendMessageModel> userNewChatList = Get.arguments[2];
+
+  /// Getting From API
+  String oppositeUserFcmToken = "";
+
+  ApiHeader apiHeader = ApiHeader();
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -42,7 +50,7 @@ class UserConversationScreenController extends GetxController {
 
     /// Send Chat Notification
     sendGeneralNotification(
-      fcmToken: UserDetails.fcmToken,
+      fcmToken: oppositeUserFcmToken, // Getting From API
       title: UserDetails.userName,
       body: messageFieldController.text.trim(),
       type: 0,
@@ -141,6 +149,45 @@ class UserConversationScreenController extends GetxController {
     }
 
     // Get.back();
+  }
+
+
+  /// Get User FCM Token
+  getUserFcmTokenFunction() async {
+    isLoading(true);
+    String url = ApiUrl.getFcmTokenApi + "?id=$peerUniqueId";
+    log("Get User Fcm Token : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getFcmTokeModel.success.obs;
+      log("getFcmTokeModel.success : ${getFcmTokeModel.success}");
+      log("getFcmTokeModel.success : ${getFcmTokeModel.statusCode}");
+      log("getFcmTokeModel.success : ${getFcmTokeModel.data.fcmToken}");
+
+      if(isSuccessStatus.value) {
+        oppositeUserFcmToken = getFcmTokeModel.data.fcmToken;
+        log("oppositeUserFcmToken : $oppositeUserFcmToken");
+      } else {
+        log("getUserFcmTokenFunction Else Else");
+      }
+
+
+    } catch(e) {
+      log("getUserFcmTokenFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
+  }
+
+
+
+  @override
+  void onInit() {
+    getUserFcmTokenFunction();
+    super.onInit();
   }
 
 }

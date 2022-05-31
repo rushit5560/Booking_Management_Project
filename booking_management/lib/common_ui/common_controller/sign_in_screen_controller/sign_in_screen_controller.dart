@@ -12,6 +12,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../common_modules/constants/user_details.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreenController extends GetxController {
@@ -32,7 +34,7 @@ class SignInScreenController extends GetxController {
     isLoading(true);
 
     String url = ApiUrl.signInApi +
-        "?UserName=${unameFieldController.text.trim()}&Password=${passwordFieldController.text.trim()}";
+        "?UserName=${unameFieldController.text.trim()}&Password=${passwordFieldController.text.trim()}&Fcm=${UserDetails.fcmToken}";
     log('Url : $url');
 
     try {
@@ -73,6 +75,7 @@ class SignInScreenController extends GetxController {
             //slotDuration: ""
             businessId: ""
           );
+          log("Fcm Token : ${UserDetails.fcmToken}");
           Get.offAll(() => IndexScreen());
 
           //Get.snackbar(signInModel.message, '');

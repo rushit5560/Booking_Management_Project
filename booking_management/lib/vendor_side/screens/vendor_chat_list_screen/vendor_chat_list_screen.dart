@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/common_widgets.dart';
+import '../../../common_modules/constants/user_details.dart';
 import '../../../user_side/model/user_chat_list_screen_model/user_chat_list_screen_model.dart';
 import '../../../user_side/screens/user_conversation_screen/user_conversation_screen.dart';
 import '../../controllers/vendor_chat_list_screen_controller/vendor_chat_list_screen_controller.dart';
@@ -66,14 +67,24 @@ class VendorChatListScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () => Get.to(()=> UserConversationScreen(),
-            transition: Transition.zoom,
-            arguments: [
-              singleMsg.roomId,
-              singleMsg.peerId,
-              singleMsg.createdName,
-              // screenController.userChatList,
-            ]),
+        onTap: () {
+
+          String oppositeUserUniqueId = "";
+          if(UserDetails.roleName == "Customer") {
+            oppositeUserUniqueId = singleMsg.vendorid!;
+          } else {
+            oppositeUserUniqueId = singleMsg.customerid!;
+          }
+
+          Get.to(()=> UserConversationScreen(),
+              transition: Transition.zoom,
+              arguments: [
+                singleMsg.roomId,
+                singleMsg.peerId,
+                singleMsg.createdName,
+                oppositeUserUniqueId,
+              ]);
+        },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),

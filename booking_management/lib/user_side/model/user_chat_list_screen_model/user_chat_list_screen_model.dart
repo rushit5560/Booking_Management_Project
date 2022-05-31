@@ -14,7 +14,9 @@ class UserChatRoomListModel {
     this.roomId,
     this.users,
     this.createdName,
-    this.peerName
+    this.peerName,
+    this.customerid,
+    this.vendorid,
   });
 
   Timestamp? createdAt;
@@ -24,6 +26,8 @@ class UserChatRoomListModel {
   String? createdName;
   String? peerName;
   List<String>? users;
+  String? customerid;
+  String? vendorid;
 
   factory UserChatRoomListModel.fromJson(Map<String, dynamic> json) => UserChatRoomListModel(
     createdAt: json["createdAt"] ?? Timestamp.now(),
@@ -32,6 +36,8 @@ class UserChatRoomListModel {
     roomId: json["roomId"] ?? "",
     createdName: json["createdName"] ?? "",
     peerName: json["peerName"] ?? "",
+    customerid: json["customerid"] ?? "",
+    vendorid: json["vendorid"] ?? "",
     users: List<String>.from(json["users"].map((x) => x) ?? []),
   );
 
@@ -42,6 +48,8 @@ class UserChatRoomListModel {
     "roomId": roomId,
     "createdName" : createdName,
     "peerName" : peerName,
+    "customerid" : customerid,
+    "vendorid" : vendorid,
     "users": List<dynamic>.from(users!.map((x) => x)),
   };
 }

@@ -1834,7 +1834,7 @@ class MapShowModule extends StatelessWidget {
             const SizedBox(width: 15),
             Expanded(
               flex: 6,
-              child: Text(screenController.selectedLatitude.value),
+              child: Text(screenController.defaultLatitude),
             ),
           ],
         ),

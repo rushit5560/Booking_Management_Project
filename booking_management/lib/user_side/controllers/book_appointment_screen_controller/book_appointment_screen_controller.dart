@@ -147,6 +147,7 @@ class BookAppointmentScreenController extends GetxController {
           for(int i = 0; i < allResourcesList.length; i++) {
             allResourcesList[i].timingList =
             await getResourcesAdditionalSlotAndAnytimeFunction(resId: allResourcesList[i].id.toString());
+            log("allResourcesList[i].id ${allResourcesList[i].id}");
           }
         }
         else if(searchType2 == SearchType2.anyTimeWise) {
@@ -194,6 +195,7 @@ class BookAppointmentScreenController extends GetxController {
 
   /// Get Resources Time List
   getResourcesTimeListFunction({required String resId}) async {
+    log("Resource Id : $resId");
     DateTime dateTime = DateTime.now();
     String month = '';
     if(dateTime.month == 1) {
@@ -221,7 +223,7 @@ class BookAppointmentScreenController extends GetxController {
     } else if(dateTime.month == 12) {
       month = "December";
     }
-    String dateModule = "${dateTime.day}-$month-${dateTime.year}";
+    String dateModule = "${dateTime.day}/$month/${dateTime.year}";
     String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
     List<TimingSlot> timeList = [];
     isLoading(true);
@@ -622,6 +624,7 @@ class BookAppointmentScreenController extends GetxController {
       month = "December";
     }
 
+    /// todo - Date Format
     selectedDate.value = "${dateTime.day}-$month-${dateTime.year}";
     log("selectedDate : ${selectedDate.value}");
   }

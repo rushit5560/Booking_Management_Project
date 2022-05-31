@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../vendor_side/model/vendor_additional_slot_screen_model/get_all_additional_slot_model.dart';
 import '../../controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
@@ -216,7 +214,7 @@ class BookingResourcesListModule extends StatelessWidget {
   }
 
   Widget _resourcesListTile(BookingResourceWorkerData singleItem) {
-    String imgUrl = ApiUrl.apiMainPath + singleItem.image;
+    String imgUrl = singleItem.image;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -602,7 +600,7 @@ class SelectDateModule extends StatelessWidget {
                   month = "December";
                 }
 
-                screenController.selectedDate.value = "${selectedDay.day}-$month-${selectedDay.year}";
+                screenController.selectedDate.value = "${selectedDay.day}/$month/${selectedDay.year}";
                 screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
                 screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
                 screenController.loadUI();

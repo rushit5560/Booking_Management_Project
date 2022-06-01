@@ -33,7 +33,7 @@ class AppointmentDetailsData {
     this.id,
     this.bookingId,
     this.vendorId,
-    // this.vendor,
+    this.vendor,
     this.customer,
     this.customerId,
     this.bookingFor,
@@ -52,7 +52,7 @@ class AppointmentDetailsData {
   int? id;
   String? bookingId;
   int? vendorId;
-  // String? vendor;
+  Vendor? vendor;
   AppointmentCustomer? customer;
   int? customerId;
   String? bookingFor;
@@ -71,7 +71,7 @@ class AppointmentDetailsData {
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     vendorId: json["vendorId"] ?? 0,
-    // vendor: json["vendor"] ?? "",
+    vendor: Vendor.fromJson(json["vendor"] ?? {}),
     customer: AppointmentCustomer.fromJson(json["customer"] ?? {}),
     customerId: json["customerId"] ?? 0,
     bookingFor: json["bookingFor"] ?? "",
@@ -91,7 +91,7 @@ class AppointmentDetailsData {
     "id": id,
     "bookingId": bookingId,
     "vendorId": vendorId,
-    // "vendor": vendor,
+    "vendor": vendor!.toJson(),
     "customer": customer!.toJson(),
     "customerId": customerId,
     "bookingFor": bookingFor,
@@ -182,6 +182,27 @@ class AppointmentCustomer {
     "notes": notes,
     "bookingId": bookingId,
     "isPriceDisplay": isPriceDisplay,
+  };
+}
+
+class Vendor {
+  Vendor({
+    required this.userId,
+
+  });
+
+
+  String userId;
+
+
+  factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+    userId: json["userId"] ?? "",
+
+  );
+
+  Map<String, dynamic> toJson() => {
+    "userId": userId,
+
   };
 }
 

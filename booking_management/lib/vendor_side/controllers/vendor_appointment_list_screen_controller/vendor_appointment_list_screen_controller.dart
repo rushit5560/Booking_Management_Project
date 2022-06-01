@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../user_side/model/user_conversation_screen_model/get_fcm_token_model.dart';
 import '../../model/vendor_appointment_list_screen_models/appointment_list_model.dart';
 import '../../model/vendor_appointment_list_screen_models/appointment_status_change_model.dart';
 
@@ -26,6 +27,8 @@ class VendorAppointmentListScreenController extends GetxController {
   SignInModel ? signInModel;
   RxString selectedDate = "".obs;
   RxBool isAppointmentListCalenderShow = false.obs;
+
+  String message = "";
 
   /// All Filter List
   List<AppointmentListModule> allAppointmentList = [];
@@ -138,6 +141,8 @@ class VendorAppointmentListScreenController extends GetxController {
 
 
 
+
+
   @override
   void onInit() {
     getAppointmentListFunction();
@@ -148,5 +153,10 @@ class VendorAppointmentListScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
+
+
+
+
+
 
 }

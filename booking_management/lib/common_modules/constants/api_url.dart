@@ -7,6 +7,8 @@ class ApiUrl {
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";
   static const logoApi = apiMainPath + "API/Logo";
   static const getFcmTokenApi = apiMainPath + "API/GetFCM";
+  static const saveNotificationApi = apiMainPath + "API/NotificationUpsert";
+  static const getNotificationApi = apiMainPath + "API/NotificationGetById";
 
   /// Customer API
   static const userSignUpApi = apiMainPath + "API/CustomerRegister";

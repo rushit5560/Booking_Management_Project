@@ -166,17 +166,20 @@ class UserCheckoutScreenController extends GetxController{
     } finally {
       isLoading(false);
     }
-
   }
+
+
 
 
   @override
   void onInit() {
-    fNameFieldController.text = UserDetails.userName;
-    emailFieldController.text = UserDetails.email;
-    phoneFieldController.text = UserDetails.phoneNo;
+    fNameFieldController.text = UserDetails.userName.isEmpty ? "" : UserDetails.userName;
+    emailFieldController.text = UserDetails.email.isEmpty ? "" : UserDetails.email;
+    phoneFieldController.text = UserDetails.phoneNo.isEmpty ? "" : UserDetails.phoneNo;
     getCheckoutFunction();
     super.onInit();
   }
+
+
 
 }

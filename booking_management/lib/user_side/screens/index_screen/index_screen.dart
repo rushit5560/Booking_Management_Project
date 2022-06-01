@@ -39,7 +39,7 @@ class IndexScreen extends StatelessWidget {
     } else if (indexScreenController.menuIndex.value == 1) {
       return UserAppointmentListScreen();
     } else if (indexScreenController.menuIndex.value == 2) {
-      return const UserNotificationScreen();
+      return UserNotificationScreen();
     } else {
       return UserChatListScreen();
     }

@@ -173,7 +173,6 @@ class UserConversationScreenController extends GetxController {
         log("getUserFcmTokenFunction Else Else");
       }
 
-
     } catch(e) {
       log("getUserFcmTokenFunction Error ::: $e");
     } finally {

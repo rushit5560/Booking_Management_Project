@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:http/http.dart' as http;
+import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
-
-import '../../../common_modules/constants/api_header.dart';
+import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_url.dart';
-import '../../../common_modules/constants/user_details.dart';
-import '../../../user_side/model/booking_success_screen_model/notification_get_model.dart';
+import '../../model/booking_success_screen_model/notification_get_model.dart';
 
-class VendorNotificationScreenController extends GetxController {
-
+class UserNotificationScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 

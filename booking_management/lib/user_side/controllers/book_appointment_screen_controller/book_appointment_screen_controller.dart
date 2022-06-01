@@ -44,6 +44,7 @@ class BookAppointmentScreenController extends GetxController {
   RxBool isCalenderShow = false.obs;
   RxInt selectedTimeIndex = 0.obs;
   RxBool isPriceDisplay = false.obs;
+  String vendorUniqueId = "";
 
 
   List<String> timeList = [ 'Any Time',
@@ -73,6 +74,7 @@ class BookAppointmentScreenController extends GetxController {
         resourcePrefix = getVendorBookingModel.workerList.vendor.categories.prefix;
         isServiceSlot.value = getVendorBookingModel.workerList.vendor.isServiceSlots;
         isPriceDisplay.value = getVendorBookingModel.workerList.vendor.isPriceDisplay;
+        vendorUniqueId = getVendorBookingModel.workerList.vendor.userId;
         log("isServiceSlot : ${isServiceSlot.value}");
         log("isPriceDisplay : ${isPriceDisplay.value}");
 

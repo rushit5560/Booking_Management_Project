@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/user_side/controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -149,11 +150,13 @@ class PersonalInformationFormModule extends StatelessWidget {
 class ConfirmAndPayButtonModule extends StatelessWidget {
   ConfirmAndPayButtonModule({Key? key}) : super(key: key);
   final screenController = Get.find<UserCheckoutScreenController>();
+  // final bookAppointmentScreenController = Get.find<BookAppointmentScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
         if(screenController.checkOutFormKey.currentState!.validate()) {
             await screenController.checkOutSubmitFunction();
         }

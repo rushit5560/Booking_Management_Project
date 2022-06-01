@@ -71,7 +71,7 @@ class WorkerList {
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     vendorId: json["vendorId"] ?? 0,
-    vendor: json["vendor"] ?? {},
+    vendor: Vendor.fromJson(json["vendor"] ?? {}),
     customer: Customer.fromJson(json["customer"] ?? {}),
     customerId: json["customerId"] ?? 0,
     bookingFor: json["bookingFor"] ?? "",

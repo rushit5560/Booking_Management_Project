@@ -1809,11 +1809,26 @@ class MapShowModule extends StatelessWidget {
               },
               myLocationEnabled: true,
               compassEnabled: true,
+              markers: screenController.markers,
               myLocationButtonEnabled: true,
               onTap: (latLong) {
                 log("latLong : $latLong");
-                screenController.selectedLatitude.value = latLong.latitude.toString();
-                screenController.selectedLongitude.value = latLong.longitude.toString();
+                screenController.selectedLatitude.value =
+                    latLong.latitude.toString();
+                screenController.selectedLongitude.value =
+                    latLong.longitude.toString();
+
+                screenController.markers.clear();
+                screenController.markers.add(
+                  Marker(
+                    markerId: const MarkerId("selectedLocation"),
+                    position: LatLng(
+                      double.parse(screenController.selectedLatitude.value),
+                      double.parse(screenController.selectedLongitude.value),
+                    ),
+                  ),
+                );
+
                 screenController.loadUI();
               },
             ),
@@ -1834,7 +1849,7 @@ class MapShowModule extends StatelessWidget {
             const SizedBox(width: 15),
             Expanded(
               flex: 6,
-              child: Text(screenController.defaultLatitude),
+              child: Text(screenController.selectedLatitude.value),
             ),
           ],
         ),

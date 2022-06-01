@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/user_details.dart';
+import '../../../user_side/model/booking_success_screen_model/notification_save_model.dart';
+import '../../../user_side/model/user_conversation_screen_model/get_fcm_token_model.dart';
 import '../../model/appointment_details_screen_models/appointment_details_model.dart';
 import '../../model/vendor_appointment_list_screen_models/appointment_status_change_model.dart';
 
@@ -22,6 +24,9 @@ class AppointmentDetailsScreenController extends GetxController {
   AppointmentDetailsData appointmentDetailsData = AppointmentDetailsData();
 
   String oppositeUserUniqueId = "";
+  String oppositeUserFcmToken = "";
+  String date = "";
+  String slotTime = "";
 
   /// Get Appointment Details
   getAppointmentDetailsByIdFunction() async {
@@ -38,7 +43,12 @@ class AppointmentDetailsScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         appointmentDetailsData = appointmentDetailsModel.data;
-        oppositeUserUniqueId = appointmentDetailsModel.data.customer!.userId;
+        oppositeUserUniqueId = appointmentDetailsModel.data.vendor!.userId;
+
+        String dateTime = appointmentDetailsModel.data.startDateTime!;
+        date = dateTime.substring(0, dateTime.length - 9);
+        slotTime = dateTime.substring(11, dateTime.length - 3);
+
         log("appointmentDetailsData :: $appointmentDetailsData");
       } else {
         log("getAppointmentDetailsByIdFunction Else Else");
@@ -68,13 +78,12 @@ class AppointmentDetailsScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Confirmed!");
-        /// Confirm Notification Send
-        sendGeneralNotification(
-          oppositeUserUniqueId,
-          "Appointment Confirmed!",
-          "Title",
-          0,
-        );
+
+        String title = "${UserDetails.userName} appointment confirmed";
+        String msg = "${UserDetails.userName} appointment confirmed for $date at $slotTime time";
+
+        await getUserFcmTokenFunction(title: title, body: msg);
+
         // Get.back();
       } else {
         log("confirmAppointmentByIdFunction Else Else");
@@ -85,6 +94,7 @@ class AppointmentDetailsScreenController extends GetxController {
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       isLoading(false);
+
     }
   }
 
@@ -103,13 +113,12 @@ class AppointmentDetailsScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Done!");
-        /// Done Noti Send
-        sendGeneralNotification(
-          UserDetails.fcmToken,
-          "Appointment Done!",
-          "Title",
-          0,
-        );
+
+        String title = "${UserDetails.userName} appointment done";
+        String msg = "${UserDetails.userName} appointment done for $date at $slotTime time";
+
+        await getUserFcmTokenFunction(title: title, body: msg);
+
         // Get.back();
       } else {
         log("confirmAppointmentByIdFunction Else Else");
@@ -138,12 +147,13 @@ class AppointmentDetailsScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Canceled!");
-        sendGeneralNotification(
-          UserDetails.fcmToken,
-          "Appointment Canceled!",
-          "Title",
-          0,
-        );
+
+        String title = "${UserDetails.userName} appointment cancel";
+        String msg = "${UserDetails.userName} appointment cancel for $date at $slotTime time";
+
+        await getUserFcmTokenFunction(title: title, body: msg);
+
+
       } else {
         log("cancelAppointmentByIdFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
@@ -156,6 +166,90 @@ class AppointmentDetailsScreenController extends GetxController {
     }
   }
 
+
+  /// Get Fcm Token
+  getUserFcmTokenFunction({required String title, required String body}) async {
+    isLoading(true);
+    String url = ApiUrl.getFcmTokenApi + "?id=$oppositeUserUniqueId";
+    log("Get User Fcm Token : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getFcmTokeModel.success.obs;
+      log("getFcmTokeModel.success : ${getFcmTokeModel.success}");
+      log("getFcmTokeModel.success : ${getFcmTokeModel.statusCode}");
+      log("getFcmTokeModel.success : ${getFcmTokeModel.data.fcmToken}");
+
+      if(isSuccessStatus.value) {
+        oppositeUserFcmToken = getFcmTokeModel.data.fcmToken;
+
+        /// Send Chat Notification
+        sendGeneralNotification(
+          fcmToken: oppositeUserFcmToken, // Getting From API
+          title: title,
+          body: body,
+          type: 0,
+        );
+
+        await addNotificationFunction(title: title, message: body);
+
+        // message = "${UserDetails.userName} booked appointment for $date at $slotTime time";
+
+        // log("oppositeUserUniqueId : oppositeUserUniqueId");
+      } else {
+        log("getUserFcmTokenFunction Else Else");
+      }
+
+    } catch(e) {
+      log("getUserFcmTokenFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Add Notification
+  addNotificationFunction({required String title, required String message}) async {
+    isLoading(true);
+    String url = ApiUrl.saveNotificationApi;
+    log("Add Notification API URL : $url");
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['Message'] = message;
+      request.fields['NotificationFor'] = title;
+      request.fields['NotificationFrom'] = UserDetails.uniqueId;
+      request.fields['NotificationTo'] = oppositeUserUniqueId;
+
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
+
+      var response = await request.send();
+      log('response: ${response.statusCode}');
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        NotificationSaveModel notificationSaveModel = NotificationSaveModel.fromJson(json.decode(value));
+        isSuccessStatus = notificationSaveModel.success.obs;
+
+        if(isSuccessStatus.value) {
+          log(notificationSaveModel.message);
+        } else {
+          // log(notificationSaveModel.message);
+          log("Add Notification Else Else");
+        }
+      });
+
+
+    } catch(e) {
+      log("Add Notification Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
+  }
+
   @override
   void onInit() {
     getAppointmentDetailsByIdFunction();
@@ -163,12 +257,13 @@ class AppointmentDetailsScreenController extends GetxController {
   }
 
 
-  static void sendGeneralNotification(
-      String fcmToken,
-      String body,
-      String title,
-      int type,
-      ) async {
+  /// Send Notification Function
+  static void sendGeneralNotification({
+    required String fcmToken,
+    required String body,
+    required String title,
+    required int type,
+  }) async {
 
     log("fcmToken : $fcmToken");
     log("body : $body");
@@ -207,7 +302,7 @@ class AppointmentDetailsScreenController extends GetxController {
       log("General Notification Failed");
     }
 
-    Get.back();
+    // Get.back();
   }
 
 }

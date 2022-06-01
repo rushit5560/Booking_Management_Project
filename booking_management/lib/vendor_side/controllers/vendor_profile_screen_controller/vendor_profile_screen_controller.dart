@@ -68,6 +68,7 @@ class VendorProfileScreenController extends GetxController{
   RxString selectedLongitude = "".obs;
   Completer<GoogleMapController> mapController = Completer();
   late CameraPosition? kGooglePlex;
+  Set<Marker> markers = {};
 
 
 
@@ -268,7 +269,7 @@ class VendorProfileScreenController extends GetxController{
       log('getUserDetailsByIdModel: ${getUserDetailsByIdModel.success}');
       log('getUserDetailsByIdModelStatus : $isStatus');
 
-      if(isStatus.value == 200){
+      if(isStatus.value == 200) {
         log("Success");
         businessIdTextFieldController.text = getUserDetailsByIdModel.data.businessId;
         nameTextFieldController.text = getUserDetailsByIdModel.data.userName;

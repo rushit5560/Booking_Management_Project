@@ -1,8 +1,10 @@
 import 'package:booking_management/vendor_side/controllers/vendor_notification_screen_controller/vendor_notification_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/app_images.dart';
+import '../../../user_side/model/booking_success_screen_model/notification_get_model.dart';
+
+
 
 class VendorNotificationHeaderModule extends StatelessWidget {
   final String name;
@@ -12,31 +14,34 @@ class VendorNotificationHeaderModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       name,
-      style: const TextStyle(
-        color: Colors.grey,
-        fontSize: 16,
-      ),
+      style: const TextStyle(color: Colors.grey, fontSize: 16),
     );
   }
 }
 
 class VendorNotificationListModule extends StatelessWidget {
-  final int count;
-  VendorNotificationListModule({Key? key, required this.count}) : super(key: key);
+  VendorNotificationListModule({Key? key}) : super(key: key);
 
   final screenController = Get.find<VendorNotificationScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: count,
+      itemCount: screenController.notificationList.length,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, i) {
+        NotificationData singleItem = screenController.notificationList[i];
+
+        String dateTime = screenController.notificationList[i].dateTime;
+
+        String date = dateTime.substring(0,dateTime.length - 9);
+        String time = dateTime.substring(11, dateTime.length - 3);
+
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            margin: EdgeInsets.only(bottom: 3),
+            margin: const EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
@@ -61,20 +66,30 @@ class VendorNotificationListModule extends StatelessWidget {
                           scale: 0.85,
                         ),
                         const SizedBox(width: 15),
-                        const Expanded(
+                        Expanded(
                           child: Text(
-                            'Lorem Ipsum accept your booking',
-                            maxLines: 1,
+                            singleItem.message,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 13),
+                            style: const TextStyle(fontSize: 13),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const Text(
-                    '01:22 PM',
-                    style: TextStyle(fontSize: 9),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        date,
+                        style: const TextStyle(fontSize: 9),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        time,
+                        style: const TextStyle(fontSize: 9),
+                      ),
+                    ],
                   ),
                 ],
               ),

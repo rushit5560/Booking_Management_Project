@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/user_side/controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/user_side/screens/invoice_screen/invoice_screen.dart';
 import 'package:flutter/material.dart';
@@ -86,10 +87,12 @@ class BookingDetailsModule extends StatelessWidget {
 class ButtonsModule extends StatelessWidget {
   ButtonsModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookingSuccessScreenController>();
+  final bookAppointmentScreenController = Get.find<BookAppointmentScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return bookAppointmentScreenController.isPriceDisplay.value
+    ? Row(
       children: [
         Expanded(
           child: GestureDetector(
@@ -163,6 +166,38 @@ class ButtonsModule extends StatelessWidget {
           ),
         ),
       ],
+    )
+    : GestureDetector(
+      onTap: () {
+        Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: Get.width,
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  color: Colors.grey.shade300,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ]
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              'Continue Booking',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

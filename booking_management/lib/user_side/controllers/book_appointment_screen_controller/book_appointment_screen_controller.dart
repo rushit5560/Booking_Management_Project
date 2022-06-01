@@ -43,6 +43,7 @@ class BookAppointmentScreenController extends GetxController {
   RxBool isServiceCalenderShow = false.obs;
   RxBool isCalenderShow = false.obs;
   RxInt selectedTimeIndex = 0.obs;
+  RxBool isPriceDisplay = false.obs;
 
 
   List<String> timeList = [ 'Any Time',
@@ -54,7 +55,7 @@ class BookAppointmentScreenController extends GetxController {
   RxString selectedTimeValue = "Any Time".obs;
 
 
-  /// Get Booking Vendor
+  /// 1) Get Booking Vendor
   getBookVendorDetailsByIdFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorBookingDetailsApi + "?Id=$vendorId";
@@ -62,7 +63,7 @@ class BookAppointmentScreenController extends GetxController {
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Book Vendor Details Response : ${response.body}");
+      // log("Book Vendor Details Response : ${response.body}");
 
       GetVendorBookingModel getVendorBookingModel = GetVendorBookingModel.fromJson(json.decode(response.body));
       isSuccessStatus = getVendorBookingModel.success.obs;
@@ -71,7 +72,9 @@ class BookAppointmentScreenController extends GetxController {
         bookVendorDetails = getVendorBookingModel.workerList;
         resourcePrefix = getVendorBookingModel.workerList.vendor.categories.prefix;
         isServiceSlot.value = getVendorBookingModel.workerList.vendor.isServiceSlots;
+        isPriceDisplay.value = getVendorBookingModel.workerList.vendor.isPriceDisplay;
         log("isServiceSlot : ${isServiceSlot.value}");
+        log("isPriceDisplay : ${isPriceDisplay.value}");
 
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
@@ -87,11 +90,12 @@ class BookAppointmentScreenController extends GetxController {
         await getServicesListByIdFunction();
       } else {
         await getAllResourcesListByIdFunction();
+        await getAllAdditionalSlotFunction();
       }
     }
   }
 
-  /// Get Services List
+  /// 2) Get Services List
   getServicesListByIdFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorServicesApi + "?Id=$vendorId";
@@ -121,7 +125,7 @@ class BookAppointmentScreenController extends GetxController {
     }
   }
 
-  /// Get Resources List
+  /// 2 & 3) Get Resources List
   getAllResourcesListByIdFunction({SearchType2 searchType2 = SearchType2.none}) async {
     isLoading(true);
     String url = ApiUrl.vendorBookingResourcesApi + "?Id=$vendorId";
@@ -185,18 +189,19 @@ class BookAppointmentScreenController extends GetxController {
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       log("isServiceSlot.value : ${isServiceSlot.value}");
+      isLoading(false);
 
-      if(isServiceSlot.value == true) {
-        isLoading(false);
-      } else if(isServiceSlot.value == false){
-        await getAllAdditionalSlotFunction();
-      }
+      // if(isServiceSlot.value == true) {
+      //   isLoading(false);
+      // } else if(isServiceSlot.value == false){
+      //   await getAllAdditionalSlotFunction();
+      // }
 
     }
 
   }
 
-  /// Get Resources Time List
+  /// 4) Get Resources Time List
   getResourcesTimeListFunction({required String resId}) async {
     log("Resource Id : $resId");
     DateTime dateTime = DateTime.now();
@@ -217,7 +222,7 @@ class BookAppointmentScreenController extends GetxController {
     for (int i = 0; i < 10; i++) {
       if(dateTime.minute.toString() == i.toString()) {
         if(dateTime.minute.toString().length == 1) {
-          hour = "0${dateTime.minute}";
+          minute = "0${dateTime.minute}";
         }
       }
     }
@@ -226,6 +231,7 @@ class BookAppointmentScreenController extends GetxController {
 
     String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     String timeModule = "$hour:$minute:00";
+    log("dateTime : $dateTime");
     log("timeModule : $timeModule");
     List<TimingSlot> timeList = [];
     isLoading(true);
@@ -241,17 +247,17 @@ class BookAppointmentScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
 
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
-          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
-          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList![i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].endDateTime.length-3);
 
           timeList.add(TimingSlot(
-            id: getAllTimeListByResourceIdModel.workerList[i].id,
-            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            id: getAllTimeListByResourceIdModel.workerList![i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList![i].resourceId,
             startDateTime: startTime,
             endDateTime: endTime,
-            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
-            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isActive: getAllTimeListByResourceIdModel.workerList![i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList![i].booking,
             isSelected: false,
           ));
         }
@@ -273,7 +279,7 @@ class BookAppointmentScreenController extends GetxController {
     return timeList;
   }
 
-  /// Get Resources Date & Time Wise List
+  /// 4) Get Resources Date & Time Wise List
   getResourcesDateAndTimeListFunction({required String resId}) async {
     // DateTime dateTime = DateTime.now();
     // String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
@@ -292,17 +298,17 @@ class BookAppointmentScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
 
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
-          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
-          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList![i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].endDateTime.length-3);
 
           timeList.add(TimingSlot(
-            id: getAllTimeListByResourceIdModel.workerList[i].id,
-            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            id: getAllTimeListByResourceIdModel.workerList![i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList![i].resourceId,
             startDateTime: startTime,
             endDateTime: endTime,
-            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
-            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isActive: getAllTimeListByResourceIdModel.workerList![i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList![i].booking,
             isSelected: false,
           ));
         }
@@ -324,12 +330,12 @@ class BookAppointmentScreenController extends GetxController {
     return timeList;
   }
 
-  /// Get Resources Additional Slot & Anny Time Wise List
+  /// 4) Get Resources Additional Slot & Anny Time Wise List
   getResourcesAdditionalSlotAndAnytimeFunction({required String resId}) async {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time=$selectedTimeValue";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time=$selectedTimeValue";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -341,17 +347,17 @@ class BookAppointmentScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
 
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
-          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
-          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList![i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].endDateTime.length-3);
 
           timeList.add(TimingSlot(
-            id: getAllTimeListByResourceIdModel.workerList[i].id,
-            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            id: getAllTimeListByResourceIdModel.workerList![i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList![i].resourceId,
             startDateTime: startTime,
             endDateTime: endTime,
-            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
-            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isActive: getAllTimeListByResourceIdModel.workerList![i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList![i].booking,
             isSelected: false,
           ));
         }
@@ -360,12 +366,13 @@ class BookAppointmentScreenController extends GetxController {
 
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
 
     } catch(e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      // Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.");
     } finally {
       isLoading(true);
     }
@@ -374,12 +381,12 @@ class BookAppointmentScreenController extends GetxController {
 
   }
 
-  /// Get Resources Any Time Wise List
+  /// 4) Get Resources Any Time Wise List
   getResourcesAndAnytimeFunction({required String resId}) async {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration&Time=$selectedTimeValue";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration&Time=$selectedTimeValue";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -391,17 +398,17 @@ class BookAppointmentScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
 
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
-          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
-          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList![i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].endDateTime.length-3);
 
           timeList.add(TimingSlot(
-            id: getAllTimeListByResourceIdModel.workerList[i].id,
-            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            id: getAllTimeListByResourceIdModel.workerList![i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList![i].resourceId,
             startDateTime: startTime,
             endDateTime: endTime,
-            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
-            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isActive: getAllTimeListByResourceIdModel.workerList![i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList![i].booking,
             isSelected: false,
           ));
         }
@@ -411,6 +418,7 @@ class BookAppointmentScreenController extends GetxController {
       } else {
         log("getResourcesTimeListFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
+        // Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
 
     } catch(e) {
@@ -424,34 +432,34 @@ class BookAppointmentScreenController extends GetxController {
 
   }
 
-  /// Get Resources Additional Slot Wise List
+  /// 4) Get Resources Additional Slot Wise List
   getResourcesAdditionalSlotFunction({required String resId}) async {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time";
-    log("Get Resources Time List API URL : $url");
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time";
+    log("Get Resources Additional Time API URL : $url");
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      // log("Resource Time List : ${response.body}");
+      log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
       isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
 
       if(isSuccessStatus.value) {
 
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
-          String startTime = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].startDateTime.length-3);
-          String endTime = getAllTimeListByResourceIdModel.workerList[i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList[i].endDateTime.length-3);
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList![i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].endDateTime.length-3);
 
           timeList.add(TimingSlot(
-            id: getAllTimeListByResourceIdModel.workerList[i].id,
-            resourceId: getAllTimeListByResourceIdModel.workerList[i].resourceId,
+            id: getAllTimeListByResourceIdModel.workerList![i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList![i].resourceId,
             startDateTime: startTime,
             endDateTime: endTime,
-            isActive: getAllTimeListByResourceIdModel.workerList[i].isActive,
-            booking: getAllTimeListByResourceIdModel.workerList[i].booking,
+            isActive: getAllTimeListByResourceIdModel.workerList![i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList![i].booking,
             isSelected: false,
           ));
         }
@@ -461,11 +469,13 @@ class BookAppointmentScreenController extends GetxController {
       } else {
         log("getResourcesTimeListFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
+        // Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
 
     } catch(e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      // Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.");
     } finally {
       isLoading(true);
     }
@@ -474,8 +484,7 @@ class BookAppointmentScreenController extends GetxController {
 
   }
 
-
-  /// Additional Slot
+  /// 5) Additional Slot
   getAllAdditionalSlotFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorGetAllAdditionalSlotApi + "?VendorId=$vendorId";
@@ -512,7 +521,7 @@ class BookAppointmentScreenController extends GetxController {
 
   }
 
-  /// Book Slot
+  /// 6) Book Slot
   bookSelectedSlotFunction() async {
     String s1 = selectedServiceList.toString();
     String s2 = s1.substring(1, s1.length-1);
@@ -547,8 +556,7 @@ class BookAppointmentScreenController extends GetxController {
     }
   }
 
-
-  /// Book Available Time Slot
+  /// 6) Book Available Time Slot
   bookAvailableTimeSlotFunction() async {
     isLoading(true);
     String url = selectedAdditionalTime.isEmpty
@@ -691,7 +699,6 @@ class BookAppointmentScreenController extends GetxController {
     //   day = "31";
     // }
 
-    /// todo - Date Format
     selectedDate.value = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     log("selectedDate : ${selectedDate.value}");
   }

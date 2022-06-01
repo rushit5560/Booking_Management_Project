@@ -8,23 +8,29 @@ class GetAllTimeListByResourceIdModel {
   GetAllTimeListByResourceIdModel({
     required this.statusCode,
     required this.success,
-    required this.workerList,
+    this.workerList,
+    required this.errorMessage,
   });
 
   int statusCode;
   bool success;
-  List<ResourcesTimeWorkerList> workerList;
+  List<ResourcesTimeWorkerList>? workerList;
+  String errorMessage;
 
   factory GetAllTimeListByResourceIdModel.fromJson(Map<String, dynamic> json) => GetAllTimeListByResourceIdModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
-    workerList: List<ResourcesTimeWorkerList>.from(json["workerList"].map((x) => ResourcesTimeWorkerList.fromJson(x)) ?? {}),
+    workerList: List<ResourcesTimeWorkerList>.from(json["workerList"].map((x) => ResourcesTimeWorkerList.fromJson(x ?? {})) ?? []).isEmpty
+        ? []
+        : List<ResourcesTimeWorkerList>.from(json["workerList"].map((x) => ResourcesTimeWorkerList.fromJson(x ?? {})) ?? []),
+    errorMessage: json["errorMessage"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
-    "workerList": List<dynamic>.from(workerList.map((x) => x.toJson())),
+    "workerList": List<dynamic>.from(workerList!.map((x) => x.toJson())),
+    "errorMessage": errorMessage,
   };
 }
 

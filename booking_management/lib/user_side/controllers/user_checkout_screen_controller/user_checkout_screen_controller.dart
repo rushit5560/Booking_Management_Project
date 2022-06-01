@@ -122,7 +122,6 @@ class UserCheckoutScreenController extends GetxController{
 
   }
 
-
   /// Submit Button
   checkOutSubmitFunction() async {
     isLoading(true);
@@ -173,6 +172,9 @@ class UserCheckoutScreenController extends GetxController{
 
   @override
   void onInit() {
+    fNameFieldController.text = UserDetails.userName;
+    emailFieldController.text = UserDetails.email;
+    phoneFieldController.text = UserDetails.phoneNo;
     getCheckoutFunction();
     super.onInit();
   }

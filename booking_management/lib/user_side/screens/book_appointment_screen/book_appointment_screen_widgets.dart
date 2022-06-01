@@ -169,10 +169,15 @@ class BookingServicesListModule extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  "From \$${singleItem.price} / ${singleItem.timeDuration} mins"
-                ),
+                screenController.isPriceDisplay.value
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 5),
+                          Text(
+                              "From \$${singleItem.price} / ${singleItem.timeDuration} mins"),
+                        ],
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -262,11 +267,13 @@ class BookingResourcesListModule extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 5),
-                    Text(
+                    screenController.isPriceDisplay.value
+                    ? Text(
                       "\$${singleItem.price}",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                    ),
+                    )
+                    : Container(),
                   ],
                 ),
               ),
@@ -384,7 +391,7 @@ class AdditionalSlotModule extends StatelessWidget {
         children: [
           ResourceCalenderTableModule(),
           screenController.isCalenderShow.value
-          ? SelectDateModule()
+          ? SelectAdditionalSlotDateModule()
           : Container(),
           const SizedBox(height: 10),
           AnytimeDropDownModule(),
@@ -410,15 +417,17 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
         if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
           await screenController.getAllResourcesListByIdFunction();
         }
-        else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
-          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWithAdditionalSlotWise);
-        }
         else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
           await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWise);
         }
         else if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
           await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.additionalSlotWise);
         }
+        else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWithAdditionalSlotWise);
+        }
+
+
       },
       child: Container(
         decoration: BoxDecoration(
@@ -446,8 +455,6 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
     );
   }
 }
-
-
 
 class CalenderTableModule extends StatelessWidget {
   CalenderTableModule({Key? key}) : super(key: key);
@@ -540,6 +547,7 @@ class ResourceCalenderTableModule extends StatelessWidget {
 }
 
 class SelectDateModule extends StatelessWidget {
+  SelectDateModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookAppointmentScreenController>();
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
@@ -604,6 +612,150 @@ class SelectDateModule extends StatelessWidget {
                 // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
 
                 screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
+                screenController.loadUI();
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                    color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SelectAdditionalSlotDateModule extends StatelessWidget {
+  SelectAdditionalSlotDateModule({Key? key}) : super(key: key);
+  final screenController = Get.find<BookAppointmentScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // const Text(
+        //   "Select Date",
+        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        // ),
+        const SizedBox(height: 10),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+
+
+                String hour = "${selectedDay.hour}";
+                String minute = "${selectedDay.minute}";
+
+                /// For Hour Format
+                for(int i = 0; i < 10; i++) {
+                  if(selectedDay.hour.toString() == i.toString()) {
+                    if(selectedDay.hour.toString().length == 1) {
+                      hour = "0${selectedDay.hour}";
+                    }
+                  }
+                }
+
+                /// For Minute
+                for (int i = 0; i < 10; i++) {
+                  if(selectedDay.minute.toString() == i.toString()) {
+                    if(selectedDay.minute.toString().length == 1) {
+                      minute = "0${selectedDay.minute}";
+                    }
+                  }
+                }
+
+                screenController.selectedTime.value = "$hour:$minute:00";
+
+
+                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+
+                log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
+                // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+
+                screenController.isCalenderShow.value = !screenController.isCalenderShow.value;
                 screenController.loadUI();
               },
 
@@ -795,7 +947,7 @@ class AdditionalSlotDropDownModule extends StatelessWidget {
           onChanged: (newValue) {
             screenController.additionalSlotWorkerList = newValue!;
             log("selectTimeDuration : ${screenController.additionalSlotWorkerList}");
-            // vendorServicesScreenController.loadUI();
+            screenController.loadUI();
           },
         ),
       ).commonSymmetricPadding(horizontal: 5),

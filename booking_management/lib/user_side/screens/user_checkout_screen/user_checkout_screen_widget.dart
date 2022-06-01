@@ -127,7 +127,7 @@ class PersonalInformationFormModule extends StatelessWidget {
           TextFormField(
             controller: screenController.notesFieldController,
             keyboardType: TextInputType.text,
-            validator: (value) => FieldValidator().validateNotes(value!),
+            // validator: (value) => FieldValidator().validateNotes(value!),
             decoration: checkoutFormFieldDecoration(hintText: 'Notes'),
           ),
 

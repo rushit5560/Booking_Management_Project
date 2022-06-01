@@ -36,7 +36,7 @@ class BookingSuccessScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         bookingId = bookingSuccessModel.workerList.bookingId;
-        // vendorName = bookingSuccessModel.
+        vendorName = bookingSuccessModel.workerList.vendor.businessName;
         String tempDate = bookingSuccessModel.workerList.startDateTime;
         date = tempDate.substring(0, tempDate.length-9);
 

@@ -33,7 +33,7 @@ class WorkerList {
     required this.id,
     required this.bookingId,
     required this.vendorId,
-    // required this.vendor,
+    required this.vendor,
     required this.customer,
     required this.customerId,
     required this.bookingFor,
@@ -52,7 +52,7 @@ class WorkerList {
   int id;
   String bookingId;
   int vendorId;
-  // dynamic vendor;
+  Vendor vendor;
   Customer customer;
   int customerId;
   String bookingFor;
@@ -71,7 +71,7 @@ class WorkerList {
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     vendorId: json["vendorId"] ?? 0,
-    // vendor: json["vendor"],
+    vendor: json["vendor"] ?? {},
     customer: Customer.fromJson(json["customer"] ?? {}),
     customerId: json["customerId"] ?? 0,
     bookingFor: json["bookingFor"] ?? "",
@@ -91,7 +91,7 @@ class WorkerList {
     "id": id,
     "bookingId": bookingId,
     "vendorId": vendorId,
-    // "vendor": vendor,
+    "vendor": vendor.toJson(),
     "customer": customer.toJson(),
     "customerId": customerId,
     "bookingFor": bookingFor,
@@ -184,82 +184,20 @@ class Customer {
   };
 }
 
-// class ApplicationUser {
-//   ApplicationUser({
-//     this.apiToken,
-//     this.frogotToken,
-//     this.id,
-//     this.userName,
-//     this.normalizedUserName,
-//     this.email,
-//     this.normalizedEmail,
-//     this.emailConfirmed,
-//     this.passwordHash,
-//     this.securityStamp,
-//     this.concurrencyStamp,
-//     this.phoneNumber,
-//     this.phoneNumberConfirmed,
-//     this.twoFactorEnabled,
-//     this.lockoutEnd,
-//     this.lockoutEnabled,
-//     this.accessFailedCount,
-//   });
-//
-//   String apiToken;
-//   String frogotToken;
-//   String id;
-//   String userName;
-//   String normalizedUserName;
-//   String email;
-//   String normalizedEmail;
-//   bool emailConfirmed;
-//   String passwordHash;
-//   String securityStamp;
-//   String concurrencyStamp;
-//   String phoneNumber;
-//   bool phoneNumberConfirmed;
-//   bool twoFactorEnabled;
-//   dynamic lockoutEnd;
-//   bool lockoutEnabled;
-//   int accessFailedCount;
-//
-//   factory ApplicationUser.fromJson(Map<String, dynamic> json) => ApplicationUser(
-//     apiToken: json["apiToken"],
-//     frogotToken: json["frogotToken"],
-//     id: json["id"],
-//     userName: json["userName"],
-//     normalizedUserName: json["normalizedUserName"],
-//     email: json["email"],
-//     normalizedEmail: json["normalizedEmail"],
-//     emailConfirmed: json["emailConfirmed"],
-//     passwordHash: json["passwordHash"],
-//     securityStamp: json["securityStamp"],
-//     concurrencyStamp: json["concurrencyStamp"],
-//     phoneNumber: json["phoneNumber"],
-//     phoneNumberConfirmed: json["phoneNumberConfirmed"],
-//     twoFactorEnabled: json["twoFactorEnabled"],
-//     lockoutEnd: json["lockoutEnd"],
-//     lockoutEnabled: json["lockoutEnabled"],
-//     accessFailedCount: json["accessFailedCount"],
-//   );
-//
-//   Map<String, dynamic> toJson() => {
-//     "apiToken": apiToken,
-//     "frogotToken": frogotToken,
-//     "id": id,
-//     "userName": userName,
-//     "normalizedUserName": normalizedUserName,
-//     "email": email,
-//     "normalizedEmail": normalizedEmail,
-//     "emailConfirmed": emailConfirmed,
-//     "passwordHash": passwordHash,
-//     "securityStamp": securityStamp,
-//     "concurrencyStamp": concurrencyStamp,
-//     "phoneNumber": phoneNumber,
-//     "phoneNumberConfirmed": phoneNumberConfirmed,
-//     "twoFactorEnabled": twoFactorEnabled,
-//     "lockoutEnd": lockoutEnd,
-//     "lockoutEnabled": lockoutEnabled,
-//     "accessFailedCount": accessFailedCount,
-//   };
-// }
+
+class Vendor {
+  Vendor({
+    required this.businessName,
+  });
+
+  String businessName;
+
+  factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+    businessName: json["businessName"] ?? "",
+  );
+
+  Map<String, dynamic> toJson() => {
+    "businessName": businessName,
+  };
+}
+

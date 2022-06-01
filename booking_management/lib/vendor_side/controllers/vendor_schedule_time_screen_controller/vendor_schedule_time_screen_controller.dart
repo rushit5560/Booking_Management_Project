@@ -220,8 +220,8 @@ class VendorScheduleTimeScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
 
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList.length; i++) {
-          String t = getAllTimeListByResourceIdModel.workerList[i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList.length-3);
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String t = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList!.length-3);
           timeList.add(t);
         }
 

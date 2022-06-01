@@ -38,32 +38,58 @@ class BookAppointmentScreen extends StatelessWidget {
                             VendorDetailsModule(),
                             const SizedBox(height: 10),
 
-                            /// If Service True then show
                             bookAppointmentScreenController.isServiceSlot.value
-                                ? Row(
+                                ? Column(
                                     children: [
-                                      Expanded(child: CalenderTableModule()),
-                                      const SizedBox(width: 25),
-                                      SubmitButtonModule(),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: CalenderTableModule()),
+                                          const SizedBox(width: 25),
+                                          SubmitButtonModule(),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      bookAppointmentScreenController.isServiceCalenderShow.value
+                                      ? SelectDateModule() : Container(),
+                                      const SizedBox(height: 10),
+                                      BookingServicesListModule(),
                                     ],
                                   )
-                                : Container(),
-                            const SizedBox(height: 10),
-
-
-                            bookAppointmentScreenController.isServiceCalenderShow.value
-                                ? SelectDateModule()
-                                : Container(),
-
-                            bookAppointmentScreenController.isServiceCalenderShow.value
-                                ? const SizedBox(height: 10)
-                                : Container(),
+                                : Column(
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      AdditionalSlotModule(),
+                                      const SizedBox(height: 10),
+                                    ],
+                                  ),
 
                             /// If Service True then show
-                            bookAppointmentScreenController.isServiceSlot.value
-                                ? BookingServicesListModule()
-                                : AdditionalSlotModule(),
-                            const SizedBox(height: 10),
+                            // bookAppointmentScreenController.isServiceSlot.value
+                            //     ? Row(
+                            //         children: [
+                            //           Expanded(child: CalenderTableModule()),
+                            //           const SizedBox(width: 25),
+                            //           SubmitButtonModule(),
+                            //         ],
+                            //       )
+                            //     : Container(),
+                            // const SizedBox(height: 10),
+                            //
+                            //
+                            // bookAppointmentScreenController.isServiceCalenderShow.value
+                            //     ? SelectDateModule()
+                            //     : Container(),
+                            //
+                            // bookAppointmentScreenController.isServiceCalenderShow.value
+                            //     ? const SizedBox(height: 10)
+                            //     : Container(),
+                            //
+                            // /// If Service True then show
+                            // bookAppointmentScreenController.isServiceSlot.value
+                            //     ? BookingServicesListModule()
+                            //     : AdditionalSlotModule(),
+                            // const SizedBox(height: 10),
 
                             /// Always Show
                             BookingResourcesListModule(),

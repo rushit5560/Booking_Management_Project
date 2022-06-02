@@ -16,7 +16,7 @@ import '../../controllers/business_details_screen_controller/business_details_sc
 import '../../model/user_business_details_model/get_business_hours_model.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
 import '../user_conversation_screen/user_conversation_screen.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class ProfileModule extends StatelessWidget {
   ProfileModule({Key? key}) : super(key: key);
   final screenController = Get.find<BusinessDetailsScreenController>();
@@ -239,15 +239,16 @@ class OverviewModule extends StatelessWidget {
 
         IconButton(
           onPressed: () async {
+            screenController.isFavourite.value = !screenController.isFavourite.value;
             await screenController.addVendorInFavoriteFunction();
             // screenController.loadUI();
           },
           icon: Icon(
-              screenController.vendorDetailsData!.favourites == true
+              screenController.isFavourite.value == true
               ? Icons.favorite_rounded
               : Icons.favorite_border_rounded
           ),
-          color: screenController.vendorDetailsData!.favourites == true
+          color: screenController.isFavourite.value == true
           ? Colors.red
           : Colors.grey,
         ),
@@ -292,20 +293,32 @@ class OverviewModule extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.colorLightGrey,
-                          blurStyle: BlurStyle.outer,
-                          blurRadius: 5,
-                        ),
-                      ]),
-                  child: Center(
-                    child: Image.asset(AppImages.callingImg),
+                GestureDetector(
+                  onTap: () async {
+                    String phoneNo = screenController.vendorDetailsData!.vendor.phoneNo;
+
+                    String url = "tel:$phoneNo";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.colorLightGrey,
+                            blurStyle: BlurStyle.outer,
+                            blurRadius: 5,
+                          ),
+                        ]),
+                    child: Center(
+                      child: Image.asset(AppImages.callingImg),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10),

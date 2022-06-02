@@ -15,6 +15,7 @@ import '../../model/user_business_details_model/get_business_hours_model.dart';
 import '../../model/user_business_details_model/get_vendor_reviews_model.dart';
 import '../../model/user_conversation_screen_model/send_message_model.dart';
 import '../../model/vendor_details_screen_models/vendor_details_model.dart';
+import '../../screens/business_details_screen/get_fav_vendor_model.dart';
 
 class BusinessDetailsScreenController extends GetxController {
   /// From Search Result List Screen
@@ -49,6 +50,7 @@ class BusinessDetailsScreenController extends GetxController {
   StreamSubscription? _streamSubscriptionChat;
 
   VendorDetailsData? vendorDetailsData;
+  RxBool isFavourite = false.obs;
 
   ApiHeader apiHeader = ApiHeader();
 
@@ -79,7 +81,7 @@ class BusinessDetailsScreenController extends GetxController {
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       // isLoading(false);
-      await getVendorReviewFunction();
+      await getFavVendorFunction(vendorDetailsData!.vendor.id);
     }
   }
 
@@ -330,6 +332,33 @@ class BusinessDetailsScreenController extends GetxController {
     } finally {
       // isLoading(false);
       loadUI();
+    }
+  }
+
+
+  getFavVendorFunction(int vendorId) async {
+    isLoading(true);
+    String url = ApiUrl.getFavVendorApi + "?VendorId=$vendorId" + "&CustomerId=${UserDetails.tableWiseId}";
+    log("Get Fav Vendor API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("response : ${response.body}");
+
+      GetFavoriteVendorModel getFavoriteVendorModel = GetFavoriteVendorModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getFavoriteVendorModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        isFavourite.value = getFavoriteVendorModel.workerList.isLike;
+        log("isFavourite.value : ${isFavourite.value}");
+      } else {
+        log("getFavVendorFunction Else Else");
+      }
+
+    } catch(e) {
+      log("getFavVendorFunction Error ::: $e");
+    } finally {
+      await getVendorReviewFunction();
     }
   }
 

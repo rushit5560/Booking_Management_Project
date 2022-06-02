@@ -33,6 +33,7 @@ class ApiUrl {
   static const searchFilterApi = apiMainPath + "API/Searchbussinesstype";
   static const favouriteVendorListApi = apiMainPath + "API/FavouritesVendor";
   static const addFavouriteVendorApi = apiMainPath + "API/Favourites";
+  static const getFavVendorApi = apiMainPath + "API/GetFavourites";
 
   /// Cst - Vendor Details
   static const vendorDetailsApi = apiMainPath + "API/getvendordetails";

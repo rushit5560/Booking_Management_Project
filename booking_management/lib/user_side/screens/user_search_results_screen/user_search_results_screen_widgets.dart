@@ -177,6 +177,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                   style: TextStyle(color: AppColors.colorLightGrey),
                   iconEnabledColor: Colors.black,
                   items: <String>[
+                    'Ratting',
                     '1',
                     '2',
                     '3',
@@ -187,14 +188,14 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                       value: value,
                       child: Text(
                         value,
-                        style: TextStyle(color: AppColors.colorLightGrey),
+                        // style: TextStyle(color: AppColors.colorLightGrey),
                       ),
                     );
                   }).toList(),
-                  hint: const Text(
-                    "Ratting",
-                    style: TextStyle(color: Colors.black, fontSize: 11),
-                  ),
+                  // hint: const Text(
+                  //   "Ratting",
+                  //   style: TextStyle(color: Colors.black, fontSize: 11),
+                  // ),
                   onChanged: (newValue) async {
                     setState(() {
                       screenController.ratting = newValue!;
@@ -244,20 +245,20 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                   //elevation: 5,
                   style: TextStyle(color: AppColors.colorLightGrey),
                   iconEnabledColor: Colors.black,
-                  items: <String>['1', '2', '3', '4', '5']
+                  items: <String>['Distance', '1', '5', '10', '15', '20', '25']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
                         value,
-                        style: TextStyle(color: AppColors.colorLightGrey),
+                        // style: TextStyle(color: AppColors.colorLightGrey),
                       ),
                     );
                   }).toList(),
-                  hint: const Text(
-                    "Distance",
-                    style: TextStyle(color: Colors.black, fontSize: 11),
-                  ),
+                  // hint: const Text(
+                  //   "Distance",
+                  //   style: TextStyle(color: Colors.black, fontSize: 11),
+                  // ),
                   onChanged: (newValue) async {
                       setState(() {
                         screenController.distance = newValue!;
@@ -311,20 +312,20 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                   //elevation: 5,
                   style: TextStyle(color: AppColors.colorLightGrey),
                   iconEnabledColor: Colors.black,
-                  items: <String>['1', '2', '3', '4', '5']
+                  items: <String>['Date', '1', '2', '3', '4', '5']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
                         value,
-                        style: TextStyle(color: AppColors.colorLightGrey),
+                        // style: TextStyle(color: AppColors.colorLightGrey),
                       ),
                     );
                   }).toList(),
-                  hint: const Text(
-                    "Date",
-                    style: TextStyle(color: Colors.black, fontSize: 11),
-                  ),
+                  // hint: const Text(
+                  //   "Date",
+                  //   style: TextStyle(color: Colors.black, fontSize: 11),
+                  // ),
                   onChanged: (newValue) {
                     setState(() {
                       screenController.date = newValue!;
@@ -488,27 +489,42 @@ class BusinessListModule extends StatelessWidget {
                               ),
                               const SizedBox(height: 3),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    singleItem.rating.toString(),
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  RatingBar.builder(
-                                    initialRating: double.parse(
-                                        singleItem.rating.toString()),
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemSize: 20,
-                                    ignoreGestures: true,
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          singleItem.rating.toString(),
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                        const SizedBox(width: 5),
+                                        RatingBar.builder(
+                                          initialRating: double.parse(
+                                              singleItem.rating.toString()),
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemSize: 20,
+                                          ignoreGestures: true,
+                                          itemBuilder: (context, _) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {},
+                                        )
+                                      ],
                                     ),
-                                    onRatingUpdate: (rating) {},
                                   ),
+
+                                  screenController.distance == "Distance"
+                                      ? Container()
+                                  : Text(
+                                    "${screenController.distance} km",
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+
                                 ],
                               ),
                               const SizedBox(height: 3),

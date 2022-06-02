@@ -12,10 +12,9 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 
-BusinessListScreenController screenController = Get.find<BusinessListScreenController>();
-
 class BusinessList extends StatelessWidget {
-   const BusinessList({Key? key}) : super(key: key);
+   BusinessList({Key? key}) : super(key: key);
+   BusinessListScreenController screenController = Get.find<BusinessListScreenController>();
 
   //Datum ? datum1;
   @override

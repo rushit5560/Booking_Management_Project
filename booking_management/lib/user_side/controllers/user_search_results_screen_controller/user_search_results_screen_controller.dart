@@ -24,9 +24,9 @@ class UserSearchResultsScreenController extends GetxController {
   TextEditingController categoryFieldController = TextEditingController();
   List<SearchVendorDatum> searchVendorList = [];
 
-  String ? distance;
-  String ? date;
-  String ? ratting;
+  String distance = "Distance";
+  String date = "Date";
+  String ratting = "Ratting";
 
   String latitude = "";
   String longitude = "";
@@ -67,7 +67,17 @@ class UserSearchResultsScreenController extends GetxController {
   /// Search Vendor Rating Wise
   getAllSearchVendorListRatingWiseFunction({required String searchText}) async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    String url = "";
+    if(distance != "Distance" && ratting != "Ratting") {
+      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    } else if(distance != "Distance" && ratting == "Ratting") {
+      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    } else if(distance == "Distance" && ratting != "Ratting") {
+      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
+    } else if(distance == "Distance" && ratting == "Ratting") {
+      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
+    }
+
     log("Search Vendor List API URL : $url");
 
     try {
@@ -135,7 +145,18 @@ class UserSearchResultsScreenController extends GetxController {
   /// Category With Rating Search
   getSearchCategoryWithRatingWiseFunction() async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    String url = "";
+
+    if(distance != "Distance" && ratting != "Ratting") {
+      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    } else if(distance != "Distance" && ratting == "Ratting") {
+      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    } else if(distance == "Distance" && ratting != "Ratting") {
+      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
+    } else if(distance == "Distance" && ratting == "Ratting") {
+      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
+    }
+
     log("Search Category And Rating Wise API URL : $url");
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);

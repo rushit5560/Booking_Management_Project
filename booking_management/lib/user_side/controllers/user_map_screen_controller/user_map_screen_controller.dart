@@ -5,9 +5,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../common_modules/sharedpreference_data/sharedpreference_data.dart';
-import 'package:dio/dio.dart';
-
-import '../../model/user_map_screen_models/directions.dart';
 
 
 class UserMapScreenController extends GetxController {
@@ -33,7 +30,7 @@ class UserMapScreenController extends GetxController {
 
   /// For Dio
   String directionUrl = "https://maps.googleapis.com/maps/api/directions/json?";
-  Dio newDio = Dio();
+  // Dio newDio = Dio();
 
   // Directions directionsInfo = Directions(
   //   bounds:

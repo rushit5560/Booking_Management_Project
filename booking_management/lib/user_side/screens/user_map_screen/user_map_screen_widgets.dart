@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../controllers/user_map_screen_controller/user_map_screen_controller.dart';
+
 
 class GoogleMapView extends StatelessWidget {
   GoogleMapView({Key? key}) : super(key: key);
@@ -14,13 +12,30 @@ class GoogleMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      myLocationEnabled: false,
+      mapType: MapType.normal,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: false,
       compassEnabled: true,
       initialCameraPosition: screenController.kGooglePlex!,
       zoomGesturesEnabled: true,
+      markers: {
+        if(screenController.destinationMarkers != null) screenController.destinationMarkers,
+        if(screenController.userMarkers != null) screenController.userMarkers
+
+      },
       onMapCreated: (GoogleMapController controller) {
         screenController.controller.complete(controller);
       },
+
+      // polylines: {
+      //   Polyline(
+      //     polylineId: const PolylineId('direction_polyline'),
+      //     color: Colors.red,
+      //     width: 4,
+      //     points: screenController.directionsInfo.polylinePoints!
+      //       .map((e) => LatLng(e.latitude, e.longitude)).toList(),
+      //   ),
+      // },
     );
   }
 }

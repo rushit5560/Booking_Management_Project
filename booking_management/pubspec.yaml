@@ -38,7 +38,6 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   intl: ^0.17.0
   pin_input_text_field: ^4.1.2
-  google_maps_flutter: 2.1.2
   table_calendar: ^3.0.4
   http: ^0.13.4
   fluttertoast: ^8.0.9
@@ -49,12 +48,18 @@ dependencies:
   firebase_core: ^1.16.0
   flutter_login_facebook: ^1.4.1
   google_sign_in: ^5.3.1
-
   firebase_messaging: ^11.3.0
   flutter_local_notifications: ^9.5.2
-
   cloud_firestore: ^3.1.11
+
+
+  # For Map Use Direction
+  google_maps_flutter: 2.1.2
   geolocator: ^8.2.1
+  #dio: ^4.0.6
+  # flutter_polyline_points: ^1.0.0
+
+
 
 dev_dependencies:
   flutter_test:

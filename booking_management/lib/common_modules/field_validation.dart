@@ -100,7 +100,7 @@ class FieldValidator {
       return 'Username is required';
     } else {
       if (!regExp.hasMatch(value)) {
-        return 'AtLeast 1 uppercase letter is required';
+        return 'Atleast 1 uppercase letter is required';
       }
     }
     return null;

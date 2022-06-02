@@ -1,14 +1,11 @@
 import 'package:booking_management/common_modules/constants/api_url.dart';
-import 'package:booking_management/user_side/controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
+import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
-
-
 
 
 /// Booking Summary
@@ -18,73 +15,172 @@ class BookingSummaryModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 35,
-              child: Container(
-                height: 75,
-                width: 75,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(ApiUrl.apiMainPath + screenController.vendorImg,),
-                    fit: BoxFit.cover,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          // color: Colors.black
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 35,
+                child: Container(
+                  height: 75,
+                  width: 75,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(ApiUrl.apiMainPath + screenController.vendorImg,),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 65,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      screenController.vendorName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+              Expanded(
+                flex: 65,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        screenController.vendorName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
+                    const SizedBox(height: 5),
 
-                  RatingBar.builder(
-                    initialRating: screenController.vendorRating,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 20,
-                    ignoreGestures: true,
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
+                    RatingBar.builder(
+                      initialRating: screenController.vendorRating,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 20,
+                      ignoreGestures: true,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {},
                     ),
-                    onRatingUpdate: (rating) {},
-                  ),
-                  const SizedBox(height: 5),
+                    const SizedBox(height: 5),
 
-                  Text(
-                    screenController.vendorAddress,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                    Text(
+                      screenController.vendorAddress,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
 
 
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+          const SizedBox(height: 25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Date",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(screenController.bookingDate),
+            ],
+          ).commonSymmetricPadding(horizontal: 10),
+
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Time",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(screenController.bookingTime),
+            ],
+          ).commonSymmetricPadding(horizontal: 10),
+
+          screenController.isPriceDisplay
+          ? Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Price",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(screenController.bookingPrice.toString()),
+                ],
+              ).commonSymmetricPadding(horizontal: 10)
+            ],
+          )
+          : Container(),
+
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Quantity",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(screenController.bookingQty.toString()),
+            ],
+          ).commonSymmetricPadding(horizontal: 10),
+
+
+          screenController.isPriceDisplay
+              ? Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Total",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(screenController.bookingTotalAmount.toString()),
+                      ],
+                    ).commonSymmetricPadding(horizontal: 10)
+                  ],
+                )
+              : Container(),
+        ],
+      ).commonAllSidePadding(5),
     );
   }
 }

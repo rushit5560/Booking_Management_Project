@@ -491,40 +491,37 @@ class BusinessListModule extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          singleItem.rating.toString(),
-                                          style: const TextStyle(fontSize: 12),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        singleItem.rating.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      RatingBar.builder(
+                                        initialRating: double.parse(
+                                            singleItem.rating.toString()),
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemSize: 20,
+                                        ignoreGestures: true,
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
                                         ),
-                                        const SizedBox(width: 5),
-                                        RatingBar.builder(
-                                          initialRating: double.parse(
-                                              singleItem.rating.toString()),
-                                          minRating: 1,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: true,
-                                          itemCount: 5,
-                                          itemSize: 20,
-                                          ignoreGestures: true,
-                                          itemBuilder: (context, _) => const Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          ),
-                                          onRatingUpdate: (rating) {},
-                                        )
-                                      ],
-                                    ),
+                                        onRatingUpdate: (rating) {},
+                                      )
+                                    ],
                                   ),
 
                                   screenController.distance == "Distance"
                                       ? Container()
-                                  : Text(
-                                    "${screenController.distance} km",
-                                    style: const TextStyle(fontSize: 13),
-                                  ),
-
+                                      : Text(
+                                          "${screenController.distance} km",
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
                                 ],
                               ),
                               const SizedBox(height: 3),

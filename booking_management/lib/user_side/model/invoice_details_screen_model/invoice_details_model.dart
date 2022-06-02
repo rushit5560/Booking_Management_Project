@@ -51,6 +51,10 @@ class InvoiceDetailsData {
     this.customer,
     this.vendor,
     this.order,
+    this.bookingItems,
+    this.resourceList,
+    this.service,
+
   });
 
   int? id;
@@ -74,6 +78,9 @@ class InvoiceDetailsData {
   Customer? customer;
   Vendor? vendor;
   Order? order;
+  BookingItems? bookingItems;
+  List<String>? resourceList;
+  String? service;
 
   factory InvoiceDetailsData.fromJson(Map<String, dynamic> json) => InvoiceDetailsData(
     id: json["id"] ?? 0,
@@ -97,6 +104,11 @@ class InvoiceDetailsData {
     customer: Customer.fromJson(json["customer"] ?? {}),
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
     order: Order.fromJson(json["order"] ?? {}),
+    bookingItems: BookingItems.fromJson(json["bookingItems"] ?? {}),
+    resourceList: List<String>.from(json["serviceName"].map((x) => x)).isEmpty
+    ? []
+    : List<String>.from(json["serviceName"].map((x) => x)),
+    service: json["service"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -121,6 +133,41 @@ class InvoiceDetailsData {
     "customer": customer!.toJson(),
     "vendor": vendor!.toJson(),
     "order": order!.toJson(),
+    "bookingItems": bookingItems!.toJson(),
+    "serviceName": List<dynamic>.from(resourceList!.map((x) => x)),
+    "service": service,
+  };
+}
+
+class BookingItems {
+  BookingItems({
+    required this.id,
+    required this.bookingId,
+    required this.price,
+    required this.quantity,
+    required this.booking,
+  });
+
+  int id;
+  String bookingId;
+  int price;
+  int quantity;
+  String booking;
+
+  factory BookingItems.fromJson(Map<String, dynamic> json) => BookingItems(
+    id: json["id"] ?? 0,
+    bookingId: json["bookingId"] ?? "",
+    price: json["price"] ?? 0,
+    quantity: json["quantity"] ?? 0,
+    booking: json["booking"] ?? "",
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "bookingId": bookingId,
+    "price": price,
+    "quantity": quantity,
+    "booking": booking,
   };
 }
 
@@ -431,85 +478,3 @@ class Vendor {
     "resourceId": resourceId,
   };
 }
-
-
-
-/*class ApplicationUser {
-  ApplicationUser({
-    this.apiToken,
-    this.frogotToken,
-    this.id,
-    this.userName,
-    this.normalizedUserName,
-    this.email,
-    this.normalizedEmail,
-    this.emailConfirmed,
-    this.passwordHash,
-    this.securityStamp,
-    this.concurrencyStamp,
-    this.phoneNumber,
-    this.phoneNumberConfirmed,
-    this.twoFactorEnabled,
-    this.lockoutEnd,
-    this.lockoutEnabled,
-    this.accessFailedCount,
-  });
-
-  String apiToken;
-  String frogotToken;
-  String id;
-  String userName;
-  String normalizedUserName;
-  String email;
-  String normalizedEmail;
-  bool emailConfirmed;
-  String passwordHash;
-  String securityStamp;
-  String concurrencyStamp;
-  String phoneNumber;
-  bool phoneNumberConfirmed;
-  bool twoFactorEnabled;
-  dynamic lockoutEnd;
-  bool lockoutEnabled;
-  int accessFailedCount;
-
-  factory ApplicationUser.fromJson(Map<String, dynamic> json) => ApplicationUser(
-    apiToken: json["apiToken"],
-    frogotToken: json["frogotToken"],
-    id: json["id"],
-    userName: json["userName"],
-    normalizedUserName: json["normalizedUserName"],
-    email: json["email"],
-    normalizedEmail: json["normalizedEmail"],
-    emailConfirmed: json["emailConfirmed"],
-    passwordHash: json["passwordHash"],
-    securityStamp: json["securityStamp"],
-    concurrencyStamp: json["concurrencyStamp"],
-    phoneNumber: json["phoneNumber"],
-    phoneNumberConfirmed: json["phoneNumberConfirmed"],
-    twoFactorEnabled: json["twoFactorEnabled"],
-    lockoutEnd: json["lockoutEnd"],
-    lockoutEnabled: json["lockoutEnabled"],
-    accessFailedCount: json["accessFailedCount"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "apiToken": apiToken,
-    "frogotToken": frogotToken,
-    "id": id,
-    "userName": userName,
-    "normalizedUserName": normalizedUserName,
-    "email": email,
-    "normalizedEmail": normalizedEmail,
-    "emailConfirmed": emailConfirmed,
-    "passwordHash": passwordHash,
-    "securityStamp": securityStamp,
-    "concurrencyStamp": concurrencyStamp,
-    "phoneNumber": phoneNumber,
-    "phoneNumberConfirmed": phoneNumberConfirmed,
-    "twoFactorEnabled": twoFactorEnabled,
-    "lockoutEnd": lockoutEnd,
-    "lockoutEnabled": lockoutEnabled,
-    "accessFailedCount": accessFailedCount,
-  };
-}*/

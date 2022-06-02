@@ -242,15 +242,16 @@ class OrderInvoiceFormModule extends StatelessWidget {
             ),
             const SizedBox(height: 5),
 
-            Row(
-              children: const [
+            screenController.isService
+            ? Row(
+              children: [
                 Expanded(
                   flex: 60,
                   child: Text(
-                    "General Consultation",
+                    screenController.invoiceDetailsData.service.toString(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -259,11 +260,11 @@ class OrderInvoiceFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "1",
+                    screenController.invoiceDetailsData.bookingItems!.quantity.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -272,17 +273,66 @@ class OrderInvoiceFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "\$100",
+                    "\$${screenController.invoiceDetailsData.bookingItems!.price}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
                   ),
                 ),
               ],
+            )
+            : ListView.builder(
+              itemCount: screenController.invoiceDetailsData.resourceList!.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, i) {
+                return Row(
+                  children: [
+                    Expanded(
+                      flex: 60,
+                      child: Text(
+                        screenController.invoiceDetailsData.service.toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 20,
+                      child: Text(
+                        screenController.invoiceDetailsData.bookingItems!.quantity.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 20,
+                      child: Text(
+                        "\$${screenController.invoiceDetailsData.bookingItems!.price}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
 
             const SizedBox(height: 40),

@@ -439,7 +439,7 @@ class BookAppointmentScreenController extends GetxController {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time";
     log("Get Resources Additional Time API URL : $url");
 
     try {
@@ -561,9 +561,9 @@ class BookAppointmentScreenController extends GetxController {
   /// 6) Book Available Time Slot
   bookAvailableTimeSlotFunction() async {
     isLoading(true);
-    String url = selectedAdditionalTime.isEmpty
+    String url = additionalSlotWorkerList.name == "Select Additional Slot"
     ? ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&Duration"
-    : ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&Duration=$selectedAdditionalTime";
+    : ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&Duration=${additionalSlotWorkerList.timeDuration}";
     log("Book Available Time Slot API URL : $url");
 
     try {
@@ -609,99 +609,31 @@ class BookAppointmentScreenController extends GetxController {
 
   getTodayDateFunction() {
     DateTime dateTime = DateTime.now();
-    // String month = '';
-    // if(dateTime.month == 1) {
-    //   month = "january";
-    // } else if(dateTime.month == 2) {
-    //   month = "february";
-    // } else if(dateTime.month == 3) {
-    //   month = "March";
-    // } else if(dateTime.month == 4) {
-    //   month = "April";
-    // } else if(dateTime.month == 5) {
-    //   month = "May";
-    // } else if(dateTime.month == 6) {
-    //   month = "June";
-    // } else if(dateTime.month == 7) {
-    //   month = "July";
-    // } else if(dateTime.month == 8) {
-    //   month = "August";
-    // } else if(dateTime.month == 9) {
-    //   month = "September";
-    // } else if(dateTime.month == 10) {
-    //   month = "October";
-    // } else if(dateTime.month == 11) {
-    //   month = "November";
-    // } else if(dateTime.month == 12) {
-    //   month = "December";
-    // }
 
-    // String day = "";
-    // if(dateTime.day == 1) {
-    //   day = "01";
-    // } else if(dateTime.day == 2) {
-    //   day = "02";
-    // } else if(dateTime.day == 3) {
-    //   day = "03";
-    // } else if(dateTime.day == 4) {
-    //   day = "04";
-    // } else if(dateTime.day == 5) {
-    //   day = "05";
-    // } else if(dateTime.day == 6) {
-    //   day = "06";
-    // } else if(dateTime.day == 7) {
-    //   day = "07";
-    // } else if(dateTime.day == 8) {
-    //   day = "08";
-    // } else if(dateTime.day == 9) {
-    //   day = "09";
-    // } else if(dateTime.day == 10) {
-    //   day = "10";
-    // } else if(dateTime.day == 11) {
-    //   day = "11";
-    // } else if(dateTime.day == 12) {
-    //   day = "12";
-    // } else if(dateTime.day == 13) {
-    //   day = "13";
-    // } else if(dateTime.day == 14) {
-    //   day = "14";
-    // } else if(dateTime.day == 15) {
-    //   day = "15";
-    // } else if(dateTime.day == 16) {
-    //   day = "16";
-    // } else if(dateTime.day == 17) {
-    //   day = "17";
-    // } else if(dateTime.day == 18) {
-    //   day = "18";
-    // } else if(dateTime.day == 19) {
-    //   day = "19";
-    // } else if(dateTime.day == 20) {
-    //   day = "20";
-    // } else if(dateTime.day == 21) {
-    //   day = "21";
-    // } else if(dateTime.day == 22) {
-    //   day = "22";
-    // } else if(dateTime.day == 23) {
-    //   day = "23";
-    // } else if(dateTime.day == 24) {
-    //   day = "24";
-    // } else if(dateTime.day == 25) {
-    //   day = "25";
-    // } else if(dateTime.day == 26) {
-    //   day = "26";
-    // } else if(dateTime.day == 27) {
-    //   day = "27";
-    // } else if(dateTime.day == 28) {
-    //   day = "28";
-    // } else if(dateTime.day == 29) {
-    //   day = "29";
-    // } else if(dateTime.day == 30) {
-    //   day = "30";
-    // } else if(dateTime.day == 31) {
-    //   day = "31";
-    // }
+    String hour = "${dateTime.hour}";
+    String minute = "${dateTime.minute}";
+
+    /// For Hour Format
+    for(int i = 0; i < 10; i++) {
+      if(dateTime.hour.toString() == i.toString()) {
+        if(dateTime.hour.toString().length == 1) {
+          hour = "0${dateTime.hour}";
+        }
+      }
+    }
+
+    /// For Minute
+    for (int i = 0; i < 10; i++) {
+      if(dateTime.minute.toString() == i.toString()) {
+        if(dateTime.minute.toString().length == 1) {
+          minute = "0${dateTime.minute}";
+        }
+      }
+    }
+
 
     selectedDate.value = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    selectedTime.value = "$hour:$minute:00";
     log("selectedDate : ${selectedDate.value}");
   }
 

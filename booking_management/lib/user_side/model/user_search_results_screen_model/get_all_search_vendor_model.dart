@@ -158,7 +158,7 @@ class SearchVendorDatum {
     status: json["status"] ?? "",
     category: json["category"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
-    workingHoursStatus: json["workingHoursStatus"] ?? "",
+    workingHoursStatus: json["workingHoursStatus"] ?? "Close",
     avilableTime: json["avilableTime"] ?? "",
     dDate: json["dDate"] ?? "",
     duration: json["duration"] ?? "",

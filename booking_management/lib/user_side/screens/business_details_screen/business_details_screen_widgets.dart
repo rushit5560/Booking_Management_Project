@@ -109,6 +109,8 @@ class TabViewModule extends StatelessWidget {
             onTap: () {
               screenController.isOverviewSelected.value = false;
               screenController.isReviewSelected.value = true;
+              screenController.reviewFieldController.clear();
+              screenController.selectRating.value = 1;
               log('Review : ${screenController.isReviewSelected.value}');
               log('Overview : ${screenController.isOverviewSelected.value}');
             },

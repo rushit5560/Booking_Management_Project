@@ -15,6 +15,9 @@ class InvoiceScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
   ApiHeader apiHeader = ApiHeader();
 
+  bool isService = false;
+
+
   // int transactionId = 0;
   InvoiceDetailsData invoiceDetailsData = InvoiceDetailsData();
 
@@ -32,6 +35,9 @@ class InvoiceScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         invoiceDetailsData = invoiceDetailsModel.workerList;
+        invoiceDetailsModel.workerList.service == ""
+            ? isService = false
+            : isService = true;
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getInvoiceDetailsFunction Else Else");

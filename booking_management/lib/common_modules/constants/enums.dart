@@ -12,7 +12,8 @@ enum CustomerDrawerOption {
    payment,
    help,
    changePassword,
-   logOut
+   logOut,
+   favourites
 }
 
 enum VendorDrawerOption {

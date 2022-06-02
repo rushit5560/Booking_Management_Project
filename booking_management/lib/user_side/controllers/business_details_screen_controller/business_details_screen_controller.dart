@@ -289,7 +289,7 @@ class BusinessDetailsScreenController extends GetxController {
 
   /// Add Vendor in Favorite
   addVendorInFavoriteFunction() async {
-    // isLoading(true);
+    isLoading(true);
     String url = ApiUrl.addFavouriteVendorApi;
     log("Add Vendor in Favourite API URL : $url");
 

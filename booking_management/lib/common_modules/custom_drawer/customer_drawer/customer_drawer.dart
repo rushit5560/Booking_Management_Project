@@ -41,6 +41,13 @@ class CustomerDrawer extends StatelessWidget {
 
               CustomerDrawerSingleItemModule(
                 img: AppImages.bookingHistoryImg,
+                name: 'Favourites',
+                customerDrawerOption: CustomerDrawerOption.favourites,
+              ),
+              const SizedBox(height: 20),
+
+              CustomerDrawerSingleItemModule(
+                img: AppImages.bookingHistoryImg,
                 name: 'Booking History',
                 customerDrawerOption: CustomerDrawerOption.bookingHistory,
               ),

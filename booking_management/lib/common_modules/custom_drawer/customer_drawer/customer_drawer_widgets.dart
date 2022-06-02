@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
+import 'package:booking_management/user_side/screens/user_favourite_list_screen/user_favourite_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -93,6 +94,8 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
       await sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);
       Get.snackbar('You Have Successfully Logout', '');
+    } else if(userSettingScreenOption == CustomerDrawerOption.favourites) {
+      Get.to(()=> UserFavouriteListScreen(), transition: Transition.zoom);
     }
   }
 }

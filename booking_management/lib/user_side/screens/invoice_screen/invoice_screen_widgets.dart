@@ -147,7 +147,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
             ),
             // const SizedBox(height: 15),
             const Divider(thickness: 1, height: 25),
-            Row(
+            /*Row(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,15 +180,15 @@ class OrderInvoiceFormModule extends StatelessWidget {
                   ],
                 ),
               ],
-            ),
+            ),*/
 
-            const Divider(thickness: 1, height: 25),
+            // const Divider(thickness: 1, height: 25),
 
             /// Form Header
             Row(
               children: const [
                 Expanded(
-                  flex: 40,
+                  flex: 60,
                   child: Text(
                     "Description",
                     maxLines: 1,
@@ -212,7 +212,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
+                /*Expanded(
                   flex: 20,
                   child: Text(
                     "VAT",
@@ -224,7 +224,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                ),
+                ),*/
                 Expanded(
                   flex: 20,
                   child: Text(
@@ -245,7 +245,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
             Row(
               children: const [
                 Expanded(
-                  flex: 40,
+                  flex: 60,
                   child: Text(
                     "General Consultation",
                     maxLines: 2,
@@ -272,19 +272,6 @@ class OrderInvoiceFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "\$0",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
                     "\$100",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -297,65 +284,10 @@ class OrderInvoiceFormModule extends StatelessWidget {
                 ),
               ],
             ),
-            // Row(
-            //   children: const [
-            //     Expanded(
-            //       flex: 40,
-            //       child: Text(
-            //         "Video Call Booking",
-            //         maxLines: 2,
-            //         overflow: TextOverflow.ellipsis,
-            //         style: TextStyle(
-            //           // fontWeight: FontWeight.bold,
-            //           fontSize: 13,
-            //         ),
-            //       ),
-            //     ),
-            //     Expanded(
-            //       flex: 20,
-            //       child: Text(
-            //         "1",
-            //         maxLines: 1,
-            //         overflow: TextOverflow.ellipsis,
-            //         textAlign: TextAlign.center,
-            //         style: TextStyle(
-            //           // fontWeight: FontWeight.bold,
-            //           fontSize: 13,
-            //         ),
-            //       ),
-            //     ),
-            //     Expanded(
-            //       flex: 20,
-            //       child: Text(
-            //         "\$0",
-            //         maxLines: 1,
-            //         overflow: TextOverflow.ellipsis,
-            //         textAlign: TextAlign.center,
-            //         style: TextStyle(
-            //           // fontWeight: FontWeight.bold,
-            //           fontSize: 13,
-            //         ),
-            //       ),
-            //     ),
-            //     Expanded(
-            //       flex: 20,
-            //       child: Text(
-            //         "\$250",
-            //         maxLines: 1,
-            //         overflow: TextOverflow.ellipsis,
-            //         textAlign: TextAlign.center,
-            //         style: TextStyle(
-            //           // fontWeight: FontWeight.bold,
-            //           fontSize: 13,
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
 
             const SizedBox(height: 40),
 
-            Row(
+            /*Row(
               children: [
                 Expanded(flex: 40, child: Container()),
                 const Expanded(
@@ -386,8 +318,8 @@ class OrderInvoiceFormModule extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            Row(
+            ),*/
+            /*Row(
               children: [
                 Expanded(flex: 40, child: Container()),
                 const Expanded(
@@ -418,7 +350,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ),*/
             Row(
               children: [
                 Expanded(flex: 40, child: Container()),

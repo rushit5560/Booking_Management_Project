@@ -1,14 +1,13 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_appointment_list_screen_controller/user_appointment_list_screen_controller.dart';
 import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
-import 'package:booking_management/user_side/screens/extra/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../model/user_appointment_list_model/user_appointment_list_model.dart';
+
+
 
 UserAppointmentScreenController screenController = Get.find<UserAppointmentScreenController>();
 
@@ -505,62 +504,62 @@ class AllAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
-    return GestureDetector(
-      //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 2,
-              color: Colors.grey.shade300,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'View',
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+  // Widget _viewButton() {
+  //   return GestureDetector(
+  //     //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         boxShadow: [
+  //           BoxShadow(
+  //             spreadRadius: 1,
+  //             blurRadius: 2,
+  //             color: Colors.grey.shade300,
+  //             blurStyle: BlurStyle.outer,
+  //           ),
+  //         ],
+  //       ),
+  //       child: const Padding(
+  //         padding: EdgeInsets.all(8),
+  //         child: Text(
+  //           'View',
+  //           style: TextStyle(
+  //             fontSize: 9,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //
+  //     ),
+  //   );
+  // }
 
-      ),
-    );
-  }
-
-  Widget _confirmButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'Confirm',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
-    );
-  }
+  // Widget _confirmButton() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(10),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           spreadRadius: 1,
+  //           blurRadius: 2,
+  //           color: Colors.grey.shade300,
+  //           blurStyle: BlurStyle.outer,
+  //         ),
+  //       ],
+  //     ),
+  //     child: const Padding(
+  //       padding: EdgeInsets.all(8),
+  //       child: Text(
+  //         'Confirm',
+  //         style: TextStyle(
+  //           fontSize: 9,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //
+  //   );
+  // }
 
 }
 
@@ -580,7 +579,7 @@ class UserPendingAppointmentListModule extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i){
         return Container(
-          margin: EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+          margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
@@ -708,62 +707,62 @@ class UserPendingAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
-    return GestureDetector(
-      //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 2,
-              color: Colors.grey.shade300,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'View',
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-      ),
-    );
-  }
-
-  Widget _confirmButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'Confirm',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
-    );
-  }
+  // Widget _viewButton() {
+  //   return GestureDetector(
+  //     //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         boxShadow: [
+  //           BoxShadow(
+  //             spreadRadius: 1,
+  //             blurRadius: 2,
+  //             color: Colors.grey.shade300,
+  //             blurStyle: BlurStyle.outer,
+  //           ),
+  //         ],
+  //       ),
+  //       child: const Padding(
+  //         padding: EdgeInsets.all(8),
+  //         child: Text(
+  //           'View',
+  //           style: TextStyle(
+  //             fontSize: 9,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _confirmButton() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(10),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           spreadRadius: 1,
+  //           blurRadius: 2,
+  //           color: Colors.grey.shade300,
+  //           blurStyle: BlurStyle.outer,
+  //         ),
+  //       ],
+  //     ),
+  //     child: const Padding(
+  //       padding: EdgeInsets.all(8),
+  //       child: Text(
+  //         'Confirm',
+  //         style: TextStyle(
+  //           fontSize: 9,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //
+  //   );
+  // }
 
 }
 
@@ -910,62 +909,62 @@ class ConfirmAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
-    return GestureDetector(
-      //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 2,
-              color: Colors.grey.shade300,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'View',
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-      ),
-    );
-  }
-
-  Widget _confirmButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'Confirm',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
-    );
-  }
+  // Widget _viewButton() {
+  //   return GestureDetector(
+  //     //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         boxShadow: [
+  //           BoxShadow(
+  //             spreadRadius: 1,
+  //             blurRadius: 2,
+  //             color: Colors.grey.shade300,
+  //             blurStyle: BlurStyle.outer,
+  //           ),
+  //         ],
+  //       ),
+  //       child: const Padding(
+  //         padding: EdgeInsets.all(8),
+  //         child: Text(
+  //           'View',
+  //           style: TextStyle(
+  //             fontSize: 9,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _confirmButton() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(10),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           spreadRadius: 1,
+  //           blurRadius: 2,
+  //           color: Colors.grey.shade300,
+  //           blurStyle: BlurStyle.outer,
+  //         ),
+  //       ],
+  //     ),
+  //     child: const Padding(
+  //       padding: EdgeInsets.all(8),
+  //       child: Text(
+  //         'Confirm',
+  //         style: TextStyle(
+  //           fontSize: 9,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //
+  //   );
+  // }
 
 }
 
@@ -1106,62 +1105,62 @@ class CancelAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
-    return GestureDetector(
-      //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 2,
-              color: Colors.grey.shade300,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'View',
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-      ),
-    );
-  }
-
-  Widget _confirmButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'Confirm',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
-    );
-  }
+  // Widget _viewButton() {
+  //   return GestureDetector(
+  //     //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         boxShadow: [
+  //           BoxShadow(
+  //             spreadRadius: 1,
+  //             blurRadius: 2,
+  //             color: Colors.grey.shade300,
+  //             blurStyle: BlurStyle.outer,
+  //           ),
+  //         ],
+  //       ),
+  //       child: const Padding(
+  //         padding: EdgeInsets.all(8),
+  //         child: Text(
+  //           'View',
+  //           style: TextStyle(
+  //             fontSize: 9,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _confirmButton() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(10),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           spreadRadius: 1,
+  //           blurRadius: 2,
+  //           color: Colors.grey.shade300,
+  //           blurStyle: BlurStyle.outer,
+  //         ),
+  //       ],
+  //     ),
+  //     child: const Padding(
+  //       padding: EdgeInsets.all(8),
+  //       child: Text(
+  //         'Confirm',
+  //         style: TextStyle(
+  //           fontSize: 9,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //
+  //   );
+  // }
 }
 
 
@@ -1309,61 +1308,61 @@ class DoneAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
-    return GestureDetector(
-      //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 2,
-              color: Colors.grey.shade300,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'View',
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-      ),
-    );
-  }
-
-  Widget _confirmButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 2,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Text(
-          'Confirm',
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
-    );
-  }
+  // Widget _viewButton() {
+  //   return GestureDetector(
+  //     //onTap: () => Get.to(()=> VendorUserDetailsScreen(), transition: Transition.zoom),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         boxShadow: [
+  //           BoxShadow(
+  //             spreadRadius: 1,
+  //             blurRadius: 2,
+  //             color: Colors.grey.shade300,
+  //             blurStyle: BlurStyle.outer,
+  //           ),
+  //         ],
+  //       ),
+  //       child: const Padding(
+  //         padding: EdgeInsets.all(8),
+  //         child: Text(
+  //           'View',
+  //           style: TextStyle(
+  //             fontSize: 9,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _confirmButton() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(10),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           spreadRadius: 1,
+  //           blurRadius: 2,
+  //           color: Colors.grey.shade300,
+  //           blurStyle: BlurStyle.outer,
+  //         ),
+  //       ],
+  //     ),
+  //     child: const Padding(
+  //       padding: EdgeInsets.all(8),
+  //       child: Text(
+  //         'Confirm',
+  //         style: TextStyle(
+  //           fontSize: 9,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //
+  //   );
+  // }
 
 }

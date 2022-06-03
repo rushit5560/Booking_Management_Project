@@ -7,13 +7,18 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/constants/api_header.dart';
+import '../../../vendor_side/model/vendor_update_profile_model/vendor_get_user_details_model.dart';
 import '../../model/user_profile_screen_model/update_user_profile_model.dart';
 
 class UserProfileScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
+  RxInt isStatus = 0.obs;
   RxString selectedDate = UserDetails.dob.obs;
   RxString gender = 'Male'.obs;
+
+  ApiHeader apiHeader = ApiHeader();
 
   GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
   final nameTextFieldController = TextEditingController();
@@ -74,8 +79,40 @@ class UserProfileScreenController extends GetxController{
 
   }
 
+
+
+  /// Get User Details By Id
+  getUserDetailsById()async {
+    isLoading(true);
+    String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.uniqueId}";
+    log('Url : $url');
+
+    try{
+
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Get All User Details Response : ${response.body}');
+
+      GetUserDetailsByIdModel getUserDetailsByIdModel = GetUserDetailsByIdModel.fromJson(json.decode(response.body));
+      isStatus = getUserDetailsByIdModel.statusCode.obs;
+      log('getUserDetailsByIdModel: ${getUserDetailsByIdModel.success}');
+      log('getUserDetailsByIdModelStatus : $isStatus');
+
+      if(isStatus.value == 200) {
+
+      } else {
+        log('Get All User Details Else Else');
+      }
+
+    } catch(e) {
+      log('Get All User Details False False: $e');
+    } finally {
+      isLoading(false);
+    }
+  }
+
   @override
   void onInit() {
+    // getUserDetailsById();
     nameTextFieldController.text = UserDetails.userName;
     mobileTextFieldController.text = UserDetails.phoneNo;
     selectedDate.value = UserDetails.dob;

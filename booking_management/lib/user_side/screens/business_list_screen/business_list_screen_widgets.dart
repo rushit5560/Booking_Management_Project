@@ -166,10 +166,10 @@ class BusinessListModule extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         //child: datum.businessLogo.isNotEmpty ? Image.network(ApiUrl.apiMainPath + datum.businessLogo) : Image.asset(AppImages.vendorImg),
                         child: CachedNetworkImage(
-                          imageUrl: ApiUrl.apiMainPath + datum.businessLogo,
+                          imageUrl: ApiUrl.apiImagePath + datum.businessLogo,
                             placeholder: (context, url) {
                             return Image.asset(AppImages.vendorImg);},
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
                     ),

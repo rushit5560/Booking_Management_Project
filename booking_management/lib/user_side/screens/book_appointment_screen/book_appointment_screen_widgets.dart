@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class VendorDetailsModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imgUrl = screenController.bookVendorDetails!.vendor.categories.image;
+    String imgUrl = ApiUrl.apiImagePath + screenController.bookVendorDetails!.vendor.categories.image;
     return Row(
       children: [
         Expanded(
@@ -153,6 +154,7 @@ class BookingServicesListModule extends StatelessWidget {
 
               /// Selected Service Add in List
               screenController.selectedServiceList.add(singleItem.id);
+              log("singleItem.id : ${singleItem.id}");
 
             },
           ),
@@ -219,7 +221,7 @@ class BookingResourcesListModule extends StatelessWidget {
   }
 
   Widget _resourcesListTile(BookingResourceWorkerData singleItem) {
-    String imgUrl = singleItem.image;
+    String imgUrl = ApiUrl.apiImagePath + singleItem.image;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -305,6 +307,7 @@ class BookingResourcesListModule extends StatelessWidget {
 
                   /// Selected Item Become Blue
                   int selectedId = singleItem.timingList[i].id;
+                  log("selectedId : $selectedId");
                   screenController.selectedResourceTimeSlotId = selectedId;
 
                     for(int j=0; j < singleItem.timingList.length; j++) {

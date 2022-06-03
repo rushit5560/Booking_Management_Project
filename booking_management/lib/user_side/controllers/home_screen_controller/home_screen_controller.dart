@@ -69,7 +69,6 @@ class HomeScreenController extends GetxController {
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Upcoming API URL : $url");
 
       GetAllAppointmentListModel getAllAppointmentListModel = GetAllAppointmentListModel.fromJson(json.decode(response.body));
 

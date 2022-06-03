@@ -23,8 +23,7 @@ class ProfileModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imgUrl = ApiUrl.apiMainPath +
-        screenController.vendorDetailsData!.vendor.businessLogo;
+    String imgUrl = ApiUrl.apiImagePath + screenController.vendorDetailsData!.vendor.businessLogo;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),

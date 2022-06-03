@@ -35,10 +35,10 @@ class SplashScreenController extends GetxController {
       isSuccessStatus = getLogoModel.success.obs;
 
       if(isSuccessStatus.value) {
-        AppLogo.splashLogo = ApiUrl.apiMainPath + getLogoModel.workerList.splashLogo;
-        AppLogo.homeLogo = ApiUrl.apiMainPath + getLogoModel.workerList.homeLogo;
-        AppLogo.mainLogo = ApiUrl.apiMainPath + getLogoModel.workerList.mainLogo;
-        AppLogo.smallLogo = ApiUrl.apiMainPath + getLogoModel.workerList.smallLogo;
+        AppLogo.splashLogo = ApiUrl.apiImagePath + getLogoModel.workerList.splashLogo;
+        AppLogo.homeLogo = ApiUrl.apiImagePath + getLogoModel.workerList.homeLogo;
+        AppLogo.mainLogo = ApiUrl.apiImagePath + getLogoModel.workerList.mainLogo;
+        AppLogo.smallLogo = ApiUrl.apiImagePath + getLogoModel.workerList.smallLogo;
 
         log("splashLogo : ${AppLogo.splashLogo}");
         log("homeLogo : ${AppLogo.homeLogo}");

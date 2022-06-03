@@ -86,7 +86,7 @@ class Booking {
   int vendorId;
   Vendor vendor;
   // dynamic customer;
-  String customerId;
+  int customerId;
   String bookingFor;
   String bookingForId;
   String startDateTime;
@@ -105,7 +105,7 @@ class Booking {
     vendorId: json["vendorId"] ?? 0,
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
     // customer: json["customer"],
-    customerId: json["customerId"] ?? "",
+    customerId: json["customerId"] ?? 0,
     bookingFor: json["bookingFor"] ?? "",
     bookingForId: json["bookingForId"] ?? "",
     startDateTime: json["startDateTime"] ?? "",

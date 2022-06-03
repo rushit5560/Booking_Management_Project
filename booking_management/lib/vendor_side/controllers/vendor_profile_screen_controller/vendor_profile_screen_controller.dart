@@ -255,7 +255,7 @@ class VendorProfileScreenController extends GetxController{
   /// Get User Details By Id
   getUserDetailsById()async {
     isLoading(true);
-    String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.tableWiseId}";
+    String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.uniqueId}";
     log('Url : $url');
 
     try{

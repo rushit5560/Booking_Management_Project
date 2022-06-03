@@ -78,7 +78,7 @@ class IndexScreen extends StatelessWidget {
                   scale: 0.9),
             ),
           ),
-          InkWell(
+          /*InkWell(
             onTap: () {
               changeIndex.call(1);
               log("${indexScreenController.menuIndex.value}");
@@ -95,7 +95,7 @@ class IndexScreen extends StatelessWidget {
                 scale: 0.9,
               ),
             ),
-          ),
+          ),*/
           InkWell(
             onTap: () {
               changeIndex.call(2);

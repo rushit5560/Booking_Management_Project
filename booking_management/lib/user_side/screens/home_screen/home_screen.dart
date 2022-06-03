@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                           SearchButtonModule(),
                         ],
                       ).commonSymmetricPadding(horizontal: 15),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
 
                       UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20),
                       // const SizedBox(height: 30),

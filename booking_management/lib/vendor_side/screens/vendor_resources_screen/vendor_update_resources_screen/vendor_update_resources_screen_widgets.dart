@@ -1,9 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
-import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/field_decorations.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
@@ -12,8 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+
+
 class UpdateResourceFormModule extends StatelessWidget {
   final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+
+  UpdateResourceFormModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class ResourceProfileModule extends StatelessWidget {
             child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill))
             : ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(/*ApiUrl.apiMainPath + */vendorResourcesScreenController.updatePhotoUrl,
+            child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
                 height: 100, width: 100, fit: BoxFit.fill)),
 
         GestureDetector(

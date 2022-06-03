@@ -331,7 +331,7 @@ class VendorResourcesScreenController extends GetxController {
         updateResourceDetailsFieldController.text = getResourceDetailsModel.workerList.details;
         updateResourcePriceFieldController.text = getResourceDetailsModel.workerList.price.toString();
         //updatePhotoUrl = "http://5.189.147.159:9600///images//Resource//9188f689-6c67-4fae-9045-a55a32888891.png";
-        updatePhotoUrl = "http://5.189.147.159:9600/""${getResourceDetailsModel.workerList.resourceName}";
+        updatePhotoUrl = "${ApiUrl.apiImagePath}${getResourceDetailsModel.workerList.resourceName}";
 
         // updateServiceNameFieldController.text = getServiceDetailsModel.workerList.name;
         // updateServiceShortDesFieldController.text = getServiceDetailsModel.workerList.shortDescription;

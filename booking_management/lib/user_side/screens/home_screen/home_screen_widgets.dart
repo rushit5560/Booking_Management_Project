@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:booking_management/common_modules/common_functions.dart';
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
@@ -360,7 +361,7 @@ class PartialCategoryListModule extends StatelessWidget {
   }
 
   Widget _categoryListModule(CategoryDatum singleItem) {
-    // String imgUrl = ApiUrl.apiMainPath + singleItem.image;
+    String imgUrl = ApiUrl.apiImagePath + singleItem.image;
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -394,7 +395,7 @@ class PartialCategoryListModule extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: NetworkImage(singleItem.image),
+                    image: NetworkImage(imgUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -461,6 +462,7 @@ class FavouriteDoctorsModule extends StatelessWidget {
   }
 
   Widget _favouriteVendorListTile(FavouriteVendorDetails singleVendor) {
+    String imgUrl = ApiUrl.apiImagePath + singleVendor.businessLogo;
     return Container(
       margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
       decoration: BoxDecoration(
@@ -482,7 +484,7 @@ class FavouriteDoctorsModule extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
-                  image: NetworkImage(singleVendor.businessLogo),
+                  image: NetworkImage(imgUrl),
                   fit: BoxFit.cover,
                 ),
               ),

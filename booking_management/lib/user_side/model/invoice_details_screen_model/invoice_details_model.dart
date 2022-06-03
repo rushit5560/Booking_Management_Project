@@ -9,22 +9,26 @@ class InvoiceDetailsModel {
     required this.statusCode,
     required this.success,
     required this.workerList,
+    required this.list,
   });
 
   int statusCode;
   bool success;
   InvoiceDetailsData workerList;
+  List<String> list;
 
   factory InvoiceDetailsModel.fromJson(Map<String, dynamic> json) => InvoiceDetailsModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     workerList: InvoiceDetailsData.fromJson(json["workerList"] ?? {}),
+    list: List<String>.from(json["list"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
     "workerList": workerList.toJson(),
+    "list": List<dynamic>.from(list.map((x) => x)),
   };
 }
 
@@ -52,8 +56,8 @@ class InvoiceDetailsData {
     this.vendor,
     this.order,
     this.bookingItems,
-    this.resourceList,
-    this.service,
+    // this.resourceList,
+    // this.service,
 
   });
 
@@ -79,8 +83,8 @@ class InvoiceDetailsData {
   Vendor? vendor;
   Order? order;
   BookingItems? bookingItems;
-  List<String>? resourceList;
-  String? service;
+  // List<String>? resourceList;
+  // String? service;
 
   factory InvoiceDetailsData.fromJson(Map<String, dynamic> json) => InvoiceDetailsData(
     id: json["id"] ?? 0,
@@ -105,10 +109,10 @@ class InvoiceDetailsData {
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
     order: Order.fromJson(json["order"] ?? {}),
     bookingItems: BookingItems.fromJson(json["bookingItems"] ?? {}),
-    resourceList: List<String>.from(json["serviceName"].map((x) => x)).isEmpty
-    ? []
-    : List<String>.from(json["serviceName"].map((x) => x)),
-    service: json["service"] ?? "",
+    // resourceList: List<String>.from(json["serviceName"].map((x) => x)).isEmpty
+    // ? []
+    // : List<String>.from(json["serviceName"].map((x) => x)),
+    // service: json["service"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -134,8 +138,8 @@ class InvoiceDetailsData {
     "vendor": vendor!.toJson(),
     "order": order!.toJson(),
     "bookingItems": bookingItems!.toJson(),
-    "serviceName": List<dynamic>.from(resourceList!.map((x) => x)),
-    "service": service,
+    // "serviceName": List<dynamic>.from(resourceList!.map((x) => x)),
+    // "service": service,
   };
 }
 
@@ -150,14 +154,14 @@ class BookingItems {
 
   int id;
   String bookingId;
-  int price;
+  double price;
   int quantity;
   String booking;
 
   factory BookingItems.fromJson(Map<String, dynamic> json) => BookingItems(
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
-    price: json["price"] ?? 0,
+    price: double.parse(json["price"].toString()),
     quantity: json["quantity"] ?? 0,
     booking: json["booking"] ?? "",
   );

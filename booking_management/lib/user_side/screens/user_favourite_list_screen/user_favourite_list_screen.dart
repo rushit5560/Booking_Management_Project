@@ -62,7 +62,7 @@ class UserFavouriteListScreen extends StatelessWidget {
   }
 
   Widget _favouriteVendorListTile(FavouriteVendorDetails singleVendor) {
-    String imgUrl = ApiUrl.apiMainPath + singleVendor.businessLogo;
+    String imgUrl = ApiUrl.apiImagePath + singleVendor.businessLogo;
     return Container(
       margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
       decoration: BoxDecoration(

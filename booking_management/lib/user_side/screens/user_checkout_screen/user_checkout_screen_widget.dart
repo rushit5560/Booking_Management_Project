@@ -15,6 +15,7 @@ class BookingSummaryModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imgUrl = ApiUrl.apiImagePath + screenController.vendorImg;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -32,7 +33,7 @@ class BookingSummaryModule extends StatelessWidget {
                   width: 75,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(ApiUrl.apiMainPath + screenController.vendorImg,),
+                      image: NetworkImage(imgUrl),
                       fit: BoxFit.cover,
                     ),
                   ),

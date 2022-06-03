@@ -416,7 +416,7 @@ class ResourcesListModule extends StatelessWidget {
   }
 
   Widget _resourcesListTile(AllResourcesWorkerList singleItem) {
-    String imgUrl = ApiUrl.apiMainPath + singleItem.image;
+    String imgUrl = ApiUrl.apiImagePath + singleItem.image;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

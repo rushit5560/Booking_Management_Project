@@ -64,7 +64,7 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
                   image: NetworkImage(
-                    "${ApiUrl.apiMainPath}${singleItem.image}"
+                    "${ApiUrl.apiImagePath}${singleItem.image}"
                   ),
                   fit: BoxFit.cover,
                 ),

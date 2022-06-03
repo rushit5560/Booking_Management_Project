@@ -22,7 +22,7 @@ class UserBookingHistoryScreenController extends GetxController{
   userBookingHistoryFunction() async {
     isLoading(true);
     String url = ApiUrl.userBookingHistoryListApi + "?customerid=${UserDetails.uniqueId}";
-    log('customer Id: ${UserDetails.customerId}');
+    log('customer Id: ${UserDetails.uniqueId}');
     log('Url : $url');
     try{
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
@@ -35,6 +35,7 @@ class UserBookingHistoryScreenController extends GetxController{
       log("status : $isStatus");
 
       if(isSuccessStatus.value) {
+        historyList.clear();
         historyList = bookingHistoryModel.data;
         log('allHistoryList : $historyList');
       } else {

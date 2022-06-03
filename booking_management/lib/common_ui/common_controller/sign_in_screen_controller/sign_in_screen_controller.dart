@@ -55,6 +55,11 @@ class SignInScreenController extends GetxController {
         } else if (signInModel.role[0] == "Customer") {
           log('customer side');
           Get.snackbar(signInModel.message, '');
+
+          String dob = signInModel.customer.dateOfBirth;
+          String finalDob = dob.substring(0, dob.length - 9);
+          log("finalDob : $finalDob");
+
           sharedPreferenceData.setUserLoginDetailsInPrefs(
             apiToken: signInModel.data.apiToken,
             uniqueId: signInModel.data.id,
@@ -62,7 +67,7 @@ class SignInScreenController extends GetxController {
             userName: signInModel.data.userName,
             email: signInModel.data.email,
             phoneNo: signInModel.data.phoneNumber,
-            dob: signInModel.customer.dateOfBirth,
+            dob: finalDob,
             roleName: signInModel.role[0],
             gender: signInModel.customer.gender,
             businessName: "",

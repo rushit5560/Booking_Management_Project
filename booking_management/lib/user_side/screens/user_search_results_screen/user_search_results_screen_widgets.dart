@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
@@ -372,6 +373,7 @@ class BusinessListModule extends StatelessWidget {
   }
 
   Widget _vendorListTile(SearchVendorDatum singleItem) {
+    String imgUrl = ApiUrl.apiImagePath + singleItem.businessLogo;
     return GestureDetector(
       onTap: () {
         Get.to(() => BusinessDetailScreen(),
@@ -464,7 +466,7 @@ class BusinessListModule extends StatelessWidget {
                 flex: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(singleItem.businessLogo),
+                  child: Image.network(imgUrl),
                 ),
               ),
               const SizedBox(width: 7),

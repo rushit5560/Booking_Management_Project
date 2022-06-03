@@ -18,13 +18,13 @@ class UserAppointmentListScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const CommonAppBarModule(title: 'Appointment List'),
-            const SizedBox(height: 10),
+            // const SizedBox(height: 10),
 
             Expanded(
               child: Column(
                 children: [
-                  SearchAppointmentField(),
-                  SizedBox(height: 30),
+                  // SearchAppointmentField(),
+                  // SizedBox(height: 30),
                   AppointmentListTextModule(),
 
                   Obx(

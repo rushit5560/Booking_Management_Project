@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/user_side/controllers/user_profile_screen_controller/user_profile_screen_controller.dart';
@@ -13,17 +14,22 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            CommonAppBarModule(title: "Profile", appBarOption: AppBarOption.singleBackButtonOption),
-
-            Expanded(
-              child: ProfileDetailsModule(),
-            )
-          ],
-        ),
+      body: Obx(
+        () => userProfileScreenController.isLoading.value
+            ? const CustomCircularLoaderModule()
+            : SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const CommonAppBarModule(
+                        title: "Profile",
+                        appBarOption: AppBarOption.singleBackButtonOption),
+                    Expanded(
+                      child: ProfileDetailsModule(),
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }

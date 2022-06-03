@@ -7,12 +7,12 @@ import 'package:booking_management/user_side/controllers/user_profile_screen_con
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-
-final screenController = Get.find<UserProfileScreenController>();
 
 class ProfileDetailsModule extends StatelessWidget {
-  const ProfileDetailsModule({Key? key}) : super(key: key);
+  ProfileDetailsModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +48,12 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context, DateTime dateTime) async {
     final DateTime? d = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1995),
-      lastDate: DateTime(2025),
+      initialDate: dateTime,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2022),
     );
     if (d != null) {
       //setState(() {
@@ -84,7 +84,7 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 
-  /// ame Field
+  /// Name Field
   Widget nameTextField(){
     return Row(
       children: [
@@ -384,7 +384,7 @@ class ProfileDetailsModule extends StatelessWidget {
             child: Obx(()=>
                 Container(
                   height: 45,
-                  margin: EdgeInsets.only(left: 5),
+                  margin: const EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
@@ -401,21 +401,27 @@ class ProfileDetailsModule extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
-                          child: Text(
-                              screenController.selectedDate.value,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black)
-                          ),
-                          onTap: (){
-                            _selectDate(context);
-                          },
+                        Text(
+                            screenController.selectedDate.value,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.black)
                         ),
                         IconButton(
-                          icon: Icon(Icons.calendar_today_outlined, color: Colors.black, size: 20,),
+                          icon: const Icon(Icons.calendar_today_outlined, color: Colors.black, size: 20,),
                           tooltip: 'DOB',
                           onPressed: () {
-                            _selectDate(context);
+                            var dateFormat = DateFormat('yyyy-MM-dd');
+                            String selectedDate = screenController.selectedDate.value;
+
+                            String year = selectedDate.substring(0, selectedDate.length - 6);
+                            String month = selectedDate.substring(5, selectedDate.length - 3);
+                            String day = selectedDate.substring(8);
+
+                            DateTime dateTime = dateFormat.parse("$year-$month-$day 00:00:00.000000");
+                            log("dateTime : $dateTime");
+                            log("Date Format : ${DateTime.now()}");
+                            _selectDate(context, dateTime);
+                            // SelectDateModule();
                           },
                         ),
                       ],
@@ -427,6 +433,8 @@ class ProfileDetailsModule extends StatelessWidget {
       ],
     );
   }
+
+
 
   /// City
   /*Widget cityTextField(){
@@ -710,6 +718,151 @@ class ProfileDetailsModule extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+class SelectDateModule extends StatelessWidget {
+  SelectDateModule({Key? key}) : super(key: key);
+  // final screenController = Get.find<BookAppointmentScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // const Text(
+        //   "Select Date",
+        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        // ),
+        const SizedBox(height: 10),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+
+
+                String hour = "${selectedDay.hour}";
+                String minute = "${selectedDay.minute}";
+
+                /// For Hour Format
+                for(int i = 0; i < 10; i++) {
+                  if(selectedDay.hour.toString() == i.toString()) {
+                    if(selectedDay.hour.toString().length == 1) {
+                      hour = "0${selectedDay.hour}";
+                    }
+                  }
+                }
+
+                /// For Minute
+                for (int i = 0; i < 10; i++) {
+                  if(selectedDay.minute.toString() == i.toString()) {
+                    if(selectedDay.minute.toString().length == 1) {
+                      minute = "0${selectedDay.minute}";
+                    }
+                  }
+                }
+
+                // screenController.selectedTime.value = "$hour:$minute:00";
+
+
+                // screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+
+                // log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
+                // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+
+                // screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
+                // screenController.loadUI();
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                    color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

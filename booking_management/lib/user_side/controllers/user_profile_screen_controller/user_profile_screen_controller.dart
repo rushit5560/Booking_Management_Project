@@ -6,10 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/api_header.dart';
-import '../../../vendor_side/model/vendor_update_profile_model/vendor_get_user_details_model.dart';
 import '../../model/user_profile_screen_model/update_user_profile_model.dart';
+import '../../model/user_profile_screen_model/user_profile_details_model.dart';
+
+
 
 class UserProfileScreenController extends GetxController{
   RxBool isLoading = false.obs;
@@ -65,6 +66,7 @@ class UserProfileScreenController extends GetxController{
           log(updateUserProfileModel.dataVendor.userName);
           log(updateUserProfileModel.dataVendor.email);
           log(updateUserProfileModel.dataVendor.phoneNo);
+          Get.back();
 
         } else {
           log('False False');
@@ -92,13 +94,24 @@ class UserProfileScreenController extends GetxController{
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get All User Details Response : ${response.body}');
 
-      GetUserDetailsByIdModel getUserDetailsByIdModel = GetUserDetailsByIdModel.fromJson(json.decode(response.body));
-      isStatus = getUserDetailsByIdModel.statusCode.obs;
-      log('getUserDetailsByIdModel: ${getUserDetailsByIdModel.success}');
+      UserProfileDetailsModel userProfileDetailsModel = UserProfileDetailsModel.fromJson(json.decode(response.body));
+      isStatus = userProfileDetailsModel.statusCode.obs;
+      log('getUserDetailsByIdModel: ${userProfileDetailsModel.success}');
       log('getUserDetailsByIdModelStatus : $isStatus');
 
       if(isStatus.value == 200) {
+        nameTextFieldController.text = userProfileDetailsModel.data.userName;
+        emailTextFieldController.text = userProfileDetailsModel.data.email;
+        mobileTextFieldController.text = userProfileDetailsModel.data.phoneNo;
+        gender.value = userProfileDetailsModel.data.gender;
 
+        if(userProfileDetailsModel.data.dateOfBirth.length > 10) {
+          String dob = userProfileDetailsModel.data.dateOfBirth;
+          String finalDob = dob.substring(0, dob.length - 9);
+          selectedDate.value = finalDob;
+        } else {
+          selectedDate.value = userProfileDetailsModel.data.dateOfBirth;
+        }
       } else {
         log('Get All User Details Else Else');
       }
@@ -112,12 +125,12 @@ class UserProfileScreenController extends GetxController{
 
   @override
   void onInit() {
-    // getUserDetailsById();
-    nameTextFieldController.text = UserDetails.userName;
-    mobileTextFieldController.text = UserDetails.phoneNo;
-    selectedDate.value = UserDetails.dob;
-    emailTextFieldController.text = UserDetails.email;
-    gender.value = UserDetails.gender;
+    getUserDetailsById();
+    // nameTextFieldController.text = UserDetails.userName;
+    // mobileTextFieldController.text = UserDetails.phoneNo;
+    // selectedDate.value = UserDetails.dob;
+    // emailTextFieldController.text = UserDetails.email;
+    // gender.value = UserDetails.gender;
     super.onInit();
   }
 

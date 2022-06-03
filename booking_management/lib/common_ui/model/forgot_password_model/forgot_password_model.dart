@@ -13,22 +13,26 @@ class ForgotPasswordModel {
     required this.statusCode,
     required this.success,
     required this.workerList,
+    required this.message,
   });
 
   int statusCode;
   bool success;
   WorkerList workerList;
+  String message;
 
   factory ForgotPasswordModel.fromJson(Map<String, dynamic> json) => ForgotPasswordModel(
-    statusCode: json["statusCode"],
-    success: json["success"],
-    workerList: WorkerList.fromJson(json["workerList"]),
+    statusCode: json["statusCode"] ?? 0,
+    success: json["success"] ?? false,
+    workerList: WorkerList.fromJson(json["workerList"] ?? {}),
+    message: json["message"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
     "workerList": workerList.toJson(),
+    "message": message,
   };
 }
 
@@ -36,32 +40,32 @@ class WorkerList {
   WorkerList({
     required this.id,
     required this.email,
-    this.password,
+    required this.password,
     required this.userName,
-    this.phoneNumber,
-    this.apiToken,
+    required this.phoneNumber,
+    required this.apiToken,
     required this.frogotToken,
-    this.role,
+    required this.role,
   });
 
   String id;
   String email;
-  dynamic password;
+  String password;
   String userName;
-  dynamic phoneNumber;
-  dynamic apiToken;
+  String phoneNumber;
+  String apiToken;
   String frogotToken;
-  dynamic role;
+  String role;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
-    id: json["id"],
-    email: json["email"],
-    password: json["password"],
-    userName: json["userName"],
-    phoneNumber: json["phoneNumber"],
-    apiToken: json["apiToken"],
-    frogotToken: json["frogotToken"],
-    role: json["role"],
+    id: json["id"] ?? "",
+    email: json["email"] ?? "",
+    password: json["password"] ?? "",
+    userName: json["userName"] ?? "",
+    phoneNumber: json["phoneNumber"] ?? "",
+    apiToken: json["apiToken"] ?? "",
+    frogotToken: json["frogotToken"] ?? "",
+    role: json["role"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

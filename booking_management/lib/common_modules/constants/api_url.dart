@@ -1,7 +1,7 @@
 class ApiUrl {
   static const serverApiKey = "AAAAPMN5_nM:APA91bHk_HS5tqZwzSyV-_2uP8ktyuhl_sp7HwkbFMP9lsiNHhWDvSxW1vvEMJ_skX2m_nHQp4QInHVPQGig9tkugj81_aoimCMY4ke7_2oZvck5cPtrRUFs9jj7jMJ-29HEfXc3_TTa";
   static const apiMainPath = "http://192.168.29.219:8080/";
-  static const apiImagePath = "http://192.168.29.219:8080";
+  static const apiImagePath = "http://192.168.29.219:8080/";
   /// Common API
   static const signInApi = apiMainPath + "API/Login";
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";

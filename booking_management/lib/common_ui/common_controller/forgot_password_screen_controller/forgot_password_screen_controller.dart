@@ -110,11 +110,17 @@ class ForgotPasswordScreenController extends GetxController {
       ForgotPasswordModel forgotPasswordModel = ForgotPasswordModel.fromJson(json.decode(response.body));
       isStatus = forgotPasswordModel.statusCode.obs;
 
+
+
       if(isStatus.value == 200) {
-        Get.offAll(() => SignInScreen());
-        log("${forgotPasswordModel.workerList}");
-        Get.snackbar('Forgot password confirmation', 'Please check your email to reset your password.');
-        emailFieldController.clear();
+        if(forgotPasswordModel.message.contains('User does not exist')) {
+          Fluttertoast.showToast(msg: "User does not exist. Please check your email to reset your password.");
+        } else {
+          Get.offAll(() => SignInScreen());
+          emailFieldController.clear();
+          Get.snackbar('Forgot password confirmation',
+              'Please check your email to reset your password.');
+        }
       } else {
         log('Forgot Password False False');
         Fluttertoast.showToast(msg: "Something went wrong!");

@@ -56,9 +56,9 @@ class SignInScreenController extends GetxController {
           log('customer side');
           Get.snackbar(signInModel.message, '');
 
-          String dob = signInModel.customer.dateOfBirth;
-          String finalDob = dob.substring(0, dob.length - 9);
-          log("finalDob : $finalDob");
+          // String dob = signInModel.customer.dateOfBirth;
+          // String finalDob = dob.substring(0, dob.length - 9);
+          // log("finalDob : $finalDob");
 
           sharedPreferenceData.setUserLoginDetailsInPrefs(
             apiToken: signInModel.data.apiToken,
@@ -67,7 +67,7 @@ class SignInScreenController extends GetxController {
             userName: signInModel.data.userName,
             email: signInModel.data.email,
             phoneNo: signInModel.data.phoneNumber,
-            dob: finalDob,
+            dob: signInModel.customer.dateOfBirth,
             roleName: signInModel.role[0],
             gender: signInModel.customer.gender,
             businessName: "",

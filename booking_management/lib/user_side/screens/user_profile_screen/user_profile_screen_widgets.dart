@@ -53,12 +53,16 @@ class ProfileDetailsModule extends StatelessWidget {
       context: context,
       initialDate: dateTime,
       firstDate: DateTime(1950),
-      lastDate: DateTime(2022),
+      lastDate: DateTime(2025),
     );
     if (d != null) {
+      screenController.isLoading(true);
+      screenController.selectedDate = d;
+      screenController.isLoading(false);
+
       //setState(() {
-      screenController.selectedDate.value = DateFormat.yMd("en_US").format(d);
-      log(screenController.selectedDate.value);
+      // screenController.selectedDate = DateFormat.yMd("en_US").format(d);
+      // log(screenController.selectedDate.value);
       //});
     }
   }
@@ -381,54 +385,55 @@ class ProfileDetailsModule extends StatelessWidget {
         ),
         Expanded(
             flex: 4,
-            child: Obx(()=>
-                Container(
-                  height: 45,
-                  margin: const EdgeInsets.only(left: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.colorLightGrey.withOpacity(0.2),
-                        blurRadius: 10,
-                        spreadRadius: 5,
-                        blurStyle: BlurStyle.outer,
+            child: Container(
+              height: 45,
+              margin: const EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                          "${screenController.selectedDate.day}-${screenController.selectedDate.month}-${screenController.selectedDate.year}",
+                          // textAlign: TextAlign.center,
+                          maxLines: 1,
+                          style: const TextStyle(color: Colors.black)
                       ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                            screenController.selectedDate.value,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.black)
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.calendar_today_outlined, color: Colors.black, size: 20,),
-                          tooltip: 'DOB',
-                          onPressed: () {
-                            var dateFormat = DateFormat('yyyy-MM-dd');
-                            String selectedDate = screenController.selectedDate.value;
-
-                            String year = selectedDate.substring(0, selectedDate.length - 6);
-                            String month = selectedDate.substring(5, selectedDate.length - 3);
-                            String day = selectedDate.substring(8);
-
-                            DateTime dateTime = dateFormat.parse("$year-$month-$day 00:00:00.000000");
-                            log("dateTime : $dateTime");
-                            log("Date Format : ${DateTime.now()}");
-                            _selectDate(context, dateTime);
-                            // SelectDateModule();
-                          },
-                        ),
-                      ],
                     ),
-                  ),
+                    IconButton(
+                      icon: const Icon(Icons.calendar_today_outlined, color: Colors.black, size: 20,),
+                      tooltip: 'DOB',
+                      onPressed: () {
+                        // var dateFormat = DateFormat('yyyy-MM-dd');
+                        DateTime selectedDate = screenController.selectedDate;
+
+                        // String year = selectedDate.substring(0, selectedDate.length - 6);
+                        // String month = selectedDate.substring(5, selectedDate.length - 3);
+                        // String day = selectedDate.substring(8);
+
+                        // DateTime dateTime = dateFormat.parse("$year-$month-${day}T00:00:00.000000");
+                        // log("dateTime : $dateTime");
+                        // log("Date Format : ${DateTime.now()}");
+                        _selectDate(context, selectedDate);
+                        // SelectDateModule();
+                      },
+                    ),
+                  ],
                 ),
-            )
+              ),
+            ),
         )
       ],
     );

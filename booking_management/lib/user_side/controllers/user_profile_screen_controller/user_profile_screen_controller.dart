@@ -16,7 +16,8 @@ class UserProfileScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
-  RxString selectedDate = UserDetails.dob.obs;
+  // RxString selectedDate = UserDetails.dob.obs;
+  DateTime selectedDate = DateTime.now();
   RxString gender = 'Male'.obs;
 
   ApiHeader apiHeader = ApiHeader();
@@ -48,7 +49,7 @@ class UserProfileScreenController extends GetxController{
 
       request.fields['Id'] = UserDetails.tableWiseId.toString();
       request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
-      request.fields['DateOfBirth'] = selectedDate.value;
+      request.fields['DateOfBirth'] = selectedDate.toString();
       request.fields['Gender'] = gender.value;
       request.fields['ModifiedBy'] = UserDetails.uniqueId;
 
@@ -104,20 +105,21 @@ class UserProfileScreenController extends GetxController{
         emailTextFieldController.text = userProfileDetailsModel.data.email;
         mobileTextFieldController.text = userProfileDetailsModel.data.phoneNo;
         gender.value = userProfileDetailsModel.data.gender;
+        selectedDate = userProfileDetailsModel.data.dateOfBirth;
 
-        if(userProfileDetailsModel.data.dateOfBirth.length > 10) {
-          String dob = userProfileDetailsModel.data.dateOfBirth;
-          String finalDob = dob.substring(0, dob.length - 9);
-          selectedDate.value = finalDob;
-        } else {
-          selectedDate.value = userProfileDetailsModel.data.dateOfBirth;
-        }
+        // if(userProfileDetailsModel.data.dateOfBirth.length > 10) {
+        //   String dob = userProfileDetailsModel.data.dateOfBirth;
+        //   String finalDob = dob.substring(0, dob.length - 9);
+        //   selectedDate.value = finalDob;
+        // } else {
+        //   selectedDate.value = userProfileDetailsModel.data.dateOfBirth;
+        // }
       } else {
         log('Get All User Details Else Else');
       }
 
     } catch(e) {
-      log('Get All User Details False False: $e');
+      log('Get All User Details Error ::: $e');
     } finally {
       isLoading(false);
     }

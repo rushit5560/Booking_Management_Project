@@ -1,0 +1,4 @@
+class PaymentKeys {
+  static const String publishKey = "pk_test_51KsPtDSCojWRLHKCYkrHuie4X8Vq9gzECQePDUCm18hwp5BSYqph58DORL7Yfq1t5FxRWoYjkRu4IFCgKHcIvmYz009cYzJubh";
+  static const String secretKey = "sk_test_51KsPtDSCojWRLHKCggF2ThTmXJhUScnfFaimPxeibSsajv2eTdclko0KHanZByxTxxS2xOYQXVe2s5yIgDIeQFGn00hMZewcYo";
+}

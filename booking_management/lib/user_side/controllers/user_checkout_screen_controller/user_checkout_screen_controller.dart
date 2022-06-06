@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_header.dart';
@@ -20,6 +22,9 @@ class UserCheckoutScreenController extends GetxController{
   bool isPriceDisplay = false;
 
   ApiHeader apiHeader = ApiHeader();
+
+  /// For Stripe
+  Map<String, dynamic>? paymentIntentData;
 
   /// Summary
   String vendorName = "";
@@ -44,6 +49,7 @@ class UserCheckoutScreenController extends GetxController{
 
 
 
+  /// Checkout
   getCheckoutFunction() async {
     isLoading(true);
     String url = ApiUrl.customerCheckoutApi + "?id=$bookingId&UserId=${UserDetails.uniqueId}";
@@ -168,6 +174,91 @@ class UserCheckoutScreenController extends GetxController{
     }
   }
 
+  /// For Stripe
+  Future<void> makePayment() async {
+    try {
+      paymentIntentData = await createPaymentIntent(bookingPrice, "USD");
+
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+            paymentIntentClientSecret: paymentIntentData!['client_secret'],
+            applePay: true,
+            googlePay: true,
+            style: ThemeMode.dark,
+            merchantCountryCode: 'US',
+            merchantDisplayName: 'SetDayTime'
+          )
+      );
+
+      await displayPaymentSheet();
+
+    } catch(e) {
+      log("Make Payment Error ::: $e");
+    }
+  }
+
+  createPaymentIntent(double amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        "amount" : calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card'
+      };
+
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        body: body,
+          headers: {
+            'Authorization': 'Bearer ${PaymentKeys.secretKey}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+      );
+      
+      return jsonDecode(response.body.toString());
+
+    } catch(e) {
+      log("Create Payment Intent ::: $e");
+    }
+  }
+
+  calculateAmount(double amount) {
+    double price = amount * 100;
+    return price.toString();
+  }
+
+  displayPaymentSheet() async {
+    try {
+      Stripe.instance.presentPaymentSheet(
+        parameters: PresentPaymentSheetParameters(
+            clientSecret: paymentIntentData!['client_secret'],
+          confirmPayment: true,
+        )
+      );
+
+      isLoading(true);
+      paymentIntentData = null;
+      isLoading(false);
+
+      Get.snackbar(
+        "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+      );
+
+      /// API Calling
+      await checkOutSubmitFunction();
+
+
+    } on StripeException catch(e) {
+      log("StripeException Error ::: $e");
+      Get.snackbar(
+          "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
+      );
+    } catch(e) {
+      log("Display Payment Sheet Error ::: $e");
+      Get.snackbar(
+          "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
+      );
+    }
+  }
 
 
 

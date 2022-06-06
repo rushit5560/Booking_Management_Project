@@ -7,8 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 
+import 'common_modules/constants/payment_keys.dart';
 import 'common_modules/constants/user_details.dart';
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -31,6 +33,8 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  Stripe.publishableKey = PaymentKeys.publishKey;
 
   /// For Background
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

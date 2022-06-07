@@ -179,12 +179,14 @@ class UserCheckoutScreenController extends GetxController{
     try {
       paymentIntentData = await createPaymentIntent(bookingPrice, "USD");
 
+      log('paymentIntentData: $paymentIntentData');
+
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: paymentIntentData!['client_secret'],
             applePay: true,
             googlePay: true,
-            style: ThemeMode.dark,
+            // style: ThemeMode.dark,
             merchantCountryCode: 'US',
             merchantDisplayName: 'SetDayTime'
           )
@@ -204,6 +206,7 @@ class UserCheckoutScreenController extends GetxController{
         'currency': currency,
         'payment_method_types[]': 'card'
       };
+      log('body: $body');
 
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
@@ -213,8 +216,10 @@ class UserCheckoutScreenController extends GetxController{
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       );
-      
+      log("response.body: ${response.body}");
+      log("response.statusCode: ${response.statusCode}");
       return jsonDecode(response.body.toString());
+
 
     } catch(e) {
       log("Create Payment Intent ::: $e");
@@ -238,6 +243,7 @@ class UserCheckoutScreenController extends GetxController{
       isLoading(true);
       paymentIntentData = null;
       isLoading(false);
+
 
       Get.snackbar(
         "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM

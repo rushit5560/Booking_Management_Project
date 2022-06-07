@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
+import '../../../vendor_side/screens/appointment_report_screen/appointment_report_screen.dart';
 import '../../../vendor_side/screens/my_customer_screen/my_customer_screen.dart';
 import '../../../vendor_side/screens/review_screen/review_screen.dart';
 import '../../../vendor_side/screens/vendor_additional_slot_screen/vendor_additional_slot_screen.dart';
@@ -83,9 +84,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({
-    required VendorDrawerOption vendorSettingScreenOption,
-  }) {
+  singleItemOnTap({required VendorDrawerOption vendorSettingScreenOption}) {
     if (vendorSettingScreenOption == VendorDrawerOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
@@ -141,6 +140,15 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);
       Get.snackbar('You Have Successfully Logout', '');
+    } else if(vendorSettingScreenOption == VendorDrawerOption.appointmentReport) {
+      Get.to(() => AppointmentReportScreen(),
+          transition: Transition.rightToLeft);
+    }  else if(vendorSettingScreenOption == VendorDrawerOption.invoiceReport) {
+      // Get.to(() => UserChangePasswordScreen(),
+      //     transition: Transition.rightToLeft);
+    } else if(vendorSettingScreenOption == VendorDrawerOption.customerReport) {
+      // Get.to(() => UserChangePasswordScreen(),
+      //     transition: Transition.rightToLeft);
     }
   }
 }

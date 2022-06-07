@@ -124,4 +124,6 @@ class ApiUrl {
   static const vendorAddAndUpdateResourcesApi = apiMainPath + "API/ResourceUpsert"; // Add & Update
   static const vendorDeleteResourcesApi = apiMainPath + "API/ResourceDelete"; //delete
   static const vendorGetResourceDetailsApi = apiMainPath + "API/ResourceGetById"; // Get By Id
+
+  static const appointmentReportApi = apiMainPath + "API/AppointmentReport";
 }

@@ -126,4 +126,5 @@ class ApiUrl {
   static const vendorGetResourceDetailsApi = apiMainPath + "API/ResourceGetById"; // Get By Id
 
   static const appointmentReportApi = apiMainPath + "API/AppointmentReport";
+  static const customerReportApi = apiMainPath + "API/CustomerReport";
 }

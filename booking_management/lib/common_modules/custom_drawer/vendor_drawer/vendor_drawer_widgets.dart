@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../vendor_side/screens/appointment_report_screen/appointment_report_screen.dart';
+import '../../../vendor_side/screens/customer_report_screen/customer_report_screen.dart';
 import '../../../vendor_side/screens/my_customer_screen/my_customer_screen.dart';
 import '../../../vendor_side/screens/review_screen/review_screen.dart';
 import '../../../vendor_side/screens/vendor_additional_slot_screen/vendor_additional_slot_screen.dart';
@@ -147,8 +148,8 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       // Get.to(() => UserChangePasswordScreen(),
       //     transition: Transition.rightToLeft);
     } else if(vendorSettingScreenOption == VendorDrawerOption.customerReport) {
-      // Get.to(() => UserChangePasswordScreen(),
-      //     transition: Transition.rightToLeft);
+      Get.to(() => CustomerReportScreen(),
+          transition: Transition.rightToLeft);
     }
   }
 }

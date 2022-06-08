@@ -117,19 +117,19 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              /// Invoice report
-              VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Invoice Report',
-                vendorDrawerOption: VendorDrawerOption.invoiceReport,
-              ),
-              const SizedBox(height: 20),
-
               /// Customer report
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Customer Report',
                 vendorDrawerOption: VendorDrawerOption.customerReport,
+              ),
+              const SizedBox(height: 20),
+
+              /// Invoice report
+              VendorDrawerSingleItemModule(
+                img: AppImages.resourcesImg,
+                name: 'Invoice Report',
+                vendorDrawerOption: VendorDrawerOption.invoiceReport,
               ),
               const SizedBox(height: 20),
 

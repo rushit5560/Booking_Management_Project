@@ -1,3 +1,4 @@
+import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:flutter/material.dart';
@@ -145,8 +146,8 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => AppointmentReportScreen(),
           transition: Transition.rightToLeft);
     }  else if(vendorSettingScreenOption == VendorDrawerOption.invoiceReport) {
-      // Get.to(() => UserChangePasswordScreen(),
-      //     transition: Transition.rightToLeft);
+      Get.to(() => InvoiceReportScreen(),
+          transition: Transition.rightToLeft);
     } else if(vendorSettingScreenOption == VendorDrawerOption.customerReport) {
       Get.to(() => CustomerReportScreen(),
           transition: Transition.rightToLeft);

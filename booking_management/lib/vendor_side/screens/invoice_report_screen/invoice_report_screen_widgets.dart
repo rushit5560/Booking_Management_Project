@@ -1,89 +1,21 @@
 import 'dart:developer';
+
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 import '../../../common_modules/constants/app_colors.dart';
-import '../../../common_modules/constants/app_images.dart';
-import '../../controllers/appointment_report_screen_controller/appointment_report_screen_controller.dart';
-import '../../model/appointment_report_screen_model/appointment_report_model.dart';
+import '../../controllers/invoice_report_screen_controller/invoice_report_screen_controller.dart';
+import '../../model/invoice_report_screen_model/invoice_report_model.dart';
 
 
-
-/// Status DD Module
-class StatusDropDownModule extends StatelessWidget {
-  StatusDropDownModule({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(right: 3),
-      height: 45,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.colorLightGrey.withOpacity(0.5),
-            blurRadius: 5,
-            //spreadRadius: 5,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: Theme(
-        data: Theme.of(context).copyWith(
-            canvasColor: Colors.grey.shade100,
-            // background color for the dropdown items
-            buttonTheme: ButtonTheme.of(context).copyWith(
-              alignedDropdown:
-              true, //If false (the default), then the dropdown's menu will be wider than its button.
-            )),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
-            isExpanded: true,
-            focusColor: Colors.white,
-            value: screenController.selectedStatusValue.value,
-            //elevation: 5,
-            // style: TextStyle(color: AppColors.colorLightGrey),
-            iconEnabledColor: Colors.black,
-            items: screenController.statusList
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  // style: TextStyle(color: AppColors.colorLightGrey),
-                ),
-              );
-            }).toList(),
-            // hint: const Text(
-            //   "Ratting",
-            //   style: TextStyle(color: Colors.black, fontSize: 11),
-            // ),
-            onChanged: (newValue) {
-              screenController.isLoading(true);
-              screenController.selectedStatusValue.value = newValue!;
-              screenController.isLoading(false);
-              // if (screenController.searchType == SearchType.categoryWise) {
-              //   await screenController.getSearchCategoryWithRatingWiseFunction();
-              // } else if (screenController.searchType == SearchType.none) {
-              //   await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
-              // }
-            },
-          ),
-        ),
-      ),
-    ).commonAllSidePadding(10);
-  }
-}
 
 /// Start Date Select Module
 class StartDateSelectModule extends StatelessWidget {
   StartDateSelectModule({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
+  final screenController = Get.find<InvoiceReportScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +64,7 @@ class StartDateSelectModule extends StatelessWidget {
 
 class SelectStartDateCalender extends StatelessWidget {
   SelectStartDateCalender({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
+  final screenController = Get.find<InvoiceReportScreenController>();
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -142,10 +74,6 @@ class SelectStartDateCalender extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // const Text(
-        //   "Select Date",
-        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        // ),
         const SizedBox(height: 10),
         Material(
           elevation: 2,
@@ -249,10 +177,11 @@ class SelectStartDateCalender extends StatelessWidget {
   }
 }
 
+
 /// End Date Select Module
 class EndDateSelectModule extends StatelessWidget {
   EndDateSelectModule({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
+  final screenController = Get.find<InvoiceReportScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +230,7 @@ class EndDateSelectModule extends StatelessWidget {
 
 class SelectEndDateCalender extends StatelessWidget {
   SelectEndDateCalender({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
+  final screenController = Get.find<InvoiceReportScreenController>();
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -422,7 +351,7 @@ class SelectEndDateCalender extends StatelessWidget {
 /// Submit Button
 class SubmitButton extends StatelessWidget {
   SubmitButton({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
+  final screenController = Get.find<InvoiceReportScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -433,7 +362,7 @@ class SubmitButton extends StatelessWidget {
         } else if(screenController.endDate.value == "Select End Date") {
           Fluttertoast.showToast(msg: "Please select end date");
         } else {
-          await screenController.getFilterAppointmentReportFunction();
+          await screenController.getFilterInvoiceReportFunction();
         }
       },
       child: Container(
@@ -465,27 +394,27 @@ class SubmitButton extends StatelessWidget {
   }
 }
 
-/// Appointment Report List
+/// Invoice Report List
 class AppointmentReportListModule extends StatelessWidget {
   AppointmentReportListModule({Key? key}) : super(key: key);
-  final screenController = Get.find<AppointmentReportScreenController>();
+  final screenController = Get.find<InvoiceReportScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return screenController.appointmentReportList.isEmpty
-    ? const Center(child: Text("No data available!"))
-    : ListView.builder(
-      itemCount: screenController.appointmentReportList.length,
+    return screenController.invoiceReportList.isEmpty
+        ? const Center(child: Text("No data available!"))
+        : ListView.builder(
+      itemCount: screenController.invoiceReportList.length,
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, i) {
-        AppointmentItem singleItem = screenController.appointmentReportList[i];
+        InvoiceReportData singleItem = screenController.invoiceReportList[i];
         return _appointmentListTile(singleItem);
       },
     ).commonAllSidePadding(10);
   }
 
-  Widget _appointmentListTile(AppointmentItem singleItem) {
+  Widget _appointmentListTile(InvoiceReportData singleItem) {
     return Container(
       margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
       decoration: BoxDecoration(
@@ -502,6 +431,7 @@ class AppointmentReportListModule extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          /// Booking id
           Row(
             children: [
               const Text(
@@ -519,127 +449,128 @@ class AppointmentReportListModule extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
+
+          /// Transaction Code
           Row(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                            "Vendor :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            singleItem.vendor.businessName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          "Customer :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            singleItem.customer.userName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          "Start Time :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            singleItem.startDateTime,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          "End Time :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            singleItem.endDateTime,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                  ],
-                ),
+              const Text(
+                "Transaction Code :",
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "\$${singleItem.bookingItems.price}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "${singleItem.bookingItems.quantity}",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    singleItem.status,
-                    style: const TextStyle(
-                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  singleItem.transactionCode,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),
-          // const SizedBox(width: 5),
-          // _viewButton(),
+          const SizedBox(height: 5),
+
+          /// Payment Intent Id
+          Row(
+            children: [
+              const Text(
+                "Payment Intent Id :",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  singleItem.paymentIntentId,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+
+          /// Transaction For
+          Row(
+            children: [
+              const Text(
+                "Start Time :",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  singleItem.transactionFor,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+
+          /// Transaction By
+          Row(
+            children: [
+              const Text(
+                "End Time :",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  singleItem.transactionBy,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+
+          /// Transaction Date
+          Row(
+            children: [
+              const Text(
+                "End Time :",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  singleItem.transactionDate,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+
+          /// Price
+          Row(
+            children: [
+              const Text(
+                "Price :",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  singleItem.order.price.toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
         ],
       ).commonAllSidePadding(10),
     );
   }
 
 }
-
-

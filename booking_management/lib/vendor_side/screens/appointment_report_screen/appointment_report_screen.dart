@@ -26,7 +26,22 @@ class AppointmentReportScreen extends StatelessWidget {
                       appBarOption: AppBarOption.singleBackButtonOption,
                     ),
                     StatusDropDownModule(),
+
+                    /// Select Start Date Module
                     StartDateSelectModule(),
+                    appointmentReportScreenController.isStartDateCalenderShow.value
+                        ? SelectStartDateCalender()
+                        : Container(),
+
+                    const SizedBox(height: 10),
+
+                    /// Select End Date Module
+                    EndDateSelectModule(),
+                    appointmentReportScreenController.isEndDateCalenderShow.value
+                        ? SelectEndDateCalender()
+                        : Container(),
+
+                    const SizedBox(height: 15),
                     SubmitButton(),
                     Expanded(child: AppointmentReportListModule()),
                   ],

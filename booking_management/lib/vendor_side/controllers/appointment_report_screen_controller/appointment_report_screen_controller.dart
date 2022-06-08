@@ -23,10 +23,11 @@ class AppointmentReportScreenController extends GetxController {
   RxBool isEndDateCalenderShow = false.obs;
   /// DD List
   List<String> statusList = ["Select Status", "Confirm", "Done", "Pending", "Cancel"];
-  RxString selectedDDValue = "Select Status".obs;
+  RxString selectedStatusValue = "Select Status".obs;
 
 
-  
+
+  /// Appointment Report All List
   getAppointmentReportFunction() async {
     isLoading(true);
     String url = ApiUrl.appointmentReportApi + "?vendorId=${UserDetails.uniqueId}";
@@ -49,6 +50,39 @@ class AppointmentReportScreenController extends GetxController {
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
 
+    } catch(e) {
+      log("getAppointmentReportFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
+  }
+
+  /// Filter Appointment Report List
+  getFilterAppointmentReportFunction() async {
+    isLoading(true);
+    String url = selectedStatusValue.value == "Select Status"
+    ? ApiUrl.appointmentReportApi + "?fromDate=$startDate" + "&toDate=$endDate" + "&option" + "&vendorId=${UserDetails.uniqueId}"
+    : ApiUrl.appointmentReportApi + "?fromDate=$startDate" + "&toDate=$endDate" + "&option=$selectedStatusValue" + "&vendorId=${UserDetails.uniqueId}";
+
+    log("Appointment Report Api Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      log("Appointment Report Response : ${response.body}");
+
+      AppointmentReportModel appointmentReportModel = AppointmentReportModel.fromJson(json.decode(response.body));
+      isSuccessStatus = appointmentReportModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        appointmentReportList.clear();
+
+        appointmentReportList = appointmentReportModel.workerList;
+        log("appointmentReportList : ${appointmentReportList.length}");
+      } else {
+        log("getAppointmentReportFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
 
     } catch(e) {
       log("getAppointmentReportFunction Error ::: $e");
@@ -62,6 +96,11 @@ class AppointmentReportScreenController extends GetxController {
   void onInit() {
     getAppointmentReportFunction();
     super.onInit();
+  }
+
+  loadUI() {
+    isLoading(true);
+    isLoading(false);
   }
 
 }

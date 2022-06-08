@@ -1,9 +1,9 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
+import 'package:table_calendar/table_calendar.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/appointment_report_screen_controller/appointment_report_screen_controller.dart';
@@ -11,8 +11,7 @@ import '../../model/appointment_report_screen_model/appointment_report_model.dar
 
 
 
-// final screenController = Get.find<AppointmentReportScreenController>();
-
+/// Status DD Module
 class StatusDropDownModule extends StatelessWidget {
   StatusDropDownModule({Key? key}) : super(key: key);
   final screenController = Get.find<AppointmentReportScreenController>();
@@ -46,7 +45,7 @@ class StatusDropDownModule extends StatelessWidget {
             icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
             isExpanded: true,
             focusColor: Colors.white,
-            value: screenController.selectedDDValue.value,
+            value: screenController.selectedStatusValue.value,
             //elevation: 5,
             // style: TextStyle(color: AppColors.colorLightGrey),
             iconEnabledColor: Colors.black,
@@ -66,7 +65,7 @@ class StatusDropDownModule extends StatelessWidget {
             // ),
             onChanged: (newValue) {
               screenController.isLoading(true);
-              screenController.selectedDDValue.value = newValue!;
+              screenController.selectedStatusValue.value = newValue!;
               screenController.isLoading(false);
               // if (screenController.searchType == SearchType.categoryWise) {
               //   await screenController.getSearchCategoryWithRatingWiseFunction();
@@ -81,6 +80,7 @@ class StatusDropDownModule extends StatelessWidget {
   }
 }
 
+/// Start Date Select Module
 class StartDateSelectModule extends StatelessWidget {
   StartDateSelectModule({Key? key}) : super(key: key);
   final screenController = Get.find<AppointmentReportScreenController>();
@@ -118,7 +118,9 @@ class StartDateSelectModule extends StatelessWidget {
               screenController.isStartDateCalenderShow.value =
               !screenController.isStartDateCalenderShow.value;
 
-              log("screenController.isCalenderShow.value : ${screenController.isStartDateCalenderShow.value}");
+              screenController.isEndDateCalenderShow.value = false;
+
+              log("screenController.isStartDateCalenderShow.value : ${screenController.isStartDateCalenderShow.value}");
             },
             child: const Icon(Icons.calendar_month),
           ),
@@ -128,8 +130,296 @@ class StartDateSelectModule extends StatelessWidget {
   }
 }
 
+class SelectStartDateCalender extends StatelessWidget {
+  SelectStartDateCalender({Key? key}) : super(key: key);
+  final screenController = Get.find<AppointmentReportScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // const Text(
+        //   "Select Date",
+        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        // ),
+        const SizedBox(height: 10),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+
+                screenController.startDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.isStartDateCalenderShow.value = !screenController.isStartDateCalenderShow.value;
+
+                screenController.isEndDateCalenderShow.value = false;
+
+                screenController.loadUI();
+
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                    color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// End Date Select Module
+class EndDateSelectModule extends StatelessWidget {
+  EndDateSelectModule({Key? key}) : super(key: key);
+  final screenController = Get.find<AppointmentReportScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+
+          /// Show Date as Text
+          Text(
+            screenController.endDate.value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+
+          /// Calender Image Button
+          GestureDetector(
+            onTap: () {
+              screenController.isEndDateCalenderShow.value =
+              !screenController.isEndDateCalenderShow.value;
+
+              screenController.isStartDateCalenderShow.value = false;
+
+              log("screenController.isEndDateCalenderShow.value : ${screenController.isEndDateCalenderShow.value}");
+            },
+            child: const Icon(Icons.calendar_month),
+          ),
+        ],
+      ).commonSymmetricPadding(vertical: 12, horizontal: 10),
+    ).commonSymmetricPadding(horizontal: 10);
+  }
+}
+
+class SelectEndDateCalender extends StatelessWidget {
+  SelectEndDateCalender({Key? key}) : super(key: key);
+  final screenController = Get.find<AppointmentReportScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // const Text(
+        //   "Select Date",
+        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        // ),
+        const SizedBox(height: 10),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+
+                screenController.endDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.isEndDateCalenderShow.value = !screenController.isEndDateCalenderShow.value;
 
 
+                screenController.isStartDateCalenderShow.value = false;
+
+                screenController.loadUI();
+
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                    color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Submit Button
 class SubmitButton extends StatelessWidget {
   SubmitButton({Key? key}) : super(key: key);
   final screenController = Get.find<AppointmentReportScreenController>();
@@ -137,7 +427,15 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        if(screenController.startDate.value == "Select Start Date") {
+          Fluttertoast.showToast(msg: "Please select start date");
+        } else if(screenController.endDate.value == "Select End Date") {
+          Fluttertoast.showToast(msg: "Please select end date");
+        } else {
+          screenController.getFilterAppointmentReportFunction();
+        }
+      },
       child: Container(
         alignment: Alignment.centerRight,
         child: Container(
@@ -167,8 +465,6 @@ class SubmitButton extends StatelessWidget {
   }
 }
 
-
-
 /// Appointment Report List
 class AppointmentReportListModule extends StatelessWidget {
   AppointmentReportListModule({Key? key}) : super(key: key);
@@ -176,7 +472,9 @@ class AppointmentReportListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return screenController.appointmentReportList.isEmpty
+    ? const Center(child: Text("No data available!"))
+    : ListView.builder(
       itemCount: screenController.appointmentReportList.length,
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,

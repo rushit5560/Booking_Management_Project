@@ -465,6 +465,46 @@ class SubmitButton extends StatelessWidget {
   }
 }
 
+/// Export Button
+// class ExcelButton extends StatelessWidget {
+//   ExcelButton({Key? key}) : super(key: key);
+//   final screenController = Get.find<AppointmentReportScreenController>();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () async {
+//         await screenController.createExcel();
+//       },
+//       child: Container(
+//         alignment: Alignment.centerLeft,
+//         child: Container(
+//           decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(10),
+//               boxShadow: [
+//                 BoxShadow(
+//                   // spreadRadius: 3,
+//                   blurRadius: 5,
+//                   color: Colors.grey.shade300,
+//                   blurStyle: BlurStyle.outer,
+//                 ),
+//               ]),
+//           child: const Padding(
+//             padding: EdgeInsets.all(12),
+//             child: Text(
+//               'Export',
+//               style: TextStyle(
+//                 fontWeight: FontWeight.bold,
+//                 fontSize: 16,
+//               ),
+//             ),
+//           ),
+//         ),
+//       ).commonSymmetricPadding(horizontal: 15),
+//     );
+//   }
+// }
+
 /// Appointment Report List
 class AppointmentReportListModule extends StatelessWidget {
   AppointmentReportListModule({Key? key}) : super(key: key);

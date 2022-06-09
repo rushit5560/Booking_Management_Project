@@ -43,7 +43,16 @@ class AppointmentReportScreen extends StatelessWidget {
                         : Container(),
 
                     const SizedBox(height: 15),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   mainAxisSize: MainAxisSize.max,
+                    //   children: [
+                    //     // ExcelButton(),
+                    //     SubmitButton(),
+                    //   ],
+                    // ),
                     SubmitButton(),
+
                     Expanded(child: AppointmentReportListModule()),
                   ],
                 ),

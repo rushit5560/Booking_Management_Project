@@ -39,6 +39,7 @@ class BookingSummaryModule extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(width: 10),
               Expanded(
                 flex: 65,
                 child: Column(

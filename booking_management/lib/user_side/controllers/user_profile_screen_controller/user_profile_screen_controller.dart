@@ -49,7 +49,7 @@ class UserProfileScreenController extends GetxController{
 
       request.fields['Id'] = UserDetails.tableWiseId.toString();
       request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
-      request.fields['DateOfBirth'] = selectedDate.toString();
+      request.fields['DateOfBirth'] = "$selectedDate";
       request.fields['Gender'] = gender.value;
       request.fields['ModifiedBy'] = UserDetails.uniqueId;
 

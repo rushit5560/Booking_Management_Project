@@ -337,7 +337,7 @@ class BookAppointmentScreenController extends GetxController {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time=$selectedTimeValue";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.id}&Time=$selectedTimeValue";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -439,7 +439,7 @@ class BookAppointmentScreenController extends GetxController {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.timeDuration}&Time";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.id}&Time";
     log("Get Resources Additional Time API URL : $url");
 
     try {
@@ -555,45 +555,49 @@ class BookAppointmentScreenController extends GetxController {
       log("bookSelectedSlotFunction Error ::: $e");
     } finally {
       isLoading(false);
-      // payment key api call - todo
     }
   }
 
   /// 6) Book Available Time Slot
   bookAvailableTimeSlotFunction() async {
     isLoading(true);
-    String url = additionalSlotWorkerList.name == "Select Additional Slot"
-    ? ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&Duration"
-    : ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&Duration=${additionalSlotWorkerList.timeDuration}";
+    String url = ApiUrl.bookSelectedAvailableTimeSlotApi;
+    // String url = additionalSlotWorkerList.name == "Select Additional Slot"
+    // ? ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=$vendorId&Duration"
+    // : ApiUrl.bookSelectedAvailableTimeSlotApi + "?ResourceId=$selectedResourceTimeSlotId&VendorId=$vendorId&Duration=${additionalSlotWorkerList.id}";
     log("Book Available Time Slot API URL : $url");
 
     try {
-      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers);
-      log("Book Available Time Slot Response : ${response.body}");
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
 
-      BookAppointmentModel bookAppointmentModel = BookAppointmentModel.fromJson(json.decode(response.body));
-      isSuccessStatus = bookAppointmentModel.success.obs;
+      request.fields['ResourceId'] = selectedResourceTimeSlotId.toString();
+      request.fields['VendorId'] = vendorId.toString();
+      request.fields['Duration'] = "${additionalSlotWorkerList.id}";
 
-      if(isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: bookAppointmentModel.message);
-        String bookingId = bookAppointmentModel.id;
-        log("bookingId : $bookingId");
-        Get.to(() => UserCheckoutScreen(), arguments: bookingId);
-      } else {
-        log("bookAvailableTimeSlotFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
-      }
+      var response = await request.send();
 
+      response.stream.transform(utf8.decoder).listen((value) async {
+        BookAppointmentModel bookAppointmentModel =
+            BookAppointmentModel.fromJson(json.decode(value));
+        isSuccessStatus = bookAppointmentModel.success.obs;
 
-    } catch(e) {
+        if (isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: bookAppointmentModel.message);
+          String bookingId = bookAppointmentModel.id;
+          log("bookingId : $bookingId");
+          Get.to(() => UserCheckoutScreen(), arguments: bookingId);
+        } else {
+          log("bookAvailableTimeSlotFunction Else Else");
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+      });
+    } catch (e) {
       log("bookAvailableTimeSlotFunction Error ::: $e");
     } finally {
       isLoading(false);
-      //todo
     }
   }
-
-
 
   @override
   void onInit() {

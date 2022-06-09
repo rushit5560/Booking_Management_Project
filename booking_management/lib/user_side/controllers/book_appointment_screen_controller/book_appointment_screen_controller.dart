@@ -555,6 +555,7 @@ class BookAppointmentScreenController extends GetxController {
       log("bookSelectedSlotFunction Error ::: $e");
     } finally {
       isLoading(false);
+      // payment key api call - todo
     }
   }
 
@@ -588,6 +589,7 @@ class BookAppointmentScreenController extends GetxController {
       log("bookAvailableTimeSlotFunction Error ::: $e");
     } finally {
       isLoading(false);
+      //todo
     }
   }
 

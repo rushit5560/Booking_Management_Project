@@ -29,6 +29,15 @@ class HomeScreenController extends GetxController {
 
   AppointDetailsData? appointDetailsData;
 
+  RxBool isServiceCalenderShow = false.obs;
+  RxString selectedDate = "".obs;
+  RxString selectedTime = "".obs;
+
+
+  loadUI() {
+    isLoading(true);
+    isLoading(false);
+  }
 
   /// Get All Category
   getAllCategoriesFunction() async {
@@ -79,6 +88,38 @@ class HomeScreenController extends GetxController {
 
         allUpcomingAppointmentList = getAllAppointmentListModel.data;
         log("allUpcomingAppointmentList : $allUpcomingAppointmentList");
+      } else {
+        log("getAllUpcomingAppointment Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+    } catch(e) {
+      log("getAllUpcomingAppointment Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
+  }
+
+
+  ///getUpcomingAppointDateWise
+  getAllUpcomingAppointmentDateWiseFunction() async {
+    isLoading(true);
+    String url = ApiUrl.getAllUpcomingAppointment + "?cutomerid=${UserDetails.uniqueId}" + "&dDate=${selectedDate.value}";
+    log("Upcoming Appointment API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+
+      GetAllAppointmentListModel getAllAppointmentListModel = GetAllAppointmentListModel.fromJson(json.decode(response.body));
+
+      isSuccessStatus = getAllAppointmentListModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        allUpcomingAppointmentList.clear();
+
+        allUpcomingAppointmentList = getAllAppointmentListModel.data;
+        log("allUpcomingAppointmentList Date Wise : ${allUpcomingAppointmentList.length}");
       } else {
         log("getAllUpcomingAppointment Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");

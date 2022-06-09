@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
+import 'package:booking_management/user_side/model/get_payment_id_model/get_payment_id_model.dart';
+import 'package:booking_management/user_side/model/get_stripe_secret_key_model/get_stripe_secret_key_model.dart';
 import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -20,6 +22,8 @@ class UserCheckoutScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   bool isPriceDisplay = false;
+  String secretKey = "";
+  String publishableKey = "";
 
   ApiHeader apiHeader = ApiHeader();
 
@@ -33,9 +37,10 @@ class UserCheckoutScreenController extends GetxController{
   String vendorAddress = "";
   String bookingDate = "";
   String bookingTime = "";
-  double bookingPrice = 0.0;
+  int bookingPrice = 0;
   int bookingQty = 0;
-  double bookingTotalAmount = 0.0;
+  int bookingTotalAmount = 0;
+  int transactionId= 0;
 
   GlobalKey<FormState> checkOutFormKey = GlobalKey();
   TextEditingController fNameFieldController = TextEditingController();
@@ -52,6 +57,7 @@ class UserCheckoutScreenController extends GetxController{
   /// Checkout
   getCheckoutFunction() async {
     isLoading(true);
+    log('bookingId: $bookingId');
     String url = ApiUrl.customerCheckoutApi + "?id=$bookingId&UserId=${UserDetails.uniqueId}";
     log("Get Checkout API URL : $url");
 
@@ -102,7 +108,7 @@ class UserCheckoutScreenController extends GetxController{
         bookingDate = bDate1;
         String bTime1 = bookDate.substring(11, bookDate.length-3);
         bookingTime = bTime1;
-        bookingPrice = checkoutSummaryModel.workerList.price;
+        bookingPrice = checkoutSummaryModel.workerList.price.toInt();
         bookingQty = checkoutSummaryModel.workerList.quantity;
         bookingTotalAmount = bookingPrice * bookingQty;
 
@@ -124,8 +130,57 @@ class UserCheckoutScreenController extends GetxController{
       log("getCheckoutSummaryFunction Error ::: $e");
     } finally {
       isLoading(false);
+      // if(isPriceDisplay == true) {
+      //   //call api
+      //   await getPaymentIdFunction();
+      // } else {
+      //   isLoading(false);
+      // }
+      getStripeKeyFunction();
     }
 
+  }
+
+  /// get payment Id From payment
+  getPaymentIdFunction(String id, String secretKey) async {
+    isLoading(true);
+    String url = ApiUrl.getPaymentIdApi;
+    log("getPaymentId : $url");
+
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['BookingId'] = bookingId;
+      request.fields['sessionId'] = secretKey;
+      request.fields['paymentIntentld'] = id;
+
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
+
+      var response = await request.send();
+      log('getPaymentId response: ${response.statusCode}');
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        GetPaymentIdModel getPaymentIdModel = GetPaymentIdModel.fromJson(json.decode(value));
+        isSuccessStatus = getPaymentIdModel.success.obs;
+        log('isSuccessStatus: $isSuccessStatus');
+        if(isSuccessStatus.value) {
+          transactionId = getPaymentIdModel.workerList.id;
+          log("transactionId : $transactionId");
+        } else {
+          Fluttertoast.showToast(msg: "Something went wrong!");
+          log("getPaymentId Else Else");
+        }
+
+      });
+
+    } catch(e) {
+      log("getPaymentId Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
   }
 
   /// Submit Button
@@ -149,7 +204,7 @@ class UserCheckoutScreenController extends GetxController{
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('response: ${response.statusCode}');
+      log('response: ${response.request}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
         ConfirmCheckoutModel confirmCheckoutModel = ConfirmCheckoutModel.fromJson(json.decode(value));
@@ -199,7 +254,7 @@ class UserCheckoutScreenController extends GetxController{
     }
   }
 
-  createPaymentIntent(double amount, String currency) async {
+  createPaymentIntent(int amount, String currency) async {
     try {
       Map<String, dynamic> body = {
         "amount" : calculateAmount(amount),
@@ -216,8 +271,8 @@ class UserCheckoutScreenController extends GetxController{
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       );
-      log("response.body: ${response.body}");
-      log("response.statusCode: ${response.statusCode}");
+      //log("response.body: ${response.body}");
+      //log("response.statusCode: ${response.statusCode}");
       return jsonDecode(response.body.toString());
 
 
@@ -226,8 +281,8 @@ class UserCheckoutScreenController extends GetxController{
     }
   }
 
-  calculateAmount(double amount) {
-    double price = amount * 100;
+  calculateAmount(int amount) {
+    int price = amount * 100;
     return price.toString();
   }
 
@@ -239,15 +294,45 @@ class UserCheckoutScreenController extends GetxController{
           confirmPayment: true,
         )
       );
+      log('paymentIntentData id : ${paymentIntentData!['id']}');
+      log('Display paymentIntentData: $paymentIntentData');
+      if(paymentIntentData!['id'] == null)
+        {
+          log('Failed');
+          Get.snackbar(
+              "Failed", "Failed payment Id", snackPosition: SnackPosition.BOTTOM
+          );
+        } else{
+        log('Success');
+        Get.snackbar(
+            "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+        );
+        await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
+      }
+
 
       isLoading(true);
       paymentIntentData = null;
       isLoading(false);
 
 
+      /*if(paymentIntentData!['id'] == null){
+        Get.snackbar(
+            "Failed", "Failed", snackPosition: SnackPosition.BOTTOM
+        );
+      } else{
+        Get.snackbar(
+            "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+        );
+
+      }*/
       Get.snackbar(
-        "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+          "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
       );
+      //await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
+      // Get.snackbar(
+      //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+      // );
 
       /// API Calling
       await checkOutSubmitFunction();
@@ -266,6 +351,36 @@ class UserCheckoutScreenController extends GetxController{
     }
   }
 
+  getStripeKeyFunction() async{
+    isLoading(true);
+    String url = ApiUrl.getSecretKeyApi;
+    log("Get Stripe Secret Key API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Stripe Secret Key Response : ${response.body}");
+
+      GetStripeSecretKeyModel getStripeSecretKeyModel = GetStripeSecretKeyModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getStripeSecretKeyModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        secretKey = getStripeSecretKeyModel.workerList.secretKey;
+        publishableKey = getStripeSecretKeyModel.workerList.publishableKey;
+        log("secretKey : $secretKey");
+        log("publishableKey : $publishableKey");
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getStripeKeyFunction Else Else");
+      }
+
+    } catch(e) {
+      log("getStripeKeyFunction Error ::: $e");
+    } finally {
+       isLoading(false);
+
+    }
+  }
+
 
 
   @override
@@ -274,6 +389,7 @@ class UserCheckoutScreenController extends GetxController{
     emailFieldController.text = UserDetails.email.isEmpty ? "" : UserDetails.email;
     phoneFieldController.text = UserDetails.phoneNo.isEmpty ? "" : UserDetails.phoneNo;
     getCheckoutFunction();
+
     super.onInit();
   }
 

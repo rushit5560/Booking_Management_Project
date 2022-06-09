@@ -473,7 +473,13 @@ class UpcomingAppointmentModule extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-        const SizedBox(height: 15),
+        // const SizedBox(height: 15),
+
+        DatePickerModule(),
+
+        const SizedBox(height: 10),
+        screenController.isServiceCalenderShow.value
+            ? SelectDateModule() : Container(),
 
         ListView.builder(
           itemCount: screenController.allUpcomingAppointmentList.length,

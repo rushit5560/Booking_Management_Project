@@ -34,11 +34,11 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ).commonSymmetricPadding(horizontal: 15),
                       //const SizedBox(height: 10),
-                      DatePickerModule(),
-
-                      const SizedBox(height: 10),
-                      homeScreenController.isServiceCalenderShow.value
-                          ? SelectDateModule() : Container(),
+                      // DatePickerModule(),
+                      //
+                      // const SizedBox(height: 10),
+                      // homeScreenController.isServiceCalenderShow.value
+                      //     ? SelectDateModule() : Container(),
                       const SizedBox(height: 10),
                       UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20),
                       // const SizedBox(height: 30),

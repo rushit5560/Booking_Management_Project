@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import 'package:flutter/material.dart';
@@ -246,8 +248,8 @@ class CancelAppointmentButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await screenController.cancelAppointmentByIdFunction();
-        await vendorAppointmentListScreenController.getAppointmentListFunction();
+        await alertDialogBox(context);
+        log("true");
       },
       child: Container(
         decoration: shadowDecoration(),
@@ -265,6 +267,58 @@ class CancelAppointmentButtonModule extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  alertDialogBox(context){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: const Text('Do you want to cancel appointment?'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextFormField(
+              controller: screenController.reasonFieldController,
+                keyboardType: TextInputType.text,
+                //validator: (value) => FieldValidator().validateEmail(value!),
+                decoration: const InputDecoration(
+                    hintText: "Reason",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    errorBorder:
+                    UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder:
+                    UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+                ),
+              )
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Get.back();
+              },
+              textColor: Theme.of(context).primaryColor,
+              child: const Text('Cancel'),
+            ),
+            FlatButton(
+              onPressed: ()async {
+                await screenController.cancelAppointmentByIdFunction();
+                await vendorAppointmentListScreenController.getAppointmentListFunction();
+              },
+              textColor: Theme.of(context).primaryColor,
+              child: const Text('Submit'),
+            ),
+          ],
+        );
+      },
+
     );
   }
 }

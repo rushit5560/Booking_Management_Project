@@ -463,34 +463,36 @@ class UpcomingAppointmentModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Upcoming Appointment',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+    return Obx(()=>
+       Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Upcoming Appointment',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
-        ),
-        // const SizedBox(height: 15),
+          // const SizedBox(height: 15),
 
-        DatePickerModule(),
+          DatePickerModule(),
 
-        const SizedBox(height: 10),
-        screenController.isServiceCalenderShow.value
-            ? SelectDateModule() : Container(),
+          const SizedBox(height: 10),
+          screenController.isServiceCalenderShow.value
+              ? SelectDateModule() : Container(),
 
-        ListView.builder(
-          itemCount: screenController.allUpcomingAppointmentList.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, i) {
-            UpcomingAppointmentDatum singleItem = screenController.allUpcomingAppointmentList[i];
-            return _upcomingAppointmentListTile(singleItem);
-          },
-        ),
-      ],
+          ListView.builder(
+            itemCount: screenController.allUpcomingAppointmentList.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, i) {
+              UpcomingAppointmentDatum singleItem = screenController.allUpcomingAppointmentList[i];
+              return _upcomingAppointmentListTile(singleItem);
+            },
+          ),
+        ],
+      ),
     );
   }
 

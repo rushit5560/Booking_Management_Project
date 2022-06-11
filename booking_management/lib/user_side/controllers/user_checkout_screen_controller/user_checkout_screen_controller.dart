@@ -72,7 +72,7 @@ class UserCheckoutScreenController extends GetxController{
         isPriceDisplay = checkoutModel.workerList.isPriceDisplay;
         log("isPriceDisplay : $isPriceDisplay");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        //Fluttertoast.showToast(msg: "Something went wrong!");
         log("getCheckoutFunction Else Else");
       }
 
@@ -122,7 +122,7 @@ class UserCheckoutScreenController extends GetxController{
         log("bookingQty : $bookingQty");
         log("bookingTotalAmount : $bookingTotalAmount");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        //Fluttertoast.showToast(msg: "Something went wrong!");
         log("getCheckoutSummaryFunction Else Else");
       }
 
@@ -170,7 +170,7 @@ class UserCheckoutScreenController extends GetxController{
           transactionId = getPaymentIdModel.workerList.id;
           log("transactionId : $transactionId");
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          //Fluttertoast.showToast(msg: "Something went wrong!");
           log("getPaymentId Else Else");
         }
 
@@ -180,6 +180,7 @@ class UserCheckoutScreenController extends GetxController{
       log("getPaymentId Error ::: $e");
     } finally {
       isLoading(false);
+
     }
   }
 
@@ -207,16 +208,22 @@ class UserCheckoutScreenController extends GetxController{
       log('response: ${response.request}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
+        log('value: $value');
         ConfirmCheckoutModel confirmCheckoutModel = ConfirmCheckoutModel.fromJson(json.decode(value));
         isSuccessStatus = confirmCheckoutModel.success.obs;
 
         if(isSuccessStatus.value) {
           returnId = confirmCheckoutModel.id;
           log("returnId : $returnId");
-          Get.to(()=> BookingSuccessScreen(),
-          arguments: returnId);
+          Get.to(()=> BookingSuccessScreen(), arguments: returnId);
+          // if(returnId.isEmpty){
+          //   Get.back();
+          // } else{
+          //   Get.to(()=> BookingSuccessScreen(), arguments: returnId);
+          // }
+          //Get.to(()=> BookingSuccessScreen(), arguments: returnId);
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          //Fluttertoast.showToast(msg: "Something went wrong!");
           log("checkOutSubmitFunction Else Else");
         }
 
@@ -247,7 +254,24 @@ class UserCheckoutScreenController extends GetxController{
           )
       );
 
-      await displayPaymentSheet();
+      if(paymentIntentData!['id'] == null)
+      {
+        log('Failed');
+        log('id: ${paymentIntentData!['id']}');
+        Get.snackbar(
+            "Failed", "Failed payment Id", snackPosition: SnackPosition.BOTTOM
+        );
+      } else{
+        //log('Success');
+        log('id: ${paymentIntentData!['id']}');
+        // Get.snackbar(
+        //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+        // );
+        await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
+      }
+
+       await displayPaymentSheet();
+      //await checkOutSubmitFunction();
 
     } catch(e) {
       log("Make Payment Error ::: $e");
@@ -288,66 +312,49 @@ class UserCheckoutScreenController extends GetxController{
 
   displayPaymentSheet() async {
     try {
-      Stripe.instance.presentPaymentSheet(
+      await Stripe.instance.presentPaymentSheet(
         parameters: PresentPaymentSheetParameters(
             clientSecret: paymentIntentData!['client_secret'],
+
           confirmPayment: true,
-        )
-      );
-      log('paymentIntentData id : ${paymentIntentData!['id']}');
-      log('Display paymentIntentData: $paymentIntentData');
-      if(paymentIntentData!['id'] == null)
-        {
-          log('Failed');
-          Get.snackbar(
-              "Failed", "Failed payment Id", snackPosition: SnackPosition.BOTTOM
-          );
-        } else{
-        log('Success');
-        Get.snackbar(
-            "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
-        );
-        await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
-      }
+        ),
+      ).then((value) {
+        log('paymentIntentData id : ${paymentIntentData!['id']}');
+        log('Display paymentIntentData: $paymentIntentData');
+
+        isLoading(true);
+        paymentIntentData = null;
+        isLoading(false);
+        log('success');
+      });
 
 
-      isLoading(true);
-      paymentIntentData = null;
-      isLoading(false);
 
-
-      /*if(paymentIntentData!['id'] == null){
-        Get.snackbar(
-            "Failed", "Failed", snackPosition: SnackPosition.BOTTOM
-        );
-      } else{
-        Get.snackbar(
-            "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
-        );
-
-      }*/
-      Get.snackbar(
-          "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
-      );
+      //Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
+      //Get.back();
       //await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
       // Get.snackbar(
       //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
       // );
 
       /// API Calling
-      await checkOutSubmitFunction();
+      //checkOutSubmitFunction();
 
 
     } on StripeException catch(e) {
       log("StripeException Error ::: $e");
-      Get.snackbar(
-          "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
-      );
+      // Get.snackbar(
+      //     "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
+      // );
     } catch(e) {
       log("Display Payment Sheet Error ::: $e");
       Get.snackbar(
           "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
       );
+    } finally {
+      //isLoading(false);
+      Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
+      checkOutSubmitFunction();
     }
   }
 
@@ -369,7 +376,7 @@ class UserCheckoutScreenController extends GetxController{
         log("secretKey : $secretKey");
         log("publishableKey : $publishableKey");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        //Fluttertoast.showToast(msg: "Something went wrong!");
         log("getStripeKeyFunction Else Else");
       }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
@@ -7,6 +9,7 @@ import 'package:booking_management/user_side/screens/business_details_screen/bus
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../model/user_search_results_screen_model/get_all_search_vendor_model.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
 
@@ -115,224 +118,389 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // Expanded(
-        //   child: Container(
-        //     height: 45,
-        //     //padding: EdgeInsets.all(3),
-        //     decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.circular(10),
-        //       boxShadow: [
-        //         BoxShadow(
-        //           color: AppColors.colorLightGrey.withOpacity(0.5),
-        //           blurRadius: 5,
-        //           //spreadRadius: 5,
-        //           blurStyle: BlurStyle.outer,
-        //         ),
-        //       ],
-        //       //border: Border.all(color: AppColors.colorLightGrey)
-        //     ),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         SizedBox(width: 17,),
-        //         Expanded(child: Text("Popular Search", style: TextStyle(fontSize: 12),)),
-        //
-        //       ],
-        //     ),
-        //   ),
-        // ),
+    return Obx(()=>
+      Column(
+        children: [
+          Row(
+            children: [
+              // Expanded(
+              //   child: Container(
+              //     height: 45,
+              //     //padding: EdgeInsets.all(3),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(10),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: AppColors.colorLightGrey.withOpacity(0.5),
+              //           blurRadius: 5,
+              //           //spreadRadius: 5,
+              //           blurStyle: BlurStyle.outer,
+              //         ),
+              //       ],
+              //       //border: Border.all(color: AppColors.colorLightGrey)
+              //     ),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         SizedBox(width: 17,),
+              //         Expanded(child: Text("Popular Search", style: TextStyle(fontSize: 12),)),
+              //
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
-        const SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(right: 3),
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.colorLightGrey.withOpacity(0.5),
-                  blurRadius: 5,
-                  //spreadRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ],
-            ),
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                  canvasColor: Colors.grey.shade100,
-                  // background color for the dropdown items
-                  buttonTheme: ButtonTheme.of(context).copyWith(
-                    alignedDropdown:
-                        true, //If false (the default), then the dropdown's menu will be wider than its button.
-                  )),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
-                  isExpanded: true,
-                  focusColor: Colors.white,
-                  value: screenController.ratting,
-                  //elevation: 5,
-                  style: TextStyle(color: AppColors.colorLightGrey),
-                  iconEnabledColor: Colors.black,
-                  items: <String>[
-                    'Ratting',
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        // style: TextStyle(color: AppColors.colorLightGrey),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 3),
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey.withOpacity(0.5),
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
                       ),
-                    );
-                  }).toList(),
-                  // hint: const Text(
-                  //   "Ratting",
-                  //   style: TextStyle(color: Colors.black, fontSize: 11),
-                  // ),
-                  onChanged: (newValue) async {
-                    setState(() {
-                      screenController.ratting = newValue!;
-                    });
-
-                    if (screenController.searchType == SearchType.categoryWise) {
-                      await screenController.getSearchCategoryWithRatingWiseFunction();
-                    } else if (screenController.searchType == SearchType.none) {
-                      await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(right: 3),
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.colorLightGrey.withOpacity(0.5),
-                  blurRadius: 5,
-                  //spreadRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ],
-            ),
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                  canvasColor: Colors.grey.shade100,
-                  // background color for the dropdown items
-                  buttonTheme: ButtonTheme.of(context).copyWith(
-                    alignedDropdown:
-                        true, //If false (the default), then the dropdown's menu will be wider than its button.
-                  )),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
-                  isExpanded: true,
-                  focusColor: Colors.white,
-                  value: screenController.distance,
-                  //elevation: 5,
-                  style: TextStyle(color: AppColors.colorLightGrey),
-                  iconEnabledColor: Colors.black,
-                  items: <String>['Distance', '1', '5', '10', '15', '20', '25']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        // style: TextStyle(color: AppColors.colorLightGrey),
-                      ),
-                    );
-                  }).toList(),
-                  // hint: const Text(
-                  //   "Distance",
-                  //   style: TextStyle(color: Colors.black, fontSize: 11),
-                  // ),
-                  onChanged: (newValue) async {
-                      setState(() {
-                        screenController.distance = newValue!;
-                      });
-
-                      if (screenController.searchType == SearchType.categoryWise) {
-                        await screenController.getSearchCategoryWithRatingWiseFunction();
-                      } else if (screenController.searchType == SearchType.none) {
-                        await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
-                      }
-
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(right: 3),
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.colorLightGrey.withOpacity(0.5),
-                  blurRadius: 5,
-                  //spreadRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ],
-            ),
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                  canvasColor: Colors.grey.shade100,
-                  // background color for the dropdown items
-                  buttonTheme: ButtonTheme.of(context).copyWith(
-                    alignedDropdown:
-                        true, //If false (the default), then the dropdown's menu will be wider than its button.
-                  )),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  icon: Image.asset(
-                    AppImages.dropDownArrowImg,
-                    scale: 3,
+                    ],
                   ),
-                  isExpanded: true,
-                  focusColor: Colors.white,
-                  value: screenController.date,
-                  //elevation: 5,
-                  style: TextStyle(color: AppColors.colorLightGrey),
-                  iconEnabledColor: Colors.black,
-                  items: <String>['Date', '1', '2', '3', '4', '5']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        // style: TextStyle(color: AppColors.colorLightGrey),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                        canvasColor: Colors.grey.shade100,
+                        // background color for the dropdown items
+                        buttonTheme: ButtonTheme.of(context).copyWith(
+                          alignedDropdown:
+                              true, //If false (the default), then the dropdown's menu will be wider than its button.
+                        )),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
+                        isExpanded: true,
+                        focusColor: Colors.white,
+                        value: screenController.ratting,
+                        //elevation: 5,
+                        style: TextStyle(color: AppColors.colorLightGrey),
+                        iconEnabledColor: Colors.black,
+                        items: <String>[
+                          'Ratting',
+                          '1',
+                          '2',
+                          '3',
+                          '4',
+                          '5',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              // style: TextStyle(color: AppColors.colorLightGrey),
+                            ),
+                          );
+                        }).toList(),
+                        // hint: const Text(
+                        //   "Ratting",
+                        //   style: TextStyle(color: Colors.black, fontSize: 11),
+                        // ),
+                        onChanged: (newValue) async {
+                          setState(() {
+                            screenController.ratting = newValue!;
+                          });
+
+                          if (screenController.searchType == SearchType.categoryWise) {
+                            await screenController.getSearchCategoryWithRatingWiseFunction();
+                          } else if (screenController.searchType == SearchType.none) {
+                            await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+                          }
+                        },
                       ),
-                    );
-                  }).toList(),
-                  // hint: const Text(
-                  //   "Date",
-                  //   style: TextStyle(color: Colors.black, fontSize: 11),
-                  // ),
-                  onChanged: (newValue) {
-                    setState(() {
-                      screenController.date = newValue!;
-                    });
-                  },
+                    ),
+                  ),
                 ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 3),
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey.withOpacity(0.5),
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                        canvasColor: Colors.grey.shade100,
+                        // background color for the dropdown items
+                        buttonTheme: ButtonTheme.of(context).copyWith(
+                          alignedDropdown:
+                              true, //If false (the default), then the dropdown's menu will be wider than its button.
+                        )),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
+                        isExpanded: true,
+                        focusColor: Colors.white,
+                        value: screenController.distance,
+                        //elevation: 5,
+                        style: TextStyle(color: AppColors.colorLightGrey),
+                        iconEnabledColor: Colors.black,
+                        items: <String>['Distance', '1', '5', '10', '15', '20', '25']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              // style: TextStyle(color: AppColors.colorLightGrey),
+                            ),
+                          );
+                        }).toList(),
+                        // hint: const Text(
+                        //   "Distance",
+                        //   style: TextStyle(color: Colors.black, fontSize: 11),
+                        // ),
+                        onChanged: (newValue) async {
+                            setState(() {
+                              screenController.distance = newValue!;
+                            });
+
+                            if (screenController.searchType == SearchType.categoryWise) {
+                              await screenController.getSearchCategoryWithRatingWiseFunction();
+                            } else if (screenController.searchType == SearchType.none) {
+                              await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+                            }
+
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 3),
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey.withOpacity(0.5),
+                        blurRadius: 5,
+                        //spreadRadius: 5,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        screenController.selectedDate.value,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+
+                      /// Calender Image Button
+                      GestureDetector(
+                        onTap: () {
+                          screenController.isServiceCalenderShow.value =
+                          !screenController.isServiceCalenderShow.value;
+
+                          log("screenController.isCalenderShow.value : ${screenController.isServiceCalenderShow.value}");
+                        },
+                        child: const Icon(Icons.calendar_month),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          screenController.isServiceCalenderShow.value
+              ? SelectDateModule() : Container(),
+        ],
+      ),
+    );
+  }
+
+  /*Future<void> _selectDate(BuildContext context, DateTime dateTime) async {
+    final DateTime? d = await showDatePicker(
+      context: context,
+      initialDate: dateTime,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2025),
+    );
+    if (d != null) {
+      screenController.isLoading(true);
+      screenController.selectedDate = d;
+      screenController.isLoading(false);
+
+      if (screenController.searchType == SearchType.categoryWise) {
+        await screenController.getSearchCategoryWithRatingWiseFunction();
+      } else if (screenController.searchType == SearchType.none) {
+        await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+      }
+
+      //setState(() {
+      // screenController.selectedDate = DateFormat.yMd("en_US").format(d);
+      // log(screenController.selectedDate.value);
+      //});
+    }
+  }*/
+}
+
+class SelectDateModule extends StatelessWidget {
+  SelectDateModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSearchResultsScreenController>();
+  CalendarFormat format = CalendarFormat.month;
+
+  DateTime focusedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // const Text(
+        //   "Select Date",
+        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        // ),
+        const SizedBox(height: 10),
+        Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TableCalendar(
+              focusedDay: focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: format,
+              rangeStartDay: DateTime.now(),
+              onDaySelected: (DateTime selectDay, DateTime focusDay) async{
+                screenController.selectedDay = selectDay;
+                focusedDay = focusDay;
+
+
+                String hour = "${screenController.selectedDay.hour}";
+                String minute = "${screenController.selectedDay.minute}";
+
+                /// For Hour Format
+                for(int i = 0; i < 10; i++) {
+                  if(screenController.selectedDay.hour.toString() == i.toString()) {
+                    if(screenController.selectedDay.hour.toString().length == 1) {
+                      hour = "0${screenController.selectedDay.hour}";
+                    }
+                  }
+                }
+
+                /// For Minute
+                for (int i = 0; i < 10; i++) {
+                  if(screenController.selectedDay.minute.toString() == i.toString()) {
+                    if(screenController.selectedDay.minute.toString().length == 1) {
+                      minute = "0${screenController.selectedDay.minute}";
+                    }
+                  }
+                }
+
+                screenController.selectedTime.value = "$hour:$minute:00";
+
+
+                screenController.selectedDate.value = "${screenController.selectedDay.day}-${screenController.selectedDay.month}-${screenController.selectedDay.year}";
+
+                log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
+                // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
+
+                screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
+                screenController.loadUI();
+
+                if (screenController.searchType == SearchType.categoryWise) {
+                  await screenController.getSearchCategoryWithRatingWiseFunction();
+                } else if (screenController.searchType == SearchType.none) {
+                  await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+                }
+              },
+
+              // Day Changed
+              selectedDayPredicate: (DateTime date) {
+                return isSameDay(screenController.selectedDay, date);
+              },
+              // Style the Calender
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: false,
+                outsideDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                defaultTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                weekendTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                todayTextStyle: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                defaultDecoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                weekendDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: Colors.transparent),
+                selectedDecoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.circle,
+                    color: AppColors.colorLightGrey1),
+              ),
+              // Week Style
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                // dowTextFormatter: (dowTextFormat, dynamic) {
+                //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                // },
+                decoration: BoxDecoration(color: Colors.transparent),
+                weekdayStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+
+                weekendStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              // Month Style
+              headerStyle: HeaderStyle(
+                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: const BoxDecoration(color: Colors.white),
+                formatButtonDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                    color: Colors.black),
+                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
+                    color: Colors.black),
               ),
             ),
           ),

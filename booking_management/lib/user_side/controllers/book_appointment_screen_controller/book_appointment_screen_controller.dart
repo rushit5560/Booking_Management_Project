@@ -571,17 +571,26 @@ class BookAppointmentScreenController extends GetxController {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['ResourceId'] = selectedResourceTimeSlotId.toString();
-      request.fields['VendorId'] = vendorId.toString();
-      request.fields['Duration'] = "${additionalSlotWorkerList.id}";
 
+      if(additionalSlotWorkerList.id == 0) {
+        request.fields['ResourceId'] = selectedResourceTimeSlotId.toString();
+        request.fields['VendorId'] = vendorId.toString();
+       // request.fields['Duration'] = "";
+      } else if(additionalSlotWorkerList.id != 0) {
+        request.fields['ResourceId'] = selectedResourceTimeSlotId.toString();
+        request.fields['VendorId'] = vendorId.toString();
+        request.fields['Duration'] = "${additionalSlotWorkerList.id}";
+      }
+      log('request.fields: ${request.fields}');
       var response = await request.send();
 
       response.stream.transform(utf8.decoder).listen((value) async {
+        log("value : $value");
+
         BookAppointmentModel bookAppointmentModel =
             BookAppointmentModel.fromJson(json.decode(value));
         isSuccessStatus = bookAppointmentModel.success.obs;
-
+        log('bookAppointmentModel: ${bookAppointmentModel.message}');
         if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: bookAppointmentModel.message);
           String bookingId = bookAppointmentModel.id;

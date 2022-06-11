@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/vendor_side/model/vendor_appointment_cancel_model/vendor_appointment_cancel_model.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -27,6 +29,9 @@ class AppointmentDetailsScreenController extends GetxController {
   String oppositeUserFcmToken = "";
   String date = "";
   String slotTime = "";
+
+  TextEditingController reasonFieldController = TextEditingController();
+  int id = 0;
 
   /// Get Appointment Details
   getAppointmentDetailsByIdFunction() async {
@@ -135,32 +140,50 @@ class AppointmentDetailsScreenController extends GetxController {
   /// Appointment for Cancel
   cancelAppointmentByIdFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorAppointmentStatusChangeApi + "?status=Cancel&id=$appointmentId";
-    log("Cancel Appointment Status Change API URL : $url");
 
-    try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Cancel Appointment Details API Response : ${response.body}");
+    String url = ApiUrl.vendorAppointmentStatusCancelApi;
+    log('vendorAppointmentStatusCancelApi Url : $url');
 
-      AppointmentStatusChangeModel appointmentStatusChangeModel = AppointmentStatusChangeModel.fromJson(json.decode(response.body));
-      isSuccessStatus = appointmentStatusChangeModel.success.obs;
+    try{
 
-      if(isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: "Appointment Canceled!");
+      var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        String title = "${UserDetails.userName} appointment cancel";
-        String msg = "${UserDetails.userName} appointment cancel for $date at $slotTime time";
+      request.headers.addAll(apiHeader.headers);
 
-        await getUserFcmTokenFunction(title: title, body: msg);
+      request.fields['BookingId'] = "${appointmentId}";
+      request.fields['Reason'] = reasonFieldController.text.trim();
 
 
-      } else {
-        log("cancelAppointmentByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
-      }
+      log('request.fields: ${request.fields}');
+      log('request.files: ${request.files}');
+
+
+      var response = await request.send();
+      log('response: ${response.request}');
+
+      response.stream.transform(utf8.decoder).listen((value) {
+        VendorAppointmentCancelModel vendorAppointmentCancelModel = VendorAppointmentCancelModel.fromJson(json.decode(value));
+        log('response1 ::::::${vendorAppointmentCancelModel.statusCode}');
+        isSuccessStatus = vendorAppointmentCancelModel.success.obs;
+        log('vendorAppointmentStatusCancelApi status : $isSuccessStatus');
+        //log('success : ${isSuccessStatus.}');
+
+        if(isSuccessStatus.value){
+          //UserDetails().vendorId = response1.data.id;
+          log("Cancel Appointment");
+          Fluttertoast.showToast(msg: 'Successfully Cancelled');
+          reasonFieldController.clear();
+          Get.back();
+          //id = vendorAppointmentCancelModel.data.id;
+         // log('Cancel id : $id');
+        } else {
+          // Fluttertoast.showToast(msg: "${response1.message}");
+          log('False False');
+        }
+      });
+
     } catch(e) {
-      log("cancelAppointmentByIdFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      log('SignUp Error : $e');
     } finally {
       isLoading(false);
     }

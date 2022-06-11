@@ -49,9 +49,9 @@ class WorkerList {
   String publishableKey;
   bool isActive;
   String createdBy;
-  DateTime createdOn;
+  String createdOn;
   String modifiedBy;
-  DateTime modifiedOn;
+  String modifiedOn;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
     id: json["id"] ?? 0,
@@ -59,9 +59,9 @@ class WorkerList {
     publishableKey: json["publishableKey"] ?? "",
     isActive: json["isActive"] ?? false,
     createdBy: json["createdBy"] ?? "",
-    createdOn: DateTime.parse(json["createdOn"] ?? DateTime.now()),
+    createdOn: json["createdOn"] ?? "",
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
+    modifiedOn: json["modifiedOn"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -70,8 +70,8 @@ class WorkerList {
     "publishableKey": publishableKey,
     "isActive": isActive,
     "createdBy": createdBy,
-    "createdOn": createdOn.toIso8601String(),
+    "createdOn": createdOn,
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn.toIso8601String(),
+    "modifiedOn": modifiedOn,
   };
 }

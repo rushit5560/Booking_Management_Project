@@ -17,6 +17,7 @@ import '../../model/vendor_appointment_list_screen_models/appointment_status_cha
 class VendorAppointmentListScreenController extends GetxController {
   RxInt selectedTabIndex = 1.obs;
   TextEditingController searchAppointmentFieldController = TextEditingController();
+
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
 
 
@@ -47,11 +48,11 @@ class VendorAppointmentListScreenController extends GetxController {
     String url = selectedDate.value == ""
     ? ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}"
     : ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}&Status=&dDate=$selectedDate";
-    log("Appointment List APi ULR : $url");
+    //log("Appointment List APi ULR : $url");
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Appointment List Response : ${response.body}");
+      //log("Appointment List Response : ${response.body}");
 
       AppointmentListModel appointmentListModel = AppointmentListModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentListModel.success.obs;

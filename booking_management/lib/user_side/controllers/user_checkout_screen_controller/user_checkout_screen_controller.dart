@@ -171,7 +171,7 @@ class UserCheckoutScreenController extends GetxController{
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('getPaymentId response: ${response.statusCode}');
+      //log('getPaymentId response: ${response.statusCode}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
         GetPaymentIdModel getPaymentIdModel = GetPaymentIdModel.fromJson(json.decode(value));
@@ -190,8 +190,8 @@ class UserCheckoutScreenController extends GetxController{
     } catch(e) {
       log("getPaymentId Error ::: $e");
     } finally {
-      isLoading(false);
-
+      //isLoading(false);
+      await displayPaymentSheet();
     }
   }
 
@@ -278,10 +278,10 @@ class UserCheckoutScreenController extends GetxController{
         // Get.snackbar(
         //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
         // );
-        await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
+         getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
       }
 
-       await displayPaymentSheet();
+      //await displayPaymentSheet();
       //await checkOutSubmitFunction();
 
     } catch(e) {
@@ -322,6 +322,7 @@ class UserCheckoutScreenController extends GetxController{
   }
 
   displayPaymentSheet() async {
+    //isLoading(true);
     try {
       await Stripe.instance.presentPaymentSheet(
         parameters: PresentPaymentSheetParameters(
@@ -364,8 +365,9 @@ class UserCheckoutScreenController extends GetxController{
       );
     } finally {
       //isLoading(false);
+      log('paymentIntentData id : ${paymentIntentData!['id']}');
       Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
-      checkOutSubmitFunction();
+      await checkOutSubmitFunction();
     }
   }
 

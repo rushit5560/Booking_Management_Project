@@ -151,7 +151,7 @@ class ProfileDetailsModule extends StatelessWidget {
                     //   ),
                     // ),
                   ),
-                  validator: (value) => FieldValidator().validateName(value!),
+                  //validator: (value) => FieldValidator().validateName(value!),
                 ),
               ],
             )

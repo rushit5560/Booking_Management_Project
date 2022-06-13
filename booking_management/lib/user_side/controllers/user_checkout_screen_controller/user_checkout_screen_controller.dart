@@ -37,6 +37,8 @@ class UserCheckoutScreenController extends GetxController{
   String vendorAddress = "";
   String bookingDate = "";
   String bookingTime = "";
+  String endBookingTime = "";
+  String endBookingDate = "";
   int bookingPrice = 0;
   int bookingQty = 0;
   int bookingTotalAmount = 0;
@@ -103,11 +105,18 @@ class UserCheckoutScreenController extends GetxController{
         vendorRating = double.parse(checkoutSummaryModel.workerList.booking.vendor.rating.toString());
         vendorAddress = "${checkoutSummaryModel.workerList.booking.vendor.state}, ${checkoutSummaryModel.workerList.booking.vendor.country}, "
             "${checkoutSummaryModel.workerList.booking.vendor.postcode}";
-        String bookDate = checkoutSummaryModel.workerList.booking.startDateTime;
-        String bDate1 = bookDate.substring(0, bookDate.length-9);
+        String startBookDate = checkoutSummaryModel.workerList.booking.startDateTime;
+        String bDate1 = startBookDate.substring(0, startBookDate.length-9);
         bookingDate = bDate1;
-        String bTime1 = bookDate.substring(11, bookDate.length-3);
+        String bTime1 = startBookDate.substring(11, startBookDate.length-3);
         bookingTime = bTime1;
+
+        String endBookDate = checkoutSummaryModel.workerList.booking.endDateTime;
+        String endDate1 = endBookDate.substring(0, endBookDate.length-23);
+        endBookingDate = endDate1;
+        String endTime1 = endBookDate.substring(11, endBookDate.length-17);
+        endBookingTime = endTime1;
+
         bookingPrice = checkoutSummaryModel.workerList.price.toInt();
         bookingQty = checkoutSummaryModel.workerList.quantity;
         bookingTotalAmount = bookingPrice * bookingQty;
@@ -118,6 +127,8 @@ class UserCheckoutScreenController extends GetxController{
         log("vendorAddress : $vendorAddress");
         log("bookingDate : $bookingDate");
         log("bookingTime : $bookingTime");
+        log("endBookingDate: $endBookingDate");
+        log("endBookingTime : $endBookingTime");
         log("bookingPrice : $bookingPrice");
         log("bookingQty : $bookingQty");
         log("bookingTotalAmount : $bookingTotalAmount");

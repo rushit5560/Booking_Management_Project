@@ -110,7 +110,7 @@ class BookingSummaryModule extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Time",
+                "Start time",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -118,6 +118,22 @@ class BookingSummaryModule extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(screenController.bookingTime),
+            ],
+          ).commonSymmetricPadding(horizontal: 10),
+
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "End time",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(screenController.endBookingTime),
             ],
           ).commonSymmetricPadding(horizontal: 10),
 

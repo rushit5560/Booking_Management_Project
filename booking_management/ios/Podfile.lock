@@ -807,6 +807,7 @@ PODS:
   - nanopb/encode (2.30908.0)
   - path_provider_ios (0.0.1):
     - Flutter
+  - PaymentKit (1.2)
   - PromisesObjC (2.1.0)
   - shared_preferences_ios (0.0.1):
     - Flutter
@@ -854,6 +855,7 @@ DEPENDENCIES:
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - PaymentKit
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - Stripe
@@ -889,6 +891,7 @@ SPEC REPOS:
     - leveldb-library
     - Libuv-gRPC
     - nanopb
+    - PaymentKit
     - PromisesObjC
     - Stripe
     - StripeApplePay
@@ -977,6 +980,7 @@ SPEC CHECKSUMS:
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  PaymentKit: 9bf248ab9a7343ccc65523890428e23678d1bde9
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
@@ -989,6 +993,6 @@ SPEC CHECKSUMS:
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
-PODFILE CHECKSUM: 702e4069f8f4ff57477b726fafbae89efb6fc9d1
+PODFILE CHECKSUM: 293b508a30c343beb580011c2f0ec0a4658afcf8
 
 COCOAPODS: 1.10.2

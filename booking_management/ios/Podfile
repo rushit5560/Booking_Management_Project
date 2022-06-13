@@ -33,6 +33,7 @@ target 'Runner' do
   #pod "Stripe"
   pod 'Stripe'
   pod 'Alamofire'
+  pod 'PaymentKit'
   use_frameworks!
   use_modular_headers!
 

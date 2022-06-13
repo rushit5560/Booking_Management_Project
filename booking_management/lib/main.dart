@@ -35,6 +35,8 @@ void main() async {
   await Firebase.initializeApp();
 
   Stripe.publishableKey = PaymentKeys.publishKey;
+  Stripe.merchantIdentifier = '';
+  await Stripe.instance.applySettings();
 
   /// For Background
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

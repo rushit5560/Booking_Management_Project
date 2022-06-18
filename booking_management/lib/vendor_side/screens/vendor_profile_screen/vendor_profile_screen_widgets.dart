@@ -1803,7 +1803,7 @@ class MapShowModule extends StatelessWidget {
             ),
             child: GoogleMap(
               mapType: MapType.normal,
-              initialCameraPosition: screenController.kGooglePlex!,
+              initialCameraPosition: screenController.kGooglePlex,
               onMapCreated: (GoogleMapController controller) {
                 screenController.mapController.complete(controller);
               },

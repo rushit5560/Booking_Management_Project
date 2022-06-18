@@ -1,10 +1,10 @@
 class ApiUrl {
   static const serverApiKey = "AAAAPMN5_nM:APA91bHk_HS5tqZwzSyV-_2uP8ktyuhl_sp7HwkbFMP9lsiNHhWDvSxW1vvEMJ_skX2m_nHQp4QInHVPQGig9tkugj81_aoimCMY4ke7_2oZvck5cPtrRUFs9jj7jMJ-29HEfXc3_TTa";
-  // static const apiMainPath = "https://setdaytime.com/";
-  // static const apiImagePath = "https://setdaytime.com/";
+  static const apiMainPath = "https://setdaytime.com/";
+  static const apiImagePath = "https://setdaytime.com/";
 
-  static const apiMainPath = "http://192.168.29.218:8080/";
-  static const apiImagePath = "http://192.168.29.218:8080/";
+  // static const apiMainPath = "http://192.168.29.218:8080/";
+  // static const apiImagePath = "http://192.168.29.218:8080/";
 
 
   /// Common API
@@ -33,6 +33,9 @@ class ApiUrl {
   static const getAllUpcomingAppointment = apiMainPath + "API/customerdashboard";
   static const searchVendorApi = apiMainPath + "API/Searchbussinesstype";
   static const upcomingAppointmentDetailsApi = apiMainPath + "API/customerdashboardView";
+
+  static const searchApi = apiMainPath + "API/Search";
+  static const locationSearchApi = apiMainPath + "API/Location";
 
   /// Cst - Search Filter API
   static const searchFilterApi = apiMainPath + "API/Searchbussinesstype";

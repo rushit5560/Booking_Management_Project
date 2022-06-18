@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/home_screen_models/get_all_appointment_list_model.dart';
+import 'package:booking_management/user_side/model/home_screen_models/search_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -68,6 +69,65 @@ class HomeScreenController extends GetxController {
       // isLoading(false);
       await getAllUpcomingAppointmentFunction();
     }
+  }
+
+
+  Future<List<String>> getCategorySearchFunction(String searchText) async {
+    String url = ApiUrl.searchApi + "?prefix=$searchText";
+    log("Search Category Api Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      log("Get Category Api Response : ${response.body}");
+
+      SearchModel searchModel = SearchModel.fromJson(json.decode(response.body));
+
+      List<String> searchList = searchModel.data;
+      log("searchList : $searchList");
+
+
+      return searchText.isEmpty
+          ? searchList
+          : searchList.where((element) {
+              String searchListString = element.toLowerCase();
+              String searchTextNew = searchText.toLowerCase();
+
+              return searchListString.contains(searchTextNew);
+            }).toList();
+    } catch(e) {
+      log("getCategorySearchFunction Error :::$e");
+      return [];
+    }
+
+  }
+
+  Future<List<String>> getLocationSearchFunction(String searchText) async {
+    String url = ApiUrl.locationSearchApi + "?prefix=$searchText";
+    log("Search Location Api Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      log("Get Location Api Response : ${response.body}");
+
+      SearchModel searchModel = SearchModel.fromJson(json.decode(response.body));
+
+      List<String> locationSearchList = searchModel.data;
+      log("searchList : $locationSearchList");
+
+
+      return searchText.isEmpty
+          ? locationSearchList
+          : locationSearchList.where((element) {
+        String searchListString = element.toLowerCase();
+        String searchTextNew = searchText.toLowerCase();
+
+        return searchListString.contains(searchTextNew);
+      }).toList();
+    } catch(e) {
+      log("getLocationSearchFunction Error :::$e");
+      return [];
+    }
+
   }
 
   /// Get All Upcoming Appointment
@@ -147,7 +207,7 @@ class HomeScreenController extends GetxController {
   //     isSuccessStatus = searchVendorModel.success.obs;
   //
   //     if(isSuccessStatus.value) {
-  //       /// Set List todo
+  //
   //     } else {
   //       Fluttertoast.showToast(msg: "Something went wrong!");
   //       log("searchVendorFunction Else Else");

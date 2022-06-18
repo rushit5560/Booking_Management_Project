@@ -67,7 +67,7 @@ class VendorProfileScreenController extends GetxController{
   RxString selectedLatitude = "".obs;
   RxString selectedLongitude = "".obs;
   Completer<GoogleMapController> mapController = Completer();
-  late CameraPosition? kGooglePlex;
+  late CameraPosition kGooglePlex;
   Set<Marker> markers = {};
 
 

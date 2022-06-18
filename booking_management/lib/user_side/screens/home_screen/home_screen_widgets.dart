@@ -6,6 +6,7 @@ import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../common_modules/constants/app_images.dart';
@@ -70,7 +71,7 @@ class HeaderModule extends StatelessWidget {
 }
 
 /// Search Field (Category & Name)
-class SearchCategoryField extends StatelessWidget {
+/*class SearchCategoryField extends StatelessWidget {
   SearchCategoryField({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
 
@@ -110,6 +111,76 @@ class SearchCategoryField extends StatelessWidget {
       ),
     );
   }
+}*/
+
+class SearchCategoryField extends StatelessWidget {
+  SearchCategoryField({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 42,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 2,
+            blurRadius: 8,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+
+      // child: TypeAheadField(
+      //   suggestionsCallback: (text) async {
+      //     return await screenController.getCategorySearchFunction(text);
+      //   },
+      //   hideSuggestionsOnKeyboardHide: true,
+      //   textFieldConfiguration: TextFieldConfiguration(
+      //     controller: screenController.categoryFieldController,
+      //     decoration: const InputDecoration(
+      //       prefixIcon: Icon(Icons.search_rounded, color: Colors.grey, size: 18),
+      //       border: InputBorder.none,
+      //       hintText: 'Search for a service providers or business',
+      //       hintStyle: TextStyle(fontSize: 15, color: Colors.grey,),
+      //       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+      //     ),
+      //
+      //   ),
+      //   itemBuilder: (context, String? suggestion) {
+      //     final cat = suggestion!;
+      //     return ListTile(
+      //       title: Text(cat),
+      //     );
+      //   },
+      //   onSuggestionSelected: (String? suggestion) {
+      //     screenController.categoryFieldController.text = suggestion!;
+      //     log("Text : ${screenController.categoryFieldController.text}");
+      //   },
+      // ),
+
+      child: TextFormField(
+        controller: screenController.categoryFieldController,
+        cursorColor: Colors.grey,
+        decoration: const InputDecoration(
+          hintText: 'Search category or Name',
+          hintStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: 15,
+          ),
+          border: InputBorder.none,
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          prefixIcon: Icon(
+            Icons.search_rounded,
+            color: Colors.grey,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// Search Location Wise
@@ -132,6 +203,35 @@ class SearchLocationField extends StatelessWidget {
           ),
         ],
       ),
+
+      // child: TypeAheadField(
+      //   suggestionsCallback: (text) async {
+      //     return await screenController.getCategorySearchFunction(text);
+      //   },
+      //   hideSuggestionsOnKeyboardHide: true,
+      //   textFieldConfiguration: TextFieldConfiguration(
+      //     controller: screenController.locationFieldController,
+      //     decoration: const InputDecoration(
+      //       prefixIcon: Icon(Icons.search_rounded, color: Colors.grey, size: 18),
+      //       border: InputBorder.none,
+      //       hintText: 'Search Location',
+      //       hintStyle: TextStyle(fontSize: 15, color: Colors.grey,),
+      //       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+      //     ),
+      //
+      //   ),
+      //   itemBuilder: (context, String? suggestion) {
+      //     final cat = suggestion!;
+      //     return ListTile(
+      //       title: Text(cat),
+      //     );
+      //   },
+      //   onSuggestionSelected: (String? suggestion) {
+      //     screenController.locationFieldController.text = suggestion!;
+      //     log("Text : ${screenController.locationFieldController.text}");
+      //   },
+      // ),
+
       child: TextFormField(
         controller: screenController.locationFieldController,
         cursorColor: Colors.grey,

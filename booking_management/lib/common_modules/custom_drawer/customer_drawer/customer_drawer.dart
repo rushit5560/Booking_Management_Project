@@ -1,5 +1,7 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../constants/app_images.dart';
 import '../../constants/enums.dart';
@@ -7,7 +9,8 @@ import 'customer_drawer_widgets.dart';
 
 
 class CustomerDrawer extends StatelessWidget {
-  const CustomerDrawer({Key? key}) : super(key: key);
+  CustomerDrawer({Key? key}) : super(key: key);
+  final customDrawerController = Get.put(CustomDrawerController());
 
   @override
   Widget build(BuildContext context) {

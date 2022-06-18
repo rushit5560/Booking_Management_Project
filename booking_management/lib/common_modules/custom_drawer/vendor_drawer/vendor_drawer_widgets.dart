@@ -1,9 +1,9 @@
+import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../vendor_side/screens/appointment_report_screen/appointment_report_screen.dart';
 import '../../../vendor_side/screens/customer_report_screen/customer_report_screen.dart';
@@ -21,7 +21,6 @@ import '../../../vendor_side/screens/vendor_subscription_plan_screen/vendor_subs
 import '../../../vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen.dart';
 import '../../constants/app_images.dart';
 import '../../constants/enums.dart';
-import '../../sharedpreference_data/sharedpreference_data.dart';
 
 
 class VendorDrawerSingleItemModule extends StatelessWidget {
@@ -36,7 +35,8 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     required this.vendorDrawerOption,
   }) : super(key: key);
 
-  final SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  final customDrawerController = Get.find<CustomDrawerController>();
+  // final SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({required VendorDrawerOption vendorSettingScreenOption}) {
+  singleItemOnTap({required VendorDrawerOption vendorSettingScreenOption}) async {
     if (vendorSettingScreenOption == VendorDrawerOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
@@ -139,9 +139,10 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => VendorInvoiceListScreen(),
           transition: Transition.rightToLeft);
     }else if (vendorSettingScreenOption == VendorDrawerOption.logout) {
-      sharedPreferenceData.clearUserLoginDetailsFromPrefs();
-      Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);
-      Get.snackbar('You Have Successfully Logout', '');
+      await customDrawerController.signOutFunction();
+      // sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+      // Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);
+      // Get.snackbar('You Have Successfully Logout', '');
     } else if(vendorSettingScreenOption == VendorDrawerOption.appointmentReport) {
       Get.to(() => AppointmentReportScreen(),
           transition: Transition.rightToLeft);

@@ -16,7 +16,7 @@ class VendorHomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => hideKeyboard(),
       child: Scaffold(
-        drawer: const VendorDrawer(),
+        drawer: VendorDrawer(),
         body: Obx(
           () => vendorHomeScreenController.isLoading.value
               ? const CustomCircularLoaderModule()

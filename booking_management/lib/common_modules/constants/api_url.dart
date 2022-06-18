@@ -1,7 +1,12 @@
 class ApiUrl {
   static const serverApiKey = "AAAAPMN5_nM:APA91bHk_HS5tqZwzSyV-_2uP8ktyuhl_sp7HwkbFMP9lsiNHhWDvSxW1vvEMJ_skX2m_nHQp4QInHVPQGig9tkugj81_aoimCMY4ke7_2oZvck5cPtrRUFs9jj7jMJ-29HEfXc3_TTa";
-  static const apiMainPath = "https://setdaytime.com/";
-  static const apiImagePath = "https://setdaytime.com/";
+  // static const apiMainPath = "https://setdaytime.com/";
+  // static const apiImagePath = "https://setdaytime.com/";
+
+  static const apiMainPath = "http://192.168.29.218:8080/";
+  static const apiImagePath = "http://192.168.29.218:8080/";
+
+
   /// Common API
   static const signInApi = apiMainPath + "API/Login";
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";
@@ -131,4 +136,7 @@ class ApiUrl {
   static const appointmentReportApi = apiMainPath + "API/AppointmentReport";
   static const customerReportApi = apiMainPath + "API/CustomerReport";
   static const invoiceReportApi = apiMainPath + "API/InvoiceReport";
+
+
+  static const logOutApi = apiMainPath + "API/Logout";
 }

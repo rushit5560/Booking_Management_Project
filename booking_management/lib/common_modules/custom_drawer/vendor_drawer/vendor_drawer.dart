@@ -1,13 +1,16 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_drawer/vendor_drawer/vendor_drawer_widgets.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../constants/app_images.dart';
 
 
 class VendorDrawer extends StatelessWidget {
-  const VendorDrawer({Key? key}) : super(key: key);
+  VendorDrawer({Key? key}) : super(key: key);
+  final customDrawerController = Get.put(CustomDrawerController());
 
   @override
   Widget build(BuildContext context) {

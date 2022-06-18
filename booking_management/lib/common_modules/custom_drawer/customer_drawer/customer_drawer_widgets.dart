@@ -1,16 +1,16 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
+import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/user_side/screens/user_favourite_list_screen/user_favourite_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../../user_side/screens/booking_history_screen/booking_history_screen.dart';
 import '../../../user_side/screens/customer_order_list_screen/customer_order_list_screen.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import '../../../user_side/screens/user_profile_screen/user_profile_screen.dart';
 import '../../constants/app_images.dart';
-import '../../sharedpreference_data/sharedpreference_data.dart';
+
+
 
 class CustomerDrawerSingleItemModule extends StatelessWidget {
   final String name;
@@ -24,7 +24,8 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     required this.customerDrawerOption,
   }) : super(key: key);
 
-  final SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  final customDrawerController = Get.find<CustomDrawerController>();
+  // final SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +91,13 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     } else if (userSettingScreenOption == CustomerDrawerOption.help) {
     } else if (userSettingScreenOption == CustomerDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(), transition: Transition.zoom);
-    } else if (userSettingScreenOption == CustomerDrawerOption.logOut) {
-      await sharedPreferenceData.clearUserLoginDetailsFromPrefs();
-      Get.offAll(() => SignInScreen(), transition: Transition.zoom);
-      Get.snackbar('You Have Successfully Logout', '');
-    } else if(userSettingScreenOption == CustomerDrawerOption.favourites) {
+    }
+
+    else if (userSettingScreenOption == CustomerDrawerOption.logOut) {
+      await customDrawerController.signOutFunction();
+    }
+
+    else if(userSettingScreenOption == CustomerDrawerOption.favourites) {
       Get.to(()=> UserFavouriteListScreen(), transition: Transition.zoom);
     }
   }

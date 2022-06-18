@@ -146,10 +146,19 @@ class BookAppointmentScreenController extends GetxController {
 
         if(searchType2 == SearchType2.none) {
           log("searchType2 : $searchType2");
-          for(int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList =
-            await getResourcesTimeListFunction(resId: allResourcesList[i].id.toString());
+          //todo - newapi
+          if(selectedServiceList.isEmpty) {
+            for(int i = 0; i < allResourcesList.length; i++) {
+              allResourcesList[i].timingList =
+              await getResourcesTimeListFunction(resId: allResourcesList[i].id.toString());
+            }
+          } else if(selectedServiceList.isNotEmpty) {
+            for(int i = 0; i < allResourcesList.length; i++) {
+              allResourcesList[i].timingList =
+              await getSelectedResourcesTimeSlotFunction(resId: allResourcesList[i].id.toString());
+            }
           }
+
         }
         else if(searchType2 == SearchType2.anyTimeWithAdditionalSlotWise) {
           log("searchType2 : $searchType2");
@@ -175,10 +184,19 @@ class BookAppointmentScreenController extends GetxController {
         }
         else if(searchType2 == SearchType2.dateTimeWise) {
           log("searchType2 : $searchType2");
-          for(int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList =
-            await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
+          //todo - new api
+          if(selectedServiceList.isEmpty) {
+            for(int i = 0; i < allResourcesList.length; i++) {
+              allResourcesList[i].timingList =
+              await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
+            }
+          } else if(selectedServiceList.isNotEmpty) {
+            for(int i = 0; i < allResourcesList.length; i++) {
+              allResourcesList[i].timingList =
+              await getSelectedResourcesTimeSlotFunction(resId: allResourcesList[i].id.toString());
+            }
           }
+
         }
 
       } else {
@@ -280,6 +298,113 @@ class BookAppointmentScreenController extends GetxController {
 
     return timeList;
   }
+
+  /// 4) Get Selected Resource Time List - todo
+  getSelectedResourcesTimeSlotFunction({required String resId, required }) async {
+    log("Resource Id : $resId");
+    DateTime dateTime = DateTime.now();
+    bool isToday = selectedDate.value == "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    log("isToday isToday isToday :$isToday");
+
+    String s1 = selectedServiceList.toString();
+    String s2 = s1.substring(1, s1.length-1);
+    String serviceId = s2.replaceAll(" ", "");
+
+    String hour = "${dateTime.hour}";
+    String minute = "${dateTime.minute}";
+
+    /// For Hour Format
+    for(int i = 0; i < 10; i++) {
+      if(dateTime.hour.toString() == i.toString()) {
+        if(dateTime.hour.toString().length == 1) {
+          hour = "0${dateTime.hour}";
+        }
+      }
+    }
+
+    /// For Minute
+    for (int i = 0; i < 10; i++) {
+      if(dateTime.minute.toString() == i.toString()) {
+        if(dateTime.minute.toString().length == 1) {
+          minute = "0${dateTime.minute}";
+        }
+      }
+    }
+
+
+
+    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String timeModule = "$hour:$minute:00";
+    log("dateTime : $dateTime");
+    log("timeModule : $timeModule");
+    List<TimingSlot> timeList = [];
+    isLoading(true);
+    String url = isToday
+        ? ApiUrl.selectedServicesWiseResourceSlotSearchApi + "?Id=$resId&dDate=${dateModule}T$timeModule&Service=$serviceId"
+        : ApiUrl.selectedServicesWiseResourceSlotSearchApi + "?Id=$resId&dDate=$dateModule&Service=$serviceId";
+    log("Get Resources Time List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      // log("Resource Time List : ${response.body}");
+
+      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
+
+      if(isSuccessStatus.value) {
+
+        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
+          String startTime = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].startDateTime.length-3);
+          String endTime = getAllTimeListByResourceIdModel.workerList![i].endDateTime.substring(11, getAllTimeListByResourceIdModel.workerList![i].endDateTime.length-3);
+
+          timeList.add(TimingSlot(
+            id: getAllTimeListByResourceIdModel.workerList![i].id,
+            resourceId: getAllTimeListByResourceIdModel.workerList![i].resourceId,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            isActive: getAllTimeListByResourceIdModel.workerList![i].isActive,
+            booking: getAllTimeListByResourceIdModel.workerList![i].booking,
+            isSelected: false,
+          ));
+        }
+
+        log("Time List : ${timeList.length}");
+
+      } else {
+        log("getResourcesTimeListFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+
+    } catch(e) {
+      log("getResourcesTimeListFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      isLoading(true);
+    }
+
+    return timeList;
+  }
+
+  // ///4) Get Selected Service wise resource time list
+  // getSelectedServiceWiseResourceSlotFunction() async {
+  //   String s1 = selectedServiceList.toString();
+  //   String s2 = s1.substring(1, s1.length-1);
+  //   String serviceId = s2.replaceAll(" ", "");
+  //   List<TimingSlot> timeList = [];
+  //
+  //   isLoading(true);
+  //   String url = ApiUrl.selectedServicesWiseResourceSlotApi + "?Id=$vendorId" + "&Service=$serviceId";
+  //   log("Selected Service Wise Resource Slot Api Url : $url");
+  //
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+  //   } catch(e) {
+  //     log("Selected Service Wise Resource Slot Error ::: $e");
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  //
+  // }
 
   /// 4) Get Resources Date & Time Wise List
   getResourcesDateAndTimeListFunction({required String resId}) async {
@@ -607,6 +732,9 @@ class BookAppointmentScreenController extends GetxController {
       isLoading(false);
     }
   }
+
+
+
 
   @override
   void onInit() {

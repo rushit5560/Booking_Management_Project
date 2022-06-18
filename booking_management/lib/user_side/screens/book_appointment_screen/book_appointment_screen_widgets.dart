@@ -148,13 +148,21 @@ class BookingServicesListModule extends StatelessWidget {
         children: [
           Checkbox(
             value: singleItem.isSelect,
-            onChanged: (value) {
+            onChanged: (value) async {
               singleItem.isSelect = !singleItem.isSelect;
               screenController.loadUI();
 
-              /// Selected Service Add in List
-              screenController.selectedServiceList.add(singleItem.id);
-              log("singleItem.id : ${singleItem.id}");
+              if(singleItem.isSelect == true) {
+                // Selected Service Add in List
+                screenController.selectedServiceList.add(singleItem.id);
+                log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
+              } else {
+                // Selected Service Remove From the List
+                screenController.selectedServiceList.removeWhere((element) => singleItem.id == element);
+                log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
+              }
+
+              await screenController.getAllResourcesListByIdFunction();
 
             },
           ),

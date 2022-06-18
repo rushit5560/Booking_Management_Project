@@ -6,7 +6,6 @@ import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../common_modules/constants/app_images.dart';

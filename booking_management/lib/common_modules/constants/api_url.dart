@@ -24,7 +24,7 @@ class ApiUrl {
   static const userAddReviewApi = apiMainPath + "Reviews/APIAddUpdateReview";
 
   /// Customer - Home Screen API
-  static const getAllCategoryApi = apiMainPath + "API/APIBusinesstypelist";
+  static const getAllCategoryApi = apiMainPath + "API/AvailableCategorieslist";
   static const getAllUpcomingAppointment = apiMainPath + "API/customerdashboard";
   static const searchVendorApi = apiMainPath + "API/Searchbussinesstype";
   static const upcomingAppointmentDetailsApi = apiMainPath + "API/customerdashboardView";
@@ -36,7 +36,7 @@ class ApiUrl {
   static const getFavVendorApi = apiMainPath + "API/GetFavourites";
 
   /// Cst - Vendor Details
-  static const vendorDetailsApi = apiMainPath + "API/getvendordetails";
+  static const vendorDetailsApi = apiMainPath + "API/GetVendorDetails";
 
   /// Cst - Get Vendor ReviewList
   static const vendorReviewApi = apiMainPath + "API/customerReviewList";
@@ -49,6 +49,8 @@ class ApiUrl {
   static const vendorBookingResourcesApi = apiMainPath + "API/GetALLResourceByVendorId";
   static const bookSelectedSlotApi = apiMainPath + "API/AddBookingSchedule";
   static const bookSelectedAvailableTimeSlotApi = apiMainPath + "API/AddBookingScheduleResource";
+
+  static const selectedServicesWiseResourceSlotSearchApi = apiMainPath + "API/BookingResourceSchedule";
 
   /// Cst - Checkout
   static const customerCheckoutApi = apiMainPath + "API/Checkout";

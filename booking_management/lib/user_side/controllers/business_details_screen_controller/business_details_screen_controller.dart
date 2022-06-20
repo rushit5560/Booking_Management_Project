@@ -52,7 +52,7 @@ class BusinessDetailsScreenController extends GetxController {
   VendorDetailsData? vendorDetailsData;
   RxBool isFavourite = false.obs;
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   /// Get Vendor Details By Id
   getVendorDetailsByIdFunction() async {
@@ -62,7 +62,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Vendor Details Response : ${response.body}");
 
       VendorDetailsModel vendorDetailsModel =
@@ -131,7 +131,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("vendor Review API Response : ${response.body}");
 
       GetVendorReviewsModel getVendorReviewsModel =
@@ -166,7 +166,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
@@ -236,7 +236,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Business Hours API URL : ${response.body}");
 
       GetBusinessHoursModel getBusinessHoursModel =
@@ -298,7 +298,7 @@ class BusinessDetailsScreenController extends GetxController {
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
@@ -342,7 +342,7 @@ class BusinessDetailsScreenController extends GetxController {
     log("Get Fav Vendor API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("response : ${response.body}");
 
       GetFavoriteVendorModel getFavoriteVendorModel = GetFavoriteVendorModel.fromJson(json.decode(response.body));

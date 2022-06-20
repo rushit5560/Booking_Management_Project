@@ -13,7 +13,7 @@ class InvoiceScreenController extends GetxController {
   String orderId = Get.arguments;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   bool isService = false;
 
@@ -28,7 +28,7 @@ class InvoiceScreenController extends GetxController {
     log("Invoice Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Invoice Details API Response : ${response.body}");
 
       InvoiceDetailsModel invoiceDetailsModel = InvoiceDetailsModel.fromJson(json.decode(response.body));

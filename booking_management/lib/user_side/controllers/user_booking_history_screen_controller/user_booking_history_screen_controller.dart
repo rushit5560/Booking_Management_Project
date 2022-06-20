@@ -13,7 +13,7 @@ class UserBookingHistoryScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   List<Datum> historyList = [];
 
@@ -25,7 +25,7 @@ class UserBookingHistoryScreenController extends GetxController{
     log('customer Id: ${UserDetails.uniqueId}');
     log('Url : $url');
     try{
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
 
       log('Response : ${response.body}');
 

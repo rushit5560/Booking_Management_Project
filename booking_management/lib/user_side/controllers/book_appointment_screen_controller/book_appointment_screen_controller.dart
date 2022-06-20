@@ -21,7 +21,7 @@ class BookAppointmentScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   VendorBookingWorkerList? bookVendorDetails;
   RxBool isServiceSlot = false.obs;
@@ -63,7 +63,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Book Vendor Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Book Vendor Details Response : ${response.body}");
 
       GetVendorBookingModel getVendorBookingModel = GetVendorBookingModel.fromJson(json.decode(response.body));
@@ -104,7 +104,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Services List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Services List API Response : ${response.body}");
 
       GetBookingServiceModel getBookingServiceModel = GetBookingServiceModel.fromJson(json.decode(response.body));
@@ -134,7 +134,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Booking Resources API URL  :$url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Resources API Response : ${response.body}");
 
       GetBookingResourcesModel getBookingResourcesModel = GetBookingResourcesModel.fromJson(json.decode(response.body));
@@ -259,7 +259,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Resources Time List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
@@ -345,7 +345,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Resources Time List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
@@ -417,7 +417,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Resources Time List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
@@ -466,7 +466,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Resources Time List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
@@ -517,7 +517,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Resources Time List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
@@ -568,7 +568,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get Resources Additional Time API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
@@ -618,7 +618,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get All Additional Slot API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log('Response : ${response.body}');
 
       GetAllAdditionalSlotModel getAllAdditionalSlotModel = GetAllAdditionalSlotModel.fromJson(json.decode(response.body));
@@ -659,7 +659,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Book Selected Slot API URL : $url");
 
     try {
-      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.post(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Book Slot API Response : ${response.body}");
 
       BookAppointmentModel bookAppointmentModel = BookAppointmentModel.fromJson(json.decode(response.body));
@@ -694,7 +694,7 @@ class BookAppointmentScreenController extends GetxController {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
 
       if(additionalSlotWorkerList.id == 0) {

@@ -25,7 +25,7 @@ class UserSearchResultsScreenController extends GetxController {
   RxBool isServiceCalenderShow = false.obs;
   DateTime selectedDay = DateTime.now();
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
   TextEditingController categoryFieldController = TextEditingController();
   List<SearchVendorDatum> searchVendorList = [];
 
@@ -43,7 +43,7 @@ class UserSearchResultsScreenController extends GetxController {
     log("Search Vendor List API URL : $url");
 
     try {
-    http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+    http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
     // log("Search Vendor List ${response.body}");
 
     GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
@@ -108,7 +108,7 @@ class UserSearchResultsScreenController extends GetxController {
     log("Search Vendor List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
 
       GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllSearchVendorModel.success.obs;
@@ -147,7 +147,7 @@ class UserSearchResultsScreenController extends GetxController {
     log("Search Category Wise API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Search Vendor List ${response.body}");
 
       GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
@@ -217,7 +217,7 @@ class UserSearchResultsScreenController extends GetxController {
 
     log("Search Category And Rating Wise API URL : $url");
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Search Vendor List ${response.body}");
 
       GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));

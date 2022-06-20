@@ -14,7 +14,7 @@ class UserFavouriteListScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
   List<FavouriteVendorDetails> favouriteVendorList = [];
 
   /// Get Favourite Vendor List
@@ -24,7 +24,7 @@ class UserFavouriteListScreenController extends GetxController {
     log("Favourite vendor List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Favourite Vendor Response : ${response.body}");
 
       GetFavouriteVendorModel getFavouriteVendorModel = GetFavouriteVendorModel.fromJson(json.decode(response.body));
@@ -55,7 +55,7 @@ class UserFavouriteListScreenController extends GetxController {
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";

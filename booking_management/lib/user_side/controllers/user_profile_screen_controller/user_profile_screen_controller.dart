@@ -20,7 +20,7 @@ class UserProfileScreenController extends GetxController{
   DateTime selectedDate = DateTime.now();
   RxString gender = 'Male'.obs;
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
   final nameTextFieldController = TextEditingController();
@@ -92,7 +92,7 @@ class UserProfileScreenController extends GetxController{
 
     try{
 
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log('Get All User Details Response : ${response.body}');
 
       UserProfileDetailsModel userProfileDetailsModel = UserProfileDetailsModel.fromJson(json.decode(response.body));

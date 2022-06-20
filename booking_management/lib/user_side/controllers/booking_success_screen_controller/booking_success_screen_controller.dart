@@ -20,7 +20,7 @@ class BookingSuccessScreenController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   String bookingId = "";
   String vendorName = "";
@@ -40,7 +40,7 @@ class BookingSuccessScreenController extends GetxController {
     log("Success API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Booking Success Response : ${response.body}");
 
       BookingSuccessModel bookingSuccessModel = BookingSuccessModel.fromJson(json.decode(response.body));
@@ -85,7 +85,7 @@ class BookingSuccessScreenController extends GetxController {
     log("Get User Fcm Token : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFcmTokeModel.success.obs;
       log("getFcmTokeModel.success : ${getFcmTokeModel.success}");
@@ -126,7 +126,7 @@ class BookingSuccessScreenController extends GetxController {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
       request.fields['Message'] = message;
       request.fields['NotificationFor'] = "Booked Appointment";

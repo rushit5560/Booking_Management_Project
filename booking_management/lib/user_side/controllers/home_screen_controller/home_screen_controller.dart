@@ -19,7 +19,7 @@ class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   final TextEditingController categoryFieldController = TextEditingController();
   final TextEditingController locationFieldController = TextEditingController();
@@ -47,7 +47,7 @@ class HomeScreenController extends GetxController {
     log("Category API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       // log("Category Response : ${response.body}");
 
       GetAllCategoryModel getAllCategoryModel = GetAllCategoryModel.fromJson(json.decode(response.body));
@@ -137,7 +137,7 @@ class HomeScreenController extends GetxController {
     log("Upcoming Appointment API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
 
       GetAllAppointmentListModel getAllAppointmentListModel = GetAllAppointmentListModel.fromJson(json.decode(response.body));
 
@@ -169,7 +169,7 @@ class HomeScreenController extends GetxController {
     log("Upcoming Appointment API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
 
       GetAllAppointmentListModel getAllAppointmentListModel = GetAllAppointmentListModel.fromJson(json.decode(response.body));
 
@@ -230,7 +230,7 @@ class HomeScreenController extends GetxController {
     log("Appointment Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Appointment Details Response : ${response.body}");
 
       GetAppointmentDetailsModel getAppointmentDetailsModel = GetAppointmentDetailsModel.fromJson(json.decode(response.body));

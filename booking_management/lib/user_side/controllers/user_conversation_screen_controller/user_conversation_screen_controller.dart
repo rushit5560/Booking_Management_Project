@@ -23,7 +23,7 @@ class UserConversationScreenController extends GetxController {
   /// Getting From API
   String oppositeUserFcmToken = "";
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -159,7 +159,7 @@ class UserConversationScreenController extends GetxController {
     log("Get User Fcm Token : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFcmTokeModel.success.obs;
       log("getFcmTokeModel.success : ${getFcmTokeModel.success}");

@@ -25,7 +25,7 @@ class UserCheckoutScreenController extends GetxController{
   String secretKey = "";
   String publishableKey = "";
 
-  ApiHeader apiHeader = ApiHeader();
+  // ApiHeader apiHeader = ApiHeader();
 
   /// For Stripe
   Map<String, dynamic>? paymentIntentData;
@@ -64,7 +64,7 @@ class UserCheckoutScreenController extends GetxController{
     log("Get Checkout API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Checkout Response : ${response.body}");
 
       CheckoutModel checkoutModel = CheckoutModel.fromJson(json.decode(response.body));
@@ -93,7 +93,7 @@ class UserCheckoutScreenController extends GetxController{
     log("Checkout Summary API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Checkout Summary Response : ${response.body}");
 
       CheckoutSummaryModel checkoutSummaryModel = CheckoutSummaryModel.fromJson(json.decode(response.body));
@@ -161,7 +161,7 @@ class UserCheckoutScreenController extends GetxController{
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
       request.fields['BookingId'] = bookingId;
       request.fields['sessionId'] = secretKey;
@@ -203,7 +203,7 @@ class UserCheckoutScreenController extends GetxController{
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+      // request.headers.addAll(apiHeader.headers);
 
       request.fields['BookingId'] = bookingId;
       request.fields['Email'] = emailFieldController.text.trim().toLowerCase();
@@ -377,7 +377,7 @@ class UserCheckoutScreenController extends GetxController{
     log("Get Stripe Secret Key API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Stripe Secret Key Response : ${response.body}");
 
       GetStripeSecretKeyModel getStripeSecretKeyModel = GetStripeSecretKeyModel.fromJson(json.decode(response.body));

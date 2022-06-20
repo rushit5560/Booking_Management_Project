@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_logos.dart';
@@ -101,22 +105,23 @@ class SearchAppointmentField extends StatelessWidget {
 }
 
 class PendingListTextModule extends StatelessWidget {
-  PendingListTextModule({Key? key}) : super(key: key);
+  final String text;
+  PendingListTextModule({Key? key, required this.text}) : super(key: key);
   final screenController = Get.find<VendorHomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: const [
+      children: [
         Text(
-          'Today Appointment List',
-          style: TextStyle(
+          text,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -304,3 +309,271 @@ class TodayAppointmentListModule extends StatelessWidget {
   }*/
 
 }
+
+
+class ResourcesModule extends StatelessWidget {
+  ResourcesModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorHomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: screenController.allResourcesList.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i) {
+        BookingResourceWorkerData singleItem = screenController.allResourcesList[i];
+        return _resourcesListTile(singleItem);
+      },
+    );
+  }
+
+  Widget _resourcesListTile(BookingResourceWorkerData singleItem) {
+    String imgUrl = ApiUrl.apiImagePath + singleItem.image;
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(imgUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      singleItem.resourceName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      singleItem.details,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 5),
+                Text(
+                    "\$${singleItem.price}",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                    // screenController.isPriceDisplay.value
+                    //     ? Text(
+                    //   "\$${singleItem.price}",
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // )
+                    //     : Container(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          singleItem.timingList.isEmpty
+              ? Container()
+              : GridView.builder(
+            itemCount: singleItem.timingList.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 3,
+                crossAxisSpacing: 3,
+                childAspectRatio: 5
+            ),
+            itemBuilder: (context, i) {
+              return GestureDetector(
+                onTap: () async {
+                  if(singleItem.timingList[i].booking == false) {
+                    await screenController.getBookingDetailsFunction(
+                        bookingId: singleItem.timingList[i].id.toString(),
+                    );
+                    _bottomSheetModule(context);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5,
+                          color: Colors.grey.shade300,
+                          blurStyle: BlurStyle.outer,
+                        ),
+                      ],
+                      color: singleItem.timingList[i].booking == false
+                          ? Colors.orangeAccent
+                          : null
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        singleItem.timingList[i].startDateTime,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: singleItem.timingList[i].isSelected == true
+                                ? Colors.white
+                                : Colors.black
+                        ),
+                      ),
+
+                      Text(
+                        "-",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: singleItem.timingList[i].isSelected == true
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                      ).commonSymmetricPadding(horizontal: 5),
+
+                      Text(
+                        singleItem.timingList[i].endDateTime,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                            color: singleItem.timingList[i].isSelected == true
+                                ? Colors.white
+                                : Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ).commonAllSidePadding(3),
+              );
+            },
+          ),
+        ],
+      ).commonAllSidePadding(8),
+    ).commonSymmetricPadding(vertical: 8);
+  }
+
+
+  Future _bottomSheetModule(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        isDismissible: false,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Slot Details",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Get.back(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: const Icon(Icons.close),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(thickness: 1),
+
+                  _singleItemModule(heading: "Customer Name:", value: screenController.customerName),
+                  const SizedBox(height: 5),
+                  _singleItemModule(heading: "Vendor Name:", value: screenController.vendorName),
+                  const SizedBox(height: 5),
+                  _singleItemModule(heading: "Details:", value: screenController.details),
+                  const SizedBox(height: 5),
+                  const Text(
+                    "Service Name:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  ListView.builder(
+                    itemCount: screenController.serviceName.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, i) {
+                      return Text(
+                        screenController.serviceName[i],
+                        style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18
+                        ),);
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  _singleItemModule(heading: "Availability:", value: screenController.availability),
+                  const SizedBox(height: 5),
+                  _singleItemModule(heading: "Paid Amount:", value: screenController.amountPaid),
+
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+
+  Widget _singleItemModule({required String heading, required String value}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          heading,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        // const SizedBox(height: 5),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 18
+          ),
+        ),
+      ],
+    );
+  }
+
+}
+

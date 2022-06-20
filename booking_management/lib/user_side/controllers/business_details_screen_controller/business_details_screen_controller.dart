@@ -52,7 +52,7 @@ class BusinessDetailsScreenController extends GetxController {
   VendorDetailsData? vendorDetailsData;
   RxBool isFavourite = false.obs;
 
-  // ApiHeader apiHeader = ApiHeader();
+  ApiHeader apiHeader = ApiHeader();
 
   /// Get Vendor Details By Id
   getVendorDetailsByIdFunction() async {
@@ -131,7 +131,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       http.Response response =
-          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("vendor Review API Response : ${response.body}");
 
       GetVendorReviewsModel getVendorReviewsModel =

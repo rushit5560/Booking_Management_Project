@@ -222,8 +222,8 @@ class OverviewModule extends StatelessWidget {
           initialRating: screenController.vendorDetailsData!.ratting.toDouble(),
           minRating: 1,
           direction: Axis.horizontal,
-          // allowHalfRating: true,
-          itemCount: screenController.vendorDetailsData!.ratting,
+          allowHalfRating: true,
+          itemCount: 5,
           itemSize: 25,
           itemBuilder: (context, _) => const Icon(
             Icons.star,

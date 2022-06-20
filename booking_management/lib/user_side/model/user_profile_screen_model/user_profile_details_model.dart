@@ -59,12 +59,12 @@ class Data {
   String phoneNo;
   String gender;
   String userName;
-  DateTime dateOfBirth;
+  String dateOfBirth;
   bool isActive;
   String userId;
   // ApplicationUser applicationUser;
   String modifiedBy;
-  String modifiedOn;
+  DateTime modifiedOn;
   // ApplicationUser applicationUserModifier;
   String passwordHash;
   String notes;
@@ -79,12 +79,12 @@ class Data {
     phoneNo: json["phoneNo"] ?? "",
     gender: json["gender"] ?? "",
     userName: json["userName"] ?? "",
-    dateOfBirth: DateTime.parse(json["dateOfBirth"] ?? DateTime.now()),
+    dateOfBirth: json["dateOfBirth"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
     // applicationUser: ApplicationUser.fromJson(json["applicationUser"]),
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
+    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
     // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"]),
     passwordHash: json["passwordHash"] ?? "",
     notes: json["notes"] ?? "",
@@ -100,12 +100,12 @@ class Data {
     "phoneNo": phoneNo,
     "gender": gender,
     "userName": userName,
-    "dateOfBirth": dateOfBirth.toIso8601String(),
+    "dateOfBirth": dateOfBirth,
     "isActive": isActive,
     "userId": userId,
     // "applicationUser": applicationUser.toJson(),
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
+    "modifiedOn": modifiedOn.toIso8601String(),
     // "applicationUserModifier": applicationUserModifier.toJson(),
     "passwordHash": passwordHash,
     "notes": notes,

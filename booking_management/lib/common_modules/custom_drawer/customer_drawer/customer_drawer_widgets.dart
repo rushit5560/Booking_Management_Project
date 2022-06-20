@@ -1,5 +1,6 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_favourite_list_screen/user_favourite_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,13 +93,14 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     } else if (userSettingScreenOption == CustomerDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(), transition: Transition.zoom);
     }
-
     else if (userSettingScreenOption == CustomerDrawerOption.logOut) {
       await customDrawerController.signOutFunction();
     }
-
     else if(userSettingScreenOption == CustomerDrawerOption.favourites) {
       Get.to(()=> UserFavouriteListScreen(), transition: Transition.zoom);
+    }
+    else if(userSettingScreenOption == CustomerDrawerOption.login) {
+      Get.to(()=> SignInScreen(), transition: Transition.zoom);
     }
   }
 }

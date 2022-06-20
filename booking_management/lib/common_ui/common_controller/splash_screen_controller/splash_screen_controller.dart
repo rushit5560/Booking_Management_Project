@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
-import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/user_side/screens/home_screen/home_screen.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../common_modules/constants/api_url.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../common_modules/constants/app_logos.dart';
 import '../../model/splash_screen_model/get_logo_model.dart';
+
+
 
 class SplashScreenController extends GetxController {
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
@@ -46,18 +45,17 @@ class SplashScreenController extends GetxController {
         log("getAppLogoFunction Else Else");
       }
 
-
     } catch(e) {
       log("Get Application Logo Error ::: $e");
     } finally {
       isLoading(false);
-      Timer(const Duration(seconds: 2), () => goToNextScreen());
+      Timer(const Duration(seconds: 2), () async => await goToNextScreen());
     }
   }
 
 
   /// Go To Next Screen
-  goToNextScreen()async {
+  goToNextScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserDetails.isUserLoggedIn = prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
     UserDetails.apiToken = prefs.getString(sharedPreferenceData.apiTokenKey) ?? "";
@@ -98,6 +96,8 @@ class SplashScreenController extends GetxController {
 
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');
+
+
     if(isLoggedIn == true) {
       if(UserDetails.roleName == "Customer") {
         log('Role Name : ${UserDetails.roleName}');
@@ -107,7 +107,7 @@ class SplashScreenController extends GetxController {
         Get.offAll(() => VendorIndexScreen(), transition: Transition.zoom);
       }
     } else {
-      Get.offAll(()=> SignInScreen(), transition: Transition.zoom);
+      Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
     }
 
   }

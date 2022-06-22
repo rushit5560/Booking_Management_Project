@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -1026,14 +1028,18 @@ class BookButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
 
-        if(screenController.selectedResourceTimeSlotId == 0) {
-         Fluttertoast.showToast(msg: "Please select time slot!");
-        } else {
-          if (screenController.isServiceSlot.value) {
-            await screenController.bookSelectedSlotFunction();
+        if(UserDetails.isUserLoggedIn == true) {
+          if (screenController.selectedResourceTimeSlotId == 0) {
+            Fluttertoast.showToast(msg: "Please select time slot!");
           } else {
-            await screenController.bookAvailableTimeSlotFunction();
+            if (screenController.isServiceSlot.value) {
+              await screenController.bookSelectedSlotFunction();
+            } else {
+              await screenController.bookAvailableTimeSlotFunction();
+            }
           }
+        } else if(UserDetails.isUserLoggedIn == false) {
+          await _bottomSheetModule(context);
         }
       },
       child: Container(
@@ -1064,5 +1070,92 @@ class BookButtonModule extends StatelessWidget {
       ),
     );
   }
+
+
+  Future _bottomSheetModule(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        // isDismissible: false,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Almost there!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
+                        child: const Icon(
+                          Icons.close_rounded
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(thickness: 1, color: Colors.grey),
+
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        "Log in",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Text(
+                        " to book faster with your saved details",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+
+                Row(
+                  children: const [
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                      // size: 20,
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        "Book appointments and complete online forms faster with saved details",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
 }
 

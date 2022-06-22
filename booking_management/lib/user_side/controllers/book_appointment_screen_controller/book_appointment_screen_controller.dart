@@ -146,7 +146,6 @@ class BookAppointmentScreenController extends GetxController {
 
         if(searchType2 == SearchType2.none) {
           log("searchType2 : $searchType2");
-          //todo - newapi
           if(selectedServiceList.isEmpty) {
             for(int i = 0; i < allResourcesList.length; i++) {
               allResourcesList[i].timingList =
@@ -184,7 +183,6 @@ class BookAppointmentScreenController extends GetxController {
         }
         else if(searchType2 == SearchType2.dateTimeWise) {
           log("searchType2 : $searchType2");
-          //todo - new api
           if(selectedServiceList.isEmpty) {
             for(int i = 0; i < allResourcesList.length; i++) {
               allResourcesList[i].timingList =

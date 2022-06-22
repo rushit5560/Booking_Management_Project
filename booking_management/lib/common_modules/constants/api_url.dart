@@ -3,8 +3,8 @@ class ApiUrl {
   // static const apiMainPath = "https://setdaytime.com/";
   // static const apiImagePath = "https://setdaytime.com/";
 
-  static const apiMainPath = "http://192.168.0.110:8080/";
-  static const apiImagePath = "http://192.168.0.110:8080/";
+  static const apiMainPath = "http://192.168.29.218:8080/";
+  static const apiImagePath = "http://192.168.29.218:8080/";
 
 
   /// Common API

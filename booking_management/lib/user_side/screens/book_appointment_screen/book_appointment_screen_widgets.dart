@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -1039,7 +1039,11 @@ class BookButtonModule extends StatelessWidget {
             }
           }
         } else if(UserDetails.isUserLoggedIn == false) {
-          await _bottomSheetModule(context);
+          if (screenController.selectedResourceTimeSlotId == 0) {
+            Fluttertoast.showToast(msg: "Please select time slot!");
+          } else {
+            await _bottomSheetModule(context);
+          }
         }
       },
       child: Container(
@@ -1075,11 +1079,12 @@ class BookButtonModule extends StatelessWidget {
   Future _bottomSheetModule(BuildContext context) {
     return showModalBottomSheet(
         context: context,
-        // isDismissible: false,
+        isDismissible: false,
         builder: (context) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1098,7 +1103,7 @@ class BookButtonModule extends StatelessWidget {
                           border: Border.all(),
                         ),
                         child: const Icon(
-                          Icons.close_rounded
+                            Icons.close_rounded
                         ),
                       ),
                     ),
@@ -1130,31 +1135,161 @@ class BookButtonModule extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 8),
+
+                _singleModule(text: "Book appointments and complete online forms faster with saved details"),
+
+                const SizedBox(height: 5),
+                _singleModule(text: "Save your favourite healthcare providers"),
+
+                const SizedBox(height: 5),
+                _singleModule(text: "Manage your appointments easily"),
+
+                const SizedBox(height: 10),
+                _socialMediaModule(),
+
+                const SizedBox(height: 10),
+                _signUpModule(),
                 const SizedBox(height: 5),
 
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                      // size: 20,
-                    ),
-                    SizedBox(width: 5),
-                    Expanded(
-                      child: Text(
-                        "Book appointments and complete online forms faster with saved details",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
+                const Text(
+                  "or",
+                  style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
+                const SizedBox(height: 8),
+
+                guestButtonModule(),
+
               ],
             ),
           );
-        });
+        }
+        );
+  }
+
+  Widget _singleModule({required String text}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(
+          Icons.check,
+          color: Colors.green,
+          // size: 20,
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _socialMediaModule() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            await screenController.signInWithGoogleFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.googleLoginImg),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 60),
+        GestureDetector(
+          onTap: () async {
+            // await userSignUpScreenController.signInWithFacebookFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.fbLoginImg),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _signUpModule() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Don't have an account? ",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {},
+              child: const Text(
+                "Sign up ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+
+          ],
+        ),
+        const Text(
+          "to book faster next time",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget guestButtonModule() {
+    return GestureDetector(
+      onTap: () async {
+        if (screenController.isServiceSlot.value) {
+          await screenController.bookSelectedSlotFunction();
+        } else {
+          await screenController.bookAvailableTimeSlotFunction();
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Text(
+          "Continue as guest",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ).commonSymmetricPadding(horizontal: 30, vertical: 15),
+      ),
+    );
   }
 
 }

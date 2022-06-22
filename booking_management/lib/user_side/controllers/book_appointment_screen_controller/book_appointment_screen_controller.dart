@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/user_side/model/user_sign_up_model/user_sign_up_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:get/get.dart';
@@ -20,6 +23,7 @@ class BookAppointmentScreenController extends GetxController {
   int vendorId = Get.arguments;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
+  RxInt isStatus = 0.obs;
 
   // ApiHeader apiHeader = ApiHeader();
 
@@ -777,5 +781,57 @@ class BookAppointmentScreenController extends GetxController {
     selectedTime.value = "$hour:$minute:00";
     log("selectedDate : ${selectedDate.value}");
   }
+
+
+
+Future signInWithGoogleFunction() async {
+  isLoading(true);
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  googleSignIn.signOut();
+  final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+  if (googleSignInAccount != null) {
+    final GoogleSignInAuthentication googleSignInAuthentication =
+    await googleSignInAccount.authentication;
+    final AuthCredential authCredential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+    // Getting users credential
+    UserCredential result = await auth.signInWithCredential(authCredential);
+    // User? user = result.user;
+    log("Email: ${result.user!.email}");
+    log("Username: ${result.user!.displayName}");
+    log("User Id: ${result.user!.uid}");
+
+    //login = prefs.getString('userId');
+    //print(login);
+    if (result != null) {
+      String userName = result.user!.displayName!;
+      String email = result.user!.email!;
+      // userNameFieldController.text = userName.wordCapitalize();
+      // emailFieldController.text = email;
+      // passwordFieldController.text = "${userNameFieldController.text}@123";
+
+      // prefs.setString('userId', result.user!.uid);
+      // prefs.setString('userName', result.user!.displayName!);
+      // prefs.setString('email', result.user!.email!);
+      // prefs.setString('photo', result.user!.photoURL!);
+      // prefs.setBool('isLoggedIn', false);
+
+      // Get.offAll(() => IndexScreen());
+
+      if (isServiceSlot.value) {
+        await bookSelectedSlotFunction();
+      } else {
+        await bookAvailableTimeSlotFunction();
+      }
+
+    }
+  }
+  isLoading(false);
+}
+
 
 }

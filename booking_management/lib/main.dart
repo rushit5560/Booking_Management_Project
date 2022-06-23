@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'common_modules/constants/payment_keys.dart';
@@ -28,6 +29,9 @@ late AndroidNotificationChannel channel;
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+
+
 
 
 void main() async {
@@ -95,6 +99,9 @@ void main() async {
 
   firebaseMessaging.setForegroundNotificationPresentationOptions(sound: true);
 
+ // HttpOverrides.global = new MyHttpOverrides();
+ //  log("Console Log Void Main");
+ //  Fluttertoast.showToast(msg: "Console Log Void Main");
   runApp(const MyApp());
 }
 
@@ -179,6 +186,9 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown
     ]);
 
+    // log("Console Log runApp");
+    // Fluttertoast.showToast(msg: "Console Log runApp");
+
     return GetMaterialApp(
       title: "Booking Management System",
       debugShowCheckedModeBanner: false,
@@ -189,3 +199,11 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+/*class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}*/

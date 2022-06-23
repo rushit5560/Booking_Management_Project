@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/common_widgets.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,10 @@ class HomeScreen extends StatelessWidget {
                       // homeScreenController.isServiceCalenderShow.value
                       //     ? SelectDateModule() : Container(),
                       const SizedBox(height: 10),
-                      UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20),
+
+                      UserDetails.isUserLoggedIn == true ?
+                      UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20)
+                          :  Container(),
                       // const SizedBox(height: 30),
                       PartialCategoryListModule()
                           .commonSymmetricPadding(horizontal: 20),

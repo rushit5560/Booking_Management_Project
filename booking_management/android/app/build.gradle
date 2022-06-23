@@ -25,7 +25,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+//configurations.all {
+//    resolutionStrategy { force 'androidx.core:core-ktx:1.6.21' }
+//}
+
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileSdkVersion 31
 
     compileOptions {

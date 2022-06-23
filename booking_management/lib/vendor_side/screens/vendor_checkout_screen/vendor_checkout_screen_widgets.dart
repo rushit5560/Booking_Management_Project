@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../controllers/vendor_checkout_screen_controller/vendor_checkout_screen_controller.dart';
 
-VendorCheckoutScreenController screenController = Get.find<VendorCheckoutScreenController>();
+
 
 class VendorSelectPaymentMethod extends StatelessWidget {
-  const VendorSelectPaymentMethod({Key? key}) : super(key: key);
+   VendorSelectPaymentMethod({Key? key}) : super(key: key);
+
+   VendorCheckoutScreenController screenController = Get.find<VendorCheckoutScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -131,29 +133,37 @@ class VendorSelectPaymentMethod extends StatelessWidget {
 }
 
 class PayNowButtonModule extends StatelessWidget {
-  const PayNowButtonModule({Key? key}) : super(key: key);
+  PayNowButtonModule({Key? key}) : super(key: key);
+
+  VendorCheckoutScreenController screenController = Get.find<VendorCheckoutScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-        child: Text(
-          'Pay Now',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
+    return GestureDetector(
+      onTap: ()async{
+        await screenController.makePayment();
+        //Get.back();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 3,
+              blurRadius: 5,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          child: Text(
+            'Pay Now',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
           ),
         ),
       ),

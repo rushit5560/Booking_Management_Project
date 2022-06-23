@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
@@ -17,6 +18,7 @@ import '../../../common_modules/constants/user_details.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreenController extends GetxController {
+  SignInRoute signInRoute = Get.arguments ?? SignInRoute.none;
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
@@ -41,8 +43,7 @@ class SignInScreenController extends GetxController {
       http.Response response = await http.post(Uri.parse(url));
       log('Response : $response');
 
-      SignInModel signInModel =
-          SignInModel.fromJson(json.decode(response.body));
+      SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
       isStatus = signInModel.statusCode.obs;
 
       log("status: $isStatus");
@@ -81,7 +82,14 @@ class SignInScreenController extends GetxController {
             businessId: ""
           );
           log("Fcm Token : ${UserDetails.fcmToken}");
-          Get.offAll(() => IndexScreen());
+          if(signInRoute == SignInRoute.fromBookScreen) {
+            Get.back();
+            Get.back();
+          } else {
+            Get.offAll(() => IndexScreen());
+          }
+
+
 
           //Get.snackbar(signInModel.message, '');
         } else if (signInModel.role[0] == "Vendor") {

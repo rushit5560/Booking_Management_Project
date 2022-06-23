@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
@@ -18,6 +19,7 @@ import 'package:http/http.dart' as http;
 
 
 class UserSignUpScreenController extends GetxController {
+  SignInRoute signInRoute = Get.arguments ?? SignInRoute.none;
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
@@ -90,7 +92,13 @@ class UserSignUpScreenController extends GetxController {
           // UserDetails.customerId = response1.data.id;
           Fluttertoast.showToast(msg: response1.message);
           clearSignUpFieldsFunction();
-          Get.off(()=> SignInScreen(), transition: Transition.zoom);
+
+          if(signInRoute == SignInRoute.fromBookScreen) {
+           Get.back();
+           Get.back();
+          } else {
+            Get.off(() => SignInScreen(), transition: Transition.zoom);
+          }
         } else {
           log('False False');
         }

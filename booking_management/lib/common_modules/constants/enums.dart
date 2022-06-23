@@ -69,3 +69,8 @@ enum SearchType2 {
    additionalSlotWise,
    anyTimeWithAdditionalSlotWise
 }
+
+enum SignInRoute {
+   none,
+   fromBookScreen
+}

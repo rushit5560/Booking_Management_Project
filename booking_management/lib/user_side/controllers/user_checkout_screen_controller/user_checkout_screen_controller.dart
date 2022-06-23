@@ -6,9 +6,7 @@ import 'package:booking_management/user_side/model/get_stripe_secret_key_model/g
 import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
@@ -18,7 +16,10 @@ import '../../model/user_checkout_screen_model/checkout_summary_model.dart';
 import '../../model/user_checkout_screen_model/confirm_checkout_model.dart';
 
 class UserCheckoutScreenController extends GetxController{
-  String bookingId = Get.arguments;
+  String bookingId = Get.arguments[0];
+  String userName = Get.arguments[1];
+  String userEmail = Get.arguments[2];
+
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   bool isPriceDisplay = false;
@@ -411,7 +412,8 @@ class UserCheckoutScreenController extends GetxController{
       emailFieldController.text = UserDetails.email.isEmpty ? "" : UserDetails.email;
       phoneFieldController.text = UserDetails.phoneNo.isEmpty ? "" : UserDetails.phoneNo;
     } else {
-
+      fNameFieldController.text = userName;
+      emailFieldController.text = userEmail;
     }
 
     getCheckoutFunction();

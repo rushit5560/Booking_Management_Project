@@ -4,6 +4,8 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/user_side/screens/user_sign_up_screen/user_sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -1033,9 +1035,9 @@ class BookButtonModule extends StatelessWidget {
             Fluttertoast.showToast(msg: "Please select time slot!");
           } else {
             if (screenController.isServiceSlot.value) {
-              await screenController.bookSelectedSlotFunction();
+              await screenController.bookSelectedSlotFunction(userName: "", email: "");
             } else {
-              await screenController.bookAvailableTimeSlotFunction();
+              await screenController.bookAvailableTimeSlotFunction(userName: "", email: "");
             }
           }
         } else if(UserDetails.isUserLoggedIn == false) {
@@ -1076,6 +1078,7 @@ class BookButtonModule extends StatelessWidget {
   }
 
 
+  /// Bottom sheet
   Future _bottomSheetModule(BuildContext context) {
     return showModalBottomSheet(
         context: context,
@@ -1114,7 +1117,9 @@ class BookButtonModule extends StatelessWidget {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        Get.to(() => SignInScreen(), arguments: SignInRoute.fromBookScreen);
+                      },
                       child: const Text(
                         "Log in",
                         style: TextStyle(
@@ -1210,7 +1215,7 @@ class BookButtonModule extends StatelessWidget {
         const SizedBox(width: 60),
         GestureDetector(
           onTap: () async {
-            // await userSignUpScreenController.signInWithFacebookFunction();
+            await screenController.signInWithFacebookFunction();
           },
           child: Container(
             height: 30,
@@ -1242,7 +1247,9 @@ class BookButtonModule extends StatelessWidget {
             ),
 
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => UserSignUpScreen(), arguments: SignInRoute.fromBookScreen);
+              },
               child: const Text(
                 "Sign up ",
                 style: TextStyle(
@@ -1270,9 +1277,9 @@ class BookButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (screenController.isServiceSlot.value) {
-          await screenController.bookSelectedSlotFunction();
+          await screenController.bookSelectedSlotFunction(userName: "",email: "");
         } else {
-          await screenController.bookAvailableTimeSlotFunction();
+          await screenController.bookAvailableTimeSlotFunction(userName: "", email: "");
         }
       },
       child: Container(

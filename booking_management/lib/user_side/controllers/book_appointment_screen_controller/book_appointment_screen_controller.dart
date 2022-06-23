@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/user_sign_up_model/user_sign_up_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +27,10 @@ class BookAppointmentScreenController extends GetxController {
   RxInt isStatus = 0.obs;
 
   // ApiHeader apiHeader = ApiHeader();
+
+  /// Fb Login
+  FacebookUserProfile? profile;
+  final FacebookLogin  plugin = FacebookLogin(debug: true);
 
   VendorBookingWorkerList? bookVendorDetails;
   RxBool isServiceSlot = false.obs;
@@ -651,7 +656,7 @@ class BookAppointmentScreenController extends GetxController {
   }
 
   /// 6) Book Slot
-  bookSelectedSlotFunction() async {
+  bookSelectedSlotFunction({required String userName, required String email}) async {
     String s1 = selectedServiceList.toString();
     String s2 = s1.substring(1, s1.length-1);
     String serviceId = s2.replaceAll(" ", "");
@@ -671,7 +676,7 @@ class BookAppointmentScreenController extends GetxController {
         Fluttertoast.showToast(msg: bookAppointmentModel.message);
         String bookingId = bookAppointmentModel.id;
         log("bookingId : $bookingId");
-        Get.to(() => UserCheckoutScreen(), arguments: bookingId);
+        Get.to(() => UserCheckoutScreen(), arguments: [bookingId, userName, email]);
       } else {
         log("bookSelectedSlotFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
@@ -686,7 +691,7 @@ class BookAppointmentScreenController extends GetxController {
   }
 
   /// 6) Book Available Time Slot
-  bookAvailableTimeSlotFunction() async {
+  bookAvailableTimeSlotFunction({required String userName, required String email}) async {
     isLoading(true);
     String url = ApiUrl.bookSelectedAvailableTimeSlotApi;
     // String url = additionalSlotWorkerList.name == "Select Additional Slot"
@@ -722,7 +727,7 @@ class BookAppointmentScreenController extends GetxController {
           Fluttertoast.showToast(msg: bookAppointmentModel.message);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
-          Get.to(() => UserCheckoutScreen(), arguments: bookingId);
+          Get.to(() => UserCheckoutScreen(), arguments: [bookingId, userName, email]);
         } else {
           log("bookAvailableTimeSlotFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
@@ -783,55 +788,95 @@ class BookAppointmentScreenController extends GetxController {
   }
 
 
+  Future signInWithGoogleFunction() async {
+    isLoading(true);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    googleSignIn.signOut();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
 
-Future signInWithGoogleFunction() async {
-  isLoading(true);
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-  googleSignIn.signOut();
-  final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  if (googleSignInAccount != null) {
-    final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount.authentication;
-    final AuthCredential authCredential = GoogleAuthProvider.credential(
-        idToken: googleSignInAuthentication.idToken,
-        accessToken: googleSignInAuthentication.accessToken);
+      // Getting users credential
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      // User? user = result.user;
+      log("Email: ${result.user!.email}");
+      log("Username: ${result.user!.displayName}");
+      log("User Id: ${result.user!.uid}");
 
-    // Getting users credential
-    UserCredential result = await auth.signInWithCredential(authCredential);
-    // User? user = result.user;
-    log("Email: ${result.user!.email}");
-    log("Username: ${result.user!.displayName}");
-    log("User Id: ${result.user!.uid}");
+      //login = prefs.getString('userId');
+      //print(login);
+      if (result != null) {
+        String userName = result.user!.displayName!;
+        String email = result.user!.email!;
+        // userNameFieldController.text = userName.wordCapitalize();
+        // emailFieldController.text = email;
+        // passwordFieldController.text = "${userNameFieldController.text}@123";
 
-    //login = prefs.getString('userId');
-    //print(login);
-    if (result != null) {
-      String userName = result.user!.displayName!;
-      String email = result.user!.email!;
-      // userNameFieldController.text = userName.wordCapitalize();
-      // emailFieldController.text = email;
-      // passwordFieldController.text = "${userNameFieldController.text}@123";
+        // prefs.setString('userId', result.user!.uid);
+        // prefs.setString('userName', result.user!.displayName!);
+        // prefs.setString('email', result.user!.email!);
+        // prefs.setString('photo', result.user!.photoURL!);
+        // prefs.setBool('isLoggedIn', false);
 
-      // prefs.setString('userId', result.user!.uid);
-      // prefs.setString('userName', result.user!.displayName!);
-      // prefs.setString('email', result.user!.email!);
-      // prefs.setString('photo', result.user!.photoURL!);
-      // prefs.setBool('isLoggedIn', false);
+        // Get.offAll(() => IndexScreen());
 
-      // Get.offAll(() => IndexScreen());
-
-      if (isServiceSlot.value) {
-        await bookSelectedSlotFunction();
-      } else {
-        await bookAvailableTimeSlotFunction();
+        if (isServiceSlot.value) {
+          await bookSelectedSlotFunction(userName: userName, email: email);
+        } else {
+          await bookAvailableTimeSlotFunction(userName: userName, email: email);
+        }
       }
+    }
+    isLoading(false);
+  }
 
+  Future signInWithFacebookFunction() async {
+    await plugin.logIn(
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ],
+    );
+
+    await subPartOfFacebookLogin();
+    await plugin.logOut();
+  }
+
+  subPartOfFacebookLogin() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    final plugin1 = plugin;
+    final token = await plugin1.accessToken;
+
+    String? email;
+    String? imageUrl;
+
+    if (token != null) {
+      log("token===$token");
+      profile = await plugin1.getUserProfile();
+      log("profile===$profile");
+      if (token.permissions.contains(FacebookPermission.email.name)) {
+        email = await plugin1.getUserEmail();
+      }
+      imageUrl = await plugin1.getProfileImageUrl(width: 100);
+      if (profile != null) {
+        if (profile!.userId.isNotEmpty) {
+          String userName = profile!.name!;
+
+          if (isServiceSlot.value) {
+            await bookSelectedSlotFunction(userName: userName, email: email!);
+          } else {
+            await bookAvailableTimeSlotFunction(
+                userName: userName, email: email!);
+          }
+        }
+      }
     }
   }
-  isLoading(false);
-}
-
-
 }

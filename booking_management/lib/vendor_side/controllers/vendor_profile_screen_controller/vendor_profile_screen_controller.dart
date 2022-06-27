@@ -41,8 +41,8 @@ class VendorProfileScreenController extends GetxController{
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
-  String defaultLatitude = "";
-  String defaultLongitude = "";
+  // String defaultLatitude = "";
+  // String defaultLongitude = "";
 
   RxBool isLoading = false.obs;
   RxInt isStatus = 0.obs;
@@ -371,6 +371,7 @@ class VendorProfileScreenController extends GetxController{
 
 
   void autoCompleteSearch(String value) async {
+
     var result = await googlePlace.autocomplete.get(value);
 
     if(result != null && result.predictions != null) {

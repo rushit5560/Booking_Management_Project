@@ -10,11 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
 import '../../../common_modules/constants/enums.dart';
-
-
 
 
 class VendorProfileAppBarModule extends StatelessWidget {
@@ -480,6 +477,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   ),
                   validator: (value) => FieldValidator().validateAddress(value!),
                   onChanged: (value) {
+                    log(value);
                     if(screenController.debounce?.isActive ?? false) screenController.debounce!.cancel();
                     screenController.debounce = Timer(const Duration(milliseconds: 800), () {
                       if (value.isNotEmpty) {
@@ -515,6 +513,15 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                     log(details.result!.addressComponents![0].longName!);
                     screenController.addressTextFieldController.text = details.result!.adrAddress!;
                     screenController.addressTextFieldController.text = screenController.predictions[i].description.toString();
+                    screenController.selectedLatitude.value = details.result!.geometry!.location!.lat.toString();
+                    screenController.selectedLongitude.value = details.result!.geometry!.location!.lng.toString();
+                    screenController.isLoading(true);
+                    screenController.predictions.clear();
+                    screenController.kGooglePlex = CameraPosition(
+                      target: LatLng(double.parse(screenController.selectedLatitude.value), double.parse(screenController.selectedLongitude.value)),
+                      zoom: 16,
+                    );
+                    screenController.isLoading(false);
                   } else {
                   }
                 },

@@ -130,7 +130,7 @@ class ApiUrl {
   /// Vendor - Customer
   static const vendorMyCustomerApi = apiMainPath + "API/MycustomerIndex";
 
-  static const vendorBusinessTypeApi = apiMainPath + "API/APIBusinesstypelist";
+  static const vendorBusinessTypeApi = apiMainPath + "API/AvailableCategorieslist";
   static const getUserDetailsByIdApi = apiMainPath + "API/GetUserDetailById";
 
   static const vendorGetAllResourcesApi = apiMainPath + "API/ResourceIndex"; // Get ALL

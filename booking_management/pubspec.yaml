@@ -53,6 +53,7 @@ dependencies:
   cloud_firestore: ^3.1.11
   url_launcher: ^6.1.2
   flutter_stripe: ^2.0.1
+  google_place: ^0.4.7
   # flutter_typeahead: ^3.2.4
   # syncfusion_flutter_xlsio: ^20.1.59-beta
   # excel: ^2.0.0-null-safety-3

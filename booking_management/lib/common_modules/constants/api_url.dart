@@ -147,6 +147,9 @@ class ApiUrl {
   static const vendorResourceScheduleApi = apiMainPath + "API/ResourceSchedule";
   static const bookingDetailsApi = apiMainPath + "API/BookingResource";
 
+  /// Get Transaction
+  static const getTransactionListApi = apiMainPath + "API/CustomerOrderListIndex";
+
 
   static const logOutApi = apiMainPath + "API/Logout";
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
@@ -158,16 +159,17 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
           mobileTextField(),
           const SizedBox(height: 15),
           addressTextField(),
-          const SizedBox(height: 15),
-          cityTextField(),
-          const SizedBox(height: 15),
-          stateTextField(),
-          const SizedBox(height: 15),
-          countryTextField(),
-          const SizedBox(height: 15),
-          subUrbTextField(),
-          const SizedBox(height: 15),
-          postCodeTextField(),
+          searchAddressListModule(),
+          // const SizedBox(height: 15),
+          // cityTextField(),
+          // const SizedBox(height: 15),
+          // stateTextField(),
+          // const SizedBox(height: 15),
+          // countryTextField(),
+          // const SizedBox(height: 15),
+          // subUrbTextField(),
+          // const SizedBox(height: 15),
+          // postCodeTextField(),
           const SizedBox(height: 15),
           slotDurationTextField(context),
           // const SizedBox(height: 15),
@@ -424,31 +426,9 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   decoration: const InputDecoration(
                     hintText: "Business Name",
                     hintStyle: TextStyle(color: Colors.black),
-                    //isDense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                    //filled: true,
-                    //fillColor: Colors.white,
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
+
                   ),
                   validator: (value) => FieldValidator().validateName(value!),
                 ),
@@ -495,39 +475,80 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   decoration: const InputDecoration(
                     hintText: "Address",
                     hintStyle: TextStyle(color: Colors.black),
-                    //isDense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                    //filled: true,
-                    //fillColor: Colors.white,
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                   validator: (value) => FieldValidator().validateAddress(value!),
+                  onChanged: (value) {
+                    if(screenController.debounce?.isActive ?? false) screenController.debounce!.cancel();
+                    screenController.debounce = Timer(const Duration(milliseconds: 800), () {
+                      if (value.isNotEmpty) {
+                        screenController.autoCompleteSearch(value);
+                      } else {
+                        screenController.predictions.clear();
+                      }
+                    }
+                    );
+
+
+                  },
                 ),
               ],
-            )
+            ),
         )
       ],
     );
+  }
+
+  Widget searchAddressListModule() {
+    return screenController.predictions.isEmpty
+        ? Container()
+        : ListView.builder(
+            itemCount: screenController.predictions.length,
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              return ListTile(
+                onTap: () async {
+                  final placeId = screenController.predictions[i].placeId;
+                  final details = await screenController.googlePlace.details.get(placeId!);
+                  if(details != null && details.result != null) {
+                    log(details.result!.addressComponents![0].longName!);
+                    screenController.addressTextFieldController.text = details.result!.adrAddress!;
+                    screenController.addressTextFieldController.text = screenController.predictions[i].description.toString();
+                  } else {
+                  }
+                },
+                leading: const CircleAvatar(
+                  child: Icon(Icons.pin_drop_rounded),
+                ),
+                title: Text(
+                    screenController.predictions[i].description.toString()),
+              );
+            },
+          );
+    // : Row(
+    //   children: [
+    //     // Expanded(
+    //     //   flex: 2,
+    //     //   child: Container(),
+    //     // ),
+    //     Expanded(
+    //       // flex: 4,
+    //       child: ListView.builder(
+    //         itemCount: screenController.predictions.length,
+    //         shrinkWrap: true,
+    //         itemBuilder: (context, i) {
+    //           return ListTile(
+    //             leading: const CircleAvatar(
+    //               child: Icon(Icons.pin_drop_rounded),
+    //             ),
+    //             title: Text(screenController.predictions[i].description.toString()),
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 
   Widget mobileTextField(){
@@ -600,7 +621,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
     );
   }
 
-  Widget cityTextField(){
+  /*Widget cityTextField(){
     return Row(
       children: [
         const Expanded(
@@ -668,9 +689,9 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
         )
       ],
     );
-  }
+  }*/
 
-  Widget stateTextField(){
+  /*Widget stateTextField(){
     return Row(
       children: [
         const Expanded(
@@ -738,9 +759,9 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
         )
       ],
     );
-  }
+  }*/
 
-  Widget countryTextField(){
+ /* Widget countryTextField(){
     return Row(
       children: [
         const Expanded(
@@ -808,9 +829,9 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
         )
       ],
     );
-  }
+  }*/
 
-  Widget subUrbTextField(){
+  /*Widget subUrbTextField(){
     return Row(
       children: [
         const Expanded(
@@ -878,9 +899,9 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
         )
       ],
     );
-  }
+  }*/
 
-  Widget postCodeTextField(){
+  /*Widget postCodeTextField(){
     return Row(
       children: [
         const Expanded(
@@ -948,7 +969,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
         )
       ],
     );
-  }
+  }*/
 
   Widget slotDurationTextField(context){
     return Row(

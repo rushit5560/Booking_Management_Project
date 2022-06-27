@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_place/google_place.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,6 +36,8 @@ class VendorProfileScreenController extends GetxController{
   final postCodeTextFieldController = TextEditingController();
   final businessIdTextFieldController = TextEditingController();
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
+
+  late GooglePlace googlePlace;
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
@@ -61,6 +64,9 @@ class VendorProfileScreenController extends GetxController{
   RxList<Datum> businessTypeLists = [Datum(name: "Select Business List")].obs;
   Datum? businessDropDownValue;
   ApiHeader apiHeader = ApiHeader();
+
+  List<AutocompletePrediction> predictions = [];
+  Timer? debounce;
 
   /// Map Module
   RxBool isMapShow = false.obs;
@@ -352,12 +358,28 @@ class VendorProfileScreenController extends GetxController{
   }
 
   @override
-  void onInit() async {
+  void onInit() {
 
     //await getDataFromPrefs();
     getAllBusinessTypeList();
+
+    googlePlace = GooglePlace(ApiUrl.googleApiKey);
+
     // getUserDetailsById();
     super.onInit();
+  }
+
+
+  void autoCompleteSearch(String value) async {
+    var result = await googlePlace.autocomplete.get(value);
+
+    if(result != null && result.predictions != null) {
+      log(result.predictions!.first.description!);
+      predictions = result.predictions!;
+      isLoading(true);
+      isLoading(false);
+    }
+
   }
 
 

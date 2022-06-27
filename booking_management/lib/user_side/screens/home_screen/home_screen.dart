@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
                           SearchCategoryField(),
                           const SizedBox(height: 20),
                           SearchLocationField(),
+                          SearchLocationListModule(),
                           const SizedBox(height: 20),
                           SearchButtonModule(),
                         ],

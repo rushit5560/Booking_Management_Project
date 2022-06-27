@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/home_screen_models/get_all_appointment_list_model.dart';
 import 'package:booking_management/user_side/model/home_screen_models/search_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_place/google_place.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,10 @@ class HomeScreenController extends GetxController {
   RxBool isServiceCalenderShow = false.obs;
   RxString selectedDate = "".obs;
   RxString selectedTime = "".obs;
+
+  late GooglePlace googlePlace;
+  List<AutocompletePrediction> predictions = [];
+  Timer? debounce;
 
 
   loadUI() {
@@ -259,7 +265,22 @@ class HomeScreenController extends GetxController {
   @override
   void onInit() {
     getAllCategoriesFunction();
+    googlePlace = GooglePlace(ApiUrl.googleApiKey);
     super.onInit();
+  }
+
+  void autoCompleteLocationSearch(String value) async {
+
+    var result = await googlePlace.autocomplete.get(value);
+    
+
+    if(result != null && result.predictions != null) {
+      log(result.predictions!.first.description!);
+      predictions = result.predictions!;
+      isLoading(true);
+      isLoading(false);
+    }
+
   }
 
 }

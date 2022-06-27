@@ -37,9 +37,9 @@ class UserSearchResultsScreenController extends GetxController {
   String longitude = "";
 
   /// Search Vendor List
-  getAllSearchVendorListFunction({required String searchText}) async {
+  getAllSearchVendorListFunction({required String searchText, required String locationText}) async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?category=$searchText";
+    String url = ApiUrl.searchVendorApi + "?category=$searchText" + "location=$locationText";
     log("Search Vendor List API URL : $url");
 
     try {
@@ -245,14 +245,20 @@ class UserSearchResultsScreenController extends GetxController {
 
   @override
   void onInit() {
-    categoryFieldController.text = searchText;
+    // categoryFieldController.text = searchText;
     latitude = UserDetails.latitude;
     longitude = UserDetails.longitude;
+
+    String tempLocation = locationText;
+    locationText = tempLocation.replaceAll(" ", "");
 
     if(searchType == SearchType.categoryWise) {
       getSearchCategoryWiseFunction(catId: searchText);
     } else if(searchType == SearchType.none){
-      getAllSearchVendorListFunction(searchText: categoryFieldController.text);
+      getAllSearchVendorListFunction(
+          searchText: searchText,
+        locationText: locationText
+      );
     }
 
     super.onInit();

@@ -477,7 +477,6 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   ),
                   validator: (value) => FieldValidator().validateAddress(value!),
                   onChanged: (value) {
-                    log(value);
                     if(screenController.debounce?.isActive ?? false) screenController.debounce!.cancel();
                     screenController.debounce = Timer(const Duration(milliseconds: 800), () {
                       if (value.isNotEmpty) {
@@ -487,8 +486,6 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                       }
                     }
                     );
-
-
                   },
                 ),
               ],
@@ -511,7 +508,6 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   final details = await screenController.googlePlace.details.get(placeId!);
                   if(details != null && details.result != null) {
                     log(details.result!.addressComponents![0].longName!);
-                    screenController.addressTextFieldController.text = details.result!.adrAddress!;
                     screenController.addressTextFieldController.text = screenController.predictions[i].description.toString();
                     screenController.selectedLatitude.value = details.result!.geometry!.location!.lat.toString();
                     screenController.selectedLongitude.value = details.result!.geometry!.location!.lng.toString();

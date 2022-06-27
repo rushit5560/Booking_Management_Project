@@ -48,7 +48,8 @@ class SearchCategoryTextField extends StatelessWidget {
           suffixIcon: GestureDetector(
             onTap: () async {
               await screenController.getAllSearchVendorListFunction(
-                searchText: screenController.categoryFieldController.text.trim(),
+                searchText: screenController.searchText,
+                locationText: screenController.locationText
               );
             },
             child: const Icon(

@@ -26,7 +26,7 @@ class BookAppointmentScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
 
-  // ApiHeader apiHeader = ApiHeader();
+   ApiHeader apiHeader = ApiHeader();
 
   /// Fb Login
   FacebookUserProfile? profile;
@@ -625,7 +625,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get All Additional Slot API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Response : ${response.body}');
 
       GetAllAdditionalSlotModel getAllAdditionalSlotModel = GetAllAdditionalSlotModel.fromJson(json.decode(response.body));
@@ -641,6 +641,7 @@ class BookAppointmentScreenController extends GetxController {
         allAdditionalSlotList.addAll(getAllAdditionalSlotModel.workerList);
         /// Set First Value of list in DD Value Object
         additionalSlotWorkerList = allAdditionalSlotList[0];
+        log('additionalSlotWorkerList: $additionalSlotWorkerList');
         // }
 
       } else {

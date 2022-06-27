@@ -10,6 +10,7 @@ enum CustomerDrawerOption {
    orderList,
    bookingHistory,
    payment,
+   transaction,
    help,
    changePassword,
    logOut,

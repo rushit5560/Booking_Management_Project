@@ -71,6 +71,15 @@ class CustomerDrawer extends StatelessWidget {
               : Container(),
               const SizedBox(height: 20),
 
+              UserDetails.isUserLoggedIn == true
+                  ? CustomerDrawerSingleItemModule(
+                img: AppImages.paymentImg,
+                name: 'Transaction',
+                customerDrawerOption: CustomerDrawerOption.transaction,
+              )
+                  : Container(),
+              const SizedBox(height: 20),
+
               CustomerDrawerSingleItemModule(
                 img: AppImages.helpImg,
                 name: 'Help',

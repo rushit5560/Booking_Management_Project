@@ -26,12 +26,16 @@ class VendorResourcesScreenController extends GetxController {
   TextEditingController resourceNameFieldController = TextEditingController();
   TextEditingController resourceDetailsFieldController = TextEditingController();
   TextEditingController resourcePriceFieldController = TextEditingController();
+  TextEditingController resourceCapacityFieldController = TextEditingController();
 
   /// Update Resource Form TextField
   GlobalKey<FormState> resourceUpdateFormKey = GlobalKey();
   TextEditingController updateResourceNameFieldController = TextEditingController();
   TextEditingController updateResourceDetailsFieldController = TextEditingController();
   TextEditingController updateResourcePriceFieldController = TextEditingController();
+
+  /// isEvent checkbox value
+  RxBool isEvent = false.obs;
 
   File? addFile;
   File? file;
@@ -109,8 +113,10 @@ class VendorResourcesScreenController extends GetxController {
       request.fields['ResourceName'] = resourceNameFieldController.text.trim();
       request.fields['Details'] = resourceDetailsFieldController.text.trim();
       request.fields['Price'] = resourcePriceFieldController.text.trim();
-      request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+      request.fields['id'] = "${UserDetails.tableWiseId}";
       request.fields['CreatedBy'] = UserDetails.uniqueId;
+      request.fields['Capacity'] = resourceCapacityFieldController.text.trim();
+      request.fields['isEvent'] = "$isEvent";
 
       // request.fields['Name'] = "Shaving";
       // request.fields['ShortDescription'] = "Lorem Ipsum is simply dummy text of the printing.";

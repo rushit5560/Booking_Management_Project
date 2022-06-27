@@ -961,7 +961,7 @@ class AdditionalSlotDropDownModule extends StatelessWidget {
           }).toList(),
           onChanged: (newValue) {
             screenController.additionalSlotWorkerList = newValue!;
-            log("selectTimeDuration : ${screenController.additionalSlotWorkerList}");
+            log("selectAdditionalSlotDuration : ${screenController.additionalSlotWorkerList}");
             screenController.loadUI();
           },
         ),

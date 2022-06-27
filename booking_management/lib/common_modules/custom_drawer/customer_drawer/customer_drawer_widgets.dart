@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_favourite_list_screen/user_favourite_list_screen.dart';
+import 'package:booking_management/user_side/screens/user_transactions_screen/user_transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../user_side/screens/booking_history_screen/booking_history_screen.dart';
@@ -89,7 +90,10 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     else if (userSettingScreenOption == CustomerDrawerOption.bookingHistory) {
       Get.to(() => BookingHistoryScreen(), transition: Transition.zoom);
     } else if (userSettingScreenOption == CustomerDrawerOption.payment) {
-    } else if (userSettingScreenOption == CustomerDrawerOption.help) {
+    } else if (userSettingScreenOption == CustomerDrawerOption.transaction) {
+      Get.to(() => UserTransactionsScreen(), transition: Transition.zoom);
+    }
+    else if (userSettingScreenOption == CustomerDrawerOption.help) {
     } else if (userSettingScreenOption == CustomerDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(), transition: Transition.zoom);
     }

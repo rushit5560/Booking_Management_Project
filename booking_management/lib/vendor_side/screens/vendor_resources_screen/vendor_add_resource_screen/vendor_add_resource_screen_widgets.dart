@@ -30,7 +30,10 @@ class AddResourceFormModule extends StatelessWidget {
              ResourceDetailsModule(),
             const SizedBox(height: 20),
             ResourcePriceFieldModule(),
-            // const SizedBox(height: 20),
+             const SizedBox(height: 20),
+            ResourceCapacityFieldModule(),
+            const SizedBox(height: 20),
+            IsEventCheckBoxModule(),
             // ServiceShortDesFieldModule(),
             // const SizedBox(height: 20),
             // ServiceLongDesFieldModule(),
@@ -238,6 +241,91 @@ class ResourcePriceFieldModule extends StatelessWidget {
             ),
           ],
         )
+      ],
+    );
+  }
+}
+
+class ResourceCapacityFieldModule extends StatelessWidget {
+  ResourceCapacityFieldModule({Key? key}) : super(key: key);
+
+  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Capacity",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ).commonSymmetricPadding(horizontal: 5),
+        const SizedBox(height: 5),
+
+        Stack(
+          children: [
+            Container(
+              height: 46,
+              decoration: BoxDecoration(
+                //color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                //border: Border.all(color: AppColors.colorLightGrey),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 5,
+                    //spreadRadius: 5,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            ),
+            TextFormField(
+              controller: vendorResourcesScreenController.resourceCapacityFieldController,
+              keyboardType: TextInputType.number,
+              validator: (value) => FieldValidator().validatePrice(value!),
+              decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class IsEventCheckBoxModule extends StatelessWidget {
+  IsEventCheckBoxModule({Key? key}) : super(key: key);
+  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(
+              () => Checkbox(
+            value: vendorResourcesScreenController.isEvent.value,
+            onChanged: (value) {
+               vendorResourcesScreenController.isEvent.value = !vendorResourcesScreenController.isEvent.value;
+              // if(vendorResourcesScreenController.isSundayOn.value == false) {
+              //   vendorResourcesScreenController.sundayStartTime.value = "00:00";
+              //   vendorResourcesScreenController.sundayEndTime.value = "00:00";
+              // }
+              // log("${screenController.isSundayOn.value}");
+            },
+          ),
+        ),
+        const SizedBox(width: 10),
+        const Text(
+          "isEvent",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
       ],
     );
   }

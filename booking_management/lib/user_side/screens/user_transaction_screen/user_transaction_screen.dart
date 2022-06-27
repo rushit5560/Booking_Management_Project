@@ -16,7 +16,7 @@ class UserTransactionScreen extends StatelessWidget {
     return Scaffold(
       body: Obx(
         ()=> userTransactionScreenController.isLoading.value
-        ? const hCustomCircularLoaderModule()
+        ? const CustomCircularLoaderModule()
         : SafeArea(
           child: Column(
             children: [

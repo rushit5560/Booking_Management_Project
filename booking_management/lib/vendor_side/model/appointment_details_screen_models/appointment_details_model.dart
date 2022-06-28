@@ -84,7 +84,7 @@ class AppointmentDetailsData {
     notes: json["notes"] ?? "",
     status: json["status"] ?? "",
     bookingItems: json["bookingItems"] ?? "",
-    serviceName: List<String>.from(json["serviceName"].map((x) => x) ?? ""),
+    serviceName: List<String>.from(json["serviceName"].map((x) => x) ?? []),
   );
 
   Map<String, dynamic> toJson() => {

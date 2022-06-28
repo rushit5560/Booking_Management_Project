@@ -185,7 +185,7 @@ class TodayAppointmentListModule extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 5),
-          _viewButton(),
+          _viewButton(singleItem),
         ],
       ).commonAllSidePadding(10),
     );
@@ -251,9 +251,16 @@ class TodayAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton() {
+  Widget _viewButton(AppointmentListModule singleItem) {
     return GestureDetector(
       onTap: () => Get.to(() => AppointmentDetailsScreen(),
+          //arguments: singleItem.bookingId,
+          arguments: [
+            singleItem.bookingId,
+            singleItem.status,
+            singleItem.id
+          ],
+
           transition: Transition.zoom),
       child: Container(
         decoration: BoxDecoration(

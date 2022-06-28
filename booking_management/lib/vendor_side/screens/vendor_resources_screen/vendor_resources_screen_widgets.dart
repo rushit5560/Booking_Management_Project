@@ -121,6 +121,29 @@ class VendorResourcesListModule extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            const Text(
+                              'Capacity:',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              '${screenController.getResourceList[i].capacity}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

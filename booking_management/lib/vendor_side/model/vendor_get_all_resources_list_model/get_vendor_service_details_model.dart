@@ -49,11 +49,14 @@ class WorkerList {
     required this.vendorBooking,
     required this.vendorId,
     required this.price,
+    required this.capacity,
+    required this.isEvent,
     required this.dDate,
     required this.duration,
     required this.avilableTime,
     required this.vendor,
     required this.bookingAvailability,
+    required this.service
   });
 
   int id;
@@ -71,11 +74,14 @@ class WorkerList {
   String vendorBooking;
   int vendorId;
   double price;
+  int capacity;
+  bool isEvent;
   String dDate;
   String duration;
   String avilableTime;
   String vendor;
   String bookingAvailability;
+  String service;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
     id: json["id"] ?? 0,
@@ -93,11 +99,14 @@ class WorkerList {
     vendorBooking: json["vendorBooking"] ?? "",
     vendorId: json["vendorId"] ?? 0,
     price: json["price"] ?? 0.0,
+    capacity: json["capacity"] ?? 0,
+    isEvent: json["isEvent"] ?? false,
     dDate: json["dDate"] ?? "",
     duration: json["duration"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
     vendor: json["vendor"] ?? "",
     bookingAvailability: json["bookingAvailability"] ?? "",
+    service: json["service"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -116,11 +125,14 @@ class WorkerList {
     "vendorBooking": vendorBooking,
     "vendorId": vendorId,
     "price": price,
+    "capacity": capacity,
+    "isEvent": isEvent,
     "dDate": dDate,
     "duration": duration,
     "avilableTime": avilableTime,
     "vendor": vendor,
     "bookingAvailability": bookingAvailability,
+    "service": service,
   };
 }
 

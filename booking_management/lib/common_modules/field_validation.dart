@@ -206,6 +206,13 @@ class FieldValidator {
     return null;
   }
 
+  String? validateCapacity(String value) {
+    if (value.isEmpty) {
+      return 'Capacity is required';
+    }
+    return null;
+  }
+
   String? validatePrice(String value) {
     if (value.isEmpty) {
       return 'Price is required';

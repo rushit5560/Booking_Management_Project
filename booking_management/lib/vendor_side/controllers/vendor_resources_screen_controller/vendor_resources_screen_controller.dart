@@ -33,9 +33,11 @@ class VendorResourcesScreenController extends GetxController {
   TextEditingController updateResourceNameFieldController = TextEditingController();
   TextEditingController updateResourceDetailsFieldController = TextEditingController();
   TextEditingController updateResourcePriceFieldController = TextEditingController();
+  TextEditingController updateResourceCapacityFieldController = TextEditingController();
 
   /// isEvent checkbox value
   RxBool isEvent = false.obs;
+  bool updateEvent = false;
 
   File? addFile;
   File? file;
@@ -225,8 +227,11 @@ class VendorResourcesScreenController extends GetxController {
         request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
         request.fields['Price'] = updateResourcePriceFieldController.text.trim();
         //request.fields['Image'] = updateServiceLongDesFieldController.text.trim();
-        request.fields['Id'] = "$selectedItemId";
-        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['id'] = "$selectedItemId";
+        request.fields['CreatedBy'] = UserDetails.uniqueId;
+        request.fields['Capacity'] = updateResourceCapacityFieldController.text.trim();
+        request.fields['isEvent'] = "$updateEvent";
+
 
         log("Fields : ${request.fields}");
         log("headers : ${apiHeader.headers}");
@@ -273,8 +278,10 @@ class VendorResourcesScreenController extends GetxController {
         request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
         request.fields['Price'] = updateResourcePriceFieldController.text.trim();
         //request.fields['Image'] = updateServiceLongDesFieldController.text.trim();
-        request.fields['Id'] = "${UserDetails.tableWiseId}";
-        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['id'] = "$selectedItemId";
+        request.fields['CreatedBy'] = UserDetails.uniqueId;
+        request.fields['Capacity'] = updateResourceCapacityFieldController.text.trim();
+        request.fields['isEvent'] = "$isEvent";
 
         log("Fields : ${request.fields}");
         log("headers : ${apiHeader.headers}");
@@ -336,6 +343,8 @@ class VendorResourcesScreenController extends GetxController {
         updateResourceNameFieldController.text = getResourceDetailsModel.workerList.resourceName;
         updateResourceDetailsFieldController.text = getResourceDetailsModel.workerList.details;
         updateResourcePriceFieldController.text = getResourceDetailsModel.workerList.price.toString();
+        updateResourceCapacityFieldController.text = getResourceDetailsModel.workerList.capacity.toString();
+        updateEvent = getResourceDetailsModel.workerList.isEvent;
         //updatePhotoUrl = "http://5.189.147.159:9600///images//Resource//9188f689-6c67-4fae-9045-a55a32888891.png";
         updatePhotoUrl = "${ApiUrl.apiImagePath}${getResourceDetailsModel.workerList.resourceName}";
 

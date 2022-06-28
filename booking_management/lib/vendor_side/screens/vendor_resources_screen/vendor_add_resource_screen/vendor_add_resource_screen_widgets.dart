@@ -18,6 +18,7 @@ class AddResourceFormModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('vendorResourcesScreenController.isEvent.value: ${vendorResourcesScreenController.isEvent.value}');
     return SingleChildScrollView(
       child: Form(
         key: vendorResourcesScreenController.resourceAddFormKey,
@@ -30,10 +31,12 @@ class AddResourceFormModule extends StatelessWidget {
              ResourceDetailsModule(),
             const SizedBox(height: 20),
             ResourcePriceFieldModule(),
-             const SizedBox(height: 20),
-            ResourceCapacityFieldModule(),
             const SizedBox(height: 20),
             IsEventCheckBoxModule(),
+             const SizedBox(height: 20),
+
+            ResourceCapacityFieldModule(),
+
             // ServiceShortDesFieldModule(),
             // const SizedBox(height: 20),
             // ServiceLongDesFieldModule(),
@@ -283,11 +286,18 @@ class ResourceCapacityFieldModule extends StatelessWidget {
                 ],
               ),
             ),
-            TextFormField(
-              controller: vendorResourcesScreenController.resourceCapacityFieldController,
-              keyboardType: TextInputType.number,
-              validator: (value) => FieldValidator().validatePrice(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
+            Obx(()=>
+               TextFormField(
+                readOnly: !vendorResourcesScreenController.isEvent.value,
+                controller: vendorResourcesScreenController.resourceCapacityFieldController,
+                keyboardType: TextInputType.number,
+                validator: (value) => FieldValidator().validateCapacity(value!),
+                decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
+                 onChanged: (value){
+                   vendorResourcesScreenController.isEvent.value = value as bool;
+                   log('vendorResourcesScreenController.isEvent.value checkbox: ${vendorResourcesScreenController.isEvent.value}');
+                 },
+              ),
             ),
           ],
         )
@@ -305,22 +315,17 @@ class IsEventCheckBoxModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Obx(
-              () => Checkbox(
+        Obx(() => Checkbox(
             value: vendorResourcesScreenController.isEvent.value,
             onChanged: (value) {
-               vendorResourcesScreenController.isEvent.value = !vendorResourcesScreenController.isEvent.value;
-              // if(vendorResourcesScreenController.isSundayOn.value == false) {
-              //   vendorResourcesScreenController.sundayStartTime.value = "00:00";
-              //   vendorResourcesScreenController.sundayEndTime.value = "00:00";
-              // }
-              // log("${screenController.isSundayOn.value}");
+               vendorResourcesScreenController.isEvent.value = value!;
+               log('vendorResourcesScreenController.isEvent.value checkbox: ${vendorResourcesScreenController.isEvent.value}');
             },
           ),
         ),
         const SizedBox(width: 10),
         const Text(
-          "isEvent",
+          "Event",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,

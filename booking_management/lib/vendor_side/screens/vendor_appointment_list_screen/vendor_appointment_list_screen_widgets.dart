@@ -798,8 +798,9 @@ class AllAppointmentListModule extends StatelessWidget {
         ()=> AppointmentDetailsScreen(),
         transition: Transition.zoom,
         arguments: [
-          screenController.allAppointmentList[i].id,
+          screenController.allAppointmentList[i].bookingId,
           screenController.allAppointmentList[i].status,
+          screenController.allAppointmentList[i].id,
         ],
       ),
       child: Container(
@@ -999,8 +1000,9 @@ class PendingAppointmentListModule extends StatelessWidget {
                   () => AppointmentDetailsScreen(),
               transition: Transition.zoom,
             arguments: [
-              screenController.pendingAppointmentList[i].id,
-              screenController.pendingAppointmentList[i].status,
+              screenController.allAppointmentList[i].bookingId,
+              screenController.allAppointmentList[i].status,
+              screenController.allAppointmentList[i].id,
             ]
           ),
       child: Container(
@@ -1206,8 +1208,10 @@ class ConfirmAppointmentListModule extends StatelessWidget {
           Get.to(
                   () => AppointmentDetailsScreen(),
               transition: Transition.zoom,
-              arguments: [screenController.confirmAppointmentList[i].id,
-                screenController.confirmAppointmentList[i].status,]
+              arguments: [
+                screenController.allAppointmentList[i].bookingId,
+                screenController.allAppointmentList[i].status,
+                screenController.allAppointmentList[i].id,]
           ),
       child: Container(
         decoration: BoxDecoration(
@@ -1406,8 +1410,9 @@ class CancelAppointmentListModule extends StatelessWidget {
                   () => AppointmentDetailsScreen(),
               transition: Transition.zoom,
               arguments: [
-                screenController.cancelAppointmentList[i].id,
-                screenController.cancelAppointmentList[i].status,
+                screenController.allAppointmentList[i].bookingId,
+                screenController.allAppointmentList[i].status,
+                screenController.allAppointmentList[i].id,
               ]
           ),
       child: Container(
@@ -1607,8 +1612,9 @@ class DoneAppointmentListModule extends StatelessWidget {
                   () => AppointmentDetailsScreen(),
               transition: Transition.zoom,
               arguments: [
-                screenController.doneAppointmentList[i].id,
-                screenController.doneAppointmentList[i].status,
+                screenController.allAppointmentList[i].bookingId,
+                screenController.allAppointmentList[i].status,
+                screenController.allAppointmentList[i].id,
               ]
           ),
       child: Container(

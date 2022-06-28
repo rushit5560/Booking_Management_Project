@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/appointment_details_screen_controller/appointment_details_screen_controller.dart';
@@ -11,6 +12,8 @@ class AppointmentDetailsScreen extends StatelessWidget {
   AppointmentDetailsScreen({Key? key}) : super(key: key);
   final appointmentDetailsScreenController =
       Get.put(AppointmentDetailsScreenController());
+  final vendorAppointmentListScreenController =
+  Get.put(VendorAppointmentListScreenController());
 
   @override
   Widget build(BuildContext context) {

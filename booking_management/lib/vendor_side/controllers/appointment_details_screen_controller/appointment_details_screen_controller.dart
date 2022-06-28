@@ -17,8 +17,9 @@ import '../../model/vendor_appointment_list_screen_models/appointment_status_cha
 
 class AppointmentDetailsScreenController extends GetxController {
   /// "appointmentId" From Appointment List Screen
-  int appointmentId = Get.arguments[0];
+  String bookingId = Get.arguments[0];
   String status = Get.arguments[1];
+  int appointmentId = Get.arguments[2];
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   ApiHeader apiHeader = ApiHeader();
@@ -36,7 +37,7 @@ class AppointmentDetailsScreenController extends GetxController {
   /// Get Appointment Details
   getAppointmentDetailsByIdFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorAppointmentDetailsApi + "?id=$appointmentId";
+    String url = ApiUrl.vendorAppointmentDetailsApi + "?id=$bookingId";
     log("Appointment Details API URL : $url");
 
     try {
@@ -150,7 +151,7 @@ class AppointmentDetailsScreenController extends GetxController {
 
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['BookingId'] = "${appointmentId}";
+      request.fields['BookingId'] = "$appointmentId";
       request.fields['Reason'] = reasonFieldController.text.trim();
 
 

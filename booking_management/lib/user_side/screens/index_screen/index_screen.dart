@@ -1,8 +1,11 @@
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_appointment_list_screen/user_appointment_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_notification_screen/user_notification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
@@ -98,10 +101,15 @@ class IndexScreen extends StatelessWidget {
           ),*/
           InkWell(
             onTap: () {
-              changeIndex.call(2);
-              log("${indexScreenController.menuIndex.value}");
+              if(UserDetails.isUserLoggedIn == true) {
+                changeIndex.call(2);
+                log("${indexScreenController.menuIndex.value}");
 
-              indexScreenController.menuIndex.value = 2;
+                indexScreenController.menuIndex.value = 2;
+              } else {
+                Get.to(()=> SignInScreen(), transition: Transition.zoom);
+              }
+
             },
             child: SizedBox(
               height: 30,
@@ -115,10 +123,15 @@ class IndexScreen extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              changeIndex.call(3);
-              log("${indexScreenController.menuIndex.value}");
+              if(UserDetails.isUserLoggedIn == true) {
+                changeIndex.call(3);
+                log("${indexScreenController.menuIndex.value}");
 
-              indexScreenController.menuIndex.value = 3;
+                indexScreenController.menuIndex.value = 3;
+              } else {
+                Get.to(()=> SignInScreen(), transition: Transition.zoom);
+              }
+
             },
             child: SizedBox(
               height: 30,

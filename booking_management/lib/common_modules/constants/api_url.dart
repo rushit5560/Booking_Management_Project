@@ -2,8 +2,8 @@ class ApiUrl {
   static const serverApiKey = "AAAAPMN5_nM:APA91bHk_HS5tqZwzSyV-_2uP8ktyuhl_sp7HwkbFMP9lsiNHhWDvSxW1vvEMJ_skX2m_nHQp4QInHVPQGig9tkugj81_aoimCMY4ke7_2oZvck5cPtrRUFs9jj7jMJ-29HEfXc3_TTa";
   static const googleApiKey = "AIzaSyDKcmqROew5b-45jQbybMpPXpWjiByOutc";
 
-  static const apiMainPath = "http://5.189.147.159:7001/";
-  static const apiImagePath = "http://5.189.147.159:7001/";
+  static const apiMainPath = "https://www.setdaytime.com.au/";
+  static const apiImagePath = "https://www.setdaytime.com.au/";
 
 
   // static const apiMainPath = "http://192.168.0.103:8080/";

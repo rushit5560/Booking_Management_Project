@@ -99,7 +99,7 @@ class BusinessDetailsScreenController extends GetxController {
   //     UserBusinessDetailsModel userBusinessDetailsModel = UserBusinessDetailsModel.fromJson(json.decode(response.body));
   //     isStatusSuccess = userBusinessDetailsModel.success.obs;
   //     log("status : $isStatusSuccess");
-  //
+
   //     if(isStatusSuccess.value){
   //       log("success");
   //       businessName = userBusinessDetailsModel.data.vendorBooking.businessName;
@@ -131,7 +131,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("vendor Review API Response : ${response.body}");
 
       GetVendorReviewsModel getVendorReviewsModel =
@@ -235,17 +235,17 @@ class BusinessDetailsScreenController extends GetxController {
     log("Get Business Hours API URL : $url");
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("Business Hours API URL : ${response.body}");
 
-      GetBusinessHoursModel getBusinessHoursModel =
-          GetBusinessHoursModel.fromJson(json.decode(response.body));
+      GetBusinessHoursModel getBusinessHoursModel = GetBusinessHoursModel.fromJson(json.decode(response.body));
       isSuccessStatus.value = getBusinessHoursModel.success;
 
       if (isSuccessStatus.value) {
         businessHoursList = getBusinessHoursModel.data;
-        log("businessHoursList : ${businessHoursList.length}");
+        for(int i = 0; i < businessHoursList.length; i++) {
+          log("businessHoursList : ${businessHoursList[i].day}");
+        }
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getBusinessHoursFunction Else Else");

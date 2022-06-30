@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_map_screen/user_map_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -225,6 +226,7 @@ class OverviewModule extends StatelessWidget {
           allowHalfRating: true,
           itemCount: 5,
           itemSize: 25,
+          ignoreGestures: true,
           itemBuilder: (context, _) => const Icon(
             Icons.star,
             color: Colors.amber,
@@ -240,8 +242,12 @@ class OverviewModule extends StatelessWidget {
 
         IconButton(
           onPressed: () async {
-            screenController.isFavourite.value = !screenController.isFavourite.value;
-            await screenController.addVendorInFavoriteFunction();
+            if(UserDetails.isUserLoggedIn == true) {
+              screenController.isFavourite.value = !screenController.isFavourite.value;
+              await screenController.addVendorInFavoriteFunction();
+            } else {
+              Get.to(()=> SignInScreen(), transition: Transition.zoom);
+            }
             // screenController.loadUI();
           },
           icon: Icon(
@@ -337,37 +343,42 @@ class OverviewModule extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Timestamp timeStamp = Timestamp.now();
+                    if(UserDetails.isUserLoggedIn == true) {
 
-                    /// CharRoom Id Generate
-                    String charRoomId = "${UserDetails.uniqueId}_${screenController.vendorUniqueId}";
+                      Timestamp timeStamp = Timestamp.now();
 
-                    /// ChatRoom Data
-                    Map<String, dynamic> chatRoomData = {
-                      "createdAt" : timeStamp,
-                      "createdBy" : UserDetails.email.toLowerCase(),
-                      "peerId" : screenController.vendorEmail.toLowerCase(),
-                      "roomId" : charRoomId,
-                      "createdName" : UserDetails.userName,
-                      "peerName" : screenController.vendorBusinessName,
-                      "users" : [UserDetails.email, screenController.vendorEmail],
-                      "customerid" : UserDetails.uniqueId,
-                      "vendorid" : screenController.vendorUniqueId
-                    };
+                      /// CharRoom Id Generate
+                      String charRoomId = "${UserDetails.uniqueId}_${screenController.vendorUniqueId}";
 
-                    log("chatRoomData : $chatRoomData");
+                      /// ChatRoom Data
+                      Map<String, dynamic> chatRoomData = {
+                        "createdAt" : timeStamp,
+                        "createdBy" : UserDetails.email.toLowerCase(),
+                        "peerId" : screenController.vendorEmail.toLowerCase(),
+                        "roomId" : charRoomId,
+                        "createdName" : UserDetails.userName,
+                        "peerName" : screenController.vendorBusinessName,
+                        "users" : [UserDetails.email, screenController.vendorEmail],
+                        "customerid" : UserDetails.uniqueId,
+                        "vendorid" : screenController.vendorUniqueId
+                      };
 
-                    /// Create ChatRoom Function
-                    firebaseDatabase.createChatRoomOfTwoUsers(charRoomId, chatRoomData);
+                      log("chatRoomData : $chatRoomData");
 
-                    Get.to(()=> UserConversationScreen(),
-                    transition: Transition.zoom,
-                    arguments: [
-                      charRoomId,
-                      screenController.vendorEmail,
-                      screenController.vendorBusinessName,
-                      screenController.vendorUniqueId,
-                    ]);
+                      /// Create ChatRoom Function
+                      firebaseDatabase.createChatRoomOfTwoUsers(charRoomId, chatRoomData);
+
+                      Get.to(()=> UserConversationScreen(),
+                          transition: Transition.zoom,
+                          arguments: [
+                            charRoomId,
+                            screenController.vendorEmail,
+                            screenController.vendorBusinessName,
+                            screenController.vendorUniqueId,
+                          ]);
+                    } else {
+                      Get.to(()=> SignInScreen(), transition: Transition.zoom);
+                    }
                   },
                   child: Container(
                     height: 40,

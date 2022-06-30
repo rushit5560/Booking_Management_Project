@@ -306,7 +306,7 @@ class BookAppointmentScreenController extends GetxController {
     return timeList;
   }
 
-  /// 4) Get Selected Resource Time List - todo
+  /// 4) Get Selected Resource Time List
   getSelectedResourcesTimeSlotFunction({required String resId, required }) async {
     log("Resource Id : $resId");
     DateTime dateTime = DateTime.now();
@@ -415,10 +415,7 @@ class BookAppointmentScreenController extends GetxController {
 
   /// 4) Get Resources Date & Time Wise List
   getResourcesDateAndTimeListFunction({required String resId}) async {
-    // DateTime dateTime = DateTime.now();
-    // String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-    // String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
-    List<TimingSlot> timeList = [];
+        List<TimingSlot> timeList = [];
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration&Time";
     log("Get Resources Time List API URL : $url");

@@ -34,7 +34,7 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,7 +46,7 @@ android {
         applicationId "com.example.booking_management"
         minSdkVersion 21
         multiDexEnabled true
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -61,7 +61,7 @@ android {
 
     dependencies {
         //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-        implementation 'com.google.firebase:firebase-messaging:20.1.0'
+        implementation 'com.google.firebase:firebase-messaging:23.0.6'
         implementation "androidx.multidex:multidex:2.0.1"
     }
 }

@@ -388,14 +388,13 @@ class SelectDateModule extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
+              firstDay: DateTime.now(),
               lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
               onDaySelected: (DateTime selectDay, DateTime focusDay) async{
                 screenController.selectedDay = selectDay;
                 focusedDay = focusDay;
-
 
                 String hour = "${screenController.selectedDay.hour}";
                 String minute = "${screenController.selectedDay.minute}";

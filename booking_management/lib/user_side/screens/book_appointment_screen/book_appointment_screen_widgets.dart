@@ -359,7 +359,7 @@ class BookingResourcesListModule extends StatelessWidget {
                         ),
                       ),
 
-                      /*Text(
+                      Text(
                         "-",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -368,9 +368,9 @@ class BookingResourcesListModule extends StatelessWidget {
                               ? Colors.white
                               : Colors.black,
                         ),
-                      ).commonSymmetricPadding(horizontal: 5),*/
+                      ).commonSymmetricPadding(horizontal: 5),
 
-                      /*Text(
+                      Text(
                         singleItem.timingList[i].endDateTime,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -379,7 +379,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                 ? Colors.white
                                 : Colors.black,
                         ),
-                      ),*/
+                      ),
                     ],
                   ),
                 ).commonAllSidePadding(3),
@@ -428,7 +428,7 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
+      onTap: () async {//todo
         if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
           await screenController.getAllResourcesListByIdFunction();
         }
@@ -588,8 +588,9 @@ class SelectDateModule extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
+              firstDay: DateTime.now(),
               lastDay: DateTime(2050),
+
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
@@ -732,7 +733,7 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
+              firstDay: DateTime.now(),
               lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
@@ -741,34 +742,67 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                 focusedDay = focusDay;
 
 
-                String hour = "${selectedDay.hour}";
-                String minute = "${selectedDay.minute}";
+                String selectedDayDummy = selectedDay.toString().substring(0, selectedDay.toString().length - 14);
+                log("selectedDayDummy : $selectedDayDummy");
+                String d1 = DateTime.now().toString();
 
-                /// For Hour Format
-                for(int i = 0; i < 10; i++) {
-                  if(selectedDay.hour.toString() == i.toString()) {
-                    if(selectedDay.hour.toString().length == 1) {
-                      hour = "0${selectedDay.hour}";
+                String todayDateDummy = d1.substring(0, d1.length - 16);
+                log("todayDateDummy : $todayDateDummy");
+
+                if(selectedDayDummy == todayDateDummy) {
+                  DateTime dummyDate = DateTime.now();
+                  String hour = "${dummyDate.hour}";
+                  String minute = "${dummyDate.minute}";
+
+                  screenController.selectedDate.value = "${dummyDate.year}-${dummyDate.month}-${dummyDate.day}";
+
+                  /// For Hour Format
+                  for(int i = 0; i < 10; i++) {
+                    if(dummyDate.hour.toString() == i.toString()) {
+                      if(dummyDate.hour.toString().length == 1) {
+                        hour = "0${dummyDate.hour}";
+                      }
                     }
                   }
-                }
 
-                /// For Minute
-                for (int i = 0; i < 10; i++) {
-                  if(selectedDay.minute.toString() == i.toString()) {
-                    if(selectedDay.minute.toString().length == 1) {
-                      minute = "0${selectedDay.minute}";
+                  /// For Minute
+                  for (int i = 0; i < 10; i++) {
+                    if(dummyDate.minute.toString() == i.toString()) {
+                      if(dummyDate.minute.toString().length == 1) {
+                        minute = "0${dummyDate.minute}";
+                      }
                     }
                   }
+
+                  screenController.selectedTime.value = "$hour:$minute:00";
+                } else {
+                  String hour = "${selectedDay.hour}";
+                  String minute = "${selectedDay.minute}";
+
+                  /// For Hour Format
+                  for(int i = 0; i < 10; i++) {
+                    if(selectedDay.hour.toString() == i.toString()) {
+                      if(selectedDay.hour.toString().length == 1) {
+                        hour = "0${selectedDay.hour}";
+                      }
+                    }
+                  }
+
+                  /// For Minute
+                  for (int i = 0; i < 10; i++) {
+                    if(selectedDay.minute.toString() == i.toString()) {
+                      if(selectedDay.minute.toString().length == 1) {
+                        minute = "0${selectedDay.minute}";
+                      }
+                    }
+                  }
+
+                  screenController.selectedTime.value = "$hour:$minute:00";
+                  screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+
                 }
-
-                screenController.selectedTime.value = "$hour:$minute:00";
-
-
-                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
-                // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
 
                 screenController.isCalenderShow.value = !screenController.isCalenderShow.value;
                 screenController.loadUI();
@@ -1085,7 +1119,7 @@ class BookButtonModule extends StatelessWidget {
         isDismissible: false,
         builder: (context) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -1096,6 +1130,7 @@ class BookButtonModule extends StatelessWidget {
                       "Almost there!",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
 
@@ -1151,7 +1186,7 @@ class BookButtonModule extends StatelessWidget {
                 _singleModule(text: "Manage your appointments easily"),
 
                 const SizedBox(height: 10),
-                _socialMediaModule(),
+                // _socialMediaModule(),
 
                 const SizedBox(height: 10),
                 _signUpModule(),

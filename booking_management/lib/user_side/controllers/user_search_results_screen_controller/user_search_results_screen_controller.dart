@@ -39,7 +39,14 @@ class UserSearchResultsScreenController extends GetxController {
   /// Search Vendor List
   getAllSearchVendorListFunction({required String searchText, required String locationText}) async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?category=$searchText" + "location=$locationText";
+    String url = ApiUrl.searchVendorApi +
+        "?category=$searchText" +
+        "&location=$locationText" +
+        "&rating=" +
+        "&CurrentLatitude=${UserDetails.latitude}" +
+        "&CurrentLongitude=${UserDetails.longitude}" +
+        "&Distance=$distance";
+
     log("Search Vendor List API URL : $url");
 
     try {
@@ -248,6 +255,7 @@ class UserSearchResultsScreenController extends GetxController {
     // categoryFieldController.text = searchText;
     latitude = UserDetails.latitude;
     longitude = UserDetails.longitude;
+    distance = '50';
 
     String tempLocation = locationText;
     locationText = tempLocation.replaceAll(" ", "");

@@ -24,7 +24,7 @@ class IndexScreenController extends GetxController {
       lat: "${position!.latitude}",
       long: "${position!.longitude}",
     );
-    log("position : $position");
+    log("position123 : $position");
   }
 
 

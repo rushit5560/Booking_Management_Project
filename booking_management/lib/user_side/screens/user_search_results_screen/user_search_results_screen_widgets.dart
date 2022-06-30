@@ -253,7 +253,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         //elevation: 5,
                         style: TextStyle(color: AppColors.colorLightGrey),
                         iconEnabledColor: Colors.black,
-                        items: <String>['Distance', '1', '5', '10', '15', '20', '25']
+                        items: <String>['Distance', '1', '5', '10', '15', '20', '25', '50']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,

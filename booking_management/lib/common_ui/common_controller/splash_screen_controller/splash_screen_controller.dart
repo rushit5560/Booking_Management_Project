@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
-import 'package:booking_management/user_side/screens/home_screen/home_screen.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common_modules/constants/api_url.dart';
@@ -108,7 +106,7 @@ class SplashScreenController extends GetxController {
         Get.offAll(() => VendorIndexScreen(), transition: Transition.zoom);
       }
     } else {
-      Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
+      Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
     }
 
   }

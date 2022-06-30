@@ -17,7 +17,7 @@ import '../../model/home_screen_models/get_all_appointment_list_model.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_favourite_vendor_model.dart';
 import 'upcoming_appointment_details_screen/upcoming_appointment_details_screen.dart';
-
+import 'package:html/parser.dart' show parse;
 
 /// Header Logo Module
 class HeaderModule extends StatelessWidget {
@@ -48,7 +48,6 @@ class HeaderModule extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             top: 10,
             left: 10,
@@ -142,13 +141,16 @@ class SearchCategoryField extends StatelessWidget {
         textFieldConfiguration: TextFieldConfiguration(
           controller: screenController.categoryFieldController,
           decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.search_rounded, color: Colors.grey, size: 18),
+            prefixIcon:
+                Icon(Icons.search_rounded, color: Colors.grey, size: 18),
             border: InputBorder.none,
             hintText: 'Search for a service providers or business',
-            hintStyle: TextStyle(fontSize: 15, color: Colors.grey,),
+            hintStyle: TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
+            ),
             contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           ),
-
         ),
         itemBuilder: (context, String? suggestion) {
           final cat = suggestion!;
@@ -252,15 +254,16 @@ class SearchLocationField extends StatelessWidget {
         controller: screenController.locationFieldController,
         cursorColor: Colors.grey,
         onChanged: (value) {
-          if(screenController.debounce?.isActive ?? false) screenController.debounce!.cancel();
-          screenController.debounce = Timer(const Duration(milliseconds: 800), () {
+          if (screenController.debounce?.isActive ?? false)
+            screenController.debounce!.cancel();
+          screenController.debounce =
+              Timer(const Duration(milliseconds: 800), () {
             if (value.isNotEmpty) {
               screenController.autoCompleteLocationSearch(value);
             } else {
               screenController.predictions.clear();
             }
-          }
-          );
+          });
         },
         decoration: const InputDecoration(
           hintText: 'Search Location',
@@ -275,7 +278,6 @@ class SearchLocationField extends StatelessWidget {
             Icons.search_rounded,
             color: Colors.grey,
           ),
-
         ),
       ),
     );
@@ -291,33 +293,38 @@ class SearchLocationListModule extends StatelessWidget {
     return screenController.predictions.isEmpty
         ? Container()
         : ListView.builder(
-      itemCount: screenController.predictions.length,
-      shrinkWrap: true,
-      itemBuilder: (context, i) {
-        return ListTile(
-          onTap: () async {
-            final placeId = screenController.predictions[i].placeId;
-            final details = await screenController.googlePlace.details.get(placeId!);
-            if(details != null && details.result != null) {
-              log(details.result!.addressComponents![0].longName!);
-              screenController.locationFieldController.text = screenController.predictions[i].description.toString();
-              screenController.isLoading(true);
-              screenController.predictions.clear();
-              screenController.isLoading(false);
-            } else {
-            }
-          },
-          leading: const CircleAvatar(
-            child: Icon(Icons.pin_drop_rounded),
-          ),
-          title: Text(
-              screenController.predictions[i].description.toString()),
-        );
-      },
-    );
+            itemCount: screenController.predictions.length,
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              return ListTile(
+                onTap: () async {
+                  final placeId = screenController.predictions[i].placeId;
+                  final details =
+                      await screenController.googlePlace.details.get(placeId!);
+                  if (details != null && details.result != null) {
+                    log(details.result!.addressComponents![0].longName!);
+                    screenController.locationFieldController.text =
+                        screenController.predictions[i].description.toString();
+                    var document = parse(details.result!.adrAddress.toString());
+                    var regionName = document.getElementsByClassName("region");
+                    // var pinCode = document.getElementsByClassName("postal-code");
+                    log("regionName : $regionName");
+                    // log("pinCode : $pinCode");
+                    screenController.isLoading(true);
+                    screenController.predictions.clear();
+                    screenController.isLoading(false);
+                  } else {}
+                },
+                leading: const CircleAvatar(
+                  child: Icon(Icons.pin_drop_rounded),
+                ),
+                title: Text(
+                    screenController.predictions[i].description.toString()),
+              );
+            },
+          );
   }
 }
-
 
 /// Search Button
 class SearchButtonModule extends StatelessWidget {
@@ -329,7 +336,8 @@ class SearchButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // if(screenController.categoryFieldController.text.isNotEmpty) {
-        Get.to(() => UserSearchResultsScreen(),
+        Get.to(
+          () => UserSearchResultsScreen(),
           arguments: [
             screenController.categoryFieldController.text,
             screenController.locationFieldController.text,
@@ -372,7 +380,6 @@ class SearchButtonModule extends StatelessWidget {
   }
 }
 
-
 class DatePickerModule extends StatelessWidget {
   const DatePickerModule({Key? key}) : super(key: key);
 
@@ -382,8 +389,7 @@ class DatePickerModule extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Row(
         children: [
-          Expanded(
-              child: CalenderTableModule()),
+          Expanded(child: CalenderTableModule()),
           const SizedBox(width: 25),
           SubmitButtonModule(),
         ],
@@ -413,7 +419,6 @@ class CalenderTableModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.selectedDate.value,
@@ -427,7 +432,7 @@ class CalenderTableModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isServiceCalenderShow.value =
-              !screenController.isServiceCalenderShow.value;
+                  !screenController.isServiceCalenderShow.value;
 
               log("screenController.isCalenderShow.value : ${screenController.isServiceCalenderShow.value}");
             },
@@ -462,8 +467,7 @@ class SubmitButtonModule extends StatelessWidget {
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
-              ]
-          ),
+              ]),
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
@@ -515,14 +519,13 @@ class SelectDateModule extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-
                 String hour = "${selectedDay.hour}";
                 String minute = "${selectedDay.minute}";
 
                 /// For Hour Format
-                for(int i = 0; i < 10; i++) {
-                  if(selectedDay.hour.toString() == i.toString()) {
-                    if(selectedDay.hour.toString().length == 1) {
+                for (int i = 0; i < 10; i++) {
+                  if (selectedDay.hour.toString() == i.toString()) {
+                    if (selectedDay.hour.toString().length == 1) {
                       hour = "0${selectedDay.hour}";
                     }
                   }
@@ -530,8 +533,8 @@ class SelectDateModule extends StatelessWidget {
 
                 /// For Minute
                 for (int i = 0; i < 10; i++) {
-                  if(selectedDay.minute.toString() == i.toString()) {
-                    if(selectedDay.minute.toString().length == 1) {
+                  if (selectedDay.minute.toString() == i.toString()) {
+                    if (selectedDay.minute.toString().length == 1) {
                       minute = "0${selectedDay.minute}";
                     }
                   }
@@ -539,13 +542,14 @@ class SelectDateModule extends StatelessWidget {
 
                 screenController.selectedTime.value = "$hour:$minute:00";
 
-
-                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.selectedDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
                 // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
 
-                screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
+                screenController.isServiceCalenderShow.value =
+                    !screenController.isServiceCalenderShow.value;
                 screenController.loadUI();
               },
 
@@ -557,7 +561,7 @@ class SelectDateModule extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -567,19 +571,19 @@ class SelectDateModule extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -606,7 +610,7 @@ class SelectDateModule extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -624,7 +628,6 @@ class SelectDateModule extends StatelessWidget {
   }
 }
 
-
 /// Upcoming Appointment
 class UpcomingAppointmentModule extends StatelessWidget {
   UpcomingAppointmentModule({Key? key}) : super(key: key);
@@ -632,8 +635,8 @@ class UpcomingAppointmentModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>
-       Column(
+    return Obx(
+      () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
@@ -649,14 +652,16 @@ class UpcomingAppointmentModule extends StatelessWidget {
 
           const SizedBox(height: 10),
           screenController.isServiceCalenderShow.value
-              ? SelectDateModule() : Container(),
+              ? SelectDateModule()
+              : Container(),
 
           ListView.builder(
             itemCount: screenController.allUpcomingAppointmentList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, i) {
-              UpcomingAppointmentDatum singleItem = screenController.allUpcomingAppointmentList[i];
+              UpcomingAppointmentDatum singleItem =
+                  screenController.allUpcomingAppointmentList[i];
               return _upcomingAppointmentListTile(singleItem);
             },
           ),
@@ -666,7 +671,6 @@ class UpcomingAppointmentModule extends StatelessWidget {
   }
 
   Widget _upcomingAppointmentListTile(UpcomingAppointmentDatum singleItem) {
-
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
@@ -730,8 +734,10 @@ class UpcomingAppointmentModule extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                await screenController.getUpcomingAppointmentDetailsFunction(id: singleItem.id);
-                Get.to(()=> UpcomingAppointmentDetailsScreen(), transition: Transition.zoom);
+                await screenController.getUpcomingAppointmentDetailsFunction(
+                    id: singleItem.id);
+                Get.to(() => UpcomingAppointmentDetailsScreen(),
+                    transition: Transition.zoom);
               },
               child: Container(
                 width: 30,
@@ -748,7 +754,6 @@ class UpcomingAppointmentModule extends StatelessWidget {
       ),
     );
   }
-
 }
 
 /// All Category List
@@ -848,7 +853,6 @@ class PartialCategoryListModule extends StatelessWidget {
       ).commonAllSidePadding(5),
     );
   }
-
 }
 
 /// Favourite Vendor List
@@ -883,7 +887,8 @@ class FavouriteDoctorsModule extends StatelessWidget {
               childAspectRatio: 1.1,
             ),
             itemBuilder: (context, i) {
-              FavouriteVendorDetails singleVendor = screenController.favouriteVendorList[i];
+              FavouriteVendorDetails singleVendor =
+                  screenController.favouriteVendorList[i];
               return _favouriteVendorListTile(singleVendor);
             },
           ),
@@ -931,9 +936,7 @@ class FavouriteDoctorsModule extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13
-                  ),
+                      fontWeight: FontWeight.bold, fontSize: 13),
                 ),
                 /*Text(
                   'Lorem Ipsum',
@@ -950,8 +953,4 @@ class FavouriteDoctorsModule extends StatelessWidget {
       ),
     );
   }
-
 }
-
-
-

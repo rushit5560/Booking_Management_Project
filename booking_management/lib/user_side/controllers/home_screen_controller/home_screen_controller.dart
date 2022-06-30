@@ -272,7 +272,6 @@ class HomeScreenController extends GetxController {
   void autoCompleteLocationSearch(String value) async {
 
     var result = await googlePlace.autocomplete.get(value);
-    
 
     if(result != null && result.predictions != null) {
       log(result.predictions!.first.description!);

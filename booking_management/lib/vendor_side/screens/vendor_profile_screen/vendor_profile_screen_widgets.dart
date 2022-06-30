@@ -508,10 +508,11 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   final details = await screenController.googlePlace.details.get(placeId!);
                   if(details != null && details.result != null) {
                     log(details.result!.addressComponents![0].longName!);
-                    screenController.addressTextFieldController.text = screenController.predictions[i].description.toString();
+                    screenController.addressTextFieldController.text = details.result!.formattedAddress!.toString();
                     screenController.selectedLatitude.value = details.result!.geometry!.location!.lat.toString();
                     screenController.selectedLongitude.value = details.result!.geometry!.location!.lng.toString();
                     screenController.isLoading(true);
+                    log("formattedAddress : ${details.result!.formattedAddress}");
                     screenController.predictions.clear();
                     screenController.kGooglePlex = CameraPosition(
                       target: LatLng(double.parse(screenController.selectedLatitude.value), double.parse(screenController.selectedLongitude.value)),

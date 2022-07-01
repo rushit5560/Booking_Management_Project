@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
+import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_vendor_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,87 +42,96 @@ class SignInScreenController extends GetxController {
 
     try {
       http.Response response = await http.post(Uri.parse(url));
-      log('Response : $response');
+      log('Response : ${response.body}');
 
-      SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
-      isStatus = signInModel.statusCode.obs;
+      if(response.body.toString().contains("417")) {
+        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
 
-      log("status: $isStatus");
-
-      if (isStatus.value == 200) {
-        if (signInModel.message.toString().contains("not Verified")) {
-          Get.snackbar(signInModel.message, '');
-        } else if (signInModel.message.contains("Invalid login attempt")) {
-          Get.snackbar(signInModel.message, '');
-        } else if (signInModel.role[0] == "Customer") {
-          log('customer side');
-          Get.snackbar(signInModel.message, '');
-
-          // String dob = signInModel.customer.dateOfBirth;
-          // String finalDob = dob.substring(0, dob.length - 9);
-          // log("finalDob : $finalDob");
-
-          sharedPreferenceData.setUserLoginDetailsInPrefs(
-            apiToken: signInModel.data.apiToken,
-            uniqueId: signInModel.data.id,
-            tableWiseId: signInModel.customer.id,
-            userName: signInModel.data.userName,
-            email: signInModel.data.email,
-            phoneNo: signInModel.data.phoneNumber,
-            dob: signInModel.customer.dateOfBirth,
-            roleName: signInModel.role[0],
-            gender: signInModel.customer.gender,
-            businessName: "",
-            address: "",
-            street: "",
-            state: "",
-            country: "",
-            subUrb: "",
-            postCode: "",
-            //slotDuration: ""
-            businessId: ""
-          );
-          log("Fcm Token : ${UserDetails.fcmToken}");
-          if(signInRoute == SignInRoute.fromBookScreen) {
-            Get.back();
-            Get.back();
-          } else {
-            Get.offAll(() => IndexScreen());
-          }
-
-
-
-          //Get.snackbar(signInModel.message, '');
-        } else if (signInModel.role[0] == "Vendor") {
-          log('Vendor side');
-          Get.snackbar(signInModel.message, '');
-          sharedPreferenceData.setUserLoginDetailsInPrefs(
-            apiToken: signInModel.data.apiToken,
-            uniqueId: signInModel.data.id,
-            tableWiseId: signInModel.vendor.id,
-            userName: signInModel.data.userName,
-            email: signInModel.data.email,
-            phoneNo: signInModel.data.phoneNumber,
-            dob: "",
-            roleName: signInModel.role[0],
-            gender: "",
-            businessName: signInModel.vendor.businessName,
-            address: signInModel.vendor.address,
-            street: signInModel.vendor.street,
-            state: signInModel.vendor.state,
-            country: signInModel.vendor.country,
-            subUrb: signInModel.vendor.suburb,
-            postCode: signInModel.vendor.postcode,
-            // slotDuration: signInModel.vendor.
-            businessId: signInModel.vendor.businessId
-          );
-          Get.offAll(() => VendorIndexScreen());
-          //Get.snackbar('LoggedIn Successfully.', '');
-        }
-      } else {
-        log('SignIn False False');
-        Get.snackbar(signInModel.message, '');
       }
+      else {
+        SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
+        isStatus = signInModel.statusCode.obs;
+
+        log("status: $isStatus");
+
+        if (isStatus.value == 200) {
+          if (signInModel.message.toString().contains("not Verified")) {
+            Get.snackbar(signInModel.message, '');
+          } else if (signInModel.message.contains("Invalid login attempt")) {
+            Get.snackbar(signInModel.message, '');
+          } else if (signInModel.role[0] == "Customer") {
+            log('customer side');
+            Get.snackbar(signInModel.message, '');
+
+            // String dob = signInModel.customer.dateOfBirth;
+            // String finalDob = dob.substring(0, dob.length - 9);
+            // log("finalDob : $finalDob");
+
+            sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.customer.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: signInModel.customer.dateOfBirth,
+                roleName: signInModel.role[0],
+                gender: signInModel.customer.gender,
+                businessName: "",
+                address: "",
+                street: "",
+                state: "",
+                country: "",
+                subUrb: "",
+                postCode: "",
+                //slotDuration: ""
+                businessId: ""
+            );
+            log("Fcm Token : ${UserDetails.fcmToken}");
+            if(signInRoute == SignInRoute.fromBookScreen) {
+              Get.back();
+              Get.back();
+            } else {
+              Get.offAll(() => IndexScreen());
+            }
+
+            //Get.snackbar(signInModel.message, '');
+          } else if (signInModel.role[0] == "Vendor") {
+            log('Vendor side');
+            Get.snackbar(signInModel.message, '');
+            sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.vendor.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: "",
+                roleName: signInModel.role[0],
+                gender: "",
+                businessName: signInModel.vendor.businessName,
+                address: signInModel.vendor.address,
+                street: signInModel.vendor.street,
+                state: signInModel.vendor.state,
+                country: signInModel.vendor.country,
+                subUrb: signInModel.vendor.suburb,
+                postCode: signInModel.vendor.postcode,
+                // slotDuration: signInModel.vendor.
+                businessId: signInModel.vendor.businessId
+            );
+            Get.offAll(() => VendorIndexScreen());
+            //Get.snackbar('LoggedIn Successfully.', '');
+          }
+        }
+        else {
+          log('SignIn False False');
+          Get.snackbar(signInModel.message, '');
+        }
+
+      }
+
+
     } catch (e) {
       log('SignIn Error : $e');
       Fluttertoast.showToast(msg: "Something went wrong!");

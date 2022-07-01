@@ -5,10 +5,10 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/user_side/controllers/user_profile_screen_controller/user_profile_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 
 class ProfileDetailsModule extends StatelessWidget {
   ProfileDetailsModule({Key? key}) : super(key: key);
@@ -68,20 +68,21 @@ class ProfileDetailsModule extends StatelessWidget {
   }
 
   /// Profile
-  Widget profile(){
+  Widget profile() {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(10),
-        child: Image.asset(AppImages.vendorImg, scale: 8,)),
-
+            child: Image.asset(
+              AppImages.vendorImg,
+              scale: 8,
+            )),
         Container(
-          height: 35, width: 35,
+          height: 35,
+          width: 35,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white
-          ),
+              borderRadius: BorderRadius.circular(5), color: Colors.white),
           child: Icon(Icons.edit),
         )
       ],
@@ -89,13 +90,10 @@ class ProfileDetailsModule extends StatelessWidget {
   }
 
   /// Name Field
-  Widget nameTextField(){
+  Widget nameTextField() {
     return Row(
       children: [
-        const Expanded(
-          flex: 2,
-            child: Text("Name:")
-        ),
+        const Expanded(flex: 2, child: Text("Name:")),
         Expanded(
             flex: 4,
             child: Stack(
@@ -116,7 +114,6 @@ class ProfileDetailsModule extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 TextFormField(
                   controller: screenController.nameTextFieldController,
                   keyboardType: TextInputType.name,
@@ -154,20 +151,16 @@ class ProfileDetailsModule extends StatelessWidget {
                   //validator: (value) => FieldValidator().validateName(value!),
                 ),
               ],
-            )
-        )
+            ))
       ],
     );
   }
 
   /// Email Field
-  Widget emailTextField(){
+  Widget emailTextField() {
     return Row(
       children: [
-        const Expanded(
-            flex: 2,
-            child: Text("Email:")
-        ),
+        const Expanded(flex: 2, child: Text("Email:")),
         Expanded(
             flex: 4,
             child: Stack(
@@ -188,7 +181,6 @@ class ProfileDetailsModule extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 TextFormField(
                   controller: screenController.emailTextFieldController,
                   keyboardType: TextInputType.emailAddress,
@@ -226,8 +218,7 @@ class ProfileDetailsModule extends StatelessWidget {
                   // validator: (value) => FieldValidator().validateEmail(value!),
                 ),
               ],
-            )
-        )
+            ))
       ],
     );
   }
@@ -305,13 +296,10 @@ class ProfileDetailsModule extends StatelessWidget {
   }*/
 
   /// Mobile Number
-  Widget mobileTextField(){
+  Widget mobileTextField() {
     return Row(
       children: [
-        const Expanded(
-            flex: 2,
-            child: Text("Mobile:")
-        ),
+        const Expanded(flex: 2, child: Text("Mobile:")),
         Expanded(
             flex: 4,
             child: Stack(
@@ -332,16 +320,17 @@ class ProfileDetailsModule extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 TextFormField(
                   controller: screenController.mobileTextFieldController,
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
+                  inputFormatters: [LengthLimitingTextInputFormatter(10)],
                   decoration: const InputDecoration(
                     hintText: "Mobile",
                     hintStyle: TextStyle(color: Colors.black),
                     //isDense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
+
                     //filled: true,
                     //fillColor: Colors.white,
                     border: InputBorder.none,
@@ -369,77 +358,74 @@ class ProfileDetailsModule extends StatelessWidget {
                   validator: (value) => FieldValidator().validateMobile(value!),
                 ),
               ],
-            )
-        )
+            ))
       ],
     );
   }
 
   /// DOB Field
-  Widget dateOfBirthTextField(context){
+  Widget dateOfBirthTextField(context) {
     return Row(
       children: [
-        const Expanded(
-            flex: 2,
-            child: Text("Date Of Birth:")
-        ),
+        const Expanded(flex: 2, child: Text("Date Of Birth:")),
         Expanded(
-            flex: 4,
-            child: Container(
-              height: 45,
-              margin: const EdgeInsets.only(left: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.colorLightGrey.withOpacity(0.2),
-                    blurRadius: 10,
-                    spreadRadius: 5,
-                    blurStyle: BlurStyle.outer,
+          flex: 4,
+          child: Container(
+            height: 45,
+            margin: const EdgeInsets.only(left: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.colorLightGrey.withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 5,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                        "${screenController.selectedDate.day}-${screenController.selectedDate.month}-${screenController.selectedDate.year}",
+                        // textAlign: TextAlign.center,
+                        maxLines: 1,
+                        style: const TextStyle(color: Colors.black)),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.calendar_today_outlined,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                    tooltip: 'DOB',
+                    onPressed: () {
+                      // var dateFormat = DateFormat('yyyy-MM-dd');
+                      DateTime selectedDate = screenController.selectedDate;
+
+                      // String year = selectedDate.substring(0, selectedDate.length - 6);
+                      // String month = selectedDate.substring(5, selectedDate.length - 3);
+                      // String day = selectedDate.substring(8);
+
+                      // DateTime dateTime = dateFormat.parse("$year-$month-${day}T00:00:00.000000");
+                      // log("dateTime : $dateTime");
+                      // log("Date Format : ${DateTime.now()}");
+                      _selectDate(context, selectedDate);
+                      // SelectDateModule();
+                    },
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                          "${screenController.selectedDate.day}-${screenController.selectedDate.month}-${screenController.selectedDate.year}",
-                          // textAlign: TextAlign.center,
-                          maxLines: 1,
-                          style: const TextStyle(color: Colors.black)
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.calendar_today_outlined, color: Colors.black, size: 20,),
-                      tooltip: 'DOB',
-                      onPressed: () {
-                        // var dateFormat = DateFormat('yyyy-MM-dd');
-                        DateTime selectedDate = screenController.selectedDate;
-
-                        // String year = selectedDate.substring(0, selectedDate.length - 6);
-                        // String month = selectedDate.substring(5, selectedDate.length - 3);
-                        // String day = selectedDate.substring(8);
-
-                        // DateTime dateTime = dateFormat.parse("$year-$month-${day}T00:00:00.000000");
-                        // log("dateTime : $dateTime");
-                        // log("Date Format : ${DateTime.now()}");
-                        _selectDate(context, selectedDate);
-                        // SelectDateModule();
-                      },
-                    ),
-                  ],
-                ),
-              ),
             ),
+          ),
         )
       ],
     );
   }
-
-
 
   /// City
   /*Widget cityTextField(){
@@ -656,62 +642,66 @@ class ProfileDetailsModule extends StatelessWidget {
 
   /// Radio Button
   Widget _radioButton() {
-    return Obx(()=>
-        Row(
-          children: [
-            Expanded(
-              child: ListTile(
-                leading: Radio<String>(
-                  value: 'Male',
-                  activeColor: Colors.black,
-                  groupValue: screenController.gender.value,
-                  onChanged: (value) {
-                    screenController.gender.value = value!;
-                    log(value);
-                  },
-                ),
-                title: const Text('Male', style: TextStyle(color: Colors.black, fontSize: 15),),
+    return Obx(
+      () => Row(
+        children: [
+          Expanded(
+            child: ListTile(
+              leading: Radio<String>(
+                value: 'Male',
+                activeColor: Colors.black,
+                groupValue: screenController.gender.value,
+                onChanged: (value) {
+                  screenController.gender.value = value!;
+                  log(value);
+                },
+              ),
+              title: const Text(
+                'Male',
+                style: TextStyle(color: Colors.black, fontSize: 15),
               ),
             ),
-            Expanded(
-              child: ListTile(
-                leading: Radio<String>(
-                  value: 'Female',
-                  activeColor: Colors.black,
-                  groupValue: screenController.gender.value,
-                  onChanged: (value) {
-                    screenController.gender.value = value!;
-                    log(value);
-                  },
-                ),
-                title: const Text('Female', style: TextStyle(color: Colors.black, fontSize: 15),),
+          ),
+          Expanded(
+            child: ListTile(
+              leading: Radio<String>(
+                value: 'Female',
+                activeColor: Colors.black,
+                groupValue: screenController.gender.value,
+                onChanged: (value) {
+                  screenController.gender.value = value!;
+                  log(value);
+                },
+              ),
+              title: const Text(
+                'Female',
+                style: TextStyle(color: Colors.black, fontSize: 15),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 
   /// Save Button
-  Widget saveButtonModule(){
+  Widget saveButtonModule() {
     return GestureDetector(
       onTap: () async {
-        if(screenController.profileFormKey.currentState!.validate()){
+        if (screenController.profileFormKey.currentState!.validate()) {
           await screenController.updateUserProfileFunction();
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
@@ -726,7 +716,6 @@ class ProfileDetailsModule extends StatelessWidget {
     );
   }
 }
-
 
 class SelectDateModule extends StatelessWidget {
   SelectDateModule({Key? key}) : super(key: key);
@@ -763,14 +752,13 @@ class SelectDateModule extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-
                 String hour = "${selectedDay.hour}";
                 String minute = "${selectedDay.minute}";
 
                 /// For Hour Format
-                for(int i = 0; i < 10; i++) {
-                  if(selectedDay.hour.toString() == i.toString()) {
-                    if(selectedDay.hour.toString().length == 1) {
+                for (int i = 0; i < 10; i++) {
+                  if (selectedDay.hour.toString() == i.toString()) {
+                    if (selectedDay.hour.toString().length == 1) {
                       hour = "0${selectedDay.hour}";
                     }
                   }
@@ -778,15 +766,14 @@ class SelectDateModule extends StatelessWidget {
 
                 /// For Minute
                 for (int i = 0; i < 10; i++) {
-                  if(selectedDay.minute.toString() == i.toString()) {
-                    if(selectedDay.minute.toString().length == 1) {
+                  if (selectedDay.minute.toString() == i.toString()) {
+                    if (selectedDay.minute.toString().length == 1) {
                       minute = "0${selectedDay.minute}";
                     }
                   }
                 }
 
                 // screenController.selectedTime.value = "$hour:$minute:00";
-
 
                 // screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
@@ -805,7 +792,7 @@ class SelectDateModule extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -815,19 +802,19 @@ class SelectDateModule extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -854,7 +841,7 @@ class SelectDateModule extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

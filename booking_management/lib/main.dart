@@ -16,7 +16,6 @@ import 'common_modules/constants/user_details.dart';
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
@@ -29,10 +28,6 @@ late AndroidNotificationChannel channel;
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,26 +52,24 @@ void main() async {
 
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
 
     final IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
-        requestAlertPermission: false,
-        requestBadgePermission: false,
-        requestSoundPermission: false,
-        onDidReceiveLocalNotification: (
-            int id,
-            String? title,
-            String? body,
-            String? payload,
-            ) async {
-
-        });
+        IOSInitializationSettings(
+            requestAlertPermission: false,
+            requestBadgePermission: false,
+            requestSoundPermission: false,
+            onDidReceiveLocalNotification: (
+              int id,
+              String? title,
+              String? body,
+              String? payload,
+            ) async {});
 
     /// Create an Android Notification Channel.
     ///
@@ -84,7 +77,7 @@ void main() async {
     /// default FCM channel to enable heads up notifications.
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     /// Update the iOS foreground notification presentation options to allow
@@ -99,9 +92,9 @@ void main() async {
 
   firebaseMessaging.setForegroundNotificationPresentationOptions(sound: true);
 
- // HttpOverrides.global = new MyHttpOverrides();
- //  log("Console Log Void Main");
- //  Fluttertoast.showToast(msg: "Console Log Void Main");
+  // HttpOverrides.global = new MyHttpOverrides();
+  //  log("Console Log Void Main");
+  //  Fluttertoast.showToast(msg: "Console Log Void Main");
   runApp(const MyApp());
 }
 
@@ -113,9 +106,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
-
   @override
   void initState() {
     super.initState();
@@ -129,7 +119,7 @@ class _MyAppState extends State<MyApp> {
     //checkForInitialMessage();
     FirebaseMessaging.instance
         .getInitialMessage()
-        .then((RemoteMessage ? message) {
+        .then((RemoteMessage? message) {
       if (message != null) {
         log('we can now navigate to specific screen');
         // Navigator.pushNamed(context, '/message',
@@ -138,9 +128,9 @@ class _MyAppState extends State<MyApp> {
     });
 
     /// For Foreground Notification
-    FirebaseMessaging.onMessage.listen((RemoteMessage ? message) {
-      RemoteNotification ? notification = message!.notification;
-      AndroidNotification ? android = message.notification!.android;
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+      RemoteNotification? notification = message!.notification;
+      AndroidNotification? android = message.notification!.android;
       if (notification != null && android != null && !kIsWeb) {
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
@@ -161,8 +151,8 @@ class _MyAppState extends State<MyApp> {
     ///Background notification
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       log('A new onMessageOpenedApp event was published!');
-       // Navigator.pushNamed(context, '/message',
-       //    arguments: MessageArguments(message, true));
+      // Navigator.pushNamed(context, '/message',
+      //    arguments: MessageArguments(message, true));
     });
   }
 
@@ -170,7 +160,7 @@ class _MyAppState extends State<MyApp> {
   checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       log('For handling notification when the app is in terminated state');
@@ -179,12 +169,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     /// Set Only Vertical Orientation
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     // log("Console Log runApp");
     // Fluttertoast.showToast(msg: "Console Log runApp");
@@ -192,9 +179,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: "Booking Management System",
       debugShowCheckedModeBanner: false,
-
       theme: appThemeData(),
-
       home: SplashScreen(),
     );
   }

@@ -100,6 +100,7 @@ class UserSignUpScreenController extends GetxController {
             Get.off(() => SignInScreen(), transition: Transition.zoom);
           }
         } else {
+          Fluttertoast.showToast(msg: response1.message);
           log('False False');
         }
       });

@@ -120,7 +120,7 @@ class SearchCategoryField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42,
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
@@ -194,7 +194,7 @@ class SearchLocationField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42,
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
@@ -640,7 +640,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Upcoming Appointment',
+            'Customer Appointment',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

@@ -109,7 +109,7 @@ class ForgotPasswordScreenController extends GetxController {
 
       ForgotPasswordModel forgotPasswordModel = ForgotPasswordModel.fromJson(json.decode(response.body));
       isStatus = forgotPasswordModel.statusCode.obs;
-
+      log('isStatus: $isStatus');
 
 
       if(isStatus.value == 200) {

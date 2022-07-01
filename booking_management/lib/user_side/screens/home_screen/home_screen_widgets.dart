@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:booking_management/common_modules/common_functions.dart';
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
@@ -9,6 +10,7 @@ import 'package:booking_management/user_side/screens/user_search_results_screen/
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:google_place/google_place.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/constants/enums.dart';
@@ -140,16 +142,28 @@ class SearchCategoryField extends StatelessWidget {
         hideSuggestionsOnKeyboardHide: true,
         textFieldConfiguration: TextFieldConfiguration(
           controller: screenController.categoryFieldController,
-          decoration: const InputDecoration(
-            prefixIcon:
-                Icon(Icons.search_rounded, color: Colors.grey, size: 18),
+          decoration: InputDecoration(
+            prefixIcon: const Icon(
+              Icons.search_rounded,
+              color: Colors.grey,
+              size: 18,
+            ),
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.close),
+              color: Colors.grey,
+              iconSize: 20,
+              onPressed: () {
+                screenController.categoryFieldController.clear();
+              },
+            ),
             border: InputBorder.none,
             hintText: 'Search for a service providers or business',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               fontSize: 15,
               color: Colors.grey,
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           ),
         ),
         itemBuilder: (context, String? suggestion) {
@@ -265,18 +279,27 @@ class SearchLocationField extends StatelessWidget {
             }
           });
         },
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           hintText: 'Search Location',
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             color: Colors.grey,
             fontSize: 15,
           ),
           border: InputBorder.none,
           isDense: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-          prefixIcon: Icon(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          prefixIcon: const Icon(
             Icons.search_rounded,
             color: Colors.grey,
+          ),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.close),
+            color: Colors.grey,
+            iconSize: 20,
+            onPressed: () {
+              screenController.locationFieldController.clear();
+            },
           ),
         ),
       ),
@@ -301,19 +324,39 @@ class SearchLocationListModule extends StatelessWidget {
                   final placeId = screenController.predictions[i].placeId;
                   final details =
                       await screenController.googlePlace.details.get(placeId!);
-                  if (details != null && details.result != null) {
-                    log(details.result!.addressComponents![0].longName!);
-                    screenController.locationFieldController.text =
-                        screenController.predictions[i].description.toString();
-                    var document = parse(details.result!.adrAddress.toString());
-                    var regionName = document.getElementsByClassName("region");
-                    // var pinCode = document.getElementsByClassName("postal-code");
-                    log("regionName : $regionName");
-                    // log("pinCode : $pinCode");
-                    screenController.isLoading(true);
-                    screenController.predictions.clear();
-                    screenController.isLoading(false);
-                  } else {}
+
+                  UtilFunctions().formatPlaceSearchKeyword(details);
+                  // DetailsResponse placeDetails = details!;
+                  // if (details != null && details.result != null) {
+                  //   log(details.result!.addressComponents![0].longName!);
+                  //   var document = parse(details.result!.adrAddress);
+
+                  //   var regionNameData =
+                  //       document.getElementsByClassName("region");
+                  //   var localityData =
+                  //       document.getElementsByClassName("locality");
+                  //   var postalCodeData =
+                  //       document.getElementsByClassName("postal-code");
+
+                  //   // var pinCode = document.getElementsByClassName("postal-code");
+                  //   log("place details body : ${details.result!.adrAddress}");
+
+                  //   var region = regionNameData[0].innerHtml;
+                  //   var locality = localityData[0].innerHtml;
+                  //   var postalCode = postalCodeData[0].innerHtml;
+
+                  //   log("region name : ${region}");
+                  //   log("locality : ${locality}");
+                  //   log("postal code :${postalCode} ");
+
+                  //   screenController.locationFieldController.text =
+                  //       screenController.predictions[i].description.toString();
+                  //   // "$postalCode, $region";
+                  //   // log("pinCode : $pinCode");
+                  //   screenController.isLoading(true);
+                  //   screenController.predictions.clear();
+                  //   screenController.isLoading(false);
+                  // } else {}
                 },
                 leading: const CircleAvatar(
                   child: Icon(Icons.pin_drop_rounded),
@@ -648,7 +691,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
           ),
           // const SizedBox(height: 15),
 
-          DatePickerModule(),
+          const DatePickerModule(),
 
           const SizedBox(height: 10),
           screenController.isServiceCalenderShow.value
@@ -735,7 +778,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 await screenController.getUpcomingAppointmentDetailsFunction(
-                    id: singleItem.id);
+                    id: singleItem.bookingId);
                 Get.to(() => UpcomingAppointmentDetailsScreen(),
                     transition: Transition.zoom);
               },

@@ -15,13 +15,11 @@ import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_appointment_details_model.dart';
 import '../../model/home_screen_models/get_favourite_vendor_model.dart';
 
-
-
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-   ApiHeader apiHeader = ApiHeader();
+  ApiHeader apiHeader = ApiHeader();
 
   final TextEditingController categoryFieldController = TextEditingController();
   final TextEditingController locationFieldController = TextEditingController();
@@ -40,7 +38,6 @@ class HomeScreenController extends GetxController {
   List<AutocompletePrediction> predictions = [];
   Timer? debounce;
 
-
   loadUI() {
     isLoading(true);
     isLoading(false);
@@ -53,13 +50,16 @@ class HomeScreenController extends GetxController {
     log("Category API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       // log("Category Response : ${response.body}");
 
-      GetAllCategoryModel getAllCategoryModel = GetAllCategoryModel.fromJson(json.decode(response.body));
+      GetAllCategoryModel getAllCategoryModel =
+          GetAllCategoryModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllCategoryModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         allCategoryList.clear();
         allCategoryList = getAllCategoryModel.data;
         // log("allCategoryList : ${allCategoryList.length}");
@@ -67,16 +67,13 @@ class HomeScreenController extends GetxController {
         log("getAllCategoriesFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getAllCategoriesFunction Error ::: $e");
     } finally {
       // isLoading(false);
       await getAllUpcomingAppointmentFunction();
     }
   }
-
 
   Future<List<String>> getCategorySearchFunction(String searchText) async {
     String url = ApiUrl.searchApi + "?prefix=$searchText";
@@ -86,11 +83,11 @@ class HomeScreenController extends GetxController {
       http.Response response = await http.get(Uri.parse(url));
       log("Get Category Api Response : ${response.body}");
 
-      SearchModel searchModel = SearchModel.fromJson(json.decode(response.body));
+      SearchModel searchModel =
+          SearchModel.fromJson(json.decode(response.body));
 
       List<String> searchList = searchModel.data;
       log("searchList : $searchList");
-
 
       return searchText.isEmpty
           ? searchList
@@ -100,11 +97,10 @@ class HomeScreenController extends GetxController {
 
               return searchListString.contains(searchTextNew);
             }).toList();
-    } catch(e) {
+    } catch (e) {
       log("getCategorySearchFunction Error :::$e");
       return [];
     }
-
   }
 
   Future<List<String>> getLocationSearchFunction(String searchText) async {
@@ -115,41 +111,43 @@ class HomeScreenController extends GetxController {
       http.Response response = await http.get(Uri.parse(url));
       log("Get Location Api Response : ${response.body}");
 
-      SearchModel searchModel = SearchModel.fromJson(json.decode(response.body));
+      SearchModel searchModel =
+          SearchModel.fromJson(json.decode(response.body));
 
       List<String> locationSearchList = searchModel.data;
       log("searchList : $locationSearchList");
 
-
       return searchText.isEmpty
           ? locationSearchList
           : locationSearchList.where((element) {
-        String searchListString = element.toLowerCase();
-        String searchTextNew = searchText.toLowerCase();
+              String searchListString = element.toLowerCase();
+              String searchTextNew = searchText.toLowerCase();
 
-        return searchListString.contains(searchTextNew);
-      }).toList();
-    } catch(e) {
+              return searchListString.contains(searchTextNew);
+            }).toList();
+    } catch (e) {
       log("getLocationSearchFunction Error :::$e");
       return [];
     }
-
   }
 
   /// Get All Upcoming Appointment
   getAllUpcomingAppointmentFunction() async {
     isLoading(true);
-    String url = ApiUrl.getAllUpcomingAppointment + "?cutomerid=${UserDetails.uniqueId}";
+    String url =
+        ApiUrl.getAllUpcomingAppointment + "?cutomerid=${UserDetails.uniqueId}";
     log("Upcoming Appointment API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
 
-      GetAllAppointmentListModel getAllAppointmentListModel = GetAllAppointmentListModel.fromJson(json.decode(response.body));
+      GetAllAppointmentListModel getAllAppointmentListModel =
+          GetAllAppointmentListModel.fromJson(json.decode(response.body));
 
       isSuccessStatus = getAllAppointmentListModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         allUpcomingAppointmentList.clear();
 
         allUpcomingAppointmentList = getAllAppointmentListModel.data;
@@ -158,30 +156,31 @@ class HomeScreenController extends GetxController {
         log("getAllUpcomingAppointment Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getAllUpcomingAppointment Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
 
   ///getUpcomingAppointDateWise
   getAllUpcomingAppointmentDateWiseFunction() async {
     isLoading(true);
-    String url = ApiUrl.getAllUpcomingAppointment + "?cutomerid=${UserDetails.uniqueId}" + "&dDate=${selectedDate.value}";
+    String url = ApiUrl.getAllUpcomingAppointment +
+        "?cutomerid=${UserDetails.uniqueId}" +
+        "&dDate=${selectedDate.value}";
     log("Upcoming Appointment API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
 
-      GetAllAppointmentListModel getAllAppointmentListModel = GetAllAppointmentListModel.fromJson(json.decode(response.body));
+      GetAllAppointmentListModel getAllAppointmentListModel =
+          GetAllAppointmentListModel.fromJson(json.decode(response.body));
 
       isSuccessStatus = getAllAppointmentListModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         allUpcomingAppointmentList.clear();
 
         allUpcomingAppointmentList = getAllAppointmentListModel.data;
@@ -190,13 +189,11 @@ class HomeScreenController extends GetxController {
         log("getAllUpcomingAppointment Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getAllUpcomingAppointment Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   /// Search Vendor
@@ -228,39 +225,34 @@ class HomeScreenController extends GetxController {
   //
   // }
 
-
   /// Get Upcoming Appointment Details
-  getUpcomingAppointmentDetailsFunction({required int id}) async {
+  getUpcomingAppointmentDetailsFunction({required String id}) async {
     isLoading(true);
     String url = ApiUrl.upcomingAppointmentDetailsApi + "?id=$id";
     log("Appointment Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment Details Response : ${response.body}");
 
-      GetAppointmentDetailsModel getAppointmentDetailsModel = GetAppointmentDetailsModel.fromJson(json.decode(response.body));
+      GetAppointmentDetailsModel getAppointmentDetailsModel =
+          GetAppointmentDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAppointmentDetailsModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         appointDetailsData = getAppointmentDetailsModel.data;
         log("appointmentDetails : $appointDetailsData");
-
       } else {
         log("getUpcomingAppointmentDetailsFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getUpcomingAppointmentDetailsFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
-
 
   @override
   void onInit() {
@@ -270,16 +262,13 @@ class HomeScreenController extends GetxController {
   }
 
   void autoCompleteLocationSearch(String value) async {
-
     var result = await googlePlace.autocomplete.get(value);
 
-    if(result != null && result.predictions != null) {
+    if (result != null && result.predictions != null) {
       log(result.predictions!.first.description!);
       predictions = result.predictions!;
       isLoading(true);
       isLoading(false);
     }
-
   }
-
 }

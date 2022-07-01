@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_place/google_place.dart';
+import 'package:html/parser.dart';
 
 import '../common_ui/common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
+import '../user_side/controllers/home_screen_controller/home_screen_controller.dart';
 import 'constants/app_images.dart';
 
 class HeaderLogoModule extends StatelessWidget {
@@ -47,10 +52,11 @@ class OrTextModule extends StatelessWidget {
   }
 }
 
-
 class SocialMediaLoginModule extends StatelessWidget {
   final UserSignUpScreenController userSignUpScreenController;
-  const SocialMediaLoginModule({Key? key, required this.userSignUpScreenController}) : super(key: key);
+  const SocialMediaLoginModule(
+      {Key? key, required this.userSignUpScreenController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,5 +115,52 @@ class CustomCircularLoaderModule extends StatelessWidget {
         width: Get.width * 0.50,
       ),
     );*/
+  }
+}
+
+class UtilFunctions {
+  formatPlaceSearchKeyword(DetailsResponse? details) {
+    final screenController = Get.find<HomeScreenController>();
+
+    if (details != null && details.result != null) {
+      log(details.result!.addressComponents![0].longName!);
+      var document = parse(details.result!.adrAddress);
+
+      // variables source data
+
+      var postalCodeData = document.getElementsByClassName("postal-code");
+
+      var regionData = document.getElementsByClassName("region");
+
+      // variables
+
+      var postalCode = "";
+      var region = "";
+
+      //variable value assign
+      if (postalCodeData.isNotEmpty) {
+        postalCode = postalCodeData[0].innerHtml;
+
+        log(" postal code is  :   $postalCode\n ");
+        if (regionData.isNotEmpty) {
+          region = regionData[0].innerHtml;
+          log("postal region is  :   $postalCode\n$region\n ");
+        } else {}
+      } else if (regionData.isNotEmpty) {
+        region = regionData[0].innerHtml;
+
+        log("only region is  :  \n$region\n ");
+      }
+
+      // var pinCode = document.getElementsByClassName("postal-code");
+      log("place details full body : ${details.result!.adrAddress}");
+
+      screenController.locationFieldController.text = "$postalCode $region";
+      // screenController.predictions[i].description.toString();
+      // log("pinCode : $pinCode");
+      screenController.isLoading(true);
+      screenController.predictions.clear();
+      screenController.isLoading(false);
+    } else {}
   }
 }

@@ -11,7 +11,7 @@ class UserNotificationScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-  // ApiHeader apiHeader = ApiHeader();
+   ApiHeader apiHeader = ApiHeader();
 
   List<NotificationData> notificationList = [];
   List<NotificationData> _notificationListData = [];
@@ -23,7 +23,7 @@ class UserNotificationScreenController extends GetxController {
     log("Notification Get API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
 
       NotificationGetModel notificationGetModel = NotificationGetModel.fromJson(json.decode(response.body));
       isSuccessStatus = notificationGetModel.success.obs;

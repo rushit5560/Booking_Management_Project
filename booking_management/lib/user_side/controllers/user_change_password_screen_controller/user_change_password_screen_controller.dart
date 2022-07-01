@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/user_side/model/user_change_password_model/user_change_password_model.dart';
@@ -18,6 +19,8 @@ class UserChangePasswordScreenController extends GetxController{
   RxBool isSuccessStatus = false.obs;
   GlobalKey<FormState> changePasswordFormKey = GlobalKey<FormState>();
 
+  ApiHeader apiHeader = ApiHeader();
+
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController currentPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
@@ -30,15 +33,15 @@ class UserChangePasswordScreenController extends GetxController{
     String url = ApiUrl.userChangePasswordApi;
     log('Url : $url');
 
-    Map<String, String> headers= <String,String>{
-      'Authorization': UserDetails.apiToken
-    };
+    // Map<String, String> headers= <String,String>{
+    //   'Authorization': UserDetails.apiToken
+    // };
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
     try{
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      request.headers.addAll(headers);
+      request.headers.addAll(apiHeader.headers);
 
       request.fields['UserName'] = UserDetails.userName;
       request.fields['CurrentPassword'] = currentPasswordController.text.trim();

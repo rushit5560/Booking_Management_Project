@@ -20,7 +20,7 @@ class BookingSuccessScreenController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
-  // ApiHeader apiHeader = ApiHeader();
+   ApiHeader apiHeader = ApiHeader();
 
   String bookingId = "";
   String vendorName = "";
@@ -85,7 +85,7 @@ class BookingSuccessScreenController extends GetxController {
     log("Get User Fcm Token : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFcmTokeModel.success.obs;
       log("getFcmTokeModel.success : ${getFcmTokeModel.success}");

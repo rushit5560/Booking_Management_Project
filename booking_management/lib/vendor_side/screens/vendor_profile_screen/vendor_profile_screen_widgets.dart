@@ -427,7 +427,7 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                     border: InputBorder.none,
 
                   ),
-                  validator: (value) => FieldValidator().validateName(value!),
+                  validator: (value) => FieldValidator().validateBusinessName123(value!),
                 ),
               ],
             )
@@ -587,8 +587,10 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                   controller: screenController.mobileTextFieldController,
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
+                  maxLength: 10,
                   decoration: const InputDecoration(
                     hintText: "Mobile",
+                    counterText: "",
                     hintStyle: TextStyle(color: Colors.black),
                     //isDense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -1028,10 +1030,15 @@ class _VendorProfileDetailsModuleState extends State<VendorProfileDetailsModule>
                                 '30',
                                 '45',
                                 '60',
-                                '75',
-                                '90',
-                                '105',
                                 '120',
+                                '180',
+                                '240',
+                                '300',
+                                '360',
+                                '420',
+                                '480',
+                                '540',
+                                '600',
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,

@@ -118,7 +118,7 @@ class VendorResourcesScreenController extends GetxController {
       request.fields['id'] = "${UserDetails.tableWiseId}";
       request.fields['CreatedBy'] = UserDetails.uniqueId;
       request.fields['Capacity'] = resourceCapacityFieldController.text.trim();
-      request.fields['isEvent'] = "$isEvent";
+      request.fields['isEvent'] = "${isEvent.value}";
 
       // request.fields['Name'] = "Shaving";
       // request.fields['ShortDescription'] = "Lorem Ipsum is simply dummy text of the printing.";
@@ -146,6 +146,7 @@ class VendorResourcesScreenController extends GetxController {
       log('response: ${response.request}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
+        log("value : $value");
         AddVendorResourceModel addVendorResourceModel = AddVendorResourceModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorResourceModel.success.obs;
         log("Code : ${addVendorResourceModel.statusCode}");

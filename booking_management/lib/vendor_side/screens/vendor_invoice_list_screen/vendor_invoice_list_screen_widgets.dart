@@ -84,7 +84,13 @@ class OrderListModule extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               GestureDetector(
-                onTap: () {},
+                onTap: () async {
+                  await screenController.getOrderDetailsByIdFunction(id: singleItem.id);
+                  Get.to(
+                        () => VendorInvoiceDetailsScreen(),
+                    transition: Transition.zoom,
+                  );
+                },
                 child: Text(
                   "Print",
                   maxLines: 1,

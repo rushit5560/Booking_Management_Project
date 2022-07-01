@@ -290,7 +290,10 @@ class ServiceTimeDurationModule extends StatelessWidget {
                         .map<DropdownMenuItem<int>>((int value) {
                       return DropdownMenuItem<int>(
                         value: value,
-                        child: Text("$value Minutes",style: const TextStyle(color:Colors.black),),
+                        child: Text(
+                          value == 1 ? "$value Hour"
+                          : "$value Minutes",
+                          style: const TextStyle(color:Colors.black),),
                       );
                     }).toList(),
                     onChanged: (newValue) {

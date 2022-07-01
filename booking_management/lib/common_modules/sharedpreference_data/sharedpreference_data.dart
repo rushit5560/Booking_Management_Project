@@ -25,6 +25,7 @@ class SharedPreferenceData{
   String postCodeKey = "postCodeKey";
   //String slotDurationKey = "slotDurationKey";
   String businessIdKey = "businessIdKey";
+  String serviceSlotKey = "serviceSlotKey";
 
   String latitudeKey = "latitudeKey";
   String longitudeKey = "longitudeKey";
@@ -48,7 +49,8 @@ class SharedPreferenceData{
         required String subUrb,
         required String postCode,
     //required String slotDuration
-    required String businessId
+    required String businessId,
+    required bool serviceSlot,
       }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -72,6 +74,7 @@ class SharedPreferenceData{
     prefs.remove(postCodeKey);
     //prefs.remove(slotDurationKey);
     prefs.remove(businessIdKey);
+    prefs.setBool(serviceSlotKey, false);
 
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, true);
@@ -93,6 +96,7 @@ class SharedPreferenceData{
     prefs.setString(postCodeKey, postCode);
     //prefs.setString(slotDurationKey, slotDuration);
     prefs.setString(businessIdKey, businessId);
+    prefs.setBool(serviceSlotKey, serviceSlot);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -114,6 +118,7 @@ class SharedPreferenceData{
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
     //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
+    UserDetails.isServiceSlot = prefs.getBool(serviceSlotKey) ?? false;
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -134,6 +139,7 @@ class SharedPreferenceData{
     log("UserDetails.postCode : ${UserDetails.postCode}");
     //log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
+    log("UserDetails.isServiceSlot : ${UserDetails.isServiceSlot}");
   }
 
 

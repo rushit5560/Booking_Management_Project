@@ -7,6 +7,7 @@ import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_vendor_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_subscription_plan_screen/vendor_subscription_plan_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
@@ -86,7 +87,8 @@ class SignInScreenController extends GetxController {
                 subUrb: "",
                 postCode: "",
                 //slotDuration: ""
-                businessId: ""
+                businessId: "",
+              serviceSlot: false
             );
             log("Fcm Token : ${UserDetails.fcmToken}");
             if(signInRoute == SignInRoute.fromBookScreen) {
@@ -118,8 +120,19 @@ class SignInScreenController extends GetxController {
                 subUrb: signInModel.vendor.suburb,
                 postCode: signInModel.vendor.postcode,
                 // slotDuration: signInModel.vendor.
-                businessId: signInModel.vendor.businessId
+                businessId: signInModel.vendor.businessId,
+                serviceSlot: signInModel.vendor.isServiceSlots
             );
+
+            // DateTime subscription = signInModel.vendor.nextPayment;
+            //
+            // if(subscription == "") {
+            //   Get.offAll(()=> VendorSubscriptionPlanScreen(), transition: Transition.zoom);
+            // }
+            // else {
+            //   Get.offAll(() => VendorIndexScreen());
+            // }
+
             Get.offAll(() => VendorIndexScreen());
             //Get.snackbar('LoggedIn Successfully.', '');
           }

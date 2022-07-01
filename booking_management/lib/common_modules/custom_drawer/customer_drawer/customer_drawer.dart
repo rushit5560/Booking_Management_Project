@@ -62,14 +62,14 @@ class CustomerDrawer extends StatelessWidget {
               : Container(),
               const SizedBox(height: 20),
 
-              UserDetails.isUserLoggedIn == true
-              ? CustomerDrawerSingleItemModule(
-                img: AppImages.paymentImg,
-                name: 'Payment',
-                customerDrawerOption: CustomerDrawerOption.payment,
-              )
-              : Container(),
-              const SizedBox(height: 20),
+              // UserDetails.isUserLoggedIn == true
+              // ? CustomerDrawerSingleItemModule(
+              //   img: AppImages.paymentImg,
+              //   name: 'Payment',
+              //   customerDrawerOption: CustomerDrawerOption.payment,
+              // )
+              // : Container(),
+              // const SizedBox(height: 20),
 
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
@@ -80,12 +80,12 @@ class CustomerDrawer extends StatelessWidget {
                   : Container(),
               const SizedBox(height: 20),
 
-              CustomerDrawerSingleItemModule(
-                img: AppImages.helpImg,
-                name: 'Help',
-                customerDrawerOption: CustomerDrawerOption.help,
-              ),
-              const SizedBox(height: 20),
+              // CustomerDrawerSingleItemModule(
+              //   img: AppImages.helpImg,
+              //   name: 'Help',
+              //   customerDrawerOption: CustomerDrawerOption.help,
+              // ),
+              // const SizedBox(height: 20),
 
               UserDetails.isUserLoggedIn == true
               ? CustomerDrawerSingleItemModule(

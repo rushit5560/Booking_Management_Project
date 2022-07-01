@@ -137,6 +137,9 @@ class ServicesListModule extends StatelessWidget {
                             Get.back();
                           },
                         );
+                      onTap: () async {
+
+                        // await screenController.deleteVendorServiceFunction(resourceId: "${singleItem.id}");
                       },
                       child: const Icon(
                         Icons.delete,

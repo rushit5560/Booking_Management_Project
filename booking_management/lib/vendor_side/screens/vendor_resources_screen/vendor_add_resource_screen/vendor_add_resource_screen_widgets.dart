@@ -291,12 +291,8 @@ class ResourceCapacityFieldModule extends StatelessWidget {
                 readOnly: !vendorResourcesScreenController.isEvent.value,
                 controller: vendorResourcesScreenController.resourceCapacityFieldController,
                 keyboardType: TextInputType.number,
-                validator: (value) => FieldValidator().validateCapacity(value!),
+                // validator: (value) => FieldValidator().validateCapacity(value!),
                 decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
-                 onChanged: (value){
-                   vendorResourcesScreenController.isEvent.value = value as bool;
-                   log('vendorResourcesScreenController.isEvent.value checkbox: ${vendorResourcesScreenController.isEvent.value}');
-                 },
               ),
             ),
           ],
@@ -318,8 +314,12 @@ class IsEventCheckBoxModule extends StatelessWidget {
         Obx(() => Checkbox(
             value: vendorResourcesScreenController.isEvent.value,
             onChanged: (value) {
-               vendorResourcesScreenController.isEvent.value = value!;
-               log('vendorResourcesScreenController.isEvent.value checkbox: ${vendorResourcesScreenController.isEvent.value}');
+               vendorResourcesScreenController.isEvent.value =
+               !vendorResourcesScreenController.isEvent.value;
+
+               if(vendorResourcesScreenController.isEvent.value == false) {
+                 vendorResourcesScreenController.resourceCapacityFieldController.clear();
+               }
             },
           ),
         ),

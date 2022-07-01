@@ -50,6 +50,8 @@ class BookingResourceWorkerData {
       required this.vendorBooking,
       required this.vendorId,
       required this.price,
+        required this.isEvent,
+        required this.capacity,
       required this.dDate,
       required this.duration,
       required this.avilableTime,
@@ -73,6 +75,8 @@ class BookingResourceWorkerData {
   VendorBooking vendorBooking;
   int vendorId;
   double price;
+  int capacity;
+  bool isEvent;
   String dDate;
   String duration;
   String avilableTime;
@@ -97,6 +101,8 @@ class BookingResourceWorkerData {
           vendorBooking: VendorBooking.fromJson(json["vendorBooking"] ?? {}),
           vendorId: json["vendorId"] ?? 0,
           price: double.parse(json["price"].toString()),
+          capacity: json["capacity"] ?? 0,
+          isEvent: json["isEvent"] ?? false,
           dDate: json["dDate"] ?? "",
           duration: json["duration"] ?? "",
           avilableTime: json["avilableTime"] ?? "",

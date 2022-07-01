@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/user_side/model/get_payment_id_model/get_payment_id_model.dart';
 import 'package:booking_management/user_side/model/get_stripe_secret_key_model/get_stripe_secret_key_model.dart';
@@ -26,7 +27,7 @@ class UserCheckoutScreenController extends GetxController{
   String secretKey = "";
   String publishableKey = "";
 
-  // ApiHeader apiHeader = ApiHeader();
+   ApiHeader apiHeader = ApiHeader();
 
   /// For Stripe
   Map<String, dynamic>? paymentIntentData;
@@ -162,7 +163,7 @@ class UserCheckoutScreenController extends GetxController{
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      // request.headers.addAll(apiHeader.headers);
+       request.headers.addAll(apiHeader.headers);
 
       request.fields['BookingId'] = bookingId;
       request.fields['sessionId'] = secretKey;

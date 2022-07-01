@@ -64,6 +64,8 @@ class BookAppointmentScreenController extends GetxController {
     '22:00', '22:30', '23:00', '23:30'];
   RxString selectedTimeValue = "Any Time".obs;
 
+  RxBool isEvent = false.obs;
+
 
   /// 1) Get Booking Vendor
   getBookVendorDetailsByIdFunction() async {
@@ -151,6 +153,14 @@ class BookAppointmentScreenController extends GetxController {
 
       if(isSuccessStatus.value) {
         allResourcesList = getBookingResourcesModel.workerList;
+        for(int i =0; i < getBookingResourcesModel.workerList.length; i++){
+
+          if(getBookingResourcesModel.workerList[i].isEvent == true) {
+            isEvent = getBookingResourcesModel.workerList[i].isEvent.obs;
+          }
+
+          log('isEvent: $isEvent');
+        }
         log("allResourcesList : ${allResourcesList.length}");
 
         if(searchType2 == SearchType2.none) {

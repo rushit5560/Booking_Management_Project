@@ -409,9 +409,9 @@ class AdditionalSlotModule extends StatelessWidget {
           ? SelectAdditionalSlotDateModule()
           : Container(),
           const SizedBox(height: 10),
-          AnytimeDropDownModule(),
+          screenController.isEvent.value ?  Container() : AnytimeDropDownModule(),
           const SizedBox(height: 10),
-          AdditionalSlotDropDownModule(),
+          screenController.isEvent.value ? Container() : AdditionalSlotDropDownModule(),
           const SizedBox(height: 15),
           AdditionalSlotSubmitButton(),
           // SubmitButtonModule(),

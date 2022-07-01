@@ -48,7 +48,10 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
 
   Widget _subscriptionPlanLitTile(SubscriptionWorkerList singleItem) {
     return GestureDetector(
-      onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft, arguments: singleItem.price),
+     // onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft, arguments: singleItem.price),
+      onTap: ()async{
+        await vendorSubscriptionPlanScreenController.makePayment(singleItem.price);
+      },
       child: Container(
         margin: const EdgeInsets.only(left: 5, right: 5),
         decoration: shadowDecoration(),

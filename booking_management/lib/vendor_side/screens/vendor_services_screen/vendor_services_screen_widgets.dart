@@ -123,7 +123,8 @@ class ServicesListModule extends StatelessWidget {
                     const SizedBox(height: 30),
                     GestureDetector(
                       onTap: () async {
-                        await screenController.deleteVendorServiceFunction(resourceId: "${singleItem.id}");
+                        
+                        // await screenController.deleteVendorServiceFunction(resourceId: "${singleItem.id}");
                       },
                       child: const Icon(
                         Icons.delete,

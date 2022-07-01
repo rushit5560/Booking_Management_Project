@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/enums.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/custom_drawer/vendor_drawer/vendor_drawer_widgets.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
@@ -49,12 +50,12 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),*/
 
-              VendorDrawerSingleItemModule(
+              /*VendorDrawerSingleItemModule(
                 img: AppImages.paymentImg,
                 name: 'Wallet',
                 vendorDrawerOption: VendorDrawerOption.wallet,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20),*/
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
@@ -63,18 +64,17 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Services',
-                vendorDrawerOption: VendorDrawerOption.services,
-              ),
-              const SizedBox(height: 20),
-
-              VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Additional Slot',
-                vendorDrawerOption: VendorDrawerOption.additionalSlot,
-              ),
+              UserDetails.isServiceSlot
+                  ? VendorDrawerSingleItemModule(
+                      img: AppImages.resourcesImg,
+                      name: 'Services',
+                      vendorDrawerOption: VendorDrawerOption.services,
+                    )
+                  : VendorDrawerSingleItemModule(
+                      img: AppImages.resourcesImg,
+                      name: 'Additional Slot',
+                      vendorDrawerOption: VendorDrawerOption.additionalSlot,
+                    ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(

@@ -25,6 +25,7 @@ class UserDetails {
   static String postCode = "";
   static String slotDuration = "";
   static String businessId = "";
+  static bool isServiceSlot = false;
 
   static String latitude = "";
   static String longitude = "";

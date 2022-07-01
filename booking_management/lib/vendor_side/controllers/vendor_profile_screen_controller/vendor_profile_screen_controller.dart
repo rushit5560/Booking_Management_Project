@@ -291,8 +291,11 @@ class VendorProfileScreenController extends GetxController{
         slotDurationValue.value = getUserDetailsByIdModel.data.duration.toString();
         businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
 
-        selectedLatitude.value = getUserDetailsByIdModel.data.latitude;
-        selectedLongitude.value = getUserDetailsByIdModel.data.longitude;
+        selectedLatitude.value = getUserDetailsByIdModel.data.latitude == ""
+        ? UserDetails.latitude : getUserDetailsByIdModel.data.latitude;
+
+        selectedLongitude.value = getUserDetailsByIdModel.data.longitude == ""
+        ? UserDetails.longitude : getUserDetailsByIdModel.data.longitude;
 
         kGooglePlex = CameraPosition(
           target: LatLng(double.parse(selectedLatitude.value), double.parse(selectedLongitude.value)),

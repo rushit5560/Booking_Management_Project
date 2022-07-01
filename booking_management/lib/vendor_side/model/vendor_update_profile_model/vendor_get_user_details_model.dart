@@ -157,7 +157,7 @@ class Data {
     workingHoursStatus: json["workingHoursStatus"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
     dDate: json["dDate"] ?? "",
-    duration: json["duration"] ?? 0,
+    duration: json["duration"] ?? 15,
     startTime: json["startTime"] ?? "",
     endTime: json["endTime"] ?? "",
     vendorList: json["vendorList"] ?? "",

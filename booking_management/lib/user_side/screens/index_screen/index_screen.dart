@@ -12,8 +12,6 @@ import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/index_screen_controller/index_screen_controller.dart';
 import '../home_screen/home_screen.dart';
 
-
-
 class IndexScreen extends StatelessWidget {
   IndexScreen({Key? key}) : super(key: key);
   final indexScreenController = Get.put(IndexScreenController());
@@ -101,15 +99,14 @@ class IndexScreen extends StatelessWidget {
           ),*/
           InkWell(
             onTap: () {
-              if(UserDetails.isUserLoggedIn == true) {
+              if (UserDetails.isUserLoggedIn == true) {
                 changeIndex.call(2);
                 log("${indexScreenController.menuIndex.value}");
 
                 indexScreenController.menuIndex.value = 2;
               } else {
-                Get.to(()=> SignInScreen(), transition: Transition.zoom);
+                Get.to(() => SignInScreen(), transition: Transition.zoom);
               }
-
             },
             child: SizedBox(
               height: 30,
@@ -123,24 +120,24 @@ class IndexScreen extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              if(UserDetails.isUserLoggedIn == true) {
+              if (UserDetails.isUserLoggedIn == true) {
                 changeIndex.call(3);
                 log("${indexScreenController.menuIndex.value}");
 
                 indexScreenController.menuIndex.value = 3;
               } else {
-                Get.to(()=> SignInScreen(), transition: Transition.zoom);
+                Get.to(() => SignInScreen(), transition: Transition.zoom);
               }
-
             },
             child: SizedBox(
               height: 30,
               width: 30,
               child: Image.asset(
-                indexScreenController.menuIndex.value == 3
-                    ? AppImages.chatImg
-                    : AppImages.chatImg,
-                  scale: 0.9
+                AppImages.chatImg,
+                scale: 0.9,
+                color: indexScreenController.menuIndex.value == 3
+                    ? AppColors.colorGreyIconDark
+                    : AppColors.colorGreyIconLight,
               ),
             ),
           ),

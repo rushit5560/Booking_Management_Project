@@ -1,11 +1,11 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../common_modules/common_widgets.dart';
 import '../../controllers/vendor_additional_slot_screen_controller/vendor_additional_slot_screen_controller.dart';
 import '../../model/vendor_additional_slot_screen_model/get_all_additional_slot_model.dart';
 import 'vendor_add_additional_slot_screen/vendor_add_additional_slot_screen.dart';
 import 'vendor_update_additional_slot_screen/vendor_update_additional_slot_screen.dart';
-
 
 class AddAdditionalSlotButton extends StatelessWidget {
   const AddAdditionalSlotButton({Key? key}) : super(key: key);
@@ -13,19 +13,18 @@ class AddAdditionalSlotButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(()=> VendorAddAdditionalSlotScreen(), transition: Transition.zoom),
+      onTap: () => Get.to(() => VendorAddAdditionalSlotScreen(),
+          transition: Transition.zoom),
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
@@ -41,7 +40,6 @@ class AddAdditionalSlotButton extends StatelessWidget {
   }
 }
 
-
 class AdditionalSlotListModule extends StatelessWidget {
   AdditionalSlotListModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorAdditionalSlotScreenController>();
@@ -52,10 +50,12 @@ class AdditionalSlotListModule extends StatelessWidget {
         itemCount: screenController.allAdditionalSlotList.length,
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, i){
-          AdditionalSlotWorkerList singleItem = screenController.allAdditionalSlotList[i];
+        itemBuilder: (context, i) {
+          AdditionalSlotWorkerList singleItem =
+              screenController.allAdditionalSlotList[i];
           return Container(
-            margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+            margin:
+                const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
@@ -100,7 +100,8 @@ class AdditionalSlotListModule extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        await screenController.getAdditionalDetailsByIdFunction(id: singleItem.id!);
+                        await screenController.getAdditionalDetailsByIdFunction(
+                            id: singleItem.id!);
                         // screenController.selectedUpdateItemId = singleItem.id;
                         // screenController.updateAdditionalNameFieldController.text = singleItem.name;
                         // screenController.updateAdditionalPriceFieldController.text = singleItem.price.toString();
@@ -109,7 +110,7 @@ class AdditionalSlotListModule extends StatelessWidget {
                         // screenController.updateAdditionalTimeDuration.value = singleItem.timeDuration;
 
                         Get.to(
-                              () => VendorUpdateAdditionalSlotScreen(),
+                          () => VendorUpdateAdditionalSlotScreen(),
                           transition: Transition.zoom,
                         );
                       },
@@ -120,8 +121,21 @@ class AdditionalSlotListModule extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     GestureDetector(
-                      onTap: () async {
-                        await screenController.deleteVendorAdditionalSlotFunction(resourceId: "${singleItem.id}");
+                      onTap: () {
+                        CommonWidgets.yesOrNoDialog(
+                          context: context,
+                          title: "Are You Sure ?",
+                          body: "You want to delete this resource ",
+                          onYesPressed: () async {
+                            await screenController
+                                .deleteVendorAdditionalSlotFunction(
+                                    resourceId: "${singleItem.id}");
+                            Get.back();
+                          },
+                          onNoPressed: () {
+                            Get.back();
+                          },
+                        );
                       },
                       child: const Icon(
                         Icons.delete,
@@ -151,8 +165,7 @@ class AdditionalSlotListModule extends StatelessWidget {
   }
 
   Widget _serviceModule(AdditionalSlotWorkerList singleItem) {
-    return Text(
-        singleItem.categories!.name,
+    return Text(singleItem.categories!.name,
         style: const TextStyle(fontSize: 12));
   }
 
@@ -162,17 +175,13 @@ class AdditionalSlotListModule extends StatelessWidget {
   //       style: const TextStyle(fontSize: 12));
   // }
 
-  Widget _priceModule(AdditionalSlotWorkerList singleItem){
-    return Text(
-        singleItem.price.toString(),
+  Widget _priceModule(AdditionalSlotWorkerList singleItem) {
+    return Text(singleItem.price.toString(),
         style: const TextStyle(fontSize: 12));
   }
 
-  Widget _timeDurationModule(AdditionalSlotWorkerList singleItem){
-    return Text(
-        "Time Duration : ${singleItem.timeDuration.toString()}",
+  Widget _timeDurationModule(AdditionalSlotWorkerList singleItem) {
+    return Text("Time Duration : ${singleItem.timeDuration.toString()}",
         style: const TextStyle(fontSize: 12));
   }
-
-
 }

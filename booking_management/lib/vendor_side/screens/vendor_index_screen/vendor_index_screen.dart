@@ -17,18 +17,17 @@ class VendorIndexScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-            () => Container(
+        () => Container(
           child: getMenuByIndex,
         ),
       ),
-
       bottomNavigationBar: Obx(() => naviBar(context, changeIndex)),
-
     );
   }
 
   Widget get getMenuByIndex {
-    log("menuIndex -> " + vendorIndexScreenController.vendorMenuIndex.toString());
+    log("menuIndex -> " +
+        vendorIndexScreenController.vendorMenuIndex.toString());
 
     if (vendorIndexScreenController.vendorMenuIndex.value == 0) {
       return VendorHomeScreen();
@@ -120,10 +119,11 @@ class VendorIndexScreen extends StatelessWidget {
               height: 30,
               width: 30,
               child: Image.asset(
-                  vendorIndexScreenController.vendorMenuIndex.value == 3
-                      ? AppImages.chatImg
-                      : AppImages.chatImg,
-                  scale: 0.9
+                AppImages.chatImg,
+                scale: 0.9,
+                color: vendorIndexScreenController.vendorMenuIndex.value == 3
+                    ? AppColors.colorGreyIconDark
+                    : AppColors.colorGreyIconLight,
               ),
             ),
           ),
@@ -135,5 +135,4 @@ class VendorIndexScreen extends StatelessWidget {
   changeIndex(int index) {
     vendorIndexScreenController.vendorMenuIndex.value = index;
   }
-
 }

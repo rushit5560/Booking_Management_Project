@@ -2,10 +2,10 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/vendor_side/screens/vendor_services_screen/vendor_update_service_screen/vendor_update_service_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../common_modules/common_widgets.dart';
 import '../../controllers/vendor_services_screen_controller/vendor_services_screen_controller.dart';
 import '../../model/vendor_service_screen_model/get_vendor_service_model.dart';
 import 'vendor_add_service_screen/vendor_add_service_screen.dart';
-
 
 /// Add Service Button
 class AddServicesButton extends StatelessWidget {
@@ -14,19 +14,18 @@ class AddServicesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(()=> VendorAddServiceScreen(), transition: Transition.zoom),
+      onTap: () =>
+          Get.to(() => VendorAddServiceScreen(), transition: Transition.zoom),
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
@@ -53,10 +52,11 @@ class ServicesListModule extends StatelessWidget {
         itemCount: screenController.allResourcesList.length,
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, i){
+        itemBuilder: (context, i) {
           WorkerList1 singleItem = screenController.allResourcesList[i];
           return Container(
-            margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+            margin:
+                const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
@@ -101,8 +101,8 @@ class ServicesListModule extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () async {
-
-                        await screenController.getAdditionalDetailsByIdFunction(id: singleItem.id);
+                        await screenController.getAdditionalDetailsByIdFunction(
+                            id: singleItem.id);
                         // screenController.selectedItemId = singleItem.id;
                         // screenController.updateServiceNameFieldController.text = singleItem.name;
                         // screenController.updateServicePriceFieldController.text = singleItem.price.toString();
@@ -122,8 +122,21 @@ class ServicesListModule extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     GestureDetector(
-                      onTap: () async {
-                        await screenController.deleteVendorServiceFunction(resourceId: "${singleItem.id}");
+                      onTap: () {
+                        CommonWidgets.yesOrNoDialog(
+                          context: context,
+                          title: "Are You Sure ?",
+                          body: "You want to delete this resource ",
+                          onYesPressed: () async {
+                            await screenController.deleteVendorServiceFunction(
+                                resourceId: "${singleItem.id}");
+
+                            Get.back();
+                          },
+                          onNoPressed: () {
+                            Get.back();
+                          },
+                        );
                       },
                       child: const Icon(
                         Icons.delete,
@@ -161,8 +174,7 @@ class ServicesListModule extends StatelessWidget {
   }
 
   Widget _serviceModule(WorkerList1 singleItem) {
-    return Text(
-        singleItem.categories.name,
+    return Text(singleItem.categories.name,
         style: const TextStyle(fontSize: 12));
   }
 
@@ -172,26 +184,21 @@ class ServicesListModule extends StatelessWidget {
   //       style: const TextStyle(fontSize: 12));
   // }
 
-  Widget _priceModule(WorkerList1 singleItem){
-    return Text(
-        singleItem.price.toString(),
+  Widget _priceModule(WorkerList1 singleItem) {
+    return Text(singleItem.price.toString(),
         style: const TextStyle(fontSize: 12));
   }
 
-  Widget _timeDurationModule(WorkerList1 singleItem){
-    return Text(
-        "Time Duration : ${singleItem.timeDuration.toString()}",
+  Widget _timeDurationModule(WorkerList1 singleItem) {
+    return Text("Time Duration : ${singleItem.timeDuration.toString()}",
         style: const TextStyle(fontSize: 12));
   }
 
   showBottomSheet(BuildContext context) {
     return showModalBottomSheet(
-      context: context,
+        context: context,
         builder: (context) {
-        return Container();
-        }
-    );
+          return Container();
+        });
   }
-
-
 }

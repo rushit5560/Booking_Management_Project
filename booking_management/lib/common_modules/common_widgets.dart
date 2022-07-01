@@ -164,3 +164,51 @@ class UtilFunctions {
     } else {}
   }
 }
+
+class CommonWidgets {
+  static yesOrNoDialog({
+    BuildContext? context,
+    String? title,
+    String? body,
+    Function()? onYesPressed,
+    Function()? onNoPressed,
+  }) async {
+    await showDialog(
+      context: context!,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(title!),
+          content: Text(body!),
+          actions: <Widget>[
+            TextButton(
+              onPressed: onNoPressed,
+              child: const Text(
+                'No',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: onYesPressed,
+              child: const Text(
+                'Yes',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

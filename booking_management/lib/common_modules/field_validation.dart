@@ -268,11 +268,13 @@ class FieldValidator {
     String v1 = value[0];
 
     if (value.isEmpty) {
-      return 'Name is required';
-    } else if(v1.contains(RegExp(r'[A-Z]')) || v1.contains(RegExp(r"[a-z]"))) {
-      return "First character should be alphabet";
+      return 'Business Name is required';
     }
     return null;
+    // else if (!v1[0].contains(RegExp(r'[A-Z]')) ||
+    //     !v1[0].contains(RegExp(r"[a-z]"))) {
+    //   return "First character should be alphabet";
+    // }
   }
 
   String? validateCurrentPassword(String value) {
@@ -354,7 +356,6 @@ class FieldValidator {
   }
 
   String? validateResourceName(String value) {
-
     if (value.isEmpty) {
       return 'Resource name is required';
     }
@@ -362,12 +363,9 @@ class FieldValidator {
   }
 
   String? validateResourceDetail(String value) {
-
     if (value.isEmpty) {
       return 'Resource details is required';
     }
     return null;
   }
-
-
 }

@@ -325,7 +325,10 @@ class SearchLocationListModule extends StatelessWidget {
                   final details =
                       await screenController.googlePlace.details.get(placeId!);
 
-                  UtilFunctions().formatPlaceSearchKeyword(details);
+                  UtilFunctions().formatPlaceSearchKeyword(
+                    details: details,
+                    index: i,
+                  );
                   // DetailsResponse placeDetails = details!;
                   // if (details != null && details.result != null) {
                   //   log(details.result!.addressComponents![0].longName!);

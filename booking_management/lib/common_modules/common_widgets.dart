@@ -119,7 +119,7 @@ class CustomCircularLoaderModule extends StatelessWidget {
 }
 
 class UtilFunctions {
-  formatPlaceSearchKeyword(DetailsResponse? details) {
+  formatPlaceSearchKeyword({DetailsResponse? details, int? index}) {
     final screenController = Get.find<HomeScreenController>();
 
     if (details != null && details.result != null) {
@@ -128,35 +128,36 @@ class UtilFunctions {
 
       // variables source data
 
-      var postalCodeData = document.getElementsByClassName("postal-code");
+      // var postalCodeData = document.getElementsByClassName("postal-code");
 
-      var regionData = document.getElementsByClassName("region");
+      // var regionData = document.getElementsByClassName("region");
 
-      // variables
+      // // variables
 
-      var postalCode = "";
-      var region = "";
+      // var postalCode = "";
+      // var region = "";
 
       //variable value assign
-      if (postalCodeData.isNotEmpty) {
-        postalCode = postalCodeData[0].innerHtml;
+      // if (postalCodeData.isNotEmpty) {
+      //   postalCode = postalCodeData[0].innerHtml;
 
-        log(" postal code is  :   $postalCode\n ");
-        if (regionData.isNotEmpty) {
-          region = regionData[0].innerHtml;
-          log("postal region is  :   $postalCode\n$region\n ");
-        } else {}
-      } else if (regionData.isNotEmpty) {
-        region = regionData[0].innerHtml;
+      //   log(" postal code is  :   $postalCode\n ");
+      //   if (regionData.isNotEmpty) {
+      //     region = regionData[0].innerHtml;
+      //     log("postal region is  :   $postalCode\n$region\n ");
+      //   } else {}
+      // } else if (regionData.isNotEmpty) {
+      //   region = regionData[0].innerHtml;
 
-        log("only region is  :  \n$region\n ");
-      }
+      //   log("only region is  :  \n$region\n ");
+      // }
 
       // var pinCode = document.getElementsByClassName("postal-code");
       log("place details full body : ${details.result!.adrAddress}");
 
-      screenController.locationFieldController.text = "$postalCode $region";
-      // screenController.predictions[i].description.toString();
+      screenController.locationFieldController.text =
+          screenController.predictions[index!].description.toString();
+      // "$postalCode $region";
       // log("pinCode : $pinCode");
       screenController.isLoading(true);
       screenController.predictions.clear();

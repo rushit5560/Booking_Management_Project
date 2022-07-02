@@ -48,23 +48,55 @@ class IndexScreen extends StatelessWidget {
 
   Widget naviBar(BuildContext context, changeIndex) {
     return Container(
-      height: Get.height * 0.07,
+      height: Get.height * 0.08,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(25),
-          topRight: Radius.circular(25),
-        ),
+        // borderRadius: const BorderRadius.only(
+        //   topLeft: Radius.circular(25),
+        //   topRight: Radius.circular(25),
+        // ),
         color: AppColors.colorLightGrey,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+
+          indexScreenController.menuIndex.value == 0 ?
           InkWell(
             onTap: () {
               changeIndex.call(0);
               log("${indexScreenController.menuIndex.value}");
-
+              indexScreenController.menuIndex.value = 0;
+            },
+            child: Container(
+              // margin: const EdgeInsets.only(top: 5),
+              // padding: const EdgeInsets.all(5),
+              height: 35,
+              //width: 30,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.grey
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      indexScreenController.menuIndex.value == 0
+                          ? AppImages.menuHomeImg
+                          : AppImages.menuHome1Img,
+                      scale: 1, ),
+                    SizedBox(width: 15),
+                    Text("Home", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                  ],
+                ),
+              ),
+            ),
+          ):
+          InkWell(
+            onTap: () {
+              changeIndex.call(0);
+              log("${indexScreenController.menuIndex.value}");
               indexScreenController.menuIndex.value = 0;
             },
             child: SizedBox(
@@ -97,6 +129,39 @@ class IndexScreen extends StatelessWidget {
               ),
             ),
           ),*/
+
+          indexScreenController.menuIndex.value == 2 ?
+          InkWell(
+            onTap: () {
+              changeIndex.call(0);
+              log("${indexScreenController.menuIndex.value}");
+              indexScreenController.menuIndex.value = 2;
+            },
+            child: Container(
+              // margin: const EdgeInsets.only(top: 5),
+              // padding: const EdgeInsets.all(5),
+              height: 35,
+              //width: 30,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.grey
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      indexScreenController.menuIndex.value == 2
+                          ? AppImages.menuNotificationImg
+                          : AppImages.menuNotification1Img,
+                      scale: 1, ),
+                    SizedBox(width: 15),
+                    Text("Notification", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                  ],
+                ),
+              ),
+            ),
+          ) :
           InkWell(
             onTap: () {
               if (UserDetails.isUserLoggedIn == true) {
@@ -118,6 +183,40 @@ class IndexScreen extends StatelessWidget {
                   scale: 0.9),
             ),
           ),
+
+          indexScreenController.menuIndex.value == 3 ?
+          InkWell(
+            onTap: () {
+              changeIndex.call(0);
+              log("${indexScreenController.menuIndex.value}");
+              indexScreenController.menuIndex.value = 3;
+            },
+            child: Container(
+              // margin: const EdgeInsets.only(top: 5),
+              // padding: const EdgeInsets.all(5),
+              height: 35,
+              //width: 30,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.grey
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      AppImages.chatImg,
+                      scale: 1,
+                      color: indexScreenController.menuIndex.value == 3
+                          ? AppColors.colorGreyIconDark
+                          : AppColors.colorGreyIconLight),
+                    SizedBox(width: 15),
+                    Text("Chat", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                  ],
+                ),
+              ),
+            ),
+          ) :
           InkWell(
             onTap: () {
               if (UserDetails.isUserLoggedIn == true) {

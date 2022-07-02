@@ -29,6 +29,7 @@ class HomeScreenController extends GetxController {
   List<FavouriteVendorDetails> favouriteVendorList = [];
 
   AppointDetailsData? appointDetailsData;
+  List<String> serviceList= [];
 
   RxBool isServiceCalenderShow = false.obs;
   RxString selectedDate = "".obs;
@@ -242,6 +243,7 @@ class HomeScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         appointDetailsData = getAppointmentDetailsModel.data;
+        serviceList = getAppointmentDetailsModel.list;
         log("appointmentDetails : $appointDetailsData");
       } else {
         log("getUpcomingAppointmentDetailsFunction Else Else");

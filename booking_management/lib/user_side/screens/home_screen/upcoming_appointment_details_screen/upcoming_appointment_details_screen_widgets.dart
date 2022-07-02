@@ -134,12 +134,12 @@ class BookingDetailsModule extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: screenController.appointDetailsData!.serviceName.length,
+                itemCount: screenController.serviceList.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
                   return Text(
-                      screenController.appointDetailsData!.serviceName[i],
+                      screenController.serviceList[i],
                     style: const TextStyle(fontWeight: FontWeight.w400),
                   );
                 },

@@ -25,6 +25,7 @@ class AppointmentDetailsScreenController extends GetxController {
   ApiHeader apiHeader = ApiHeader();
 
   AppointmentDetailsData appointmentDetailsData = AppointmentDetailsData();
+  List<String> serviceList= [];
 
   String oppositeUserUniqueId = "";
   String oppositeUserFcmToken = "";
@@ -46,6 +47,7 @@ class AppointmentDetailsScreenController extends GetxController {
 
       AppointmentDetailsModel appointmentDetailsModel = AppointmentDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentDetailsModel.success.obs;
+      serviceList = appointmentDetailsModel.list;
 
       if(isSuccessStatus.value) {
         appointmentDetailsData = appointmentDetailsModel.data;

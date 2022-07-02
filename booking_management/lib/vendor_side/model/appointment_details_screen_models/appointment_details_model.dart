@@ -9,22 +9,26 @@ class AppointmentDetailsModel {
     required this.statusCode,
     required this.success,
     required this.data,
+    required this.list
   });
 
   int statusCode;
   bool success;
   AppointmentDetailsData data;
+  List<String> list;
 
   factory AppointmentDetailsModel.fromJson(Map<String, dynamic> json) => AppointmentDetailsModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     data: AppointmentDetailsData.fromJson(json["data"] ?? {}),
+    list: List<String>.from(json["list"].map((x) => x) ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
     "data": data.toJson(),
+    "list": List<dynamic>.from(list.map((x) => x)),
   };
 }
 
@@ -65,7 +69,7 @@ class AppointmentDetailsData {
   String? notes;
   String? status;
   String? bookingItems;
-  List<String>? serviceName;
+  String? serviceName;
 
   factory AppointmentDetailsData.fromJson(Map<String, dynamic> json) => AppointmentDetailsData(
     id: json["id"] ?? 0,
@@ -84,7 +88,7 @@ class AppointmentDetailsData {
     notes: json["notes"] ?? "",
     status: json["status"] ?? "",
     bookingItems: json["bookingItems"] ?? "",
-    serviceName: List<String>.from(json["serviceName"].map((x) => x) ?? []),
+    serviceName: json["serviceName"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -104,7 +108,7 @@ class AppointmentDetailsData {
     "notes": notes,
     "status": status,
     "bookingItems": bookingItems,
-    "serviceName": List<dynamic>.from(serviceName!.map((x) => x)),
+    "serviceName": serviceName,
   };
 }
 

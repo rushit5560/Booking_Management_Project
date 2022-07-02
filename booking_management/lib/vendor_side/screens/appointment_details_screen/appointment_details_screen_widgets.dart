@@ -518,12 +518,12 @@ class ServiceDetailsModule extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: screenController.appointmentDetailsData.serviceName!.length,
+                itemCount: screenController.serviceList.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
                   return Text(
-                    screenController.appointmentDetailsData.serviceName![i],
+                    screenController.serviceList[i],
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

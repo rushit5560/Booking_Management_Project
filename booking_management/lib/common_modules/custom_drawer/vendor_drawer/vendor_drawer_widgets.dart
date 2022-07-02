@@ -58,20 +58,20 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
             children: [
               Expanded(
                 child: Row(
                   children: [
-                    Image.asset(img, scale: 0.85),
+                    Image.asset(img, scale: 1),
                     const SizedBox(width: 20),
                     Expanded(
                       child: Text(
                         name,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 17,
+                          fontSize: 14,
                         ),
                       ),
                     ),

@@ -115,10 +115,10 @@ class VendorResourcesScreenController extends GetxController {
       request.fields['ResourceName'] = resourceNameFieldController.text.trim();
       request.fields['Details'] = resourceDetailsFieldController.text.trim();
       request.fields['Price'] = resourcePriceFieldController.text.trim();
-      request.fields['id'] = "${UserDetails.tableWiseId}";
+      request.fields['vendorId'] = "${UserDetails.tableWiseId}";
       request.fields['CreatedBy'] = UserDetails.uniqueId;
       request.fields['Capacity'] = resourceCapacityFieldController.text.trim();
-      request.fields['isEvent'] = "${isEvent.value}";
+      request.fields['IsEvent'] = "${isEvent.value}";
 
       // request.fields['Name'] = "Shaving";
       // request.fields['ShortDescription'] = "Lorem Ipsum is simply dummy text of the printing.";

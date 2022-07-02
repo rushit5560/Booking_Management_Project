@@ -20,27 +20,29 @@ class UpdateResourceFormModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: vendorResourcesScreenController.resourceUpdateFormKey,
-      child: Column(
-        children: [
-          ResourceProfileModule(),
-          const SizedBox(height: 20),
-          ResourceNameFieldModule(),
-          const SizedBox(height: 20),
-          ResourceDetailsModule(),
-          const SizedBox(height: 20),
-          ResourcePriceFieldModule(),
-          const SizedBox(height: 20),
-          EventCheckBoxModule(),
-           const SizedBox(height: 20),
-           ResourceCapacityFieldModule(),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ResourceProfileModule(),
+            const SizedBox(height: 20),
+            ResourceNameFieldModule(),
+            const SizedBox(height: 20),
+            ResourceDetailsModule(),
+            const SizedBox(height: 20),
+            ResourcePriceFieldModule(),
+            const SizedBox(height: 20),
+            EventCheckBoxModule(),
+             const SizedBox(height: 20),
+             ResourceCapacityFieldModule(),
 
-           //ServiceShortDesFieldModule(),
-          // const SizedBox(height: 20),
-          // ServiceLongDesFieldModule(),
-          const SizedBox(height: 30),
-          ResourceUpdateButton(),
-          const SizedBox(height: 10),
-        ],
+             //ServiceShortDesFieldModule(),
+            // const SizedBox(height: 20),
+            // ServiceLongDesFieldModule(),
+            const SizedBox(height: 30),
+            ResourceUpdateButton(),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     ).commonAllSidePadding(10);
   }

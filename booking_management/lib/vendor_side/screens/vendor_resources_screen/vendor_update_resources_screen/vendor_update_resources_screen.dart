@@ -24,7 +24,7 @@ class VendorUpdateResourcesScreen extends StatelessWidget {
                         title: "Update Resources",
                         appBarOption: AppBarOption.singleBackButtonOption),
                     const SizedBox(height: 10),
-                    UpdateResourceFormModule(),
+                    Expanded(child: UpdateResourceFormModule()),
                   ],
                 ),
               ),

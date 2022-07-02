@@ -158,7 +158,6 @@ class BookAppointmentScreenController extends GetxController {
           if(getBookingResourcesModel.workerList[i].isEvent == true) {
             isEvent = getBookingResourcesModel.workerList[i].isEvent.obs;
           }
-
           log('isEvent: $isEvent');
         }
         log("allResourcesList : ${allResourcesList.length}");

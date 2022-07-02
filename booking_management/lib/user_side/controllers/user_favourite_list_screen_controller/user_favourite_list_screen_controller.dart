@@ -33,7 +33,7 @@ class UserFavouriteListScreenController extends GetxController {
       if(isSuccessStatus.value) {
         favouriteVendorList.clear();
         favouriteVendorList = getFavouriteVendorModel.data;
-        // log("favouriteVendorList : ${favouriteVendorList.length}");
+         log("favouriteVendorList : ${favouriteVendorList.length}");
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getFavouriteVendorByIdFunction Else Else");

@@ -2,6 +2,7 @@ import 'package:booking_management/common_ui/common_controller/custom_drawer_con
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_subscription_report_screen/vendor_subscription_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
@@ -151,6 +152,9 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
           transition: Transition.rightToLeft);
     } else if(vendorSettingScreenOption == VendorDrawerOption.customerReport) {
       Get.to(() => CustomerReportScreen(),
+          transition: Transition.rightToLeft);
+    } else if(vendorSettingScreenOption == VendorDrawerOption.subscriptionReport) {
+      Get.to(() => VendorSubscriptionReportScreen(),
           transition: Transition.rightToLeft);
     }
   }

@@ -38,7 +38,8 @@ enum VendorDrawerOption {
    logout,
    appointmentReport,
    invoiceReport,
-   customerReport
+   customerReport,
+   subscriptionReport
 }
 
 enum AvailableTimeDay {

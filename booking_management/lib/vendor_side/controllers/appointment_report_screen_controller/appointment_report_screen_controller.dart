@@ -26,6 +26,9 @@ class AppointmentReportScreenController extends GetxController {
   List<String> statusList = ["Select Status", "Confirm", "Done", "Pending", "Cancel"];
   RxString selectedStatusValue = "Select Status".obs;
 
+
+  DateTime selectedStartDate = DateTime.now();
+
   /// Export Excel
   // Duration? executionTime;
 

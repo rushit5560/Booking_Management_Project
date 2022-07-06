@@ -142,18 +142,22 @@ class SearchCategoryField extends StatelessWidget {
         hideSuggestionsOnKeyboardHide: true,
         textFieldConfiguration: TextFieldConfiguration(
           controller: screenController.categoryFieldController,
+          onChanged: (value) {
+            screenController.loadUI();
+          },
           decoration: InputDecoration(
             prefixIcon: const Icon(
               Icons.search_rounded,
               color: Colors.grey,
               size: 18,
             ),
-            suffixIcon: IconButton(
+            suffixIcon: screenController.categoryFieldController.text == "" ? null : IconButton(
               icon: const Icon(Icons.close),
               color: Colors.grey,
               iconSize: 20,
               onPressed: () {
                 screenController.categoryFieldController.clear();
+                screenController.loadUI();
               },
             ),
             border: InputBorder.none,
@@ -278,6 +282,13 @@ class SearchLocationField extends StatelessWidget {
               screenController.predictions.clear();
             }
           });
+
+          if(screenController.locationFieldController.text == "") {
+            screenController.predictions.clear();
+          }
+
+          screenController.loadUI();
+
         },
         decoration: InputDecoration(
           hintText: 'Search Location',
@@ -293,12 +304,14 @@ class SearchLocationField extends StatelessWidget {
             Icons.search_rounded,
             color: Colors.grey,
           ),
-          suffixIcon: IconButton(
+          suffixIcon: screenController.locationFieldController.text == "" ? null : IconButton(
             icon: const Icon(Icons.close),
             color: Colors.grey,
             iconSize: 20,
             onPressed: () {
               screenController.locationFieldController.clear();
+              screenController.predictions.clear();
+              screenController.loadUI();
             },
           ),
         ),
@@ -322,13 +335,18 @@ class SearchLocationListModule extends StatelessWidget {
               return ListTile(
                 onTap: () async {
                   final placeId = screenController.predictions[i].placeId;
-                  final details =
-                      await screenController.googlePlace.details.get(placeId!);
+                  // final details = await screenController.googlePlace.details.get(placeId!);
 
-                  UtilFunctions().formatPlaceSearchKeyword(
-                    details: details,
-                    index: i,
-                  );
+                  screenController.locationFieldController.text = screenController.predictions[1].description.toString();
+
+                  screenController.isLoading(true);
+                  screenController.predictions.clear();
+                  screenController.isLoading(false);
+
+                  // UtilFunctions().formatPlaceSearchKeyword(
+                  //   details: details,
+                  //   index: i,
+                  // );
                   // DetailsResponse placeDetails = details!;
                   // if (details != null && details.result != null) {
                   //   log(details.result!.addressComponents![0].longName!);

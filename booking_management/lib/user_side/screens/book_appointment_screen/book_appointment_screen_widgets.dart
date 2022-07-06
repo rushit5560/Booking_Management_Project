@@ -7,6 +7,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_sign_up_screen/user_sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -275,11 +276,14 @@ class BookingResourcesListModule extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      singleItem.details,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    Html(
+                      data: singleItem.details,
                     ),
+                    // Text(
+                    //   singleItem.details,
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
                     const SizedBox(height: 5),
                     screenController.isPriceDisplay.value
                     ? Text(
@@ -409,8 +413,8 @@ class AdditionalSlotModule extends StatelessWidget {
           ? SelectAdditionalSlotDateModule()
           : Container(),
           const SizedBox(height: 10),
-          screenController.isEvent.value ?  Container() : AnytimeDropDownModule(),
-          const SizedBox(height: 10),
+          // screenController.isEvent.value ?  Container() : AnytimeDropDownModule(),
+          // const SizedBox(height: 10),
           screenController.isEvent.value ? Container() : AdditionalSlotDropDownModule(),
           const SizedBox(height: 15),
           AdditionalSlotSubmitButton(),
@@ -429,18 +433,18 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {//todo
-        if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
-          await screenController.getAllResourcesListByIdFunction();
-        }
-        else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
+        // if(/*screenController.selectedTimeValue.value == "Any Time" && */screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
+        //   await screenController.getAllResourcesListByIdFunction();
+        // }
+        if(/*screenController.selectedTimeValue.value == "Any Time" &&*/ screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
           await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWise);
         }
-        else if(screenController.selectedTimeValue.value == "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
+        else if(/*screenController.selectedTimeValue.value == "Any Time" && */screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
           await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.additionalSlotWise);
         }
-        else if(screenController.selectedTimeValue.value != "Any Time" && screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
-          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWithAdditionalSlotWise);
-        }
+        // else if(/*screenController.selectedTimeValue.value != "Any Time" &&*/ screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
+        //   await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWithAdditionalSlotWise);
+        // }
 
 
       },
@@ -800,6 +804,8 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                   screenController.selectedTime.value = "$hour:$minute:00";
                   screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
+                  log("screenController.selectedDate.value : ${screenController.selectedDate.value}");
+
                 }
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
@@ -924,46 +930,46 @@ class SubmitButtonModule extends StatelessWidget {
 }
 
 
-class AnytimeDropDownModule extends StatelessWidget {
-  AnytimeDropDownModule({Key? key}) : super(key: key);
-  final screenController = Get.find<BookAppointmentScreenController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-          ()=> Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.colorLightGrey,
-              blurRadius: 5,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: screenController.selectedTimeValue.value,
-            items:screenController.timeList
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value,style: const TextStyle(color:Colors.black),),
-              );
-            }).toList(),
-            onChanged: (newValue) {
-              screenController.selectedTimeValue.value = newValue!;
-              log("selectTimeDuration : ${screenController.selectedTimeValue}");
-              // vendorServicesScreenController.loadUI();
-            },
-          ),
-        ).commonSymmetricPadding(horizontal: 5),
-      ),
-    );
-  }
-}
+// class AnytimeDropDownModule extends StatelessWidget {
+//   AnytimeDropDownModule({Key? key}) : super(key: key);
+//   final screenController = Get.find<BookAppointmentScreenController>();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Obx(
+//           ()=> Container(
+//         width: Get.width,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(15),
+//           boxShadow: [
+//             BoxShadow(
+//               color: AppColors.colorLightGrey,
+//               blurRadius: 5,
+//               blurStyle: BlurStyle.outer,
+//             ),
+//           ],
+//         ),
+//         child: DropdownButtonHideUnderline(
+//           child: DropdownButton<String>(
+//             value: screenController.selectedTimeValue.value,
+//             items:screenController.timeList
+//                 .map<DropdownMenuItem<String>>((String value) {
+//               return DropdownMenuItem<String>(
+//                 value: value,
+//                 child: Text(value,style: const TextStyle(color:Colors.black),),
+//               );
+//             }).toList(),
+//             onChanged: (newValue) {
+//               screenController.selectedTimeValue.value = newValue!;
+//               log("selectTimeDuration : ${screenController.selectedTimeValue}");
+//               // vendorServicesScreenController.loadUI();
+//             },
+//           ),
+//         ).commonSymmetricPadding(horizontal: 5),
+//       ),
+//     );
+//   }
+// }
 
 class AdditionalSlotDropDownModule extends StatelessWidget {
   AdditionalSlotDropDownModule({Key? key}) : super(key: key);

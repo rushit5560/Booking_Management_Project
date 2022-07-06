@@ -53,7 +53,7 @@ class ProfileDetailsModule extends StatelessWidget {
       context: context,
       initialDate: dateTime,
       firstDate: DateTime(1950),
-      lastDate: DateTime(2025),
+      lastDate: DateTime.now(),
     );
     if (d != null) {
       screenController.isLoading(true);

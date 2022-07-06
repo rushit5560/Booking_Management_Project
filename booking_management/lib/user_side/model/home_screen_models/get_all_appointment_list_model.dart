@@ -203,7 +203,7 @@ class Vendor {
     required this.address,
     required this.isActive,
     required this.userId,
-    required this.vendorPortal,
+    // required this.vendorPortal,
     required this.vendorVerification,
     required this.businessId,
     required this.isResource,
@@ -253,7 +253,7 @@ class Vendor {
   String address;
   bool isActive;
   String userId;
-  String vendorPortal;
+  // String vendorPortal;
   bool vendorVerification;
   String businessId;
   bool isResource;
@@ -303,7 +303,7 @@ class Vendor {
     address: json["address"] ?? "",
     isActive: json["isActive"] ?? false,
     userId: json["userId"] ?? "",
-    vendorPortal: json["vendorPortal"] ?? "",
+    // vendorPortal: json["vendorPortal"] ?? "",
     vendorVerification: json["vendorVerification"] ?? false,
     businessId: json["businessId"] ?? "",
     isResource: json["isResource"] ?? false,
@@ -354,7 +354,7 @@ class Vendor {
     "address": address,
     "isActive": isActive,
     "userId": userId,
-    "vendorPortal": vendorPortal,
+    // "vendorPortal": vendorPortal,
     "vendorVerification": vendorVerification,
     "businessId": businessId,
     "isResource": isResource,

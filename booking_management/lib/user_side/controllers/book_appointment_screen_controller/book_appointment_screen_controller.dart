@@ -271,7 +271,7 @@ class BookAppointmentScreenController extends GetxController {
     log("timeModule : $timeModule");
     List<TimingSlot> timeList = [];
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${dateModule}T$timeModule&Duration&Time";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${dateModule}T$timeModule&Duration";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -424,9 +424,10 @@ class BookAppointmentScreenController extends GetxController {
 
   /// 4) Get Resources Date & Time Wise List
   getResourcesDateAndTimeListFunction({required String resId}) async {
+    log('Rushit');
         List<TimingSlot> timeList = [];
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration&Time";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -475,7 +476,7 @@ class BookAppointmentScreenController extends GetxController {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.id}&Time=$selectedTimeValue";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration=${additionalSlotWorkerList.id}";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -526,7 +527,7 @@ class BookAppointmentScreenController extends GetxController {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration&Time=$selectedTimeValue";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}&Duration";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -577,7 +578,7 @@ class BookAppointmentScreenController extends GetxController {
     List<TimingSlot> timeList = [];
 
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.id}&Time";
+    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration=${additionalSlotWorkerList.id}";
     log("Get Resources Additional Time API URL : $url");
 
     try {

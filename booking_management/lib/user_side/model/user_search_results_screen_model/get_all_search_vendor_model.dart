@@ -115,7 +115,7 @@ class SearchVendorDatum {
   String workingHoursStatus;
   String avilableTime;
   String dDate;
-  String duration;
+  int duration;
   String startTime;
   String endTime;
   String vendorList;
@@ -161,7 +161,7 @@ class SearchVendorDatum {
     workingHoursStatus: json["workingHoursStatus"] ?? "Close",
     avilableTime: json["avilableTime"] ?? "",
     dDate: json["dDate"] ?? "",
-    duration: json["duration"] ?? "",
+    duration: json["duration"] ?? 0,
     startTime: json["startTime"] ?? "",
     endTime: json["endTime"] ?? "",
     vendorList: json["vendorList"] ?? "",

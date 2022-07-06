@@ -22,6 +22,8 @@ class InvoiceReportScreenController extends GetxController {
   RxBool isStartDateCalenderShow = false.obs;
   RxBool isEndDateCalenderShow = false.obs;
 
+  DateTime selectedStartDate = DateTime.now();
+
 
   /// Invoice Report All List
   getInvoiceReportFunction() async {

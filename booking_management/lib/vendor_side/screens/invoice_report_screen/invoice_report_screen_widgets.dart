@@ -93,6 +93,8 @@ class SelectStartDateCalender extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
+                screenController.selectedStartDate = selectedDay;
+
                 screenController.startDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
                 screenController.isStartDateCalenderShow.value = !screenController.isStartDateCalenderShow.value;
 
@@ -255,7 +257,7 @@ class SelectEndDateCalender extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
+              firstDay: screenController.selectedStartDate,
               lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
@@ -494,7 +496,7 @@ class AppointmentReportListModule extends StatelessWidget {
           Row(
             children: [
               const Text(
-                "Start Time :",
+                "Transaction For :",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(width: 5),
@@ -514,7 +516,7 @@ class AppointmentReportListModule extends StatelessWidget {
           Row(
             children: [
               const Text(
-                "End Time :",
+                "Transaction By :",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(width: 5),
@@ -534,7 +536,7 @@ class AppointmentReportListModule extends StatelessWidget {
           Row(
             children: [
               const Text(
-                "End Time :",
+                "Transaction Date :",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(width: 5),

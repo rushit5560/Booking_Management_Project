@@ -9,6 +9,7 @@ import 'package:booking_management/vendor_side/screens/choose_court_screen/choos
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 import '../../../common_modules/container_decorations.dart';
@@ -88,16 +89,19 @@ class VendorResourcesListModule extends StatelessWidget {
                                   fontSize: 15,
                                 ),
                               ),
-                              SizedBox(height: 8),
-                              Text(
-                                screenController.getResourceList[i].details!,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
+                              const SizedBox(height: 8),
+                              Html(
+                                data: screenController.getResourceList[i].details!,
                               ),
-                              SizedBox(height: 8),
+                              // Text(
+                              //   screenController.getResourceList[i].details!,
+                              //   maxLines: 2,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   style: const TextStyle(
+                              //     fontSize: 15,
+                              //   ),
+                              // ),
+                              const SizedBox(height: 8),
                               Row(
                                 children: [
                                   const Text(
@@ -119,7 +123,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Row(
                                 children: [
                                   const Text(
@@ -167,12 +171,12 @@ class VendorResourcesListModule extends StatelessWidget {
                                   );
                                 },
                                 child: const Icon(Icons.edit)),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             GestureDetector(
                                 onTap: () {
                                   CommonWidgets.yesOrNoDialog(
                                     context: context,
-                                    title: "Are You Sure ?",
+                                    title: "Are you sure ?",
                                     body: "You want to delete this resource ",
                                     onYesPressed: () async {
                                       await screenController
@@ -187,7 +191,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                     },
                                   );
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.delete,
                                   color: Colors.red,
                                 ))

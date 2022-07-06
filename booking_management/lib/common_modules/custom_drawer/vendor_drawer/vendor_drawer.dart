@@ -36,27 +36,6 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              /*VendorDrawerSingleItemModule(
-                img: AppImages.chatImg,
-                name: 'Chat',
-                vendorDrawerOption: VendorDrawerOption.chat,
-              ),
-              const SizedBox(height: 20),*/
-
-              /*VendorDrawerSingleItemModule(
-                img: AppImages.bookingHistoryImg,
-                name: 'Booking History',
-                vendorDrawerOption: VendorDrawerOption.bookingHistory,
-              ),
-              const SizedBox(height: 20),*/
-
-              /*VendorDrawerSingleItemModule(
-                img: AppImages.paymentImg,
-                name: 'Wallet',
-                vendorDrawerOption: VendorDrawerOption.wallet,
-              ),
-              const SizedBox(height: 20),*/
-
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Resources',
@@ -143,12 +122,6 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // VendorDrawerSingleItemModule(
-              //   img: AppImages.helpImg,
-              //   name: 'Help',
-              //   vendorDrawerOption: VendorDrawerOption.help,
-              // ),
-              // const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
                 img: AppImages.changePasswordImg,

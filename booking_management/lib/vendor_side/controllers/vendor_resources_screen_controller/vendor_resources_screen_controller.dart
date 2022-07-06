@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' show parse;
+
 
 class VendorResourcesScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -37,7 +39,7 @@ class VendorResourcesScreenController extends GetxController {
 
   /// isEvent checkbox value
   RxBool isEvent = false.obs;
-  bool updateEvent = false;
+  RxBool updateEvent = false.obs;
 
   File? addFile;
   File? file;
@@ -159,7 +161,7 @@ class VendorResourcesScreenController extends GetxController {
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addVendorResourceModel.message}");
-          Fluttertoast.showToast(msg: "Something wnt wrong!");
+          Fluttertoast.showToast(msg: addVendorResourceModel.message);
         }
       });
 
@@ -214,7 +216,7 @@ class VendorResourcesScreenController extends GetxController {
       // Map<String, String> headers = <String,String>{
       //   'Authorization': UserDetails.apiToken
       // };
-      if(file != null){
+      if(file != null) {
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         var stream = http.ByteStream(file!.openRead());
@@ -345,9 +347,9 @@ class VendorResourcesScreenController extends GetxController {
         updateResourceDetailsFieldController.text = getResourceDetailsModel.workerList.details;
         updateResourcePriceFieldController.text = getResourceDetailsModel.workerList.price.toString();
         updateResourceCapacityFieldController.text = getResourceDetailsModel.workerList.capacity.toString();
-        updateEvent = getResourceDetailsModel.workerList.isEvent;
-        //updatePhotoUrl = "http://5.189.147.159:9600///images//Resource//9188f689-6c67-4fae-9045-a55a32888891.png";
-        updatePhotoUrl = "${ApiUrl.apiImagePath}${getResourceDetailsModel.workerList.resourceName}";
+        updateEvent = getResourceDetailsModel.workerList.isEvent.obs;
+        updatePhotoUrl = "${ApiUrl.apiImagePath}${getResourceDetailsModel.workerList.image}";
+        log("updatePhotoUrl : $updatePhotoUrl");
 
         // updateServiceNameFieldController.text = getServiceDetailsModel.workerList.name;
         // updateServiceShortDesFieldController.text = getServiceDetailsModel.workerList.shortDescription;
@@ -371,7 +373,7 @@ class VendorResourcesScreenController extends GetxController {
     resourceNameFieldController.clear();
     resourceDetailsFieldController.clear();
     resourcePriceFieldController.clear();
-    file!.delete();
+    // file!.deleteSync();
     addFile!.deleteSync();
     //updatePhotoUrl = "";
   }

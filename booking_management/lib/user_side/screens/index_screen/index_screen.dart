@@ -87,7 +87,7 @@ class IndexScreen extends StatelessWidget {
                           : AppImages.menuHome1Img,
                       scale: 1, ),
                     SizedBox(width: 15),
-                    Text("Home", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                    Text("Home", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey.shade800),)
                   ],
                 ),
               ),
@@ -156,7 +156,7 @@ class IndexScreen extends StatelessWidget {
                           : AppImages.menuNotification1Img,
                       scale: 1, ),
                     SizedBox(width: 15),
-                    Text("Notification", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                    Text("Notification", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey.shade800),)
                   ],
                 ),
               ),
@@ -211,7 +211,7 @@ class IndexScreen extends StatelessWidget {
                           ? AppColors.colorGreyIconDark
                           : AppColors.colorGreyIconLight),
                     SizedBox(width: 15),
-                    Text("Chat", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                    Text("Chat", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey.shade800),)
                   ],
                 ),
               ),

@@ -22,7 +22,7 @@ class VendorInvoiceListScreen extends StatelessWidget {
           child: Column(
             children: [
               const CommonAppBarModule(
-                title: "Order",
+                title: "Invoices",
                 appBarOption: AppBarOption.singleBackButtonOption,
               ),
               Expanded(

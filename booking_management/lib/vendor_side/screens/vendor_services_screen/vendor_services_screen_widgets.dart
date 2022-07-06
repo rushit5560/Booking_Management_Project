@@ -125,8 +125,8 @@ class ServicesListModule extends StatelessWidget {
                       onTap: () {
                         CommonWidgets.yesOrNoDialog(
                           context: context,
-                          title: "Are You Sure ?",
-                          body: "You want to delete this resource ",
+                          title: "Are you sure ?",
+                          body: "You want to delete this service ",
                           onYesPressed: () async {
                             await screenController.deleteVendorServiceFunction(
                                 resourceId: "${singleItem.id}");

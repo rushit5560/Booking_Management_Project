@@ -109,17 +109,17 @@ class FieldValidator {
   }
 
   String? validateServiceName(String value) {
-    // String  pattern = r'^(?=.*?[A-Z])';
-    // RegExp regExp =  RegExp(pattern);
+    String  pattern = r'^(?=.*?[A-Z])';
+    RegExp regExp =  RegExp(pattern);
     //return
     if (value.isEmpty) {
       return 'Service name is required';
     }
-    /*else{
-      if(!regExp.hasMatch(value)){
+    else{
+      if(!regExp.hasMatch(value[0])){
         return 'AtLeast 1 uppercase letter is required';
       }
-    }*/
+    }
     return null;
   }
 
@@ -218,6 +218,8 @@ class FieldValidator {
   String? validatePrice(String value) {
     if (value.isEmpty) {
       return 'Price is required';
+    } else if(value.contains("-")) {
+      return 'Invalid price';
     }
     return null;
   }
@@ -272,7 +274,7 @@ class FieldValidator {
 
     if (value.isEmpty) {
       return 'Business name is required';
-    } else if (!value[0].contains(RegExp(r"[a-z]"))) {
+    } else if (!value[0].contains(RegExp(r'^(?=.*?[A-Z])'))) {
       return "First character should be alphabet";
     } else {
       return null;

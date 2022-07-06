@@ -62,13 +62,54 @@ class ResourceProfileModule extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         vendorResourcesScreenController.file != null
-            ? ClipRRect(
+            ? Container(
+          height: 150, width: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              //border: Border.all(color: AppColors.colorLightGrey),
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 1,
+                    blurStyle: BlurStyle.outer,
+                    color: Colors.grey.shade500
+                )
+              ]
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.file(vendorResourcesScreenController.file!,
+                height: 100, width: 100, fit: BoxFit.cover),
+          ),
+        )
+
+        /*ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill))
-            : ClipRRect(
+            child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill))*/
+            : Container(
+          height: 150, width: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              //border: Border.all(color: AppColors.colorLightGrey),
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 1,
+                    blurStyle: BlurStyle.outer,
+                    color: Colors.grey.shade500
+                )
+              ]
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
+                height: 100, width: 100, fit: BoxFit.cover),
+          ),
+        )
+
+
+        /*ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
-                height: 100, width: 100, fit: BoxFit.fill)),
+                height: 100, width: 100, fit: BoxFit.fill))*/,
 
         GestureDetector(
           onTap: (){
@@ -289,7 +330,8 @@ class ResourceCapacityFieldModule extends StatelessWidget {
             TextFormField(
               controller: vendorResourcesScreenController.updateResourceCapacityFieldController,
               keyboardType: TextInputType.number,
-              validator: (value) => FieldValidator().validatePrice(value!),
+              readOnly: vendorResourcesScreenController.updateEvent == true ? false : true,
+              // validator: (value) => FieldValidator().validatePrice(value!),
               decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
             ),
           ],
@@ -309,9 +351,14 @@ class EventCheckBoxModule extends StatelessWidget {
       children: [
         Obx(
               () => Checkbox(
-            value: vendorResourcesScreenController.isEvent.value,
+            value: vendorResourcesScreenController.updateEvent.value,
             onChanged: (value) {
-              vendorResourcesScreenController.isEvent.value = !vendorResourcesScreenController.isEvent.value;
+              vendorResourcesScreenController.isLoading(true);
+              vendorResourcesScreenController.updateEvent.value = !vendorResourcesScreenController.updateEvent.value;
+              if(vendorResourcesScreenController.updateEvent.value == false) {
+                vendorResourcesScreenController.updateResourceCapacityFieldController.clear();
+              }
+              vendorResourcesScreenController.isLoading(false);
               // if(vendorResourcesScreenController.isSundayOn.value == false) {
               //   vendorResourcesScreenController.sundayStartTime.value = "00:00";
               //   vendorResourcesScreenController.sundayEndTime.value = "00:00";

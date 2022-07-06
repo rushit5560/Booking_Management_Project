@@ -268,13 +268,12 @@ class FieldValidator {
     String v1 = value[0];
 
     if (value.isEmpty) {
-      return 'Business Name is required';
+      return 'Business name is required';
+    } else if (!v1.contains(RegExp(r'[A-Z]')) || !v1.contains(RegExp(r"[a-z]"))) {
+      return "First character should be alphabet";
+    } else {
+      return null;
     }
-    return null;
-    // else if (!v1[0].contains(RegExp(r'[A-Z]')) ||
-    //     !v1[0].contains(RegExp(r"[a-z]"))) {
-    //   return "First character should be alphabet";
-    // }
   }
 
   String? validateCurrentPassword(String value) {

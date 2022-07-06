@@ -1,13 +1,10 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/user_side/controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_place/google_place.dart';
 import 'package:html/parser.dart';
-
-import '../common_ui/common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
 import '../user_side/controllers/home_screen_controller/home_screen_controller.dart';
 import 'constants/app_images.dart';
 

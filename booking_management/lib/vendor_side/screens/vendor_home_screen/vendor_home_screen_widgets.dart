@@ -5,6 +5,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_logos.dart';
 import '../../controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
@@ -378,11 +379,15 @@ class ResourcesModule extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      singleItem.details,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    Html(
+                      data: singleItem.details,
+                      shrinkWrap: true,
                     ),
+                    // Text(
+                    //   singleItem.details,
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
                     const SizedBox(height: 5),
                 Text(
                     "\$${singleItem.price}",

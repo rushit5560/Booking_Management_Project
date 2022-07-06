@@ -36,6 +36,7 @@ class VendorProfileScreenController extends GetxController{
   final postCodeTextFieldController = TextEditingController();
   final businessIdTextFieldController = TextEditingController();
   var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
+  String vendorProfile = "";
 
   late GooglePlace googlePlace;
 
@@ -104,22 +105,35 @@ class VendorProfileScreenController extends GetxController{
     try{
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
+        var stream = http.ByteStream(file!.openRead());
+        stream.cast();
+
+        var length = await file!.length();
+
         request.headers.addAll(headers);
 
         request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
         request.fields['CategoryId'] = "$businessDropDownValue";
         request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
-        request.fields['Street'] = streetTextFieldController.text.trim();
-        request.fields['Suburb'] = subUrbTextFieldController.text.trim();
-        request.fields['Postcode'] = postCodeTextFieldController.text.trim();
-        request.fields['State'] = stateTextFieldController.text.trim();
-        request.fields['Country'] = countryTextFieldController.text.trim();
+        // request.fields['Street'] = streetTextFieldController.text.trim();
+        // request.fields['Suburb'] = subUrbTextFieldController.text.trim();
+        // request.fields['Postcode'] = postCodeTextFieldController.text.trim();
+        // request.fields['State'] = stateTextFieldController.text.trim();
+        // request.fields['Country'] = countryTextFieldController.text.trim();
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['ModifiedBy'] = UserDetails.uniqueId;
         request.fields['Duration'] = slotDurationValue.value;
 
         request.fields['Id'] = UserDetails.tableWiseId.toString();
+
+        var multiPart = http.MultipartFile(
+          'file',
+          stream,
+          length,
+        );
+
+        request.files.add(multiPart);
 
 
         log('request.fields: ${request.fields}');
@@ -277,6 +291,7 @@ class VendorProfileScreenController extends GetxController{
 
       if(isStatus.value == 200) {
         log("Success");
+        vendorProfile = getUserDetailsByIdModel.data.businessLogo;
         businessIdTextFieldController.text = getUserDetailsByIdModel.data.businessId;
         nameTextFieldController.text = getUserDetailsByIdModel.data.userName;
         emailTextFieldController.text = getUserDetailsByIdModel.data.email;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class FieldValidator {
   //final signUpScreenController = Get.find<SignUpScreenController>();
 
@@ -265,11 +267,12 @@ class FieldValidator {
   }
 
   String? validateBusinessName123(String value) {
-    String v1 = value[0];
+    // String v1 = "${value[0]}";
+    // log("v1 : $v1");
 
     if (value.isEmpty) {
       return 'Business name is required';
-    } else if (!v1.contains(RegExp(r'[A-Z]')) || !v1.contains(RegExp(r"[a-z]"))) {
+    } else if (!value[0].contains(RegExp(r"[a-z]"))) {
       return "First character should be alphabet";
     } else {
       return null;

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -155,8 +156,8 @@ class _VendorProfileDetailsModuleState
       key: screenController.vendorProfileFormKey,
       child: Column(
         children: [
-          // profile(),
-          // const SizedBox(height: 30),
+          profile(),
+          const SizedBox(height: 30),
           userNameTextField(),
           const SizedBox(height: 15),
           emailTextField(),
@@ -218,24 +219,25 @@ class _VendorProfileDetailsModuleState
                 borderRadius: BorderRadius.circular(10),
                 child: Image.file(screenController.file!,
                     height: 100, width: 100, fit: BoxFit.fill))
-            : ClipRRect(
+            : screenController.vendorProfile == ""
+        ? ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(AppImages.profileImg,
-                    height: 100, width: 100, fit: BoxFit.fill)),
+                    height: 100, width: 100, fit: BoxFit.fill))
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(ApiUrl.apiImagePath + screenController.vendorProfile,
+                height: 100, width: 100, fit: BoxFit.fill)),
         GestureDetector(
           onTap: () {
             openGallery();
           },
-          child: Positioned(
-            //bottom: 15,
-            //top: 15,
-            child: Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: Colors.white),
-              child: const Icon(Icons.edit),
-            ),
+          child: Container(
+            height: 35,
+            width: 35,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5), color: Colors.white),
+            child: const Icon(Icons.edit),
           ),
         ),
       ],

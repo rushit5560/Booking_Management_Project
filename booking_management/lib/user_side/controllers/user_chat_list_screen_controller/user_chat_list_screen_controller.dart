@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,10 @@ class UserChatListScreenController extends GetxController {
   FirebaseDatabase firebaseDatabase = FirebaseDatabase();
 
   Stream? chatRoomsStream;
+
+  StreamSubscription<QuerySnapshot> ? streamSubscription;
+  StreamSubscription ? streamSubscriptionChat;
+
 
   /// Get User ChatRoom List
   Stream<List<UserChatRoomListModel>> getChatRoomListFunction() {
@@ -39,6 +45,18 @@ class UserChatListScreenController extends GetxController {
   void onInit() {
     getChatRoomListFunction();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    streamSubscription!.cancel();
+    streamSubscriptionChat!.cancel();
+    streamSubscriptionChat = null;
+    streamSubscription = null;
+    //textController.dispose();
+    //_scrollController.dispose();
   }
 
   loadUI() {

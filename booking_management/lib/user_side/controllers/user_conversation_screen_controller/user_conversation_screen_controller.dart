@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/user_side/model/user_conversation_screen_model/receive_message_model.dart';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/send_message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -87,15 +88,25 @@ class UserConversationScreenController extends GetxController {
   }*/
 
   /// Get All Messages From Firebase -> Return Chat List
-  Stream<List<SendMessageModel>> fetchChatFromFirebase() {
+  Stream<List<ReceiveMessageModel>> fetchChatFromFirebase() {
     return FirebaseFirestore.instance.collection("Chats")
         .where("room_id", isEqualTo: roomId)
         .orderBy("created_at", descending: true)
         .snapshots()
         .map((snapshot) =>
-        snapshot.docs.map((doc) => SendMessageModel.fromJson(doc.data()))
-            .toList());
+        snapshot.docs.map((doc) {
+          log("doc : ${doc.id}");
+          return ReceiveMessageModel.fromJson(doc.data(), doc.id);
+        }).toList());
   }
+
+  /// Delete Message
+  deleteSingleMessage(String docId) {
+    FirebaseFirestore.instance.collection("Chats").doc(docId).delete();
+    Get.back();
+  }
+
+
 
 
   /// Load UI

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/user_side/model/user_conversation_screen_model/receive_message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/field_decorations.dart';
@@ -7,10 +10,12 @@ import '../../controllers/user_conversation_screen_controller/user_conversation_
 import '../../model/user_conversation_screen_model/send_message_model.dart';
 
 class SingleMessageBubble extends StatelessWidget {
-  final SendMessageModel singleMsg;
+  final ReceiveMessageModel singleMsg;
 
-  const SingleMessageBubble({Key? key, required this.singleMsg})
+  SingleMessageBubble({Key? key, required this.singleMsg})
       : super(key: key);
+
+  final screenController = Get.find<UserConversationScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,27 +39,35 @@ class SingleMessageBubble extends StatelessWidget {
             crossAxisAlignment:
                 isSendByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: AppColors.colorLightGrey,
-                  borderRadius: BorderRadius.only(
-                    topRight: const Radius.circular(15),
-                    topLeft: const Radius.circular(15),
-                    bottomRight: Radius.circular(isSendByMe ? 0 : 15),
-                    bottomLeft: Radius.circular(isSendByMe ? 15 : 0),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: isSendByMe
-                      ? CrossAxisAlignment.end
-                      : CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      singleMsg.message,
-                      style: const TextStyle(fontSize: 12),
+              GestureDetector(
+                onTap: () {
+                  if(isSendByMe == true) {
+                    log("singleMsg.id : ${singleMsg.docId}");
+                    showAlertDialog(context, singleMsg.docId);
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: AppColors.colorLightGrey,
+                    borderRadius: BorderRadius.only(
+                      topRight: const Radius.circular(15),
+                      topLeft: const Radius.circular(15),
+                      bottomRight: Radius.circular(isSendByMe ? 0 : 15),
+                      bottomLeft: Radius.circular(isSendByMe ? 15 : 0),
                     ),
-                  ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: isSendByMe
+                        ? CrossAxisAlignment.end
+                        : CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        singleMsg.message,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -63,6 +76,43 @@ class SingleMessageBubble extends StatelessWidget {
       ),
     );
   }
+
+  showAlertDialog(BuildContext context, String docId) {
+
+    Widget okButton = TextButton(
+      onPressed: () {
+        screenController.deleteSingleMessage(docId);
+      },
+      child: const Text("Ok"),
+    );
+
+    Widget cancelButton = TextButton(
+      onPressed: () {
+        Get.back();
+      },
+      child: const Text("Cancel"),
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("Simple Alert"),
+      content: const Text("Delete Message?"),
+      actions: [
+        cancelButton,
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 }
 
 class MessageWriteTextFieldModule extends StatelessWidget {

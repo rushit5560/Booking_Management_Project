@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/user_side/screens/user_conversation_screen/user_conversation_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
@@ -14,6 +18,8 @@ import '../../model/user_chat_list_screen_model/user_chat_list_screen_model.dart
 class UserChatListScreen extends StatelessWidget {
   UserChatListScreen({Key? key}) : super(key: key);
   final userChatListScreenController = Get.put(UserChatListScreenController());
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,7 @@ class UserChatListScreen extends StatelessWidget {
                       itemBuilder: (context, i) {
                         UserChatRoomListModel singleMsg = chatList[i];
 
-                        return _chatListTile(singleMsg);
+                        return _chatListTile(singleMsg, context);
                       },
                     ).commonAllSidePadding(15);
                     // return ListView(
@@ -69,7 +75,7 @@ class UserChatListScreen extends StatelessWidget {
     );
   }
 
-  Widget _chatListTile(UserChatRoomListModel singleMsg) {
+  Widget _chatListTile(UserChatRoomListModel singleMsg, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -80,6 +86,8 @@ class UserChatListScreen extends StatelessWidget {
           } else {
             oppositeUserUniqueId = singleMsg.customerid!;
           }
+
+          //readAllMessage(context, singleMsg, singleMsg.roomId!);
 
           Get.to(()=> UserConversationScreen(),
               transition: Transition.zoom,
@@ -153,6 +161,9 @@ class UserChatListScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                //newMessage(singleMsg)
+
                 // const Text(
                 //   '12:00 PM',
                 //   style: TextStyle(fontSize: 11),
@@ -164,5 +175,62 @@ class UserChatListScreen extends StatelessWidget {
       ),
     );
   }
+
+  /*void readAllMessage(BuildContext context,UserChatRoomListModel singleMsg, String room) {
+    if (userChatListScreenController.streamSubscription != null) {
+      print("second chat");
+      userChatListScreenController.streamSubscription!.cancel();
+      userChatListScreenController.streamSubscriptionChat!.cancel();
+      userChatListScreenController.streamSubscription = null;
+      //_streamSubscriptionChat = null;
+    }
+
+    print("read Messages ${userChatListScreenController.streamSubscription}");
+    //print("against email $email");
+    userChatListScreenController.streamSubscription = FirebaseFirestore.instance
+        .collection("Chats")
+        .where('room_id', isEqualTo: room)
+        .where('receiver_id', isEqualTo: singleMsg.vendorid)
+        .where('sender_id', isEqualTo: singleMsg.customerid)
+        .where('seen', isEqualTo: false)
+        .snapshots()
+        .listen((value) {
+      value.docs.forEach((element) {
+        FirebaseFirestore.instance
+            .collection("Chats")
+            .doc(element.id)
+            .update({'seen': true}).then((value) {
+          print('Seen by user :::::::::::::::updated');
+        });
+      });
+    });
+
+    log('userChatListScreenController.streamSubscription: ${userChatListScreenController.streamSubscription}');
+  }
+
+  Widget newMessage(UserChatRoomListModel singleMsg) {
+    log('singleMsg.vendorid: ${singleMsg.vendorid}');
+    log('singleMsg.customerid: ${singleMsg.customerid}');
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection("Chats")
+          .where('receiver_id', isEqualTo: singleMsg.vendorid)
+          .where('sender_id', isEqualTo: singleMsg.customerid)
+          .where('seen', isEqualTo: false)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return SizedBox();
+        } *//*else if (snapshot.data.docs.isEmpty) {
+          return SizedBox();
+        } *//*else {
+          return const CircleAvatar(
+            radius: 4,
+            backgroundColor: Colors.red,
+          );
+        }
+      },
+    );
+  }*/
 
 }

@@ -1287,7 +1287,7 @@ class _VendorProfileDetailsModuleState
                   controller: screenController.businessIdTextFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
-                  //readOnly: true,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "Business Id",
                     hintStyle: TextStyle(color: Colors.black),

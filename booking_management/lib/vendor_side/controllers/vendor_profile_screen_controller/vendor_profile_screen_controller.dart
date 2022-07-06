@@ -103,6 +103,7 @@ class VendorProfileScreenController extends GetxController{
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
     try{
+      if(file != null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         var stream = http.ByteStream(file!.openRead());
@@ -112,8 +113,8 @@ class VendorProfileScreenController extends GetxController{
 
         request.headers.addAll(headers);
 
-        request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
-        request.fields['CategoryId'] = "$businessDropDownValue";
+        //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
+        request.fields['CategoryId'] = "${businessDropDownValue!.id}";
         request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         // request.fields['Street'] = streetTextFieldController.text.trim();
@@ -124,8 +125,9 @@ class VendorProfileScreenController extends GetxController{
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['ModifiedBy'] = UserDetails.uniqueId;
         request.fields['Duration'] = slotDurationValue.value;
-
         request.fields['Id'] = UserDetails.tableWiseId.toString();
+        request.fields['Longitude'] = selectedLongitude.value;
+        request.fields['Latitude'] = selectedLatitude.value;
 
         var multiPart = http.MultipartFile(
           'file',
@@ -162,6 +164,69 @@ class VendorProfileScreenController extends GetxController{
             log('False False');
           }
         });
+      } else{
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        // var stream = http.ByteStream(file!.openRead());
+        // stream.cast();
+        //
+        // var length = await file!.length();
+
+        request.headers.addAll(headers);
+
+        //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
+        request.fields['CategoryId'] = "${businessDropDownValue!.id}";
+        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
+        // request.fields['Street'] = streetTextFieldController.text.trim();
+        // request.fields['Suburb'] = subUrbTextFieldController.text.trim();
+        // request.fields['Postcode'] = postCodeTextFieldController.text.trim();
+        // request.fields['State'] = stateTextFieldController.text.trim();
+        // request.fields['Country'] = countryTextFieldController.text.trim();
+        request.fields['Address'] = addressTextFieldController.text.trim();
+        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['Duration'] = slotDurationValue.value;
+        request.fields['Id'] = UserDetails.tableWiseId.toString();
+        request.fields['Longitude'] = selectedLongitude.value;
+        request.fields['Latitude'] = selectedLatitude.value;
+
+        // var multiPart = http.MultipartFile(
+        //   'file',
+        //   stream,
+        //   length,
+        // );
+        //
+        // request.files.add(multiPart);
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+        log('request.headers: ${request.headers}');
+
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.statusCode}');
+          isStatus = response1.statusCode.obs;
+          log('status : $isStatus');
+          log('success : ${response1.statusCode}');
+
+          if(isStatus.value == 200){
+
+            getUserDetailsById();
+            log("response1.message : ${response1.message}");
+            Fluttertoast.showToast(msg: response1.message);
+
+
+          } else {
+            // Fluttertoast.showToast(msg: "${response1.message}");
+            log('False False');
+          }
+        });
+      }
+
 
 
     } catch(e) {

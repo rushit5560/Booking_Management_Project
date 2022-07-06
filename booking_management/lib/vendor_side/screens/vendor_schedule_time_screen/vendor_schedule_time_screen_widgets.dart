@@ -123,7 +123,7 @@ class ResourcesSelectDateModule extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
+              firstDay: DateTime.now(),
               lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),

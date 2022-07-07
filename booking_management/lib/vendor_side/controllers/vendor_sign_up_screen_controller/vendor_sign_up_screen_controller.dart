@@ -36,7 +36,7 @@ class VendorSignUpScreenController extends GetxController {
   final TextEditingController passwordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController cPasswordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   RxBool vendorPortal = false.obs;
-  RxBool anyResourcesCheckBox = false.obs;
+  RxBool termsAndConditionCheckBox = false.obs;
   RxBool priceCheckBox = false.obs;
   RxBool serviceCheckBox = false.obs;
 
@@ -93,7 +93,7 @@ class VendorSignUpScreenController extends GetxController {
       request.fields['IsActive'] = "true";
       request.fields['VendorPortal'] = "true";
       request.fields['BusinessId'] = businessIdFieldController.text.trim();
-      request.fields['IsResource'] = anyResourcesCheckBox.toString();
+      request.fields['TermsConditions'] = termsAndConditionCheckBox.toString();
       request.fields['IsServiceSlots'] = serviceCheckBox.toString();
       request.fields['IsPriceDisplay'] = priceCheckBox.toString();
       request.fields['BusinessName'] = businessNameFieldController.text.trim();
@@ -172,7 +172,7 @@ class VendorSignUpScreenController extends GetxController {
     postCodeFieldController.clear();
     businessNameFieldController.clear();
     businessIdFieldController.clear();
-    anyResourcesCheckBox(false);
+    termsAndConditionCheckBox(false);
     priceCheckBox(false);
     serviceCheckBox(false);
   }

@@ -3,6 +3,8 @@ import 'package:booking_management/common_ui/common_controller/custom_drawer_con
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_favourite_list_screen/user_favourite_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_transactions_screen/user_transactions_screen.dart';
+import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
+import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../user_side/screens/booking_history_screen/booking_history_screen.dart';
@@ -105,6 +107,12 @@ class CustomerDrawerSingleItemModule extends StatelessWidget {
     }
     else if(userSettingScreenOption == CustomerDrawerOption.login) {
       Get.to(()=> SignInScreen(), transition: Transition.zoom);
+    }
+    else if(userSettingScreenOption == CustomerDrawerOption.termsAndCondition) {
+      Get.to(()=> TermsAndConditionScreen(), transition: Transition.zoom);
+    }
+    else if(userSettingScreenOption == CustomerDrawerOption.privacyPolicy) {
+      Get.to(()=> VendorPrivacyPolicyScreen(), transition: Transition.zoom);
     }
   }
 }

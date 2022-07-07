@@ -22,7 +22,7 @@ class VendorAvailableTimeScreen extends StatelessWidget {
           child: Column(
             children: [
               const CommonAppBarModule(
-                title: "Available Time",
+                title: "Business Timing",
                 appBarOption: AppBarOption.singleBackButtonOption,
               ),
               Expanded(

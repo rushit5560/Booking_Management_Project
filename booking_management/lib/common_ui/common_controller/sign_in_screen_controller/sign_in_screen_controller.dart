@@ -45,7 +45,11 @@ class SignInScreenController extends GetxController {
       http.Response response = await http.post(Uri.parse(url));
       log('Response : ${response.body}');
 
-      if(response.body.toString().contains("417")) {
+      if(response.body.toString().contains("Subscription pending")) {
+        Get.to(() => VendorSubscriptionPlanScreen());
+      }
+
+      else if(response.body.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
 
@@ -141,10 +145,7 @@ class SignInScreenController extends GetxController {
           log('SignIn False False');
           Get.snackbar(signInModel.message, '');
         }
-
       }
-
-
     } catch (e) {
       log('SignIn Error : $e');
       Fluttertoast.showToast(msg: "Something went wrong!");

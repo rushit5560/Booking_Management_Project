@@ -19,7 +19,7 @@ class VendorSubscriptionReportScreenController extends GetxController {
 
   getSubscriptionReportFunction() async {
     isLoading(true);
-    String url = ApiUrl.appointmentReportApi + "?vendorId=${UserDetails.uniqueId}";
+    String url = ApiUrl.subscriptionReportApi + "?id=${UserDetails.uniqueId}";
     log("Appointment Report Api Url : $url");
 
     try {
@@ -28,19 +28,20 @@ class VendorSubscriptionReportScreenController extends GetxController {
 
       VendorSubscriptionReportModel vendorSubscriptionReportModel = VendorSubscriptionReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = vendorSubscriptionReportModel.success.obs;
+      log('isSuccessStatus: $isSuccessStatus');
 
       if(isSuccessStatus.value) {
         subscriptionReportList.clear();
 
         subscriptionReportList = vendorSubscriptionReportModel.workerList;
-        log("appointmentReportList : ${subscriptionReportList.length}");
+        log("subscriptionReportList : ${subscriptionReportList.length}");
       } else {
-        log("getAppointmentReportFunction Else Else");
+        log("getSubscriptionReportFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
 
     } catch(e) {
-      log("getAppointmentReportFunction Error ::: $e");
+      log("getSubscriptionReportFunction Error ::: $e");
     } finally {
       isLoading(false);
     }

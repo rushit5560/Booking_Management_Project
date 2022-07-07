@@ -142,6 +142,7 @@ class ApiUrl {
   static const appointmentReportApi = apiMainPath + "API/AppointmentReport";
   static const customerReportApi = apiMainPath + "API/CustomerReport";
   static const invoiceReportApi = apiMainPath + "API/InvoiceReport";
+  static const subscriptionReportApi = apiMainPath + "API/SubscriptionReport";
 
   /// Vendor Dashboard
   static const vendorDashboardResourceListApi = apiMainPath + "API/ResourceList";
@@ -151,6 +152,8 @@ class ApiUrl {
   /// Get Transaction
   static const getTransactionListApi = apiMainPath + "API/CustomerOrderListIndex";
 
+  /// Privacy policy and Terms & Condition
+  static const getPrivacyPolicyApi = apiMainPath + "API/CMS";
 
   static const logOutApi = apiMainPath + "API/Logout";
 }

@@ -2,6 +2,7 @@ class AppImages {
   static const root = "assets/images/";
   static const gifRoot = "assets/gifs/";
 
+  static const logoImg = root + "logo.png";
   static const shapeImg = root + "shape.png";
   static const headerLogoImg = root + "header_logo.png";
   static const vendorImg = root + "vendor1.png";

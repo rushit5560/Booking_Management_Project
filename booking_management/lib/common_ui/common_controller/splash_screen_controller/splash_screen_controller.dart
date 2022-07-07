@@ -40,6 +40,7 @@ class SplashScreenController extends GetxController {
 
         log("splashLogo : ${AppLogo.splashLogo}");
         log("homeLogo : ${AppLogo.homeLogo}");
+        log("AppLogo.mainLogo: ${AppLogo.mainLogo}");
       } else {
         log("getAppLogoFunction Else Else");
       }

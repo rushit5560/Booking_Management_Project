@@ -6,6 +6,7 @@ import 'package:booking_management/common_modules/custom_appbar/custom_appbar.da
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/vendor_checkout_screen/vendor_checkout_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 import '../../../common_modules/constants/api_url.dart';
@@ -61,8 +62,8 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
           children: [
 
             Container(
-              height: 70,
-              width: 70,
+              height: 60,
+              width: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
@@ -95,24 +96,10 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  //const SizedBox(height: 8),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        '- ',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      Expanded(
-                        child: Text(
-                          singleItem.detail,
-                          // maxLines: 10,
-                          // overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ],
+                  Html(
+                    data: singleItem.detail
                   ),
 
                   // const SizedBox(height: 3),

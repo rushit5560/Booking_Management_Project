@@ -13,6 +13,8 @@ enum CustomerDrawerOption {
    transaction,
    help,
    changePassword,
+   termsAndCondition,
+   privacyPolicy,
    logOut,
    favourites,
    login
@@ -39,6 +41,8 @@ enum VendorDrawerOption {
    appointmentReport,
    invoiceReport,
    customerReport,
+   termsAndCondition,
+   privacyPolicy,
    subscriptionReport
 }
 

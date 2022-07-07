@@ -1,5 +1,7 @@
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
+import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
+import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_report_screen/vendor_subscription_report_screen.dart';
@@ -155,6 +157,13 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
           transition: Transition.rightToLeft);
     } else if(vendorSettingScreenOption == VendorDrawerOption.subscriptionReport) {
       Get.to(() => VendorSubscriptionReportScreen(),
+          transition: Transition.rightToLeft);
+    }
+    else if(vendorSettingScreenOption == VendorDrawerOption.privacyPolicy) {
+      Get.to(() => VendorPrivacyPolicyScreen(),
+          transition: Transition.rightToLeft);
+    } else if(vendorSettingScreenOption == VendorDrawerOption.termsAndCondition) {
+      Get.to(() => TermsAndConditionScreen(),
           transition: Transition.rightToLeft);
     }
   }

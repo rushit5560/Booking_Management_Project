@@ -457,8 +457,8 @@ class VendorPortalCheckboxModule extends StatelessWidget {
   }
 }
 
-class AnyResourcesCheckboxModule extends StatelessWidget {
-  AnyResourcesCheckboxModule({Key? key}) : super(key: key);
+class TermsAndConditionCheckboxModule extends StatelessWidget {
+  TermsAndConditionCheckboxModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorSignUpScreenController>();
 
   @override
@@ -467,11 +467,11 @@ class AnyResourcesCheckboxModule extends StatelessWidget {
       children: [
         Obx(
           () => Checkbox(
-              value: screenController.anyResourcesCheckBox.value,
+              value: screenController.termsAndConditionCheckBox.value,
               activeColor: AppColors.colorLightGrey,
               onChanged: (bool? newValue) {
                 //setState(() {
-                screenController.anyResourcesCheckBox.value = newValue!;
+                screenController.termsAndConditionCheckBox.value = newValue!;
                 //});
                 const Text(
                   'Resources',
@@ -479,7 +479,7 @@ class AnyResourcesCheckboxModule extends StatelessWidget {
                 );
               }),
         ),
-        const Text("Do you have any resources?")
+        const Text("I agree to the sites terms and conditions")
       ],
     );
   }

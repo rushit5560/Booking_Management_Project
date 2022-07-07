@@ -96,6 +96,20 @@ class CustomerDrawer extends StatelessWidget {
               : Container(),
               const SizedBox(height: 20),
 
+              CustomerDrawerSingleItemModule(
+                img: AppImages.changePasswordImg,
+                name: 'Terms And Condition',
+                customerDrawerOption: CustomerDrawerOption.termsAndCondition,
+              ),
+              const SizedBox(height: 20),
+
+              CustomerDrawerSingleItemModule(
+                img: AppImages.changePasswordImg,
+                name: 'Privacy Policy',
+                customerDrawerOption: CustomerDrawerOption.privacyPolicy,
+              ),
+
+              const SizedBox(height: 20),
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
                 img: AppImages.logoutImg,

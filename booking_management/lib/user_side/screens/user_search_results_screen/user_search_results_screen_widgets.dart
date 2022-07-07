@@ -634,7 +634,8 @@ class BusinessListModule extends StatelessWidget {
                 flex: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(imgUrl),
+                  child: imgUrl.isNotEmpty ? Image.network(imgUrl) : Image.asset(AppImages.logoImg),
+
                 ),
               ),
               const SizedBox(width: 7),

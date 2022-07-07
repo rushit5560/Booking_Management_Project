@@ -138,6 +138,7 @@ class AppointmentReportScreenController extends GetxController {
     : ApiUrl.appointmentReportApi + "?fromDate=$startDate" + "&toDate=$endDate" + "&option=$selectedStatusValue" + "&vendorId=${UserDetails.uniqueId}";
 
     log("Appointment Report Api Url : $url");
+    log('header: ${apiHeader.headers}');
 
     try {
       http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);

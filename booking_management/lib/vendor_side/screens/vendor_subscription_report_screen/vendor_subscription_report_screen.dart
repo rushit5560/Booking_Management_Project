@@ -22,7 +22,7 @@ class VendorSubscriptionReportScreen extends StatelessWidget {
             child: Column(
               children: [
                 const CommonAppBarModule(
-                  title: "Appointment Report",
+                  title: "Subscription Report",
                   appBarOption: AppBarOption.singleBackButtonOption,
                 ),
 

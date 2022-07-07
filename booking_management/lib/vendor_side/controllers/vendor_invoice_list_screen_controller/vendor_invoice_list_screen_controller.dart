@@ -18,7 +18,9 @@ class VendorInvoiceListScreenController extends GetxController {
   ApiHeader apiHeader = ApiHeader();
 
   List<OrdersDatum> allInvoiceList = [];
-  OrderDetailsData? orderDetailsData;
+  //OrderDetailsData? orderDetailsData;
+
+  String customerUserName = "";
 
   /// Get All Order List
   getAllOrderListFunction() async {
@@ -56,17 +58,23 @@ class VendorInvoiceListScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.vendorOrderDetailsApi + "?id=$id";
     log("Order Details API URL : $url");
+    log('apiHeader.headers: ${apiHeader.headers}');
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Response Body : ${response.body}");
+      log("Order Details Response Body : ${response.body}");
 
       GetInvoiceDetailsModel getInvoiceDetailsModel = GetInvoiceDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = getInvoiceDetailsModel.success.obs;
-
+      log('isSuccessStatus: $isSuccessStatus');
       if(isSuccessStatus.value) {
-        orderDetailsData = getInvoiceDetailsModel.data;
-        log("orderDetailsData : $orderDetailsData");
+        // orderDetailsData = getInvoiceDetailsModel.workerList;
+        // log("orderDetailsData : $orderDetailsData");
+
+        // Customer
+        customerUserName = getInvoiceDetailsModel.workerList.customer.userName;
+        log('customerUserName: $customerUserName');
+
       } else {
         log("getOrderDetailsByIdFunction Else Else");
       }

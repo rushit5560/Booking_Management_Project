@@ -142,6 +142,20 @@ class VendorDrawer extends StatelessWidget {
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
+                img: AppImages.resourcesImg,
+                name: 'Terms & Condition',
+                vendorDrawerOption: VendorDrawerOption.termsAndCondition,
+              ),
+              const SizedBox(height: 20),
+
+              VendorDrawerSingleItemModule(
+                img: AppImages.resourcesImg,
+                name: 'Privacy Policy',
+                vendorDrawerOption: VendorDrawerOption.privacyPolicy,
+              ),
+              const SizedBox(height: 20),
+
+              VendorDrawerSingleItemModule(
                 img: AppImages.logoutImg,
                 name: 'Logout',
                 vendorDrawerOption: VendorDrawerOption.logout,

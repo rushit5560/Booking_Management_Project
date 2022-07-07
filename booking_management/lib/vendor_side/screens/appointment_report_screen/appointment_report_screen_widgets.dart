@@ -437,6 +437,7 @@ class SubmitButton extends StatelessWidget {
         } else {
           await screenController.getFilterAppointmentReportFunction();
         }
+        //await screenController.getFilterAppointmentReportFunction();
       },
       child: Container(
         alignment: Alignment.centerRight,

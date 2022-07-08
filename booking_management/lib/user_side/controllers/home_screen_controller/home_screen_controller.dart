@@ -33,6 +33,7 @@ class HomeScreenController extends GetxController {
 
   RxBool isServiceCalenderShow = false.obs;
   RxString selectedDate = "".obs;
+  RxString selectedDisplayDate = "".obs;
   RxString selectedTime = "".obs;
 
   late GooglePlace googlePlace;

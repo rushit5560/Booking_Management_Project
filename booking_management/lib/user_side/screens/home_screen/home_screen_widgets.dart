@@ -151,15 +151,17 @@ class SearchCategoryField extends StatelessWidget {
               color: Colors.grey,
               size: 18,
             ),
-            suffixIcon: screenController.categoryFieldController.text == "" ? null : IconButton(
-              icon: const Icon(Icons.close),
-              color: Colors.grey,
-              iconSize: 20,
-              onPressed: () {
-                screenController.categoryFieldController.clear();
-                screenController.loadUI();
-              },
-            ),
+            suffixIcon: screenController.categoryFieldController.text == ""
+                ? null
+                : IconButton(
+                    icon: const Icon(Icons.close),
+                    color: Colors.grey,
+                    iconSize: 20,
+                    onPressed: () {
+                      screenController.categoryFieldController.clear();
+                      screenController.loadUI();
+                    },
+                  ),
             border: InputBorder.none,
             hintText: 'Search for a service providers or business',
             hintStyle: const TextStyle(
@@ -283,12 +285,11 @@ class SearchLocationField extends StatelessWidget {
             }
           });
 
-          if(screenController.locationFieldController.text == "") {
+          if (screenController.locationFieldController.text == "") {
             screenController.predictions.clear();
           }
 
           screenController.loadUI();
-
         },
         decoration: InputDecoration(
           hintText: 'Search Location',
@@ -304,16 +305,18 @@ class SearchLocationField extends StatelessWidget {
             Icons.search_rounded,
             color: Colors.grey,
           ),
-          suffixIcon: screenController.locationFieldController.text == "" ? null : IconButton(
-            icon: const Icon(Icons.close),
-            color: Colors.grey,
-            iconSize: 20,
-            onPressed: () {
-              screenController.locationFieldController.clear();
-              screenController.predictions.clear();
-              screenController.loadUI();
-            },
-          ),
+          suffixIcon: screenController.locationFieldController.text == ""
+              ? null
+              : IconButton(
+                  icon: const Icon(Icons.close),
+                  color: Colors.grey,
+                  iconSize: 20,
+                  onPressed: () {
+                    screenController.locationFieldController.clear();
+                    screenController.predictions.clear();
+                    screenController.loadUI();
+                  },
+                ),
         ),
       ),
     );
@@ -337,7 +340,8 @@ class SearchLocationListModule extends StatelessWidget {
                   final placeId = screenController.predictions[i].placeId;
                   // final details = await screenController.googlePlace.details.get(placeId!);
 
-                  screenController.locationFieldController.text = screenController.predictions[1].description.toString();
+                  screenController.locationFieldController.text =
+                      screenController.predictions[1].description.toString();
 
                   screenController.isLoading(true);
                   screenController.predictions.clear();
@@ -484,11 +488,13 @@ class CalenderTableModule extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           /// Show Date as Text
-          Text(
-            screenController.selectedDate.value,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          Obx(
+            () => Text(
+              screenController.selectedDisplayDate.value,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
 
@@ -548,11 +554,20 @@ class SubmitButtonModule extends StatelessWidget {
   }
 }
 
-class SelectDateModule extends StatelessWidget {
+class SelectDateModule extends StatefulWidget {
   SelectDateModule({Key? key}) : super(key: key);
+
+  @override
+  State<SelectDateModule> createState() => _SelectDateModuleState();
+}
+
+class _SelectDateModuleState extends State<SelectDateModule> {
   final screenController = Get.find<HomeScreenController>();
+
   CalendarFormat format = CalendarFormat.month;
+
   DateTime selectedDay = DateTime.now();
+
   DateTime focusedDay = DateTime.now();
 
   @override
@@ -605,6 +620,11 @@ class SelectDateModule extends StatelessWidget {
                 }
 
                 screenController.selectedTime.value = "$hour:$minute:00";
+
+                setState(() {
+                  screenController.selectedDisplayDate.value =
+                      "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                });
 
                 screenController.selectedDate.value =
                     "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";

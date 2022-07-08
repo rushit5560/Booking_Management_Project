@@ -24,24 +24,31 @@ class VendorAppointmentListScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             // SearchAppointmentField().commonSymmetricPadding(horizontal: 45, vertical: 40),
-            AppointmentListTextModule().commonSymmetricPadding(horizontal: 20),
-            Obx(
-              () => vendorAppointmentListScreenController.isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: vendorAppointmentListScreenController.selectedTabIndex.value == 1
-                          ? AllAppointmentListModule()
-                          : vendorAppointmentListScreenController.selectedTabIndex.value == 2
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    AppointmentListTextModule().commonSymmetricPadding(horizontal: 20),
+                    Obx(
+                          () => vendorAppointmentListScreenController.isLoading.value
+                          ? const Center(child: CircularProgressIndicator())
+                          : vendorAppointmentListScreenController.selectedTabIndex.value == 1
+                              ? AllAppointmentListModule()
+                              : vendorAppointmentListScreenController.selectedTabIndex.value == 2
                               ? PendingAppointmentListModule()
                               : vendorAppointmentListScreenController.selectedTabIndex.value == 3
-                                  ? ConfirmAppointmentListModule()
-                                  : vendorAppointmentListScreenController.selectedTabIndex.value == 4
-                                      ? CancelAppointmentListModule()
-                                      : vendorAppointmentListScreenController.selectedTabIndex.value == 5
-                                          ? DoneAppointmentListModule()
-                                          : Container(),
+                              ? ConfirmAppointmentListModule()
+                              : vendorAppointmentListScreenController.selectedTabIndex.value == 4
+                              ? CancelAppointmentListModule()
+                              : vendorAppointmentListScreenController.selectedTabIndex.value == 5
+                              ? DoneAppointmentListModule()
+                              : Container(),
                     ),
-            ),
+                  ],
+                ),
+              ),
+            )
+
           ],
         ),
       ),

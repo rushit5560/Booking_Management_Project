@@ -33,11 +33,15 @@ class VendorDetailsModule extends StatelessWidget {
           flex: 30,
           child: Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(imgUrl),
-                fit: BoxFit.cover,
-              ),
+              // image: DecorationImage(
+              //   image: NetworkImage(imgUrl),
+              //   fit: BoxFit.cover,
+              // ),
             ),
+            child: Image.network(imgUrl,
+            errorBuilder: (context, error, st){
+              return Image.asset(AppImages.logoImg);
+            }),
           ),
         ),
         Expanded(
@@ -72,7 +76,7 @@ class VendorDetailsModule extends StatelessWidget {
               ),
 
               // const SizedBox(height: 5),
-              Row(
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
@@ -95,7 +99,7 @@ class VendorDetailsModule extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
+              ),*/
 
 
             ],

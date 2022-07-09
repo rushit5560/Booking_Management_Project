@@ -1000,7 +1000,9 @@ class FavouriteVendorsModule extends StatelessWidget {
               singleVendor.userId,
               singleVendor.email,
               singleVendor.businessName,
-            ]);
+            ])!.then((value) async {
+          await screenController.getFavouriteVendorByIdFunction();
+        });
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),

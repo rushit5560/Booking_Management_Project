@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +33,15 @@ class BookingSummaryModule extends StatelessWidget {
                   height: 75,
                   width: 75,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(imgUrl),
-                      fit: BoxFit.cover,
-                    ),
+                    // image: DecorationImage(
+                    //   image: NetworkImage(imgUrl),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
+                  child: Image.network(imgUrl,
+                      errorBuilder: (context, error, st){
+                        return Image.asset(AppImages.logoImg);
+                      }),
                 ),
               ),
               const SizedBox(width: 10),
@@ -73,15 +78,15 @@ class BookingSummaryModule extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
 
-                    Text(
-                      screenController.vendorAddress,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
+                    // Text(
+                    //   screenController.vendorAddress,
+                    //   maxLines: 1,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
 
 
                   ],

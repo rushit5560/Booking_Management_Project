@@ -636,7 +636,7 @@ class BookAppointmentScreenController extends GetxController {
     log("Get All Additional Slot API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log('Response : ${response.body}');
 
       GetAllAdditionalSlotModel getAllAdditionalSlotModel = GetAllAdditionalSlotModel.fromJson(json.decode(response.body));

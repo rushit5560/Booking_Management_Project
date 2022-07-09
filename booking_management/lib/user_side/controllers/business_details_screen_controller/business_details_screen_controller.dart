@@ -166,7 +166,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      // request.headers.addAll(apiHeader.headers);
+       request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";

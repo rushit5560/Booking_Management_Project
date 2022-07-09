@@ -15,18 +15,17 @@ class TermsAndConditionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: termsAndConditionScreenController.isLoading.value ?
-        const Center(child: CircularProgressIndicator()):
-        Column(
-          children:  [
-            CommonAppBarModule(
-              title: 'Terms And Condition',
-              appBarOption: AppBarOption.none,
-            ),
-            SizedBox(height: 10),
+        child: Obx(()=>
+        termsAndConditionScreenController.isLoading.value ?
+          const Center(child: CircularProgressIndicator()):
+          Column(
+            children:  [
+              const CommonAppBarModule(title: "Terms and Condition", appBarOption: AppBarOption.singleBackButtonOption),
+              SizedBox(height: 10),
 
-            TermsAndConditionWidget()
-          ],
+              TermsAndConditionWidget()
+            ],
+          ),
         ),
       ),
     );

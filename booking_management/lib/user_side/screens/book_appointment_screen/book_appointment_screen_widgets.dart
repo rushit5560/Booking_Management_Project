@@ -1192,7 +1192,7 @@ class BookButtonModule extends StatelessWidget {
                 _singleModule(text: "Manage your appointments easily"),
 
                 const SizedBox(height: 10),
-                // _socialMediaModule(),
+                 _socialMediaModule(),
 
                 const SizedBox(height: 10),
                 _signUpModule(),

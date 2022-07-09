@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/common_widgets.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -86,11 +87,15 @@ class UserFavouriteListScreen extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(
-                      image: NetworkImage(imgUrl),
-                      fit: BoxFit.cover,
-                    ),
+                    // image: DecorationImage(
+                    //   image: NetworkImage(imgUrl),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
+                  child: Image.network(imgUrl,
+                    errorBuilder: (context, st, ob){
+                      return Image.asset(AppImages.logoImg);
+                    },),
                 ),
               ),
               Expanded(

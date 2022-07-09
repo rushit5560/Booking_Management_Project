@@ -500,48 +500,48 @@ class GetInvoiceDetailsModel {
 
 class WorkerList {
   WorkerList({
-    required this.id,
-    required this.bookingId,
-    required this.vendorId,
-    required this.vendor,
-    required this.customer,
-    required this.customerId,
-    required this.bookingFor,
-    required this.bookingForId,
-    required this.bookingForName,
-    required this.startDateTime,
-    required this.endDateTime,
-    required this.firstName,
-    required this.email,
-    required this.phoneNo,
-    required this.notes,
-    required this.status,
-    required this.bookingItems,
-    required this.serviceName,
-    required this.service,
-    required this.price,
+     this.id,
+     this.bookingId,
+     this.vendorId,
+     this.vendor,
+     this.customer,
+     this.customerId,
+     this.bookingFor,
+     this.bookingForId,
+     this.bookingForName,
+     this.startDateTime,
+     this.endDateTime,
+     this.firstName,
+     this.email,
+     this.phoneNo,
+     this.notes,
+     this.status,
+     this.bookingItems,
+     this.serviceName,
+     this.service,
+     this.price,
   });
 
-  int id;
-  String bookingId;
-  int vendorId;
-  Vendor vendor;
-  Customer customer;
-  int customerId;
-  String bookingFor;
-  String bookingForId;
-  String bookingForName;
-  String startDateTime;
-  String endDateTime;
-  String firstName;
-  String email;
-  String phoneNo;
-  String notes;
-  String status;
-  BookingItems bookingItems;
-  String serviceName;
-  String service;
-  String price;
+  int ? id;
+  String ?  bookingId;
+  int ? vendorId;
+  Vendor ? vendor;
+  Customer ? customer;
+  int ? customerId;
+  String ? bookingFor;
+  String ? bookingForId;
+  String ? bookingForName;
+  String ? startDateTime;
+  String ? endDateTime;
+  String ? firstName;
+  String ? email;
+  String ? phoneNo;
+  String ? notes;
+  String ? status;
+  BookingItems ? bookingItems;
+  String ? serviceName;
+  String ? service;
+  String ? price;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
     id: json["id"] ?? 0,
@@ -570,8 +570,8 @@ class WorkerList {
     "id": id,
     "bookingId": bookingId,
     "vendorId": vendorId,
-    "vendor": vendor.toJson(),
-    "customer": customer.toJson(),
+    "vendor": vendor!.toJson(),
+    "customer": customer!.toJson(),
     "customerId": customerId,
     "bookingFor": bookingFor,
     "bookingForId": bookingForId,
@@ -583,7 +583,7 @@ class WorkerList {
     "phoneNo": phoneNo,
     "notes": notes,
     "status": status,
-    "bookingItems": bookingItems.toJson(),
+    "bookingItems": bookingItems!.toJson(),
     "serviceName": serviceName,
     "service": service,
     "price": price,
@@ -602,7 +602,7 @@ class BookingItems {
 
   int id;
   String bookingId;
-  int price;
+  double price;
   int quantity;
   String booking;
   String review;
@@ -610,7 +610,7 @@ class BookingItems {
   factory BookingItems.fromJson(Map<String, dynamic> json) => BookingItems(
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
-    price: json["price"] ?? 0,
+    price: json["price"] ?? 0.0,
     quantity: json["quantity"] ?? 0,
     booking: json["booking"] ?? "",
     review: json["review"] ?? "",

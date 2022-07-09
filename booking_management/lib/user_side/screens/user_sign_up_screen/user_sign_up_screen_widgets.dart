@@ -1,3 +1,6 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
+import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_sign_up_screen/vendor_sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -173,6 +176,48 @@ class CPasswordFieldModule extends StatelessWidget {
   }
 }
 
+class TermsAndConditionCheckboxModule extends StatelessWidget {
+  TermsAndConditionCheckboxModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserSignUpScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(
+              () => Checkbox(
+              value: screenController.termsAndConditionCheckBox.value,
+              activeColor: AppColors.colorLightGrey,
+              onChanged: (bool? newValue) {
+                //setState(() {
+                screenController.termsAndConditionCheckBox.value = newValue!;
+                //});
+                const Text(
+                  'Resources',
+                  style: TextStyle(color: Colors.black),
+                );
+              }),
+        ),
+        const Text("I agree to the sites terms and conditions")
+      ],
+    );
+  }
+}
+
+class TermsAndConditionText extends StatelessWidget {
+  const TermsAndConditionText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        Get.to(() => TermsAndConditionScreen());
+      },
+        child: Text("Read our terms and conditions here", style: const TextStyle(color: Colors.blue)));
+  }
+}
+
+
 class DOBFieldModule extends StatelessWidget {
   DOBFieldModule({Key? key}) : super(key: key);
   final screenController = Get.find<UserSignUpScreenController>();
@@ -256,35 +301,64 @@ class SignUpButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        if(screenController.userSignUpFormKey.currentState!.validate()){
-          await screenController.userSignUpFunction();
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            if(screenController.userSignUpFormKey.currentState!.validate()){
+              await screenController.userSignUpFunction();
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    color: Colors.grey.shade300,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ]
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+              child: Text(
+                'SIGN UP',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
-            ]
-        ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-          child: Text(
-            'SIGN UP',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
             ),
           ),
         ),
-      ),
+      ],
+    );
+  }
+}
+
+class SkipButton extends StatelessWidget {
+  const SkipButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+            onTap: (){
+              Get.offAll(()=> IndexScreen());
+            },
+            child: const Text(
+              "Skip",
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 16,
+              ),
+            ),),
+      ],
     );
   }
 }

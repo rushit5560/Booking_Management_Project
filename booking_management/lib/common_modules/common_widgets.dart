@@ -45,7 +45,12 @@ class OrTextModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('OR');
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Text('OR'),
+      ],
+    );
   }
 }
 
@@ -95,6 +100,9 @@ class SocialMediaLoginModule extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class CustomCircularLoaderModule extends StatelessWidget {
   const CustomCircularLoaderModule({Key? key}) : super(key: key);

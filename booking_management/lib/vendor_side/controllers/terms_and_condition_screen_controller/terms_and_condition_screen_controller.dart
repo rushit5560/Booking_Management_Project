@@ -20,17 +20,18 @@ class TermsAndConditionScreenController extends GetxController{
     isLoading(true);
     String url = ApiUrl.getPrivacyPolicyApi + "?pageName=TermsConditions";
     log("Terms And Condition API URL : $url");
-    log('apiHeader.headers: ${apiHeader.headers}');
+    //log('apiHeader.headers: ${apiHeader.headers}');
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url) /*headers: apiHeader.headers*/);
       log("TermsConditions Response Body : ${response.body}");
 
       GetPrivacyPolicyModel getPrivacyPolicyModel = GetPrivacyPolicyModel.fromJson(json.decode(response.body));
       isSuccessStatus = getPrivacyPolicyModel.success.obs;
       log('isSuccessStatus: $isSuccessStatus');
+
       if(isSuccessStatus.value) {
-        // orderDetailsData = getInvoiceDetailsModel.workerList;
+        // orderDetailsData = getPrivacyPolicyModel.data;
         // log("orderDetailsData : $orderDetailsData");
 
         pageTitle = getPrivacyPolicyModel.data.pageTitle;

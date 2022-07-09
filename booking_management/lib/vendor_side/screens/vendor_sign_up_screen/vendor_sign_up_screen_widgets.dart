@@ -1,8 +1,9 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/container_decorations.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
@@ -541,39 +542,82 @@ class AnyServiceCheckboxModule extends StatelessWidget {
   }
 }
 
+class TermsAndConditionText extends StatelessWidget {
+  const TermsAndConditionText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: (){
+          Get.to(() => TermsAndConditionScreen());
+        },
+        child: Text("Read our terms and conditions here", style: const TextStyle(color: Colors.blue)));
+  }
+}
+
 class VendorSignUpButtonModule extends StatelessWidget {
   VendorSignUpButtonModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorSignUpScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        if (screenController.vendorSignUpFormKey.currentState!.validate()) {
-          await screenController.vendorSignUpFunction();
-        }
-      },
-      child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
-          BoxShadow(
-            spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-          child: Text(
-            'SIGN UP',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            if (screenController.vendorSignUpFormKey.currentState!.validate()) {
+              await screenController.vendorSignUpFunction();
+            }
+          },
+          child: Container(
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+              BoxShadow(
+                spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+              child: Text(
+                'SIGN UP',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
+    );
+  }
+}
+
+class SkipButton extends StatelessWidget {
+  const SkipButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+            onTap: (){
+              Get.offAll(()=> IndexScreen());
+            },
+            child: const Text(
+                "Skip",
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 16,
+              ),
+            ),
+        ),
+      ],
     );
   }
 }

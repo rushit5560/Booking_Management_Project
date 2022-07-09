@@ -21,6 +21,16 @@ class VendorInvoiceListScreenController extends GetxController {
   //OrderDetailsData? orderDetailsData;
 
   String customerUserName = "";
+  String customerEmail = "";
+  String customerPhoneNumber = "";
+
+  String vendorUserName = "";
+  String vendorEmail = "";
+  String vendorPhoneNumber = "";
+
+  int orderId = 0;
+  List<String> descriptionList = [];
+  WorkerList orderList = WorkerList();
 
   /// Get All Order List
   getAllOrderListFunction() async {
@@ -70,10 +80,22 @@ class VendorInvoiceListScreenController extends GetxController {
       if(isSuccessStatus.value) {
         // orderDetailsData = getInvoiceDetailsModel.workerList;
         // log("orderDetailsData : $orderDetailsData");
+        descriptionList = getInvoiceDetailsModel.list;
+        orderList= getInvoiceDetailsModel.workerList;
+
 
         // Customer
-        customerUserName = getInvoiceDetailsModel.workerList.customer.userName;
+        customerUserName = getInvoiceDetailsModel.workerList.customer!.userName;
+        customerEmail = getInvoiceDetailsModel.workerList.customer!.email;
+        customerPhoneNumber = getInvoiceDetailsModel.workerList.customer!.phoneNo;
         log('customerUserName: $customerUserName');
+
+        // Vendor
+        vendorUserName = getInvoiceDetailsModel.workerList.vendor!.userName;
+        vendorEmail = getInvoiceDetailsModel.workerList.vendor!.email;
+        vendorPhoneNumber = getInvoiceDetailsModel.workerList.vendor!.phoneNo;
+
+        orderId = getInvoiceDetailsModel.workerList.id!;
 
       } else {
         log("getOrderDetailsByIdFunction Else Else");

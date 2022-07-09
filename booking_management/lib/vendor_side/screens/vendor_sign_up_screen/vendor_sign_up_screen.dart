@@ -17,6 +17,7 @@ class VendorSignUpScreen extends StatelessWidget {
           child: Form(
             key: vendorSignUpScreenController.vendorSignUpFormKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // From Common Widgets
                 const HeaderLogoModule(),
@@ -69,9 +70,12 @@ class VendorSignUpScreen extends StatelessWidget {
                 PriceCheckboxModule(),
                 AnyServiceCheckboxModule(),
                 const SizedBox(height: 20),
+                const TermsAndConditionText(),
+                const SizedBox(height: 25),
                 VendorSignUpButtonModule(),
-                const SizedBox(height: 50),
-
+                const SizedBox(height: 25),
+                SkipButton(),
+                const SizedBox(height: 25),
                 const CustomerSignUpTextModule(),
                 const SizedBox(height: 15),
                 const VendorSignInTextModule(),

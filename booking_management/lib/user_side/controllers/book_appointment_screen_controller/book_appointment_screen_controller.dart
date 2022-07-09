@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/user_side/model/user_business_details_model/add_vendor_in_favourite_model.dart';
 import 'package:booking_management/user_side/model/user_sign_up_model/user_sign_up_model.dart';
+import 'package:booking_management/user_side/model/vendor_details_screen_models/vendor_details_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -65,6 +67,8 @@ class BookAppointmentScreenController extends GetxController {
   RxString selectedTimeValue = "Any Time".obs;
 
   RxBool isEvent = false.obs;
+
+  VendorDetailsData? vendorDetailsData;
 
 
   /// 1) Get Booking Vendor
@@ -362,7 +366,7 @@ class BookAppointmentScreenController extends GetxController {
 
     try {
       http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
-      // log("Resource Time List : ${response.body}");
+       log("Resource Time List : ${response.body}");
 
       GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
       isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
@@ -735,6 +739,7 @@ class BookAppointmentScreenController extends GetxController {
           Fluttertoast.showToast(msg: bookAppointmentModel.message);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
+          await addVendorInFavoriteFunction();
           Get.to(() => UserCheckoutScreen(), arguments: [bookingId, userName, email]);
         } else {
           log("bookAvailableTimeSlotFunction Else Else");
@@ -749,6 +754,50 @@ class BookAppointmentScreenController extends GetxController {
   }
 
 
+  addVendorInFavoriteFunction() async {
+  isLoading(true);
+  String url = ApiUrl.addFavouriteVendorApi;
+  log("Add Vendor in Favourite API URL : $url");
+
+  try {
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+
+    request.headers.addAll(apiHeader.headers);
+
+    request.fields['VendorId'] = "$vendorId";
+    request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
+
+    log("Fields : ${request.fields}");
+    log('request.headers: ${request.headers}');
+
+    var response = await request.send();
+    log('response: ${response.statusCode}');
+
+    response.stream.transform(utf8.decoder).listen((value) async {
+      AddVendorInFavouriteModel addVendorInFavouriteModel =
+      AddVendorInFavouriteModel.fromJson(json.decode(value));
+      isSuccessStatus = addVendorInFavouriteModel.success.obs;
+      log("Body : ${addVendorInFavouriteModel.statusCode}");
+
+      if (isSuccessStatus.value) {
+        vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
+        if(vendorDetailsData!.favourites) {
+          //Fluttertoast.showToast(msg: "Added in favourite");
+        } else {
+          //Fluttertoast.showToast(msg: "Removed from favourite");
+        }
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+    });
+  } catch (e) {
+    log("addVendorInFavoriteFunction Error ::: $e");
+    Fluttertoast.showToast(msg: "Something went wrong!");
+  } finally {
+    // isLoading(false);
+    loadUI();
+  }
+}
 
 
   @override

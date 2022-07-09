@@ -25,7 +25,7 @@ class UserSignUpScreenController extends GetxController {
   RxBool isPasswordVisible = true.obs;
   RxBool isRePasswordVisible = true.obs;
   RxString selectedDate = ''.obs;
-
+  RxBool termsAndConditionCheckBox = false.obs;
   File? file;
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
@@ -75,7 +75,7 @@ class UserSignUpScreenController extends GetxController {
       request.fields['UserName'] = userNameFieldController.text.trim();
       request.fields['Email'] = emailFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
-      // request.fields['PhoneNo'] = mobileFieldController.text.trim();
+      request.fields['TermsConditions'] = termsAndConditionCheckBox.toString();
 
       log('request.fields: ${request.fields}');
 
@@ -90,7 +90,7 @@ class UserSignUpScreenController extends GetxController {
 
         if(isStatus.value == 200) {
           // UserDetails.customerId = response1.data.id;
-          Fluttertoast.showToast(msg: response1.message);
+          Fluttertoast.showToast(msg: "${response1.message}. Please confirm your email.");
           clearSignUpFieldsFunction();
 
           if(signInRoute == SignInRoute.fromBookScreen) {

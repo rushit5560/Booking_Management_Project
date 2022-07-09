@@ -49,6 +49,11 @@ class SignInScreenController extends GetxController {
         Get.to(() => VendorSubscriptionPlanScreen());
       }
 
+      if(response.body.toString().contains("Please confirm your email")) {
+        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
+          Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+      }
+
       else if(response.body.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);

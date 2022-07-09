@@ -27,6 +27,7 @@ class UserSignUpScreen extends StatelessWidget {
                     child: Form(
                       key: userSignUpScreenController.userSignUpFormKey,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           /// From Common Widgets
                           const HeaderLogoModule(),
@@ -44,6 +45,12 @@ class UserSignUpScreen extends StatelessWidget {
                           const SizedBox(height: 5),
                           CPasswordFieldModule(),
                           const SizedBox(height: 30),
+                          //const SizedBox(height: 20),
+                          //VendorPortalCheckboxModule(),
+                          TermsAndConditionCheckboxModule(),
+                          const SizedBox(height: 20),
+                          const TermsAndConditionText(),
+                          const SizedBox(height: 25),
                           SignUpButtonModule(),
                           const SizedBox(height: 25),
                           /// From Common Widgets
@@ -51,7 +58,9 @@ class UserSignUpScreen extends StatelessWidget {
                           const SizedBox(height: 15),
                           /// From Common Widgets
                           SocialMediaLoginModule(userSignUpScreenController: userSignUpScreenController),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 25),
+                          SkipButton(),
+                          const SizedBox(height: 15),
                           const VendorSignUpTextModule(),
                           const SizedBox(height: 15),
                           const SignInTextModule(),

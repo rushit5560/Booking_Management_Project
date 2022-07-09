@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_invoice_list_screen_controller/vendor_invoice_list_screen_controller.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +22,11 @@ class OrderDetailFormModule extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    height: Get.height * 0.07,
+                    height: Get.height * 0.06,
                     alignment: Alignment.topLeft,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(AppImages.headerLogoImg),
+                        image: NetworkImage(AppLogo.homeLogo),
                         // scale: ,
                       ),
                     ),
@@ -47,15 +48,15 @@ class OrderDetailFormModule extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          // Text(
-                          //   "${vendorInvoiceListScreenController.orderDetailsData!.id}",
-                          //   maxLines: 1,
-                          //   overflow: TextOverflow.ellipsis,
-                          //   style: const TextStyle(fontSize: 16),
-                          // ),
+                          Text(
+                            "${vendorInvoiceListScreenController.orderId}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 5),
+                      // const SizedBox(height: 5),
                       // Text(
                       //   vendorInvoiceListScreenController.orderDetailsData!.transactionDate,
                       //   maxLines: 1,
@@ -86,22 +87,24 @@ class OrderDetailFormModule extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 10),
                       Text(
                         vendorInvoiceListScreenController.customerUserName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      // Text(
-                      //   vendorInvoiceListScreenController.orderDetailsData!.customer.email,
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      // Text(
-                      //   vendorInvoiceListScreenController.orderDetailsData!.customer.phoneNo,
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
+                      const SizedBox(height: 5),
+                      Text(
+                        vendorInvoiceListScreenController.customerEmail,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        vendorInvoiceListScreenController.customerPhoneNumber,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                 ),
@@ -120,30 +123,32 @@ class OrderDetailFormModule extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      Text(
+                        vendorInvoiceListScreenController.vendorUserName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       const SizedBox(height: 5),
-                      // Text(
-                      //   vendorInvoiceListScreenController.orderDetailsData!.vendor.userName,
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      // Text(
-                      //   vendorInvoiceListScreenController.orderDetailsData!.vendor.email,
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      // Text(
-                      //   vendorInvoiceListScreenController.orderDetailsData!.vendor.phoneNo,
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
+                      Text(
+                        vendorInvoiceListScreenController.vendorEmail,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        vendorInvoiceListScreenController.vendorPhoneNumber,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
             // const SizedBox(height: 15),
-            const Divider(thickness: 1, height: 25),
-            Row(
+            const Divider(thickness: 1, height: 30),
+            /*Row(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +183,7 @@ class OrderDetailFormModule extends StatelessWidget {
               ],
             ),
 
-            const Divider(thickness: 1, height: 25),
+            const Divider(thickness: 1, height: 25),*/
 
             Row(
               children: const [
@@ -207,19 +212,19 @@ class OrderDetailFormModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
-                    "VAT",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
+                // Expanded(
+                //   flex: 20,
+                //   child: Text(
+                //     "VAT",
+                //     maxLines: 1,
+                //     overflow: TextOverflow.ellipsis,
+                //     textAlign: TextAlign.center,
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 16,
+                //     ),
+                //   ),
+                // ),
                 Expanded(
                   flex: 20,
                   child: Text(
@@ -235,17 +240,38 @@ class OrderDetailFormModule extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
 
             Row(
-              children: const [
+              children:  [
                 Expanded(
-                  flex: 40,
+                  flex: 60,
+                  child: ListView.builder(
+                    itemCount: vendorInvoiceListScreenController.descriptionList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, i) {
+                      return Text(
+                        vendorInvoiceListScreenController.descriptionList[i].toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                Expanded(
+                  flex: 20,
                   child: Text(
-                    "General Consultation",
-                    maxLines: 2,
+                    "${vendorInvoiceListScreenController.orderList.bookingItems!.quantity}",
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    textAlign: TextAlign.center,
+                    style:  const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -254,37 +280,11 @@ class OrderDetailFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "1",
+                    "\$${vendorInvoiceListScreenController.orderList.bookingItems!.price}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
-                    "\$0",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
-                    "\$100",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -292,65 +292,65 @@ class OrderDetailFormModule extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              children: const [
-                Expanded(
-                  flex: 40,
-                  child: Text(
-                    "Video Call Booking",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
-                    "1",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
-                    "\$0",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Text(
-                    "\$250",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: const [
+            //     Expanded(
+            //       flex: 40,
+            //       child: Text(
+            //         "Video Call Booking",
+            //         maxLines: 2,
+            //         overflow: TextOverflow.ellipsis,
+            //         style: TextStyle(
+            //           // fontWeight: FontWeight.bold,
+            //           fontSize: 13,
+            //         ),
+            //       ),
+            //     ),
+            //     Expanded(
+            //       flex: 20,
+            //       child: Text(
+            //         "1",
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //         textAlign: TextAlign.center,
+            //         style: TextStyle(
+            //           // fontWeight: FontWeight.bold,
+            //           fontSize: 13,
+            //         ),
+            //       ),
+            //     ),
+            //     Expanded(
+            //       flex: 20,
+            //       child: Text(
+            //         "\$0",
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //         textAlign: TextAlign.center,
+            //         style: TextStyle(
+            //           // fontWeight: FontWeight.bold,
+            //           fontSize: 13,
+            //         ),
+            //       ),
+            //     ),
+            //     Expanded(
+            //       flex: 20,
+            //       child: Text(
+            //         "\$250",
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //         textAlign: TextAlign.center,
+            //         style: TextStyle(
+            //           // fontWeight: FontWeight.bold,
+            //           fontSize: 13,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 25),
 
-            Row(
+            /*Row(
               children: [
                 Expanded(flex: 40, child: Container()),
                 const Expanded(
@@ -413,7 +413,7 @@ class OrderDetailFormModule extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ),*/
             Row(
               children: [
                 Expanded(flex: 40, child: Container()),
@@ -431,10 +431,10 @@ class OrderDetailFormModule extends StatelessWidget {
                   ),
                 ),
 
-                const Expanded(
+                Expanded(
                   flex: 20,
                   child: Text(
-                    "\$315",
+                    "\$${vendorInvoiceListScreenController.orderList.bookingItems!.price}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -447,7 +447,7 @@ class OrderDetailFormModule extends StatelessWidget {
               ],
             ),
 
-            const Divider(thickness: 1, height: 25),
+            /*const Divider(thickness: 1, height: 25),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
@@ -473,7 +473,7 @@ class OrderDetailFormModule extends StatelessWidget {
                   ),
                 )
               ],
-            ),
+            ),*/
           ],
         ).commonAllSidePadding(8),
       ).commonAllSidePadding(10),

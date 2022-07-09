@@ -30,6 +30,9 @@ class ProfileModule extends StatelessWidget {
           bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
       child: Image.network(
         imgUrl,
+        errorBuilder: (context, st, ob){
+          return Image.asset(AppImages.logoImg);
+        },
         fit: BoxFit.cover,
       ),
     );

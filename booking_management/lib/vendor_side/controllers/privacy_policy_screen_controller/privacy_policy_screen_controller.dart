@@ -24,7 +24,7 @@ class PrivacyPolicyScreenController extends GetxController{
     log('apiHeader.headers: ${apiHeader.headers}');
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(Uri.parse(url) /*headers: apiHeader.headers*/);
       log("Privacy Policy Response Body : ${response.body}");
 
       GetPrivacyPolicyModel getPrivacyPolicyModel = GetPrivacyPolicyModel.fromJson(json.decode(response.body));

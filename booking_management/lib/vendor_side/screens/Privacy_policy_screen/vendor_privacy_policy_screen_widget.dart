@@ -16,7 +16,7 @@ class PrivacyPolicyWidget extends StatelessWidget {
           children: [
             Text(screenController.pageTitle),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
 
             Text(screenController.pageDescription)
           ],

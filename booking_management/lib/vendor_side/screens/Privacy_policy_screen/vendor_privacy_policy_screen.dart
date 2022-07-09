@@ -15,18 +15,19 @@ class VendorPrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: vendorPrivacyPolicyScreenController.isLoading.value ?
-        Center(child: const CircularProgressIndicator()):
-        Column(
-          children:  [
-            CommonAppBarModule(
-              title: 'Privacy Policy',
-              appBarOption: AppBarOption.none,
-            ),
-            SizedBox(height: 10),
+        child: Obx(()=>
+        vendorPrivacyPolicyScreenController.isLoading.value ?
+          Center(child: const CircularProgressIndicator()):
+          Column(
+            children:  [
 
-            PrivacyPolicyWidget()
-          ],
+              const CommonAppBarModule(title: "Privacy Policy", appBarOption: AppBarOption.singleBackButtonOption),
+
+              SizedBox(height: 10),
+
+              PrivacyPolicyWidget()
+            ],
+          ),
         ),
       ),
     );

@@ -40,7 +40,7 @@ class UserTransactionListModule extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Vendor Name",
+                  screenController.transactionList[i].vendor.businessName,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,

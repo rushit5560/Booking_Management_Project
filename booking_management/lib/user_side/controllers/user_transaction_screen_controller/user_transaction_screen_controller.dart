@@ -15,14 +15,15 @@ class UserTransactionScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
 
-  List<Data> transactionList = [];
+  List<WorkerList> transactionList = [];
   String orderDate = "";
   String orderDate1 = "";
 
   getUserTransactionFunction() async {
     isLoading(true);
-    String url = ApiUrl.getTransactionListApi + "?customerid=${UserDetails.uniqueId}";
+    String url = ApiUrl.getTransactionListApi + "?id=${UserDetails.uniqueId}";
     log("Transaction Get API URL : $url");
+    log('API token: ${apiHeader.headers}');
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
@@ -32,7 +33,7 @@ class UserTransactionScreenController extends GetxController {
       isSuccessStatus = getUserTransactionModel.success.obs;
 
       if(isSuccessStatus.value) {
-        transactionList = getUserTransactionModel.data;
+        transactionList = getUserTransactionModel.workerList;
         for(int i=0; i < transactionList.length; i++){
           orderDate = transactionList[i].orderDate;
           String bDate1 = orderDate.substring(0, orderDate.length-17);

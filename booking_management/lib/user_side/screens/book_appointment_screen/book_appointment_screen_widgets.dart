@@ -255,10 +255,16 @@ class BookingResourcesListModule extends StatelessWidget {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(imgUrl),
-                    fit: BoxFit.cover,
-                  ),
+                  // image: DecorationImage(
+                  //   image: NetworkImage(imgUrl),
+                  //   fit: BoxFit.cover,
+                  // ),
+                ),
+                child: Image.network(imgUrl,
+                  errorBuilder: (context, st, ob){
+                    return Image.asset(AppImages.logoImg);
+                  },
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(width: 10),

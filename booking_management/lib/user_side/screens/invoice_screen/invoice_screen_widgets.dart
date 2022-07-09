@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,14 +25,18 @@ class OrderInvoiceFormModule extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    height: Get.height * 0.07,
+                    height: Get.height * 0.05,
                     alignment: Alignment.topLeft,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(AppImages.headerLogoImg),
-                        // scale: ,
-                      ),
+                    decoration: BoxDecoration(
+                      // image: DecorationImage(
+                      //   image: NetworkImage(AppLogo.homeLogo),
+                      //
+                      // ),
                     ),
+                    child: Image.network(AppLogo.homeLogo,
+                      errorBuilder: (context, st, ob){
+                        return Image.asset(AppImages.logoImg);
+                      },),
                   ),
                 ),
                 Expanded(
@@ -392,8 +397,8 @@ class OrderInvoiceFormModule extends StatelessWidget {
               ],
             ),
 
-            const Divider(thickness: 1, height: 25),
-            Column(
+            //const Divider(thickness: 1, height: 25),
+            /*Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
@@ -418,7 +423,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                   ),
                 )
               ],
-            ),
+            ),*/
           ],
         ).commonAllSidePadding(8),
       ).commonAllSidePadding(10),

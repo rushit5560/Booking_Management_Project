@@ -72,12 +72,16 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
               width: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                  image:
-                      NetworkImage("${ApiUrl.apiImagePath}${singleItem.image}"),
-                  fit: BoxFit.cover,
-                ),
+                // image: DecorationImage(
+                //   image:
+                //       NetworkImage("${ApiUrl.apiImagePath}${singleItem.image}"),
+                //   fit: BoxFit.cover,
+                // ),
               ),
+              child: Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
+                errorBuilder: (context, st, ob){
+                  return Image.asset(AppImages.logoImg);
+                },fit: BoxFit.cover),
             ),
             const SizedBox(width: 15),
             Expanded(

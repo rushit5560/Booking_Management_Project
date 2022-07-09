@@ -89,7 +89,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                   fontSize: 15,
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              //const SizedBox(height: 8),
                               Html(
                                 data: screenController.getResourceList[i].details!,
                               ),
@@ -101,7 +101,7 @@ class VendorResourcesListModule extends StatelessWidget {
                               //     fontSize: 15,
                               //   ),
                               // ),
-                              const SizedBox(height: 8),
+                              //const SizedBox(height: 8),
                               Row(
                                 children: [
                                   const Text(

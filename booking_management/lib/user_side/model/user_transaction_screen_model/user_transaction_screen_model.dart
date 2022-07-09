@@ -1,64 +1,282 @@
-class GetUserTransactionModel {
-  int statusCode;
-  bool success;
-  List<Data> data;
+import 'dart:convert';
 
+GetUserTransactionModel getUserTransactionModelFromJson(String str) => GetUserTransactionModel.fromJson(json.decode(str));
+
+String getUserTransactionModelToJson(GetUserTransactionModel data) => json.encode(data.toJson());
+
+class GetUserTransactionModel {
   GetUserTransactionModel({
     required this.statusCode,
     required this.success,
-    required this.data
+    required this.workerList,
   });
+
+  int statusCode;
+  bool success;
+  List<WorkerList> workerList;
 
   factory GetUserTransactionModel.fromJson(Map<String, dynamic> json) => GetUserTransactionModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
-    data: List<Data>.from(json["data"].map((x) => Data.fromJson(x)) ?? {}),
+    workerList: List<WorkerList>.from(json["workerList"].map((x) => WorkerList.fromJson(x)) ?? {}),
   );
-
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "workerList": List<dynamic>.from(workerList.map((x) => x.toJson())),
   };
 }
 
-class Data {
+
+class WorkerList {
+  WorkerList({
+    required this.id,
+    required this.bookingId,
+    required this.orderDate,
+    required this.price,
+    required this.paidBy,
+    required this.vendor,
+  });
+
   int id;
   String bookingId;
   String orderDate;
   double price;
   String paidBy;
-  //ApplicationUserCreator applicationUserCreator;
+  Vendor vendor;
 
-  Data(
-      {
-        required this.id,
-        required this.bookingId,
-        required this.orderDate,
-        required this.price,
-        required this.paidBy,
-        //required this.applicationUserCreator
-      });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     orderDate: json["orderDate"] ?? "",
     price: json["price"] ?? 0.0,
     paidBy: json["paidBy"] ?? "",
-    //applicationUserCreator: ApplicationUserCreator.fromJson(json["applicationUserCreator"]),
+    vendor: Vendor.fromJson(json["vendor"] ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    // "categories": categories,
     "bookingId": bookingId,
     "orderDate": orderDate,
     "price": price,
-    "paidBy": paidBy
+    "paidBy": paidBy,
+    "vendor": vendor.toJson(),
   };
+}
 
+
+
+class Vendor {
+  Vendor({
+    required this.id,
+    required this.categories,
+    required this.categoryId,
+    required this.businessName,
+    required this.businessLogo,
+    required this.street,
+    required this.suburb,
+    required this.postcode,
+    required this.state,
+    required this.country,
+    required this.userName,
+    required this.email,
+    required this.phoneNo,
+    required this.address,
+    required this.isActive,
+    required this.userId,
+    required this.vendorPortal,
+    required this.vendorVerification,
+    required this.businessId,
+    required this.isResource,
+    required this.isPriceDisplay,
+    required this.confirmation,
+    required this.isServiceSlots,
+    required this.latitude,
+    required this.longitude,
+    required this.firstPayment,
+    required this.nextPayment,
+    required this.vendorVerificationDate,
+    required this.modifiedBy,
+    required this.modifiedOn,
+    required this.review,
+    required this.rating,
+    required this.vendorWorkingHours,
+    required this.status,
+    required this.category,
+    required this.passwordHash,
+    required this.workingHoursStatus,
+    required this.avilableTime,
+    required this.dDate,
+    required this.duration,
+    required this.startTime,
+    required this.endTime,
+    required this.vendorList,
+    required this.additionalSlot,
+    required this.resourceList,
+    required this.resourceId,
+    required this.service,
+    required this.resource,
+    required this.termsConditions,
+    required this.fullName,
+  });
+
+  int id;
+  String categories;
+  int categoryId;
+  String businessName;
+  String businessLogo;
+  String street;
+  String suburb;
+  String postcode;
+  String state;
+  String country;
+  String userName;
+  String email;
+  String phoneNo;
+  String address;
+  bool isActive;
+  String userId;
+  bool vendorPortal;
+  bool vendorVerification;
+  String businessId;
+  bool isResource;
+  bool isPriceDisplay;
+  bool confirmation;
+  bool isServiceSlots;
+  String latitude;
+  String longitude;
+  String firstPayment;
+  String nextPayment;
+  String vendorVerificationDate;
+  String modifiedBy;
+  String modifiedOn;
+  String review;
+  String rating;
+  String vendorWorkingHours;
+  String status;
+  String category;
+  String passwordHash;
+  String workingHoursStatus;
+  String avilableTime;
+  String dDate;
+  String duration;
+  String startTime;
+  String endTime;
+  String vendorList;
+  String additionalSlot;
+  String resourceList;
+  String resourceId;
+  String service;
+  String resource;
+  bool termsConditions;
+  String fullName;
+
+  factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+    id: json["id"] ?? 0,
+    categories: json["categories"] ?? "",
+    categoryId: json["categoryId"] ?? 0,
+    businessName: json["businessName"] ?? "",
+    businessLogo: json["businessLogo"] ?? "",
+    street: json["street"] ?? "",
+    suburb: json["suburb"] ?? "",
+    postcode: json["postcode"] ?? "",
+    state: json["state"] ?? "",
+    country: json["country"] ?? "",
+    userName: json["userName"] ?? "",
+    email: json["email"] ?? "",
+    phoneNo: json["phoneNo"] ?? "",
+    address: json["address"] ?? "",
+    isActive: json["isActive"] ?? false,
+    userId: json["userId"] ?? "",
+    vendorPortal: json["vendorPortal"] ?? false,
+    vendorVerification: json["vendorVerification"] ?? false,
+    businessId: json["businessId"] ?? "",
+    isResource: json["isResource"] ?? false,
+    isPriceDisplay: json["isPriceDisplay"] ?? false,
+    confirmation: json["confirmation"] ?? false,
+    isServiceSlots: json["isServiceSlots"] ?? false,
+    latitude: json["latitude"] ?? "",
+    longitude: json["longitude"] ?? "",
+    firstPayment: json["firstPayment"] ?? "",
+    nextPayment: json["nextPayment"] ?? "",
+    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
+    modifiedBy: json["modifiedBy"] ?? "",
+    modifiedOn: json["modifiedOn"] ?? "",
+    review: json["review"] ?? "",
+    rating: json["rating"] ?? "",
+    vendorWorkingHours: json["vendorWorkingHours"] ?? "",
+    status: json["status"] ?? "",
+    category: json["category"] ?? "",
+    passwordHash: json["passwordHash"] ?? "",
+    workingHoursStatus: json["workingHoursStatus"] ?? "",
+    avilableTime: json["avilableTime"] ?? "",
+    dDate: json["dDate"] ?? "",
+    duration: json["duration"] ?? "",
+    startTime: json["startTime"] ?? "",
+    endTime: json["endTime"] ?? "",
+    vendorList: json["vendorList"] ?? "",
+    additionalSlot: json["additionalSlot"] ?? "",
+    resourceList: json["resourceList"] ?? "",
+    resourceId: json["resourceId"] ?? "",
+    service: json["service"] ?? "",
+    resource: json["resource"] ?? "",
+    termsConditions: json["termsConditions"] ?? false,
+    fullName: json["fullName"] ?? "",
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "categories": categories,
+    "categoryId": categoryId,
+    "businessName": businessName,
+    "businessLogo": businessLogo,
+    "street": street,
+    "suburb": suburb,
+    "postcode": postcode,
+    "state": state,
+    "country": country,
+    "userName": userName,
+    "email": email,
+    "phoneNo": phoneNo,
+    "address": address,
+    "isActive": isActive,
+    "userId": userId,
+    "vendorPortal": vendorPortal,
+    "vendorVerification": vendorVerification,
+    "businessId": businessId,
+    "isResource": isResource,
+    "isPriceDisplay": isPriceDisplay,
+    "confirmation": confirmation,
+    "isServiceSlots": isServiceSlots,
+    "latitude": latitude,
+    "longitude": longitude,
+    "firstPayment": firstPayment,
+    "nextPayment": nextPayment,
+    "vendorVerificationDate": vendorVerificationDate,
+    "modifiedBy": modifiedBy,
+    "modifiedOn": modifiedOn,
+    "review": review,
+    "rating": rating,
+    "vendorWorkingHours": vendorWorkingHours,
+    "status": status,
+    "category": category,
+    "passwordHash": passwordHash,
+    "workingHoursStatus": workingHoursStatus,
+    "avilableTime": avilableTime,
+    "dDate": dDate,
+    "duration": duration,
+    "startTime": startTime,
+    "endTime": endTime,
+    "vendorList": vendorList,
+    "additionalSlot": additionalSlot,
+    "resourceList": resourceList,
+    "resourceId": resourceId,
+    "service": service,
+    "resource": resource,
+    "termsConditions": termsConditions,
+    "fullName": fullName,
+  };
 }
 
 /*

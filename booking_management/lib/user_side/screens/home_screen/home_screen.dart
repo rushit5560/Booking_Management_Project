@@ -25,6 +25,22 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       const HeaderModule(),
                       const SizedBox(height: 10),
+                      UserDetails.isUserLoggedIn == true
+                      ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Hello, ${UserDetails.userName}",
+                            maxLines: 2,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ).commonSymmetricPadding(horizontal: 15),
+                        ],
+                      )
+                      : Container(),
+                      const SizedBox(height: 10),
                       Column(
                         children: [
                           SearchCategoryField(),
@@ -46,16 +62,19 @@ class HomeScreen extends StatelessWidget {
                       UserDetails.isUserLoggedIn == true ?
                       UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20)
                           :  Container(),
-                      // const SizedBox(height: 30),
+                      const SizedBox(height: 15),
+
+                      homeScreenController.favouriteVendorList.isEmpty
+                      ? Container()
+                      : FavouriteVendorsModule()
+                          .commonSymmetricPadding(horizontal: 20),
+                      const SizedBox(height: 20),
+
                       PartialCategoryListModule()
                           .commonSymmetricPadding(horizontal: 20),
                       const SizedBox(height: 15),
 
-                      // homeScreenController.favouriteVendorList.isEmpty
-                      // ? Container()
-                      // : FavouriteDoctorsModule()
-                      //     .commonSymmetricPadding(horizontal: 20),
-                      // const SizedBox(height: 20),
+
                     ],
                   ),
                 ),

@@ -21,7 +21,7 @@ class UserTransactionScreenController extends GetxController {
 
   getUserTransactionFunction() async {
     isLoading(true);
-    String url = ApiUrl.getTransactionListApi + "?customerid=${UserDetails.tableWiseId}";
+    String url = ApiUrl.getTransactionListApi + "?customerid=${UserDetails.uniqueId}";
     log("Transaction Get API URL : $url");
 
     try {

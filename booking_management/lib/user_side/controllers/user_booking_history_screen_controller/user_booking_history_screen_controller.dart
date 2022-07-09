@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/user_side/model/home_screen_models/get_appointment_details_model.dart';
 import 'package:booking_management/user_side/model/user_booking_history_model/user_booking_history_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -16,12 +17,14 @@ class UserBookingHistoryScreenController extends GetxController{
    ApiHeader apiHeader = ApiHeader();
 
   List<Datum> historyList = [];
+  AppointDetailsData? appointDetailsData;
+  List<String> serviceList= [];
 
 
 
   userBookingHistoryFunction() async {
     isLoading(true);
-    String url = ApiUrl.userBookingHistoryListApi + "?customerid=${UserDetails.uniqueId}";
+    String url = ApiUrl.userBookingHistoryApi + "?cutomerid=${UserDetails.uniqueId}";
     log('customer Id: ${UserDetails.uniqueId}');
     log('Url : $url');
     try{
@@ -44,6 +47,36 @@ class UserBookingHistoryScreenController extends GetxController{
       }
     } catch(e) {
       log('userBookingHistoryFunction Error ::: $e');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Get Upcoming Appointment Details
+  getUpcomingAppointmentDetailsFunction({required String id}) async {
+    isLoading(true);
+    String url = ApiUrl.upcomingAppointmentDetailsApi + "?id=$id";
+    log("Appointment Details API URL : $url");
+
+    try {
+      http.Response response =
+      await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Appointment Details Response : ${response.body}");
+
+      GetAppointmentDetailsModel getAppointmentDetailsModel =
+      GetAppointmentDetailsModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getAppointmentDetailsModel.success.obs;
+
+      if (isSuccessStatus.value) {
+        appointDetailsData = getAppointmentDetailsModel.data;
+        serviceList = getAppointmentDetailsModel.list;
+        log("appointmentDetails : $appointDetailsData");
+      } else {
+        log("getUpcomingAppointmentDetailsFunction Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+    } catch (e) {
+      log("getUpcomingAppointmentDetailsFunction Error ::: $e");
     } finally {
       isLoading(false);
     }

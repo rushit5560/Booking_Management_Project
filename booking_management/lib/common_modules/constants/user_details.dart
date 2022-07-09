@@ -31,4 +31,7 @@ class UserDetails {
   static String longitude = "";
 
   static String fcmToken = "";
+
+
+  static bool isUserFirstTime = true;
 }

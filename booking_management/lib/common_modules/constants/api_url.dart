@@ -26,6 +26,7 @@ class ApiUrl {
 
   static const userBusinessDetailsApi = apiMainPath + "Searching/APIBusinessDetails";
   static const userBookingHistoryListApi = apiMainPath + "API/CustomerOrderListIndex";
+  static const userBookingHistoryApi = apiMainPath + "API/bookingHistory";
   static const getReviewApi = apiMainPath + "Reviews/APIShowReview";
   static const userChangePasswordApi = apiMainPath + "API/APIChangePassword";
   static const userAppointmentListApi = apiMainPath + "CustomerDashboard/APICustomerAppointmentlist";

@@ -29,7 +29,7 @@ class BookingHistoryScreen extends StatelessWidget {
                     ? const CustomCircularLoaderModule()
                     : userBookingHistoryScreenController.historyList.isEmpty
                         ? const Center(child: Text("No Data Available"))
-                        : const BookingHistoryList().commonAllSidePadding(20),
+                        : BookingHistoryList().commonAllSidePadding(20),
               ),
             ),
           ],

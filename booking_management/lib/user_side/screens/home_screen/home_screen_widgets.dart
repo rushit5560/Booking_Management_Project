@@ -6,6 +6,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -411,7 +412,9 @@ class SearchButtonModule extends StatelessWidget {
             screenController.locationFieldController.text,
             SearchType.none,
           ],
-        );
+        )!.then((value) async {
+          await screenController.getFavouriteVendorByIdFunction();
+        });
         hideKeyboard();
 
         screenController.categoryFieldController.clear();
@@ -454,11 +457,11 @@ class DatePickerModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
       child: Row(
         children: [
           Expanded(child: CalenderTableModule()),
-          const SizedBox(width: 25),
+          const SizedBox(width: 20),
           SubmitButtonModule(),
         ],
       ),
@@ -474,6 +477,7 @@ class CalenderTableModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
@@ -719,25 +723,24 @@ class UpcomingAppointmentModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Customer Appointment',
+            'Upcoming Appointment',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
-          // const SizedBox(height: 15),
+          const SizedBox(height: 15),
 
-          const DatePickerModule(),
+         /* const DatePickerModule(),
 
           const SizedBox(height: 10),
           screenController.isServiceCalenderShow.value
               ? SelectDateModule()
-              : Container(),
+              : Container(),*/
 
           ListView.builder(
             itemCount: screenController.allUpcomingAppointmentList.length,
@@ -750,8 +753,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
             },
           ),
         ],
-      ),
-    );
+      );
   }
 
   Widget _upcomingAppointmentListTile(UpcomingAppointmentDatum singleItem) {
@@ -892,7 +894,9 @@ class PartialCategoryListModule extends StatelessWidget {
             "",
             SearchType.categoryWise,
           ],
-        );
+        )!.then((value) async {
+          await screenController.getFavouriteVendorByIdFunction();
+        });
       },
       child: Container(
         decoration: BoxDecoration(
@@ -914,11 +918,16 @@ class PartialCategoryListModule extends StatelessWidget {
                 width: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    image: NetworkImage(imgUrl),
-                    fit: BoxFit.cover,
-                  ),
+                  // image: DecorationImage(
+                  //   image: NetworkImage(imgUrl),
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
+                child: Image.network(imgUrl,
+                  errorBuilder: (context, st, ob){
+                    return Image.asset(AppImages.logoImg);
+                  },
+                  fit: BoxFit.cover,),
               ).commonAllSidePadding(10),
             ),
             Expanded(
@@ -940,8 +949,8 @@ class PartialCategoryListModule extends StatelessWidget {
 }
 
 /// Favourite Vendor List
-class FavouriteDoctorsModule extends StatelessWidget {
-  FavouriteDoctorsModule({Key? key}) : super(key: key);
+class FavouriteVendorsModule extends StatelessWidget {
+  FavouriteVendorsModule({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
 
   @override
@@ -983,57 +992,82 @@ class FavouriteDoctorsModule extends StatelessWidget {
 
   Widget _favouriteVendorListTile(FavouriteVendorDetails singleVendor) {
     String imgUrl = ApiUrl.apiImagePath + singleVendor.businessLogo;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 1,
-            blurRadius: 5,
-            color: Colors.grey.shade400,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 60,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                  image: NetworkImage(imgUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => BusinessDetailScreen(),
+            arguments: [
+              singleVendor.id,
+              singleVendor.userId,
+              singleVendor.email,
+              singleVendor.businessName,
+            ]);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 3, top: 3, left: 3, right: 3),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 5,
+              color: Colors.grey.shade400,
+              blurStyle: BlurStyle.outer,
             ),
-          ),
-          Expanded(
-            flex: 40,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Column(
               children: [
-                Text(
-                  singleVendor.businessName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 13),
-                ),
-                /*Text(
-                  'Lorem Ipsum',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 10,
+                Expanded(
+                  flex: 60,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                        image: NetworkImage(imgUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),*/
+                ),
+                Expanded(
+                  flex: 40,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        singleVendor.businessName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                      /*Text(
+                    'Lorem Ipsum',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),*/
+                    ],
+                  ).commonAllSidePadding(5),
+                ),
               ],
-            ).commonAllSidePadding(5),
-          ),
-        ],
+            ),
+
+            IconButton(
+              onPressed: () async {
+                await screenController.addVendorInFavoriteFunction(singleVendor.id);
+                // screenController.loadUI();
+              },
+              icon: const Icon(Icons.favorite_rounded),
+              color: Colors.red,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -44,14 +44,14 @@ class CustomerDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),*/
 
-              UserDetails.isUserLoggedIn == true
+              /*UserDetails.isUserLoggedIn == true
               ? CustomerDrawerSingleItemModule(
                 img: AppImages.bookingHistoryImg,
                 name: 'Favourites',
                 customerDrawerOption: CustomerDrawerOption.favourites,
               )
               : Container(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20),*/
 
               UserDetails.isUserLoggedIn == true
               ? CustomerDrawerSingleItemModule(

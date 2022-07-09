@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/user_side/screens/user_sign_up_screen/user_sign_up_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -97,18 +98,28 @@ class SplashScreenController extends GetxController {
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');
 
+    UserDetails.isUserFirstTime = prefs.getBool(sharedPreferenceData.isUserFirstTimeKey) ?? true;
+    log("UserDetails.isUserFirstTime : ${UserDetails.isUserFirstTime}");
 
-    if(isLoggedIn == true) {
-      if(UserDetails.roleName == "Customer") {
-        log('Role Name : ${UserDetails.roleName}');
-        Get.offAll(() => IndexScreen(), transition: Transition.zoom);
-      } else if(UserDetails.roleName == "Vendor") {
-        log('Role Name : ${UserDetails.roleName}');
-        Get.offAll(() => VendorIndexScreen(), transition: Transition.zoom);
-      }
+    if(UserDetails.isUserFirstTime == true) {
+      Get.offAll(()=> UserSignUpScreen(), transition: Transition.zoom);
+      await sharedPreferenceData.setUserIsFirstTimeInApp();
     } else {
-      Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+      if(isLoggedIn == true) {
+        if(UserDetails.roleName == "Customer") {
+          log('Role Name : ${UserDetails.roleName}');
+          Get.offAll(() => IndexScreen(), transition: Transition.zoom);
+        } else if(UserDetails.roleName == "Vendor") {
+          log('Role Name : ${UserDetails.roleName}');
+          Get.offAll(() => VendorIndexScreen(), transition: Transition.zoom);
+        }
+      } else {
+        Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+      }
     }
+
+
+
 
   }
 

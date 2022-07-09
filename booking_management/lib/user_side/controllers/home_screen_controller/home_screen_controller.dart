@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/home_screen_models/get_all_appointment_list_model.dart';
 import 'package:booking_management/user_side/model/home_screen_models/search_model.dart';
+import 'package:booking_management/user_side/model/user_business_details_model/add_vendor_in_favourite_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_place/google_place.dart';
 import 'package:http/http.dart' as http;
@@ -161,7 +162,8 @@ class HomeScreenController extends GetxController {
     } catch (e) {
       log("getAllUpcomingAppointment Error ::: $e");
     } finally {
-      isLoading(false);
+      // isLoading(false);
+      await getFavouriteVendorByIdFunction();
     }
   }
 
@@ -256,6 +258,79 @@ class HomeScreenController extends GetxController {
       isLoading(false);
     }
   }
+
+  /// Get Favourite Vendor List
+  getFavouriteVendorByIdFunction() async {
+    isLoading(true);
+    String url = ApiUrl.favouriteVendorListApi + "?cutomerid=${UserDetails.tableWiseId}";
+    log("Favourite vendor List API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      // log("Favourite Vendor Response : ${response.body}");
+
+      GetFavouriteVendorModel getFavouriteVendorModel = GetFavouriteVendorModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getFavouriteVendorModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        favouriteVendorList.clear();
+        favouriteVendorList = getFavouriteVendorModel.data;
+        log("favouriteVendorList : ${favouriteVendorList.length}");
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getFavouriteVendorByIdFunction Else Else");
+      }
+
+    } catch(e) {
+      log("getFavouriteVendorByIdFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+  /// Add Vendor in Favorite
+  addVendorInFavoriteFunction(int vendorId) async {
+    // isLoading(true);
+    String url = ApiUrl.addFavouriteVendorApi;
+    log("Add Vendor in Favourite API URL : $url");
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      // request.headers.addAll(apiHeader.headers);
+
+      request.fields['VendorId'] = "$vendorId";
+      request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
+
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
+
+      var response = await request.send();
+      log('response: ${response.statusCode}');
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        AddVendorInFavouriteModel addVendorInFavouriteModel =
+        AddVendorInFavouriteModel.fromJson(json.decode(value));
+        isSuccessStatus = addVendorInFavouriteModel.success.obs;
+        log("Body : ${addVendorInFavouriteModel.statusCode}");
+
+        if (isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: "Removed from favourite");
+        } else {
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+      });
+    } catch (e) {
+      log("addVendorInFavoriteFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      // isLoading(false);
+      await getFavouriteVendorByIdFunction();
+    }
+  }
+
+
+
+
 
   @override
   void onInit() {

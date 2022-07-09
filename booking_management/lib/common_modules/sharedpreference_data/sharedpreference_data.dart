@@ -30,6 +30,8 @@ class SharedPreferenceData{
   String latitudeKey = "latitudeKey";
   String longitudeKey = "longitudeKey";
 
+  String isUserFirstTimeKey = "isUserFirstTimeKey";
+
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
         required String apiToken,
@@ -230,5 +232,13 @@ class SharedPreferenceData{
     prefs.setString(latitudeKey, "");
     prefs.setString(longitudeKey, "");
   }
+
+
+  setUserIsFirstTimeInApp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(isUserFirstTimeKey, false);
+
+  }
+
 
 }

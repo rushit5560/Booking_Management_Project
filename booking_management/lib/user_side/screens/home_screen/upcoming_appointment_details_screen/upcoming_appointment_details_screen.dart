@@ -27,13 +27,19 @@ class UpcomingAppointmentDetailsScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            VendorDetailsModule(),
-                            const Divider(thickness: 1).commonSymmetricPadding(horizontal: 10),
-                            BookingDetailsModule(),
-                          ],
-                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(),
+                          ),
+                          child: Column(
+                            children: [
+                              VendorDetailsModule(),
+                              const Divider(thickness: 1).commonSymmetricPadding(horizontal: 10),
+                              BookingDetailsModule(),
+                            ],
+                          ),
+                        ).commonAllSidePadding(10),
                       ),
                     ),
                   ],

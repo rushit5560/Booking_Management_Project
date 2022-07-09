@@ -64,7 +64,7 @@ class Data {
   String userId;
   // ApplicationUser applicationUser;
   String modifiedBy;
-  DateTime modifiedOn;
+  String modifiedOn;
   // ApplicationUser applicationUserModifier;
   String passwordHash;
   String notes;
@@ -84,7 +84,7 @@ class Data {
     userId: json["userId"] ?? "",
     // applicationUser: ApplicationUser.fromJson(json["applicationUser"]),
     modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: DateTime.parse(json["modifiedOn"] ?? DateTime.now()),
+    modifiedOn: json["modifiedOn"] ?? "",
     // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"]),
     passwordHash: json["passwordHash"] ?? "",
     notes: json["notes"] ?? "",
@@ -105,7 +105,7 @@ class Data {
     "userId": userId,
     // "applicationUser": applicationUser.toJson(),
     "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn.toIso8601String(),
+    "modifiedOn": modifiedOn,
     // "applicationUserModifier": applicationUserModifier.toJson(),
     "passwordHash": passwordHash,
     "notes": notes,

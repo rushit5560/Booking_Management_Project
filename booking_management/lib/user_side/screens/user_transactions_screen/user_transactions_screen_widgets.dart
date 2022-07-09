@@ -40,6 +40,15 @@ class UserTransactionListModule extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  "Vendor Name",
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
                   screenController.transactionList[i].paidBy,
                   //maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -48,12 +57,12 @@ class UserTransactionListModule extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   screenController.transactionList[i].orderDate,
                   //maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -63,7 +72,7 @@ class UserTransactionListModule extends StatelessWidget {
           ),
           Text(
             screenController.transactionList[i].price.toString(),
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),

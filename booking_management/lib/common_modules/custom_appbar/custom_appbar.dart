@@ -22,7 +22,7 @@ class CommonAppBarModule extends StatelessWidget {
           borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(25),
               bottomLeft: Radius.circular(25)),
-          color: AppColors.colorLightGrey
+          color: AppColors.accentColor
           //color: Colors.grey
           ),
       child: Padding(
@@ -49,8 +49,11 @@ class CommonAppBarModule extends StatelessWidget {
                         title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: AppColors.blackColor,
+                        ),
                       ),
                     ],
                   )
@@ -58,8 +61,8 @@ class CommonAppBarModule extends StatelessWidget {
                     title,
                     maxLines: 1,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: Colors.black,
+                    style: TextStyle(
+                        color: AppColors.blackColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
                   ),

@@ -34,18 +34,26 @@ class VendorHomeScreen extends StatelessWidget {
                             ? const Center(child: CircularProgressIndicator())
                             : Expanded(
                                 child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
                                   child: Column(
                                     children: [
-                                      PendingListTextModule(text: "Today Resource Summary").commonSymmetricPadding(horizontal: 25),
+                                      PendingListTextModule(
+                                              text: "Today Resource Summary")
+                                          .commonSymmetricPadding(
+                                              horizontal: 25),
                                       ResourcesModule(),
                                       const SizedBox(height: 10),
-                                      PendingListTextModule(text: "Today Appointment List").commonSymmetricPadding(horizontal: 25),
+                                      PendingListTextModule(
+                                              text: "Today Appointment List")
+                                          .commonSymmetricPadding(
+                                              horizontal: 25),
                                       TodayAppointmentListModule(),
                                     ],
                                   ).commonSymmetricPadding(horizontal: 25),
                                 ),
-                        ),
+                              ),
                       ),
+                      SizedBox(height: 20),
                     ],
                   ),
                 ),

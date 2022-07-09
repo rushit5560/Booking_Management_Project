@@ -32,12 +32,11 @@ class VendorProfileAppBarModule extends StatelessWidget {
       height: 55,
       width: Get.width,
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25)),
-          color: AppColors.colorLightGrey
-          //color: Colors.grey
-          ),
+        borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
+        color: AppColors.accentColor,
+        //color: Colors.grey
+      ),
       child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Row(
@@ -220,14 +219,17 @@ class _VendorProfileDetailsModuleState
                 child: Image.file(screenController.file!,
                     height: 100, width: 100, fit: BoxFit.fill))
             : screenController.vendorProfile == ""
-        ? ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(AppImages.profileImg,
-                    height: 100, width: 100, fit: BoxFit.fill))
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(ApiUrl.apiImagePath + screenController.vendorProfile,
-                height: 100, width: 100, fit: BoxFit.fill)),
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(AppImages.profileImg,
+                        height: 100, width: 100, fit: BoxFit.fill))
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                        ApiUrl.apiImagePath + screenController.vendorProfile,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.fill)),
         GestureDetector(
           onTap: () {
             openGallery();

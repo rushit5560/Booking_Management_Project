@@ -48,9 +48,8 @@ class SearchCategoryTextField extends StatelessWidget {
           suffixIcon: GestureDetector(
             onTap: () async {
               await screenController.getAllSearchVendorListFunction(
-                searchText: screenController.searchText,
-                locationText: screenController.locationText
-              );
+                  searchText: screenController.searchText,
+                  locationText: screenController.locationText);
             },
             child: const Icon(
               Icons.search_rounded,
@@ -119,8 +118,8 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>
-      Column(
+    return Obx(
+      () => Column(
         children: [
           Row(
             children: [
@@ -151,18 +150,19 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
               //   ),
               // ),
 
-              const SizedBox(width: 10),
+              // const SizedBox(width: 10),
               Expanded(
+                flex: 2,
                 child: Container(
-                  padding: const EdgeInsets.only(right: 3),
+                  padding: const EdgeInsets.only(right: 8),
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.colorLightGrey.withOpacity(0.5),
-                        blurRadius: 5,
-                        //spreadRadius: 5,
+                        color: AppColors.colorGreyIconDark.withOpacity(0.2),
+                        blurRadius: 15,
+                        spreadRadius: 1,
                         blurStyle: BlurStyle.outer,
                       ),
                     ],
@@ -177,15 +177,19 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         )),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
-                        isExpanded: true,
+                        icon: Image.asset(
+                          AppImages.dropDownArrowImg,
+                          width: 15,
+                          color: AppColors.colorGreyIconDark,
+                        ),
+                        isExpanded: false,
                         focusColor: Colors.white,
-                        value: screenController.ratting,
+                        value: screenController.rating,
                         //elevation: 5,
-                        style: TextStyle(color: AppColors.colorLightGrey),
-                        iconEnabledColor: Colors.black,
+                        style: TextStyle(color: AppColors.colorGreyIconDark),
+                        // iconEnabledColor: Colors.black,
                         items: <String>[
-                          'Ratting',
+                          'Rating',
                           '1',
                           '2',
                           '3',
@@ -206,13 +210,19 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         // ),
                         onChanged: (newValue) async {
                           setState(() {
-                            screenController.ratting = newValue!;
+                            screenController.rating = newValue!;
                           });
 
-                          if (screenController.searchType == SearchType.categoryWise) {
-                            await screenController.getSearchCategoryWithRatingWiseFunction();
-                          } else if (screenController.searchType == SearchType.none) {
-                            await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+                          if (screenController.searchType ==
+                              SearchType.categoryWise) {
+                            await screenController
+                                .getSearchCategoryWithRatingWiseFunction();
+                          } else if (screenController.searchType ==
+                              SearchType.none) {
+                            await screenController
+                                .getAllSearchVendorListRatingWiseFunction(
+                                    searchText: screenController
+                                        .categoryFieldController.text);
                           }
                         },
                       ),
@@ -222,16 +232,17 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
               ),
               const SizedBox(width: 10),
               Expanded(
+                flex: 2,
                 child: Container(
-                  padding: const EdgeInsets.only(right: 3),
+                  padding: const EdgeInsets.only(right: 8),
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.colorLightGrey.withOpacity(0.5),
-                        blurRadius: 5,
-                        //spreadRadius: 5,
+                        color: AppColors.colorGreyIconDark.withOpacity(0.2),
+                        blurRadius: 15,
+                        spreadRadius: 1,
                         blurStyle: BlurStyle.outer,
                       ),
                     ],
@@ -246,15 +257,29 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         )),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        icon: Image.asset(AppImages.dropDownArrowImg, scale: 3),
+                        icon: Image.asset(
+                          AppImages.dropDownArrowImg,
+                          width: 15,
+                          color: AppColors.colorGreyIconDark,
+                        ),
                         isExpanded: true,
                         focusColor: Colors.white,
                         value: screenController.distance,
                         //elevation: 5,
-                        style: TextStyle(color: AppColors.colorLightGrey),
-                        iconEnabledColor: Colors.black,
-                        items: <String>['Distance', '1', '5', '10', '15', '20', '25', '50']
-                            .map<DropdownMenuItem<String>>((String value) {
+                        style: TextStyle(
+                          color: AppColors.colorGreyIconDark,
+                        ),
+                        // iconEnabledColor: Colors.black,
+                        items: <String>[
+                          'Distance',
+                          '1',
+                          '5',
+                          '10',
+                          '15',
+                          '20',
+                          '25',
+                          '50'
+                        ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(
@@ -268,16 +293,21 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         //   style: TextStyle(color: Colors.black, fontSize: 11),
                         // ),
                         onChanged: (newValue) async {
-                            setState(() {
-                              screenController.distance = newValue!;
-                            });
+                          setState(() {
+                            screenController.distance = newValue!;
+                          });
 
-                            if (screenController.searchType == SearchType.categoryWise) {
-                              await screenController.getSearchCategoryWithRatingWiseFunction();
-                            } else if (screenController.searchType == SearchType.none) {
-                              await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
-                            }
-
+                          if (screenController.searchType ==
+                              SearchType.categoryWise) {
+                            await screenController
+                                .getSearchCategoryWithRatingWiseFunction();
+                          } else if (screenController.searchType ==
+                              SearchType.none) {
+                            await screenController
+                                .getAllSearchVendorListRatingWiseFunction(
+                                    searchText: screenController
+                                        .categoryFieldController.text);
+                          }
                         },
                       ),
                     ),
@@ -286,16 +316,20 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
               ),
               const SizedBox(width: 10),
               Expanded(
+                flex: 3,
                 child: Container(
-                  padding: const EdgeInsets.only(right: 3),
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 12,
+                  ),
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.colorLightGrey.withOpacity(0.5),
-                        blurRadius: 5,
-                        //spreadRadius: 5,
+                        color: AppColors.colorGreyIconDark.withOpacity(0.2),
+                        blurRadius: 15,
+                        spreadRadius: 1,
                         blurStyle: BlurStyle.outer,
                       ),
                     ],
@@ -305,9 +339,10 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                     children: [
                       Text(
                         screenController.selectedDate.value,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                        style: TextStyle(
+                          // fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          color: AppColors.colorGreyIconDark,
                         ),
                       ),
 
@@ -315,11 +350,15 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                       GestureDetector(
                         onTap: () {
                           screenController.isServiceCalenderShow.value =
-                          !screenController.isServiceCalenderShow.value;
+                              !screenController.isServiceCalenderShow.value;
 
                           log("screenController.isCalenderShow.value : ${screenController.isServiceCalenderShow.value}");
                         },
-                        child: const Icon(Icons.calendar_month),
+                        child: Icon(
+                          Icons.calendar_month,
+                          color: AppColors.colorGreyIconDark,
+                          size: 25,
+                        ),
                       ),
                     ],
                   ),
@@ -329,7 +368,8 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
           ),
           const SizedBox(height: 10),
           screenController.isServiceCalenderShow.value
-              ? SelectDateModule() : Container(),
+              ? SelectDateModule()
+              : Container(),
         ],
       ),
     );
@@ -392,7 +432,7 @@ class SelectDateModule extends StatelessWidget {
               lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
-              onDaySelected: (DateTime selectDay, DateTime focusDay) async{
+              onDaySelected: (DateTime selectDay, DateTime focusDay) async {
                 screenController.selectedDay = selectDay;
                 focusedDay = focusDay;
 
@@ -400,9 +440,11 @@ class SelectDateModule extends StatelessWidget {
                 String minute = "${screenController.selectedDay.minute}";
 
                 /// For Hour Format
-                for(int i = 0; i < 10; i++) {
-                  if(screenController.selectedDay.hour.toString() == i.toString()) {
-                    if(screenController.selectedDay.hour.toString().length == 1) {
+                for (int i = 0; i < 10; i++) {
+                  if (screenController.selectedDay.hour.toString() ==
+                      i.toString()) {
+                    if (screenController.selectedDay.hour.toString().length ==
+                        1) {
                       hour = "0${screenController.selectedDay.hour}";
                     }
                   }
@@ -410,8 +452,10 @@ class SelectDateModule extends StatelessWidget {
 
                 /// For Minute
                 for (int i = 0; i < 10; i++) {
-                  if(screenController.selectedDay.minute.toString() == i.toString()) {
-                    if(screenController.selectedDay.minute.toString().length == 1) {
+                  if (screenController.selectedDay.minute.toString() ==
+                      i.toString()) {
+                    if (screenController.selectedDay.minute.toString().length ==
+                        1) {
                       minute = "0${screenController.selectedDay.minute}";
                     }
                   }
@@ -419,19 +463,24 @@ class SelectDateModule extends StatelessWidget {
 
                 screenController.selectedTime.value = "$hour:$minute:00";
 
-
-                screenController.selectedDate.value = "${screenController.selectedDay.day}-${screenController.selectedDay.month}-${screenController.selectedDay.year}";
+                screenController.selectedDate.value =
+                    "${screenController.selectedDay.day}-${screenController.selectedDay.month}-${screenController.selectedDay.year}";
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
                 // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
 
-                screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
+                screenController.isServiceCalenderShow.value =
+                    !screenController.isServiceCalenderShow.value;
                 screenController.loadUI();
 
                 if (screenController.searchType == SearchType.categoryWise) {
-                  await screenController.getSearchCategoryWithRatingWiseFunction();
+                  await screenController
+                      .getSearchCategoryWithRatingWiseFunction();
                 } else if (screenController.searchType == SearchType.none) {
-                  await screenController.getAllSearchVendorListRatingWiseFunction(searchText: screenController.categoryFieldController.text);
+                  await screenController
+                      .getAllSearchVendorListRatingWiseFunction(
+                          searchText:
+                              screenController.categoryFieldController.text);
                 }
               },
 
@@ -443,7 +492,7 @@ class SelectDateModule extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -453,19 +502,19 @@ class SelectDateModule extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -492,7 +541,7 @@ class SelectDateModule extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -544,13 +593,12 @@ class BusinessListModule extends StatelessWidget {
     String imgUrl = ApiUrl.apiImagePath + singleItem.businessLogo;
     return GestureDetector(
       onTap: () {
-        Get.to(() => BusinessDetailScreen(),
-            arguments: [
+        Get.to(() => BusinessDetailScreen(), arguments: [
           singleItem.id,
           singleItem.userId,
           singleItem.email,
-              singleItem.businessName,
-            ]);
+          singleItem.businessName,
+        ]);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 15),
@@ -634,8 +682,12 @@ class BusinessListModule extends StatelessWidget {
                 flex: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: imgUrl.isNotEmpty ? Image.network(imgUrl) : Image.asset(AppImages.logoImg),
-
+                  child: Image.network(
+                    imgUrl,
+                    errorBuilder: (context, st, ob) {
+                      return Image.asset(AppImages.logoImg);
+                    },
+                  ),
                 ),
               ),
               const SizedBox(width: 7),
@@ -660,7 +712,8 @@ class BusinessListModule extends StatelessWidget {
                               ),
                               const SizedBox(height: 3),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -686,7 +739,6 @@ class BusinessListModule extends StatelessWidget {
                                       )
                                     ],
                                   ),
-
                                   screenController.distance == "Distance"
                                       ? Container()
                                       : Text(

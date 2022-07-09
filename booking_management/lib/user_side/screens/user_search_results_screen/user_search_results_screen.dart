@@ -7,55 +7,56 @@ import 'package:booking_management/user_side/screens/user_search_results_screen/
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
 class UserSearchResultsScreen extends StatelessWidget {
   UserSearchResultsScreen({Key? key}) : super(key: key);
 
-  final userSearchResultsScreenController = Get.put(UserSearchResultsScreenController());
+  final userSearchResultsScreenController =
+      Get.put(UserSearchResultsScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        ()=> userSearchResultsScreenController.isLoading.value
-        ? const CustomCircularLoaderModule()
-        : SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CommonAppBarModule(title: "Search Results", appBarOption: AppBarOption.singleBackButtonOption),
-              // userSearchResultsScreenController.searchType == SearchType.categoryWise
-              //     ? Container()
-              //     : const SizedBox(height: 0),
+        () => userSearchResultsScreenController.isLoading.value
+            ? const CustomCircularLoaderModule()
+            : SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const CommonAppBarModule(
+                        title: "Search Results",
+                        appBarOption: AppBarOption.singleBackButtonOption),
+                    // userSearchResultsScreenController.searchType == SearchType.categoryWise
+                    //     ? Container()
+                    //     : const SizedBox(height: 0),
 
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      /*userSearchResultsScreenController.searchType == SearchType.categoryWise
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            /*userSearchResultsScreenController.searchType == SearchType.categoryWise
                       ? Container()
                       : SearchCategoryTextField(),
                       userSearchResultsScreenController.searchType == SearchType.categoryWise
                           ? Container()
                           : const SizedBox(height: 20),*/
 
-                      // SearchLocationTextField(),
-                      // SizedBox(height: 30,),
-                      PopularSearchAndDistance(),
-                      const SizedBox(height: 30),
-                      userSearchResultsScreenController.searchVendorList.isEmpty
-                      ? const Center(child: Text("No Data Available"))
-                      : BusinessListModule(),
-                    ],
-                  ).commonAllSidePadding(20),
+                            // SearchLocationTextField(),
+                            // SizedBox(height: 30,),
+                            const PopularSearchAndDistance(),
+                            const SizedBox(height: 30),
+                            userSearchResultsScreenController
+                                    .searchVendorList.isEmpty
+                                ? const Center(child: Text("No Data Available"))
+                                : BusinessListModule(),
+                          ],
+                        ).commonAllSidePadding(20),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-            ],
-          ),
-        ),
       ),
     );
   }

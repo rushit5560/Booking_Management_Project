@@ -8,8 +8,6 @@ import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import '../appointment_details_screen/appointment_details_screen.dart';
 
-
-
 class AppointmentListSearchAppointmentField extends StatelessWidget {
   AppointmentListSearchAppointmentField({Key? key}) : super(key: key);
   final screenController = Get.find<VendorAppointmentListScreenController>();
@@ -78,7 +76,6 @@ class AppointmentListTextModule extends StatelessWidget {
         const SizedBox(height: 25),
         _selectDateModule(),
         const SizedBox(height: 25),
-
         screenController.isAppointmentListCalenderShow.value == true
             ? Column(
                 mainAxisSize: MainAxisSize.min,
@@ -88,7 +85,6 @@ class AppointmentListTextModule extends StatelessWidget {
                 ],
               )
             : Container(),
-
         _selectableTabsModule(),
         const SizedBox(height: 25),
       ],
@@ -114,10 +110,9 @@ class AppointmentListTextModule extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 /// Show Date as Text
                 Text(
-                  screenController.selectedDate.value,
+                  screenController.selectedDisplayDate.value,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -128,7 +123,7 @@ class AppointmentListTextModule extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     screenController.isAppointmentListCalenderShow.value =
-                    !screenController.isAppointmentListCalenderShow.value;
+                        !screenController.isAppointmentListCalenderShow.value;
                     screenController.loadUI();
 
                     log("screenController.isCalenderShow.value : ${screenController.isAppointmentListCalenderShow.value}");
@@ -177,35 +172,40 @@ class AppointmentListTextModule extends StatelessWidget {
             focusedDay = focusDay;
 
             String month = '';
-            if(selectedDay.month == 1) {
+            if (selectedDay.month == 1) {
               month = "january";
-            } else if(selectedDay.month == 2) {
+            } else if (selectedDay.month == 2) {
               month = "february";
-            } else if(selectedDay.month == 3) {
+            } else if (selectedDay.month == 3) {
               month = "March";
-            } else if(selectedDay.month == 4) {
+            } else if (selectedDay.month == 4) {
               month = "April";
-            } else if(selectedDay.month == 5) {
+            } else if (selectedDay.month == 5) {
               month = "May";
-            } else if(selectedDay.month == 6) {
+            } else if (selectedDay.month == 6) {
               month = "June";
-            } else if(selectedDay.month == 7) {
+            } else if (selectedDay.month == 7) {
               month = "July";
-            } else if(selectedDay.month == 8) {
+            } else if (selectedDay.month == 8) {
               month = "August";
-            } else if(selectedDay.month == 9) {
+            } else if (selectedDay.month == 9) {
               month = "September";
-            } else if(selectedDay.month == 10) {
+            } else if (selectedDay.month == 10) {
               month = "October";
-            } else if(selectedDay.month == 11) {
+            } else if (selectedDay.month == 11) {
               month = "November";
-            } else if(selectedDay.month == 12) {
+            } else if (selectedDay.month == 12) {
               month = "December";
             }
 
-            screenController.selectedDate.value = "${selectedDay.day}/$month/${selectedDay.year}";
+            screenController.selectedDate.value =
+                "${selectedDay.day}/$month/${selectedDay.year}";
+            screenController.selectedDisplayDate.value =
+                "${selectedDay.day}/${selectedDay.month}/${selectedDay.year}";
+
             // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
-            screenController.isAppointmentListCalenderShow.value = !screenController.isAppointmentListCalenderShow.value;
+            screenController.isAppointmentListCalenderShow.value =
+                !screenController.isAppointmentListCalenderShow.value;
             screenController.loadUI();
             await screenController.getAppointmentListFunction();
           },
@@ -218,7 +218,7 @@ class AppointmentListTextModule extends StatelessWidget {
           calendarStyle: CalendarStyle(
             isTodayHighlighted: false,
             outsideDecoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
             defaultTextStyle: const TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold),
             weekendTextStyle: const TextStyle(
@@ -228,19 +228,19 @@ class AppointmentListTextModule extends StatelessWidget {
             todayTextStyle: const TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold),
             defaultDecoration: const BoxDecoration(
-              // borderRadius: BorderRadius.circular(10),
+                // borderRadius: BorderRadius.circular(10),
                 shape: BoxShape.circle,
                 color: Colors.white),
             weekendDecoration: const BoxDecoration(
-              //borderRadius: BorderRadius.circular(10),
+                //borderRadius: BorderRadius.circular(10),
                 shape: BoxShape.circle,
                 color: Colors.white),
             todayDecoration: const BoxDecoration(
-              //borderRadius: BorderRadius.circular(10),
+                //borderRadius: BorderRadius.circular(10),
                 shape: BoxShape.circle,
                 color: Colors.transparent),
             selectedDecoration: BoxDecoration(
-              //borderRadius: BorderRadius.circular(10),
+                //borderRadius: BorderRadius.circular(10),
                 shape: BoxShape.circle,
                 color: AppColors.colorLightGrey1),
           ),
@@ -251,14 +251,10 @@ class AppointmentListTextModule extends StatelessWidget {
             // },
             decoration: BoxDecoration(color: Colors.transparent),
             weekdayStyle: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
 
             weekendStyle: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
           ),
           // Month Style
           headerStyle: HeaderStyle(
@@ -267,13 +263,11 @@ class AppointmentListTextModule extends StatelessWidget {
             titleCentered: true,
             decoration: const BoxDecoration(color: Colors.white),
             formatButtonDecoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
             titleTextStyle: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 18),
-            leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
-                color: Colors.black),
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+            leftChevronIcon:
+                const Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
             rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
                 color: Colors.black),
           ),
@@ -691,27 +685,33 @@ class AllAppointmentListModule extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 70,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _userNameModule(i),
-                          const SizedBox(height: 8),
-                          _dateAndTimeModule(i),
-                          const SizedBox(height: 8),
-                          _statusModule(i),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _userNameModule(i),
+                            const SizedBox(height: 8),
+                            _dateAndTimeModule(i),
+                            const SizedBox(height: 8),
+                            _statusModule(i),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(width: 5),
                     Expanded(
                       flex: 30,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          _viewButton(i),
-                          // const SizedBox(width: 10),
-                          // _confirmButton(i),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _viewButton(i),
+                            // const SizedBox(width: 10),
+                            // _confirmButton(i),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -744,7 +744,7 @@ class AllAppointmentListModule extends StatelessWidget {
     return Text(
       screenController.allAppointmentList[i].customer.userName,
       style: const TextStyle(
-        fontSize: 12,
+        fontSize: 13,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -755,14 +755,14 @@ class AllAppointmentListModule extends StatelessWidget {
       children: [
         Image.asset(
           AppImages.dateImg,
-          height: 11,
-          width: 11,
+          height: 12,
+          width: 12,
           fit: BoxFit.cover,
         ),
         const SizedBox(width: 5),
         Text(
           screenController.allAppointmentList[i].startDateTime,
-          style: const TextStyle(fontSize: 9),
+          style: const TextStyle(fontSize: 10),
         ),
 
         /*const SizedBox(width: 10),
@@ -786,7 +786,7 @@ class AllAppointmentListModule extends StatelessWidget {
     return Text(
       "Status - " + screenController.allAppointmentList[i].status,
       style: const TextStyle(
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -795,7 +795,7 @@ class AllAppointmentListModule extends StatelessWidget {
   Widget _viewButton(i) {
     return GestureDetector(
       onTap: () => Get.to(
-        ()=> AppointmentDetailsScreen(),
+        () => AppointmentDetailsScreen(),
         transition: Transition.zoom,
         arguments: [
           screenController.allAppointmentList[i].bookingId,
@@ -820,7 +820,7 @@ class AllAppointmentListModule extends StatelessWidget {
           child: Text(
             'View',
             style: TextStyle(
-              fontSize: 9,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -869,57 +869,57 @@ class PendingAppointmentListModule extends StatelessWidget {
     return screenController.pendingAppointmentList.isEmpty
         ? const Center(child: Text("No Pending Appointment List"))
         : ListView.builder(
-      itemCount: screenController.pendingAppointmentList.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i) {
-        return Container(
-          margin: const EdgeInsets.only(
-              bottom: 17, left: 5, right: 5, top: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 70,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _userNameModule(i),
-                    const SizedBox(height: 8),
-                    _dateAndTimeModule(i),
-                    const SizedBox(height: 8),
-                    _statusModule(i),
+            itemCount: screenController.pendingAppointmentList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, i) {
+              return Container(
+                margin: const EdgeInsets.only(
+                    bottom: 17, left: 5, right: 5, top: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      color: Colors.grey.shade300,
+                      blurStyle: BlurStyle.outer,
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 30,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _viewButton(i),
-                    // const SizedBox(width: 10),
-                    // _confirmButton(i),
+                    Expanded(
+                      flex: 70,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(i),
+                          const SizedBox(height: 8),
+                          _dateAndTimeModule(i),
+                          const SizedBox(height: 8),
+                          _statusModule(i),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      flex: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _viewButton(i),
+                          // const SizedBox(width: 10),
+                          // _confirmButton(i),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          ).commonAllSidePadding(10),
-        );
-      },
-    ).commonSymmetricPadding(horizontal: 15);
+                ).commonAllSidePadding(10),
+              );
+            },
+          ).commonSymmetricPadding(horizontal: 15);
   }
 
   // Widget _userImageModule(i) {
@@ -995,16 +995,13 @@ class PendingAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton(i) {
     return GestureDetector(
-      onTap: () =>
-          Get.to(
-                  () => AppointmentDetailsScreen(),
-              transition: Transition.zoom,
-            arguments: [
-              screenController.allAppointmentList[i].bookingId,
-              screenController.allAppointmentList[i].status,
-              screenController.allAppointmentList[i].id,
-            ]
-          ),
+      onTap: () => Get.to(() => AppointmentDetailsScreen(),
+          transition: Transition.zoom,
+          arguments: [
+            screenController.allAppointmentList[i].bookingId,
+            screenController.allAppointmentList[i].status,
+            screenController.allAppointmentList[i].id,
+          ]),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1078,57 +1075,57 @@ class ConfirmAppointmentListModule extends StatelessWidget {
     return screenController.confirmAppointmentList.isEmpty
         ? const Center(child: Text("No Confirm Appointment List"))
         : ListView.builder(
-      itemCount: screenController.confirmAppointmentList.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i) {
-        return Container(
-          margin: const EdgeInsets.only(
-              bottom: 17, left: 5, right: 5, top: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 70,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _userNameModule(i),
-                    const SizedBox(height: 8),
-                    _dateAndTimeModule(i),
-                    const SizedBox(height: 8),
-                    _statusModule(i),
+            itemCount: screenController.confirmAppointmentList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, i) {
+              return Container(
+                margin: const EdgeInsets.only(
+                    bottom: 17, left: 5, right: 5, top: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      color: Colors.grey.shade300,
+                      blurStyle: BlurStyle.outer,
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 30,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _viewButton(i),
-                    // const SizedBox(width: 10),
-                    // _confirmButton(),
+                    Expanded(
+                      flex: 70,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(i),
+                          const SizedBox(height: 8),
+                          _dateAndTimeModule(i),
+                          const SizedBox(height: 8),
+                          _statusModule(i),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      flex: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _viewButton(i),
+                          // const SizedBox(width: 10),
+                          // _confirmButton(),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          ).commonAllSidePadding(10),
-        );
-      },
-    ).commonSymmetricPadding(horizontal: 15);
+                ).commonAllSidePadding(10),
+              );
+            },
+          ).commonSymmetricPadding(horizontal: 15);
   }
 
   // Widget _userImageModule(i) {
@@ -1204,15 +1201,13 @@ class ConfirmAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton(i) {
     return GestureDetector(
-      onTap: () =>
-          Get.to(
-                  () => AppointmentDetailsScreen(),
-              transition: Transition.zoom,
-              arguments: [
-                screenController.allAppointmentList[i].bookingId,
-                screenController.allAppointmentList[i].status,
-                screenController.allAppointmentList[i].id,]
-          ),
+      onTap: () => Get.to(() => AppointmentDetailsScreen(),
+          transition: Transition.zoom,
+          arguments: [
+            screenController.allAppointmentList[i].bookingId,
+            screenController.allAppointmentList[i].status,
+            screenController.allAppointmentList[i].id,
+          ]),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1279,57 +1274,57 @@ class CancelAppointmentListModule extends StatelessWidget {
     return screenController.cancelAppointmentList.isEmpty
         ? const Center(child: Text("No Cancel Appointment List"))
         : ListView.builder(
-      itemCount: screenController.cancelAppointmentList.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i) {
-        return Container(
-          margin: const EdgeInsets.only(
-              bottom: 17, left: 5, right: 5, top: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 70,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _userNameModule(i),
-                    const SizedBox(height: 8),
-                    _dateAndTimeModule(i),
-                    const SizedBox(height: 8),
-                    _statusModule(i),
+            itemCount: screenController.cancelAppointmentList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, i) {
+              return Container(
+                margin: const EdgeInsets.only(
+                    bottom: 17, left: 5, right: 5, top: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      color: Colors.grey.shade300,
+                      blurStyle: BlurStyle.outer,
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 30,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _viewButton(i),
-                    // const SizedBox(width: 10),
-                    // _confirmButton(),
+                    Expanded(
+                      flex: 70,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(i),
+                          const SizedBox(height: 8),
+                          _dateAndTimeModule(i),
+                          const SizedBox(height: 8),
+                          _statusModule(i),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      flex: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _viewButton(i),
+                          // const SizedBox(width: 10),
+                          // _confirmButton(),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          ).commonAllSidePadding(10),
-        );
-      },
-    ).commonSymmetricPadding(horizontal: 15);
+                ).commonAllSidePadding(10),
+              );
+            },
+          ).commonSymmetricPadding(horizontal: 15);
   }
 
   // Widget _userImageModule(i) {
@@ -1405,16 +1400,13 @@ class CancelAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton(i) {
     return GestureDetector(
-      onTap: () =>
-          Get.to(
-                  () => AppointmentDetailsScreen(),
-              transition: Transition.zoom,
-              arguments: [
-                screenController.allAppointmentList[i].bookingId,
-                screenController.allAppointmentList[i].status,
-                screenController.allAppointmentList[i].id,
-              ]
-          ),
+      onTap: () => Get.to(() => AppointmentDetailsScreen(),
+          transition: Transition.zoom,
+          arguments: [
+            screenController.allAppointmentList[i].bookingId,
+            screenController.allAppointmentList[i].status,
+            screenController.allAppointmentList[i].id,
+          ]),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -1481,57 +1473,57 @@ class DoneAppointmentListModule extends StatelessWidget {
     return screenController.doneAppointmentList.isEmpty
         ? const Center(child: Text("No Done Appointment List"))
         : ListView.builder(
-      itemCount: screenController.doneAppointmentList.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i) {
-        return Container(
-          margin: const EdgeInsets.only(
-              bottom: 17, left: 5, right: 5, top: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 70,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _userNameModule(i),
-                    const SizedBox(height: 8),
-                    _dateAndTimeModule(i),
-                    const SizedBox(height: 8),
-                    _statusModule(i),
+            itemCount: screenController.doneAppointmentList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, i) {
+              return Container(
+                margin: const EdgeInsets.only(
+                    bottom: 17, left: 5, right: 5, top: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      color: Colors.grey.shade300,
+                      blurStyle: BlurStyle.outer,
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 30,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _viewButton(i),
-                    // const SizedBox(width: 10),
-                    // _confirmButton(),
+                    Expanded(
+                      flex: 70,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _userNameModule(i),
+                          const SizedBox(height: 8),
+                          _dateAndTimeModule(i),
+                          const SizedBox(height: 8),
+                          _statusModule(i),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      flex: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _viewButton(i),
+                          // const SizedBox(width: 10),
+                          // _confirmButton(),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          ).commonAllSidePadding(10),
-        );
-      },
-    ).commonSymmetricPadding(horizontal: 15);
+                ).commonAllSidePadding(10),
+              );
+            },
+          ).commonSymmetricPadding(horizontal: 15);
   }
 
   // Widget _userImageModule(i) {
@@ -1607,16 +1599,13 @@ class DoneAppointmentListModule extends StatelessWidget {
 
   Widget _viewButton(i) {
     return GestureDetector(
-      onTap: () =>
-          Get.to(
-                  () => AppointmentDetailsScreen(),
-              transition: Transition.zoom,
-              arguments: [
-                screenController.allAppointmentList[i].bookingId,
-                screenController.allAppointmentList[i].status,
-                screenController.allAppointmentList[i].id,
-              ]
-          ),
+      onTap: () => Get.to(() => AppointmentDetailsScreen(),
+          transition: Transition.zoom,
+          arguments: [
+            screenController.allAppointmentList[i].bookingId,
+            screenController.allAppointmentList[i].status,
+            screenController.allAppointmentList[i].id,
+          ]),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

@@ -10,8 +10,6 @@ import '../../controllers/vendor_schedule_time_screen_controller/vendor_schedule
 import '../../model/vendor_get_all_resources_list_model/vendor_get_all_resources_model.dart';
 import '../../model/vendor_schedule_time_screen_model/get_all_resource_by_vendor_id_model.dart';
 
-
-
 class ResourcesDropDownModule extends StatelessWidget {
   ResourcesDropDownModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorScheduleTimeScreenController>();
@@ -131,29 +129,29 @@ class ResourcesSelectDateModule extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
                 String month = "";
-                if(selectedDay.month == 1) {
+                if (selectedDay.month == 1) {
                   month = "january";
-                } else if(selectedDay.month == 2){
+                } else if (selectedDay.month == 2) {
                   month = "February";
-                } else if(selectedDay.month == 3){
+                } else if (selectedDay.month == 3) {
                   month = "March";
-                } else if(selectedDay.month == 4){
+                } else if (selectedDay.month == 4) {
                   month = "April";
-                } else if(selectedDay.month == 5){
+                } else if (selectedDay.month == 5) {
                   month = "May";
-                } else if(selectedDay.month == 6){
+                } else if (selectedDay.month == 6) {
                   month = "June";
-                } else if(selectedDay.month == 7){
+                } else if (selectedDay.month == 7) {
                   month = "July";
-                } else if(selectedDay.month == 8){
+                } else if (selectedDay.month == 8) {
                   month = "August";
-                } else if(selectedDay.month == 9){
+                } else if (selectedDay.month == 9) {
                   month = "September";
-                } else if(selectedDay.month == 10){
+                } else if (selectedDay.month == 10) {
                   month = "October";
-                } else if(selectedDay.month == 11){
+                } else if (selectedDay.month == 11) {
                   month = "November";
-                } else if(selectedDay.month == 12){
+                } else if (selectedDay.month == 12) {
                   month = "December";
                 }
                 screenController.selectedDate.value =
@@ -409,7 +407,8 @@ class ResourcesListModule extends StatelessWidget {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i) {
-        AllResourcesWorkerList singleItem = screenController.getAllResourcesList[i];
+        AllResourcesWorkerList singleItem =
+            screenController.getAllResourcesList[i];
         return _resourcesListTile(singleItem);
       },
     );
@@ -474,38 +473,42 @@ class ResourcesListModule extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 15),
           singleItem.timingList.isEmpty
-          ? Container()
-          : GridView.builder(
-            itemCount: singleItem.timingList.length,
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              childAspectRatio: 2
-            ),
-            itemBuilder: (context, i) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 5,
-                      color: Colors.grey.shade300,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
-                ),
-                child: Text(
-                  singleItem.timingList[i],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
+              ? Container()
+              : GridView.builder(
+                  itemCount: singleItem.timingList.length,
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 5,
+                    // mainAxisExtent: 100,
                   ),
+                  itemBuilder: (context, i) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5,
+                            color: Colors.grey.shade300,
+                            blurStyle: BlurStyle.outer,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          singleItem.timingList[i],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ).commonAllSidePadding(3);
+                  },
                 ),
-              ).commonAllSidePadding(3);
-            },
-          ),
         ],
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8);

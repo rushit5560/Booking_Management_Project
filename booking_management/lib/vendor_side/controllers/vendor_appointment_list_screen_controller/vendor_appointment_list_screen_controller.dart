@@ -27,6 +27,7 @@ class VendorAppointmentListScreenController extends GetxController {
   ApiHeader apiHeader = ApiHeader();
   SignInModel ? signInModel;
   RxString selectedDate = "".obs;
+  RxString selectedDisplayDate = "".obs;
   RxBool isAppointmentListCalenderShow = false.obs;
 
   String message = "";

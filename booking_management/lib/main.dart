@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_theme.dart';
 import 'package:booking_management/common_ui/common_screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +33,14 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: AppColors.accentColor,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
 
   Stripe.publishableKey = PaymentKeys.publishKey;
   Stripe.merchantIdentifier = '';

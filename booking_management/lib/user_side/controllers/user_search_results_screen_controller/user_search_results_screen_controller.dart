@@ -20,7 +20,7 @@ class UserSearchResultsScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
-  RxString selectedDate = "".obs;
+  RxString selectedDate = "Select Date".obs;
   RxString selectedTime = "".obs;
   RxBool isServiceCalenderShow = false.obs;
   DateTime selectedDay = DateTime.now();
@@ -31,13 +31,14 @@ class UserSearchResultsScreenController extends GetxController {
 
   String distance = "Distance";
   String date = "Date";
-  String ratting = "Ratting";
+  String rating = "Rating";
 
   String latitude = "";
   String longitude = "";
 
   /// Search Vendor List
-  getAllSearchVendorListFunction({required String searchText, required String locationText}) async {
+  getAllSearchVendorListFunction(
+      {required String searchText, required String locationText}) async {
     isLoading(true);
     String url = ApiUrl.searchVendorApi +
         "?category=$searchText" +
@@ -50,31 +51,30 @@ class UserSearchResultsScreenController extends GetxController {
     log("Search Vendor List API URL : $url");
 
     try {
-    http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
-    // log("Search Vendor List ${response.body}");
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
+      // log("Search Vendor List ${response.body}");
 
-    GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
-    isSuccessStatus = getAllSearchVendorModel.success.obs;
+      GetAllSearchVendorModel getAllSearchVendorModel =
+          GetAllSearchVendorModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getAllSearchVendorModel.success.obs;
 
-    if(isSuccessStatus.value) {
-      searchVendorList.clear();
+      if (isSuccessStatus.value) {
+        searchVendorList.clear();
 
-      searchVendorList = getAllSearchVendorModel.data;
-      log("searchVendorList : ${searchVendorList.length}");
-
-    } else {
-    Fluttertoast.showToast(msg: "Something went wrong!");
-    log("getAllSearchVendorListFunction Else Else");
-    }
-
-    } catch(e) {
-    log("getAllSearchVendorListFunction Error ::: $e");
+        searchVendorList = getAllSearchVendorModel.data;
+        log("searchVendorList : ${searchVendorList.length}");
+      } else {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getAllSearchVendorListFunction Else Else");
+      }
+    } catch (e) {
+      log("getAllSearchVendorListFunction Error ::: $e");
     } finally {
-    isLoading(false);
+      isLoading(false);
     }
-
   }
-
 
   /// Search Vendor Rating Wise
   getAllSearchVendorListRatingWiseFunction({required String searchText}) async {
@@ -84,68 +84,72 @@ class UserSearchResultsScreenController extends GetxController {
     log('date: $date');
 
     String url = "";
-    if(distance != "Distance" && ratting != "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
-    } else if(distance != "Distance" && ratting == "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting != "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting == "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
-    }
-
-    else if(distance == "Distance" && ratting != "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
-    } else if(distance != "Distance" && ratting == "Ratting" &&date != "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
-    } else if(distance != "Distance" && ratting != "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
-    }
-    else if(distance == "Distance" && ratting == "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
-    }
-    else if(distance != "Distance" && ratting == "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting != "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting == "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
+    if (distance != "Distance" && rating != "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating=$rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
+    } else if (distance != "Distance" && rating == "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating != "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating == "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
+    } else if (distance == "Distance" && rating != "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
+    } else if (distance != "Distance" && rating == "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
+    } else if (distance != "Distance" && rating != "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating=$rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating == "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
+    } else if (distance != "Distance" && rating == "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating != "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating == "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?category=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
     }
 
     log("Search Vendor List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
 
-      GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
+      GetAllSearchVendorModel getAllSearchVendorModel =
+          GetAllSearchVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllSearchVendorModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         searchVendorList.clear();
 
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
-
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getAllSearchVendorListRatingWiseFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getAllSearchVendorListRatingWiseFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   loadUI() {
     isLoading(true);
     isLoading(false);
   }
-
-
-
 
   /// Category Search
   getSearchCategoryWiseFunction({required String catId}) async {
@@ -154,101 +158,107 @@ class UserSearchResultsScreenController extends GetxController {
     log("Search Category Wise API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       // log("Search Vendor List ${response.body}");
 
-      GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
+      GetAllSearchVendorModel getAllSearchVendorModel =
+          GetAllSearchVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllSearchVendorModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         searchVendorList.clear();
 
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
-
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getSearchCategoryWiseFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getSearchCategoryWiseFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
 
-
   /// Category With Rating Search
   getSearchCategoryWithRatingWiseFunction() async {
     isLoading(true);
     String url = "";
     date = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
-    /*if(distance != "Distance" && ratting != "Ratting") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
-    } else if(distance != "Distance" && ratting == "Ratting") {
+    /*if(distance != "Distance" && rating != "Rating") {
+      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
+    } else if(distance != "Distance" && rating == "Rating") {
       url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
-    } else if(distance == "Distance" && ratting != "Ratting") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
-    } else if(distance == "Distance" && ratting == "Ratting") {
+    } else if(distance == "Distance" && rating != "Rating") {
+      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
+    } else if(distance == "Distance" && rating == "Rating") {
       url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText";
     }*/
 
-    if(distance != "Distance" && ratting != "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
-    } else if(distance != "Distance" && ratting == "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting != "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting == "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
-    }
-
-    else if(distance == "Distance" && ratting != "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
-    } else if(distance != "Distance" && ratting == "Ratting" &&date != "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
-    } else if(distance != "Distance" && ratting != "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
-    }
-    else if(distance == "Distance" && ratting == "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
-    }
-    else if(distance != "Distance" && ratting == "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting != "Ratting" && date == "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$ratting&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
-    } else if(distance == "Distance" && ratting == "Ratting" && date != "Date") {
-      url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
+    if (distance != "Distance" && rating != "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating=$rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
+    } else if (distance != "Distance" && rating == "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating != "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating == "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
+    } else if (distance == "Distance" && rating != "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
+    } else if (distance != "Distance" && rating == "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date=$date";
+    } else if (distance != "Distance" && rating != "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating=$rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating == "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
+    } else if (distance != "Distance" && rating == "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating != "Rating" && date == "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating=$rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date";
+    } else if (distance == "Distance" && rating == "Rating" && date != "Date") {
+      url = ApiUrl.searchVendorApi +
+          "?categoryid=$searchText&rating&CurrentLatitude&CurrentLongitude&Distance&location=$locationText&date=$date";
     }
 
     log("Search Category And Rating Wise API URL : $url");
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       // log("Search Vendor List ${response.body}");
 
-      GetAllSearchVendorModel getAllSearchVendorModel = GetAllSearchVendorModel.fromJson(json.decode(response.body));
+      GetAllSearchVendorModel getAllSearchVendorModel =
+          GetAllSearchVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllSearchVendorModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         searchVendorList.clear();
 
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
-
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getSearchCategoryWithRatingWiseFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getSearchCategoryWithRatingWiseFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
 
   @override
   void onInit() {
@@ -260,13 +270,11 @@ class UserSearchResultsScreenController extends GetxController {
     String tempLocation = locationText;
     locationText = tempLocation.replaceAll(" ", "");
 
-    if(searchType == SearchType.categoryWise) {
+    if (searchType == SearchType.categoryWise) {
       getSearchCategoryWiseFunction(catId: searchText);
-    } else if(searchType == SearchType.none){
+    } else if (searchType == SearchType.none) {
       getAllSearchVendorListFunction(
-          searchText: searchText,
-        locationText: locationText
-      );
+          searchText: searchText, locationText: locationText);
     }
 
     super.onInit();

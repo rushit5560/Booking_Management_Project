@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -23,7 +23,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
   Map<String, dynamic>? paymentIntentData;
 
   /// For Stripe
-  Future<void> makePayment(double price) async {
+  /*Future<void> makePayment(double price) async {
     isLoading(true);
     try {
       int price1 = price.toInt();
@@ -118,7 +118,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
       // Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
       //await checkOutSubmitFunction();
     }
-  }
+  }*/
 
   calculateAmount(int amount) {
     int price1 = amount * 100;

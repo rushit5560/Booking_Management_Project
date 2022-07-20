@@ -79,7 +79,7 @@ class UserSearchResultsScreenController extends GetxController {
   /// Search Vendor Rating Wise
   getAllSearchVendorListRatingWiseFunction({required String searchText}) async {
     isLoading(true);
-    date = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+    date = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
     //date = "${selectedDay.day}-";
     log('date: $date');
 

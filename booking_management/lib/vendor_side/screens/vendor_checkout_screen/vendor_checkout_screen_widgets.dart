@@ -141,7 +141,8 @@ class PayNowButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ()async{
-        await screenController.makePayment();
+        //await screenController.makePayment();
+        //await screenController.checkOutSubmitFunction();
         //Get.back();
       },
       child: Container(

@@ -277,11 +277,12 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
       onTap: () async {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
         if(screenController.checkOutFormKey.currentState!.validate()) {
-          if(screenController.isPriceDisplay) {
+          /*if(screenController.isPriceDisplay) {
             await screenController.makePayment();
           } else {
             await screenController.checkOutSubmitFunction();
-          }
+          }*/
+          await screenController.checkOutSubmitFunction();
         }
       },
       child: Container(

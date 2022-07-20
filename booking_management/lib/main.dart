@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -42,9 +42,9 @@ void main() async {
     ),
   );
 
-  Stripe.publishableKey = PaymentKeys.publishKey;
-  Stripe.merchantIdentifier = '';
-  await Stripe.instance.applySettings();
+  // Stripe.publishableKey = PaymentKeys.publishKey;
+  // Stripe.merchantIdentifier = '';
+  // await Stripe.instance.applySettings();
 
   /// For Background
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

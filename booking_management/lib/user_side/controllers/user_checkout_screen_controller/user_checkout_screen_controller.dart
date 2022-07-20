@@ -6,7 +6,7 @@ import 'package:booking_management/user_side/model/get_payment_id_model/get_paym
 import 'package:booking_management/user_side/model/get_stripe_secret_key_model/get_stripe_secret_key_model.dart';
 import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
@@ -162,7 +162,7 @@ class UserCheckoutScreenController extends GetxController {
   }
 
   /// get payment Id From payment
-  getPaymentIdFunction(String id, String secretKey) async {
+  /*getPaymentIdFunction(String id, String secretKey) async {
     isLoading(true);
     String url = ApiUrl.getPaymentIdApi;
     log("getPaymentId : $url");
@@ -200,7 +200,7 @@ class UserCheckoutScreenController extends GetxController {
       //isLoading(false);
       await displayPaymentSheet();
     }
-  }
+  }*/
 
   /// Submit Button
   checkOutSubmitFunction() async {
@@ -254,7 +254,7 @@ class UserCheckoutScreenController extends GetxController {
   }
 
   /// For Stripe
-  Future<void> makePayment() async {
+  /*Future<void> makePayment() async {
     try {
       paymentIntentData = await createPaymentIntent(bookingPrice, "USD");
 
@@ -293,7 +293,7 @@ class UserCheckoutScreenController extends GetxController {
       log("Make Payment Error ::: $e");
       rethrow;
     }
-  }
+  }*/
 
   createPaymentIntent(int amount, String currency) async {
     try {
@@ -324,7 +324,7 @@ class UserCheckoutScreenController extends GetxController {
     return price.toString();
   }
 
-  displayPaymentSheet() async {
+  /*displayPaymentSheet() async {
     //isLoading(true);
     try {
       await Stripe.instance
@@ -374,7 +374,7 @@ class UserCheckoutScreenController extends GetxController {
           snackPosition: SnackPosition.TOP);
       // await checkOutSubmitFunction();
     }
-  }
+  }*/
 
   getStripeKeyFunction() async {
     isLoading(true);

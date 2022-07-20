@@ -57,8 +57,8 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
     return GestureDetector(
       // onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft, arguments: singleItem.price),
       onTap: () async {
-        await vendorSubscriptionPlanScreenController
-            .makePayment(singleItem.price);
+        /*await vendorSubscriptionPlanScreenController
+            .makePayment(singleItem.price);*/
       },
       child: Container(
         margin: const EdgeInsets.only(left: 5, right: 5),

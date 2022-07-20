@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/user_side/model/get_payment_id_model/get_payment_id_model.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +18,7 @@ class VendorCheckoutScreenController extends GetxController {
   Map<String, dynamic>? paymentIntentData;
 
   /// For Stripe
-  Future<void> makePayment() async {
+  /*Future<void> makePayment() async {
     isLoading(true);
     try {
        int price1 = price.toInt();
@@ -116,7 +116,7 @@ class VendorCheckoutScreenController extends GetxController {
       // Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
       //await checkOutSubmitFunction();
     }
-  }
+  }*/
 
   calculateAmount(int amount) {
     int price1 = amount * 100;

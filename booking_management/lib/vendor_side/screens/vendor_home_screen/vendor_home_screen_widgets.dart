@@ -135,7 +135,7 @@ class TodayAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.pendingAppointmentList.isEmpty
-        ? const Center(child: Text("No Today Appointment List"))
+        ? const Center(child: Text("No Record Found"))
         : ListView.builder(
             itemCount: screenController.pendingAppointmentList.length,
             shrinkWrap: true,
@@ -426,6 +426,7 @@ class ResourcesModule extends StatelessWidget {
             itemBuilder: (context, i) {
               return GestureDetector(
                 onTap: () async {
+                  log('booking: ${singleItem.timingList[i].id}');
                   if(singleItem.timingList[i].booking == false) {
                     await screenController.getBookingDetailsFunction(
                         bookingId: singleItem.timingList[i].id.toString(),

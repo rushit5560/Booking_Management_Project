@@ -30,6 +30,27 @@ class UserNameFieldModule extends StatelessWidget {
   }
 }
 
+class FullNameFieldModule extends StatelessWidget {
+  FullNameFieldModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<UserSignUpScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.fullNameFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: signUpFormFieldDecoration(
+        controller: screenController,
+        hintText: 'Full Name',
+        context: context,
+      ),
+    );
+  }
+}
+
+
 class LastNameFieldModule extends StatelessWidget {
   LastNameFieldModule({Key? key}) : super(key: key);
   final screenController = Get.find<UserSignUpScreenController>();

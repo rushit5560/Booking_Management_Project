@@ -253,7 +253,7 @@ class GetAllSearchVendorModel {
 class SearchVendorDatum {
   SearchVendorDatum({
     required this.id,
-    required this.categories,
+   // required this.categories,
     required this.categoryId,
     required this.businessName,
     required this.businessLogo,
@@ -308,7 +308,7 @@ class SearchVendorDatum {
   });
 
   int id;
-  String categories;
+  //String categories;
   int categoryId;
   String businessName;
   String businessLogo;
@@ -348,7 +348,7 @@ class SearchVendorDatum {
   String workingHoursStatus;
   String avilableTime;
   String dDate;
-  String duration;
+  int duration;
   String startTime;
   String endTime;
   String vendorList;
@@ -363,7 +363,7 @@ class SearchVendorDatum {
 
   factory SearchVendorDatum.fromJson(Map<String, dynamic> json) => SearchVendorDatum(
     id: json["id"] ?? 0,
-    categories: json["categories"] ?? "",
+   // categories: json["categories"] ?? "",
     categoryId: json["categoryId"] ?? 0,
     businessName: json["businessName"] ?? "",
     businessLogo: json["businessLogo"] ?? "",
@@ -403,7 +403,7 @@ class SearchVendorDatum {
     workingHoursStatus: json["workingHoursStatus"] ?? "",
     avilableTime: json["avilableTime"] ?? "",
     dDate: json["dDate"] ?? "",
-    duration: json["duration"] ?? "",
+    duration: json["duration"] ?? 0,
     startTime: json["startTime"] ?? "",
     endTime: json["endTime"] ?? "",
     vendorList: json["vendorList"] ?? "",
@@ -419,7 +419,7 @@ class SearchVendorDatum {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "categories": categories,
+    //"categories": categories,
     "categoryId": categoryId,
     "businessName": businessName,
     "businessLogo": businessLogo == null ? null : businessLogo,

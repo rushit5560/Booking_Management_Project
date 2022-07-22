@@ -89,6 +89,7 @@ class UserProfileScreenController extends GetxController{
     isLoading(true);
     String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.uniqueId}";
     log('Url : $url');
+    log('header: ${apiHeader.headers}');
 
     try{
 

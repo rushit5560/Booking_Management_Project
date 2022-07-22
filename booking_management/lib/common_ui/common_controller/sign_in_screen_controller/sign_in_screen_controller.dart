@@ -47,6 +47,7 @@ class SignInScreenController extends GetxController {
 
       if(response.body.toString().contains("Subscription pending")) {
         Get.to(() => VendorSubscriptionPlanScreen());
+        //Get.to(() => VendorIndexScreen());
       }
 
       if(response.body.toString().contains("Please confirm your email")) {

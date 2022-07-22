@@ -37,6 +37,7 @@ class UserSignUpScreenController extends GetxController {
 
   final GlobalKey<FormState> userSignUpFormKey = GlobalKey<FormState>();
   final TextEditingController userNameFieldController = TextEditingController();
+  final TextEditingController fullNameFieldController = TextEditingController();
   final TextEditingController lastNameFieldController = TextEditingController();
   final TextEditingController genderFieldController = TextEditingController();
   final TextEditingController emailFieldController = TextEditingController();
@@ -76,6 +77,7 @@ class UserSignUpScreenController extends GetxController {
       request.fields['Email'] = emailFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
       request.fields['TermsConditions'] = termsAndConditionCheckBox.toString();
+      request.fields['FullName'] = fullNameFieldController.text.trim();
 
       log('request.fields: ${request.fields}');
 

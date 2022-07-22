@@ -58,6 +58,7 @@ class VendorProfileScreenController extends GetxController{
 
   File? file;
   RxString slotDurationValue = '15'.obs;
+  String slotDuration = "";
   //RxString businessTypeValue = 'Saloon'.obs;
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
@@ -370,7 +371,7 @@ class VendorProfileScreenController extends GetxController{
         postCodeTextFieldController.text = getUserDetailsByIdModel.data.postcode;
         slotDurationValue.value = getUserDetailsByIdModel.data.duration.toString();
         businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
-
+        slotDuration = slotDurationValue.value;
         selectedLatitude.value = getUserDetailsByIdModel.data.latitude == ""
         ? UserDetails.latitude : getUserDetailsByIdModel.data.latitude;
 
@@ -382,6 +383,7 @@ class VendorProfileScreenController extends GetxController{
           zoom: 16,
         );
         log("kGooglePlex : $kGooglePlex");
+        log('slotDuration: $slotDuration');
 
         //log('businessLists : ${businessTypeLists.length}');
 

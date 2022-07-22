@@ -175,6 +175,23 @@ class UserNameModule extends StatelessWidget {
   }
 }
 
+class FullNameModule extends StatelessWidget {
+  FullNameModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorSignUpScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: screenController.fullNameFieldController,
+      keyboardType: TextInputType.text,
+      validator: (value) => FieldValidator().validateFullName(value!),
+      decoration: vendorSignUpFormFieldDecoration(
+          hintText: 'Full Name', controller: screenController),
+    );
+  }
+}
+
+
 class LastNameModule extends StatelessWidget {
   LastNameModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorSignUpScreenController>();

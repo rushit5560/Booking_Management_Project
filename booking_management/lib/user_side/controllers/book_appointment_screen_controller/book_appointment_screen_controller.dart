@@ -691,7 +691,7 @@ class BookAppointmentScreenController extends GetxController {
         Get.to(() => UserCheckoutScreen(), arguments: [bookingId, userName, email]);
       } else {
         log("bookSelectedSlotFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: bookAppointmentModel.errorMessage);
       }
 
 

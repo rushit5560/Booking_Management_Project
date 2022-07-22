@@ -78,28 +78,35 @@ class HomeScreenController extends GetxController {
     }
   }
 
-  Future<List<String>> getCategorySearchFunction(String searchText) async {
+  Future getCategorySearchFunction(String searchText) async {
     String url = ApiUrl.searchApi + "?prefix=$searchText";
     log("Search Category Api Url : $url");
 
     try {
       http.Response response = await http.get(Uri.parse(url));
       log("Get Category Api Response : ${response.body}");
-
       SearchModel searchModel =
           SearchModel.fromJson(json.decode(response.body));
+      isSuccessStatus = searchModel.success.obs;
 
-      List<String> searchList = searchModel.data;
-      log("searchList : $searchList");
+      if(isSuccessStatus.value){
+        List<String> searchList = searchModel.data;
+        log("searchList : $searchList");
+        return searchText.isEmpty
+            ? searchList
+            : searchList.where((element) {
+          String searchListString = element.toLowerCase();
+          String searchTextNew = searchText.toLowerCase();
 
-      return searchText.isEmpty
-          ? searchList
-          : searchList.where((element) {
-              String searchListString = element.toLowerCase();
-              String searchTextNew = searchText.toLowerCase();
+          return searchListString.contains(searchTextNew);
+        }).toList();
+      } else{
+        Fluttertoast.showToast(msg: searchModel.message);
+      }
 
-              return searchListString.contains(searchTextNew);
-            }).toList();
+
+
+
     } catch (e) {
       log("getCategorySearchFunction Error :::$e");
       return [];

@@ -39,6 +39,8 @@ class UserSignUpScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           UserNameFieldModule(),
                           const SizedBox(height: 5),
+                          FullNameFieldModule(),
+                          const SizedBox(height: 5),
                           EmailFieldModule(),
                           const SizedBox(height: 5),
                           PasswordFieldModule(),

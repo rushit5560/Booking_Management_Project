@@ -173,14 +173,14 @@ class SearchCategoryField extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           ),
         ),
-        itemBuilder: (context, String? suggestion) {
+        itemBuilder: (context, suggestion) {
           final cat = suggestion!;
           return ListTile(
-            title: Text(cat),
+            title: Text(cat.toString()),
           );
         },
-        onSuggestionSelected: (String? suggestion) {
-          screenController.categoryFieldController.text = suggestion!;
+        onSuggestionSelected: (suggestion) {
+          screenController.categoryFieldController.text = suggestion.toString();
           log("Text : ${screenController.categoryFieldController.text}");
         },
       ),

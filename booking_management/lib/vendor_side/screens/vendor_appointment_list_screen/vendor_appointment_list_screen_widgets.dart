@@ -660,7 +660,7 @@ class AllAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.allAppointmentList.isEmpty
-        ? const Center(child: Text("No All Appointment List"))
+        ? const Center(child: Text("No Record Found"))
         : ListView.builder(
             itemCount: screenController.allAppointmentList.length,
             shrinkWrap: true,
@@ -867,7 +867,7 @@ class PendingAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.pendingAppointmentList.isEmpty
-        ? const Center(child: Text("No Pending Appointment List"))
+        ? const Center(child: Text("No Record Found"))
         : ListView.builder(
             itemCount: screenController.pendingAppointmentList.length,
             shrinkWrap: true,
@@ -1073,7 +1073,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.confirmAppointmentList.isEmpty
-        ? const Center(child: Text("No Confirm Appointment List"))
+        ? const Center(child: Text("No Record Found"))
         : ListView.builder(
             itemCount: screenController.confirmAppointmentList.length,
             shrinkWrap: true,
@@ -1272,7 +1272,7 @@ class CancelAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.cancelAppointmentList.isEmpty
-        ? const Center(child: Text("No Cancel Appointment List"))
+        ? const Center(child: Text("No Record Found"))
         : ListView.builder(
             itemCount: screenController.cancelAppointmentList.length,
             shrinkWrap: true,
@@ -1471,7 +1471,7 @@ class DoneAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.doneAppointmentList.isEmpty
-        ? const Center(child: Text("No Done Appointment List"))
+        ? const Center(child: Text("No Record Found"))
         : ListView.builder(
             itemCount: screenController.doneAppointmentList.length,
             shrinkWrap: true,

@@ -34,6 +34,8 @@ class VendorSignUpScreen extends StatelessWidget {
                 // SizedBox(height: 5),
                 UserNameModule(),
                 const SizedBox(height: 5),
+                FullNameModule(),
+                const SizedBox(height: 5),
                 EmailFieldModule(),
                 const SizedBox(height: 5),
                 MobileFieldModule(),

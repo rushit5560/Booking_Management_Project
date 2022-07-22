@@ -4,10 +4,17 @@ class FieldValidator {
   //final signUpScreenController = Get.find<SignUpScreenController>();
 
   String? validateFullName(String value) {
-    if (value.isEmpty) {
+    /*if (value.isEmpty) {
       return 'Field is required';
     }
-    return null;
+    return null;*/
+    if (value.isEmpty) {
+      return 'Full name is required';
+    } else if (!value[0].contains(RegExp(r'^(?=.*?[A-Z])'))) {
+      return "First character should be alphabet";
+    } else {
+      return null;
+    }
   }
 
   String? validateAddress1(String value) {

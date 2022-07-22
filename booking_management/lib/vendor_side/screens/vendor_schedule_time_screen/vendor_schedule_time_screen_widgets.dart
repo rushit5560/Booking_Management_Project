@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -462,10 +463,13 @@ class ResourcesListModule extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      singleItem.details,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    // Text(
+                    //   singleItem.details,
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
+                    Html(
+                      data: singleItem.details,
                     ),
                     const SizedBox(height: 5),
                     Text(
@@ -483,6 +487,7 @@ class ResourcesListModule extends StatelessWidget {
               ? Container()
               : GridView.builder(
                   itemCount: singleItem.timingList.length,
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

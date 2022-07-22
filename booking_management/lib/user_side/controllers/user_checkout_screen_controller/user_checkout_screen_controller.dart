@@ -123,26 +123,26 @@ class UserCheckoutScreenController extends GetxController {
 
         String endBookDate =
             checkoutSummaryModel.workerList.booking.endDateTime;
-        String endDate1 = endBookDate.substring(0, endBookDate.length - 23);
-        endBookingDate = endDate1;
-        String endTime1 = endBookDate.substring(11, endBookDate.length - 17);
+        // String endDate1 = endBookDate.substring(0, endBookDate.length - 23);
+        // endBookingDate = endDate1;
+        String endTime1 = endBookDate.substring(11, endBookDate.length - 3);
         endBookingTime = endTime1;
-
-        bookingPrice = checkoutSummaryModel.workerList.price.toInt();
-        bookingQty = checkoutSummaryModel.workerList.quantity;
-        bookingTotalAmount = bookingPrice * bookingQty;
-
+        //
+        // bookingPrice = checkoutSummaryModel.workerList.price.toInt();
+        // bookingQty = checkoutSummaryModel.workerList.quantity;
+        // bookingTotalAmount = bookingPrice * bookingQty;
+        //
         log("vendorName : $vendorName");
         log("vendorImg : $vendorImg");
         log("vendorRating : $vendorRating");
         log("vendorAddress : $vendorAddress");
         log("bookingDate : $bookingDate");
         log("bookingTime : $bookingTime");
-        log("endBookingDate: $endBookingDate");
-        log("endBookingTime : $endBookingTime");
-        log("bookingPrice : $bookingPrice");
-        log("bookingQty : $bookingQty");
-        log("bookingTotalAmount : $bookingTotalAmount");
+         //log("endBookingDate: $endBookingDate");
+         log("endBookingTime : $endBookingTime");
+        // log("bookingPrice : $bookingPrice");
+        // log("bookingQty : $bookingQty");
+        // log("bookingTotalAmount : $bookingTotalAmount");
       } else {
         //Fluttertoast.showToast(msg: "Something went wrong!");
         log("getCheckoutSummaryFunction Else Else");

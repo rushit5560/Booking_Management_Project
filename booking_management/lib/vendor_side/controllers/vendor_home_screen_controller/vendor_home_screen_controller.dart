@@ -45,6 +45,7 @@ class VendorHomeScreenController extends GetxController {
         "?UserId=${UserDetails.uniqueId}" +
     "&Status=&dDate=$todayDateString";
     log("Appointment List APi ULR : $url");
+    log('header: ${apiHeader.headers}');
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
@@ -52,6 +53,10 @@ class VendorHomeScreenController extends GetxController {
 
       AppointmentListModel appointmentListModel = AppointmentListModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentListModel.success.obs;
+
+      if(appointmentListModel.message.contains("No Record Found")){
+        Fluttertoast.showToast(msg: appointmentListModel.message);
+      }
 
       if(isSuccessStatus.value) {
         allAppointmentList.clear();
@@ -192,7 +197,7 @@ class VendorHomeScreenController extends GetxController {
     // isLoading(true);
     String url = ApiUrl.bookingDetailsApi + "?id=$bookingId";
     log("Booking Details Api Url : $url");
-
+    log('header: ${apiHeader.headers}');
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("getBookingDetailsFunction Api Response : ${response.body}");

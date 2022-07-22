@@ -9,18 +9,21 @@ class BookAppointmentModel {
     required this.statusCode,
     required this.success,
     required this.message,
+    required this.errorMessage,
     required this.id,
   });
 
   int statusCode;
   bool success;
   String message;
+  String errorMessage;
   String id;
 
   factory BookAppointmentModel.fromJson(Map<String, dynamic> json) => BookAppointmentModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     message: json["message"] ?? "",
+    errorMessage: json["errorMessage"] ?? "",
     id: json["id"] ?? "",
   );
 
@@ -28,6 +31,7 @@ class BookAppointmentModel {
     "statusCode": statusCode,
     "success": success,
     "message": message,
+    "errorMessage": errorMessage,
     "id": id,
   };
 }

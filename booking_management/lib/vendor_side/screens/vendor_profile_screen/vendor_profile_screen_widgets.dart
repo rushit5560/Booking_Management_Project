@@ -1445,15 +1445,17 @@ class _VendorProfileDetailsModuleState
 
   Widget saveButtonModule() {
     return GestureDetector(
-      onTap: () {
+      onTap: () async{
         if (screenController.vendorProfileFormKey.currentState!.validate()) {
-          screenController.vendorEditProfileFunction();
-          // if(screenController.file == null){
-          //   Fluttertoast.showToast(msg: "Please Select Profile");
-          // } else{
-          //   screenController.vendorEditProfileFunction();
-          // }
+          //screenController.vendorEditProfileFunction();
+          log('old: ${screenController.slotDurationValue.value}');
+          log('new: ${screenController.slotDuration}');
 
+          if(screenController.slotDurationValue.value == screenController.slotDuration){
+            await screenController.vendorEditProfileFunction();
+          } else{
+            deleteTimingSlotDurationAlertDialog();
+          }
         }
       },
       child: Container(
@@ -1477,6 +1479,41 @@ class _VendorProfileDetailsModuleState
           ),
         ),
       ),
+    );
+  }
+
+  deleteTimingSlotDurationAlertDialog(){
+// set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No, cancel"),
+      onPressed:  () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes, delete it"),
+      onPressed:() async{
+        await screenController.vendorEditProfileFunction();
+        Get.back();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Are You Sure?"),
+      content: Text("If you change timing slot duration your all schedule slot should been deleted you won't be able to recover this again!"),
+      actions: [
+        continueButton,
+        cancelButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

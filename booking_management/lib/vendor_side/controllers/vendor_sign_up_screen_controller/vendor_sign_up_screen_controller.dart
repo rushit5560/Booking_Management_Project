@@ -21,6 +21,7 @@ class VendorSignUpScreenController extends GetxController {
   RxString businessType = 'Business'.obs;
   GlobalKey<FormState> vendorSignUpFormKey = GlobalKey<FormState>();
   final TextEditingController userNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController fullNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController lastNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController businessNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
   final TextEditingController emailFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
@@ -85,8 +86,9 @@ class VendorSignUpScreenController extends GetxController {
       // request.fields['LastVisit'] = "2001-12-01";
       // request.fields['FaxNumber'] = "20";
       // request.fields['DateOfBirth'] = "2001-12-01";
-      request.fields['CategoryId'] = "1";
+      //request.fields['CategoryId'] = "1";
       request.fields['UserName'] = userNameFieldController.text.trim();
+      request.fields['FullName'] = fullNameFieldController.text.trim();
       request.fields['Email'] = emailFieldController.text.trim();
       request.fields['PhoneNo'] = mobileFieldController.text.trim();
       request.fields['PasswordHash'] = passwordFieldController.text.trim();
@@ -128,7 +130,7 @@ class VendorSignUpScreenController extends GetxController {
           Get.off(SignInScreen(), transition: Transition.zoom);
 
         } else {
-          // Fluttertoast.showToast(msg: "${response1.message}");
+           Fluttertoast.showToast(msg: response1.message);
           log('False False');
         }
       });

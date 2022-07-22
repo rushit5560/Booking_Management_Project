@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       )
                       : Container(),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
                       Column(
                         children: [
                           SearchCategoryField(),

@@ -3,6 +3,7 @@ import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/ven
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_schedule_management_screen/vendor_schedule_management_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_report_screen/vendor_subscription_report_screen.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,11 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleTime) {
       Get.to(() => VendorScheduleTimeScreen(),
           transition: Transition.rightToLeft);
-    } else if(vendorSettingScreenOption == VendorDrawerOption.availableTime) {
+    } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleManagement) {
+      Get.to(() => VendorScheduleManagementScreen(),
+          transition: Transition.rightToLeft);
+    }
+    else if(vendorSettingScreenOption == VendorDrawerOption.availableTime) {
       Get.to(() => VendorAvailableTimeScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==

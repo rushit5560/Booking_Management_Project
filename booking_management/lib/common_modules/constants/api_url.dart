@@ -157,4 +157,10 @@ class ApiUrl {
   static const getPrivacyPolicyApi = apiMainPath + "API/CMS";
 
   static const logOutApi = apiMainPath + "API/Logout";
+
+
+  /// Schedule management API
+  static const getAutoScheduleApi = apiMainPath + "API/AutoSchedule";
+  static const getAllResourceListApi = apiMainPath + "API/ResourceList";
+  static const getAllSearchWithResourceListApi = apiMainPath + "API/ResourceSchedule";
 }

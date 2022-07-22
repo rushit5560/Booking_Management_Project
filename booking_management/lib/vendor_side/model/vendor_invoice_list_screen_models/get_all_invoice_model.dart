@@ -69,7 +69,7 @@ class OrdersDatum {
   String paymentIntentId;
   String customer;
   String vendor;
-  String order;
+  Order order;
 
   factory OrdersDatum.fromJson(Map<String, dynamic> json) => OrdersDatum(
     id: json["id"] ?? 0,
@@ -90,7 +90,7 @@ class OrdersDatum {
     paymentIntentId: json["paymentIntentId"] ?? "",
     customer: json["customer"] ?? "",
     vendor: json["vendor"] ?? "",
-    order: json["order"] ?? "",
+    order: Order.fromJson(json["order"] ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
@@ -112,7 +112,7 @@ class OrdersDatum {
     "paymentIntentId": paymentIntentId,
     "customer": customer,
     "vendor": vendor,
-    "order": order,
+    "order": order.toJson(),
   };
 }
 
@@ -193,5 +193,49 @@ class ApplicationUser {
     "lockoutEnd": lockoutEnd,
     "lockoutEnabled": lockoutEnabled,
     "accessFailedCount": accessFailedCount,
+  };
+}
+
+class Order {
+  Order({
+    required this.id,
+    required this.bookingId,
+    required this.orderDate,
+    required this.price,
+    required this.paidBy,
+    //required this.applicationUserCreator,
+    required this.vendor,
+    required this.booking,
+  });
+
+  int id;
+  String bookingId;
+  String orderDate;
+  double price;
+  String paidBy;
+  //ApplicationUser applicationUserCreator;
+  String vendor;
+  String booking;
+
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
+    id: json["id"] ?? 0,
+    bookingId: json["bookingId"] ?? "",
+    orderDate: json["orderDate"] ?? "",
+    price: json["price"] ?? 0.0,
+    paidBy: json["paidBy"] ?? "",
+    //applicationUserCreator: json["applicationUserCreator"] == null ? null : ApplicationUser.fromJson(json["applicationUserCreator"]),
+    vendor: json["vendor"] ?? "",
+    booking: json["booking"] ?? "",
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "bookingId": bookingId,
+    "orderDate": orderDate,
+    "price": price,
+    "paidBy": paidBy,
+    //"applicationUserCreator": applicationUserCreator == null ? null : applicationUserCreator.toJson(),
+    "vendor": vendor,
+    "booking": booking,
   };
 }

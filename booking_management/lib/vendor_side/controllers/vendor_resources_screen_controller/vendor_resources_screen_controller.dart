@@ -261,7 +261,7 @@ class VendorResourcesScreenController extends GetxController {
             getAllResourceAPI();
             Get.back();
           } else {
-            log("addVendorResourcesFunction Else Else ${updateVendorResourceModel.message}");
+            log("updateVendorResourcesFunction Else Else ${updateVendorResourceModel.message}");
             Fluttertoast.showToast(msg: "Something wnt wrong!");
 
           }
@@ -311,7 +311,7 @@ class VendorResourcesScreenController extends GetxController {
             getAllResourceAPI();
             Get.back();
           } else {
-            log("addVendorResourcesFunction Else Else ${updateVendorResourceModel.message}");
+            log("updateVendorResourcesFunction Else Else ${updateVendorResourceModel.message}");
             Fluttertoast.showToast(msg: "Something wnt wrong!");
 
           }

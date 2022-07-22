@@ -32,6 +32,7 @@ enum VendorDrawerOption {
    businessDocument,
    review,
    scheduleTime,
+   scheduleManagement,
    availableTime,
    invoices,
    subscription,

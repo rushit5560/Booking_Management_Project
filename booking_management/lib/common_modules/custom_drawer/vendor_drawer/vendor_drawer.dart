@@ -82,6 +82,14 @@ class VendorDrawer extends StatelessWidget {
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
+                name: 'Schedule Management',
+                vendorDrawerOption: VendorDrawerOption.scheduleManagement,
+              ),
+              const SizedBox(height: 20),
+
+
+              VendorDrawerSingleItemModule(
+                img: AppImages.resourcesImg,
                 name: 'Reviews',
                 vendorDrawerOption: VendorDrawerOption.review,
               ),

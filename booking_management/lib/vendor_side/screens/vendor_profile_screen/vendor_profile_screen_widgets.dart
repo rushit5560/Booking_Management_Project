@@ -213,52 +213,207 @@ class _VendorProfileDetailsModuleState
       alignment: Alignment.bottomCenter,
       //clipBehavior: Clip.none,
       children: [
-        screenController.file != null
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.file(screenController.file!,
-                    height: 100, width: 100, fit: BoxFit.fill))
-            : screenController.vendorProfile == ""
+        Container(
+          height: 120,
+          width: 120,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: screenController.file != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(AppImages.profileImg,
-                        height: 100, width: 100, fit: BoxFit.fill))
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                        ApiUrl.apiImagePath + screenController.vendorProfile,
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.fill)),
+                    child: Image.file(
+                      screenController.file!,
+                      // height: 100,
+                      // width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : screenController.userImage != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          ApiUrl.apiImagePath + screenController.userImage!,
+                          // height: 100,
+                          // width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          AppImages.logoImg,
+                          // height: 100,
+                          // width: 100,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+          ),
+        ),
         GestureDetector(
           onTap: () {
-            openGallery();
+            showPhotoChoiceDialog(Get.context!);
           },
           child: Container(
             height: 35,
             width: 35,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), color: Colors.white),
-            child: const Icon(Icons.edit),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            child: Icon(Icons.edit),
           ),
         ),
+        // screenController.file != null
+        //     ? ClipRRect(
+        //         borderRadius: BorderRadius.circular(10),
+        //         child: Image.file(screenController.file!,
+        //             height: 100, width: 100, fit: BoxFit.fill))
+        //     : screenController.vendorProfile == ""
+        //         ? ClipRRect(
+        //             borderRadius: BorderRadius.circular(10),
+        //             child: Image.asset(AppImages.profileImg,
+        //                 height: 100, width: 100, fit: BoxFit.fill))
+        //         : ClipRRect(
+        //             borderRadius: BorderRadius.circular(10),
+        //             child: Image.network(
+        //                 ApiUrl.apiImagePath + screenController.vendorProfile,
+        //                 height: 100,
+        //                 width: 100,
+        //                 fit: BoxFit.fill)),
+        // GestureDetector(
+        //   onTap: () {
+        //     openGallery();
+        //   },
+        //   child: Container(
+        //     height: 35,
+        //     width: 35,
+        //     decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(5), color: Colors.white),
+        //     child: const Icon(Icons.edit),
+        //   ),
+        // ),
       ],
     );
   }
 
-  void openGallery() async {
-    final image = await imagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
+  Future<void> showPhotoChoiceDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Choose option",
+            style: TextStyle(color: Colors.black),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Divider(
+                  height: 1,
+                  color: Colors.black,
+                ),
+                SizedBox(height: 10),
+                ListTile(
+                  onTap: () {
+                    _openGallery(context);
+                  },
+                  title: Text("Gallery"),
+                  leading: Icon(
+                    Icons.account_box,
+                    color: Colors.black,
+                  ),
+                ),
+                // Divider(
+                //   height: 1,
+                //   color: Colors.black,
+                // ),
+                ListTile(
+                  onTap: () {
+                    _openCamera(context);
+                  },
+                  title: Text("Camera"),
+                  leading: Icon(
+                    Icons.camera,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _openCamera(BuildContext context) async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+    );
+
+    if (pickedFile != null) {
       //setState(() {
-      screenController.file = File(image.path);
+      screenController.file = File(pickedFile.path);
       screenController.loadUI();
       log('Camera File Path : ${screenController.file}');
-      log('Camera Image Path : ${image.path}');
+      log('Camera Image Path : ${screenController.file!.path}');
       //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
       //renameImage();
       //});
-    } else {}
+    } else {
+
+
+    }
+
+    screenController.file = File(pickedFile!.path);
+    setState(() {});
+
+    Navigator.pop(context);
   }
+
+  void _openGallery(BuildContext context) async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      //setState(() {
+      screenController.file = File(pickedFile.path);
+      screenController.loadUI();
+      log('Camera File Path : ${screenController.file}');
+      log('Camera Image Path : ${screenController.file!.path}');
+
+
+      //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
+      //renameImage();
+      //});
+    } else {
+
+
+    }
+
+    screenController.file = File(pickedFile!.path);
+    setState(() {});
+
+    Navigator.pop(context);
+  }
+
+  // void openGallery() async {
+  //   final image = await imagePicker.pickImage(source: ImageSource.gallery);
+  //   if (image != null) {
+  //     //setState(() {
+  //     screenController.file = File(image.path);
+  //     screenController.loadUI();
+  //     log('Camera File Path : ${screenController.file}');
+  //     log('Camera Image Path : ${image.path}');
+  //     //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
+  //     //renameImage();
+  //     //});
+  //   } else {
+  //
+  //
+  //
+  //   }
+  // }
 
   Widget userNameTextField() {
     return Row(
@@ -1035,7 +1190,8 @@ class _VendorProfileDetailsModuleState
                 Obx(
                   () => Container(
                     padding: const EdgeInsets.only(left: 10),
-                    width: Get.width, //gives the width of the dropdown button
+                    width: Get.width,
+                    //gives the width of the dropdown button
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       //color: Colors.grey.shade200,
@@ -1215,7 +1371,8 @@ class _VendorProfileDetailsModuleState
                 Obx(
                   () => Container(
                     padding: const EdgeInsets.only(left: 10),
-                    width: Get.width, //gives the width of the dropdown button
+                    width: Get.width,
+                    //gives the width of the dropdown button
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       //color: Colors.grey.shade200,
@@ -1289,7 +1446,7 @@ class _VendorProfileDetailsModuleState
                   controller: screenController.businessIdTextFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
-                  readOnly: true,
+                  readOnly: false,
                   decoration: const InputDecoration(
                     hintText: "Business Id",
                     hintStyle: TextStyle(color: Colors.black),
@@ -1445,15 +1602,16 @@ class _VendorProfileDetailsModuleState
 
   Widget saveButtonModule() {
     return GestureDetector(
-      onTap: () async{
+      onTap: () async {
         if (screenController.vendorProfileFormKey.currentState!.validate()) {
           //screenController.vendorEditProfileFunction();
           log('old: ${screenController.slotDurationValue.value}');
           log('new: ${screenController.slotDuration}');
 
-          if(screenController.slotDurationValue.value == screenController.slotDuration){
+          if (screenController.slotDurationValue.value ==
+              screenController.slotDuration) {
             await screenController.vendorEditProfileFunction();
-          } else{
+          } else {
             deleteTimingSlotDurationAlertDialog();
           }
         }
@@ -1482,17 +1640,17 @@ class _VendorProfileDetailsModuleState
     );
   }
 
-  deleteTimingSlotDurationAlertDialog(){
+  deleteTimingSlotDurationAlertDialog() {
 // set up the buttons
     Widget cancelButton = TextButton(
       child: Text("No, cancel"),
-      onPressed:  () {
+      onPressed: () {
         Get.back();
       },
     );
     Widget continueButton = TextButton(
       child: Text("Yes, delete it"),
-      onPressed:() async{
+      onPressed: () async {
         await screenController.vendorEditProfileFunction();
         Get.back();
       },
@@ -1501,7 +1659,8 @@ class _VendorProfileDetailsModuleState
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Are You Sure?"),
-      content: Text("If you change timing slot duration your all schedule slot should been deleted you won't be able to recover this again!"),
+      content: Text(
+          "If you change timing slot duration your all schedule slot should been deleted you won't be able to recover this again!"),
       actions: [
         continueButton,
         cancelButton,

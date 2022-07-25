@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -7,11 +8,20 @@ import 'package:booking_management/user_side/controllers/user_profile_screen_con
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class ProfileDetailsModule extends StatelessWidget {
+import '../../../common_modules/constants/api_url.dart';
+
+class ProfileDetailsModule extends StatefulWidget {
   ProfileDetailsModule({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileDetailsModule> createState() => _ProfileDetailsModuleState();
+}
+
+class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
   final screenController = Get.find<UserProfileScreenController>();
 
   @override
@@ -21,8 +31,9 @@ class ProfileDetailsModule extends StatelessWidget {
         key: screenController.profileFormKey,
         child: Column(
           children: [
-            // profile(),
-            // SizedBox(height: 30,),
+            const SizedBox(height: 15),
+            profile(),
+            const SizedBox(height: 30),
             nameTextField(),
             // const SizedBox(height: 15),
             emailTextField(),
@@ -72,20 +83,129 @@ class ProfileDetailsModule extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              AppImages.vendorImg,
-              scale: 8,
-            )),
         Container(
-          height: 35,
-          width: 35,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5), color: Colors.white),
-          child: Icon(Icons.edit),
-        )
+          height: 120,
+          width: 120,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: screenController.file != null
+                ? ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.file(
+                screenController.file!,
+                // height: 100,
+                // width: 100,
+                fit: BoxFit.cover,
+              ),
+            ) :screenController.userImage != null
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      ApiUrl.apiImagePath + screenController.userImage!,
+                      // height: 100,
+                      // width: 100,
+                      fit: BoxFit.cover,
+
+
+                    ),
+                  )
+
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          AppImages.vendorImg,
+                          // height: 100,
+                          // width: 100,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            showPhotoChoiceDialog(Get.context!);
+          },
+          child: Container(
+            height: 35,
+            width: 35,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            child: Icon(Icons.edit),
+          ),
+        ),
       ],
+    );
+  }
+
+  void _openCamera(BuildContext context) async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+    );
+
+    screenController.file = File(pickedFile!.path);
+    setState(() {});
+
+    Navigator.pop(context);
+  }
+
+  void _openGallery(BuildContext context) async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+    screenController.file = File(pickedFile!.path);
+    setState(() {});
+
+    Navigator.pop(context);
+  }
+
+  Future<void> showPhotoChoiceDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Choose option",
+            style: TextStyle(color: Colors.black),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Divider(
+                  height: 1,
+                  color: Colors.black,
+                ),
+                SizedBox(height: 10),
+                ListTile(
+                  onTap: () {
+                    _openGallery(context);
+                  },
+                  title: Text("Gallery"),
+                  leading: Icon(
+                    Icons.account_box,
+                    color: Colors.black,
+                  ),
+                ),
+                // Divider(
+                //   height: 1,
+                //   color: Colors.black,
+                // ),
+                ListTile(
+                  onTap: () {
+                    _openCamera(context);
+                  },
+                  title: Text("Camera"),
+                  leading: Icon(
+                    Icons.camera,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -719,6 +839,7 @@ class ProfileDetailsModule extends StatelessWidget {
 
 class SelectDateModule extends StatelessWidget {
   SelectDateModule({Key? key}) : super(key: key);
+
   // final screenController = Get.find<BookAppointmentScreenController>();
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();

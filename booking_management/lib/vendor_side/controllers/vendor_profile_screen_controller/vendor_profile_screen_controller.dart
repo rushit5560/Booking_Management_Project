@@ -8,6 +8,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
+import 'package:booking_management/vendor_side/model/vendor_profile_screen_model/vendor_profile_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_get_user_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_update_profile_model.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,11 @@ class VendorProfileScreenController extends GetxController{
 
   late GooglePlace googlePlace;
 
+  File? file;
+
+  String? userImage;
+
+
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   // String defaultLatitude = "";
@@ -56,7 +62,7 @@ class VendorProfileScreenController extends GetxController{
     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
     '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', '31'];
 
-  File? file;
+
   RxString slotDurationValue = '15'.obs;
   String slotDuration = "";
   //RxString businessTypeValue = 'Saloon'.obs;
@@ -130,18 +136,26 @@ class VendorProfileScreenController extends GetxController{
         request.fields['Longitude'] = selectedLongitude.value;
         request.fields['Latitude'] = selectedLatitude.value;
 
-        var multiPart = http.MultipartFile(
-          'file',
-          stream,
-          length,
+        // var multiPart = http.MultipartFile(
+        //   'file',
+        //   stream,
+        //   length,
+        // );
+
+        var multiFile = await http.MultipartFile.fromPath(
+          "image",
+          file!.path,
         );
 
-        request.files.add(multiPart);
+        request.files.add(multiFile);
 
 
         log('request.fields: ${request.fields}');
-        log('request.files: ${request.files}');
+        log('request.files length : ${request.files.length}');
+        log('request.files name : ${request.files.first.filename}');
+        log('request.files filetype : ${request.files.first.contentType}');
         log('request.headers: ${request.headers}');
+
 
         var response = await request.send();
         log('response: ${response.request}');
@@ -349,7 +363,7 @@ class VendorProfileScreenController extends GetxController{
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get All User Details Response : ${response.body}');
 
-      GetUserDetailsByIdModel getUserDetailsByIdModel = GetUserDetailsByIdModel.fromJson(json.decode(response.body));
+      VendorProfileDetailsModel getUserDetailsByIdModel = VendorProfileDetailsModel.fromJson(json.decode(response.body));
       //log('getUserDetailsByIdModel : ${getUserDetailsByIdModel.data}');
       isStatus = getUserDetailsByIdModel.statusCode.obs;
       log('getUserDetailsByIdModel: ${getUserDetailsByIdModel.success}');

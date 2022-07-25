@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -106,17 +107,21 @@ class VendorChatListScreen extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      /*Container(
+                      Container(
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: const DecorationImage(
-                            image: AssetImage(AppImages.vendorImg),
-                            fit: BoxFit.cover,
-                          ),
+                         // borderRadius: BorderRadius.circular(15),
+                          // image: const DecorationImage(
+                          //   image: AssetImage(AppImages.vendorImg),
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
-                      ),*/
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.network(vendorChatListScreenController.profileImage),
+                        ),
+                      ),
                       // const SizedBox(width: 10),
                       Expanded(
                         child: Column(

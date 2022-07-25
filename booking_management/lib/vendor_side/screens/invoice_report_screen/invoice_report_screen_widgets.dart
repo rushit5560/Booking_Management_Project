@@ -95,7 +95,7 @@ class SelectStartDateCalender extends StatelessWidget {
 
                 screenController.selectedStartDate = selectedDay;
 
-                screenController.startDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.startDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
                 screenController.isStartDateCalenderShow.value = !screenController.isStartDateCalenderShow.value;
 
                 screenController.isEndDateCalenderShow.value = false;
@@ -265,7 +265,7 @@ class SelectEndDateCalender extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-                screenController.endDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.endDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
                 screenController.isEndDateCalenderShow.value = !screenController.isEndDateCalenderShow.value;
 
 

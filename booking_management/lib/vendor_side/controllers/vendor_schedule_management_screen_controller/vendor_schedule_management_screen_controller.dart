@@ -33,6 +33,7 @@ class VendorScheduleManagementScreenController extends GetxController{
   ApiHeader apiHeader = ApiHeader();
 
   int resourceId = 0;
+  List<WorkerList> searchWithResourceList = [];
 
   /// Get Auto Schedule API Filter wise
   getAutoScheduleFunction()async {
@@ -102,6 +103,7 @@ class VendorScheduleManagementScreenController extends GetxController{
         for(int i= 0 ; i < allResourcesList.length ; i++){
           resourceId = allResourcesList[i].id;
           log('Resource id: $resourceId');
+          /*allResourcesList[i].timingList =*/ await getSearchWithResourceListFunction();
         }
 
 
@@ -119,6 +121,7 @@ class VendorScheduleManagementScreenController extends GetxController{
 
   getSearchWithResourceListFunction()async{
     isLoading(true);
+    List<TimingSlot> timeList = [];
     String url = ApiUrl.getAllSearchWithResourceListApi + "?Id=$resourceId&dDate=${scheduleTimingDate.value}";
     log("Search With Resource List Api Url : $url");
     log('Header: ${apiHeader.headers}');
@@ -132,8 +135,25 @@ class VendorScheduleManagementScreenController extends GetxController{
 
       if(isSuccessStatus.value) {
        log("Success: $isSuccessStatus");
+       searchWithResourceList = getSearchWithResourceListModel.workerList;
 
+        log('searchWithResourceList: ${searchWithResourceList.length}');
 
+       for(int i =0; i < searchWithResourceList.length; i++) {
+         String startTime = searchWithResourceList[i].startDateTime.substring(11, searchWithResourceList[i].startDateTime.length-3);
+         String endTime = searchWithResourceList[i].endDateTime.substring(11, searchWithResourceList[i].endDateTime.length-3);
+
+         timeList.add(TimingSlot(
+           id: searchWithResourceList[i].id,
+           resourceId: searchWithResourceList[i].resourceId,
+           startDateTime: startTime,
+           endDateTime: endTime,
+           isActive: searchWithResourceList[i].isActive,
+           booking: searchWithResourceList[i].booking,
+           isSelected: false,
+         ));
+       }
+       log("Time List1 : ${timeList.length}");
       } else {
         log("Search With Resource List Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");

@@ -167,7 +167,7 @@ class SelectStartDateCalender extends StatelessWidget {
 
                 screenController.selectedStartDate = selectedDay;
 
-                screenController.startDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.startDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
                 screenController.isStartDateCalenderShow.value = !screenController.isStartDateCalenderShow.value;
 
@@ -329,7 +329,7 @@ class SelectEndDateCalender extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: screenController.selectedStartDate,
+              firstDay: DateTime(2020),
               lastDay: DateTime.now(),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
@@ -337,7 +337,7 @@ class SelectEndDateCalender extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-                screenController.endDate.value = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+                screenController.endDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
                 screenController.isEndDateCalenderShow.value = !screenController.isEndDateCalenderShow.value;
 
 

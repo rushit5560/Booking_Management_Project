@@ -664,6 +664,7 @@ class ResourceScheduleListModule extends StatelessWidget {
 
   Widget _resourcesListTile(BookingResourceWorkerData singleItem) {
     String imgUrl = ApiUrl.apiImagePath + singleItem.image;
+    log('singleItem.timingList: ${singleItem.timingList}');
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -731,10 +732,10 @@ class ResourceScheduleListModule extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          /*singleItem.timingList.isEmpty
+          singleItem.timingList.isEmpty
               ? Container()
-              :*/ GridView.builder(
-            itemCount: 6,
+              : GridView.builder(
+            itemCount: singleItem.timingList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -786,7 +787,7 @@ class ResourceScheduleListModule extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "10:45",
+                        singleItem.timingList[i].startDateTime,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
@@ -808,7 +809,7 @@ class ResourceScheduleListModule extends StatelessWidget {
                       ).commonSymmetricPadding(horizontal: 5),
 
                       Text(
-                        "11:00",
+                        singleItem.timingList[i].endDateTime,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,

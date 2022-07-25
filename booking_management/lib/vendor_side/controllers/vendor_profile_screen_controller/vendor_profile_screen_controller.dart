@@ -118,6 +118,8 @@ class VendorProfileScreenController extends GetxController{
 
         var length = await file!.length();
 
+        request.files.add(await http.MultipartFile.fromPath("file", file!.path));
+
         request.headers.addAll(headers);
 
         //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
@@ -136,24 +138,25 @@ class VendorProfileScreenController extends GetxController{
         request.fields['Longitude'] = selectedLongitude.value;
         request.fields['Latitude'] = selectedLatitude.value;
 
-        // var multiPart = http.MultipartFile(
-        //   'file',
-        //   stream,
-        //   length,
-        // );
-
-        var multiFile = await http.MultipartFile.fromPath(
-          "image",
-          file!.path,
+        var multiPart = http.MultipartFile(
+          'file',
+          stream,
+          length,
         );
 
-        request.files.add(multiFile);
+        // var multiFile = await http.MultipartFile.fromPath(
+        //   "file",
+        //   file!.path,
+        // );
+
+        request.files.add(multiPart);
 
 
         log('request.fields: ${request.fields}');
-        log('request.files length : ${request.files.length}');
-        log('request.files name : ${request.files.first.filename}');
-        log('request.files filetype : ${request.files.first.contentType}');
+        log('request.files: ${request.files}');
+        //log('request.files length : ${request.files.length}');
+        //log('request.files name : ${request.files.first.filename}');
+        //log('request.files filetype : ${request.files.first.contentType}');
         log('request.headers: ${request.headers}');
 
 

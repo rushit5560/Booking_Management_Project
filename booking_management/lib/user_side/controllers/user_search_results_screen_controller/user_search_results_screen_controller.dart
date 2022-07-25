@@ -44,8 +44,8 @@ class UserSearchResultsScreenController extends GetxController {
         "?category=$searchText" +
         "&location=$locationText" +
         "&rating=" +
-        "&CurrentLatitude=${UserDetails.latitude}" +
-        "&CurrentLongitude=${UserDetails.longitude}" +
+        "&CurrentLatitude=-37.815338" +
+        "&CurrentLongitude=144.963226" +
         "&Distance=$distance";
 
     log("Search Vendor List API URL : $url");

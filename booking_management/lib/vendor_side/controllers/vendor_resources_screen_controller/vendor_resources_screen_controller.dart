@@ -101,18 +101,18 @@ class VendorResourcesScreenController extends GetxController {
     log("Add Resources API URL : $url");
 
     try {
-      Map<String, String> headers = <String,String>{
-        'Authorization': UserDetails.apiToken
-      };
+      // Map<String, String> headers = <String,String>{
+      //   'Authorization': UserDetails.apiToken
+      // };
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
-
       var stream = http.ByteStream(addFile!.openRead());
       stream.cast();
-
       var length = await addFile!.length();
 
-      request.headers.addAll(headers);
+      request.files.add(await http.MultipartFile.fromPath("Image", addFile!.path));
+
+      request.headers.addAll(apiHeader.headers);
 
       request.fields['ResourceName'] = resourceNameFieldController.text.trim();
       request.fields['Details'] = resourceDetailsFieldController.text.trim();
@@ -130,10 +130,7 @@ class VendorResourcesScreenController extends GetxController {
       // request.fields['CreatedBy'] = UserDetails.uniqueId;
       // request.fields['VendorId'] = "${UserDetails.tableWiseId}";
 
-      log("Fields : ${request.fields}");
-      log("request.files: ${request.files}");
-      log("headers : $headers");
-      log('request.headers: ${request.headers}');
+
       //log('request.headers: ${request}');
 
       var multiPart = http.MultipartFile(
@@ -143,6 +140,11 @@ class VendorResourcesScreenController extends GetxController {
       );
 
       request.files.add(multiPart);
+      log("Fields : ${request.fields}");
+      log("request.files: ${request.files}");
+      //log("headers : $headers");
+      log('request.headers: ${request.headers}');
+
 
       var response = await request.send();
       log('response: ${response.request}');
@@ -225,6 +227,8 @@ class VendorResourcesScreenController extends GetxController {
         var length = await file!.length();
 
         request.headers.addAll(apiHeader.headers);
+        request.files.add(await http.MultipartFile.fromPath("Image", file!.path));
+
 
         request.fields['ResourceName'] = updateResourceNameFieldController.text.trim();
         request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
@@ -237,6 +241,7 @@ class VendorResourcesScreenController extends GetxController {
 
 
         log("Fields : ${request.fields}");
+        log("Files : ${request.files}");
         log("headers : ${apiHeader.headers}");
 
         var multiPart = http.MultipartFile(
@@ -244,12 +249,18 @@ class VendorResourcesScreenController extends GetxController {
           stream,
           length,
         );
+        // var multiPart = await http.MultipartFile.fromPath(
+        //   "Image",
+        //   file!.path,
+        // );
+
 
         request.files.add(multiPart);
 
         var response = await request.send();
 
         response.stream.transform(utf8.decoder).listen((value) {
+          log('value: $value');
           UpdateVendorResourceModel updateVendorResourceModel = UpdateVendorResourceModel.fromJson(json.decode(value));
           isSuccessStatus = updateVendorResourceModel.success.obs;
           log("Code : ${updateVendorResourceModel.statusCode}");

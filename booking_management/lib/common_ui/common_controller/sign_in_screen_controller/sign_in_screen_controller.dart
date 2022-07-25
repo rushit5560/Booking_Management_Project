@@ -22,7 +22,8 @@ import '../../../common_modules/constants/user_details.dart';
 class SignInScreenController extends GetxController {
   SignInRoute signInRoute = Get.arguments ?? SignInRoute.none;
   RxBool isLoading = false.obs;
-  RxInt isStatus = 0.obs;
+  RxBool isSuccessStatus = false.obs;
+  // RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
@@ -45,10 +46,10 @@ class SignInScreenController extends GetxController {
       http.Response response = await http.post(Uri.parse(url));
       log('Response : ${response.body}');
 
-      if(response.body.toString().contains("Subscription pending")) {
-        Get.to(() => VendorSubscriptionPlanScreen());
-        //Get.to(() => VendorIndexScreen());
-      }
+      // if(response.body.toString().contains("Subscription pending")) {
+      //   //Get.to(() => VendorSubscriptionPlanScreen());
+      //   Get.to(() => VendorIndexScreen());
+      // }
 
       if(response.body.toString().contains("Please confirm your email")) {
         SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
@@ -62,16 +63,18 @@ class SignInScreenController extends GetxController {
       }
       else {
         SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
-        isStatus = signInModel.statusCode.obs;
+        // isStatus = signInModel.statusCode.obs;
+        isSuccessStatus = signInModel.success.obs;
 
-        log("status: $isStatus");
+        log("status: $isSuccessStatus");
 
-        if (isStatus.value == 200) {
+        if (isSuccessStatus.value) {
           if (signInModel.message.toString().contains("not Verified")) {
             Get.snackbar(signInModel.message, '');
-          } else if (signInModel.message.contains("Invalid login attempt")) {
+          } /*else if (signInModel.message.contains("Invalid login attempt")) {
             Get.snackbar(signInModel.message, '');
-          } else if (signInModel.role[0] == "Customer") {
+          }*/
+          else if (signInModel.role[0] == "Customer") {
             log('customer side');
             Get.snackbar(signInModel.message, '');
 
@@ -109,8 +112,10 @@ class SignInScreenController extends GetxController {
             }
 
             //Get.snackbar(signInModel.message, '');
-          } else if (signInModel.role[0] == "Vendor") {
+          }
+          else if (signInModel.role[0] == "Vendor") {
             log('Vendor side');
+            log('Api token: ${signInModel.data.apiToken}');
             Get.snackbar(signInModel.message, '');
             sharedPreferenceData.setUserLoginDetailsInPrefs(
                 apiToken: signInModel.data.apiToken,
@@ -150,6 +155,7 @@ class SignInScreenController extends GetxController {
         else {
           log('SignIn False False');
           Get.snackbar(signInModel.message, '');
+          log("asdasdsd");
         }
       }
     } catch (e) {

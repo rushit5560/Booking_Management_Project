@@ -9,6 +9,7 @@ class SignInModel {
     required this.statusCode,
     required this.success,
     required this.message,
+    required this.userId,
     required this.data,
     required this.role,
     required this.vendor,
@@ -19,6 +20,7 @@ class SignInModel {
   int statusCode;
   bool success;
   String message;
+  String userId;
   Data data;
   List<String> role;
   Vendor vendor;
@@ -29,6 +31,7 @@ class SignInModel {
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     message: json["message"] ?? "",
+    userId: json["userId"] ?? "",
     data: Data.fromJson(json["data"] ?? {}),
     role: List<String>.from(json["role"].map((x) => x)),
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
@@ -40,6 +43,7 @@ class SignInModel {
     "statusCode": statusCode,
     "success": success,
     "message": message,
+    "userId": userId,
     "data": data.toJson(),
     "role": List<dynamic>.from(role.map((x) => x)),
     "vendor": vendor.toJson(),

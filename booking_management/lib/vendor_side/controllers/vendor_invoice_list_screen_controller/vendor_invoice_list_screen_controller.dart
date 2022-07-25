@@ -50,6 +50,9 @@ class VendorInvoiceListScreenController extends GetxController {
         allInvoiceList.clear();
 
         allInvoiceList = getAllInvoiceModel.data;
+        for(int i=0; i < allInvoiceList.length; i++){
+
+        }
         log("getAllOrdersModel : ${allInvoiceList.length}");
 
       } else {

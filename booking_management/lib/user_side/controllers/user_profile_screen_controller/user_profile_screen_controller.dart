@@ -56,11 +56,11 @@ class UserProfileScreenController extends GetxController {
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         var stream = http.ByteStream(file!.openRead());
-        stream.cast()
-        .first;
+        stream.cast();
 
         var length = await file!.length();
 
+        request.files.add(await http.MultipartFile.fromPath("image", file!.path));
         request.headers.addAll(headers);
 
         request.fields['Id'] = UserDetails.tableWiseId.toString();
@@ -69,25 +69,26 @@ class UserProfileScreenController extends GetxController {
         request.fields['Gender'] = gender.value;
         request.fields['ModifiedBy'] = UserDetails.uniqueId;
 
-        // var multiPart = http.MultipartFile(
-        //   'image',
-        //   stream,
-        //   length,
-        //
-        //   filename: "",
-        // );
+        var multiPart = http.MultipartFile(
+          'image',
+          stream,
+          length,
 
-        var multiFile = await http.MultipartFile.fromPath(
-         "image",
-          file!.path,
+          //filename: "",
         );
 
-        request.files.add(multiFile);
+        // var multiFile = await http.MultipartFile.fromPath(
+        //  "image",
+        //   file!.path,
+        // );
+
+        request.files.add(multiPart);
 
         log('request.fields: ${request.fields}');
-        log('request.files length : ${request.files.length}');
-        log('request.files name : ${request.files.first.filename}');
-        log('request.files filetype : ${request.files.first.contentType}');
+        log('request.files: ${request.files}');
+        //log('request.files length : ${request.files.length}');
+        //log('request.files name : ${request.files.first.filename}');
+        //log('request.files filetype : ${request.files.first.contentType}');
         log('request.headers: ${request.headers}');
 
         var response = await request.send();

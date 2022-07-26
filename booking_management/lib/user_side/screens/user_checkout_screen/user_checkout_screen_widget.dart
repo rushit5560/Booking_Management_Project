@@ -157,7 +157,7 @@ class BookingSummaryModule extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(screenController.bookingPrice.toString()),
+                  Text("\$${screenController.bookingPrice.toString()}"),
                 ],
               ).commonSymmetricPadding(horizontal: 10)
             ],
@@ -181,7 +181,7 @@ class BookingSummaryModule extends StatelessWidget {
           ).commonSymmetricPadding(horizontal: 10),
 
 
-          screenController.isPriceDisplay
+          /*screenController.isPriceDisplay
               ? Column(
                   children: [
                     const SizedBox(height: 10),
@@ -201,7 +201,7 @@ class BookingSummaryModule extends StatelessWidget {
                     ).commonSymmetricPadding(horizontal: 10)
                   ],
                 )
-              : Container(),
+              : Container(),*/
         ],
       ).commonAllSidePadding(5),
     );

@@ -41,7 +41,7 @@ class UserCheckoutScreenController extends GetxController {
   String bookingTime = "";
   String endBookingTime = "";
   String endBookingDate = "";
-  int bookingPrice = 0;
+  String bookingPrice = "";
   int bookingQty = 0;
   int bookingTotalAmount = 0;
   int transactionId = 0;
@@ -128,8 +128,8 @@ class UserCheckoutScreenController extends GetxController {
         String endTime1 = endBookDate.substring(11, endBookDate.length - 3);
         endBookingTime = endTime1;
         //
-        // bookingPrice = checkoutSummaryModel.workerList.price.toInt();
-        // bookingQty = checkoutSummaryModel.workerList.quantity;
+        bookingPrice = checkoutSummaryModel.workerList.price.toString();
+        bookingQty = checkoutSummaryModel.workerList.quantity;
         // bookingTotalAmount = bookingPrice * bookingQty;
         //
         log("vendorName : $vendorName");

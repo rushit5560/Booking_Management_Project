@@ -1,5 +1,6 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/user_side/model/vendor_details_screen_models/country_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:flutter/material.dart';
@@ -190,7 +191,6 @@ class FullNameModule extends StatelessWidget {
     );
   }
 }
-
 
 class LastNameModule extends StatelessWidget {
   LastNameModule({Key? key}) : super(key: key);
@@ -406,6 +406,65 @@ class PasswordFieldModule extends StatelessWidget {
   }
 }
 
+class CountrySelectModule extends StatelessWidget {
+  CountrySelectModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorSignUpScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<CountryData>(
+        // Initial Value
+        value: screenController.countryData,
+
+        // Down Arrow Icon
+        icon: const Icon(Icons.keyboard_arrow_down),
+        style: TextStyle(color: Colors.grey),
+        isExpanded: true,
+
+        // Array list of items
+        items: screenController.countriesList.map((value) {
+          return DropdownMenuItem(
+            value: value,
+            child: Text(value.country!),
+          );
+        }).toList(),
+
+        // screenController.countriesList.map((String items) {
+        //   return DropdownMenuItem(
+        //     value: items,
+        //     child: Text(items),
+        //   );
+        // }).toList(),
+        // After selecting the desired option,it will
+        // change button value to selected value
+        onChanged: (newValue) {
+          screenController.isLoading(true);
+          screenController.countryData = newValue!;
+          screenController.isLoading(false);
+          // setState(() {
+          //   dropdownvalue = newValue!;
+          // });
+        },
+      ),
+    );
+
+    // Obx(
+    //   () => TextFormField(
+    //     controller: screenController.passwordFieldController,
+    //     keyboardType: TextInputType.text,
+    //     obscureText: screenController.isPasswordVisible.value,
+    //     validator: (value) => FieldValidator().validatePassword(value!),
+    //     decoration: vendorSignUpFormFieldDecoration(
+    //       hintText: 'Password',
+    //       controller: screenController,
+    //       index: 1,
+    //     ),
+    //   ),
+    // );
+  }
+}
+
 class ConfirmPasswordFieldModule extends StatelessWidget {
   ConfirmPasswordFieldModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorSignUpScreenController>();
@@ -565,10 +624,11 @@ class TermsAndConditionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: (){
+        onTap: () {
           Get.to(() => TermsAndConditionScreen());
         },
-        child: Text("Read our terms and conditions here", style: const TextStyle(color: Colors.blue)));
+        child: Text("Read our terms and conditions here",
+            style: const TextStyle(color: Colors.blue)));
   }
 }
 
@@ -588,15 +648,16 @@ class VendorSignUpButtonModule extends StatelessWidget {
             }
           },
           child: Container(
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    color: Colors.grey.shade300,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ]),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
               child: Text(
@@ -623,16 +684,16 @@ class SkipButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-            onTap: (){
-              Get.offAll(()=> IndexScreen());
-            },
-            child: const Text(
-                "Skip",
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontSize: 16,
-              ),
+          onTap: () {
+            Get.offAll(() => IndexScreen());
+          },
+          child: const Text(
+            "Skip",
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 16,
             ),
+          ),
         ),
       ],
     );

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/user_side/model/vendor_details_screen_models/country_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_sign_up_model/vendor_sign_up_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,30 +17,84 @@ class VendorSignUpScreenController extends GetxController {
   RxBool isPasswordVisible = true.obs;
   RxBool isCPasswordVisible = true.obs;
 
-
-
   RxString businessType = 'Business'.obs;
   GlobalKey<FormState> vendorSignUpFormKey = GlobalKey<FormState>();
-  final TextEditingController userNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController fullNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController lastNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController businessNameFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController emailFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController mobileFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController businessAddress1FieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController businessAddress2FieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController streetFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController stateFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController countryFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController postCodeFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController subUrbFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController businessIdFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController passwordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
-  final TextEditingController cPasswordFieldController = TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController userNameFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController fullNameFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController lastNameFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController businessNameFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController emailFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController mobileFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController businessAddress1FieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController businessAddress2FieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController streetFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController stateFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController countryFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController postCodeFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController subUrbFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController businessIdFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController passwordFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
+  final TextEditingController cPasswordFieldController =
+      TextEditingController(/*text: "demo@gmail.com"*/);
   RxBool vendorPortal = false.obs;
   RxBool termsAndConditionCheckBox = false.obs;
   RxBool priceCheckBox = false.obs;
   RxBool serviceCheckBox = false.obs;
+  RxBool isSuccessStatus = false.obs;
+  RxString selectedCountry = "".obs;
+
+  List<CountryData> countriesList = [CountryData()];
+  CountryData? countryData;
+
+  Future<void> getAllCountries() async {
+    isLoading(true);
+    String url = ApiUrl.getAllCountriesApi;
+    log("get all countries Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      log("Response : ${response.body}");
+
+      CountryModel countriesModel =
+          CountryModel.fromJson(json.decode(response.body));
+      isSuccessStatus = countriesModel.success.obs;
+
+      if (isSuccessStatus.value == true) {
+        countriesList.clear();
+        countriesList.addAll(countriesModel.workerList);
+        countryData = countriesList[0];
+        log("countryData :${countryData!.country}");
+      } else {
+        log("countries get false Else");
+      }
+    } catch (e) {
+      log("countries get Error ::: $e");
+      rethrow;
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAllCountries();
+  }
 
   vendorSignUpFunction() async {
     isLoading(true);
@@ -47,7 +102,7 @@ class VendorSignUpScreenController extends GetxController {
     String url = ApiUrl.vendorSignUpApi;
     log('Url : $url');
 
-    try{
+    try {
       /*Map<String, dynamic> data = {
         "FirstName": firstName,
         "LastName": lastName,
@@ -98,8 +153,8 @@ class VendorSignUpScreenController extends GetxController {
       request.fields['TermsConditions'] = termsAndConditionCheckBox.toString();
       request.fields['IsServiceSlots'] = serviceCheckBox.toString();
       request.fields['IsPriceDisplay'] = priceCheckBox.toString();
+      request.fields['Country'] = countryData!.id.toString();
       request.fields['BusinessName'] = businessNameFieldController.text.trim();
-
 
       log('request.fields: ${request.fields}');
       log('request.files: ${request.files}');
@@ -116,21 +171,22 @@ class VendorSignUpScreenController extends GetxController {
       log('response: ${response.request}');
 
       response.stream.transform(utf8.decoder).listen((value) {
-        VendorSignUpModel response1 = VendorSignUpModel.fromJson(json.decode(value));
+        VendorSignUpModel response1 =
+            VendorSignUpModel.fromJson(json.decode(value));
         log('response1 ::::::${response1.statusCode}');
         isStatus = response1.statusCode.obs;
         log('status : $isStatus');
         log('success : ${response1.data}');
 
-        if(isStatus.value == 200){
+        if (isStatus.value == 200) {
           //UserDetails().vendorId = response1.data.id;
           //log("Vendor Id: ${UserDetails().vendorId}");
-          Fluttertoast.showToast(msg: "${response1.message}. Please confirm your email.");
+          Fluttertoast.showToast(
+              msg: "${response1.message}. Please confirm your email.");
           clearSignUpFieldsFunction();
           Get.off(SignInScreen(), transition: Transition.zoom);
-
         } else {
-           Fluttertoast.showToast(msg: response1.message);
+          Fluttertoast.showToast(msg: response1.message);
           log('False False');
         }
       });
@@ -151,7 +207,7 @@ class VendorSignUpScreenController extends GetxController {
       //   print('SignUp False False');
       // }
 
-    } catch(e) {
+    } catch (e) {
       log('SignUp Error : $e');
     } finally {
       isLoading(false);
@@ -178,5 +234,4 @@ class VendorSignUpScreenController extends GetxController {
     priceCheckBox(false);
     serviceCheckBox(false);
   }
-
 }

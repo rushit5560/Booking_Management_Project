@@ -13,9 +13,7 @@ class VendorSubscriptionReportScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
   ApiHeader apiHeader = ApiHeader();
 
-
   List subscriptionReportList = [];
-
 
   getSubscriptionReportFunction() async {
     isLoading(true);
@@ -23,37 +21,37 @@ class VendorSubscriptionReportScreenController extends GetxController {
     log("Appointment Report Api Url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment Report Response : ${response.body}");
 
-      VendorSubscriptionReportModel vendorSubscriptionReportModel = VendorSubscriptionReportModel.fromJson(json.decode(response.body));
+      VendorSubscriptionReportModel vendorSubscriptionReportModel =
+          VendorSubscriptionReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = vendorSubscriptionReportModel.success.obs;
       log('isSuccessStatus: $isSuccessStatus');
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         subscriptionReportList.clear();
+
+        // print(vendorSubscriptionReportModel)
 
         subscriptionReportList = vendorSubscriptionReportModel.workerList;
         log("subscriptionReportList : ${subscriptionReportList.length}");
+        // log("transaction by : ${subscriptionReportList}");
       } else {
         log("getSubscriptionReportFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getSubscriptionReportFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
 
   @override
   void onInit() {
     getSubscriptionReportFunction();
     super.onInit();
   }
-
-
 }

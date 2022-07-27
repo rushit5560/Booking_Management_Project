@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
 
-
 /// Booking Summary
 class BookingSummaryModule extends StatelessWidget {
   BookingSummaryModule({Key? key}) : super(key: key);
@@ -20,8 +19,8 @@ class BookingSummaryModule extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          // color: Colors.black
-        ),
+            // color: Colors.black
+            ),
       ),
       child: Column(
         children: [
@@ -33,15 +32,15 @@ class BookingSummaryModule extends StatelessWidget {
                   height: 75,
                   width: 75,
                   decoration: BoxDecoration(
-                    // image: DecorationImage(
-                    //   image: NetworkImage(imgUrl),
-                    //   fit: BoxFit.cover,
-                    // ),
-                  ),
-                  child: Image.network(imgUrl,
-                      errorBuilder: (context, error, st){
-                        return Image.asset(AppImages.logoImg);
-                      }),
+                      // image: DecorationImage(
+                      //   image: NetworkImage(imgUrl),
+                      //   fit: BoxFit.cover,
+                      // ),
+                      ),
+                  child:
+                      Image.network(imgUrl, errorBuilder: (context, error, st) {
+                    return Image.asset(AppImages.logoImg);
+                  }),
                 ),
               ),
               const SizedBox(width: 10),
@@ -52,7 +51,7 @@ class BookingSummaryModule extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        screenController.vendorName,
+                      screenController.vendorName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -87,8 +86,6 @@ class BookingSummaryModule extends StatelessWidget {
                     //     fontSize: 16,
                     //   ),
                     // ),
-
-
                   ],
                 ),
               ),
@@ -109,7 +106,6 @@ class BookingSummaryModule extends StatelessWidget {
               Text(screenController.bookingDate),
             ],
           ).commonSymmetricPadding(horizontal: 10),
-
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,7 +121,6 @@ class BookingSummaryModule extends StatelessWidget {
               Text(screenController.bookingTime),
             ],
           ).commonSymmetricPadding(horizontal: 10),
-
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,29 +136,27 @@ class BookingSummaryModule extends StatelessWidget {
               Text(screenController.endBookingTime),
             ],
           ).commonSymmetricPadding(horizontal: 10),
-
           screenController.isPriceDisplay
-          ? Column(
-            children: [
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Price",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text("\$${screenController.bookingPrice.toString()}"),
-                ],
-              ).commonSymmetricPadding(horizontal: 10)
-            ],
-          )
-          : Container(),
-
+              ? Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Price",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text("\$${screenController.bookingPrice.toString()}"),
+                      ],
+                    ).commonSymmetricPadding(horizontal: 10)
+                  ],
+                )
+              : Container(),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,7 +172,6 @@ class BookingSummaryModule extends StatelessWidget {
               Text(screenController.bookingQty.toString()),
             ],
           ).commonSymmetricPadding(horizontal: 10),
-
 
           /*screenController.isPriceDisplay
               ? Column(
@@ -217,53 +209,44 @@ class PersonalInformationFormModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: screenController.checkOutFormKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: screenController.fNameFieldController,
-            keyboardType: TextInputType.text,
-            validator: (value) => FieldValidator().validateFirstName(value!),
-            decoration: checkoutFormFieldDecoration(hintText: 'First Name'),
-          ),
+      child: Column(children: [
+        TextFormField(
+          controller: screenController.fNameFieldController,
+          keyboardType: TextInputType.text,
+          validator: (value) => FieldValidator().validateFirstName(value!),
+          decoration: checkoutFormFieldDecoration(hintText: 'First Name'),
+        ),
 
-          const SizedBox(height: 5),
-          TextFormField(
-            controller: screenController.emailFieldController,
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) => FieldValidator().validateEmail(value!),
-            decoration: checkoutFormFieldDecoration(hintText: 'Email'),
-          ),
+        const SizedBox(height: 5),
+        TextFormField(
+          controller: screenController.emailFieldController,
+          keyboardType: TextInputType.emailAddress,
+          validator: (value) => FieldValidator().validateEmail(value!),
+          decoration: checkoutFormFieldDecoration(hintText: 'Email'),
+        ),
 
-          const SizedBox(height: 5),
-          TextFormField(
-            controller: screenController.phoneFieldController,
-            keyboardType: TextInputType.phone,
-            maxLength: 10,
-            validator: (value) => FieldValidator().validateMobile(value!),
-            decoration: checkoutFormFieldDecoration(hintText: 'Mobile No'),
-          ),
+        const SizedBox(height: 5),
+        TextFormField(
+          controller: screenController.phoneFieldController,
+          keyboardType: TextInputType.phone,
+          maxLength: 10,
+          validator: (value) => FieldValidator().validateMobile(value!),
+          decoration: checkoutFormFieldDecoration(hintText: 'Mobile No'),
+        ),
 
-          const SizedBox(height: 5),
-          TextFormField(
-            controller: screenController.notesFieldController,
-            keyboardType: TextInputType.text,
-            // validator: (value) => FieldValidator().validateNotes(value!),
-            decoration: checkoutFormFieldDecoration(hintText: 'Notes'),
-          ),
+        const SizedBox(height: 5),
+        TextFormField(
+          controller: screenController.notesFieldController,
+          keyboardType: TextInputType.text,
+          // validator: (value) => FieldValidator().validateNotes(value!),
+          decoration: checkoutFormFieldDecoration(hintText: 'Notes'),
+        ),
 
-          // const SizedBox(height: 10),
-
-
-        ]
-      ),
+        // const SizedBox(height: 10),
+      ]),
     );
   }
-
-
-
 }
-
-
 
 /// Confirm And Pay Button
 class ConfirmAndPayButtonModule extends StatelessWidget {
@@ -276,13 +259,13 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
-        if(screenController.checkOutFormKey.currentState!.validate()) {
-          /*if(screenController.isPriceDisplay) {
+        if (screenController.checkOutFormKey.currentState!.validate()) {
+          if (screenController.isPriceDisplay) {
             await screenController.makePayment();
           } else {
             await screenController.checkOutSubmitFunction();
-          }*/
-          await screenController.checkOutSubmitFunction();
+          }
+          // await screenController.checkOutSubmitFunction();
         }
       },
       child: Container(
@@ -297,8 +280,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
-              ]
-          ),
+              ]),
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(

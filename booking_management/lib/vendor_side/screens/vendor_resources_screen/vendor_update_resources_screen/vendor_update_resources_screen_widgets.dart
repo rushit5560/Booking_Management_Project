@@ -9,10 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-
-
 class UpdateResourceFormModule extends StatelessWidget {
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   UpdateResourceFormModule({Key? key}) : super(key: key);
 
@@ -32,10 +31,10 @@ class UpdateResourceFormModule extends StatelessWidget {
             ResourcePriceFieldModule(),
             const SizedBox(height: 20),
             EventCheckBoxModule(),
-             const SizedBox(height: 20),
-             ResourceCapacityFieldModule(),
+            const SizedBox(height: 20),
+            ResourceCapacityFieldModule(),
 
-             //ServiceShortDesFieldModule(),
+            //ServiceShortDesFieldModule(),
             // const SizedBox(height: 20),
             // ServiceLongDesFieldModule(),
             const SizedBox(height: 30),
@@ -46,13 +45,12 @@ class UpdateResourceFormModule extends StatelessWidget {
       ),
     ).commonAllSidePadding(10);
   }
-
-
 }
 
 class ResourceProfileModule extends StatelessWidget {
   ResourceProfileModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
   final ImagePicker imagePicker = ImagePicker();
 
   @override
@@ -61,66 +59,72 @@ class ResourceProfileModule extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       clipBehavior: Clip.none,
       children: [
-        vendorResourcesScreenController.file != null
-            ? Container(
-          height: 150, width: 150,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
+        Container(
+          height: 150,
+          width: 150,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),
               //border: Border.all(color: AppColors.colorLightGrey),
               boxShadow: [
                 BoxShadow(
                     blurRadius: 1,
                     blurStyle: BlurStyle.outer,
-                    color: Colors.grey.shade500
-                )
-              ]
-          ),
+                    color: Colors.grey.shade500)
+              ]),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: Image.file(vendorResourcesScreenController.file!,
-                height: 100, width: 100, fit: BoxFit.cover),
+            child: vendorResourcesScreenController.file != null
+                ? Image.file(
+                    vendorResourcesScreenController.file!,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    vendorResourcesScreenController.updatePhotoUrl,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
           ),
         )
 
         /*ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.file(vendorResourcesScreenController.file!, height: 100, width: 100, fit: BoxFit.fill))*/
-            : Container(
-          height: 150, width: 150,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              //border: Border.all(color: AppColors.colorLightGrey),
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 1,
-                    blurStyle: BlurStyle.outer,
-                    color: Colors.grey.shade500
-                )
-              ]
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
-                height: 100, width: 100, fit: BoxFit.cover),
-          ),
-        )
-
+        //     : Container(
+        //   height: 150, width: 150,
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(10.0),
+        //       //border: Border.all(color: AppColors.colorLightGrey),
+        //       boxShadow: [
+        //         BoxShadow(
+        //             blurRadius: 1,
+        //             blurStyle: BlurStyle.outer,
+        //             color: Colors.grey.shade500
+        //         )
+        //       ]
+        //   ),
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(10.0),
+        //     child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
+        //         height: 100, width: 100, fit: BoxFit.cover),
+        //   ),
+        // )
 
         /*ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
-                height: 100, width: 100, fit: BoxFit.fill))*/,
-
+                height: 100, width: 100, fit: BoxFit.fill))*/
+        ,
         GestureDetector(
-          onTap: (){
+          onTap: () {
             openGallery();
           },
           child: Container(
-            height: 35, width: 35,
+            height: 35,
+            width: 35,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white
-            ),
+                borderRadius: BorderRadius.circular(5), color: Colors.white),
             child: const Icon(Icons.edit),
           ),
         ),
@@ -139,14 +143,16 @@ class ResourceProfileModule extends StatelessWidget {
       //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
       //renameImage();
       //});
-    } else {}
+    } else {
+      vendorResourcesScreenController.file = File("");
+    }
   }
 }
 
-
 class ResourceNameFieldModule extends StatelessWidget {
   ResourceNameFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +167,6 @@ class ResourceNameFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -181,9 +186,11 @@ class ResourceNameFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.updateResourceNameFieldController,
+              controller: vendorResourcesScreenController
+                  .updateResourceNameFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateResourceName(value!),
+              validator: (value) =>
+                  FieldValidator().validateResourceName(value!),
               decoration: serviceFormFieldDecoration(hintText: 'Resource Name'),
             ),
           ],
@@ -195,7 +202,8 @@ class ResourceNameFieldModule extends StatelessWidget {
 
 class ResourceDetailsModule extends StatelessWidget {
   ResourceDetailsModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +218,6 @@ class ResourceDetailsModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -230,10 +237,13 @@ class ResourceDetailsModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.updateResourceDetailsFieldController,
+              controller: vendorResourcesScreenController
+                  .updateResourceDetailsFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateResourceDetail(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Resource Details'),
+              validator: (value) =>
+                  FieldValidator().validateResourceDetail(value!),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Resource Details'),
             ),
           ],
         )
@@ -244,7 +254,8 @@ class ResourceDetailsModule extends StatelessWidget {
 
 class ResourcePriceFieldModule extends StatelessWidget {
   ResourcePriceFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +270,6 @@ class ResourcePriceFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -279,10 +289,12 @@ class ResourcePriceFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.updateResourcePriceFieldController,
+              controller: vendorResourcesScreenController
+                  .updateResourcePriceFieldController,
               keyboardType: TextInputType.number,
               validator: (value) => FieldValidator().validatePrice(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Resource Price'),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Resource Price'),
             ),
           ],
         )
@@ -293,7 +305,8 @@ class ResourcePriceFieldModule extends StatelessWidget {
 
 class ResourceCapacityFieldModule extends StatelessWidget {
   ResourceCapacityFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -308,7 +321,6 @@ class ResourceCapacityFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -328,11 +340,15 @@ class ResourceCapacityFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.updateResourceCapacityFieldController,
+              controller: vendorResourcesScreenController
+                  .updateResourceCapacityFieldController,
               keyboardType: TextInputType.number,
-              readOnly: vendorResourcesScreenController.updateEvent == true ? false : true,
+              readOnly: vendorResourcesScreenController.updateEvent == true
+                  ? false
+                  : true,
               // validator: (value) => FieldValidator().validatePrice(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Resource Capacity'),
             ),
           ],
         )
@@ -342,21 +358,25 @@ class ResourceCapacityFieldModule extends StatelessWidget {
 }
 
 class EventCheckBoxModule extends StatelessWidget {
-   EventCheckBoxModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  EventCheckBoxModule({Key? key}) : super(key: key);
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Obx(
-              () => Checkbox(
+          () => Checkbox(
             value: vendorResourcesScreenController.updateEvent.value,
             onChanged: (value) {
               vendorResourcesScreenController.isLoading(true);
-              vendorResourcesScreenController.updateEvent.value = !vendorResourcesScreenController.updateEvent.value;
-              if(vendorResourcesScreenController.updateEvent.value == false) {
-                vendorResourcesScreenController.updateResourceCapacityFieldController.clear();
+              vendorResourcesScreenController.updateEvent.value =
+                  !vendorResourcesScreenController.updateEvent.value;
+              if (vendorResourcesScreenController.updateEvent.value == false) {
+                vendorResourcesScreenController
+                    .updateResourceCapacityFieldController
+                    .clear();
               }
               vendorResourcesScreenController.isLoading(false);
               // if(vendorResourcesScreenController.isSundayOn.value == false) {
@@ -380,31 +400,30 @@ class EventCheckBoxModule extends StatelessWidget {
   }
 }
 
-
 class ResourceUpdateButton extends StatelessWidget {
   ResourceUpdateButton({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(vendorResourcesScreenController.resourceUpdateFormKey.currentState!.validate()) {
+        if (vendorResourcesScreenController.resourceUpdateFormKey.currentState!
+            .validate()) {
           await vendorResourcesScreenController.updateVendorResourceFunction();
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(

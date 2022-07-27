@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -10,10 +11,10 @@ import '../../../user_side/model/user_chat_list_screen_model/user_chat_list_scre
 import '../../../user_side/screens/user_conversation_screen/user_conversation_screen.dart';
 import '../../controllers/vendor_chat_list_screen_controller/vendor_chat_list_screen_controller.dart';
 
-
 class VendorChatListScreen extends StatelessWidget {
   VendorChatListScreen({Key? key}) : super(key: key);
-  final vendorChatListScreenController = Get.put(VendorChatListScreenController());
+  final vendorChatListScreenController =
+      Get.put(VendorChatListScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,8 @@ class VendorChatListScreen extends StatelessWidget {
             // ),
             Expanded(
               child: StreamBuilder<List<UserChatRoomListModel>>(
-                stream: vendorChatListScreenController.getChatRoomListFunction(),
+                stream:
+                    vendorChatListScreenController.getChatRoomListFunction(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text("Something went wrong! ${snapshot.error}");
@@ -69,15 +71,14 @@ class VendorChatListScreen extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-
           String oppositeUserUniqueId = "";
-          if(UserDetails.roleName == "Customer") {
+          if (UserDetails.roleName == "Customer") {
             oppositeUserUniqueId = singleMsg.vendorid!;
           } else {
             oppositeUserUniqueId = singleMsg.customerid!;
           }
 
-          Get.to(()=> UserConversationScreen(),
+          Get.to(() => UserConversationScreen(),
               transition: Transition.zoom,
               arguments: [
                 singleMsg.roomId,
@@ -99,8 +100,7 @@ class VendorChatListScreen extends StatelessWidget {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -111,24 +111,27 @@ class VendorChatListScreen extends StatelessWidget {
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(
-                         // borderRadius: BorderRadius.circular(15),
-                          // image: const DecorationImage(
-                          //   image: AssetImage(AppImages.vendorImg),
-                          //   fit: BoxFit.cover,
-                          // ),
-                        ),
+                            // borderRadius: BorderRadius.circular(15),
+                            // image: const DecorationImage(
+                            //   image: AssetImage(AppImages.vendorImg),
+                            //   fit: BoxFit.cover,
+                            // ),
+                            ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.network(vendorChatListScreenController.profileImage),
+                          child: Image.network(
+                            vendorChatListScreenController.profileImage,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(AppImages.profileImg);
+                            },
+                          ),
                         ),
                       ),
                       // const SizedBox(width: 10),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               singleMsg.createdName!,
@@ -163,5 +166,4 @@ class VendorChatListScreen extends StatelessWidget {
       ),
     );
   }
-
 }

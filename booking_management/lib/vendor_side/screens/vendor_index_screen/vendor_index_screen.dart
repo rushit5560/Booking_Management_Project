@@ -66,11 +66,11 @@ class VendorIndexScreen extends StatelessWidget {
                   child: Container(
                     // margin: const EdgeInsets.only(top: 5),
                     // padding: const EdgeInsets.all(5),
-                    height: 42,
+                    height: 45,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.blackColor.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
                       // gradient: LinearGradient(
                       //   colors: [
                       //     AppColors.whiteColor.withOpacity(0.4),
@@ -138,12 +138,13 @@ class VendorIndexScreen extends StatelessWidget {
                   child: Container(
                     // margin: const EdgeInsets.only(top: 5),
                     // padding: const EdgeInsets.all(5),
-                    height: 42,
+                    height: 45,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     //width: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.blackColor.withOpacity(0.15)),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -200,12 +201,13 @@ class VendorIndexScreen extends StatelessWidget {
                   child: Container(
                     // margin: const EdgeInsets.only(top: 5),
                     // padding: const EdgeInsets.all(5),
-                    height: 42,
+                    height: 45,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     //width: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.blackColor.withOpacity(0.15)),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -262,12 +264,13 @@ class VendorIndexScreen extends StatelessWidget {
                   child: Container(
                     // margin: const EdgeInsets.only(top: 5),
                     // padding: const EdgeInsets.all(5),
-                    height: 42,
+                    height: 45,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     //width: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.blackColor.withOpacity(0.15)),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(

@@ -14,7 +14,8 @@ import 'package:image_picker/image_picker.dart';
 
 class AddResourceFormModule extends StatelessWidget {
   AddResourceFormModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +29,19 @@ class AddResourceFormModule extends StatelessWidget {
             const SizedBox(height: 20),
             ResourceNameFieldModule(),
             const SizedBox(height: 20),
-             ResourceDetailsModule(),
+            ResourceDetailsModule(),
             const SizedBox(height: 20),
             ResourcePriceFieldModule(),
             const SizedBox(height: 20),
             IsEventCheckBoxModule(),
-             const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             ResourceCapacityFieldModule(),
 
             // ServiceShortDesFieldModule(),
             // const SizedBox(height: 20),
             // ServiceLongDesFieldModule(),
-             const SizedBox(height: 30),
+            const SizedBox(height: 30),
             ResourceCreateButton(),
             const SizedBox(height: 10),
           ],
@@ -52,7 +53,8 @@ class AddResourceFormModule extends StatelessWidget {
 
 class ResourceProfileModule extends StatelessWidget {
   ResourceProfileModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
   final ImagePicker imagePicker = ImagePicker();
 
   @override
@@ -61,24 +63,24 @@ class ResourceProfileModule extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       clipBehavior: Clip.none,
       children: [
-        vendorResourcesScreenController.addFile != null ?
-        ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.file(vendorResourcesScreenController.addFile!, height: 100, width: 100, fit: BoxFit.fill)) :
-        ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(AppImages.profileImg, height: 100, width: 100, fit: BoxFit.fill)),
-
+        vendorResourcesScreenController.addFile != null
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.file(vendorResourcesScreenController.addFile!,
+                    height: 100, width: 100, fit: BoxFit.fill))
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(AppImages.profileImg,
+                    height: 100, width: 100, fit: BoxFit.fill)),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             openGallery();
           },
           child: Container(
-            height: 35, width: 35,
+            height: 35,
+            width: 35,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white
-            ),
+                borderRadius: BorderRadius.circular(5), color: Colors.white),
             child: const Icon(Icons.edit),
           ),
         ),
@@ -101,10 +103,10 @@ class ResourceProfileModule extends StatelessWidget {
   }
 }
 
-
 class ResourceNameFieldModule extends StatelessWidget {
   ResourceNameFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +121,6 @@ class ResourceNameFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -139,9 +140,11 @@ class ResourceNameFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.resourceNameFieldController,
+              controller:
+                  vendorResourcesScreenController.resourceNameFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateResourceName(value!),
+              validator: (value) =>
+                  FieldValidator().validateResourceName(value!),
               decoration: serviceFormFieldDecoration(hintText: 'Resource Name'),
             ),
           ],
@@ -153,7 +156,8 @@ class ResourceNameFieldModule extends StatelessWidget {
 
 class ResourceDetailsModule extends StatelessWidget {
   ResourceDetailsModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +172,6 @@ class ResourceDetailsModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -188,10 +191,13 @@ class ResourceDetailsModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.resourceDetailsFieldController,
+              controller: vendorResourcesScreenController
+                  .resourceDetailsFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateResourceDetail(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Resource Details'),
+              validator: (value) =>
+                  FieldValidator().validateResourceDetail(value!),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Resource Details'),
             ),
           ],
         )
@@ -202,7 +208,8 @@ class ResourceDetailsModule extends StatelessWidget {
 
 class ResourcePriceFieldModule extends StatelessWidget {
   ResourcePriceFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +224,6 @@ class ResourcePriceFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -237,10 +243,12 @@ class ResourcePriceFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController.resourcePriceFieldController,
+              controller:
+                  vendorResourcesScreenController.resourcePriceFieldController,
               keyboardType: TextInputType.number,
               validator: (value) => FieldValidator().validatePrice(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Resource Price'),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Resource Price'),
             ),
           ],
         )
@@ -252,7 +260,8 @@ class ResourcePriceFieldModule extends StatelessWidget {
 class ResourceCapacityFieldModule extends StatelessWidget {
   ResourceCapacityFieldModule({Key? key}) : super(key: key);
 
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +276,6 @@ class ResourceCapacityFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -286,13 +294,15 @@ class ResourceCapacityFieldModule extends StatelessWidget {
                 ],
               ),
             ),
-            Obx(()=>
-               TextFormField(
+            Obx(
+              () => TextFormField(
                 readOnly: !vendorResourcesScreenController.isEvent.value,
-                controller: vendorResourcesScreenController.resourceCapacityFieldController,
+                controller: vendorResourcesScreenController
+                    .resourceCapacityFieldController,
                 keyboardType: TextInputType.number,
                 // validator: (value) => FieldValidator().validateCapacity(value!),
-                decoration: serviceFormFieldDecoration(hintText: 'Resource Capacity'),
+                decoration:
+                    serviceFormFieldDecoration(hintText: 'Resource Capacity'),
               ),
             ),
           ],
@@ -304,22 +314,24 @@ class ResourceCapacityFieldModule extends StatelessWidget {
 
 class IsEventCheckBoxModule extends StatelessWidget {
   IsEventCheckBoxModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
-
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Obx(() => Checkbox(
+        Obx(
+          () => Checkbox(
             value: vendorResourcesScreenController.isEvent.value,
             onChanged: (value) {
-               vendorResourcesScreenController.isEvent.value =
-               !vendorResourcesScreenController.isEvent.value;
+              vendorResourcesScreenController.isEvent.value =
+                  !vendorResourcesScreenController.isEvent.value;
 
-               if(vendorResourcesScreenController.isEvent.value == false) {
-                 vendorResourcesScreenController.resourceCapacityFieldController.clear();
-               }
+              if (vendorResourcesScreenController.isEvent.value == false) {
+                vendorResourcesScreenController.resourceCapacityFieldController
+                    .clear();
+              }
             },
           ),
         ),
@@ -336,36 +348,34 @@ class IsEventCheckBoxModule extends StatelessWidget {
   }
 }
 
-
 class ResourceCreateButton extends StatelessWidget {
   ResourceCreateButton({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(vendorResourcesScreenController.resourceAddFormKey.currentState!.validate()) {
-          if(vendorResourcesScreenController.addFile == null){
+        if (vendorResourcesScreenController.resourceAddFormKey.currentState!
+            .validate()) {
+          if (vendorResourcesScreenController.addFile == null) {
             Fluttertoast.showToast(msg: "Image is required");
           } else {
             await vendorResourcesScreenController.addVendorResourcesFunction();
           }
-
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(

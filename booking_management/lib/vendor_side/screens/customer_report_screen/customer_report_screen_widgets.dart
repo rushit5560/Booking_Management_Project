@@ -46,9 +46,8 @@ class StatusDropDownModule extends StatelessWidget {
             iconEnabledColor: Colors.black,
             items: screenController.statusList
                 .map<DropdownMenuItem<String>>((String value) {
-                  String finalValue = value == "AllCustomer"
-                      ? "All Customer"
-                      : value;
+              String finalValue =
+                  value == "AllCustomer" ? "All Customer" : value;
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(finalValue),
@@ -59,7 +58,7 @@ class StatusDropDownModule extends StatelessWidget {
               screenController.selectedStatusValue.value = newValue!;
               // screenController.isLoading(false);
 
-              if(screenController.selectedStatusValue.value == "AllCustomer") {
+              if (screenController.selectedStatusValue.value == "AllCustomer") {
                 await screenController.getCustomerReportFunction();
               } else {
                 await screenController.getFilterCustomerReportFunction(
@@ -89,6 +88,12 @@ class CustomerReportListModule extends StatelessWidget {
             itemBuilder: (context, i) {
               CustomerReportData singleItem =
                   screenController.customerReportList[i];
+
+              print(singleItem.email);
+              print(singleItem.firstName);
+              print(singleItem.phoneNo);
+              print(singleItem.customer.userName);
+              print(singleItem.customer.phoneNo);
               return _appointmentListTile(singleItem);
             },
           ).commonAllSidePadding(10);
@@ -124,7 +129,7 @@ class CustomerReportListModule extends StatelessWidget {
               Expanded(
                 flex: 7,
                 child: Text(
-                  singleItem.customer.userName,
+                  singleItem.firstName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
@@ -147,7 +152,7 @@ class CustomerReportListModule extends StatelessWidget {
               Expanded(
                 flex: 7,
                 child: Text(
-                  singleItem.customer.email,
+                  singleItem.email,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
@@ -170,7 +175,7 @@ class CustomerReportListModule extends StatelessWidget {
               Expanded(
                 flex: 7,
                 child: Text(
-                  singleItem.customer.phoneNo,
+                  singleItem.phoneNo,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,

@@ -153,7 +153,7 @@ class VendorSignUpScreenController extends GetxController {
       request.fields['TermsConditions'] = termsAndConditionCheckBox.toString();
       request.fields['IsServiceSlots'] = serviceCheckBox.toString();
       request.fields['IsPriceDisplay'] = priceCheckBox.toString();
-      request.fields['Country'] = countryData!.id.toString();
+      request.fields['Country'] = countryData!.code.toString();
       request.fields['BusinessName'] = businessNameFieldController.text.trim();
 
       log('request.fields: ${request.fields}');
@@ -176,7 +176,8 @@ class VendorSignUpScreenController extends GetxController {
         log('response1 ::::::${response1.statusCode}');
         isStatus = response1.statusCode.obs;
         log('status : $isStatus');
-        log('success : ${response1.data}');
+        log('success : ${response1.data.email}');
+        log('password : ${response1.data.passwordHash}');
 
         if (isStatus.value == 200) {
           //UserDetails().vendorId = response1.data.id;

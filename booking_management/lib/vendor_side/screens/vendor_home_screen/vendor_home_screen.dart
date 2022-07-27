@@ -22,39 +22,45 @@ class VendorHomeScreen extends StatelessWidget {
           () => vendorHomeScreenController.isLoading.value
               ? const CustomCircularLoaderModule()
               : SafeArea(
-                  child: Column(
-                    children: [
-                      VendorHeaderModule(),
-                      const SizedBox(height: 10),
-                      // SearchAppointmentField().commonSymmetricPadding(horizontal: 45),
-                      // const SizedBox(height: 20),
-                      // PendingListTextModule().commonSymmetricPadding(horizontal: 25),
-                      Obx(
-                        () => vendorHomeScreenController.isLoading.value
-                            ? const Center(child: CircularProgressIndicator())
-                            : Expanded(
-                                child: SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
-                                  child: Column(
-                                    children: [
-                                      PendingListTextModule(
-                                              text: "Today Resource Summary")
-                                          .commonSymmetricPadding(
-                                              horizontal: 25),
-                                      ResourcesModule(),
-                                      const SizedBox(height: 10),
-                                      PendingListTextModule(
-                                              text: "Today Appointment List")
-                                          .commonSymmetricPadding(
-                                              horizontal: 25),
-                                      TodayAppointmentListModule(),
-                                    ],
-                                  ).commonSymmetricPadding(horizontal: 25),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      await vendorHomeScreenController
+                          .getAppointmentListFunction();
+                    },
+                    child: Column(
+                      children: [
+                        VendorHeaderModule(),
+                        const SizedBox(height: 10),
+                        // SearchAppointmentField().commonSymmetricPadding(horizontal: 45),
+                        // const SizedBox(height: 20),
+                        // PendingListTextModule().commonSymmetricPadding(horizontal: 25),
+                        Obx(
+                          () => vendorHomeScreenController.isLoading.value
+                              ? const Center(child: CircularProgressIndicator())
+                              : Expanded(
+                                  child: SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    child: Column(
+                                      children: [
+                                        PendingListTextModule(
+                                                text: "Today Resource Summary")
+                                            .commonSymmetricPadding(
+                                                horizontal: 25),
+                                        ResourcesModule(),
+                                        const SizedBox(height: 10),
+                                        PendingListTextModule(
+                                                text: "Today Appointment List")
+                                            .commonSymmetricPadding(
+                                                horizontal: 25),
+                                        TodayAppointmentListModule(),
+                                      ],
+                                    ).commonSymmetricPadding(horizontal: 25),
+                                  ),
                                 ),
-                              ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ),
         ),

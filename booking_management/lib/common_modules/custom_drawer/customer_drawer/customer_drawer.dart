@@ -8,7 +8,6 @@ import '../../constants/app_images.dart';
 import '../../constants/enums.dart';
 import 'customer_drawer_widgets.dart';
 
-
 class CustomerDrawer extends StatelessWidget {
   CustomerDrawer({Key? key}) : super(key: key);
   final customDrawerController = Get.put(CustomDrawerController());
@@ -18,16 +17,16 @@ class CustomerDrawer extends StatelessWidget {
     return Drawer(
       child: SafeArea(
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
               UserDetails.isUserLoggedIn == true
-              ? CustomerDrawerSingleItemModule(
-                img: AppImages.profileImg,
-                name: 'Profile',
-                customerDrawerOption: CustomerDrawerOption.profile,
-              )
-              : Container(),
+                  ? CustomerDrawerSingleItemModule(
+                      img: AppImages.profileImg,
+                      name: 'Profile',
+                      customerDrawerOption: CustomerDrawerOption.profile,
+                    )
+                  : Container(),
               const SizedBox(height: 20),
 
               /*CustomerDrawerSingleItemModule(
@@ -54,12 +53,12 @@ class CustomerDrawer extends StatelessWidget {
               const SizedBox(height: 20),*/
 
               UserDetails.isUserLoggedIn == true
-              ? CustomerDrawerSingleItemModule(
-                img: AppImages.bookingHistoryImg,
-                name: 'Booking History',
-                customerDrawerOption: CustomerDrawerOption.bookingHistory,
-              )
-              : Container(),
+                  ? CustomerDrawerSingleItemModule(
+                      img: AppImages.bookingHistoryImg,
+                      name: 'Booking History',
+                      customerDrawerOption: CustomerDrawerOption.bookingHistory,
+                    )
+                  : Container(),
               const SizedBox(height: 20),
 
               // UserDetails.isUserLoggedIn == true
@@ -73,10 +72,10 @@ class CustomerDrawer extends StatelessWidget {
 
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                img: AppImages.paymentImg,
-                name: 'Transaction',
-                customerDrawerOption: CustomerDrawerOption.transaction,
-              )
+                      img: AppImages.paymentImg,
+                      name: 'Transaction',
+                      customerDrawerOption: CustomerDrawerOption.transaction,
+                    )
                   : Container(),
               const SizedBox(height: 20),
 
@@ -88,12 +87,12 @@ class CustomerDrawer extends StatelessWidget {
               // const SizedBox(height: 20),
 
               UserDetails.isUserLoggedIn == true
-              ? CustomerDrawerSingleItemModule(
-                img: AppImages.changePasswordImg,
-                name: 'Change Password',
-                customerDrawerOption: CustomerDrawerOption.changePassword,
-              )
-              : Container(),
+                  ? CustomerDrawerSingleItemModule(
+                      img: AppImages.changePasswordImg,
+                      name: 'Change Password',
+                      customerDrawerOption: CustomerDrawerOption.changePassword,
+                    )
+                  : Container(),
               const SizedBox(height: 20),
 
               CustomerDrawerSingleItemModule(
@@ -112,17 +111,16 @@ class CustomerDrawer extends StatelessWidget {
               const SizedBox(height: 20),
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                img: AppImages.logoutImg,
-                name: 'Logout',
-                customerDrawerOption: CustomerDrawerOption.logOut,
-              )
-              : CustomerDrawerSingleItemModule(
-                img: AppImages.logoutImg,
-                name: 'Login',
-                customerDrawerOption: CustomerDrawerOption.login,
-              ),
+                      img: AppImages.logoutImg,
+                      name: 'Logout',
+                      customerDrawerOption: CustomerDrawerOption.logOut,
+                    )
+                  : CustomerDrawerSingleItemModule(
+                      img: AppImages.logoutImg,
+                      name: 'Login',
+                      customerDrawerOption: CustomerDrawerOption.login,
+                    ),
               const SizedBox(height: 20),
-
             ],
           ).commonAllSidePadding(15),
         ),

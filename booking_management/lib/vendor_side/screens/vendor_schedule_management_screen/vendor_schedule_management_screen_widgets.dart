@@ -12,18 +12,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-
 class ScheduleMangementText extends StatelessWidget {
   const ScheduleMangementText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Text("Schedule Management",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
-    ).commonSymmetricPadding(horizontal: 10);
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
+        .commonSymmetricPadding(horizontal: 10);
   }
 }
-
 
 /// Start Date Select Module
 class StartDateSelectModule extends StatelessWidget {
@@ -47,7 +45,6 @@ class StartDateSelectModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.startDate.value,
@@ -61,7 +58,7 @@ class StartDateSelectModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isStartDateCalenderShow.value =
-              !screenController.isStartDateCalenderShow.value;
+                  !screenController.isStartDateCalenderShow.value;
 
               screenController.isEndDateCalenderShow.value = false;
 
@@ -102,8 +99,8 @@ class SelectStartDateCalender extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
-              lastDay: DateTime.now(),
+              firstDay: DateTime.now(),
+              lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
@@ -112,16 +109,17 @@ class SelectStartDateCalender extends StatelessWidget {
 
                 screenController.selectedStartDate = selectedDay;
 
-                screenController.startDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.startDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
-                screenController.isStartDateCalenderShow.value = !screenController.isStartDateCalenderShow.value;
+                screenController.isStartDateCalenderShow.value =
+                    !screenController.isStartDateCalenderShow.value;
 
                 screenController.isEndDateCalenderShow.value = false;
 
                 screenController.loadUI();
 
                 log('start date: ${screenController.startDate.value}');
-
               },
 
               // Day Changed
@@ -132,7 +130,7 @@ class SelectStartDateCalender extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -142,19 +140,19 @@ class SelectStartDateCalender extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -181,7 +179,7 @@ class SelectStartDateCalender extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -221,7 +219,6 @@ class EndDateSelectModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.endDate.value,
@@ -235,7 +232,7 @@ class EndDateSelectModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isEndDateCalenderShow.value =
-              !screenController.isEndDateCalenderShow.value;
+                  !screenController.isEndDateCalenderShow.value;
 
               screenController.isStartDateCalenderShow.value = false;
 
@@ -276,22 +273,22 @@ class SelectEndDateCalender extends StatelessWidget {
             ),
             child: TableCalendar(
               focusedDay: focusedDay,
-              firstDay: DateTime(2020),
-              lastDay: DateTime.now(),
+              firstDay: DateTime.now(),
+              lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-                screenController.endDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
-                screenController.isEndDateCalenderShow.value = !screenController.isEndDateCalenderShow.value;
-
+                screenController.endDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.isEndDateCalenderShow.value =
+                    !screenController.isEndDateCalenderShow.value;
 
                 screenController.isStartDateCalenderShow.value = false;
 
                 screenController.loadUI();
-
               },
 
               // Day Changed
@@ -302,7 +299,7 @@ class SelectEndDateCalender extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -312,19 +309,19 @@ class SelectEndDateCalender extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -351,7 +348,7 @@ class SelectEndDateCalender extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -378,9 +375,9 @@ class SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(screenController.startDate.value == "Select Start Date") {
+        if (screenController.startDate.value == "Select Start Date") {
           Fluttertoast.showToast(msg: "Please select start date");
-        } else if(screenController.endDate.value == "Select End Date") {
+        } else if (screenController.endDate.value == "Select End Date") {
           Fluttertoast.showToast(msg: "Please select end date");
         } else {
           await screenController.getAutoScheduleFunction();
@@ -423,8 +420,9 @@ class SearchScheduleTimingText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text("Search Schedule Timings",
-    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
-      ).commonSymmetricPadding(horizontal: 10).commonSymmetricPadding(horizontal: 10);
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
+        .commonSymmetricPadding(horizontal: 10)
+        .commonSymmetricPadding(horizontal: 10);
   }
 }
 
@@ -450,7 +448,6 @@ class SearchScheduleTimingModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.scheduleTimingDate.value,
@@ -464,7 +461,7 @@ class SearchScheduleTimingModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isScheduleTimingCalenderShow.value =
-              !screenController.isScheduleTimingCalenderShow.value;
+                  !screenController.isScheduleTimingCalenderShow.value;
 
               screenController.isStartDateCalenderShow.value = false;
 
@@ -506,21 +503,21 @@ class ScheduleTimingCalender extends StatelessWidget {
             child: TableCalendar(
               focusedDay: focusedDay,
               firstDay: DateTime(2020),
-              lastDay: DateTime.now(),
+              lastDay: DateTime(2050),
               calendarFormat: format,
               rangeStartDay: DateTime.now(),
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-                screenController.scheduleTimingDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
-                screenController.isScheduleTimingCalenderShow.value = !screenController.isScheduleTimingCalenderShow.value;
-
+                screenController.scheduleTimingDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.isScheduleTimingCalenderShow.value =
+                    !screenController.isScheduleTimingCalenderShow.value;
 
                 screenController.isStartDateCalenderShow.value = false;
 
                 screenController.loadUI();
-
               },
 
               // Day Changed
@@ -531,7 +528,7 @@ class ScheduleTimingCalender extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -541,19 +538,19 @@ class ScheduleTimingCalender extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -580,7 +577,7 @@ class ScheduleTimingCalender extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -598,7 +595,6 @@ class ScheduleTimingCalender extends StatelessWidget {
   }
 }
 
-
 /// Submit Button
 class SearchScheduleSubmitButton extends StatelessWidget {
   SearchScheduleSubmitButton({Key? key}) : super(key: key);
@@ -608,7 +604,7 @@ class SearchScheduleSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(screenController.scheduleTimingDate.value == "Select Date") {
+        if (screenController.scheduleTimingDate.value == "Select Date") {
           Fluttertoast.showToast(msg: "Please select date");
         } else {
           await screenController.getSearchWithResourceListFunction();
@@ -656,7 +652,8 @@ class ResourceScheduleListModule extends StatelessWidget {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i) {
-        BookingResourceWorkerData singleItem = screenController.allResourcesList[i];
+        BookingResourceWorkerData singleItem =
+            screenController.allResourcesList[i];
         return _resourcesListTile(singleItem);
       },
     );
@@ -685,13 +682,14 @@ class ResourceScheduleListModule extends StatelessWidget {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  // image: DecorationImage(
-                  //   image: NetworkImage(imgUrl),
-                  //   fit: BoxFit.cover,
-                  // ),
-                ),
-                child: Image.network(imgUrl,
-                  errorBuilder: (context, st, ob){
+                    // image: DecorationImage(
+                    //   image: NetworkImage(imgUrl),
+                    //   fit: BoxFit.cover,
+                    // ),
+                    ),
+                child: Image.network(
+                  imgUrl,
+                  errorBuilder: (context, st, ob) {
                     return Image.asset(AppImages.logoImg);
                   },
                   fit: BoxFit.cover,
@@ -735,95 +733,93 @@ class ResourceScheduleListModule extends StatelessWidget {
           singleItem.timingList.isEmpty
               ? Container()
               : GridView.builder(
-            itemCount: singleItem.timingList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 3,
-                crossAxisSpacing: 3,
-                childAspectRatio: 5
-            ),
-            itemBuilder: (context, i) {
-              return GestureDetector(
-                onTap: () {
-
-                  // /// First All Slot Set Unselected
-                  // for(int i = 0; i < screenController.allResourcesList.length; i++) {
-                  //   for(int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
-                  //     screenController.allResourcesList[i].timingList[j].isSelected = false;
-                  //   }
-                  // }
-                  //
-                  // /// Selected Item Become Blue
-                  // int selectedId = singleItem.timingList[i].id;
-                  // log("selectedId : $selectedId");
-                  // screenController.selectedResourceTimeSlotId = selectedId;
-                  //
-                  // for(int j=0; j < singleItem.timingList.length; j++) {
-                  //   if (singleItem.timingList[j].id == selectedId) {
-                  //     singleItem.timingList[j].isSelected = true;
-                  //   } else {
-                  //     singleItem.timingList[j].isSelected = false;
-                  //   }
-                  // }
-                  // screenController.loadUI();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          color: Colors.grey.shade300,
-                          blurStyle: BlurStyle.outer,
+                  itemCount: singleItem.timingList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 3,
+                      crossAxisSpacing: 3,
+                      childAspectRatio: 5),
+                  itemBuilder: (context, i) {
+                    return GestureDetector(
+                      onTap: () {
+                        // /// First All Slot Set Unselected
+                        // for(int i = 0; i < screenController.allResourcesList.length; i++) {
+                        //   for(int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
+                        //     screenController.allResourcesList[i].timingList[j].isSelected = false;
+                        //   }
+                        // }
+                        //
+                        // /// Selected Item Become Blue
+                        // int selectedId = singleItem.timingList[i].id;
+                        // log("selectedId : $selectedId");
+                        // screenController.selectedResourceTimeSlotId = selectedId;
+                        //
+                        // for(int j=0; j < singleItem.timingList.length; j++) {
+                        //   if (singleItem.timingList[j].id == selectedId) {
+                        //     singleItem.timingList[j].isSelected = true;
+                        //   } else {
+                        //     singleItem.timingList[j].isSelected = false;
+                        //   }
+                        // }
+                        // screenController.loadUI();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              color: Colors.grey.shade300,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                          // color: singleItem.timingList[i].isSelected == true
+                          //     ? Colors.blue
+                          //     : null
                         ),
-                      ],
-                      // color: singleItem.timingList[i].isSelected == true
-                      //     ? Colors.blue
-                      //     : null
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        singleItem.timingList[i].startDateTime,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                            color: /*singleItem.timingList[i].isSelected == true
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              singleItem.timingList[i].startDateTime,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: /*singleItem.timingList[i].isSelected == true
                                 ? Colors.white
-                                : */Colors.black
-                        ),
-                      ),
-
-                      Text(
-                        "-",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: /*singleItem.timingList[i].isSelected == true
+                                : */
+                                      Colors.black),
+                            ),
+                            Text(
+                              "-",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: /*singleItem.timingList[i].isSelected == true
                               ? Colors.white
-                              :*/ Colors.black,
-                        ),
-                      ).commonSymmetricPadding(horizontal: 5),
-
-                      Text(
-                        singleItem.timingList[i].endDateTime,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: /*singleItem.timingList[i].isSelected == true
+                              :*/
+                                    Colors.black,
+                              ),
+                            ).commonSymmetricPadding(horizontal: 5),
+                            Text(
+                              singleItem.timingList[i].endDateTime,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: /*singleItem.timingList[i].isSelected == true
                               ? Colors.white
-                              :*/ Colors.black,
+                              :*/
+                                    Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ).commonAllSidePadding(3),
-              );
-            },
-          ),
+                      ).commonAllSidePadding(3),
+                    );
+                  },
+                ),
         ],
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8, horizontal: 10);

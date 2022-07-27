@@ -21,7 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/vendor_profile_screen_model/save_vendor_lat_long_model.dart';
 
-class VendorProfileScreenController extends GetxController{
+class VendorProfileScreenController extends GetxController {
   RxString selectedDate = 'DOB'.obs;
   RxString slot = 'Single'.obs;
   GlobalKey<FormState> vendorProfileFormKey = GlobalKey<FormState>();
@@ -36,15 +36,17 @@ class VendorProfileScreenController extends GetxController{
   final subUrbTextFieldController = TextEditingController();
   final postCodeTextFieldController = TextEditingController();
   final businessIdTextFieldController = TextEditingController();
-  var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
+  var selectDatePageController =
+      PageController(initialPage: 0, viewportFraction: 0.16);
   String vendorProfile = "";
+
+  RxString currentSlotDuration = "".obs;
 
   late GooglePlace googlePlace;
 
   File? file;
 
   String? userImage;
-
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
@@ -58,10 +60,40 @@ class VendorProfileScreenController extends GetxController{
   //RxInt selectedTimeIndex = 0.obs;
   RxInt selectedDateIndex = 0.obs;
   RxString timeSlots = 'Hour'.obs;
-  List<String> dateList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-    '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', '31'];
-
+  RxString categoryId = '0'.obs;
+  List<String> dateList = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31'
+  ];
 
   RxString slotDurationValue = '15'.obs;
   String slotDuration = "";
@@ -84,8 +116,6 @@ class VendorProfileScreenController extends GetxController{
   late CameraPosition kGooglePlex;
   Set<Marker> markers = {};
 
-
-
   selectDatePreviousClick({required PageController pageController}) {
     pageController.previousPage(duration: 300.milliseconds, curve: Curves.ease);
   }
@@ -104,13 +134,13 @@ class VendorProfileScreenController extends GetxController{
     String url = ApiUrl.vendorEditProfileApi;
     log('Url : $url');
 
-    Map<String, String> headers= <String,String>{
+    Map<String, String> headers = <String, String>{
       'Authorization': UserDetails.apiToken
     };
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
-    try{
-      if(file != null){
+    try {
+      if (file != null) {
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         var stream = http.ByteStream(file!.openRead());
@@ -118,13 +148,15 @@ class VendorProfileScreenController extends GetxController{
 
         var length = await file!.length();
 
-        request.files.add(await http.MultipartFile.fromPath("file", file!.path));
+        request.files
+            .add(await http.MultipartFile.fromPath("file", file!.path));
 
         request.headers.addAll(headers);
 
         //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
-        request.fields['CategoryId'] = "${businessDropDownValue!.id}";
-        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        // request.fields['CategoryId'] = categoryId.value;
+        request.fields['BusinessName'] =
+            businessNameTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         // request.fields['Street'] = streetTextFieldController.text.trim();
         // request.fields['Suburb'] = subUrbTextFieldController.text.trim();
@@ -151,7 +183,6 @@ class VendorProfileScreenController extends GetxController{
 
         request.files.add(multiPart);
 
-
         log('request.fields: ${request.fields}');
         log('request.files: ${request.files}');
         //log('request.files length : ${request.files.length}');
@@ -159,30 +190,27 @@ class VendorProfileScreenController extends GetxController{
         //log('request.files filetype : ${request.files.first.contentType}');
         log('request.headers: ${request.headers}');
 
-
         var response = await request.send();
         log('response: ${response.request}');
 
         response.stream.transform(utf8.decoder).listen((value) {
-          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
+          VendorEditProfileModel response1 =
+              VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
           isStatus = response1.statusCode.obs;
           log('status : $isStatus');
           log('success : ${response1.statusCode}');
 
-          if(isStatus.value == 200){
-
+          if (isStatus.value == 200) {
             getUserDetailsById();
             log("response1.message : ${response1.message}");
             Fluttertoast.showToast(msg: response1.message);
-
-
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
           }
         });
-      } else{
+      } else {
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         // var stream = http.ByteStream(file!.openRead());
@@ -193,8 +221,9 @@ class VendorProfileScreenController extends GetxController{
         request.headers.addAll(headers);
 
         //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
-        request.fields['CategoryId'] = "${businessDropDownValue!.id}";
-        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        // request.fields['CategoryId'] = "${businessDropDownValue!.id}";
+        request.fields['BusinessName'] =
+            businessNameTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         // request.fields['Street'] = streetTextFieldController.text.trim();
         // request.fields['Suburb'] = subUrbTextFieldController.text.trim();
@@ -216,7 +245,6 @@ class VendorProfileScreenController extends GetxController{
         //
         // request.files.add(multiPart);
 
-
         log('request.fields: ${request.fields}');
         log('request.files: ${request.files}');
         log('request.headers: ${request.headers}');
@@ -224,30 +252,27 @@ class VendorProfileScreenController extends GetxController{
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(utf8.decoder).listen((value) {
-          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
+       response.stream.transform(utf8.decoder).listen((value) {
+          log(value);
+          Future.delayed(Duration(milliseconds: 800), () {});
+          VendorEditProfileModel response1 =
+              VendorEditProfileModel.fromJson(jsonDecode(value));
           log('response1 ::::::${response1.statusCode}');
           isStatus = response1.statusCode.obs;
           log('status : $isStatus');
           log('success : ${response1.statusCode}');
 
-          if(isStatus.value == 200){
-
+          if (isStatus.value == 200) {
             getUserDetailsById();
             log("response1.message : ${response1.message}");
             Fluttertoast.showToast(msg: response1.message);
-
-
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
           }
         });
       }
-
-
-
-    } catch(e) {
+    } catch (e) {
       log('SignUp Error : $e');
     } finally {
       isLoading(false);
@@ -276,7 +301,6 @@ class VendorProfileScreenController extends GetxController{
     super.dispose();
   }
 
-
   getDataFromPrefs() async {
     isLoading(true);
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -284,20 +308,31 @@ class VendorProfileScreenController extends GetxController{
     prefs.getString(sharedPreferenceData.apiTokenKey) ?? "";
     prefs.getString(sharedPreferenceData.uniqueIdKey) ?? "";
     prefs.getInt(sharedPreferenceData.tableWiseIdKey) ?? 0;
-    nameTextFieldController.text = prefs.getString(sharedPreferenceData.userNameKey) ?? "";
-    emailTextFieldController.text = prefs.getString(sharedPreferenceData.emailKey) ?? "";
-    mobileTextFieldController.text = prefs.getString(sharedPreferenceData.phoneNoKey) ?? "";
+    nameTextFieldController.text =
+        prefs.getString(sharedPreferenceData.userNameKey) ?? "";
+    emailTextFieldController.text =
+        prefs.getString(sharedPreferenceData.emailKey) ?? "";
+    mobileTextFieldController.text =
+        prefs.getString(sharedPreferenceData.phoneNoKey) ?? "";
     prefs.getString(sharedPreferenceData.dobKey) ?? "";
     prefs.getString(sharedPreferenceData.roleNameKey) ?? "";
     prefs.getString(sharedPreferenceData.genderKey) ?? "";
-    businessNameTextFieldController.text = prefs.getString(sharedPreferenceData.businessNameKey) ?? "";
-    addressTextFieldController.text = prefs.getString(sharedPreferenceData.addressKey) ?? "";
-    streetTextFieldController.text = prefs.getString(sharedPreferenceData.streetKey) ?? "";
-    stateTextFieldController.text = prefs.getString(sharedPreferenceData.stateKey) ?? "";
-    countryTextFieldController.text = prefs.getString(sharedPreferenceData.countryKey) ?? "";
-    subUrbTextFieldController.text = prefs.getString(sharedPreferenceData.subUrbKey) ?? "";
-    postCodeTextFieldController.text = prefs.getString(sharedPreferenceData.postCodeKey) ?? "";
-    businessIdTextFieldController.text = prefs.getString(sharedPreferenceData.businessIdKey) ?? "";
+    businessNameTextFieldController.text =
+        prefs.getString(sharedPreferenceData.businessNameKey) ?? "";
+    addressTextFieldController.text =
+        prefs.getString(sharedPreferenceData.addressKey) ?? "";
+    streetTextFieldController.text =
+        prefs.getString(sharedPreferenceData.streetKey) ?? "";
+    stateTextFieldController.text =
+        prefs.getString(sharedPreferenceData.stateKey) ?? "";
+    countryTextFieldController.text =
+        prefs.getString(sharedPreferenceData.countryKey) ?? "";
+    subUrbTextFieldController.text =
+        prefs.getString(sharedPreferenceData.subUrbKey) ?? "";
+    postCodeTextFieldController.text =
+        prefs.getString(sharedPreferenceData.postCodeKey) ?? "";
+    businessIdTextFieldController.text =
+        prefs.getString(sharedPreferenceData.businessIdKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -327,27 +362,27 @@ class VendorProfileScreenController extends GetxController{
     String url = ApiUrl.vendorBusinessTypeApi;
     log('Url : $url');
 
-    try{
-
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get All Business Type List Response : ${response.body}');
 
-      GetAllBusinessTypeModel getAllBusinessTypeModel = GetAllBusinessTypeModel.fromJson(json.decode(response.body));
+      GetAllBusinessTypeModel getAllBusinessTypeModel =
+          GetAllBusinessTypeModel.fromJson(json.decode(response.body));
       log('allBusinessModel : $getAllBusinessTypeModel');
       isSuccessStatus = getAllBusinessTypeModel.success!.obs;
       log('allBusinessModelStatus : $isSuccessStatus');
 
-      if(isSuccessStatus.value){
+      if (isSuccessStatus.value) {
         log("Success");
         businessTypeLists.addAll(getAllBusinessTypeModel.data!);
-         businessDropDownValue = businessTypeLists[0];
-         log('businessDropDownValue: ${businessDropDownValue!.name}');
+        businessDropDownValue = businessTypeLists[0];
+        log('businessDropDownValue: ${businessDropDownValue!.name}');
         log('businessLists : ${businessTypeLists.length}');
       } else {
         log('Get All Business Else Else');
       }
-
-    } catch(e) {
+    } catch (e) {
       log('Get All Business False False: $e');
     } finally {
       // isLoading(false);
@@ -356,47 +391,60 @@ class VendorProfileScreenController extends GetxController{
   }
 
   /// Get User Details By Id
-  getUserDetailsById()async {
+  getUserDetailsById() async {
     isLoading(true);
     String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.uniqueId}";
     log('Url : $url');
 
-    try{
-
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get All User Details Response : ${response.body}');
 
-      VendorProfileDetailsModel getUserDetailsByIdModel = VendorProfileDetailsModel.fromJson(json.decode(response.body));
+      VendorProfileDetailsModel getUserDetailsByIdModel =
+          VendorProfileDetailsModel.fromJson(json.decode(response.body));
       //log('getUserDetailsByIdModel : ${getUserDetailsByIdModel.data}');
       isStatus = getUserDetailsByIdModel.statusCode.obs;
       log('getUserDetailsByIdModel: ${getUserDetailsByIdModel.success}');
       log('getUserDetailsByIdModelStatus : $isStatus');
 
-      if(isStatus.value == 200) {
+      if (isStatus.value == 200) {
         log("Success");
         vendorProfile = getUserDetailsByIdModel.data.businessLogo;
-        businessIdTextFieldController.text = getUserDetailsByIdModel.data.businessId;
+        businessIdTextFieldController.text =
+            getUserDetailsByIdModel.data.businessId;
+        categoryId.value = getUserDetailsByIdModel.data.categoryId.toString();
         nameTextFieldController.text = getUserDetailsByIdModel.data.userName;
         emailTextFieldController.text = getUserDetailsByIdModel.data.email;
-        businessNameTextFieldController.text = getUserDetailsByIdModel.data.businessName;
+        businessNameTextFieldController.text =
+            getUserDetailsByIdModel.data.businessName;
         mobileTextFieldController.text = getUserDetailsByIdModel.data.phoneNo;
         addressTextFieldController.text = getUserDetailsByIdModel.data.address;
         streetTextFieldController.text = getUserDetailsByIdModel.data.street;
         stateTextFieldController.text = getUserDetailsByIdModel.data.state;
         countryTextFieldController.text = getUserDetailsByIdModel.data.country;
         subUrbTextFieldController.text = getUserDetailsByIdModel.data.suburb;
-        postCodeTextFieldController.text = getUserDetailsByIdModel.data.postcode;
-        slotDurationValue.value = getUserDetailsByIdModel.data.duration.toString();
-        businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
+        postCodeTextFieldController.text =
+            getUserDetailsByIdModel.data.postcode;
+        slotDurationValue.value =
+            getUserDetailsByIdModel.data.duration.toString();
+
+        currentSlotDuration.value =
+            getUserDetailsByIdModel.data.duration.toString();
+        businessDropDownValue!.name =
+            getUserDetailsByIdModel.data.categories.name;
         slotDuration = slotDurationValue.value;
         selectedLatitude.value = getUserDetailsByIdModel.data.latitude == ""
-        ? UserDetails.latitude : getUserDetailsByIdModel.data.latitude;
+            ? UserDetails.latitude
+            : getUserDetailsByIdModel.data.latitude;
 
         selectedLongitude.value = getUserDetailsByIdModel.data.longitude == ""
-        ? UserDetails.longitude : getUserDetailsByIdModel.data.longitude;
+            ? UserDetails.longitude
+            : getUserDetailsByIdModel.data.longitude;
 
         kGooglePlex = CameraPosition(
-          target: LatLng(double.parse(selectedLatitude.value), double.parse(selectedLongitude.value)),
+          target: LatLng(double.parse(selectedLatitude.value),
+              double.parse(selectedLongitude.value)),
           zoom: 16,
         );
         log("kGooglePlex : $kGooglePlex");
@@ -420,48 +468,45 @@ class VendorProfileScreenController extends GetxController{
       } else {
         log('Get All User Details Else Else');
       }
-
-    } catch(e) {
+    } catch (e) {
       log('Get All User Details False False: $e');
     } finally {
       isLoading(false);
     }
   }
 
-
   saveVendorLatLongFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorSaveLatLongApi
-        + "?CurrentLatitude=${selectedLatitude.value}"
-        + "&CurrentLongitude=${selectedLongitude.value}"
-        + "&id=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorSaveLatLongApi +
+        "?CurrentLatitude=${selectedLatitude.value}" +
+        "&CurrentLongitude=${selectedLongitude.value}" +
+        "&id=${UserDetails.tableWiseId}";
     log("save Vendor API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Save Vendor Response : ${response.body}");
 
-      SaveVendorLatLongModel saveVendorLatLongModel = SaveVendorLatLongModel.fromJson(json.decode(response.body));
+      SaveVendorLatLongModel saveVendorLatLongModel =
+          SaveVendorLatLongModel.fromJson(json.decode(response.body));
       isSuccessStatus = saveVendorLatLongModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Location Saved");
         await getAllBusinessTypeList();
       } else {
         log("saveVendorLatLongFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("saveVendorLatLongFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override
   void onInit() {
-
     //await getDataFromPrefs();
     getAllBusinessTypeList();
 
@@ -471,19 +516,14 @@ class VendorProfileScreenController extends GetxController{
     super.onInit();
   }
 
-
   void autoCompleteSearch(String value) async {
-
     var result = await googlePlace.autocomplete.get(value);
 
-    if(result != null && result.predictions != null) {
+    if (result != null && result.predictions != null) {
       log(result.predictions!.first.description!);
       predictions = result.predictions!;
       isLoading(true);
       isLoading(false);
     }
-
   }
-
-
 }

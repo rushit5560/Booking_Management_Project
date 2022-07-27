@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_subscription_report_screen_controller/vendor_subscription_report_screen_controller.dart';
 import 'package:booking_management/vendor_side/model/vendor_subscription_report_screen_model/vendor_subscription_report_model.dart';
@@ -13,16 +14,16 @@ class SubscriptionReportListModule extends StatelessWidget {
     return screenController.subscriptionReportList.isEmpty
         ? const Center(child: Text("No data available!"))
         : ListView.builder(
-      itemCount: screenController.subscriptionReportList.length,
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, i) {
-        SubscriptionData singleItem = screenController.subscriptionReportList[i];
-        return _subscriptionListTile(singleItem);
-      },
-    ).commonAllSidePadding(10);
+            itemCount: screenController.subscriptionReportList.length,
+            physics: const BouncingScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              SubscriptionData singleItem =
+                  screenController.subscriptionReportList[i];
+              return _subscriptionListTile(singleItem);
+            },
+          ).commonAllSidePadding(10);
   }
-
 
   Widget _subscriptionListTile(SubscriptionData singleItem) {
     return Container(
@@ -41,7 +42,6 @@ class SubscriptionReportListModule extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           Row(
             children: [
               const Text(
@@ -59,7 +59,6 @@ class SubscriptionReportListModule extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-
           Row(
             children: [
               const Text(
@@ -69,7 +68,7 @@ class SubscriptionReportListModule extends StatelessWidget {
               const SizedBox(width: 5),
               Expanded(
                 child: Text(
-                  singleItem.transactionBy,
+                  UserDetails.userName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   // style: TextStyle(fontWeight: FontWeight.bold),
@@ -77,7 +76,6 @@ class SubscriptionReportListModule extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 5),
           Row(
             children: [
@@ -96,7 +94,6 @@ class SubscriptionReportListModule extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 5),
           Row(
             children: [
@@ -115,49 +112,44 @@ class SubscriptionReportListModule extends StatelessWidget {
               ),
             ],
           ),
-
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              const Text(
-                "Payment Intent Id :",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                child: Text(
-                  singleItem.paymentIntentId,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  // style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-
-          Row(
-            children: [
-              const Text(
-                "Transaction Code :",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                child: Text(
-                  singleItem.transactionCode,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  // style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-
-
+          // const SizedBox(height: 5),
+          // Row(
+          //   children: [
+          //     const Text(
+          //       "Payment Intent Id :",
+          //       style: TextStyle(fontWeight: FontWeight.bold),
+          //     ),
+          //     const SizedBox(width: 5),
+          //     Expanded(
+          //       child: Text(
+          //         singleItem.paymentIntentId,
+          //         maxLines: 1,
+          //         overflow: TextOverflow.ellipsis,
+          //         // style: TextStyle(fontWeight: FontWeight.bold),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // const SizedBox(height: 5),
+          // Row(
+          //   children: [
+          //     const Text(
+          //       "Transaction Code :",
+          //       style: TextStyle(fontWeight: FontWeight.bold),
+          //     ),
+          //     const SizedBox(width: 5),
+          //     Expanded(
+          //       child: Text(
+          //         singleItem.transactionCode,
+          //         maxLines: 1,
+          //         overflow: TextOverflow.ellipsis,
+          //         // style: TextStyle(fontWeight: FontWeight.bold),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ).commonAllSidePadding(10),
     );
   }
-
 }

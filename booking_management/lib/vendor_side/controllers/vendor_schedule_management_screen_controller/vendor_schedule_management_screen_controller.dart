@@ -11,8 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class VendorScheduleManagementScreenController extends GetxController{
-
+class VendorScheduleManagementScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
@@ -36,20 +35,19 @@ class VendorScheduleManagementScreenController extends GetxController{
   List<WorkerList> searchWithResourceList = [];
 
   /// Get Auto Schedule API Filter wise
-  getAutoScheduleFunction()async {
+  getAutoScheduleFunction() async {
     isLoading(true);
-    String url =  ApiUrl.getAutoScheduleApi;
+    String url = ApiUrl.getAutoScheduleApi;
 
     log("Appointment Report Api Url : $url");
     log('header: ${apiHeader.headers}');
 
     try {
-
       List trueList = [];
       trueList.add({
-        "StartTimes" : startDate.value,
-        "EndTimes" : endDate.value,
-        "VendorId" : "${UserDetails.tableWiseId}"
+        "StartTimes": startDate.value,
+        "EndTimes": endDate.value,
+        "VendorId": "${UserDetails.tableWiseId}"
       });
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -63,107 +61,129 @@ class VendorScheduleManagementScreenController extends GetxController{
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((dataLine) {
         log('Auto schedule Response: $dataLine');
-        GetVendorAutoScheduleModel getVendorAutoScheduleModel = GetVendorAutoScheduleModel.fromJson(json.decode(dataLine));
+        GetVendorAutoScheduleModel getVendorAutoScheduleModel =
+            GetVendorAutoScheduleModel.fromJson(json.decode(dataLine));
         isSuccessStatus = getVendorAutoScheduleModel.success.obs;
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: getVendorAutoScheduleModel.message);
         } else {
           log("getVendorAutoScheduleFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
-
       });
-
-    } catch(e) {
+    } catch (e) {
       log("getVendorAutoScheduleFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
 
-  getAllResourceListFunction()async{
+  getAllResourceListFunction() async {
     isLoading(true);
-    String url = ApiUrl.getAllResourceListApi + "?Id=${UserDetails.tableWiseId}";
+    String url =
+        ApiUrl.getAllResourceListApi + "?Id=${UserDetails.tableWiseId}";
     log("Resource List Api Url : $url");
     log('Header: ${apiHeader.headers}');
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Resource List Response : ${response.body}");
 
-      GetBookingResourcesModel getBookingResourcesModel = GetBookingResourcesModel.fromJson(json.decode(response.body));
+      GetBookingResourcesModel getBookingResourcesModel =
+          GetBookingResourcesModel.fromJson(json.decode(response.body));
       isSuccessStatus = getBookingResourcesModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         allResourcesList = getBookingResourcesModel.workerList;
         log("allResourcesList : ${allResourcesList.length}");
-        for(int i= 0 ; i < allResourcesList.length ; i++){
+        for (int i = 0; i < allResourcesList.length; i++) {
           resourceId = allResourcesList[i].id;
           log('Resource id: $resourceId');
-          /*allResourcesList[i].timingList =*/ await getSearchWithResourceListFunction();
+          allResourcesList[i].timingList =
+              await getSearchWithResourceListFunction();
         }
-
-
       } else {
         log("getResourcesFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getResourcesFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
 
-  getSearchWithResourceListFunction()async{
+  Future<List<TimingSlot>> getSearchWithResourceListFunction() async {
     isLoading(true);
     List<TimingSlot> timeList = [];
-    String url = ApiUrl.getAllSearchWithResourceListApi + "?Id=$resourceId&dDate=${scheduleTimingDate.value}";
+    DateTime dateTime = DateTime.now();
+    String hour = "${dateTime.hour}";
+    String minute = "${dateTime.minute}";
+
+    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String timeModule = "$hour:$minute:00";
+
+    String url = ApiUrl.vendorResourceScheduleApi +
+        "?Id=$resourceId" "&dDate=${dateModule}T$timeModule";
+
+    ApiUrl.getAllSearchWithResourceListApi +
+        "?Id=$resourceId&dDate=${scheduleTimingDate.value}";
     log("Search With Resource List Api Url : $url");
     log('Header: ${apiHeader.headers}');
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Search With Resource List Response : ${response.body}");
 
-      GetSearchWithResourceListModel getSearchWithResourceListModel = GetSearchWithResourceListModel.fromJson(json.decode(response.body));
+      GetSearchWithResourceListModel getSearchWithResourceListModel =
+          GetSearchWithResourceListModel.fromJson(json.decode(response.body));
       isSuccessStatus = getSearchWithResourceListModel.success.obs;
 
-      if(isSuccessStatus.value) {
-       log("Success: $isSuccessStatus");
-       searchWithResourceList = getSearchWithResourceListModel.workerList;
+      if (isSuccessStatus.value) {
+        log("Success: $isSuccessStatus");
+        searchWithResourceList = getSearchWithResourceListModel.workerList;
 
         log('searchWithResourceList: ${searchWithResourceList.length}');
 
-       for(int i =0; i < searchWithResourceList.length; i++) {
-         String startTime = searchWithResourceList[i].startDateTime.substring(11, searchWithResourceList[i].startDateTime.length-3);
-         String endTime = searchWithResourceList[i].endDateTime.substring(11, searchWithResourceList[i].endDateTime.length-3);
+        for (int i = 0; i < searchWithResourceList.length; i++) {
+          String startTime = searchWithResourceList[i].startDateTime.substring(
+              11, searchWithResourceList[i].startDateTime.length - 3);
+          String endTime = searchWithResourceList[i]
+              .endDateTime
+              .substring(11, searchWithResourceList[i].endDateTime.length - 3);
 
-         timeList.add(TimingSlot(
-           id: searchWithResourceList[i].id,
-           resourceId: searchWithResourceList[i].resourceId,
-           startDateTime: startTime,
-           endDateTime: endTime,
-           isActive: searchWithResourceList[i].isActive,
-           booking: searchWithResourceList[i].booking,
-           isSelected: false,
-         ));
-       }
-       log("Time List1 : ${timeList.length}");
+          timeList.add(TimingSlot(
+            id: searchWithResourceList[i].id,
+            resourceId: searchWithResourceList[i].resourceId,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            isActive: searchWithResourceList[i].isActive,
+            booking: searchWithResourceList[i].booking,
+            isSelected: false,
+          ));
+        }
+        log("Time List1  length : ${timeList.length}");
+        log("Time start : ${timeList.first.startDateTime}");
+        log("Time end : ${timeList.first.endDateTime}");
       } else {
         log("Search With Resource List Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("Search With Resource List Error ::: $e");
     } finally {
       isLoading(false);
     }
+
+    return timeList;
   }
 
   loadUI() {

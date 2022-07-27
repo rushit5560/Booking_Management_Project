@@ -92,63 +92,65 @@ class AppointmentListTextModule extends StatelessWidget {
   }
 
   Widget _selectDateModule() {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            width: Get.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.colorLightGrey,
-                  blurRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                /// Show Date as Text
-                Text(
-                  screenController.selectedDisplayDate.value,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+    return Obx(
+      () => Row(
+        children: [
+          Expanded(
+            child: Container(
+              width: Get.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 5,
+                    blurStyle: BlurStyle.outer,
                   ),
-                ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  /// Show Date as Text
+                  Text(
+                    screenController.selectedDisplayDate.value,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
 
-                /// Calender Image Button
-                GestureDetector(
-                  onTap: () {
-                    screenController.isAppointmentListCalenderShow.value =
-                        !screenController.isAppointmentListCalenderShow.value;
-                    screenController.loadUI();
+                  /// Calender Image Button
+                  GestureDetector(
+                    onTap: () {
+                      screenController.isAppointmentListCalenderShow.value =
+                          !screenController.isAppointmentListCalenderShow.value;
+                      screenController.loadUI();
 
-                    log("screenController.isCalenderShow.value : ${screenController.isAppointmentListCalenderShow.value}");
-                  },
-                  child: const Icon(Icons.calendar_month),
-                ),
-              ],
-            ).commonSymmetricPadding(vertical: 12, horizontal: 10),
-          ),
-        ),
-        const SizedBox(width: 20),
-        GestureDetector(
-          onTap: () async {
-            screenController.selectedDate.value = "";
-            await screenController.getAppointmentListFunction();
-          },
-          child: const Text(
-            "Clear",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+                      log("screenController.isCalenderShow.value : ${screenController.isAppointmentListCalenderShow.value}");
+                    },
+                    child: const Icon(Icons.calendar_month),
+                  ),
+                ],
+              ).commonSymmetricPadding(vertical: 12, horizontal: 10),
             ),
           ),
-        ),
-      ],
+          const SizedBox(width: 20),
+          GestureDetector(
+            onTap: () async {
+              // screenController.selectedDate.value = "";
+              await screenController.getAppointmentListFunction();
+            },
+            child: const Text(
+              "Search",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

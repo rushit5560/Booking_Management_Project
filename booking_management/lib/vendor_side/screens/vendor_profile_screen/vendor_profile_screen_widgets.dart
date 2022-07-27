@@ -120,7 +120,7 @@ class VendorProfileAppBarModule extends StatelessWidget {
         hideKeyboard();
 
         Future.delayed(
-          Duration(milliseconds: 400),
+          const Duration(milliseconds: 400),
           () {
             screenController.isMapShow.value =
                 !screenController.isMapShow.value;
@@ -260,7 +260,7 @@ class _VendorProfileDetailsModuleState
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
-            child: Icon(Icons.edit),
+            child: const Icon(Icons.edit),
           ),
         ),
         // screenController.file != null
@@ -301,24 +301,24 @@ class _VendorProfileDetailsModuleState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
+          title: const Text(
             "Choose option",
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                Divider(
+                const Divider(
                   height: 1,
                   color: Colors.black,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ListTile(
                   onTap: () {
                     _openGallery(context);
                   },
-                  title: Text("Gallery"),
-                  leading: Icon(
+                  title: const Text("Gallery"),
+                  leading: const Icon(
                     Icons.account_box,
                     color: Colors.black,
                   ),
@@ -331,8 +331,8 @@ class _VendorProfileDetailsModuleState
                   onTap: () {
                     _openCamera(context);
                   },
-                  title: Text("Camera"),
-                  leading: Icon(
+                  title: const Text("Camera"),
+                  leading: const Icon(
                     Icons.camera,
                     color: Colors.black,
                   ),
@@ -359,10 +359,7 @@ class _VendorProfileDetailsModuleState
       //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
       //renameImage();
       //});
-    } else {
-
-
-    }
+    } else {}
 
     screenController.file = File(pickedFile!.path);
     setState(() {});
@@ -382,14 +379,10 @@ class _VendorProfileDetailsModuleState
       log('Camera File Path : ${screenController.file}');
       log('Camera Image Path : ${screenController.file!.path}');
 
-
       //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
       //renameImage();
       //});
-    } else {
-
-
-    }
+    } else {}
 
     screenController.file = File(pickedFile!.path);
     setState(() {});
@@ -1606,10 +1599,11 @@ class _VendorProfileDetailsModuleState
         if (screenController.vendorProfileFormKey.currentState!.validate()) {
           //screenController.vendorEditProfileFunction();
           log('old: ${screenController.slotDurationValue.value}');
-          log('new: ${screenController.slotDuration}');
+          log('new: ${screenController.currentSlotDuration}');
 
+          // ignore: unrelated_type_equality_checks
           if (screenController.slotDurationValue.value ==
-              screenController.slotDuration) {
+              screenController.currentSlotDuration.value) {
             await screenController.vendorEditProfileFunction();
           } else {
             deleteTimingSlotDurationAlertDialog();
@@ -1643,13 +1637,13 @@ class _VendorProfileDetailsModuleState
   deleteTimingSlotDurationAlertDialog() {
 // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("No, cancel"),
+      child: const Text("No, cancel"),
       onPressed: () {
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Yes, delete it"),
+      child: const Text("Yes, delete it"),
       onPressed: () async {
         await screenController.vendorEditProfileFunction();
         Get.back();
@@ -1658,8 +1652,8 @@ class _VendorProfileDetailsModuleState
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Are You Sure?"),
-      content: Text(
+      title: const Text("Are You Sure?"),
+      content: const Text(
           "If you change timing slot duration your all schedule slot should been deleted you won't be able to recover this again!"),
       actions: [
         continueButton,
@@ -1985,7 +1979,7 @@ class TimeSlots extends StatelessWidget {
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Row(
@@ -2010,7 +2004,7 @@ class TimeSlots extends StatelessWidget {
                 child: Text("15"),
               ),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Obx(
               () => Container(
                 width: Get.width / 2.5,
@@ -2046,7 +2040,7 @@ class TimeSlots extends StatelessWidget {
                       focusColor: Colors.white,
                       value: screenController.timeSlots.value,
                       //elevation: 5,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                       iconEnabledColor: Colors.black,
                       items: <String>['Hour', 'Minute']
                           .map<DropdownMenuItem<String>>((String value) {
@@ -2054,11 +2048,11 @@ class TimeSlots extends StatelessWidget {
                           value: value,
                           child: Text(
                             value,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         );
                       }).toList(),
-                      hint: Text(
+                      hint: const Text(
                         "Minute",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -2072,7 +2066,7 @@ class TimeSlots extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         GestureDetector(

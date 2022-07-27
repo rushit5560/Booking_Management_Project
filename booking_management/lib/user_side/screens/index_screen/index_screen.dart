@@ -74,8 +74,9 @@ class IndexScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     //width: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.blackColor.withOpacity(0.15)),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -155,8 +156,9 @@ class IndexScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     //width: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.blackColor.withOpacity(0.15)),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -218,8 +220,9 @@ class IndexScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     //width: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.blackColor.withOpacity(0.15)),
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.whiteColor.withOpacity(0.28),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(

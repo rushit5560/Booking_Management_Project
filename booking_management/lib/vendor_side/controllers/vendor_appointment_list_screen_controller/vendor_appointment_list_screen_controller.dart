@@ -16,16 +16,17 @@ import '../../model/vendor_appointment_list_screen_models/appointment_status_cha
 
 class VendorAppointmentListScreenController extends GetxController {
   RxInt selectedTabIndex = 1.obs;
-  TextEditingController searchAppointmentFieldController = TextEditingController();
+  TextEditingController searchAppointmentFieldController =
+      TextEditingController();
 
-  var selectDatePageController = PageController(initialPage: 0, viewportFraction: 0.16);
-
+  var selectDatePageController =
+      PageController(initialPage: 0, viewportFraction: 0.16);
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
   ApiHeader apiHeader = ApiHeader();
-  SignInModel ? signInModel;
+  SignInModel? signInModel;
   RxString selectedDate = "".obs;
   RxString selectedDisplayDate = "".obs;
   RxBool isAppointmentListCalenderShow = false.obs;
@@ -41,24 +42,27 @@ class VendorAppointmentListScreenController extends GetxController {
   // List<AppointmentListModule> processingAppointmentList = [];
   // List<AppointmentListModule> scheduledAppointmentList = [];
 
-
-
   /// Get All Appointment List
   getAppointmentListFunction() async {
     isLoading(true);
     String url = selectedDate.value == ""
-    ? ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}"
-    : ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}&Status=&dDate=$selectedDate";
-    //log("Appointment List APi ULR : $url");
+        ? ApiUrl.vendorAppointmentList + "?UserId=${UserDetails.uniqueId}"
+        : ApiUrl.vendorAppointmentList +
+            "?UserId=${UserDetails.uniqueId}&Status=&dDate=$selectedDate";
+
+    log("Appointment List APi ULR : $url");
+    log("user id: ${UserDetails.uniqueId}");
     log('header: ${apiHeader.headers}');
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment List Response : ${response.body}");
 
-      AppointmentListModel appointmentListModel = AppointmentListModel.fromJson(json.decode(response.body));
+      AppointmentListModel appointmentListModel =
+          AppointmentListModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentListModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         allAppointmentList.clear();
         pendingAppointmentList.clear();
         confirmAppointmentList.clear();
@@ -69,17 +73,17 @@ class VendorAppointmentListScreenController extends GetxController {
 
         allAppointmentList = appointmentListModel.data;
 
-        for(int i = 0; i < allAppointmentList.length; i++) {
-          if(allAppointmentList[i].status == "Pending") {
+        for (int i = 0; i < allAppointmentList.length; i++) {
+          if (allAppointmentList[i].status == "Pending") {
             pendingAppointmentList.add(allAppointmentList[i]);
           }
-          if(allAppointmentList[i].status == "Confirm") {
+          if (allAppointmentList[i].status == "Confirm") {
             confirmAppointmentList.add(allAppointmentList[i]);
           }
-          if(allAppointmentList[i].status == "Done") {
+          if (allAppointmentList[i].status == "Done") {
             doneAppointmentList.add(allAppointmentList[i]);
           }
-          if(allAppointmentList[i].status == "Cancel") {
+          if (allAppointmentList[i].status == "Cancel") {
             cancelAppointmentList.add(allAppointmentList[i]);
           }
           // if(allAppointmentList[i].status == "Processing") {
@@ -98,52 +102,47 @@ class VendorAppointmentListScreenController extends GetxController {
         // log("processingAppointmentList : ${processingAppointmentList.length}");
         // log("scheduledAppointmentList : ${scheduledAppointmentList.length}");
 
-
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getAppointmentListFunction Else Else");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getAppointmentListFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
 
-
   /// Appointment for Confirm
   confirmAppointmentByIdFunction({required int appointmentId}) async {
     isLoading(true);
-    String url = ApiUrl.vendorAppointmentStatusChangeApi + "?status=Confirm&id=$appointmentId";
+    String url = ApiUrl.vendorAppointmentStatusChangeApi +
+        "?status=Confirm&id=$appointmentId";
     log("Appointment Status Change API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment Details API Response : ${response.body}");
 
-      AppointmentStatusChangeModel appointmentStatusChangeModel = AppointmentStatusChangeModel.fromJson(json.decode(response.body));
+      AppointmentStatusChangeModel appointmentStatusChangeModel =
+          AppointmentStatusChangeModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentStatusChangeModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Confirmed!");
         Get.back();
       } else {
         log("confirmAppointmentByIdFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-    } catch(e) {
+    } catch (e) {
       log("confirmAppointmentByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       isLoading(false);
     }
   }
-
-
-
-
 
   @override
   void onInit() {
@@ -155,10 +154,4 @@ class VendorAppointmentListScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
-
-
-
-
-
 }

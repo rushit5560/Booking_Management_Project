@@ -32,7 +32,10 @@ class VendorChatListScreenController extends GetxController {
         .where("users", arrayContains: userEmail)
         .snapshots()
         .map((snapshot) =>
-        snapshot.docs.map((doc) => UserChatRoomListModel.fromJson(doc.data()))
+        snapshot.docs.map((doc) {
+          String img = "";
+          return UserChatRoomListModel.fromJson(doc.data(), img);
+        })
             .toList());
 
     /*firebaseDatabase.getChatRooms(userEmail).then((value) {

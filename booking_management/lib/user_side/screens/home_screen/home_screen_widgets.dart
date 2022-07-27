@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:booking_management/common_modules/common_functions.dart';
-import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
@@ -11,7 +10,6 @@ import 'package:booking_management/user_side/screens/user_search_results_screen/
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
-import 'package:google_place/google_place.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/constants/enums.dart';
@@ -20,7 +18,8 @@ import '../../model/home_screen_models/get_all_appointment_list_model.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_favourite_vendor_model.dart';
 import 'upcoming_appointment_details_screen/upcoming_appointment_details_screen.dart';
-import 'package:html/parser.dart' show parse;
+
+
 
 /// Header Logo Module
 class HeaderModule extends StatelessWidget {
@@ -338,7 +337,7 @@ class SearchLocationListModule extends StatelessWidget {
             itemBuilder: (context, i) {
               return ListTile(
                 onTap: () async {
-                  final placeId = screenController.predictions[i].placeId;
+                  // final placeId = screenController.predictions[i].placeId;
                   // final details = await screenController.googlePlace.details.get(placeId!);
 
                   screenController.locationFieldController.text =
@@ -795,7 +794,7 @@ class UpcomingAppointmentModule extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          singleItem.bookingFor,
+                          singleItem.vendor.businessName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

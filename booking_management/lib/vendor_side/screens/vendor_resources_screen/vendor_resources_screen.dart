@@ -29,9 +29,7 @@ class VendorResourcesScreen extends StatelessWidget {
                       children: [
                         const AddResourcesButton(),
                         const SizedBox(height: 15),
-                        Expanded(
-                            child: VendorResourcesListModule()
-                                ),
+                        Expanded(child: VendorResourcesListModule()),
                       ],
                     ).commonSymmetricPadding(horizontal: 15, vertical: 15),
             )),

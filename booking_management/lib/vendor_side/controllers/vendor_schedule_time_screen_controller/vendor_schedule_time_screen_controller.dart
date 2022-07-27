@@ -29,7 +29,7 @@ class VendorScheduleTimeScreenController extends GetxController {
   List<String> allScheduleTimeList = [];
   List<bool> checkScheduleTimeList = [];
 
-  List<AllResourcesWorkerList> getAllResourcesList = [];
+  // List<AllResourcesWorkerList> getAllResourcesList = [];
 
 
 
@@ -68,8 +68,8 @@ class VendorScheduleTimeScreenController extends GetxController {
     } catch (e) {
       log('SignIn Error : $e');
     } finally {
-      // isLoading(false);
-      await getAllResourcesByIdFunction();
+      isLoading(false);
+      // await getAllResourcesByIdFunction();
     }
   }
 
@@ -243,7 +243,7 @@ class VendorScheduleTimeScreenController extends GetxController {
 
 
   /// Get All Resources By Id
-  getAllResourcesByIdFunction() async {
+  /*getAllResourcesByIdFunction() async {
     DateTime dateTime = DateTime.now();
     String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
@@ -278,7 +278,7 @@ class VendorScheduleTimeScreenController extends GetxController {
    } finally {
      isLoading(false);
    }
-  }
+  }*/
 
   @override
   void onInit() {

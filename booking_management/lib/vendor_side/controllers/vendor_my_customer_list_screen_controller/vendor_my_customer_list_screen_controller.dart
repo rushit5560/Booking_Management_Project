@@ -25,7 +25,7 @@ class VendorMyCustomerScreenController extends GetxController{
 
   getMyCustomerList() async {
     isLoading(true);
-    String url = ApiUrl.vendorMyCustomerApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorMyCustomerApi + "?vendorid=${UserDetails.uniqueId}";
     log('Url : $url');
 
     try{

@@ -107,7 +107,8 @@ class SearchAppointmentField extends StatelessWidget {
 
 class PendingListTextModule extends StatelessWidget {
   final String text;
-  PendingListTextModule({Key? key, required this.text}) : super(key: key);
+  final double size;
+  PendingListTextModule({Key? key, required this.text, required this.size}) : super(key: key);
   final screenController = Get.find<VendorHomeScreenController>();
 
   @override
@@ -117,9 +118,9 @@ class PendingListTextModule extends StatelessWidget {
       children: [
         Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: size,
           ),
         ),
         const SizedBox(height: 10),
@@ -134,14 +135,14 @@ class TodayAppointmentListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenController.pendingAppointmentList.isEmpty
+    return screenController.allAppointmentList.isEmpty
         ? const Center(child: Text("No Record Found"))
         : ListView.builder(
-            itemCount: screenController.pendingAppointmentList.length,
+            itemCount: screenController.allAppointmentList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, i) {
-              AppointmentListModule singleItem = screenController.pendingAppointmentList[i];
+              AppointmentListModule singleItem = screenController.allAppointmentList[i];
               return _pendingListTile(singleItem);
             },
           );
@@ -161,32 +162,18 @@ class TodayAppointmentListModule extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            //flex: 68,
-            child: Row(
-              children: [
-                // _userImageModule(singleItem),
-                // const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _userNameModule(singleItem),
-                      const SizedBox(height: 8),
-                      _dateAndTimeModule(singleItem),
-                      const SizedBox(height: 8),
-                      _statusModule(singleItem),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 5),
-          _viewButton(singleItem),
+          _userNameModule(singleItem),
+          const SizedBox(height: 8),
+          _userEmailModule(singleItem),
+          const SizedBox(height: 8),
+          _dateAndTimeModule(singleItem),
+          const SizedBox(height: 8),
+          _statusModule(singleItem),
+          const SizedBox(height: 8),
+          _userPaidAmountModule(singleItem),
         ],
       ).commonAllSidePadding(10),
     );
@@ -202,7 +189,27 @@ class TodayAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(AppointmentListModule singleItem) {
     return Text(
-      singleItem.customer.userName,
+      singleItem.firstName,
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _userEmailModule(AppointmentListModule singleItem) {
+    return Text(
+      singleItem.email,
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _userPaidAmountModule(AppointmentListModule singleItem) {
+    return Text(
+      singleItem.price,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -252,7 +259,7 @@ class TodayAppointmentListModule extends StatelessWidget {
     );
   }
 
-  Widget _viewButton(AppointmentListModule singleItem) {
+  /*Widget _viewButton(AppointmentListModule singleItem) {
     return GestureDetector(
       onTap: () => Get.to(() => AppointmentDetailsScreen(),
           //arguments: singleItem.bookingId,
@@ -287,7 +294,7 @@ class TodayAppointmentListModule extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 
 /*Widget _confirmButton() {
     return Container(

@@ -1,5 +1,6 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/model/vendor_details_screen_models/country_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
@@ -412,41 +413,60 @@ class CountrySelectModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<CountryData>(
-        // Initial Value
-        value: screenController.countryData,
+    return Row(
+      children: [
+        Text(
+          "Country :",
+          style: TextStyle(
+            fontSize: 16,
+            color: AppColors.colorGreyIconDark,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<CountryData>(
+                // Initial Value
+                value: screenController.countryData,
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+                style: const TextStyle(color: Colors.black),
+                isExpanded: true,
+                // Array list of items
+                items: screenController.countriesList.map((value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value.country!),
+                  );
+                }).toList(),
 
-        // Down Arrow Icon
-        icon: const Icon(Icons.keyboard_arrow_down),
-        style: TextStyle(color: Colors.grey),
-        isExpanded: true,
-
-        // Array list of items
-        items: screenController.countriesList.map((value) {
-          return DropdownMenuItem(
-            value: value,
-            child: Text(value.country!),
-          );
-        }).toList(),
-
-        // screenController.countriesList.map((String items) {
-        //   return DropdownMenuItem(
-        //     value: items,
-        //     child: Text(items),
-        //   );
-        // }).toList(),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (newValue) {
-          screenController.isLoading(true);
-          screenController.countryData = newValue!;
-          screenController.isLoading(false);
-          // setState(() {
-          //   dropdownvalue = newValue!;
-          // });
-        },
-      ),
+                // screenController.countriesList.map((String items) {
+                //   return DropdownMenuItem(
+                //     value: items,
+                //     child: Text(items),
+                //   );
+                // }).toList(),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (newValue) {
+                  screenController.isLoading(true);
+                  screenController.countryData = newValue!;
+                  screenController.isLoading(false);
+                  // setState(() {
+                  //   dropdownvalue = newValue!;
+                  // });
+                },
+              ),
+            ).commonSymmetricPadding(horizontal: 10),
+          ),
+        ),
+      ],
     );
 
     // Obx(

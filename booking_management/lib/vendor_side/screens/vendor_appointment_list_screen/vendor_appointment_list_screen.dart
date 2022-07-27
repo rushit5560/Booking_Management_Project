@@ -28,7 +28,7 @@ class VendorAppointmentListScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     AppointmentListTextModule()
                         .commonSymmetricPadding(horizontal: 20),
                     Obx(
@@ -39,10 +39,10 @@ class VendorAppointmentListScreen extends StatelessWidget {
                                       .selectedTabIndex.value ==
                                   1
                               ? AllAppointmentListModule()
-                              : vendorAppointmentListScreenController
+                              /*: vendorAppointmentListScreenController
                                           .selectedTabIndex.value ==
                                       2
-                                  ? PendingAppointmentListModule()
+                                  ? PendingAppointmentListModule()*/
                                   : vendorAppointmentListScreenController
                                               .selectedTabIndex.value ==
                                           3

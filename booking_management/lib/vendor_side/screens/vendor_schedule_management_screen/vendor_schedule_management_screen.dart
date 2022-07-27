@@ -28,9 +28,9 @@ class VendorScheduleManagementScreen extends StatelessWidget {
                   appBarOption: AppBarOption.singleBackButtonOption,
                 ),
 
-                SizedBox(height: 15),
-                ScheduleMangementText(),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
+                const ScheduleMangementText(),
+                const SizedBox(height: 15),
 
                 /// Select Start Date Module
                 StartDateSelectModule(),
@@ -49,11 +49,11 @@ class VendorScheduleManagementScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 SubmitButton(),
 
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 /// Search schedule Timing module
-                SearchScheduleTimingText(),
-                SizedBox(height: 10),
+                const SearchScheduleTimingText(),
+                const SizedBox(height: 10),
                 SearchScheduleTimingModule(),
                 vendorScheduleManagementScreenController.isScheduleTimingCalenderShow.value
                     ? ScheduleTimingCalender()
@@ -63,8 +63,8 @@ class VendorScheduleManagementScreen extends StatelessWidget {
                 SearchScheduleSubmitButton(),
                 const SizedBox(height: 15),
 
-                ResourceScheduleListModule()
-
+                ResourceScheduleListModule(),
+                const SizedBox(height: 15),
 
 
               ],

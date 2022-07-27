@@ -36,74 +36,160 @@ class OrderListModule extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  singleItem.applicationUsercustomer.userName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                Row(
+                  children: [
+                    const Expanded(
+                      flex: 4,
+                      child: Text(
+                        "Booking Id",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        singleItem.bookingId,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 3),
-                Text(
-                  "Date : ${singleItem.transactionDate}",
-                  style: const TextStyle(fontSize: 13),
+
+
+                Row(
+                  children: [
+                    const Expanded(
+                      flex: 4,
+                      child: Text(
+                        "Transaction For",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        singleItem.transactionFor,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 3),
-                Text(
-                  singleItem.transactionStatus,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
+
+
+                Row(
+                  children: [
+                    const Expanded(
+                      flex: 4,
+                      child: Text(
+                        "Transaction By",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        singleItem.transactionBy,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 3),
+
+                Row(
+                  children: [
+                    const Expanded(
+                      flex: 4,
+                      child: Text(
+                        "Price",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        "${singleItem.order.price}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        await screenController.getOrderDetailsByIdFunction(id: singleItem.id);
+                        Get.to(
+                              () => VendorInvoiceDetailsScreen(),
+                          transition: Transition.zoom,
+                        );
+                      },
+                      child: Text(
+                        "View",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.grey.shade700,
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () async {
+                        await screenController.getOrderDetailsByIdFunction(id: singleItem.id);
+                        Get.to(
+                              () => VendorInvoiceDetailsScreen(),
+                          transition: Transition.zoom,
+                        );
+                      },
+                      child: Text(
+                        "Print",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.grey.shade700,
+                          fontSize: 17,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
-          Column(
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  await screenController.getOrderDetailsByIdFunction(id: singleItem.id);
-                  Get.to(
-                    () => VendorInvoiceDetailsScreen(),
-                    transition: Transition.zoom,
-                  );
-                },
-                child: Text(
-                  "View",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.grey.shade700,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              GestureDetector(
-                onTap: () async {
-                  await screenController.getOrderDetailsByIdFunction(id: singleItem.id);
-                  Get.to(
-                        () => VendorInvoiceDetailsScreen(),
-                    transition: Transition.zoom,
-                  );
-                },
-                child: Text(
-                  "Print",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.grey.shade700,
-                    fontSize: 17,
-                  ),
-                ),
-              )
-            ],
-          ),
+
         ],
       ).commonAllSidePadding(20),
     );

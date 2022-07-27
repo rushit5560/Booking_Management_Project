@@ -59,16 +59,16 @@ class HomeScreen extends StatelessWidget {
                       //     ? SelectDateModule() : Container(),
                       const SizedBox(height: 10),
 
+                      homeScreenController.favouriteVendorList.isEmpty
+                          ? Container()
+                          : FavouriteVendorsModule()
+                          .commonSymmetricPadding(horizontal: 20),
+                      const SizedBox(height: 20),
+
                       UserDetails.isUserLoggedIn == true ?
                       UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20)
                           :  Container(),
                       const SizedBox(height: 15),
-
-                      homeScreenController.favouriteVendorList.isEmpty
-                      ? Container()
-                      : FavouriteVendorsModule()
-                          .commonSymmetricPadding(horizontal: 20),
-                      const SizedBox(height: 20),
 
                       PartialCategoryListModule()
                           .commonSymmetricPadding(horizontal: 20),

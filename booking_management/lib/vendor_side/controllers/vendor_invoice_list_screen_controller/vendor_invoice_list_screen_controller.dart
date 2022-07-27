@@ -89,9 +89,9 @@ class VendorInvoiceListScreenController extends GetxController {
 
 
         // Customer
-        customerUserName = getInvoiceDetailsModel.workerList.customer!.userName;
-        customerEmail = getInvoiceDetailsModel.workerList.customer!.email;
-        customerPhoneNumber = getInvoiceDetailsModel.workerList.customer!.phoneNo;
+        customerUserName = getInvoiceDetailsModel.workerList.firstName!;
+        customerEmail = getInvoiceDetailsModel.workerList.email!;
+        customerPhoneNumber = getInvoiceDetailsModel.workerList.phoneNo!;
         log('customerUserName: $customerUserName');
 
         // Vendor

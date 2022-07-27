@@ -32,12 +32,12 @@ class VendorDetailsModule extends StatelessWidget {
         Expanded(
           flex: 30,
           child: Container(
-            decoration: BoxDecoration(
-              // image: DecorationImage(
-              //   image: NetworkImage(imgUrl),
-              //   fit: BoxFit.cover,
-              // ),
-            ),
+            // decoration: BoxDecoration(
+            //   // image: DecorationImage(
+            //   //   image: NetworkImage(imgUrl),
+            //   //   fit: BoxFit.cover,
+            //   // ),
+            // ),
             child: Image.network(imgUrl,
             errorBuilder: (context, error, st){
               return Image.asset(AppImages.logoImg);

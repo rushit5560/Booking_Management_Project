@@ -156,15 +156,6 @@ class VendorResourcesListModule extends StatelessWidget {
                                       .getResourcesDetailsByIdFunction(
                                           id: screenController
                                               .getResourceList[i].id!);
-                                  //screenController.selectedItemId = screenController.getResourceList[i].id;
-                                  //screenController.updateResourceNameFieldController.text = screenController.getResourceList[i].resourceName;
-                                  //screenController.updateResourceDetailsFieldController.text = screenController.getResourceList[i].details;
-                                  //screenController.updateResourcePriceFieldController.text = screenController.getResourceList[i].price.toString();
-                                  //screenController.updatePhotoUrl = "http://5.189.147.159:9600///images//Resource//9188f689-6c67-4fae-9045-a55a32888891.png";
-                                  //screenController.updatePhotoUrl = "http://5.189.147.159:9600/""${screenController.getResourceList[i].image}";
-                                  //log("http://5.189.147.159:9600/" +screenController.getResourceList[i].image );
-                                  //log('screenController.updatePhotoUrl : ${screenController.updatePhotoUrl}');
-                                  //log('image: ${screenController.getResourceList[i].image}');
                                   Get.to(
                                     () => VendorUpdateResourcesScreen(),
                                     transition: Transition.zoom,

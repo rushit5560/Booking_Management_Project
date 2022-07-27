@@ -37,7 +37,7 @@ class CustomerDatum {
     required this.id,
     required this.bookingId,
     required this.vendorId,
-    required this.vendor,
+    // required this.vendor,
     required this.customer,
     required this.customerId,
     required this.bookingFor,
@@ -56,7 +56,7 @@ class CustomerDatum {
   int id;
   String bookingId;
   int vendorId;
-  String vendor;
+  // String vendor;
   Customer customer;
   int customerId;
   String bookingFor;
@@ -75,7 +75,7 @@ class CustomerDatum {
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     vendorId: json["vendorId"] ?? 0,
-    vendor: json["vendor"] ?? "",
+    // vendor: json["vendor"] ?? "",
     customer: Customer.fromJson(json["customer"] ?? {}),
     customerId: json["customerId"] ?? 0,
     bookingFor: json["bookingFor"] ?? "",
@@ -95,7 +95,7 @@ class CustomerDatum {
     "id": id,
     "bookingId": bookingId,
     "vendorId": vendorId,
-    "vendor": vendor,
+    // "vendor": vendor,
     "customer": customer.toJson(),
     "customerId": customerId,
     "bookingFor": bookingFor,

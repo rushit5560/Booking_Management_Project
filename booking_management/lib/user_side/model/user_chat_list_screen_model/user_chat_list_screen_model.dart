@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-UserChatRoomListModel sendMessageModelFromJson(String str) => UserChatRoomListModel.fromJson(json.decode(str));
+// UserChatRoomListModel sendMessageModelFromJson(String str) => UserChatRoomListModel.fromJson(json.decode(str));
 
 String sendMessageModelToJson(UserChatRoomListModel data) => json.encode(data.toJson());
 
@@ -17,6 +17,7 @@ class UserChatRoomListModel {
     this.peerName,
     this.customerid,
     this.vendorid,
+    this.img
   });
 
   Timestamp? createdAt;
@@ -28,8 +29,9 @@ class UserChatRoomListModel {
   List<String>? users;
   String? customerid;
   String? vendorid;
+  String? img;
 
-  factory UserChatRoomListModel.fromJson(Map<String, dynamic> json) => UserChatRoomListModel(
+  factory UserChatRoomListModel.fromJson(Map<String, dynamic> json, String img) => UserChatRoomListModel(
     createdAt: json["createdAt"] ?? Timestamp.now(),
     createdBy: json["createdBy"] ?? "",
     peerId: json["peerId"] ?? "",
@@ -39,6 +41,7 @@ class UserChatRoomListModel {
     customerid: json["customerid"] ?? "",
     vendorid: json["vendorid"] ?? "",
     users: List<String>.from(json["users"].map((x) => x) ?? []),
+    img: img
   );
 
   Map<String, dynamic> toJson() => {

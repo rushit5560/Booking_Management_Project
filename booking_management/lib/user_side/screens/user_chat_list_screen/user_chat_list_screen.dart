@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/user_side/screens/user_conversation_screen/user_conversation_screen.dart';
@@ -32,33 +34,37 @@ class UserChatListScreen extends StatelessWidget {
               appBarOption: AppBarOption.none,
             ),
             Expanded(
-              child: StreamBuilder<List<UserChatRoomListModel>>(
-                stream: userChatListScreenController.getChatRoomListFunction(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Something went wrong! ${snapshot.error}");
-                  } else if (snapshot.hasData) {
-                    final chatList = snapshot.data;
-                    return ListView.builder(
-                      itemCount: chatList!.length,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, i) {
-                        UserChatRoomListModel singleMsg = chatList[i];
+              child: Obx(
+                  ()=> userChatListScreenController.isLoading.value
+                  ? const CustomCircularLoaderModule()
+                  : StreamBuilder<List<UserChatRoomListModel>>(
+                  stream: userChatListScreenController.getChatRoomListFunction(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("Something went wrong! ${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      final chatList = snapshot.data;
+                      return ListView.builder(
+                        itemCount: chatList!.length,
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, i) {
+                          UserChatRoomListModel singleMsg = chatList[i];
 
-                        return _chatListTile(singleMsg, context);
-                      },
-                    ).commonAllSidePadding(15);
-                    // return ListView(
-                    //   physics: const BouncingScrollPhysics(),
-                    //   children: categories!.map((val) {
-                    //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
-                    //   }).toList(),
-                    // ).commonAllSidePadding(padding: 15);
-                  } else {
-                    return const CustomCircularLoaderModule();
-                  }
-                },
+                          return _chatListTile(singleMsg, context);
+                        },
+                      ).commonAllSidePadding(15);
+                      // return ListView(
+                      //   physics: const BouncingScrollPhysics(),
+                      //   children: categories!.map((val) {
+                      //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+                      //   }).toList(),
+                      // ).commonAllSidePadding(padding: 15);
+                    } else {
+                      return const CustomCircularLoaderModule();
+                    }
+                  },
+                ),
               ),
               /*child: ListView.builder(
                 itemCount: 10,
@@ -76,6 +82,7 @@ class UserChatListScreen extends StatelessWidget {
   }
 
   Widget _chatListTile(UserChatRoomListModel singleMsg, BuildContext context) {
+    log("singleMsg.img : ${singleMsg.img}");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -125,13 +132,13 @@ class UserChatListScreen extends StatelessWidget {
                         width: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          image: const DecorationImage(
-                            image: AssetImage(AppImages.vendorImg),
+                          image: DecorationImage(
+                            image: NetworkImage("${ApiUrl.apiImagePath}${singleMsg.img}"),
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),*/
-                      // const SizedBox(width: 10),
+                      ),
+                      const SizedBox(width: 10),*/
                       Expanded(
                         child: Column(
                           crossAxisAlignment:

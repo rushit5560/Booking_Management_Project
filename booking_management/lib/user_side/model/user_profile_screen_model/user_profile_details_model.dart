@@ -40,10 +40,10 @@ class Data {
   String? dateOfBirth;
   bool? isActive;
   String? userId;
-  ApplicationUser? applicationUser;
+  // ApplicationUser? applicationUser;
   String? modifiedBy;
   String? modifiedOn;
-  ApplicationUser? applicationUserModifier;
+  // ApplicationUser? applicationUserModifier;
   String? image;
   String? passwordHash;
   String? notes;
@@ -64,10 +64,10 @@ class Data {
         this.dateOfBirth,
         this.isActive,
         this.userId,
-        this.applicationUser,
+        // this.applicationUser,
         this.modifiedBy,
         this.modifiedOn,
-        this.applicationUserModifier,
+        // this.applicationUserModifier,
         this.image,
         this.passwordHash,
         this.notes,
@@ -88,14 +88,14 @@ class Data {
     dateOfBirth = json['dateOfBirth'];
     isActive = json['isActive'];
     userId = json['userId'];
-    applicationUser = json['applicationUser'] != null
-        ? new ApplicationUser.fromJson(json['applicationUser'])
-        : null;
+    // applicationUser = json['applicationUser'] != null
+    //     ? new ApplicationUser.fromJson(json['applicationUser'])
+    //     : null;
     modifiedBy = json['modifiedBy'];
     modifiedOn = json['modifiedOn'];
-    applicationUserModifier = json['applicationUserModifier'] != null
-        ? new ApplicationUser.fromJson(json['applicationUserModifier'])
-        : null;
+    // applicationUserModifier = json['applicationUserModifier'] != null
+    //     ? new ApplicationUser.fromJson(json['applicationUserModifier'])
+    //     : null;
     image = json['image'];
     passwordHash = json['passwordHash'];
     notes = json['notes'];
@@ -118,14 +118,14 @@ class Data {
     data['dateOfBirth'] = this.dateOfBirth;
     data['isActive'] = this.isActive;
     data['userId'] = this.userId;
-    if (this.applicationUser != null) {
-      data['applicationUser'] = this.applicationUser!.toJson();
-    }
+    // if (this.applicationUser != null) {
+    //   data['applicationUser'] = this.applicationUser!.toJson();
+    // }
     data['modifiedBy'] = this.modifiedBy;
     data['modifiedOn'] = this.modifiedOn;
-    if (this.applicationUserModifier != null) {
-      data['applicationUserModifier'] = this.applicationUserModifier!.toJson();
-    }
+    // if (this.applicationUserModifier != null) {
+    //   data['applicationUserModifier'] = this.applicationUserModifier!.toJson();
+    // }
     data['image'] = this.image;
     data['passwordHash'] = this.passwordHash;
     data['notes'] = this.notes;

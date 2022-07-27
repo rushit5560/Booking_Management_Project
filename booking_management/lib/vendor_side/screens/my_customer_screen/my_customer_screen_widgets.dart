@@ -32,33 +32,18 @@ class CustomerList extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    //_userImageModule(i),
-                    //const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _userNameModule(singleItem),
-                        const SizedBox(height: 8),
+                _userNameModule(singleItem),
+                const SizedBox(height: 8),
 
-                        _userEmailModule(singleItem),
-                        const SizedBox(height: 8),
+                _userEmailModule(singleItem),
+                const SizedBox(height: 8),
 
-                        _userMobileNoModule(singleItem),
-                        // const SizedBox(height: 8),
-                        // _statusModule(i),
-                      ],
-                    ),
-                  ],
-                ),
-
-                const SizedBox(width: 5),
-
-                //_viewButton(),
+                _userMobileNoModule(singleItem),
+                // const SizedBox(height: 8),
+                // _statusModule(i),
               ],
             ).commonAllSidePadding(10),
           );
@@ -74,26 +59,86 @@ class CustomerList extends StatelessWidget {
   // }
 
   Widget _userNameModule(CustomerDatum singleItem) {
-    return Text(
-      singleItem.customer.userName,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
-      ),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 3,
+          child: Text(
+            "Full Name",
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 7,
+          child: Text(
+            ": ${singleItem.firstName}",
+            style: const TextStyle(
+              fontSize: 15,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _userEmailModule(CustomerDatum singleItem) {
-    return Text(
-      singleItem.customer.email,
-      style: const TextStyle(fontSize: 12),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 3,
+          child: Text(
+            "Email",
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 7,
+          child: Text(
+            ": ${singleItem.email}",
+            style: const TextStyle(
+              fontSize: 15,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _userMobileNoModule(CustomerDatum singleItem) {
-    return Text(
-      singleItem.customer.phoneNo,
-      style: const TextStyle(fontSize: 12),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 3,
+          child: Text(
+            "Mobile No",
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 7,
+          child: Text(
+            ": ${singleItem.phoneNo}",
+            style: const TextStyle(
+              fontSize: 15,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

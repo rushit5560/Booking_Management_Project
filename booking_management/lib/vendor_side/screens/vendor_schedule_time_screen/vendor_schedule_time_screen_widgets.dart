@@ -398,7 +398,7 @@ class SaveButtonModule extends StatelessWidget {
   }
 }
 
-class ResourcesListModule extends StatelessWidget {
+/*class ResourcesListModule extends StatelessWidget {
   ResourcesListModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorScheduleTimeScreenController>();
 
@@ -523,4 +523,4 @@ class ResourcesListModule extends StatelessWidget {
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8);
   }
-}
+}*/

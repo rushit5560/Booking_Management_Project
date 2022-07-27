@@ -1,4 +1,5 @@
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
@@ -40,6 +41,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
   }) : super(key: key);
 
   final customDrawerController = Get.find<CustomDrawerController>();
+  final vendorHomeScreenController = Get.find<VendorHomeScreenController>();
   // final SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
@@ -108,7 +110,9 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => VendorWalletScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.resources) {
-      Get.to(() => VendorResourcesScreen(), transition: Transition.rightToLeft);
+      Get.to(() => VendorResourcesScreen(), transition: Transition.rightToLeft)!.then((value) async {
+        await vendorHomeScreenController.getAppointmentListFunction();
+      });
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.services) {
       Get.to(() => VendorServicesScreen(), transition: Transition.rightToLeft);
@@ -131,10 +135,14 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleTime) {
       Get.to(() => VendorScheduleTimeScreen(),
-          transition: Transition.rightToLeft);
+          transition: Transition.rightToLeft)!.then((value) async {
+        await vendorHomeScreenController.getAppointmentListFunction();
+      });
     } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleManagement) {
       Get.to(() => VendorScheduleManagementScreen(),
-          transition: Transition.rightToLeft);
+          transition: Transition.rightToLeft)!.then((value) async {
+        await vendorHomeScreenController.getAppointmentListFunction();
+      });
     }
     else if(vendorSettingScreenOption == VendorDrawerOption.availableTime) {
       Get.to(() => VendorAvailableTimeScreen(),

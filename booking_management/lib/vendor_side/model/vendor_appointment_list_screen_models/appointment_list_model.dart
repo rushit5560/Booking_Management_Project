@@ -51,6 +51,7 @@ class AppointmentListModule {
     required this.status,
     required this.bookingItems,
     required this.serviceName,
+    required this.price,
   });
 
   int id;
@@ -70,6 +71,7 @@ class AppointmentListModule {
   String status;
   String bookingItems;
   String serviceName;
+  String price;
 
   factory AppointmentListModule.fromJson(Map<String, dynamic> json) => AppointmentListModule(
     id: json["id"] ?? 0,
@@ -89,6 +91,7 @@ class AppointmentListModule {
     status: json["status"] ?? "",
     bookingItems: json["bookingItems"] ?? "",
     serviceName: json["serviceName"] ?? "",
+    price: json["price"].toString(),
   );
 
   Map<String, dynamic> toJson() => {

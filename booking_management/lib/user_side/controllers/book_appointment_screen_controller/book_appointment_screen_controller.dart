@@ -198,6 +198,7 @@ class BookAppointmentScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         allResourcesList = getBookingResourcesModel.workerList;
+
         for (int i = 0; i < getBookingResourcesModel.workerList.length; i++) {
           if (getBookingResourcesModel.workerList[i].isEvent == true) {
             isEvent = getBookingResourcesModel.workerList[i].isEvent.obs;
@@ -210,52 +211,53 @@ class BookAppointmentScreenController extends GetxController {
           log("searchType2 : $searchType2");
           if (selectedServiceList.isEmpty) {
             for (int i = 0; i < allResourcesList.length; i++) {
-              allResourcesList[i].timingList =
-                  await getResourcesTimeListFunction(
-                      resId: allResourcesList[i].id.toString());
+              Map<String, dynamic> mapData = await getResourcesTimeListFunction(resId: allResourcesList[i].id.toString());
+              log("mapData : $mapData");
+              allResourcesList[i].timingList = mapData["timeList"];
+              allResourcesList[i].nextDate = mapData["nextDate"];
             }
           } else if (selectedServiceList.isNotEmpty) {
             for (int i = 0; i < allResourcesList.length; i++) {
-              allResourcesList[i].timingList =
-                  await getSelectedResourcesTimeSlotFunction(
-                      resId: allResourcesList[i].id.toString());
+              Map<String, dynamic> mapData = await getSelectedResourcesTimeSlotFunction(resId: allResourcesList[i].id.toString());
+              allResourcesList[i].timingList = mapData["timeList"];
+              allResourcesList[i].nextDate = mapData["nextDate"];
             }
           }
         } else if (searchType2 == SearchType2.anyTimeWithAdditionalSlotWise) {
           log("searchType2 : $searchType2");
           for (int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList =
-                await getResourcesAdditionalSlotAndAnytimeFunction(
-                    resId: allResourcesList[i].id.toString());
+
+            Map<String, dynamic> mapData = await getResourcesAdditionalSlotAndAnytimeFunction(resId: allResourcesList[i].id.toString());
+            allResourcesList[i].timingList = mapData["timeList"];
+            allResourcesList[i].nextDate = mapData["nextDate"];
             log("allResourcesList[i].id ${allResourcesList[i].id}");
           }
         } else if (searchType2 == SearchType2.anyTimeWise) {
           log("searchType2 : $searchType2");
           for (int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList =
-                await getResourcesAndAnytimeFunction(
-                    resId: allResourcesList[i].id.toString());
+            allResourcesList[i].timingList = await getResourcesAndAnytimeFunction(resId: allResourcesList[i].id.toString());
           }
         } else if (searchType2 == SearchType2.additionalSlotWise) {
           log("searchType2 : $searchType2");
           for (int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList =
-                await getResourcesAdditionalSlotFunction(
-                    resId: allResourcesList[i].id.toString());
+
+            Map<String, dynamic> mapData = await getResourcesAdditionalSlotFunction(resId: allResourcesList[i].id.toString());
+            allResourcesList[i].timingList = mapData["timeList"];
+            allResourcesList[i].nextDate = mapData["nextDate"];
           }
         } else if (searchType2 == SearchType2.dateTimeWise) {
           log("searchType2 : $searchType2");
           if (selectedServiceList.isEmpty) {
             for (int i = 0; i < allResourcesList.length; i++) {
-              allResourcesList[i].timingList =
-                  await getResourcesDateAndTimeListFunction(
-                      resId: allResourcesList[i].id.toString());
+              Map<String, dynamic> mapData = await getResourcesDateAndTimeListFunction(resId: allResourcesList[i].id.toString());
+              allResourcesList[i].timingList = mapData["timeList"];
+              allResourcesList[i].nextDate = mapData["nextDate"];
             }
           } else if (selectedServiceList.isNotEmpty) {
             for (int i = 0; i < allResourcesList.length; i++) {
-              allResourcesList[i].timingList =
-                  await getSelectedResourcesTimeSlotFunction(
-                      resId: allResourcesList[i].id.toString());
+              Map<String, dynamic> mapData = await getSelectedResourcesTimeSlotFunction(resId: allResourcesList[i].id.toString());
+              allResourcesList[i].timingList = mapData["timeList"];
+              allResourcesList[i].nextDate = mapData["nextDate"];
             }
           }
         }
@@ -283,6 +285,7 @@ class BookAppointmentScreenController extends GetxController {
   getResourcesTimeListFunction({required String resId}) async {
     log("Resource Id : $resId");
     DateTime dateTime = DateTime.now();
+    String nextDate = "";
 
     String hour = "${dateTime.hour}";
     String minute = "${dateTime.minute}";
@@ -326,6 +329,9 @@ class BookAppointmentScreenController extends GetxController {
       isSuccessStatus = getAllTimeListByResourceIdModel.success.obs;
 
       if (isSuccessStatus.value) {
+
+        nextDate = getAllTimeListByResourceIdModel.nextDate;
+
         for (int i = 0;
             i < getAllTimeListByResourceIdModel.workerList!.length;
             i++) {
@@ -368,7 +374,11 @@ class BookAppointmentScreenController extends GetxController {
       isLoading(true);
     }
 
-    return timeList;
+    // return [timeList, nextDate];
+    return {
+      "timeList" : timeList,
+      "nextDate" : nextDate
+    };
   }
 
   /// 4) Get Selected Resource Time List
@@ -376,6 +386,8 @@ class BookAppointmentScreenController extends GetxController {
       {required String resId, required}) async {
     log("Resource Id : $resId");
     DateTime dateTime = DateTime.now();
+    String nextDate = "";
+
     bool isToday = selectedDate.value ==
         "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     log("isToday isToday isToday :$isToday");
@@ -429,6 +441,9 @@ class BookAppointmentScreenController extends GetxController {
       isSuccessStatus = getAllTimeListByResourceIdModel.success.obs;
 
       if (isSuccessStatus.value) {
+
+        nextDate = getAllTimeListByResourceIdModel.nextDate;
+
         for (int i = 0;
             i < getAllTimeListByResourceIdModel.workerList!.length;
             i++) {
@@ -471,7 +486,8 @@ class BookAppointmentScreenController extends GetxController {
       isLoading(true);
     }
 
-    return timeList;
+    // return timeList;
+    return {"timeList": timeList, "nextDate": nextDate};
   }
 
   // ///4) Get Selected Service wise resource time list
@@ -497,8 +513,9 @@ class BookAppointmentScreenController extends GetxController {
 
   /// 4) Get Resources Date & Time Wise List
   getResourcesDateAndTimeListFunction({required String resId}) async {
-    log('Rushit');
     List<TimingSlot> timeList = [];
+    String nextDate = "";
+
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi +
         "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration";
@@ -515,6 +532,10 @@ class BookAppointmentScreenController extends GetxController {
       isSuccessStatus = getAllTimeListByResourceIdModel.success.obs;
 
       if (isSuccessStatus.value) {
+
+        nextDate = getAllTimeListByResourceIdModel.nextDate;
+
+
         for (int i = 0;
             i < getAllTimeListByResourceIdModel.workerList!.length;
             i++) {
@@ -557,12 +578,17 @@ class BookAppointmentScreenController extends GetxController {
       isLoading(true);
     }
 
-    return timeList;
+    // return timeList;
+    return {
+      "timeList" : timeList,
+      "nextDate" : nextDate
+    };
   }
 
   /// 4) Get Resources Additional Slot & Anny Time Wise List
   getResourcesAdditionalSlotAndAnytimeFunction({required String resId}) async {
     List<TimingSlot> timeList = [];
+    String nextDate = "";
 
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi +
@@ -580,6 +606,10 @@ class BookAppointmentScreenController extends GetxController {
       isSuccessStatus = getAllTimeListByResourceIdModel.success.obs;
 
       if (isSuccessStatus.value) {
+
+        nextDate = getAllTimeListByResourceIdModel.nextDate;
+
+
         for (int i = 0;
             i < getAllTimeListByResourceIdModel.workerList!.length;
             i++) {
@@ -626,12 +656,17 @@ class BookAppointmentScreenController extends GetxController {
       isLoading(true);
     }
 
-    return timeList;
+    // return timeList;
+    return {
+      "timeList" : timeList,
+      "nextDate" : nextDate
+    };
   }
 
   /// 4) Get Resources Any Time Wise List
   getResourcesAndAnytimeFunction({required String resId}) async {
     List<TimingSlot> timeList = [];
+    String nextDate = "";
 
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi +
@@ -649,6 +684,9 @@ class BookAppointmentScreenController extends GetxController {
       isSuccessStatus = getAllTimeListByResourceIdModel.success.obs;
 
       if (isSuccessStatus.value) {
+
+        nextDate = getAllTimeListByResourceIdModel.nextDate;
+
         for (int i = 0;
             i < getAllTimeListByResourceIdModel.workerList!.length;
             i++) {
@@ -692,7 +730,11 @@ class BookAppointmentScreenController extends GetxController {
       isLoading(true);
     }
 
-    return timeList;
+    // return timeList;
+    return {
+      "timeList" : timeList,
+      "nextDate" : nextDate
+    };
   }
 
   /// 4) Get Resources Additional Slot Wise List

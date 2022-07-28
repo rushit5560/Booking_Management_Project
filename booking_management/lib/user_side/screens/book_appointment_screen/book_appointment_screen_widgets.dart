@@ -258,12 +258,12 @@ class BookingResourcesListModule extends StatelessWidget {
               Container(
                 height: 50,
                 width: 50,
-                decoration: BoxDecoration(
-                  // image: DecorationImage(
-                  //   image: NetworkImage(imgUrl),
-                  //   fit: BoxFit.cover,
-                  // ),
-                ),
+                // decoration: BoxDecoration(
+                //   // image: DecorationImage(
+                //   //   image: NetworkImage(imgUrl),
+                //   //   fit: BoxFit.cover,
+                //   // ),
+                // ),
                 child: Image.network(imgUrl,
                   errorBuilder: (context, st, ob){
                     return Image.asset(AppImages.logoImg);
@@ -308,98 +308,136 @@ class BookingResourcesListModule extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          singleItem.timingList.isEmpty
-              ? Container()
-              : GridView.builder(
-            itemCount: singleItem.timingList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 3,
-                crossAxisSpacing: 3,
-                childAspectRatio: 5
-            ),
-            itemBuilder: (context, i) {
-              return GestureDetector(
-                onTap: () {
-
-                  /// First All Slot Set Unselected
-                  for(int i = 0; i < screenController.allResourcesList.length; i++) {
-                    for(int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
-                      screenController.allResourcesList[i].timingList[j].isSelected = false;
-                    }
-                  }
-
-                  /// Selected Item Become Blue
-                  int selectedId = singleItem.timingList[i].id;
-                  log("selectedId : $selectedId");
-                  screenController.selectedResourceTimeSlotId = selectedId;
-
-                    for(int j=0; j < singleItem.timingList.length; j++) {
-                      if (singleItem.timingList[j].id == selectedId) {
-                        singleItem.timingList[j].isSelected = true;
-                      } else {
-                        singleItem.timingList[j].isSelected = false;
-                      }
-                    }
-                  screenController.loadUI();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5,
-                        color: Colors.grey.shade300,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                    color: singleItem.timingList[i].isSelected == true
-                      ? Colors.blue
-                        : null
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        singleItem.timingList[i].startDateTime,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: singleItem.timingList[i].isSelected == true
-                            ? Colors.white
-                              : Colors.black
+          singleItem.timingList.isEmpty && singleItem.nextDate.isEmpty
+              ? Row(
+                  children: const [Text("Time slot is not available.")],
+                )
+              : singleItem.nextDate.isNotEmpty
+                  ? Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            String nextDate = singleItem.nextDate;
+                            List<String> dateModuleList = nextDate.split('/');
+                            for(int i = 0; i < dateModuleList.length; i++) {
+                              log("dateModuleList : ${dateModuleList[i]}");
+                            }
+                            log("dateModuleList.length : ${dateModuleList.length}");
+                            screenController.selectedDate.value = "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
+                            await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.dateTimeWise);
+                          },
+                          child: Text(
+                            "Next Available ${singleItem.nextDate}",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: AppColors.accentColor,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
+                    )
+                  : GridView.builder(
+                      itemCount: singleItem.timingList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 3,
+                              crossAxisSpacing: 3,
+                              childAspectRatio: 5),
+                      itemBuilder: (context, i) {
+                        return GestureDetector(
+                          onTap: () {
+                            /// First All Slot Set Unselected
+                            for (int i = 0;
+                                i < screenController.allResourcesList.length;
+                                i++) {
+                              for (int j = 0;
+                                  j <
+                                      screenController.allResourcesList[i]
+                                          .timingList.length;
+                                  j++) {
+                                screenController.allResourcesList[i]
+                                    .timingList[j].isSelected = false;
+                              }
+                            }
 
-                      Text(
-                        "-",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: singleItem.timingList[i].isSelected == true
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ).commonSymmetricPadding(horizontal: 5),
+                            /// Selected Item Become Blue
+                            int selectedId = singleItem.timingList[i].id;
+                            log("selectedId : $selectedId");
+                            screenController.selectedResourceTimeSlotId =
+                                selectedId;
 
-                      Text(
-                        singleItem.timingList[i].endDateTime,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                            color: singleItem.timingList[i].isSelected == true
-                                ? Colors.white
-                                : Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ).commonAllSidePadding(3),
-              );
-            },
-          ),
+                            for (int j = 0;
+                                j < singleItem.timingList.length;
+                                j++) {
+                              if (singleItem.timingList[j].id == selectedId) {
+                                singleItem.timingList[j].isSelected = true;
+                              } else {
+                                singleItem.timingList[j].isSelected = false;
+                              }
+                            }
+                            screenController.loadUI();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    color: Colors.grey.shade300,
+                                    blurStyle: BlurStyle.outer,
+                                  ),
+                                ],
+                                color:
+                                    singleItem.timingList[i].isSelected == true
+                                        ? Colors.blue
+                                        : null),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  singleItem.timingList[i].startDateTime,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color:
+                                          singleItem.timingList[i].isSelected ==
+                                                  true
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                                Text(
+                                  "-",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color:
+                                        singleItem.timingList[i].isSelected ==
+                                                true
+                                            ? Colors.white
+                                            : Colors.black,
+                                  ),
+                                ).commonSymmetricPadding(horizontal: 5),
+                                Text(
+                                  singleItem.timingList[i].endDateTime,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color:
+                                        singleItem.timingList[i].isSelected ==
+                                                true
+                                            ? Colors.white
+                                            : Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ).commonAllSidePadding(3),
+                        );
+                      },
+                    ),
         ],
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8);
@@ -442,7 +480,7 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {//todo
+      onTap: () async {
         // if(/*screenController.selectedTimeValue.value == "Any Time" && */screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
         //   await screenController.getAllResourcesListByIdFunction();
         // }

@@ -57,7 +57,9 @@ class BookingResourceWorkerData {
       required this.avilableTime,
       required this.vendor,
       required this.bookingAvailability,
-      required this.timingList});
+      required this.timingList,
+      required this.nextDate
+      });
 
   int id;
   String resourceName;
@@ -83,6 +85,7 @@ class BookingResourceWorkerData {
   String vendor;
   String bookingAvailability;
   List<TimingSlot> timingList;
+  String nextDate;
 
   factory BookingResourceWorkerData.fromJson(Map<String, dynamic> json) =>
       BookingResourceWorkerData(
@@ -108,7 +111,9 @@ class BookingResourceWorkerData {
           avilableTime: json["avilableTime"] ?? "",
           vendor: json["vendor"] ?? "",
           bookingAvailability: json["bookingAvailability"] ?? "",
-          timingList: json['timingList'] ?? []);
+          timingList: json['timingList'] ?? [],
+          nextDate: json['nextDate'] ?? ""
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,

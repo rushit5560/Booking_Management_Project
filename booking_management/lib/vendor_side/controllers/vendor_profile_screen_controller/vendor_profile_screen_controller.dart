@@ -46,7 +46,7 @@ class VendorProfileScreenController extends GetxController {
 
   File? file;
 
-  String? userImage;
+  // String? userImage;
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
@@ -153,22 +153,16 @@ class VendorProfileScreenController extends GetxController {
 
         request.headers.addAll(headers);
 
-        //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
-        // request.fields['CategoryId'] = categoryId.value;
-        request.fields['BusinessName'] =
-            businessNameTextFieldController.text.trim();
-        request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
-        // request.fields['Street'] = streetTextFieldController.text.trim();
-        // request.fields['Suburb'] = subUrbTextFieldController.text.trim();
-        // request.fields['Postcode'] = postCodeTextFieldController.text.trim();
-        // request.fields['State'] = stateTextFieldController.text.trim();
-        // request.fields['Country'] = countryTextFieldController.text.trim();
+        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
         request.fields['Address'] = addressTextFieldController.text.trim();
-        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         request.fields['Duration'] = slotDurationValue.value;
+        request.fields['CategoryId'] = "${businessDropDownValue!.id}";
+        request.fields['ModifiedBy'] = UserDetails.uniqueId;
         request.fields['Id'] = UserDetails.tableWiseId.toString();
         request.fields['Longitude'] = selectedLongitude.value;
         request.fields['Latitude'] = selectedLatitude.value;
+
 
         var multiPart = http.MultipartFile(
           'file',
@@ -176,10 +170,6 @@ class VendorProfileScreenController extends GetxController {
           length,
         );
 
-        // var multiFile = await http.MultipartFile.fromPath(
-        //   "file",
-        //   file!.path,
-        // );
 
         request.files.add(multiPart);
 
@@ -193,7 +183,7 @@ class VendorProfileScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(utf8.decoder).listen((value) {
+        response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((value) {
           VendorEditProfileModel response1 =
               VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
@@ -220,22 +210,28 @@ class VendorProfileScreenController extends GetxController {
 
         request.headers.addAll(headers);
 
-        //request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
-        // request.fields['CategoryId'] = "${businessDropDownValue!.id}";
-        request.fields['BusinessName'] =
-            businessNameTextFieldController.text.trim();
+        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
+        request.fields['Duration'] = slotDurationValue.value;
+        request.fields['CategoryId'] = "${businessDropDownValue!.id}";
+        request.fields['ModifiedBy'] = UserDetails.uniqueId;
+        request.fields['Id'] = UserDetails.tableWiseId.toString();
+        request.fields['Longitude'] = selectedLongitude.value;
+        request.fields['Latitude'] = selectedLatitude.value;
+
+
+        // request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
+        // request.fields['CategoryId'] = "${businessDropDownValue!.id}";
         // request.fields['Street'] = streetTextFieldController.text.trim();
         // request.fields['Suburb'] = subUrbTextFieldController.text.trim();
         // request.fields['Postcode'] = postCodeTextFieldController.text.trim();
         // request.fields['State'] = stateTextFieldController.text.trim();
         // request.fields['Country'] = countryTextFieldController.text.trim();
-        request.fields['Address'] = addressTextFieldController.text.trim();
-        request.fields['ModifiedBy'] = UserDetails.uniqueId;
-        request.fields['Duration'] = slotDurationValue.value;
-        request.fields['Id'] = UserDetails.tableWiseId.toString();
-        request.fields['Longitude'] = selectedLongitude.value;
-        request.fields['Latitude'] = selectedLatitude.value;
+
+
+
+
 
         // var multiPart = http.MultipartFile(
         //   'file',
@@ -252,11 +248,10 @@ class VendorProfileScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-       response.stream.transform(utf8.decoder).listen((value) {
-          log(value);
-          Future.delayed(Duration(milliseconds: 800), () {});
-          VendorEditProfileModel response1 =
-              VendorEditProfileModel.fromJson(jsonDecode(value));
+        response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((value) {
+          log("value : $value");
+          // Future.delayed(Duration(milliseconds: 800), () {});
+          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
           isStatus = response1.statusCode.obs;
           log('status : $isStatus');
@@ -431,8 +426,8 @@ class VendorProfileScreenController extends GetxController {
 
         currentSlotDuration.value =
             getUserDetailsByIdModel.data.duration.toString();
-        businessDropDownValue!.name =
-            getUserDetailsByIdModel.data.categories.name;
+        businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
+        businessDropDownValue!.id = getUserDetailsByIdModel.data.categories.id;
         slotDuration = slotDurationValue.value;
         selectedLatitude.value = getUserDetailsByIdModel.data.latitude == ""
             ? UserDetails.latitude

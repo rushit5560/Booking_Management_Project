@@ -228,11 +228,11 @@ class _VendorProfileDetailsModuleState
                       fit: BoxFit.cover,
                     ),
                   )
-                : screenController.userImage != null
+                : screenController.vendorProfile != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          ApiUrl.apiImagePath + screenController.userImage!,
+                          ApiUrl.apiImagePath + screenController.vendorProfile,
                           // height: 100,
                           // width: 100,
                           fit: BoxFit.cover,
@@ -414,7 +414,7 @@ class _VendorProfileDetailsModuleState
         const Expanded(
             flex: 2,
             child: Text(
-              "UserName:",
+              "Full Name:",
               style: TextStyle(fontWeight: FontWeight.w500),
             )),
         Expanded(
@@ -1602,8 +1602,7 @@ class _VendorProfileDetailsModuleState
           log('new: ${screenController.currentSlotDuration}');
 
           // ignore: unrelated_type_equality_checks
-          if (screenController.slotDurationValue.value ==
-              screenController.currentSlotDuration.value) {
+          if (screenController.slotDurationValue.value == screenController.currentSlotDuration.value) {
             await screenController.vendorEditProfileFunction();
           } else {
             deleteTimingSlotDurationAlertDialog();

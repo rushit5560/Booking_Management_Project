@@ -404,6 +404,7 @@ class SearchButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // if(screenController.categoryFieldController.text.isNotEmpty) {
+        screenController.predictions.clear();
         Get.to(
           () => UserSearchResultsScreen(),
           arguments: [
@@ -414,11 +415,11 @@ class SearchButtonModule extends StatelessWidget {
         )!.then((value) async {
           await screenController.getFavouriteVendorByIdFunction();
         });
-        hideKeyboard();
-
+        screenController.predictions.clear();
         screenController.categoryFieldController.clear();
         screenController.locationFieldController.clear();
-        screenController.predictions.clear();
+        hideKeyboard();
+
         // }
       },
       child: Container(

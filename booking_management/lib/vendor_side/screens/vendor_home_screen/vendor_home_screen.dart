@@ -43,18 +43,20 @@ class VendorHomeScreen extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         PendingListTextModule(
+                                                size: 20,
                                                 text: "Today Resource Summary")
                                             .commonSymmetricPadding(
-                                                horizontal: 25),
+                                                horizontal: 20),
                                         ResourcesModule(),
                                         const SizedBox(height: 10),
                                         PendingListTextModule(
+                                                size: 20,
                                                 text: "Today Appointment List")
                                             .commonSymmetricPadding(
-                                                horizontal: 25),
+                                                horizontal: 20),
                                         TodayAppointmentListModule(),
                                       ],
-                                    ).commonSymmetricPadding(horizontal: 25),
+                                    ).commonSymmetricPadding(horizontal: 20),
                                   ),
                                 ),
                         ),

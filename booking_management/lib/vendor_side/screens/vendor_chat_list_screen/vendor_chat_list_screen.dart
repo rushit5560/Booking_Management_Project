@@ -1,4 +1,5 @@
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
@@ -110,7 +111,9 @@ class VendorChatListScreen extends StatelessWidget {
                       Container(
                         height: 50,
                         width: 50,
+                        padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
+                            // shape: BoxShape.circle,
                             // borderRadius: BorderRadius.circular(15),
                             // image: const DecorationImage(
                             //   image: AssetImage(AppImages.vendorImg),
@@ -119,15 +122,36 @@ class VendorChatListScreen extends StatelessWidget {
                             ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.network(
-                            vendorChatListScreenController.profileImage,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(AppImages.profileImg);
+                          child: FutureBuilder<String>(
+                            future: vendorChatListScreenController
+                                .getUserChatImage(singleMsg.customerid!),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Image.network(
+                                  ApiUrl.apiImagePath + snapshot.data!,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(AppImages.profileImg);
+                                  },
+                                );
+                              }
+                              return Container(
+                                padding: const EdgeInsets.all(8),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.accentColor,
+                                ),
+                              );
                             },
                           ),
+
+                          //  Image.network(
+                          //   ApiUrl.apiImagePath + singleMsg.img!,
+                          //   // errorBuilder: (context, error, stackTrace) {
+                          //   //   return Image.asset(AppImages.profileImg);
+                          //   // },
+                          // ),
                         ),
                       ),
-                      // const SizedBox(width: 10),
+                      const SizedBox(width: 15),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

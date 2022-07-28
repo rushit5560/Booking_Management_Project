@@ -22,7 +22,6 @@ class ApiUrl {
   static const getUserProfileOnlyApi = apiMainPath + "API/";
   static const getAllCountryApi = apiMainPath + "API/GetAllCountry";
 
-
   /// Customer API
   static const userSignUpApi = apiMainPath + "API/CustomerRegister";
   static const userBusinessListApi = apiMainPath + "Searching/APIBusinesslist";
@@ -100,6 +99,7 @@ class ApiUrl {
   static const vendorDoneAppointmentApi =
       apiMainPath + "Appointments/APIAppointmentDone";
   static const vendorEditProfileApi = apiMainPath + "API/VendorProfile";
+  static const vendorGetProfileImageApi = apiMainPath + "API/ChatImage";
   static const vendorSaveLatLongApi = apiMainPath + "API/SaveLatitudeLongitude";
 
   /// Vendor - Services

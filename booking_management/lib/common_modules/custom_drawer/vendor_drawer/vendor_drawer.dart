@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 
 import '../../constants/app_images.dart';
 
-
 class VendorDrawer extends StatelessWidget {
   VendorDrawer({Key? key}) : super(key: key);
   final customDrawerController = Get.put(CustomDrawerController());
@@ -21,7 +20,6 @@ class VendorDrawer extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-
               VendorDrawerSingleItemModule(
                 img: AppImages.profileImg,
                 name: 'My Customer',
@@ -35,7 +33,6 @@ class VendorDrawer extends StatelessWidget {
                 vendorDrawerOption: VendorDrawerOption.invoices,
               ),
               const SizedBox(height: 20),
-
 
               VendorDrawerSingleItemModule(
                 img: AppImages.profileImg,
@@ -51,8 +48,6 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-
-
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Add Resource',
@@ -62,15 +57,15 @@ class VendorDrawer extends StatelessWidget {
 
               UserDetails.isServiceSlot
                   ? VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Add Services',
-                vendorDrawerOption: VendorDrawerOption.services,
-              )
+                      img: AppImages.resourcesImg,
+                      name: 'Add Services',
+                      vendorDrawerOption: VendorDrawerOption.services,
+                    )
                   : VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Additional Slot',
-                vendorDrawerOption: VendorDrawerOption.additionalSlot,
-              ),
+                      img: AppImages.resourcesImg,
+                      name: 'Additional Slot',
+                      vendorDrawerOption: VendorDrawerOption.additionalSlot,
+                    ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
@@ -87,14 +82,12 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Reviews',
                 vendorDrawerOption: VendorDrawerOption.review,
               ),
               const SizedBox(height: 20),
-
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
@@ -133,7 +126,6 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-
               /// Invoice report
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
@@ -168,7 +160,6 @@ class VendorDrawer extends StatelessWidget {
                 name: 'Logout',
                 vendorDrawerOption: VendorDrawerOption.logout,
               ),
-
             ],
           ).commonAllSidePadding(15),
         ),

@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/user_side/model/get_payment_id_model/get_payment_id_model.dart';
 import 'package:booking_management/user_side/model/get_stripe_secret_key_model/get_stripe_secret_key_model.dart';
 import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -138,8 +141,8 @@ class UserCheckoutScreenController extends GetxController {
         log("vendorAddress : $vendorAddress");
         log("bookingDate : $bookingDate");
         log("bookingTime : $bookingTime");
-         //log("endBookingDate: $endBookingDate");
-         log("endBookingTime : $endBookingTime");
+        //log("endBookingDate: $endBookingDate");
+        log("endBookingTime : $endBookingTime");
         // log("bookingPrice : $bookingPrice");
         // log("bookingQty : $bookingQty");
         // log("bookingTotalAmount : $bookingTotalAmount");
@@ -162,7 +165,7 @@ class UserCheckoutScreenController extends GetxController {
   }
 
   /// get payment Id From payment
-  /*getPaymentIdFunction(String id, String secretKey) async {
+  getPaymentIdFunction(String id, String secretKey) async {
     isLoading(true);
     String url = ApiUrl.getPaymentIdApi;
     log("getPaymentId : $url");
@@ -198,9 +201,9 @@ class UserCheckoutScreenController extends GetxController {
       log("getPaymentId Error ::: $e");
     } finally {
       //isLoading(false);
-      await displayPaymentSheet();
+      await displayPaymentSheet(id, secretKey);
     }
-  }*/
+  }
 
   /// Submit Button
   checkOutSubmitFunction() async {
@@ -254,22 +257,40 @@ class UserCheckoutScreenController extends GetxController {
   }
 
   /// For Stripe
-  /*Future<void> makePayment() async {
+  Future<void> makePayment() async {
     try {
-      paymentIntentData = await createPaymentIntent(bookingPrice, "USD");
+      print(bookingPrice);
+      var decimalList = bookingPrice.split(".")[0];
+      var price = int.tryParse(decimalList);
+      print(price.runtimeType);
+      print(price);
+      paymentIntentData = await createPaymentIntent(price!, "USD");
+
+      // var stripePaymentMethod = await Stripe.instance.confirmPayment(paymentIntentClientSecret, data).paymentRequestWithCardForm(CardFormPaymentRequest());
+      // var stripePaymentIntent = await StripeService.createPaymentIntent(amount, currency);
+
+      // var paymentmethod =
+      //     await Stripe.instance.createPaymentMethod(PaymentMethodParams.card());
 
       log('paymentIntentData: $paymentIntentData');
 
       await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-        paymentIntentClientSecret: paymentIntentData!['client_secret'],
-        applePay: true,
-        googlePay: true,
-        style: ThemeMode.light,
-        merchantCountryCode: 'US',
-        merchantDisplayName: 'SetDayTime',
-        customFlow: true,
-      ));
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntentData!['client_secret'],
+          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
+          customerId: paymentIntentData!['customer'],
+          // Enable custom flow
+          customFlow: true,
+          // Extra options
+          testEnv: true,
+          applePay: true,
+          googlePay: true,
+          style: ThemeMode.dark,
+          primaryButtonColor: AppColors.accentColor,
+          merchantCountryCode: 'US',
+          merchantDisplayName: 'SetDayTime',
+        ),
+      );
 
       if (paymentIntentData!['id'] == null) {
         log('Failed');
@@ -277,13 +298,52 @@ class UserCheckoutScreenController extends GetxController {
         Get.snackbar("Failed", "Failed payment Id",
             snackPosition: SnackPosition.BOTTOM);
       } else {
+        // await Stripe.instance.confirmPaymentSheetPayment();
+        // var response = await Stripe.instance.confirmPayment(
+        //   paymentIntentData!['client_secret'],
+        //   PaymentMethodParams.afterpayClearpay(
+        //     shippingDetails: ShippingDetails(
+        //       address: Address(
+        //           city: "surat",
+        //           country: "india",
+        //           line1: "",
+        //           line2: "",
+        //           postalCode: "395009",
+        //           state: "Gujarat"),
+        //     ),
+        //   ),
+        // );
+
+        // print(response.status);
+
+        // // confirmPayment(
+
+        // //   PaymentIntent(
+        // //       clientSecret: stripePaymentIntent['client_secret'],
+        // //       paymentMethodId: stripePaymentMethod.id),
+        // // );
+        // if (response.status == 'succeeded') {
+        //   //if the payment process success
+
+        //   print("'Transaction successful'");
+
+        //   // new StripeTransactionResponse(
+        //   //     message: 'Transaction successful', success: true);
+        // } else {
+        //   //payment process fail
+        //   print("'Transaction failed'");
+        //   // return new StripeTransactionResponse(
+        //   //     message: 'Transaction failed', success: false);
+        // }
         //log('Success');
         log('id: ${paymentIntentData!['id']}');
         // Get.snackbar(
         //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
         // );
         getPaymentIdFunction(
-            paymentIntentData!['id'], paymentIntentData!['client_secret']);
+          paymentIntentData!['id'],
+          paymentIntentData!['client_secret'],
+        );
       }
 
       //await displayPaymentSheet();
@@ -293,7 +353,7 @@ class UserCheckoutScreenController extends GetxController {
       log("Make Payment Error ::: $e");
       rethrow;
     }
-  }*/
+  }
 
   createPaymentIntent(int amount, String currency) async {
     try {
@@ -324,28 +384,21 @@ class UserCheckoutScreenController extends GetxController {
     return price.toString();
   }
 
-  /*displayPaymentSheet() async {
+  displayPaymentSheet(String id, String secretKey) async {
     //isLoading(true);
     try {
-      await Stripe.instance
-          .presentPaymentSheet(
-
-        parameters: PresentPaymentSheetParameters(
-          clientSecret: paymentIntentData!['client_secret'],
-          confirmPayment: true,
-
-        ),
-      )
-          .then((value) async {
+      await Stripe.instance.presentPaymentSheet().then((value) async {
         log('paymentIntentData id : ${paymentIntentData!['id']}');
         log('Display paymentIntentData: $paymentIntentData');
-
 
         isLoading(true);
         await checkOutSubmitFunction();
         paymentIntentData = null;
         isLoading(false);
+
         log('success');
+
+        // await Stripe.instance.confirmPayment();
       });
 
       //Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
@@ -359,7 +412,18 @@ class UserCheckoutScreenController extends GetxController {
       //checkOutSubmitFunction();
 
     } on StripeException catch (e) {
-      log("StripeException Error ::: $e");
+      log("StripeException Error ::: ${e.error}");
+
+      // var errorMsg = e.error;
+      // print(errorMsg.code);
+      // print(errorMsg.declineCode);
+      // print(errorMsg.localizedMessage);
+      // print(errorMsg.message);
+      // print(errorMsg.stripeErrorCode);
+
+// switch (errorMsg == )
+
+      rethrow;
       // Get.snackbar(
       //     "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
       // );
@@ -374,7 +438,7 @@ class UserCheckoutScreenController extends GetxController {
           snackPosition: SnackPosition.TOP);
       // await checkOutSubmitFunction();
     }
-  }*/
+  }
 
   getStripeKeyFunction() async {
     isLoading(true);

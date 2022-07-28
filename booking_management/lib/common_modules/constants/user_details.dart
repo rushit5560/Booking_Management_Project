@@ -2,8 +2,8 @@ class UserDetails {
   static String userId = "";
   static String role = "";
 
-  static int ? vendorId;
-  static int ? customerId;
+  static int? vendorId;
+  static int? customerId;
 
   static bool isUserLoggedIn = false;
   static String apiToken = "";
@@ -32,6 +32,6 @@ class UserDetails {
 
   static String fcmToken = "";
 
-
   static bool isUserFirstTime = true;
+  static bool isSubscription = true;
 }

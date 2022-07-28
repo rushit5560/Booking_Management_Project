@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferenceData{
-
+class SharedPreferenceData {
   String isUserLoggedInKey = "isUserLoggedInKey";
   String apiTokenKey = "apiTokenKey";
   String uniqueIdKey = "uniqueIdKey";
@@ -30,30 +29,33 @@ class SharedPreferenceData{
   String latitudeKey = "latitudeKey";
   String longitudeKey = "longitudeKey";
 
+  String isSubscriptionKey = "isSubscription";
+
   String isUserFirstTimeKey = "isUserFirstTimeKey";
 
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
-        required String apiToken,
-        required String uniqueId,
-        required int tableWiseId,
-        required String userName,
-        required String email,
-        required String phoneNo,
-        required String dob,
-        required String roleName,
-        required String gender,
-        required String businessName,
-        required String address,
-        required String street,
-        required String state,
-        required String country,
-        required String subUrb,
-        required String postCode,
+    required String apiToken,
+    required String uniqueId,
+    required int tableWiseId,
+    required String userName,
+    required String email,
+    required String phoneNo,
+    required String dob,
+    required String roleName,
+    required String gender,
+    required String businessName,
+    required String address,
+    required String street,
+    required String state,
+    required String country,
+    required String subUrb,
+    required String postCode,
+    bool? isSubscription,
     //required String slotDuration
     required String businessId,
     required bool serviceSlot,
-      }) async {
+  }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //Remove Old Id & Token
@@ -74,6 +76,7 @@ class SharedPreferenceData{
     prefs.remove(countryKey);
     prefs.remove(subUrbKey);
     prefs.remove(postCodeKey);
+    prefs.remove(isSubscriptionKey);
     //prefs.remove(slotDurationKey);
     prefs.remove(businessIdKey);
     prefs.setBool(serviceSlotKey, false);
@@ -98,6 +101,7 @@ class SharedPreferenceData{
     prefs.setString(postCodeKey, postCode);
     //prefs.setString(slotDurationKey, slotDuration);
     prefs.setString(businessIdKey, businessId);
+    prefs.setBool(isSubscriptionKey, isSubscription!);
     prefs.setBool(serviceSlotKey, serviceSlot);
 
     // Now Set Prefs Data in UserDetails in Code
@@ -120,6 +124,7 @@ class SharedPreferenceData{
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
     //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
+    UserDetails.isSubscription = prefs.getBool(isSubscriptionKey) ?? true;
     UserDetails.isServiceSlot = prefs.getBool(serviceSlotKey) ?? false;
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
@@ -140,10 +145,10 @@ class SharedPreferenceData{
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
     //log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
+    log("UserDetails.isSubscription : ${UserDetails.isSubscription}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
     log("UserDetails.isServiceSlot : ${UserDetails.isServiceSlot}");
   }
-
 
   /// Clear All UserLoggedIn Data
   clearUserLoginDetailsFromPrefs() async {
@@ -168,6 +173,7 @@ class SharedPreferenceData{
     prefs.setString(subUrbKey, "");
     prefs.setString(postCodeKey, "");
     //prefs.setString(slotDurationKey, "");
+    prefs.setString(isSubscriptionKey, "");
     prefs.setString(businessIdKey, "");
 
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -188,6 +194,7 @@ class SharedPreferenceData{
     UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
     //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
+    UserDetails.businessId = prefs.getString(isSubscriptionKey) ?? "";
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
@@ -207,10 +214,10 @@ class SharedPreferenceData{
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
-   // log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
+    // log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
+    log("UserDetails.businessId : ${UserDetails.isSubscription}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
   }
-
 
   /// Set Latitude & Longitude
   setLatAndLongInPrefs({required String lat, required String long}) async {
@@ -222,7 +229,6 @@ class SharedPreferenceData{
     UserDetails.longitude = prefs.getString(longitudeKey) ?? "";
   }
 
-
   /// Clear Lat & Long
   clearLatAndLongFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -233,12 +239,8 @@ class SharedPreferenceData{
     prefs.setString(longitudeKey, "");
   }
 
-
   setUserIsFirstTimeInApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(isUserFirstTimeKey, false);
-
   }
-
-
 }

@@ -6,7 +6,6 @@ import '../../../common_modules/common_widgets.dart';
 import '../../common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
 import 'sign_in_screen_widgets.dart';
 
-
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
   final signInScreenController = Get.put(SignInScreenController());
@@ -29,6 +28,7 @@ class SignInScreen extends StatelessWidget {
                         /// From Common Widgets
                         const HeaderLogoModule(),
                         const SizedBox(height: 20),
+
                         /// From Common Widgets
                         const HeaderTextModule(name: "Welcome \nBack"),
                         const SizedBox(height: 20),

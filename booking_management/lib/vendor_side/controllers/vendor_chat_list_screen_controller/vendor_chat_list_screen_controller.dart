@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/user_side/model/user_profile_screen_model/user_profile_details_model.dart';
+import 'package:booking_management/vendor_side/model/vendor_chat_screen_models/user_image_get_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -22,6 +24,8 @@ class VendorChatListScreenController extends GetxController {
 
   String profileImage = "";
 
+  String img = "";
+
   /// Get User ChatRoom List
   Stream<List<UserChatRoomListModel>> getChatRoomListFunction() {
     // isLoading(true);
@@ -31,12 +35,26 @@ class VendorChatListScreenController extends GetxController {
         .collection("ChatRoom")
         .where("users", arrayContains: userEmail)
         .snapshots()
-        .map((snapshot) =>
-        snapshot.docs.map((doc) {
-          String img = "";
-          return UserChatRoomListModel.fromJson(doc.data(), img);
-        })
-            .toList());
+        .map((snapshot) => snapshot.docs.map((doc) {
+              var userchatDataList = UserChatRoomListModel.fromJson(
+                doc.data(),
+                img,
+              );
+
+              // getUserChatImage(userid).then((String value) {
+              //   print(" $value");
+              //   print(" ${value.runtimeType}");
+              //   img = value;
+              // });
+
+              // img = getUserChatImage(userid).toString();
+
+              // getUserChatImage(userid).then((value) {
+              //   img = value;
+              // });
+
+              return userchatDataList;
+            }).toList());
 
     /*firebaseDatabase.getChatRooms(userEmail).then((value) {
       chatRoomsStream = value;
@@ -45,6 +63,42 @@ class VendorChatListScreenController extends GetxController {
     // loadUI();
     // isLoading(false);
     // return chatRoomsStream;
+  }
+
+  Future<String> getUserChatImage(String userId) async {
+    isLoading(true);
+    String url = ApiUrl.vendorGetProfileImageApi + "?id=$userId";
+    log('Url : $url');
+
+    String? image;
+
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Get image data Response : ${response.body}');
+
+      UserImageGetModel getUserImage =
+          UserImageGetModel.fromJson(json.decode(response.body));
+      // log('user get image : $getUserImage');
+      isSuccessStatus = getUserImage.success!.obs;
+      // log('user get image status  : $isSuccessStatus');
+
+      if (getUserImage.statusCode == 200) {
+        log("Success");
+        image = getUserImage.image.toString();
+        // log('chat image code: ${getUserImage.statusCode}');
+      } else {
+        log('Get user image Else Else');
+      }
+    } catch (e) {
+      log('Get user image False False: $e');
+    } finally {
+      isLoading(false);
+      // await getUserDetailsById();
+    }
+
+    // log('user chat image is : $image');
+    return "$image";
   }
 
   /// Get User Details By Id
@@ -97,5 +151,4 @@ class VendorChatListScreenController extends GetxController {
     //getUserDetailsById();
     super.onInit();
   }
-
 }

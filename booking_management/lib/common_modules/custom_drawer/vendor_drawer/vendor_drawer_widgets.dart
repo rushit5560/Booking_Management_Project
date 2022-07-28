@@ -1,3 +1,5 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
@@ -8,6 +10,7 @@ import 'package:booking_management/vendor_side/screens/vendor_schedule_managemen
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_report_screen/vendor_subscription_report_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../vendor_side/screens/appointment_report_screen/appointment_report_screen.dart';
@@ -26,7 +29,6 @@ import '../../../vendor_side/screens/vendor_subscription_plan_screen/vendor_subs
 import '../../../vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen.dart';
 import '../../constants/app_images.dart';
 import '../../constants/enums.dart';
-
 
 class VendorDrawerSingleItemModule extends StatelessWidget {
   final String name;
@@ -50,7 +52,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       onTap: () {
         Get.back();
         singleItemOnTap(vendorSettingScreenOption: vendorDrawerOption);
-        },
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -92,32 +94,27 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({required VendorDrawerOption vendorSettingScreenOption}) async {
+  singleItemOnTap(
+      {required VendorDrawerOption vendorSettingScreenOption}) async {
     if (vendorSettingScreenOption == VendorDrawerOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.myCustomer) {
-      Get.to(() => MyCustomerScreen(),
-          transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorDrawerOption.myCustomer) {
+      Get.to(() => MyCustomerScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
-      Get.to(() => VendorChatListScreen(),
-          transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.bookingHistory) {
+      Get.to(() => VendorChatListScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorDrawerOption.bookingHistory) {
       Get.to(() => const VendorBookingHistoryScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.wallet) {
       Get.to(() => VendorWalletScreen(), transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.resources) {
-      Get.to(() => VendorResourcesScreen(), transition: Transition.rightToLeft)!.then((value) async {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.resources) {
+      Get.to(() => VendorResourcesScreen(), transition: Transition.rightToLeft)!
+          .then((value) async {
         await vendorHomeScreenController.getAppointmentListFunction();
       });
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.services) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.services) {
       Get.to(() => VendorServicesScreen(), transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.additionalSlot) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.additionalSlot) {
       Get.to(() => VendorAdditionalSlotScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
@@ -125,57 +122,62 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => VendorBusinessDocumentScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.review) {
-      Get.to(() => ReviewScreen(),
-          transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.subscription) {
+      Get.to(() => ReviewScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorDrawerOption.subscription) {
       Get.to(() => VendorSubscriptionPlanScreen(),
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.help) {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
-    } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleTime) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.scheduleTime) {
       Get.to(() => VendorScheduleTimeScreen(),
-          transition: Transition.rightToLeft)!.then((value) async {
+              transition: Transition.rightToLeft)!
+          .then((value) async {
         await vendorHomeScreenController.getAppointmentListFunction();
       });
-    } else if(vendorSettingScreenOption == VendorDrawerOption.scheduleManagement) {
-      Get.to(() => VendorScheduleManagementScreen(),
-          transition: Transition.rightToLeft)!.then((value) async {
-        await vendorHomeScreenController.getAppointmentListFunction();
-      });
-    }
-    else if(vendorSettingScreenOption == VendorDrawerOption.availableTime) {
+    } else if (vendorSettingScreenOption ==
+        VendorDrawerOption.scheduleManagement) {
+      if (UserDetails.isSubscription == false) {
+        Fluttertoast.showToast(
+          msg: 'Subscription Expired, Purchase any subscription plan',
+        );
+      } else {
+        Get.to(() => VendorScheduleManagementScreen(),
+                transition: Transition.rightToLeft)!
+            .then((value) async {
+          await vendorHomeScreenController.getAppointmentListFunction();
+        });
+      }
+    } else if (vendorSettingScreenOption == VendorDrawerOption.availableTime) {
       Get.to(() => VendorAvailableTimeScreen(),
           transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption ==
-        VendorDrawerOption.changePassword) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.changePassword) {
       Get.to(() => UserChangePasswordScreen(),
           transition: Transition.rightToLeft);
-    } else if(vendorSettingScreenOption == VendorDrawerOption.invoices) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.invoices) {
       Get.to(() => VendorInvoiceListScreen(),
           transition: Transition.rightToLeft);
-    }else if (vendorSettingScreenOption == VendorDrawerOption.logout) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.logout) {
       await customDrawerController.signOutFunction();
       // sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       // Get.offAll(() => SignInScreen(), transition: Transition.rightToLeft);
       // Get.snackbar('You Have Successfully Logout', '');
-    } else if(vendorSettingScreenOption == VendorDrawerOption.appointmentReport) {
+    } else if (vendorSettingScreenOption ==
+        VendorDrawerOption.appointmentReport) {
       Get.to(() => AppointmentReportScreen(),
           transition: Transition.rightToLeft);
-    }  else if(vendorSettingScreenOption == VendorDrawerOption.invoiceReport) {
-      Get.to(() => InvoiceReportScreen(),
-          transition: Transition.rightToLeft);
-    } else if(vendorSettingScreenOption == VendorDrawerOption.customerReport) {
-      Get.to(() => CustomerReportScreen(),
-          transition: Transition.rightToLeft);
-    } else if(vendorSettingScreenOption == VendorDrawerOption.subscriptionReport) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.invoiceReport) {
+      Get.to(() => InvoiceReportScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption == VendorDrawerOption.customerReport) {
+      Get.to(() => CustomerReportScreen(), transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption ==
+        VendorDrawerOption.subscriptionReport) {
       Get.to(() => VendorSubscriptionReportScreen(),
           transition: Transition.rightToLeft);
-    }
-    else if(vendorSettingScreenOption == VendorDrawerOption.privacyPolicy) {
+    } else if (vendorSettingScreenOption == VendorDrawerOption.privacyPolicy) {
       Get.to(() => VendorPrivacyPolicyScreen(),
           transition: Transition.rightToLeft);
-    } else if(vendorSettingScreenOption == VendorDrawerOption.termsAndCondition) {
+    } else if (vendorSettingScreenOption ==
+        VendorDrawerOption.termsAndCondition) {
       Get.to(() => TermsAndConditionScreen(),
           transition: Transition.rightToLeft);
     }

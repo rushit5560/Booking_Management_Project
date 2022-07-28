@@ -29,7 +29,7 @@ class SignInScreenController extends GetxController {
 
   /// Fb Login
   FacebookUserProfile? profile;
-  final FacebookLogin  plugin = FacebookLogin(debug: true);
+  final FacebookLogin plugin = FacebookLogin(debug: true);
 
   final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
   final TextEditingController unameFieldController = TextEditingController();
@@ -51,18 +51,17 @@ class SignInScreenController extends GetxController {
       //   Get.to(() => VendorIndexScreen());
       // }
 
-      if(response.body.toString().contains("Please confirm your email")) {
-        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
-          Fluttertoast.showToast(msg: signInVendorErrorModel.message);
-      }
-
-      else if(response.body.toString().contains("417")) {
-        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
+      if (response.body.toString().contains("Please confirm your email")) {
+        SignInVendorErrorModel signInVendorErrorModel =
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
-
-      }
-      else {
-        SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
+      } else if (response.body.toString().contains("417")) {
+        SignInVendorErrorModel signInVendorErrorModel =
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+      } else {
+        SignInModel signInModel =
+            SignInModel.fromJson(json.decode(response.body));
         // isStatus = signInModel.statusCode.obs;
         isSuccessStatus = signInModel.success.obs;
 
@@ -101,10 +100,9 @@ class SignInScreenController extends GetxController {
                 postCode: "",
                 //slotDuration: ""
                 businessId: "",
-              serviceSlot: false
-            );
+                serviceSlot: false);
             log("Fcm Token : ${UserDetails.fcmToken}");
-            if(signInRoute == SignInRoute.fromBookScreen) {
+            if (signInRoute == SignInRoute.fromBookScreen) {
               Get.back();
               Get.back();
             } else {
@@ -112,11 +110,17 @@ class SignInScreenController extends GetxController {
             }
 
             //Get.snackbar(signInModel.message, '');
-          }
-          else if (signInModel.role[0] == "Vendor") {
+          } else if (signInModel.role[0] == "Vendor") {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
             Get.snackbar(signInModel.message, '');
+
+            var isSub = true;
+            if (signInModel.message.contains("Subscription pending")) {
+              isSub = false;
+
+              log("vendor has no subscription");
+            }
             sharedPreferenceData.setUserLoginDetailsInPrefs(
                 apiToken: signInModel.data.apiToken,
                 uniqueId: signInModel.data.id,
@@ -134,10 +138,10 @@ class SignInScreenController extends GetxController {
                 country: signInModel.vendor.country,
                 subUrb: signInModel.vendor.suburb,
                 postCode: signInModel.vendor.postcode,
+                isSubscription: isSub,
                 // slotDuration: signInModel.vendor.
                 businessId: signInModel.vendor.businessId,
-                serviceSlot: signInModel.vendor.isServiceSlots
-            );
+                serviceSlot: signInModel.vendor.isServiceSlots);
 
             // DateTime subscription = signInModel.vendor.nextPayment;
             //
@@ -151,8 +155,7 @@ class SignInScreenController extends GetxController {
             Get.offAll(() => VendorIndexScreen());
             //Get.snackbar('LoggedIn Successfully.', '');
           }
-        }
-        else {
+        } else {
           log('SignIn False False');
           Get.snackbar(signInModel.message, '');
           log("asdasdsd");
@@ -172,10 +175,11 @@ class SignInScreenController extends GetxController {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     googleSignIn.signOut();
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount.authentication;
+          await googleSignInAccount.authentication;
       final AuthCredential authCredential = GoogleAuthProvider.credential(
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken);
@@ -213,7 +217,6 @@ class SignInScreenController extends GetxController {
 
     await subPartOfFacebookLogin();
     await plugin.logOut();
-
   }
 
   subPartOfFacebookLogin() async {
@@ -232,8 +235,8 @@ class SignInScreenController extends GetxController {
         email = await plugin1.getUserEmail();
       }
       imageUrl = await plugin1.getProfileImageUrl(width: 100);
-      if(profile != null) {
-        if(profile!.userId.isNotEmpty){
+      if (profile != null) {
+        if (profile!.userId.isNotEmpty) {
           // prefs.setString('userId', profile!.userId);
           // prefs.setString('userName', profile!.firstName!);
           // prefs.setString('email', email!);
@@ -246,8 +249,6 @@ class SignInScreenController extends GetxController {
           // log('id: $userId, username : $uName, email : $uEmail, photo : $uPhotoUrl');
         }
       }
-
     }
   }
-
 }

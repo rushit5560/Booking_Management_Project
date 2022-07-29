@@ -11,17 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/common_widgets.dart';
+import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/user_details.dart';
 import '../../controllers/user_chat_list_screen_controller/user_chat_list_screen_controller.dart';
 import '../../model/user_chat_list_screen_model/user_chat_list_screen_model.dart';
 
-
-
 class UserChatListScreen extends StatelessWidget {
   UserChatListScreen({Key? key}) : super(key: key);
   final userChatListScreenController = Get.put(UserChatListScreenController());
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,36 +32,38 @@ class UserChatListScreen extends StatelessWidget {
             ),
             Expanded(
               child: Obx(
-                  ()=> userChatListScreenController.isLoading.value
-                  ? const CustomCircularLoaderModule()
-                  : StreamBuilder<List<UserChatRoomListModel>>(
-                  stream: userChatListScreenController.getChatRoomListFunction(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text("Something went wrong! ${snapshot.error}");
-                    } else if (snapshot.hasData) {
-                      final chatList = snapshot.data;
-                      return ListView.builder(
-                        itemCount: chatList!.length,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, i) {
-                          UserChatRoomListModel singleMsg = chatList[i];
+                () => userChatListScreenController.isLoading.value
+                    ? const CustomCircularLoaderModule()
+                    : StreamBuilder<List<UserChatRoomListModel>>(
+                        stream: userChatListScreenController
+                            .getChatRoomListFunction(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text(
+                                "Something went wrong! ${snapshot.error}");
+                          } else if (snapshot.hasData) {
+                            final chatList = snapshot.data;
+                            return ListView.builder(
+                              itemCount: chatList!.length,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                UserChatRoomListModel singleMsg = chatList[i];
 
-                          return _chatListTile(singleMsg, context);
+                                return _chatListTile(singleMsg, context);
+                              },
+                            ).commonAllSidePadding(15);
+                            // return ListView(
+                            //   physics: const BouncingScrollPhysics(),
+                            //   children: categories!.map((val) {
+                            //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+                            //   }).toList(),
+                            // ).commonAllSidePadding(padding: 15);
+                          } else {
+                            return const CustomCircularLoaderModule();
+                          }
                         },
-                      ).commonAllSidePadding(15);
-                      // return ListView(
-                      //   physics: const BouncingScrollPhysics(),
-                      //   children: categories!.map((val) {
-                      //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
-                      //   }).toList(),
-                      // ).commonAllSidePadding(padding: 15);
-                    } else {
-                      return const CustomCircularLoaderModule();
-                    }
-                  },
-                ),
+                      ),
               ),
               /*child: ListView.builder(
                 itemCount: 10,
@@ -88,7 +87,7 @@ class UserChatListScreen extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           String oppositeUserUniqueId = "";
-          if(UserDetails.roleName == "Customer") {
+          if (UserDetails.roleName == "Customer") {
             oppositeUserUniqueId = singleMsg.vendorid!;
           } else {
             oppositeUserUniqueId = singleMsg.customerid!;
@@ -96,7 +95,7 @@ class UserChatListScreen extends StatelessWidget {
 
           //readAllMessage(context, singleMsg, singleMsg.roomId!);
 
-          Get.to(()=> UserConversationScreen(),
+          Get.to(() => UserConversationScreen(),
               transition: Transition.zoom,
               arguments: [
                 singleMsg.roomId,
@@ -119,32 +118,50 @@ class UserChatListScreen extends StatelessWidget {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Row(
                     children: [
-                      /*Container(
+                      Container(
                         height: 50,
                         width: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: NetworkImage("${ApiUrl.apiImagePath}${singleMsg.img}"),
-                            fit: BoxFit.cover,
-                          ),
+                        // decoration: BoxDecoration(
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   image: DecorationImage(
+                        //     image: NetworkImage(
+                        //         "${ApiUrl.apiImagePath}${singleMsg.img}"),
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
+                        child: FutureBuilder<String>(
+                          future: userChatListScreenController
+                              .getUserChatImage(singleMsg.customerid!),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Image.network(
+                                ApiUrl.apiImagePath + snapshot.data!,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(AppImages.profileImg);
+                                },
+                              );
+                            }
+                            return Container(
+                              padding: const EdgeInsets.all(8),
+                              child: CircularProgressIndicator(
+                                color: AppColors.accentColor,
+                              ),
+                            );
+                          },
                         ),
                       ),
-                      const SizedBox(width: 10),*/
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               singleMsg.peerName!,
@@ -228,9 +245,9 @@ class UserChatListScreen extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return SizedBox();
-        } *//*else if (snapshot.data.docs.isEmpty) {
+        } */ /*else if (snapshot.data.docs.isEmpty) {
           return SizedBox();
-        } *//*else {
+        } */ /*else {
           return const CircleAvatar(
             radius: 4,
             backgroundColor: Colors.red,

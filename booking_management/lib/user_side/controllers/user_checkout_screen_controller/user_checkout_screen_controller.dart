@@ -281,13 +281,11 @@ class UserCheckoutScreenController extends GetxController {
           customerId: paymentIntentData!['customer'],
           // Enable custom flow
           customFlow: true,
-          // Extra options
-          testEnv: true,
-          applePay: true,
-          googlePay: true,
+
+          // applePay: PaymentSheetApplePay(),
+          // googlePay: true,
           style: ThemeMode.dark,
-          primaryButtonColor: AppColors.accentColor,
-          merchantCountryCode: 'US',
+
           merchantDisplayName: 'SetDayTime',
         ),
       );

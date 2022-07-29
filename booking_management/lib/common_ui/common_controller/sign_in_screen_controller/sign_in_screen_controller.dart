@@ -73,6 +73,7 @@ class SignInScreenController extends GetxController {
           } /*else if (signInModel.message.contains("Invalid login attempt")) {
             Get.snackbar(signInModel.message, '');
           }*/
+
           else if (signInModel.role[0] == "Customer") {
             log('customer side');
             Get.snackbar(signInModel.message, '');
@@ -81,7 +82,11 @@ class SignInScreenController extends GetxController {
             // String finalDob = dob.substring(0, dob.length - 9);
             // log("finalDob : $finalDob");
 
-            sharedPreferenceData.setUserLoginDetailsInPrefs(
+            if (signInModel.message
+                .toString()
+                .contains("Successfully Logged")) {
+              print("user logged in ");
+              sharedPreferenceData.setUserLoginDetailsInPrefs(
                 apiToken: signInModel.data.apiToken,
                 uniqueId: signInModel.data.id,
                 tableWiseId: signInModel.customer.id,
@@ -100,13 +105,15 @@ class SignInScreenController extends GetxController {
                 postCode: "",
                 //slotDuration: ""
                 businessId: "",
-                serviceSlot: false);
-            log("Fcm Token : ${UserDetails.fcmToken}");
-            if (signInRoute == SignInRoute.fromBookScreen) {
-              Get.back();
-              Get.back();
-            } else {
-              Get.offAll(() => IndexScreen());
+                serviceSlot: false,
+              );
+              log("Fcm Token : ${UserDetails.fcmToken}");
+              if (signInRoute == SignInRoute.fromBookScreen) {
+                Get.back();
+                Get.back();
+              } else {
+                Get.offAll(() => IndexScreen());
+              }
             }
 
             //Get.snackbar(signInModel.message, '');
@@ -121,27 +128,29 @@ class SignInScreenController extends GetxController {
 
               log("vendor has no subscription");
             }
+
             sharedPreferenceData.setUserLoginDetailsInPrefs(
-                apiToken: signInModel.data.apiToken,
-                uniqueId: signInModel.data.id,
-                tableWiseId: signInModel.vendor.id,
-                userName: signInModel.data.userName,
-                email: signInModel.data.email,
-                phoneNo: signInModel.data.phoneNumber,
-                dob: "",
-                roleName: signInModel.role[0],
-                gender: "",
-                businessName: signInModel.vendor.businessName,
-                address: signInModel.vendor.address,
-                street: signInModel.vendor.street,
-                state: signInModel.vendor.state,
-                country: signInModel.vendor.country,
-                subUrb: signInModel.vendor.suburb,
-                postCode: signInModel.vendor.postcode,
-                isSubscription: isSub,
-                // slotDuration: signInModel.vendor.
-                businessId: signInModel.vendor.businessId,
-                serviceSlot: signInModel.vendor.isServiceSlots);
+              apiToken: signInModel.data.apiToken,
+              uniqueId: signInModel.data.id,
+              tableWiseId: signInModel.vendor.id,
+              userName: signInModel.data.userName,
+              email: signInModel.data.email,
+              phoneNo: signInModel.data.phoneNumber,
+              dob: "",
+              roleName: signInModel.role[0],
+              gender: "",
+              businessName: signInModel.vendor.businessName,
+              address: signInModel.vendor.address,
+              street: signInModel.vendor.street,
+              state: signInModel.vendor.state,
+              country: signInModel.vendor.country,
+              subUrb: signInModel.vendor.suburb,
+              postCode: signInModel.vendor.postcode,
+              isSubscription: isSub,
+              // slotDuration: signInModel.vendor.
+              businessId: signInModel.vendor.businessId,
+              serviceSlot: signInModel.vendor.isServiceSlots,
+            );
 
             // DateTime subscription = signInModel.vendor.nextPayment;
             //

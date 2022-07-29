@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import '../../../firebase_database/firebase_database.dart';
+import '../../../vendor_side/model/vendor_chat_screen_models/user_image_get_model.dart';
 import '../../model/user_chat_list_screen_model/user_chat_list_screen_model.dart';
 
 class UserChatListScreenController extends GetxController {
@@ -21,9 +22,8 @@ class UserChatListScreenController extends GetxController {
   Stream? chatRoomsStream;
   ApiHeader apiHeader = ApiHeader();
 
-  StreamSubscription<QuerySnapshot> ? streamSubscription;
-  StreamSubscription ? streamSubscriptionChat;
-
+  StreamSubscription<QuerySnapshot>? streamSubscription;
+  StreamSubscription? streamSubscriptionChat;
 
   /// Get User ChatRoom List
   Stream<List<UserChatRoomListModel>> getChatRoomListFunction() {
@@ -35,16 +35,16 @@ class UserChatListScreenController extends GetxController {
         .where("users", arrayContains: userEmail)
         .snapshots()
         .map((snapshot) {
-        return snapshot.docs.map((doc) {
-          log("============================");
-          Map<String, dynamic> json = doc.data();
-          String vendorId = json["vendorid"];
-          log("vendorId Firebase: $vendorId");
-          // String img = getUserProfileImage(vendorId).toString();
-          String img = "";
-          return UserChatRoomListModel.fromJson(doc.data(), img.toString());
-        }).toList();
-        });
+      return snapshot.docs.map((doc) {
+        log("============================");
+        Map<String, dynamic> json = doc.data();
+        String vendorId = json["vendorid"];
+        log("vendorId Firebase: $vendorId");
+        // String img = getUserProfileImage(vendorId).toString();
+        String img = "";
+        return UserChatRoomListModel.fromJson(doc.data(), img.toString());
+      }).toList();
+    });
 
     /*firebaseDatabase.getChatRooms(userEmail).then((value) {
       chatRoomsStream = value;
@@ -56,35 +56,69 @@ class UserChatListScreenController extends GetxController {
   }
 
   // Get User Profile - todo
-  getUserProfileImage(String id) async {
-    // isLoading(true);
-    String imgUrl = "";
-    String url = ApiUrl.getUserDetailsByIdApi + "?id=$id";
-    log("Get User Profile Api Url : $url");
+  // getUserProfileImage(String id) async {
+  //   // isLoading(true);
+  //   String imgUrl = "";
+  //   String url = ApiUrl.getUserDetailsByIdApi + "?id=$id";
+  //   log("Get User Profile Api Url : $url");
+
+  //   try {
+  //     http.Response response =
+  //         await http.get(Uri.parse(url), headers: apiHeader.headers);
+
+  //     ProfileImageModel profileImageModel =
+  //         ProfileImageModel.fromJson(json.decode(response.body));
+
+  //     isSuccessStatus = profileImageModel.success.obs;
+  //     if (isSuccessStatus.value) {
+  //       imgUrl = profileImageModel.data.businessLogo;
+  //     } else {}
+  //   } catch (e) {
+  //     log("Get User Profile Only Error ::: $e");
+  //   } finally {
+  //     // isLoading(false);
+  //   }
+  //   log("imgUrl : $imgUrl");
+  //   loadUI();
+  //   isLoading(true);
+  //   isLoading(false);
+  //   return imgUrl;
+  // }
+
+  Future<String> getUserChatImage(String userId) async {
+    isLoading(true);
+    String url = ApiUrl.vendorGetProfileImageApi + "?id=$userId";
+    log('Url : $url');
+
+    String? image;
 
     try {
       http.Response response =
-      await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Get image data Response : ${response.body}');
 
-      ProfileImageModel profileImageModel = ProfileImageModel.fromJson(json.decode(response.body));
+      UserImageGetModel getUserImage =
+          UserImageGetModel.fromJson(json.decode(response.body));
+      // log('user get image : $getUserImage');
+      isSuccessStatus = getUserImage.success!.obs;
+      // log('user get image status  : $isSuccessStatus');
 
-      isSuccessStatus = profileImageModel.success.obs;
-      if(isSuccessStatus.value) {
-        imgUrl = profileImageModel.data.businessLogo;
+      if (getUserImage.statusCode == 200) {
+        log("Success");
+        image = getUserImage.image.toString();
+        // log('chat image code: ${getUserImage.statusCode}');
       } else {
-
+        log('Get user image Else Else');
       }
-
-    } catch(e) {
-       log("Get User Profile Only Error ::: $e");
+    } catch (e) {
+      log('Get user image False False: $e');
     } finally {
-      // isLoading(false);
+      isLoading(false);
+      // await getUserDetailsById();
     }
-    log("imgUrl : $imgUrl");
-    loadUI();
-    isLoading(true);
-    isLoading(false);
-    return imgUrl;
+
+    // log('user chat image is : $image');
+    return "$image";
   }
 
   @override
@@ -109,5 +143,4 @@ class UserChatListScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
 }

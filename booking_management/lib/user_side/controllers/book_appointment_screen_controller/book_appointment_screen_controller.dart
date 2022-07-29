@@ -235,7 +235,9 @@ class BookAppointmentScreenController extends GetxController {
         } else if (searchType2 == SearchType2.anyTimeWise) {
           log("searchType2 : $searchType2");
           for (int i = 0; i < allResourcesList.length; i++) {
-            allResourcesList[i].timingList = await getResourcesAndAnytimeFunction(resId: allResourcesList[i].id.toString());
+            Map<String, dynamic> mapData = await getResourcesAndAnytimeFunction(resId: allResourcesList[i].id.toString());
+            allResourcesList[i].timingList = mapData["timeList"];
+            allResourcesList[i].nextDate = mapData["nextDate"];
           }
         } else if (searchType2 == SearchType2.additionalSlotWise) {
           log("searchType2 : $searchType2");
@@ -671,7 +673,7 @@ class BookAppointmentScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi +
         "?Id=$resId&dDate=${selectedDate.value}&Duration";
-    log("Get Resources Time List API URL : $url");
+    log("Get Resources Time List API URL Date wise: $url");
 
     try {
       http.Response response = await http.get(

@@ -25,6 +25,8 @@ class UserChatListScreenController extends GetxController {
   StreamSubscription<QuerySnapshot>? streamSubscription;
   StreamSubscription? streamSubscriptionChat;
 
+  String img = "";
+
   /// Get User ChatRoom List
   Stream<List<UserChatRoomListModel>> getChatRoomListFunction() {
     // isLoading(true);
@@ -34,17 +36,20 @@ class UserChatListScreenController extends GetxController {
         .collection("ChatRoom")
         .where("users", arrayContains: userEmail)
         .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        log("============================");
-        Map<String, dynamic> json = doc.data();
-        String vendorId = json["vendorid"];
-        log("vendorId Firebase: $vendorId");
-        // String img = getUserProfileImage(vendorId).toString();
-        String img = "";
-        return UserChatRoomListModel.fromJson(doc.data(), img.toString());
-      }).toList();
-    });
+        .map((snapshot) => snapshot.docs.map((doc) {
+              log("============================");
+              Map<String, dynamic> jsonData = doc.data();
+              String vendorId = jsonData["vendorid"];
+              log(" Firebase vendorId : $vendorId");
+              // String img = getUserProfileImage(vendorId).toString();
+
+              var userchatDataList = UserChatRoomListModel.fromJson(
+                doc.data(),
+                img,
+              );
+
+              return userchatDataList;
+            }).toList());
 
     /*firebaseDatabase.getChatRooms(userEmail).then((value) {
       chatRoomsStream = value;
@@ -86,7 +91,7 @@ class UserChatListScreenController extends GetxController {
   // }
 
   Future<String> getUserChatImage(String userId) async {
-    isLoading(true);
+    // isLoading(true);
     String url = ApiUrl.vendorGetProfileImageApi + "?id=$userId";
     log('Url : $url');
 
@@ -113,7 +118,7 @@ class UserChatListScreenController extends GetxController {
     } catch (e) {
       log('Get user image False False: $e');
     } finally {
-      isLoading(false);
+      // isLoading(false);
       // await getUserDetailsById();
     }
 

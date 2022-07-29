@@ -5,11 +5,15 @@ import 'package:booking_management/common_modules/container_decorations.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/vendor_checkout_screen/vendor_checkout_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 import '../../../common_modules/constants/api_url.dart';
+import '../../../common_modules/constants/app_colors.dart';
 import '../../controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
 import '../../model/vendor_subscription_plan_screen_models/get_all_subscription_model.dart';
 
@@ -27,10 +31,11 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
             : SafeArea(
                 child: Column(
                   children: [
-                    const CommonAppBarModule(
-                      title: "Subscription Plan",
-                      appBarOption: AppBarOption.singleBackButtonOption,
-                    ),
+                    customAppbar(),
+                    // const CommonAppBarModule(
+                    //   title: "Subscription Plan",
+                    //   appBarOption: AppBarOption.,
+                    // ),
                     const SizedBox(height: 20),
                     Expanded(
                       child: ListView.builder(
@@ -49,6 +54,92 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                   ],
                 ),
               ),
+      ),
+    );
+  }
+
+  customAppbar() {
+    return Container(
+      height: 55,
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+          color: AppColors.accentColor
+          //color: Colors.grey
+          ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Subscription Plan",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          vendorSubscriptionPlanScreenController.subscriptionOption ==
+                  SubscriptionOption.drawer
+              ? leftSideButton()
+              : SizedBox(),
+          vendorSubscriptionPlanScreenController.subscriptionOption ==
+                  SubscriptionOption.direct
+              ? rightSideButton()
+              : SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  Widget leftSideButton() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: InkWell(
+        onTap: () {
+          Get.back();
+        },
+        child: SizedBox(
+          height: 50,
+          width: 50,
+          child: Image.asset(AppImages.backArrowImg),
+        ),
+      ),
+    );
+  }
+
+  Widget rightSideButton() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: InkWell(
+        onTap: () {
+          Get.offAll(() => VendorIndexScreen());
+        },
+        child: Container(
+          // height: 50,
+          // width: 50,
+          padding: const EdgeInsets.only(right: 20),
+          child: Text(
+            "Skip",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: AppColors.blackColor,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -79,9 +170,9 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                 // ),
               ),
               child: Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
-                errorBuilder: (context, st, ob){
-                  return Image.asset(AppImages.logoImg);
-                },fit: BoxFit.cover),
+                  errorBuilder: (context, st, ob) {
+                return Image.asset(AppImages.logoImg);
+              }, fit: BoxFit.cover),
             ),
             const SizedBox(width: 15),
             Expanded(

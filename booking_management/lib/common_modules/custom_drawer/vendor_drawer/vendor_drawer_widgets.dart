@@ -124,8 +124,11 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     } else if (vendorSettingScreenOption == VendorDrawerOption.review) {
       Get.to(() => ReviewScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.subscription) {
-      Get.to(() => VendorSubscriptionPlanScreen(),
-          transition: Transition.rightToLeft);
+      Get.to(
+        () => VendorSubscriptionPlanScreen(),
+        transition: Transition.rightToLeft,
+        arguments: SubscriptionOption.drawer,
+      );
     } else if (vendorSettingScreenOption == VendorDrawerOption.help) {
       // Get.to(()=> VendorBookingHistoryScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.scheduleTime) {

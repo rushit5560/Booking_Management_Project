@@ -81,7 +81,6 @@ class UserChatListScreen extends StatelessWidget {
   }
 
   Widget _chatListTile(UserChatRoomListModel singleMsg, BuildContext context) {
-    log("singleMsg.img : ${singleMsg.img}");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -128,26 +127,19 @@ class UserChatListScreen extends StatelessWidget {
                       Container(
                         height: 50,
                         width: 50,
-                        // decoration: BoxDecoration(
-                        //   borderRadius: BorderRadius.circular(15),
-                        //   image: DecorationImage(
-                        //     image: NetworkImage(
-                        //         "${ApiUrl.apiImagePath}${singleMsg.img}"),
-                        //     fit: BoxFit.cover,
-                        //   ),
-                        // ),
                         child: FutureBuilder<String>(
                           future: userChatListScreenController
-                              .getUserChatImage(singleMsg.customerid!),
+                              .getUserChatImage(singleMsg.vendorid!),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return Image.network(
-                                ApiUrl.apiImagePath + snapshot.data!,
+                                ApiUrl.apiImagePath + snapshot.data.toString(),
                                 errorBuilder: (context, error, stackTrace) {
                                   return Image.asset(AppImages.profileImg);
                                 },
                               );
                             }
+
                             return Container(
                               padding: const EdgeInsets.all(8),
                               child: CircularProgressIndicator(

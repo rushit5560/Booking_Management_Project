@@ -101,7 +101,7 @@ class SharedPreferenceData {
     prefs.setString(postCodeKey, postCode);
     //prefs.setString(slotDurationKey, slotDuration);
     prefs.setString(businessIdKey, businessId);
-    prefs.setBool(isSubscriptionKey, isSubscription!);
+    prefs.setBool(isSubscriptionKey, isSubscription ?? false);
     prefs.setBool(serviceSlotKey, serviceSlot);
 
     // Now Set Prefs Data in UserDetails in Code

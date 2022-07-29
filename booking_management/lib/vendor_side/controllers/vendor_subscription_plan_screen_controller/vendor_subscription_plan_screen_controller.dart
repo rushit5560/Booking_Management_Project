@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 //import 'package:flutter_stripe/flutter_stripe.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 import '../../model/vendor_subscription_plan_screen_models/get_all_subscription_model.dart';
 
 class VendorSubscriptionPlanScreenController extends GetxController {
+  var subscriptionOption = Get.arguments;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 

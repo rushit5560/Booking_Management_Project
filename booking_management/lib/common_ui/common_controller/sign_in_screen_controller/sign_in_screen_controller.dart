@@ -6,6 +6,7 @@ import 'package:booking_management/common_modules/sharedpreference_data/sharedpr
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
 import 'package:booking_management/common_ui/model/sign_in_screen_model/sign_vendor_model.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
+import 'package:booking_management/vendor_side/model/vendor_subscription_report_screen_model/vendor_subscription_report_model.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_plan_screen/vendor_subscription_plan_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -120,7 +121,7 @@ class SignInScreenController extends GetxController {
           } else if (signInModel.role[0] == "Vendor") {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
-            Get.snackbar(signInModel.message, '');
+            // Get.snackbar(signInModel.message, '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
@@ -161,12 +162,23 @@ class SignInScreenController extends GetxController {
             //   Get.offAll(() => VendorIndexScreen());
             // }
 
-            Get.offAll(() => VendorIndexScreen());
+            if (isSub == false) {
+              log("navigate to subscription plan screen");
+              Get.offAll(
+                () => VendorSubscriptionPlanScreen(),
+                arguments: SubscriptionOption.direct,
+              );
+            } else {
+              log("navigate to vendor index screen");
+              Get.offAll(() => VendorIndexScreen());
+            }
+
             //Get.snackbar('LoggedIn Successfully.', '');
           }
         } else {
           log('SignIn False False');
-          Get.snackbar(signInModel.message, '');
+          log('SignIn message from api ' + signInModel.message);
+          // Get.snackbar(signInModel.message, '');
           log("asdasdsd");
         }
       }

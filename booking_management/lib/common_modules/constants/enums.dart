@@ -45,7 +45,8 @@ enum VendorDrawerOption {
   termsAndCondition,
   privacyPolicy,
   subscriptionReport,
-  appointmentList
+  appointmentList,
+  bankAccountInfo
 }
 
 enum AvailableTimeDay {

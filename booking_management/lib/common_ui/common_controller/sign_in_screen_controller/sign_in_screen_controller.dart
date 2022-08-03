@@ -107,6 +107,10 @@ class SignInScreenController extends GetxController {
                 //slotDuration: ""
                 businessId: "",
                 serviceSlot: false,
+                institutionName: "",
+                accountName: "",
+                accountNumber: "",
+                ifscCode: "",
               );
               log("Fcm Token : ${UserDetails.fcmToken}");
               if (signInRoute == SignInRoute.fromBookScreen) {
@@ -151,6 +155,10 @@ class SignInScreenController extends GetxController {
               // slotDuration: signInModel.vendor.
               businessId: signInModel.vendor.businessId,
               serviceSlot: signInModel.vendor.isServiceSlots,
+              institutionName: signInModel.vendor.financialInstitutionName,
+              accountName: signInModel.vendor.accountName,
+              accountNumber: signInModel.vendor.accountNumber,
+              ifscCode: signInModel.vendor.accountCode
             );
 
             // DateTime subscription = signInModel.vendor.nextPayment;

@@ -33,6 +33,12 @@ class SharedPreferenceData {
 
   String isUserFirstTimeKey = "isUserFirstTimeKey";
 
+  String financialInstitutionNameKey = "financialInstitutionNameKey";
+  String accountNameKey = "accountNameKey";
+  String accountNumberKey = "accountNumberKey";
+  String ifscCodeKey = "ifscCodeKey";
+
+
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
     required String apiToken,
@@ -55,6 +61,10 @@ class SharedPreferenceData {
     //required String slotDuration
     required String businessId,
     required bool serviceSlot,
+    required String institutionName,
+    required String accountName,
+    required String accountNumber,
+    required String ifscCode,
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -81,6 +91,11 @@ class SharedPreferenceData {
     prefs.remove(businessIdKey);
     prefs.setBool(serviceSlotKey, false);
 
+    prefs.remove(financialInstitutionNameKey);
+    prefs.remove(accountNameKey);
+    prefs.remove(accountNumberKey);
+    prefs.remove(ifscCodeKey);
+
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, true);
     prefs.setString(apiTokenKey, apiToken);
@@ -103,6 +118,10 @@ class SharedPreferenceData {
     prefs.setString(businessIdKey, businessId);
     prefs.setBool(isSubscriptionKey, isSubscription ?? false);
     prefs.setBool(serviceSlotKey, serviceSlot);
+    prefs.setString(financialInstitutionNameKey, institutionName);
+    prefs.setString(accountNameKey, accountName);
+    prefs.setString(accountNumberKey, accountNumber);
+    prefs.setString(ifscCodeKey, ifscCode);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -126,6 +145,10 @@ class SharedPreferenceData {
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
     UserDetails.isSubscription = prefs.getBool(isSubscriptionKey) ?? true;
     UserDetails.isServiceSlot = prefs.getBool(serviceSlotKey) ?? false;
+    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
+    UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
+    UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -175,6 +198,11 @@ class SharedPreferenceData {
     //prefs.setString(slotDurationKey, "");
     prefs.setString(isSubscriptionKey, "");
     prefs.setString(businessIdKey, "");
+    prefs.setString(financialInstitutionNameKey, "");
+    prefs.setString(accountNameKey, "");
+    prefs.setString(accountNumberKey, "");
+    prefs.setString(ifscCodeKey, "");
+
 
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
     UserDetails.apiToken = prefs.getString(apiTokenKey) ?? "";
@@ -196,6 +224,10 @@ class SharedPreferenceData {
     //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
     UserDetails.businessId = prefs.getString(isSubscriptionKey) ?? "";
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
+    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
+    UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
+    UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -242,5 +274,23 @@ class SharedPreferenceData {
   setUserIsFirstTimeInApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(isUserFirstTimeKey, false);
+  }
+
+  setBankInfoInPrefs({
+    required String instituteName,
+    required String accountName,
+    required String accountNumber,
+    required String ifscCode,
+  }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(financialInstitutionNameKey, instituteName);
+    prefs.setString(accountNameKey, accountName);
+    prefs.setString(accountNumberKey, accountNumber);
+    prefs.setString(ifscCodeKey, ifscCode);
+
+    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
+    UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
+    UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
   }
 }

@@ -42,6 +42,13 @@ class VendorDrawer extends StatelessWidget {
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
+                img: AppImages.profileImg,
+                name: 'Bank Account Info',
+                vendorDrawerOption: VendorDrawerOption.bankAccountInfo,
+              ),
+              const SizedBox(height: 20),
+
+              VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Business Timing',
                 vendorDrawerOption: VendorDrawerOption.availableTime,

@@ -356,3 +356,19 @@ InputDecoration serviceFormFieldDecoration({required String hintText}) {
     // const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
   );
 }
+
+
+InputDecoration bankInfoFieldDecoration({required String hintText}) {
+  return InputDecoration(
+    hintText: hintText,
+    hintStyle: const TextStyle(color: Colors.grey),
+    enabledBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black)),
+    focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black)),
+    errorBorder:
+    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+    focusedErrorBorder:
+    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+  );
+}

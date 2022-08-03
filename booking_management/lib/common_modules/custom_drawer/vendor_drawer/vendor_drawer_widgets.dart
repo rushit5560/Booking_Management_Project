@@ -3,6 +3,7 @@ import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
+import 'package:booking_management/vendor_side/screens/bank_info_screen/bank_info_screen.dart';
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_available_time_screen/vendor_available_time_screen.dart';
@@ -182,6 +183,10 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.termsAndCondition) {
       Get.to(() => TermsAndConditionScreen(),
+          transition: Transition.rightToLeft);
+    } else if (vendorSettingScreenOption ==
+        VendorDrawerOption.bankAccountInfo) {
+      Get.to(() => BankInfoScreen(),
           transition: Transition.rightToLeft);
     }
   }

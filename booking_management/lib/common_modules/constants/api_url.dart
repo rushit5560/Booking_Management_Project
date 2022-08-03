@@ -142,6 +142,7 @@ class ApiUrl {
   /// Vendor - Subscription Plan
   static const vendorSubscriptionPlanApi =
       apiMainPath + "API/SubscriptionGetAll";
+  static const saveVendorBankInfoApi = apiMainPath + "API/BankInfo";
 
   /// vendor - Available Time
   static const vendorAvailableTimeApi =

@@ -66,6 +66,36 @@ class FieldValidator {
     return null;
   }
 
+
+  String? validateFinancialInstituteName(String value) {
+    if (value.isEmpty) {
+      return 'Financial institute name is required';
+    }
+    return null;
+  }
+
+  String? validateAccountName(String value) {
+    if (value.isEmpty) {
+      return 'Account name is required';
+    }
+    return null;
+  }
+
+  String? validateAccountNumber(String value) {
+    if (value.isEmpty) {
+      return 'Account number is required';
+    }
+    return null;
+  }
+
+  String? validateIfscCode(String value) {
+    if (value.isEmpty) {
+      return 'IFSC/BSB code is required';
+    }
+    return null;
+  }
+
+
   String? validateState(String value) {
     if (value.isEmpty) {
       return 'State is required';

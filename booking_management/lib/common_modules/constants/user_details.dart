@@ -34,4 +34,10 @@ class UserDetails {
 
   static bool isUserFirstTime = true;
   static bool isSubscription = true;
+
+  static String institutionName = "";
+  static String accountName = "";
+  static String accountNumber = "";
+  static String ifscCode = "";
+
 }

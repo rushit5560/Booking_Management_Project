@@ -185,6 +185,10 @@ class Vendor {
     required this.resourceId,
     required this.service,
     required this.resource,
+    required this.financialInstitutionName,
+    required this.accountName,
+    required this.accountCode,
+    required this.accountNumber,
   });
 
   int id;
@@ -235,6 +239,10 @@ class Vendor {
   String resourceId;
   String service;
   String resource;
+  String financialInstitutionName;
+  String accountName;
+  String accountCode;
+  String accountNumber;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
     id: json["id"] ?? 0,
@@ -286,6 +294,10 @@ class Vendor {
     resourceId: json["resourceId"] ?? "",
     service: json["service"] ?? "",
     resource: json["resource"] ?? "",
+    financialInstitutionName: json["financialInstitutionName"] ?? "",
+    accountName: json["accountName"] ?? "",
+    accountCode: json["accountCode"] ?? "",
+    accountNumber: json["accountNumber"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

@@ -87,7 +87,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
               ),
             ),
             Text(
-              "₹ ${cardScreenController.bookingPrice}",
+              "\$ ${cardScreenController.bookingPrice}",
               style: TextStyle(
                 color: AppColors.colorGreyIconLight,
                 fontSize: 16,
@@ -131,7 +131,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
               ),
             ),
             Text(
-              "₹ ${cardScreenController.bookingPrice}",
+              "\$ ${cardScreenController.bookingPrice}",
               style: TextStyle(
                 color: AppColors.blackColor,
                 fontSize: 19,
@@ -339,28 +339,27 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
         ),
       );
 
-      await Stripe.instance
-          .presentPaymentSheet()
-          .catchError((error, stackTrace) {
-        log("Stripe error occured : ${error} ");
-
-        if (error is StripeException) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Payment error : ${error.error.localizedMessage}'),
-            ),
-          );
-        } else {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text('Error : $error'),
-          //   ),
-          // );
-          // log("Error ::: $error");
-          throw error;
-        }
-      });
+      await Stripe.instance.presentPaymentSheet();
       await cardScreenController.checkoutSubscriptionSuccess();
+      //     .catchError((error, stackTrace) {
+      //   log("Stripe error occured : ${error} ");
+
+      //   if (error is StripeException) {
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //       SnackBar(
+      //         content: Text('Payment error : ${error.error.localizedMessage}'),
+      //       ),
+      //     );
+      //   } else {
+      //     // ScaffoldMessenger.of(context).showSnackBar(
+      //     //   SnackBar(
+      //     //     content: Text('Error : $error'),
+      //     //   ),
+      //     // );
+      //     // log("Error ::: $error");
+      //     throw error;
+      //   }
+      // });
 
       // cardScreenController.paymentState.value = "success";
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -396,18 +395,18 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
     } catch (e) {
       if (e is StripeException) {
         // cardScreenController.paymentState.value = "failure";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error from stripe :: ${e.error.localizedMessage}'),
-          ),
+        Get.snackbar(
+          "Payment Failure",
+          "${e.error.message}",
+          colorText: Colors.black,
         );
         log("Make Payment Error ::: ${e.error.localizedMessage}");
       } else {
         // cardScreenController.paymentState.value = "failure";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error : $e'),
-          ),
+        Get.snackbar(
+          "Payment Failure",
+          "$e",
+          colorText: Colors.black,
         );
         log("Error ::: $e");
         rethrow;

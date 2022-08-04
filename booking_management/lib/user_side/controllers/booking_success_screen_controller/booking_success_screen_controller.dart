@@ -16,11 +16,12 @@ class BookingSuccessScreenController extends GetxController {
   /// Getting from checkout screen
   String successId = Get.arguments;
 
-  final bookAppointmentScreenController = Get.find<BookAppointmentScreenController>();
+  final bookAppointmentScreenController =
+      Get.find<BookAppointmentScreenController>();
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
-   ApiHeader apiHeader = ApiHeader();
+  ApiHeader apiHeader = ApiHeader();
 
   String bookingId = "";
   String vendorName = "";
@@ -36,21 +37,25 @@ class BookingSuccessScreenController extends GetxController {
   /// Getting Booking Success
   getBookingSuccessFunction() async {
     isLoading(true);
+    log(successId);
     String url = ApiUrl.bookingSuccessApi + "?id=$successId";
     log("Success API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       log("Booking Success Response : ${response.body}");
 
-      BookingSuccessModel bookingSuccessModel = BookingSuccessModel.fromJson(json.decode(response.body));
+      BookingSuccessModel bookingSuccessModel =
+          BookingSuccessModel.fromJson(json.decode(response.body));
       isSuccessStatus = bookingSuccessModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         bookingId = bookingSuccessModel.workerList.bookingId;
         vendorName = bookingSuccessModel.workerList.vendor.businessName;
         String tempDate = bookingSuccessModel.workerList.startDateTime;
-        date = tempDate.substring(0, tempDate.length-9);
+        date = tempDate.substring(0, tempDate.length - 9);
 
         String tempSTime = bookingSuccessModel.workerList.startDateTime;
         String sTime = tempSTime.substring(11, tempSTime.length - 3);
@@ -63,54 +68,54 @@ class BookingSuccessScreenController extends GetxController {
         log("date :$date");
         log("slotTime :$slotTime");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong0!");
         log("getBookingSuccessFunction Else Else");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getBookingSuccessFunction Error ::: $e");
     } finally {
       // isLoading(false);
       await getUserFcmTokenFunction();
     }
-
   }
-
 
   /// Get Fcm Token
   getUserFcmTokenFunction() async {
     isLoading(true);
-    String url = ApiUrl.getFcmTokenApi + "?id=${bookAppointmentScreenController.vendorUniqueId}";
+    String url = ApiUrl.getFcmTokenApi +
+        "?id=${bookAppointmentScreenController.vendorUniqueId}";
     log("Get User Fcm Token : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      GetFcmTokeModel getFcmTokeModel =
+          GetFcmTokeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFcmTokeModel.success.obs;
       log("getFcmTokeModel.success : ${getFcmTokeModel.success}");
       log("getFcmTokeModel.success : ${getFcmTokeModel.statusCode}");
       log("getFcmTokeModel.success : ${getFcmTokeModel.data.fcmToken}");
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         oppositeUserFcmToken = getFcmTokeModel.data.fcmToken;
 
         /// Send Chat Notification
         sendGeneralNotification(
           fcmToken: oppositeUserFcmToken, // Getting From API
           title: "${UserDetails.userName} booked appointment",
-          body: "${UserDetails.userName} booked appointment for $date at $slotTime time",
+          body:
+              "${UserDetails.userName} booked appointment for $date at $slotTime time",
           type: 0,
         );
 
-        message = "${UserDetails.userName} booked appointment for $date at $slotTime time";
+        message =
+            "${UserDetails.userName} booked appointment for $date at $slotTime time";
 
         log("oppositeUserFcmToken : $oppositeUserFcmToken");
       } else {
         log("getUserFcmTokenFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getUserFcmTokenFunction Error ::: $e");
     } finally {
       // isLoading(false);
@@ -131,7 +136,8 @@ class BookingSuccessScreenController extends GetxController {
       request.fields['Message'] = message;
       request.fields['NotificationFor'] = "Booked Appointment";
       request.fields['NotificationFrom'] = UserDetails.uniqueId;
-      request.fields['NotificationTo'] = bookAppointmentScreenController.vendorUniqueId;
+      request.fields['NotificationTo'] =
+          bookAppointmentScreenController.vendorUniqueId;
 
       log("Fields : ${request.fields}");
       log('request.headers: ${request.headers}');
@@ -140,27 +146,23 @@ class BookingSuccessScreenController extends GetxController {
       log('response: ${response.statusCode}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
-        NotificationSaveModel notificationSaveModel = NotificationSaveModel.fromJson(json.decode(value));
+        NotificationSaveModel notificationSaveModel =
+            NotificationSaveModel.fromJson(json.decode(value));
         isSuccessStatus = notificationSaveModel.success.obs;
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           log(notificationSaveModel.message);
         } else {
           // log(notificationSaveModel.message);
           log("Add Notification Else Else");
         }
       });
-
-
-    } catch(e) {
+    } catch (e) {
       log("Add Notification Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
-
 
   @override
   void onInit() {
@@ -175,7 +177,6 @@ class BookingSuccessScreenController extends GetxController {
     required String title,
     required int type,
   }) async {
-
     log("fcmToken : $fcmToken");
     log("body : $body");
     log("title : $title");
@@ -215,6 +216,4 @@ class BookingSuccessScreenController extends GetxController {
 
     // Get.back();
   }
-
-
 }

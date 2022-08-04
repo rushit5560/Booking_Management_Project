@@ -17,7 +17,6 @@ class InvoiceScreenController extends GetxController {
 
   bool isService = false;
 
-
   // int transactionId = 0;
   InvoiceDetailsData invoiceDetailsData = InvoiceDetailsData();
   List<String> descriptionList = [];
@@ -28,32 +27,32 @@ class InvoiceScreenController extends GetxController {
     log("Invoice Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       log("Invoice Details API Response : ${response.body}");
 
-      InvoiceDetailsModel invoiceDetailsModel = InvoiceDetailsModel.fromJson(json.decode(response.body));
+      InvoiceDetailsModel invoiceDetailsModel =
+          InvoiceDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = invoiceDetailsModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         invoiceDetailsData = invoiceDetailsModel.workerList;
         descriptionList = invoiceDetailsModel.list;
-        } else {
+      } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getInvoiceDetailsFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getInvoiceDetailsFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
 
-
   @override
   void onInit() {
     getInvoiceDetailsFunction();
     super.onInit();
   }
-
 }

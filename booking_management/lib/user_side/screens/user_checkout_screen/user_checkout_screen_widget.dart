@@ -323,11 +323,13 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
         if (screenController.checkOutFormKey.currentState!.validate()) {
           if (screenController.isPriceDisplay) {
-            Get.to(
-              () => const CardPaymentScreen(),
-              arguments: screenController.bookingPrice,
-            );
-            // await screenController.initPaymentSheet();
+            // Get.to(
+            //   () => const CardPaymentScreen(),
+            //   arguments: [
+            //     screenController.bookingPrice,
+            //   ],
+            // );
+            await screenController.initPaymentSheet(context);
           } else {
             await screenController.checkOutSubmitFunction();
           }

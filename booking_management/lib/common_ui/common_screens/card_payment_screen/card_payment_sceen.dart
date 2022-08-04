@@ -85,7 +85,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
               ),
             ),
             Text(
-              "₹ ${cardScreenController.bookingPrice}",
+              "\$ ${cardScreenController.bookingPrice}",
               style: TextStyle(
                 color: AppColors.colorGreyIconLight,
                 fontSize: 16,
@@ -95,27 +95,27 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
           ],
         ),
         const SizedBox(height: 10),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Text(
-        //       "Administrative Charges ",
-        //       style: TextStyle(
-        //         color: AppColors.colorGreyIconLight,
-        //         fontSize: 16,
-        //         fontWeight: FontWeight.w500,
-        //       ),
-        //     ),
-        //     Text(
-        //       "₹ ${(int.parse(cardScreenController.bookingPrice) / 100) * 10}",
-        //       style: TextStyle(
-        //         color: AppColors.colorGreyIconLight,
-        //         fontSize: 16,
-        //         fontWeight: FontWeight.w500,
-        //       ),
-        //     ),
-        //   ],
-        // ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Administrative Charges ",
+              style: TextStyle(
+                color: AppColors.colorGreyIconLight,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              "\$ ${(double.parse(cardScreenController.bookingPrice) / 100) * 10}",
+              style: TextStyle(
+                color: AppColors.colorGreyIconLight,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
         SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
               ),
             ),
             Text(
-              "₹ ${cardScreenController.bookingPrice}",
+              "\$ ${cardScreenController.bookingPrice}",
               style: TextStyle(
                 color: AppColors.blackColor,
                 fontSize: 19,
@@ -334,28 +334,34 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
         ),
       );
 
-      await Stripe.instance
-          .presentPaymentSheet()
-          .catchError((error, stackTrace) {
-        log("Stripe error occured : ${error} ");
-
-        if (error is StripeException) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Payment error : ${error.error.localizedMessage}'),
-            ),
-          );
-        } else {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text('Error : $error'),
-          //   ),
-          // );
-          // log("Error ::: $error");
-          throw error;
-        }
-      });
+      await Stripe.instance.presentPaymentSheet();
       await cardScreenController.checkOutSubmitFunction();
+
+      // whenComplete(
+      //   () async {
+      //   },
+      // ).
+
+      // catchError((error, stackTrace) {
+      //   log("Stripe error occured : ${error} ");
+
+      //   if (error is StripeException) {
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //       SnackBar(
+      //         content: Text('Payment error : ${error.error.localizedMessage}'),
+      //       ),
+      //     );
+      //     throw error;
+      //   } else {
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //       SnackBar(
+      //         content: Text('Error : $error'),
+      //       ),
+      //     );
+      //     log("Error ::: $error");
+      //     throw error;
+      //   }
+      // });
 
       // cardScreenController.paymentState.value = "success";
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -376,10 +382,6 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
       //   } else {
       //     log('payment id: ${paymentIntentData!['id']}');
 
-      // Get.snackbar(
-      //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
-      // );
-
       ///now finally display payment sheeet
 
       // await getPaymentIdFunction(
@@ -391,56 +393,55 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
     } catch (e) {
       if (e is StripeException) {
         // cardScreenController.paymentState.value = "failure";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error from stripe :: ${e.error.localizedMessage}'),
-          ),
+
+        Get.snackbar(
+          "Payment Failure",
+          "${e.error.message}",
+          colorText: Colors.black,
         );
         log("Make Payment Error ::: ${e.error.localizedMessage}");
       } else {
         // cardScreenController.paymentState.value = "failure";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error : $e'),
-          ),
+        Get.snackbar(
+          "Payment Failure",
+          "$e",
+          colorText: Colors.black,
         );
         log("Error ::: $e");
-        throw e;
+        rethrow;
       }
     }
   }
 }
 
-
-
 // bloc pattern code
- // if (state.status == PaymentStatus.success) {
-                //   return Column(
-                //     children: [
-                //       const Text("The payment is successfull."),
-                //       SizedBox(height: 50),
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           context.read<PaymentBloc>().add(PaymentStart());
-                //         },
-                //         child: Text("back to home"),
-                //       ),
-                //     ],
-                //   );
-                // }
-                // if (state.status == PaymentStatus.failure) {
-                //   return Column(
-                //     children: [
-                //       Text("The payment is successfull."),
-                //       SizedBox(height: 50),
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           context.read<PaymentBloc>().add(PaymentStart());
-                //         },
-                //         child: Text("try again"),
-                //       ),
-                //     ],
-                //   );
-                // } else {
-                //   return const Center(child: CustomCircularLoaderModule());
-                // }
+// if (state.status == PaymentStatus.success) {
+//   return Column(
+//     children: [
+//       const Text("The payment is successfull."),
+//       SizedBox(height: 50),
+//       ElevatedButton(
+//         onPressed: () {
+//           context.read<PaymentBloc>().add(PaymentStart());
+//         },
+//         child: Text("back to home"),
+//       ),
+//     ],
+//   );
+// }
+// if (state.status == PaymentStatus.failure) {
+//   return Column(
+//     children: [
+//       Text("The payment is successfull."),
+//       SizedBox(height: 50),
+//       ElevatedButton(
+//         onPressed: () {
+//           context.read<PaymentBloc>().add(PaymentStart());
+//         },
+//         child: Text("try again"),
+//       ),
+//     ],
+//   );
+// } else {
+//   return const Center(child: CustomCircularLoaderModule());
+// }

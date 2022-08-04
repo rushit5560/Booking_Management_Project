@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/invoice_screen_controller/invoice_screen_controller.dart';
 import '../index_screen/index_screen.dart';
-
 
 class OrderInvoiceFormModule extends StatelessWidget {
   OrderInvoiceFormModule({Key? key}) : super(key: key);
@@ -28,15 +28,17 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     height: Get.height * 0.05,
                     alignment: Alignment.topLeft,
                     decoration: BoxDecoration(
-                      // image: DecorationImage(
-                      //   image: NetworkImage(AppLogo.homeLogo),
-                      //
-                      // ),
-                    ),
-                    child: Image.network(AppLogo.homeLogo,
-                      errorBuilder: (context, st, ob){
+                        // image: DecorationImage(
+                        //   image: NetworkImage(AppLogo.homeLogo),
+                        //
+                        // ),
+                        ),
+                    child: Image.network(
+                      AppLogo.homeLogo,
+                      errorBuilder: (context, st, ob) {
                         return Image.asset(AppImages.logoImg);
-                      },),
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
@@ -100,6 +102,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         screenController.invoiceDetailsData.customer!.userName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: AppColors.blackColor),
                       ),
                       Text(
                         screenController.invoiceDetailsData.customer!.email,
@@ -115,6 +118,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 5),
+
                 /// Invoice To
                 Expanded(
                   child: Column(
@@ -268,7 +272,6 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     },
                   ),
                 ),
-
                 Expanded(
                   flex: 20,
                   child: Text(
@@ -276,7 +279,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style:  const TextStyle(
+                    style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -380,7 +383,6 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   flex: 20,
                   child: Text(
@@ -431,7 +433,6 @@ class OrderInvoiceFormModule extends StatelessWidget {
   }
 }
 
-
 class ContinueButtonModule extends StatelessWidget {
   const ContinueButtonModule({Key? key}) : super(key: key);
 
@@ -439,7 +440,7 @@ class ContinueButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+        Get.offAll(() => IndexScreen(), transition: Transition.zoom);
       },
       child: Container(
         alignment: Alignment.center,
@@ -454,8 +455,7 @@ class ContinueButtonModule extends StatelessWidget {
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
-              ]
-          ),
+              ]),
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
@@ -471,4 +471,3 @@ class ContinueButtonModule extends StatelessWidget {
     );
   }
 }
-

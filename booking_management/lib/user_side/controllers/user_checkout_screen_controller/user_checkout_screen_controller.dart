@@ -345,14 +345,10 @@ class UserCheckoutScreenController extends GetxController {
         if (isSuccessStatus.value) {
           returnId = confirmCheckoutModel.id;
           log("returnId : $returnId");
-          Get.to(() => BookingSuccessScreen(), arguments: returnId);
-
-          // if(returnId.isEmpty){
-          //   Get.back();
-          // } else{
-          //   Get.to(()=> BookingSuccessScreen(), arguments: returnId);
-          // }
-          //Get.to(()=> BookingSuccessScreen(), arguments: returnId);
+          Get.to(
+            () => BookingSuccessScreen(),
+            arguments: returnId,
+          );
         } else {
           //Fluttertoast.showToast(msg: "Something went wrong!");
           log("checkOutSubmitFunction Else Else");
@@ -365,49 +361,53 @@ class UserCheckoutScreenController extends GetxController {
     }
   }
 
-  /// For Stripe
-  Future<void> initPaymentSheet() async {
+  /// For Stripe payment sheet
+  Future<void> initPaymentSheet(
+    context,
+  ) async {
     try {
-      // final url = Uri.parse("Stripe payment function URL");
-      // final response = await http.get(
-      //   url,
-      //   headers: {
-      //     "Content-Type":"application/json"
-      //   },
-      // );
-
       print(bookingPrice);
       var decimalList = bookingPrice.split(".")[0];
       var price = int.tryParse(decimalList);
+
       print(price.runtimeType);
       print(price);
+
       paymentIntentData = await createPaymentIntent(price!, "USD");
 
       log('paymentIntentData: $paymentIntentData');
+      // var adminCharges =
+      //     (int.parse(cardScreenController.bookingPrice) / 100) * 10;
 
-      // Stripe.publishableKey = publishableKey;
-      // await Stripe.instance.applySettings();
+      // Stripe.instance.createPaymentMethod(
+      //   const PaymentMethodParams.card(
+      //     billingDetails: BillingDetails(),
+      //   ),
+      //   {
+      //     "ApplicationFeeAmount": "$adminCharges",
+      //   },
+      // );
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          // Enable custom flow
-          customFlow: true,
-
           //client_secret
           paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          // Customer keys
-          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
-          // customerId: paymentIntentData!['customer'],
-
-          applePay: true,
-          googlePay: true,
-          testEnv: true,
-          style: ThemeMode.dark,
-          merchantCountryCode: 'US',
           merchantDisplayName: UserDetails.userName,
+          // Customer keys
+          // customerId: cardScreenController.paymentIntentData!['customer'],
+          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
+          customFlow: true,
+
+          style: ThemeMode.light,
+          testEnv: true,
+
+          merchantCountryCode: 'US',
         ),
       );
+
       await Stripe.instance.presentPaymentSheet();
+      await checkOutSubmitFunction();
+
       //     .whenComplete(() async {
       //   if (paymentIntentData!['id'] == null) {
       //     log('Failed');
@@ -420,31 +420,41 @@ class UserCheckoutScreenController extends GetxController {
       //   } else {
       //     log('payment id: ${paymentIntentData!['id']}');
 
-      //     // Get.snackbar(
-      //     //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
-      //     // );
+      ///now finally display payment sheeet
 
-      //     ///now finally display payment sheeet
-
-      //     // await getPaymentIdFunction(
-      //     //   paymentIntentData!['id'],
-      //     //   paymentIntentData!['client_secret'],
-      //     // );
+      // await getPaymentIdFunction(
+      //   paymentIntentData!['id'],
+      //   paymentIntentData!['client_secret'],
+      // );
       //   }
       // });
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-        ),
-      );
-      log("Make Payment Error ::: $e");
-      rethrow;
+      if (e is StripeException) {
+        // cardScreenController.paymentState.value = "failure";
+
+        Get.snackbar(
+          "Payment Failure",
+          "${e.error.message}",
+          colorText: Colors.black,
+        );
+        log("Make Payment Error ::: ${e.error.localizedMessage}");
+      } else {
+        // cardScreenController.paymentState.value = "failure";
+        Get.snackbar(
+          "Payment Failure",
+          "$e",
+          colorText: Colors.black,
+        );
+        log("Error ::: $e");
+        rethrow;
+      }
     }
   }
 
   Future<Map<String, dynamic>> createPaymentIntent(
-      int amount, String currency) async {
+    int amount,
+    String currency,
+  ) async {
     try {
       Map<String, dynamic> body = {
         "amount": calculateAmount(amount),
@@ -464,7 +474,7 @@ class UserCheckoutScreenController extends GetxController {
       //log("response.statusCode: ${response.statusCode}");
       return jsonDecode(response.body.toString());
     } catch (e) {
-      log("Create Payment Intent ::: $e");
+      log("Create Payment Intent error found ::: $e");
       print("error occured : ${e.toString()}");
       rethrow;
     }
@@ -473,123 +483,6 @@ class UserCheckoutScreenController extends GetxController {
   calculateAmount(int amount) {
     int price = amount * 100;
     return price.toString();
-  }
-
-  Future<void> displayPaymentSheet() async {
-    //isLoading(true);
-    try {
-      Stripe.instance.presentPaymentSheet();
-
-      // .catchError(
-      //   (error, stackTrace) {
-      //     log("onerror block : ");
-      //     Get.snackbar(
-      //       "Failed to pay",
-      //       "$error $stackTrace",
-      //       colorText: AppColors.blackColor,
-      //       backgroundColor: AppColors.whiteColor,
-      //       snackPosition: SnackPosition.BOTTOM,
-      //     );
-      //     log('Exception/DISPLAYPAYMENTSHEET  ==> $error');
-
-      //     throw error.toString();
-      //   },
-      // );
-
-      // ScaffoldMessenger.of(Get.context!).showSnackBar(
-      //   SnackBar(
-      //     content: Text('Payment option selected'),
-      //   ),
-      // );
-      // confirmPayment();
-      // then(
-      //   (value) async {
-      //     log('paymentIntentData id : ${paymentIntentData!['id'].toString()}');
-      //     log('Display paymentIntent clientsecret data: ${paymentIntentData!['client_secret'].toString()}');
-      //     print(
-      //         'payment intent amount + ${paymentIntentData!['amount'].toString()}');
-      //     print('payment intent' + paymentIntentData.toString());
-
-      // Get.snackbar(
-      //   "Success",
-      //   "Paid Successfully",
-      //   snackPosition: SnackPosition.TOP,
-      // );
-
-      // isLoading(true);
-      // await checkOutSubmitFunction();
-      // paymentIntentData = null;
-      // isLoading(false);
-
-      // log('success');
-
-      // await Stripe.instance.confirmPayment();
-      //   },
-      // ).
-
-    } catch (e) {
-      if (e is StripeException) {
-        Get.snackbar(
-          "Failed to pay",
-          "Error from Stripe: ${e.error.localizedMessage}",
-          colorText: AppColors.blackColor,
-          backgroundColor: AppColors.whiteColor,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        throw e.toString();
-      } else {
-        log("StripeException Error occured ::: ${e.toString()}");
-        Get.snackbar(
-          "Failed to pay",
-          "Unforeseen error: ${e}",
-          colorText: AppColors.blackColor,
-          backgroundColor: AppColors.whiteColor,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        throw e.toString();
-      }
-
-      // var errorMsg = e.error;
-      // print(errorMsg.code);
-      // print(errorMsg.declineCode);
-      // print(errorMsg.localizedMessage);
-      // print(errorMsg.message);
-      // print(errorMsg.stripeErrorCode);
-
-// switch (errorMsg == )
-
-    }
-  }
-
-  Future<void> confirmPayment() async {
-    try {
-      // 4. Confirm the payment sheet.
-      await Stripe.instance.confirmPaymentSheetPayment();
-      // step.value = 0;
-
-      // setState(() {
-      // });
-
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(
-          content: Text('Payment succesfully completed'),
-        ),
-      );
-    } on Exception catch (e) {
-      if (e is StripeException) {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(
-            content: Text('Error from Stripe: ${e.error.localizedMessage}'),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(
-            content: Text('Unforeseen error: ${e}'),
-          ),
-        );
-      }
-    }
   }
 
   getStripeKeyFunction() async {
@@ -639,7 +532,7 @@ class UserCheckoutScreenController extends GetxController {
 
     getCheckoutFunction();
 
-    log("selectedResourceIsEvent : $selectedResourceIsEvent");
+    // log("selectedResourceIsEvent : $selectedResourceIsEvent");
 
     super.onInit();
   }

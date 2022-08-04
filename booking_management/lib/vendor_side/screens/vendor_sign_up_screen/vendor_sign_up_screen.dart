@@ -80,7 +80,9 @@ class VendorSignUpScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         //VendorPortalCheckboxModule(),
                         TermsAndConditionCheckboxModule(),
-                        PriceCheckboxModule(),
+                        vendorSignUpScreenController.selectedCountryCode.value == "IN"
+                        ? Container()
+                        : PriceCheckboxModule(),
                         AnyServiceCheckboxModule(),
                         const SizedBox(height: 20),
                         const TermsAndConditionText(),

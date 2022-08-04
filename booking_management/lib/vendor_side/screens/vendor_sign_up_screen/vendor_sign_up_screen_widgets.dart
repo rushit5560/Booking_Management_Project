@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -457,10 +459,14 @@ class CountrySelectModule extends StatelessWidget {
                 onChanged: (newValue) {
                   screenController.isLoading(true);
                   screenController.countryData = newValue!;
+                  // log("countryData : ${screenController.countryData!.code}");
+                  screenController.selectedCountryCode.value
+                  = "${screenController.countryData!.code}";
+
+                  if(screenController.countryData!.code == "IN"){
+                   screenController.priceCheckBox.value = false;
+                  }
                   screenController.isLoading(false);
-                  // setState(() {
-                  //   dropdownvalue = newValue!;
-                  // });
                 },
               ),
             ).commonSymmetricPadding(horizontal: 10),

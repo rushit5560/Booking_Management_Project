@@ -53,17 +53,14 @@ class SignInScreenController extends GetxController {
       // }
 
       if (response.body.toString().contains("Please confirm your email")) {
-        SignInVendorErrorModel signInVendorErrorModel =
-            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
       } else if (response.body.toString().contains("417")) {
-        SignInVendorErrorModel signInVendorErrorModel =
-            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
       } else {
-        SignInModel signInModel =
-            SignInModel.fromJson(json.decode(response.body));
-        // isStatus = signInModel.statusCode.obs;
+        SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
+
         isSuccessStatus = signInModel.success.obs;
 
         log("status: $isSuccessStatus");
@@ -83,10 +80,9 @@ class SignInScreenController extends GetxController {
             // String finalDob = dob.substring(0, dob.length - 9);
             // log("finalDob : $finalDob");
 
-            if (signInModel.message
-                .toString()
-                .contains("Successfully Logged")) {
-              print("user logged in ");
+            if (signInModel.message.toString().contains("Successfully Logged"))
+            {
+              log("user logged in ");
               sharedPreferenceData.setUserLoginDetailsInPrefs(
                 apiToken: signInModel.data.apiToken,
                 uniqueId: signInModel.data.id,
@@ -130,7 +126,6 @@ class SignInScreenController extends GetxController {
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
               isSub = false;
-
               log("vendor has no subscription");
             }
 

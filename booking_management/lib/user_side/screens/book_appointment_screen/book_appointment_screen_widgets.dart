@@ -350,24 +350,20 @@ class BookingResourcesListModule extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             /// First All Slot Set Unselected
-                            for (int i = 0;
-                                i < screenController.allResourcesList.length;
-                                i++) {
-                              for (int j = 0;
-                                  j <
-                                      screenController.allResourcesList[i]
-                                          .timingList.length;
-                                  j++) {
-                                screenController.allResourcesList[i]
-                                    .timingList[j].isSelected = false;
+                            for (int i = 0; i < screenController.allResourcesList.length; i++) {
+                              for (int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
+                                screenController.allResourcesList[i].timingList[j].isSelected = false;
                               }
                             }
 
                             /// Selected Item Become Blue
                             int selectedId = singleItem.timingList[i].id;
                             log("selectedId : $selectedId");
-                            screenController.selectedResourceTimeSlotId =
-                                selectedId;
+                            screenController.selectedResourceTimeSlotId = selectedId;
+
+                            screenController.selectedResourceIsEvent = singleItem.isEvent;
+                            screenController.selectedResource = singleItem.id;
+                            log("isEvent :: ${singleItem.isEvent}");
 
                             for (int j = 0;
                                 j < singleItem.timingList.length;

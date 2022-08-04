@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/vendor_side/model/vendor_subscription_plan_screen_models/delete_subscription_plan_model.dart';
 //import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -203,7 +205,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
 
   getAllSubscriptionPlanFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorSubscriptionPlanApi;
+    String url = ApiUrl.vendorSubscriptionPlanApi + "?userId=${UserDetails.uniqueId}";
     log("Get All Subscription Plan API URL : $url");
 
     try {
@@ -211,8 +213,8 @@ class VendorSubscriptionPlanScreenController extends GetxController {
           await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Subscription Plan Response : ${response.body}");
 
-      GetAllSubscriptionModel getAllSubscriptionModel =
-          GetAllSubscriptionModel.fromJson(json.decode(response.body));
+      GetAllSubscriptionPlanModel getAllSubscriptionModel =
+      GetAllSubscriptionPlanModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllSubscriptionModel.success.obs;
 
       if (isSuccessStatus.value) {
@@ -230,6 +232,68 @@ class VendorSubscriptionPlanScreenController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+
+  cancelSubscriptionPlanFunction({required String productId,required  String id}) async {
+    isLoading(true);
+    String url = ApiUrl.deleteSubscriptionPlanApi
+        + "?userId=${UserDetails.uniqueId}"
+        + "&Id=$id"
+        + "&ProductId=$productId";
+    log("Cancel Subscription Api Url : $url");
+
+    try {
+
+      http.Response response = await http.get(Uri.parse(url),headers: apiHeader.headers);
+      log("response : ${response.body}");
+
+      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel = DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
+      isSuccessStatus = deleteSubscriptionPlanModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
+        await getAllSubscriptionPlanFunction();
+      } else {
+        log("cancelSubscriptionPlanFunction Else Else");
+      }
+
+    } catch(e) {
+      log("cancelSubscriptionPlanFunction Error ::: $e");
+    }finally {
+      isLoading(false);
+    }
+
+  }
+
+  purchaseSubscriptionPlanFunction({required String productId}) async {
+    isLoading(true);
+    String url = ApiUrl.purchaseSubscriptionPlanApi
+        + "?userId=${UserDetails.uniqueId}"
+        + "&Id=$productId";
+    log("Purchase Subscription Api Url : $url");
+
+    try {
+
+      http.Response response = await http.get(Uri.parse(url),headers: apiHeader.headers);
+      log("response : ${response.body}");
+
+      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel = DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
+      isSuccessStatus = deleteSubscriptionPlanModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
+        // await getAllSubscriptionPlanFunction();
+      } else {
+        log("purchaseSubscriptionPlanFunction Else Else");
+      }
+
+    } catch(e) {
+      log("purchaseSubscriptionPlanFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
   }
 
   @override

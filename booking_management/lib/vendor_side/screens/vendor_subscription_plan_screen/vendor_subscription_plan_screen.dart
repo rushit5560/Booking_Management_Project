@@ -1,14 +1,12 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/container_decorations.dart';
-import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/vendor_side/screens/vendor_checkout_screen/vendor_checkout_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
-import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
@@ -94,11 +92,11 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
           vendorSubscriptionPlanScreenController.subscriptionOption ==
                   SubscriptionOption.drawer
               ? leftSideButton()
-              : SizedBox(),
+              : const SizedBox(),
           vendorSubscriptionPlanScreenController.subscriptionOption ==
                   SubscriptionOption.direct
               ? rightSideButton()
-              : SizedBox(),
+              : const SizedBox(),
         ],
       ),
     );
@@ -155,92 +153,127 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
         margin: const EdgeInsets.only(left: 5, right: 5),
         decoration: shadowDecoration(),
         // margin: EdgeInsets.all(5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                // image: DecorationImage(
-                //   image:
-                //       NetworkImage("${ApiUrl.apiImagePath}${singleItem.image}"),
-                //   fit: BoxFit.cover,
-                // ),
-              ),
-              child: Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
-                  errorBuilder: (context, st, ob) {
-                return Image.asset(AppImages.logoImg);
-              }, fit: BoxFit.cover),
-            ),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    singleItem.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    // image: DecorationImage(
+                    //   image:
+                    //       NetworkImage("${ApiUrl.apiImagePath}${singleItem.image}"),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
-                  const SizedBox(height: 8),
+                  child: Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
+                      errorBuilder: (context, st, ob) {
+                        return Image.asset(AppImages.logoImg);
+                      }, fit: BoxFit.cover),
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        singleItem.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
 
-                  Text(
-                    'From \$${singleItem.price} / ${singleItem.days}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                      Text(
+                        'From \$${singleItem.price} ${singleItem.currency} / ${singleItem.interval}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                      //const SizedBox(height: 8),
+
+                      Html(data: singleItem.detail),
+
+                      // const SizedBox(height: 3),
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: const [
+                      //     Text(
+                      //       '- ',
+                      //       style: TextStyle(fontSize: 12),
+                      //     ),
+                      //     Expanded(
+                      //       child: Text(
+                      //         "Lorem Ipsum has been the industry's standard",
+                      //         maxLines: 2,
+                      //         overflow: TextOverflow.ellipsis,
+                      //         style: TextStyle(fontSize: 12),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      //
+                      // const SizedBox(height: 3),
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: const [
+                      //     Text(
+                      //       '- ',
+                      //       style: TextStyle(fontSize: 12),
+                      //     ),
+                      //     Expanded(
+                      //       child: Text(
+                      //         "Lorem Ipsum has been the industry's standard",
+                      //         maxLines: 2,
+                      //         overflow: TextOverflow.ellipsis,
+                      //         style: TextStyle(fontSize: 12),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
                   ),
-                  //const SizedBox(height: 8),
-
-                  Html(data: singleItem.detail),
-
-                  // const SizedBox(height: 3),
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: const [
-                  //     Text(
-                  //       '- ',
-                  //       style: TextStyle(fontSize: 12),
-                  //     ),
-                  //     Expanded(
-                  //       child: Text(
-                  //         "Lorem Ipsum has been the industry's standard",
-                  //         maxLines: 2,
-                  //         overflow: TextOverflow.ellipsis,
-                  //         style: TextStyle(fontSize: 12),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  //
-                  // const SizedBox(height: 3),
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: const [
-                  //     Text(
-                  //       '- ',
-                  //       style: TextStyle(fontSize: 12),
-                  //     ),
-                  //     Expanded(
-                  //       child: Text(
-                  //         "Lorem Ipsum has been the industry's standard",
-                  //         maxLines: 2,
-                  //         overflow: TextOverflow.ellipsis,
-                  //         style: TextStyle(fontSize: 12),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                ],
+                ),
+                // const SizedBox(width: 15),
+                // Image.asset(AppImages.rightArrowImg),
+              ],
+            ),
+            GestureDetector(
+              onTap: () async {
+                if(singleItem.isActive == true) {
+                  // Remove Plan Api Call
+                  await vendorSubscriptionPlanScreenController.cancelSubscriptionPlanFunction(
+                    productId: singleItem.id,
+                    id: singleItem.stripeSubscriptionId,
+                  );
+                } else {
+                  // Purchase plan api call
+                  await vendorSubscriptionPlanScreenController.purchaseSubscriptionPlanFunction(
+                    productId: singleItem.id
+                  );
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: singleItem.isActive == true
+                    ? Colors.red
+                      : Colors.green
+                ),
+                child: Text(
+                    singleItem.isActive == true
+                        ? "Cancel"
+                        : "Purchase Now",
+                  style: const TextStyle(color: Colors.white),
+                ).commonSymmetricPadding(horizontal: 15, vertical: 10),
               ),
             ),
-            const SizedBox(width: 15),
-            Image.asset(AppImages.rightArrowImg),
           ],
         ).commonAllSidePadding(10),
       ).commonSymmetricPadding(vertical: 10),

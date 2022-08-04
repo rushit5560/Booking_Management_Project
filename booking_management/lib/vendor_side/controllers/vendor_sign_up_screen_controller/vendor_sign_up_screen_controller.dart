@@ -58,6 +58,8 @@ class VendorSignUpScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
   RxString selectedCountry = "".obs;
 
+  RxString selectedCountryCode = "".obs;
+
   List<CountryData> countriesList = [CountryData()];
   CountryData? countryData;
 

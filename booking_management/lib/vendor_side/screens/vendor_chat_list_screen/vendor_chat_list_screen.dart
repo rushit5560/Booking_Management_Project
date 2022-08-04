@@ -86,6 +86,8 @@ class VendorChatListScreen extends StatelessWidget {
                 singleMsg.peerId,
                 singleMsg.createdName,
                 oppositeUserUniqueId,
+                singleMsg.customerid,
+                singleMsg.createdBy,
               ]);
         },
         child: Container(

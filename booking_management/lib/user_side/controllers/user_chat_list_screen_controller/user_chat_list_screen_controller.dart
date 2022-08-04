@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/user_chat_list_screen_model/profile_image_model.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
@@ -26,6 +27,15 @@ class UserChatListScreenController extends GetxController {
   StreamSubscription? streamSubscriptionChat;
 
   String img = "";
+
+  dynamic customerId = "";
+  dynamic vendorEmail;
+  dynamic name;
+  dynamic id;
+  dynamic roomId;
+  dynamic createdByMail;
+
+  Widget msgIndiWidget = SizedBox();
 
   /// Get User ChatRoom List
   Stream<List<UserChatRoomListModel>> getChatRoomListFunction() {
@@ -60,34 +70,161 @@ class UserChatListScreenController extends GetxController {
     // return chatRoomsStream;
   }
 
-  // Get User Profile - todo
-  // getUserProfileImage(String id) async {
-  //   // isLoading(true);
-  //   String imgUrl = "";
-  //   String url = ApiUrl.getUserDetailsByIdApi + "?id=$id";
-  //   log("Get User Profile Api Url : $url");
+  Widget getChatCredentials() {
+    // isLoading(true);
+    var users = [];
 
-  //   try {
-  //     http.Response response =
-  //         await http.get(Uri.parse(url), headers: apiHeader.headers);
+    var readAllMessage = true;
+    Widget dotWidget = SizedBox();
 
-  //     ProfileImageModel profileImageModel =
-  //         ProfileImageModel.fromJson(json.decode(response.body));
+    FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .where("createdBy", isEqualTo: UserDetails.email)
+        .get()
+        .then((querySnapshot) async {
+      if (querySnapshot.size > 0) {
+        for (var element in querySnapshot.docs) {
+          var data = element.data();
 
-  //     isSuccessStatus = profileImageModel.success.obs;
-  //     if (isSuccessStatus.value) {
-  //       imgUrl = profileImageModel.data.businessLogo;
-  //     } else {}
-  //   } catch (e) {
-  //     log("Get User Profile Only Error ::: $e");
-  //   } finally {
-  //     // isLoading(false);
+          customerId = data["customerid"];
+          vendorEmail = data["peerId"];
+          name = data["peerName"];
+          id = data["vendorid"];
+          roomId = data["roomId"];
+          createdByMail = data["createdBy"];
+
+          users.add(vendorEmail);
+
+          FirebaseFirestore.instance
+              .collection("Chats")
+              .where("room_id", isEqualTo: roomId)
+              .get()
+              .then((querySnapshot) {
+            if (querySnapshot.size != 0) {
+              for (var doc in querySnapshot.docs) {
+                var data = doc.data();
+
+                // print("senderid is :  ${data["sender_id"]}");
+                // print("senderid is :  ${vendorEmail}");
+                // // print("sender mail is :  ${createdByMail}");
+                // print("receiver id is :  ${data["receiver_id"]}");
+                // print("receiver id is :  ${customerId}");
+                // print("data seen id is :  ${data["seen"]}");
+                // print("vendor email is :  ${vendorEmail}   \n\n");
+
+                if (data["sender_id"] == vendorEmail &&
+                    // data["receiver_id"] == customerId &&
+                    data["seen"] == false) {
+                  var dataSeen = data["seen"];
+                  // userUnreadChatCount++;
+
+                  // msgIndiWidget = Container(
+                  //   height: 15,
+                  //   width: 15,
+                  //   color: Colors.red,
+                  // );
+                  readAllMessage = false;
+                  dotWidget = Container(
+                    height: 15,
+                    width: 15,
+                    color: Colors.red,
+                  );
+
+                  print("data seen value is : $dataSeen");
+
+                  // return userUnreadChatCount;
+                  log("if case");
+                }
+              }
+            } else {
+              log("nothing done");
+              // msgIndiWidget = SizedBox();
+            }
+          }).catchError((error) {
+            log(error.toString());
+          });
+        }
+      }
+    });
+
+    // isLoading(false);
+    return Container(
+      height: 15,
+      width: 15,
+      color: Colors.red,
+    );
+  }
+
+  // int _getUnseenMessagesNumber(List<Map<String, dynamic>> items) {
+  //   var counter;
+  //   for (final item in items) {
+  //     counter += item.values.first.length;
   //   }
-  //   log("imgUrl : $imgUrl");
-  //   loadUI();
-  //   isLoading(true);
-  //   isLoading(false);
-  //   return imgUrl;
+  //   return counter;
+  // }
+
+  // getUnreadMessage() async {
+  //   // var room_id = singleMsg.roomId;
+  //   // var email = singleMsg.users![0];
+  //   //  var sender_email = $("#senderemail").val();
+  //   // var sender_id = userChatList!.first.senderId;
+  //   print("customer id : $customerId");
+  //   print("vendor email : $vendorEmail");
+  //   print("vendor name : $name");
+  //   print("vendor id : $id");
+  //   print("chatroom id : $roomId");
+  //   print("created by email : $createdByMail \n");
+
+  //   var dataSeen;
+
+  //   await FirebaseFirestore.instance
+  //       .collection("Chats")
+  //       .where("room_id", isEqualTo: roomId)
+  //       .get()
+  //       .then((querySnapshot) {
+  //         if (querySnapshot.size != 0) {
+  //           for (var doc in querySnapshot.docs) {
+  //             var data = doc.data();
+  //             print(data["seen"]);
+
+  //             if (data["sender_id"] == createdByMail &&
+  //                 data["receiver_id"] == vendorEmail &&
+  //                 data["seen"] == false) {
+  //               var dataSeen = data["seen"];
+
+  //               print("data seen value is : $dataSeen");
+  //               // msgIndiWidget = Container(
+  //               //   height: 20,
+  //               //   width: 20,
+  //               //   color: Colors.red,
+  //               // );
+
+  //             } else {
+  //               print("No new messages");
+  //             }
+
+  //             // var ref =
+  //             //     FirebaseFirestore.instance.collection("Chats").doc(doc.id);
+
+  //             // log(ref.get().toString());
+
+  //             // ref.update({
+  //             //   "seen": true,
+  //             // });
+  //           }
+  //           // var element = document.getElementById("btn" + receiverEmail);
+  //           // element..add("d-none1");
+  //         } else {
+  //           // log(receiverEmail);
+  //         }
+  //       })
+  //       .then((val) {})
+  //       .catchError((error) {
+  //         log(error.toString());
+  //       });
+
+  //   // print("user id is : ${dataId}");
+  //   return dataSeen;
   // }
 
   Future<String> getUserChatImage(String userId) async {
@@ -100,7 +237,7 @@ class UserChatListScreenController extends GetxController {
     try {
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log('Get image data Response : ${response.body}');
+      // log('Get image data Response : ${response.body}');
 
       UserImageGetModel getUserImage =
           UserImageGetModel.fromJson(json.decode(response.body));
@@ -129,6 +266,7 @@ class UserChatListScreenController extends GetxController {
   @override
   void onInit() {
     getChatRoomListFunction();
+
     super.onInit();
   }
 

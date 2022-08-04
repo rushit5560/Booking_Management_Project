@@ -6,6 +6,7 @@ import 'package:booking_management/user_side/controllers/user_checkout_screen_co
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
 
@@ -217,7 +218,6 @@ class PersonalInformationFormModule extends StatelessWidget {
           validator: (value) => FieldValidator().validateFirstName(value!),
           decoration: checkoutFormFieldDecoration(hintText: 'First Name'),
         ),
-
         const SizedBox(height: 5),
         TextFormField(
           controller: screenController.emailFieldController,
@@ -225,7 +225,6 @@ class PersonalInformationFormModule extends StatelessWidget {
           validator: (value) => FieldValidator().validateEmail(value!),
           decoration: checkoutFormFieldDecoration(hintText: 'Email'),
         ),
-
         const SizedBox(height: 5),
         TextFormField(
           controller: screenController.phoneFieldController,
@@ -234,7 +233,6 @@ class PersonalInformationFormModule extends StatelessWidget {
           validator: (value) => FieldValidator().validateMobile(value!),
           decoration: checkoutFormFieldDecoration(hintText: 'Mobile No'),
         ),
-
         const SizedBox(height: 5),
         TextFormField(
           controller: screenController.notesFieldController,
@@ -242,9 +240,72 @@ class PersonalInformationFormModule extends StatelessWidget {
           // validator: (value) => FieldValidator().validateNotes(value!),
           decoration: checkoutFormFieldDecoration(hintText: 'Notes'),
         ),
-
-        // const SizedBox(height: 10),
+        const SizedBox(height: 10),
+        screenController.selectedResourceIsEvent == false
+            ? Container()
+            : quantityDropDownModule(),
       ]),
+    );
+  }
+
+  Widget quantityDropDownModule() {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            "Select Quantity",
+            style: TextStyle(
+              fontSize: 16,
+              color: AppColors.colorGreyIconDark,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<int>(
+                // Initial Value
+                value: screenController.quantityValue.value,
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+                style: const TextStyle(color: Colors.black),
+                isExpanded: true,
+                // Array list of items
+                items: screenController.quantityList.map((value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+
+                // screenController.countriesList.map((String items) {
+                //   return DropdownMenuItem(
+                //     value: items,
+                //     child: Text(items),
+                //   );
+                // }).toList(),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (newValue) {
+                  screenController.isLoading(true);
+                  screenController.quantityValue.value = newValue!;
+                  // log("countryData : ${screenController.countryData!.code}");
+                  // screenController.selectedCountryCode.value
+                  // = "${screenController.countryData!.code}";
+
+                  screenController.isLoading(false);
+                },
+              ),
+            ).commonSymmetricPadding(horizontal: 10),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -262,8 +323,11 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
         if (screenController.checkOutFormKey.currentState!.validate()) {
           if (screenController.isPriceDisplay) {
-            // await screenController.makePayment();
-            Get.to(() => CardPaymentScreen());
+            Get.to(
+              () => const CardPaymentScreen(),
+              arguments: screenController.bookingPrice,
+            );
+            // await screenController.initPaymentSheet();
           } else {
             await screenController.checkOutSubmitFunction();
           }

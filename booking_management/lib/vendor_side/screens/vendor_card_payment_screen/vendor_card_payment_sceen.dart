@@ -13,16 +13,18 @@ import 'package:get/get.dart';
 import '../../../common_modules/common_widgets.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/custom_appbar/custom_appbar.dart';
+import '../../controllers/vendor_card_payment_sceen_controller/vendor_card_payment_sceen_controller.dart';
 
-class CardPaymentScreen extends StatefulWidget {
-  const CardPaymentScreen({Key? key}) : super(key: key);
+class VendorCardPaymentScreen extends StatefulWidget {
+  const VendorCardPaymentScreen({Key? key}) : super(key: key);
 
   @override
-  State<CardPaymentScreen> createState() => _CardPaymentScreenState();
+  State<VendorCardPaymentScreen> createState() =>
+      _VendorCardPaymentScreenState();
 }
 
-class _CardPaymentScreenState extends State<CardPaymentScreen> {
-  final cardScreenController = Get.put(CardPaymentScreenController());
+class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
+  final cardScreenController = Get.put(VendorCardPaymentScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -293,8 +295,11 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
   ) async {
     try {
       print(cardScreenController.bookingPrice);
-      var decimalList = cardScreenController.bookingPrice.split(".")[0];
-      var price = int.tryParse(decimalList);
+
+      // var decimalList = cardScreenController.bookingPrice.split(".")[0];
+      // var price = int.tryParse(decimalList);
+
+      var price = cardScreenController.bookingPrice;
 
       print(price.runtimeType);
       print(price);
@@ -355,7 +360,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
           throw error;
         }
       });
-      await cardScreenController.checkOutSubmitFunction();
+      await cardScreenController.checkoutSubscriptionSuccess();
 
       // cardScreenController.paymentState.value = "success";
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -405,7 +410,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
           ),
         );
         log("Error ::: $e");
-        throw e;
+        rethrow;
       }
     }
   }

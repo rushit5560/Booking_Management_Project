@@ -75,7 +75,7 @@ class VendorChatListScreenController extends GetxController {
     try {
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log('Get image data Response : ${response.body}');
+      // log('Get image data Response : ${response.body}');
 
       UserImageGetModel getUserImage =
           UserImageGetModel.fromJson(json.decode(response.body));

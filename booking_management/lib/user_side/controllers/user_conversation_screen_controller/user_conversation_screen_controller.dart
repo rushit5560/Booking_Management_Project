@@ -12,13 +12,13 @@ import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_url.dart';
 import '../../model/user_conversation_screen_model/get_fcm_token_model.dart';
 
-
-
 class UserConversationScreenController extends GetxController {
   String roomId = Get.arguments[0];
   String receiverEmail = Get.arguments[1];
   String headerName = Get.arguments[2];
   String peerUniqueId = Get.arguments[3];
+  String customerId = Get.arguments[4];
+  String senderEmail = Get.arguments[5];
   // List<SendMessageModel> userNewChatList = Get.arguments[2];
 
   /// Getting From API
@@ -37,14 +37,11 @@ class UserConversationScreenController extends GetxController {
 
   final TextEditingController messageFieldController = TextEditingController();
 
-
-
   /// Send Message on Send Button Click
   Future<void> sendMessageFunction(SendMessageModel sendMsg) async {
-
-
     var documentReference = FirebaseFirestore.instance
-    .collection("Chats").doc(DateTime.now().millisecondsSinceEpoch.toString());
+        .collection("Chats")
+        .doc(DateTime.now().millisecondsSinceEpoch.toString());
 
     /// Set Data in Firebase
     documentReference.set(sendMsg.toJson());
@@ -61,6 +58,19 @@ class UserConversationScreenController extends GetxController {
     // hideKeyboard();
     messageFieldController.clear();
     loadUI();
+  }
+
+  Future<void> readMessages() async {
+    final query = await FirebaseFirestore.instance
+        .collection('Chats')
+        .where('room_id', isEqualTo: roomId)
+        .where('seen', isEqualTo: false)
+        .get();
+
+    for (var doc in query.docs) {
+      print(" seen is :  ${doc.data()['seen']}");
+      doc.reference.update({'seen': true});
+    }
   }
 
   /// Get All Messages From Firebase -> Return Chat List
@@ -89,15 +99,16 @@ class UserConversationScreenController extends GetxController {
 
   /// Get All Messages From Firebase -> Return Chat List
   Stream<List<ReceiveMessageModel>> fetchChatFromFirebase() {
-    return FirebaseFirestore.instance.collection("Chats")
+    return FirebaseFirestore.instance
+        .collection("Chats")
         .where("room_id", isEqualTo: roomId)
         .orderBy("created_at", descending: true)
         .snapshots()
-        .map((snapshot) =>
-        snapshot.docs.map((doc) {
-          log("doc : ${doc.id}");
-          return ReceiveMessageModel.fromJson(doc.data(), doc.id);
-        }).toList());
+        .map((snapshot) => snapshot.docs.map((doc) {
+              log("doc : ${doc.id}");
+
+              return ReceiveMessageModel.fromJson(doc.data(), doc.id);
+            }).toList());
   }
 
   /// Delete Message
@@ -105,9 +116,6 @@ class UserConversationScreenController extends GetxController {
     FirebaseFirestore.instance.collection("Chats").doc(docId).delete();
     Get.back();
   }
-
-
-
 
   /// Load UI
   loadUI() {
@@ -121,7 +129,6 @@ class UserConversationScreenController extends GetxController {
     required String title,
     required int type,
   }) async {
-
     log("fcmToken : $fcmToken");
     log("body : $body");
     log("title : $title");
@@ -162,7 +169,6 @@ class UserConversationScreenController extends GetxController {
     // Get.back();
   }
 
-
   /// Get User FCM Token
   getUserFcmTokenFunction() async {
     isLoading(true);
@@ -170,36 +176,35 @@ class UserConversationScreenController extends GetxController {
     log("Get User Fcm Token : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
-      GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
+      GetFcmTokeModel getFcmTokeModel =
+          GetFcmTokeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFcmTokeModel.success.obs;
       log("getFcmTokeModel.success : ${getFcmTokeModel.success}");
       log("getFcmTokeModel.success : ${getFcmTokeModel.statusCode}");
       log("getFcmTokeModel.success : ${getFcmTokeModel.data.fcmToken}");
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         oppositeUserFcmToken = getFcmTokeModel.data.fcmToken;
         log("oppositeUserFcmToken : $oppositeUserFcmToken");
       } else {
         log("getUserFcmTokenFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getUserFcmTokenFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
-
 
   @override
   void onInit() {
     getUserFcmTokenFunction();
+    readMessages();
     super.onInit();
   }
-
 }
 
 

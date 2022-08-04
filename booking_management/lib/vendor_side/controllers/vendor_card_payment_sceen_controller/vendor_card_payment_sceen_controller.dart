@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/common_ui/model/sign_out_model/sign_out_model.dart';
-import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
+import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/payment_keys.dart';
 
-class CardPaymentScreenController extends GetxController {
+class VendorCardPaymentScreenController extends GetxController {
   final size = Get.size;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -63,13 +63,13 @@ class CardPaymentScreenController extends GetxController {
     }
   }
 
-  checkOutSubmitFunction() {
+  checkoutSubscriptionSuccess() {
     Get.snackbar(
       "Success",
-      "Paid SuccesFully",
+      "Subscription Purchased",
     );
 
-    Get.to(() => BookingSuccessScreen(), arguments: "wq_12712989");
+    Get.to(() => VendorIndexScreen());
   }
 
   calculateAmount(int amount) {

@@ -14,6 +14,7 @@ import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
 import '../../model/vendor_subscription_plan_screen_models/get_all_subscription_model.dart';
+import '../vendor_card_payment_screen/vendor_card_payment_sceen.dart';
 
 class VendorSubscriptionPlanScreen extends StatelessWidget {
   VendorSubscriptionPlanScreen({Key? key}) : super(key: key);
@@ -170,10 +171,11 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                     //   fit: BoxFit.cover,
                     // ),
                   ),
-                  child: Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
-                      errorBuilder: (context, st, ob) {
-                        return Image.asset(AppImages.logoImg);
-                      }, fit: BoxFit.cover),
+                  child:
+                      Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
+                          errorBuilder: (context, st, ob) {
+                    return Image.asset(AppImages.logoImg);
+                  }, fit: BoxFit.cover),
                 ),
                 const SizedBox(width: 15),
                 Expanded(
@@ -246,30 +248,34 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                if(singleItem.isActive == true) {
+                if (singleItem.isActive == true) {
                   // Remove Plan Api Call
-                  await vendorSubscriptionPlanScreenController.cancelSubscriptionPlanFunction(
+                  await vendorSubscriptionPlanScreenController
+                      .cancelSubscriptionPlanFunction(
                     productId: singleItem.id,
                     id: singleItem.stripeSubscriptionId,
                   );
                 } else {
-                  // Purchase plan api call
-                  await vendorSubscriptionPlanScreenController.purchaseSubscriptionPlanFunction(
-                    productId: singleItem.id
+                  Get.to(
+                    () => const VendorCardPaymentScreen(),
+                    arguments: [
+                      singleItem.price,
+                    ],
                   );
+                  // Purchase plan api call
+                  await vendorSubscriptionPlanScreenController
+                      .purchaseSubscriptionPlanFunction(
+                          productId: singleItem.id);
                 }
               },
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: singleItem.isActive == true
-                    ? Colors.red
-                      : Colors.green
-                ),
+                    borderRadius: BorderRadius.circular(10),
+                    color: singleItem.isActive == true
+                        ? Colors.red
+                        : Colors.green),
                 child: Text(
-                    singleItem.isActive == true
-                        ? "Cancel"
-                        : "Purchase Now",
+                  singleItem.isActive == true ? "Cancel" : "Purchase Now",
                   style: const TextStyle(color: Colors.white),
                 ).commonSymmetricPadding(horizontal: 15, vertical: 10),
               ),

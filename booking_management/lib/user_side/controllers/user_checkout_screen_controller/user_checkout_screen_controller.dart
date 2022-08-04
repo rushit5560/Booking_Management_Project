@@ -23,6 +23,11 @@ class UserCheckoutScreenController extends GetxController {
   String bookingId = Get.arguments[0];
   String userName = Get.arguments[1];
   String userEmail = Get.arguments[2];
+  bool selectedResourceIsEvent = Get.arguments[3];
+  int duration = Get.arguments[4];
+  int selectedResource = Get.arguments[5];
+  bool isDurationAvailable = Get.arguments[6];
+  bool isEvent = Get.arguments[7];
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -59,6 +64,9 @@ class UserCheckoutScreenController extends GetxController {
 
   RxString payment = 'Credit'.obs;
 
+  List<int> quantityList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  RxInt quantityValue = 1.obs;
+
   /// Checkout
   getCheckoutFunction() async {
     isLoading(true);
@@ -78,8 +86,10 @@ class UserCheckoutScreenController extends GetxController {
       isSuccessStatus = checkoutModel.success.obs;
 
       if (isSuccessStatus.value) {
-        isPriceDisplay = checkoutModel.workerList.isPriceDisplay;
-        log("isPriceDisplay : $isPriceDisplay");
+        // isPriceDisplay = checkoutModel.workerList.isPriceDisplay;
+
+        log("worker email : ${checkoutModel.workerList.email}");
+        // log("isPriceDisplay : $isPriceDisplay");
       } else {
         //Fluttertoast.showToast(msg: "Something went wrong!");
         log("getCheckoutFunction Else Else");
@@ -117,6 +127,10 @@ class UserCheckoutScreenController extends GetxController {
         vendorAddress =
             "${checkoutSummaryModel.workerList.booking.vendor.state}, ${checkoutSummaryModel.workerList.booking.vendor.country}, "
             "${checkoutSummaryModel.workerList.booking.vendor.postcode}";
+
+        isPriceDisplay =
+            checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay;
+        log("isprice display is : ${checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay}");
         String startBookDate =
             checkoutSummaryModel.workerList.booking.startDateTime;
         String bDate1 = startBookDate.substring(0, startBookDate.length - 9);
@@ -165,8 +179,8 @@ class UserCheckoutScreenController extends GetxController {
   }
 
   /// get payment Id From payment
-  getPaymentIdFunction(String id, String secretKey) async {
-    isLoading(true);
+  Future<void> getPaymentIdFunction(String id, String secretKey) async {
+    // isLoading(true);
     String url = ApiUrl.getPaymentIdApi;
     log("getPaymentId : $url");
 
@@ -182,12 +196,13 @@ class UserCheckoutScreenController extends GetxController {
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      //log('getPaymentId response: ${response.statusCode}');
+      // log('getPaymentId response: ${response.}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
         GetPaymentIdModel getPaymentIdModel =
             GetPaymentIdModel.fromJson(json.decode(value));
         isSuccessStatus = getPaymentIdModel.success.obs;
+
         log('isSuccessStatus: $isSuccessStatus');
         if (isSuccessStatus.value) {
           transactionId = getPaymentIdModel.workerList.id;
@@ -197,11 +212,12 @@ class UserCheckoutScreenController extends GetxController {
           log("getPaymentId Else Else");
         }
       });
+      // finally display payment sheet
     } catch (e) {
       log("getPaymentId Error ::: $e");
     } finally {
       //isLoading(false);
-      await displayPaymentSheet(id, secretKey);
+
     }
   }
 
@@ -215,11 +231,103 @@ class UserCheckoutScreenController extends GetxController {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       // request.headers.addAll(apiHeader.headers);
 
-      request.fields['BookingId'] = bookingId;
-      request.fields['Email'] = emailFieldController.text.trim().toLowerCase();
-      request.fields['Notes'] = notesFieldController.text.trim();
-      request.fields['PhoneNo'] = phoneFieldController.text;
-      request.fields['UserId'] = UserDetails.uniqueId;
+      if (UserDetails.isUserLoggedIn == true) {
+        if (isDurationAvailable == true) {
+          if (isEvent == true) {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Duration'] = "$duration";
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['Quantity'] = "$quantityValue";
+            request.fields['ResourceId'] = "$selectedResource";
+            request.fields['UserId'] = UserDetails.uniqueId;
+          } else {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Duration'] = "$duration";
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['ResourceId'] = "$selectedResource";
+            request.fields['UserId'] = UserDetails.uniqueId;
+          }
+        } else {
+          if (isEvent == true) {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['Quantity'] = "$quantityValue";
+            request.fields['ResourceId'] = "$selectedResource";
+            request.fields['UserId'] = UserDetails.uniqueId;
+          } else {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['ResourceId'] = "$selectedResource";
+            request.fields['UserId'] = UserDetails.uniqueId;
+          }
+        }
+      } else {
+        if (isDurationAvailable == true) {
+          if (isEvent == true) {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Duration'] = "$duration";
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['Quantity'] = "$quantityValue";
+            request.fields['ResourceId'] = "$selectedResource";
+          } else {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Duration'] = "$duration";
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['ResourceId'] = "$selectedResource";
+          }
+        } else {
+          if (isEvent == true) {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['Quantity'] = "$quantityValue";
+            request.fields['ResourceId'] = "$selectedResource";
+          } else {
+            request.fields['BookingId'] = bookingId;
+            request.fields['Email'] =
+                emailFieldController.text.trim().toLowerCase();
+            request.fields['FullName'] = fNameFieldController.text.trim();
+            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+            request.fields['Notes'] = notesFieldController.text.trim();
+            request.fields['PhoneNo'] = phoneFieldController.text;
+            request.fields['ResourceId'] = "$selectedResource";
+          }
+        }
+      }
       request.fields['UserName'] = fNameFieldController.text.trim();
 
       log("Fields : ${request.fields}");
@@ -238,6 +346,7 @@ class UserCheckoutScreenController extends GetxController {
           returnId = confirmCheckoutModel.id;
           log("returnId : $returnId");
           Get.to(() => BookingSuccessScreen(), arguments: returnId);
+
           // if(returnId.isEmpty){
           //   Get.back();
           // } else{
@@ -257,8 +366,16 @@ class UserCheckoutScreenController extends GetxController {
   }
 
   /// For Stripe
-  Future<void> makePayment() async {
+  Future<void> initPaymentSheet() async {
     try {
+      // final url = Uri.parse("Stripe payment function URL");
+      // final response = await http.get(
+      //   url,
+      //   headers: {
+      //     "Content-Type":"application/json"
+      //   },
+      // );
+
       print(bookingPrice);
       var decimalList = bookingPrice.split(".")[0];
       var price = int.tryParse(decimalList);
@@ -266,94 +383,68 @@ class UserCheckoutScreenController extends GetxController {
       print(price);
       paymentIntentData = await createPaymentIntent(price!, "USD");
 
-      // var stripePaymentMethod = await Stripe.instance.confirmPayment(paymentIntentClientSecret, data).paymentRequestWithCardForm(CardFormPaymentRequest());
-      // var stripePaymentIntent = await StripeService.createPaymentIntent(amount, currency);
-
-      // var paymentmethod =
-      //     await Stripe.instance.createPaymentMethod(PaymentMethodParams.card());
-
       log('paymentIntentData: $paymentIntentData');
+
+      // Stripe.publishableKey = publishableKey;
+      // await Stripe.instance.applySettings();
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
-          customerId: paymentIntentData!['customer'],
           // Enable custom flow
           customFlow: true,
 
-          // applePay: PaymentSheetApplePay(),
-          // googlePay: true,
-          style: ThemeMode.dark,
+          //client_secret
+          paymentIntentClientSecret: paymentIntentData!['client_secret'],
+          // Customer keys
+          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
+          // customerId: paymentIntentData!['customer'],
 
-          merchantDisplayName: 'SetDayTime',
+          applePay: true,
+          googlePay: true,
+          testEnv: true,
+          style: ThemeMode.dark,
+          merchantCountryCode: 'US',
+          merchantDisplayName: UserDetails.userName,
         ),
       );
+      await Stripe.instance.presentPaymentSheet();
+      //     .whenComplete(() async {
+      //   if (paymentIntentData!['id'] == null) {
+      //     log('Failed');
+      //     log('id: ${paymentIntentData!['id']}');
+      //     Get.snackbar(
+      //       "Failed",
+      //       "Failed payment Id",
+      //       snackPosition: SnackPosition.BOTTOM,
+      //     );
+      //   } else {
+      //     log('payment id: ${paymentIntentData!['id']}');
 
-      if (paymentIntentData!['id'] == null) {
-        log('Failed');
-        log('id: ${paymentIntentData!['id']}');
-        Get.snackbar("Failed", "Failed payment Id",
-            snackPosition: SnackPosition.BOTTOM);
-      } else {
-        // await Stripe.instance.confirmPaymentSheetPayment();
-        // var response = await Stripe.instance.confirmPayment(
-        //   paymentIntentData!['client_secret'],
-        //   PaymentMethodParams.afterpayClearpay(
-        //     shippingDetails: ShippingDetails(
-        //       address: Address(
-        //           city: "surat",
-        //           country: "india",
-        //           line1: "",
-        //           line2: "",
-        //           postalCode: "395009",
-        //           state: "Gujarat"),
-        //     ),
-        //   ),
-        // );
+      //     // Get.snackbar(
+      //     //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+      //     // );
 
-        // print(response.status);
+      //     ///now finally display payment sheeet
 
-        // // confirmPayment(
-
-        // //   PaymentIntent(
-        // //       clientSecret: stripePaymentIntent['client_secret'],
-        // //       paymentMethodId: stripePaymentMethod.id),
-        // // );
-        // if (response.status == 'succeeded') {
-        //   //if the payment process success
-
-        //   print("'Transaction successful'");
-
-        //   // new StripeTransactionResponse(
-        //   //     message: 'Transaction successful', success: true);
-        // } else {
-        //   //payment process fail
-        //   print("'Transaction failed'");
-        //   // return new StripeTransactionResponse(
-        //   //     message: 'Transaction failed', success: false);
-        // }
-        //log('Success');
-        log('id: ${paymentIntentData!['id']}');
-        // Get.snackbar(
-        //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
-        // );
-        getPaymentIdFunction(
-          paymentIntentData!['id'],
-          paymentIntentData!['client_secret'],
-        );
-      }
-
-      //await displayPaymentSheet();
-      //await checkOutSubmitFunction();
-
+      //     // await getPaymentIdFunction(
+      //     //   paymentIntentData!['id'],
+      //     //   paymentIntentData!['client_secret'],
+      //     // );
+      //   }
+      // });
     } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+        ),
+      );
       log("Make Payment Error ::: $e");
       rethrow;
     }
   }
 
-  createPaymentIntent(int amount, String currency) async {
+  Future<Map<String, dynamic>> createPaymentIntent(
+      int amount, String currency) async {
     try {
       Map<String, dynamic> body = {
         "amount": calculateAmount(amount),
@@ -369,11 +460,13 @@ class UserCheckoutScreenController extends GetxController {
             'Authorization': 'Bearer ${PaymentKeys.secretKey}',
             'Content-Type': 'application/x-www-form-urlencoded'
           });
-      //log("response.body: ${response.body}");
+      // log("payment intent res body: ${response.body}");
       //log("response.statusCode: ${response.statusCode}");
       return jsonDecode(response.body.toString());
     } catch (e) {
       log("Create Payment Intent ::: $e");
+      print("error occured : ${e.toString()}");
+      rethrow;
     }
   }
 
@@ -382,35 +475,79 @@ class UserCheckoutScreenController extends GetxController {
     return price.toString();
   }
 
-  displayPaymentSheet(String id, String secretKey) async {
+  Future<void> displayPaymentSheet() async {
     //isLoading(true);
     try {
-      await Stripe.instance.presentPaymentSheet().then((value) async {
-        log('paymentIntentData id : ${paymentIntentData!['id']}');
-        log('Display paymentIntentData: $paymentIntentData');
+      Stripe.instance.presentPaymentSheet();
 
-        isLoading(true);
-        await checkOutSubmitFunction();
-        paymentIntentData = null;
-        isLoading(false);
+      // .catchError(
+      //   (error, stackTrace) {
+      //     log("onerror block : ");
+      //     Get.snackbar(
+      //       "Failed to pay",
+      //       "$error $stackTrace",
+      //       colorText: AppColors.blackColor,
+      //       backgroundColor: AppColors.whiteColor,
+      //       snackPosition: SnackPosition.BOTTOM,
+      //     );
+      //     log('Exception/DISPLAYPAYMENTSHEET  ==> $error');
 
-        log('success');
-
-        // await Stripe.instance.confirmPayment();
-      });
-
-      //Get.snackbar("Success", "Paid Successfully", snackPosition: SnackPosition.TOP);
-      //Get.back();
-      //await getPaymentIdFunction(paymentIntentData!['id'], paymentIntentData!['client_secret']);
-      // Get.snackbar(
-      //     "Success", "Paid Successfully", snackPosition: SnackPosition.BOTTOM
+      //     throw error.toString();
+      //   },
       // );
 
-      /// API Calling
-      //checkOutSubmitFunction();
+      // ScaffoldMessenger.of(Get.context!).showSnackBar(
+      //   SnackBar(
+      //     content: Text('Payment option selected'),
+      //   ),
+      // );
+      // confirmPayment();
+      // then(
+      //   (value) async {
+      //     log('paymentIntentData id : ${paymentIntentData!['id'].toString()}');
+      //     log('Display paymentIntent clientsecret data: ${paymentIntentData!['client_secret'].toString()}');
+      //     print(
+      //         'payment intent amount + ${paymentIntentData!['amount'].toString()}');
+      //     print('payment intent' + paymentIntentData.toString());
 
-    } on StripeException catch (e) {
-      log("StripeException Error ::: ${e.error}");
+      // Get.snackbar(
+      //   "Success",
+      //   "Paid Successfully",
+      //   snackPosition: SnackPosition.TOP,
+      // );
+
+      // isLoading(true);
+      // await checkOutSubmitFunction();
+      // paymentIntentData = null;
+      // isLoading(false);
+
+      // log('success');
+
+      // await Stripe.instance.confirmPayment();
+      //   },
+      // ).
+
+    } catch (e) {
+      if (e is StripeException) {
+        Get.snackbar(
+          "Failed to pay",
+          "Error from Stripe: ${e.error.localizedMessage}",
+          colorText: AppColors.blackColor,
+          backgroundColor: AppColors.whiteColor,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        throw e.toString();
+      } else {
+        log("StripeException Error occured ::: ${e.toString()}");
+        Get.snackbar(
+          "Failed to pay",
+          "Unforeseen error: ${e}",
+          colorText: AppColors.blackColor,
+          backgroundColor: AppColors.whiteColor,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        throw e.toString();
+      }
 
       // var errorMsg = e.error;
       // print(errorMsg.code);
@@ -421,20 +558,37 @@ class UserCheckoutScreenController extends GetxController {
 
 // switch (errorMsg == )
 
-      rethrow;
-      // Get.snackbar(
-      //     "Failed", "Failed to pay", snackPosition: SnackPosition.BOTTOM
-      // );
-    } catch (e) {
-      log("Display Payment Sheet Error ::: $e");
-      Get.snackbar("Failed", "Failed to pay",
-          snackPosition: SnackPosition.BOTTOM);
-    } finally {
-      //isLoading(false);
-      // log('paymentIntentData id : ${paymentIntentData!['id']}');
-      Get.snackbar("Success", "Paid Successfully",
-          snackPosition: SnackPosition.TOP);
-      // await checkOutSubmitFunction();
+    }
+  }
+
+  Future<void> confirmPayment() async {
+    try {
+      // 4. Confirm the payment sheet.
+      await Stripe.instance.confirmPaymentSheetPayment();
+      // step.value = 0;
+
+      // setState(() {
+      // });
+
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: Text('Payment succesfully completed'),
+        ),
+      );
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text('Error from Stripe: ${e.error.localizedMessage}'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text('Unforeseen error: ${e}'),
+          ),
+        );
+      }
     }
   }
 
@@ -484,6 +638,8 @@ class UserCheckoutScreenController extends GetxController {
     }
 
     getCheckoutFunction();
+
+    log("selectedResourceIsEvent : $selectedResourceIsEvent");
 
     super.onInit();
   }

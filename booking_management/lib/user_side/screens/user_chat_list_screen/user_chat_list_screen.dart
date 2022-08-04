@@ -231,48 +231,6 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                   },
                 ),
 
-                // userChatListScreenController.getChatCredentials(),
-
-                // FutureBuilder(
-                //   future: userChatListScreenController.getChatCredentials(),
-                //   builder: (context, snapshot) {
-                //     if (snapshot.connectionState == ConnectionState.done) {
-                //       print("seen value is : ${snapshot.data}");
-                //       return Container(
-                //         height: 20,
-                //         width: 20,
-                //         color: Colors.green,
-                //       );
-                //       // var roomid = data.docs;
-
-                //       // print(data[]);
-
-                //     } else {
-                //       return Container(
-                //         height: 20,
-                //         width: 20,
-                //         color: Colors.red,
-                //       );
-                //     }
-
-                //     // if (data > 0) {
-                //     //   for (var element in querySnapshot.docs) {
-                //     //     var data = element.data();
-
-                //     //     customerId = data["customerid"];
-                //     //     vendorEmail = data["peerId"];
-                //     //     name = data["peerName"];
-                //     //     id = data["vendorid"];
-                //     //     roomId = data["roomId"];
-                //     //     createdByMail = data["createdBy"];
-
-                //     //     users.add(vendorEmail);
-                //     //     getUnreadMessage();
-                //     //   }
-                //     // }
-                //   },
-                // ),
-
                 // newMessage(singleMsg)
 
                 // const Text(

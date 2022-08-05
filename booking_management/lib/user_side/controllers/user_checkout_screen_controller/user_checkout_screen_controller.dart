@@ -226,109 +226,39 @@ class UserCheckoutScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.checkoutSubmitApi;
     log("Checkout Submit : $url");
+    int durationVar = 0;
+
+    if(isEvent == true) {
+      durationVar = quantityValue.value;
+    }
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       // request.headers.addAll(apiHeader.headers);
 
       if (UserDetails.isUserLoggedIn == true) {
-        if (isDurationAvailable == true) {
-          if (isEvent == true) {
             request.fields['BookingId'] = bookingId;
             request.fields['Duration'] = "$duration";
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
+            request.fields['Email'] = emailFieldController.text.trim().toLowerCase();
             request.fields['FullName'] = fNameFieldController.text.trim();
             request.fields['IsPriceDisplay'] = "$isPriceDisplay";
             request.fields['Notes'] = notesFieldController.text.trim();
             request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['Quantity'] = "$quantityValue";
+            request.fields['Quantity'] = "$durationVar";
             request.fields['ResourceId'] = "$selectedResource";
             request.fields['UserId'] = UserDetails.uniqueId;
-          } else {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Duration'] = "$duration";
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['ResourceId'] = "$selectedResource";
-            request.fields['UserId'] = UserDetails.uniqueId;
-          }
-        } else {
-          if (isEvent == true) {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['Quantity'] = "$quantityValue";
-            request.fields['ResourceId'] = "$selectedResource";
-            request.fields['UserId'] = UserDetails.uniqueId;
-          } else {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['ResourceId'] = "$selectedResource";
-            request.fields['UserId'] = UserDetails.uniqueId;
-          }
-        }
       } else {
-        if (isDurationAvailable == true) {
-          if (isEvent == true) {
             request.fields['BookingId'] = bookingId;
             request.fields['Duration'] = "$duration";
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
+            request.fields['Email'] = emailFieldController.text.trim().toLowerCase();
             request.fields['FullName'] = fNameFieldController.text.trim();
             request.fields['IsPriceDisplay'] = "$isPriceDisplay";
             request.fields['Notes'] = notesFieldController.text.trim();
             request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['Quantity'] = "$quantityValue";
+            request.fields['Quantity'] = "$durationVar";
             request.fields['ResourceId'] = "$selectedResource";
-          } else {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Duration'] = "$duration";
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['ResourceId'] = "$selectedResource";
-          }
-        } else {
-          if (isEvent == true) {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['Quantity'] = "$quantityValue";
-            request.fields['ResourceId'] = "$selectedResource";
-          } else {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Email'] =
-                emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['ResourceId'] = "$selectedResource";
-          }
-        }
       }
-      request.fields['UserName'] = fNameFieldController.text.trim();
+      // request.fields['UserName'] = fNameFieldController.text.trim();
 
       log("Fields : ${request.fields}");
       log('request.headers: ${request.headers}');

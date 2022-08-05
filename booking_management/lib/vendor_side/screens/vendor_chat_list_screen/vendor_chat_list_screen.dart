@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
@@ -35,46 +38,44 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
               appBarOption: AppBarOption.none,
             ),
             Expanded(
-              child: Obx(
-                () => vendorChatListScreenController.isLoading.value
-                    ? const CustomCircularLoaderModule()
-                    : StreamBuilder<List<UserChatRoomListModel>>(
-                        stream: vendorChatListScreenController
-                            .getChatRoomListFunction(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return Text(
-                                "Something went wrong! ${snapshot.error}");
-                          } else if (snapshot.hasData) {
-                            final chatList = snapshot.data;
-                            return RefreshIndicator(
-                              onRefresh: () async {
-                                // setState(() {});
-                                vendorChatListScreenController
-                                    .getChatRoomListFunction();
-                              },
-                              child: ListView.builder(
-                                itemCount: chatList!.length,
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (context, i) {
-                                  UserChatRoomListModel singleMsg = chatList[i];
+              child: StreamBuilder<List<UserChatRoomListModel>>(
+                stream:
+                    vendorChatListScreenController.getChatRoomListFunction(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text("Something went wrong! ${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    final chatList = snapshot.data;
+                    return RefreshIndicator(
+                      triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                      onRefresh: () async {
+                        setState(() {});
+                        vendorChatListScreenController
+                            .getChatRoomListFunction();
+                      },
+                      child: ListView.builder(
+                        itemCount: chatList!.length,
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, i) {
+                          UserChatRoomListModel singleMsg = chatList[i];
 
-                                  return _chatListTile(singleMsg);
-                                },
-                              ).commonAllSidePadding(15),
-                            );
-                            // return ListView(
-                            //   physics: const BouncingScrollPhysics(),
-                            //   children: categories!.map((val) {
-                            //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
-                            //   }).toList(),
-                            // ).commonAllSidePadding(padding: 15);
-                          } else {
-                            return const CustomCircularLoaderModule();
-                          }
+                          return _chatListTile(singleMsg);
                         },
-                      ),
+                      ).commonAllSidePadding(15),
+                    );
+                    // return ListView(
+                    //   physics: const BouncingScrollPhysics(),
+                    //   children: categories!.map((val) {
+                    //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+                    //   }).toList(),
+                    // ).commonAllSidePadding(padding: 15);
+                  } else {
+                    return const CustomCircularLoaderModule();
+                  }
+                },
               ),
             ),
           ],
@@ -129,8 +130,8 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                       Container(
                         height: 50,
                         width: 50,
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
                             // shape: BoxShape.circle,
                             // borderRadius: BorderRadius.circular(15),
                             // image: const DecorationImage(
@@ -144,7 +145,16 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                             future: vendorChatListScreenController
                                 .getUserChatImage(singleMsg.customerid!),
                             builder: (context, snapshot) {
-                              if (snapshot.hasData) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container(
+                                  padding: EdgeInsets.all(15),
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.accentColor,
+                                    strokeWidth: 2,
+                                  ),
+                                );
+                              } else if (snapshot.hasData) {
                                 return Image.network(
                                   ApiUrl.apiImagePath + snapshot.data!,
                                   errorBuilder: (context, error, stackTrace) {
@@ -153,9 +163,10 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                                 );
                               }
                               return Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(15),
                                 child: CircularProgressIndicator(
                                   color: AppColors.accentColor,
+                                  strokeWidth: 2,
                                 ),
                               );
                             },
@@ -206,7 +217,7 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                   builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                     Widget widget = Container();
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CustomCircularLoaderModule();
+                      return const CustomCircularLoaderModule();
                     } else if (snapshot.hasData) {
                       var data = snapshot.data!.docs;
 
@@ -219,8 +230,8 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                           widget = Container(
                             height: 12,
                             width: 12,
-                            margin: EdgeInsets.only(right: 8),
-                            decoration: BoxDecoration(
+                            margin: const EdgeInsets.only(right: 8),
+                            decoration: const BoxDecoration(
                               color: Colors.green,
                               shape: BoxShape.circle,
                             ),

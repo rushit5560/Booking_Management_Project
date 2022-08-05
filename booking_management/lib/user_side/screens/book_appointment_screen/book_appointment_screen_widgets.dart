@@ -6,6 +6,7 @@ import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/user_side/screens/user_sign_up_screen/user_sign_up_screen.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -18,7 +19,6 @@ import '../../controllers/book_appointment_screen_controller/book_appointment_sc
 import '../../model/book_appointment_screen_model/get_booking_resources_model.dart';
 import '../../model/book_appointment_screen_model/get_booking_service_model.dart';
 
-
 /// Vendor Details Module
 class VendorDetailsModule extends StatelessWidget {
   VendorDetailsModule({Key? key}) : super(key: key);
@@ -26,7 +26,8 @@ class VendorDetailsModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imgUrl = ApiUrl.apiImagePath + screenController.bookVendorDetails!.vendor.categories.image;
+    String imgUrl = ApiUrl.apiImagePath +
+        screenController.bookVendorDetails!.vendor.categories.image;
     return Row(
       children: [
         Expanded(
@@ -38,8 +39,7 @@ class VendorDetailsModule extends StatelessWidget {
             //   //   fit: BoxFit.cover,
             //   // ),
             // ),
-            child: Image.network(imgUrl,
-            errorBuilder: (context, error, st){
+            child: Image.network(imgUrl, errorBuilder: (context, error, st) {
               return Image.asset(AppImages.logoImg);
             }),
           ),
@@ -50,7 +50,7 @@ class VendorDetailsModule extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                  screenController.bookVendorDetails!.vendor.businessName,
+                screenController.bookVendorDetails!.vendor.businessName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -61,7 +61,8 @@ class VendorDetailsModule extends StatelessWidget {
               // const SizedBox(height: 5),
 
               RatingBar.builder(
-                initialRating: double.parse(screenController.bookVendorDetails!.ratting.toString()),
+                initialRating: double.parse(
+                    screenController.bookVendorDetails!.ratting.toString()),
                 minRating: 1,
                 direction: Axis.horizontal,
                 allowHalfRating: true,
@@ -100,8 +101,6 @@ class VendorDetailsModule extends StatelessWidget {
                   ),
                 ],
               ),*/
-
-
             ],
           ),
         ),
@@ -127,18 +126,93 @@ class BookingServicesListModule extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        const SizedBox(height: 10),
+        screenController.allServicesList.length > 2
+            ? servicesCollapsable()
+            : ListView.separated(
+                itemCount: screenController.allServicesList.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                separatorBuilder: (context,i){
 
-        ListView.builder(
-          itemCount: screenController.allServicesList.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, i) {
-            BookServiceWorkerList singleItem = screenController.allServicesList[i];
-            return _bookingServiceListTile(singleItem);
-          },
-        ),
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, i) {
+                  BookServiceWorkerList singleItem =
+                      screenController.allServicesList[i];
+                  return _bookingServiceListTile(singleItem);
+                },
+              ),
       ],
     );
+  }
+
+  Widget servicesCollapsable() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: AppColors.whiteColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 12,
+            spreadRadius: 1,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: ExpandablePanel(
+
+        header: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "All Services",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: AppColors.blackColor,
+                ),
+              ).commonSymmetricPadding(horizontal: 10),
+            ],
+          ),
+        ),
+        theme: ExpandableThemeData(
+          // collapseIcon: Icons.arrow_drop_down,
+
+          animationDuration: const Duration(milliseconds: 500),
+          headerAlignment: ExpandablePanelHeaderAlignment.center,
+
+          iconColor: AppColors.blackColor,
+        ),
+        collapsed: Container(),
+        expanded: Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: ListView.separated(
+            itemCount: screenController.allServicesList.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (context,i){
+
+              return const SizedBox(height: 10);
+            },
+            itemBuilder: (context, i) {
+              BookServiceWorkerList singleItem =
+                  screenController.allServicesList[i];
+              return _bookingServiceListTile(singleItem);
+            },
+          ),
+        ),
+      ).commonSymmetricPadding(vertical: 5),
+    ).commonSymmetricPadding(vertical: 5);
+    /*return ExpansionTile(
+      // backgroundColor: Colors.white,
+      collapsedBackgroundColor: Colors.white,
+
+      title: Text("Dog"),
+      children: [],
+    );*/
   }
 
   Widget _bookingServiceListTile(BookServiceWorkerList singleItem) {
@@ -161,22 +235,21 @@ class BookingServicesListModule extends StatelessWidget {
               singleItem.isSelect = !singleItem.isSelect;
               screenController.loadUI();
 
-              if(singleItem.isSelect == true) {
+              if (singleItem.isSelect == true) {
                 // Selected Service Add in List
                 screenController.selectedServiceList.add(singleItem.id);
                 log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
               } else {
                 // Selected Service Remove From the List
-                screenController.selectedServiceList.removeWhere((element) => singleItem.id == element);
+                screenController.selectedServiceList
+                    .removeWhere((element) => singleItem.id == element);
                 log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
               }
 
               await screenController.getAllResourcesListByIdFunction();
-
             },
           ),
           const SizedBox(width: 15),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,9 +275,8 @@ class BookingServicesListModule extends StatelessWidget {
           ),
         ],
       ).commonAllSidePadding(5),
-    ).commonSymmetricPadding(vertical: 6);
+    );
   }
-
 }
 
 /// Vendor Resources List
@@ -229,7 +301,8 @@ class BookingResourcesListModule extends StatelessWidget {
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, i) {
-            BookingResourceWorkerData singleItem = screenController.allResourcesList[i];
+            BookingResourceWorkerData singleItem =
+                screenController.allResourcesList[i];
             return _resourcesListTile(singleItem);
           },
         ),
@@ -264,8 +337,9 @@ class BookingResourcesListModule extends StatelessWidget {
                 //   //   fit: BoxFit.cover,
                 //   // ),
                 // ),
-                child: Image.network(imgUrl,
-                  errorBuilder: (context, st, ob){
+                child: Image.network(
+                  imgUrl,
+                  errorBuilder: (context, st, ob) {
                     return Image.asset(AppImages.logoImg);
                   },
                   fit: BoxFit.cover,
@@ -296,12 +370,12 @@ class BookingResourcesListModule extends StatelessWidget {
                     // ),
                     const SizedBox(height: 5),
                     screenController.isPriceDisplay.value
-                    ? Text(
-                      "\$${singleItem.price}",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                    : Container(),
+                        ? Text(
+                            "\$${singleItem.price}",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Container(),
                   ],
                 ),
               ),
@@ -319,12 +393,15 @@ class BookingResourcesListModule extends StatelessWidget {
                           onTap: () async {
                             String nextDate = singleItem.nextDate;
                             List<String> dateModuleList = nextDate.split('/');
-                            for(int i = 0; i < dateModuleList.length; i++) {
+                            for (int i = 0; i < dateModuleList.length; i++) {
                               log("dateModuleList : ${dateModuleList[i]}");
                             }
                             log("dateModuleList.length : ${dateModuleList.length}");
-                            screenController.selectedDate.value = "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
-                            await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.dateTimeWise);
+                            screenController.selectedDate.value =
+                                "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
+                            await screenController
+                                .getAllResourcesListByIdFunction(
+                                    searchType2: SearchType2.dateTimeWise);
                           },
                           child: Text(
                             "Next Available ${singleItem.nextDate}",
@@ -350,18 +427,27 @@ class BookingResourcesListModule extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             /// First All Slot Set Unselected
-                            for (int i = 0; i < screenController.allResourcesList.length; i++) {
-                              for (int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
-                                screenController.allResourcesList[i].timingList[j].isSelected = false;
+                            for (int i = 0;
+                                i < screenController.allResourcesList.length;
+                                i++) {
+                              for (int j = 0;
+                                  j <
+                                      screenController.allResourcesList[i]
+                                          .timingList.length;
+                                  j++) {
+                                screenController.allResourcesList[i]
+                                    .timingList[j].isSelected = false;
                               }
                             }
 
                             /// Selected Item Become Blue
                             int selectedId = singleItem.timingList[i].id;
                             log("selectedId : $selectedId");
-                            screenController.selectedResourceTimeSlotId = selectedId;
+                            screenController.selectedResourceTimeSlotId =
+                                selectedId;
 
-                            screenController.selectedResourceIsEvent = singleItem.isEvent;
+                            screenController.selectedResourceIsEvent =
+                                singleItem.isEvent;
                             screenController.selectedResource = singleItem.id;
                             log("isEvent :: ${singleItem.isEvent}");
 
@@ -438,7 +524,6 @@ class BookingResourcesListModule extends StatelessWidget {
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8);
   }
-
 }
 
 /// Available Slot
@@ -449,17 +534,19 @@ class AdditionalSlotModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      ()=> Column(
+      () => Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ResourceCalenderTableModule(),
           screenController.isCalenderShow.value
-          ? SelectAdditionalSlotDateModule()
-          : Container(),
+              ? SelectAdditionalSlotDateModule()
+              : Container(),
           const SizedBox(height: 10),
           // screenController.isEvent.value ?  Container() : AnytimeDropDownModule(),
           // const SizedBox(height: 10),
-          screenController.isEvent.value ? Container() : AdditionalSlotDropDownModule(),
+          screenController.isEvent.value
+              ? Container()
+              : AdditionalSlotDropDownModule(),
           const SizedBox(height: 15),
           AdditionalSlotSubmitButton(),
           // SubmitButtonModule(),
@@ -480,30 +567,31 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
         // if(/*screenController.selectedTimeValue.value == "Any Time" && */screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
         //   await screenController.getAllResourcesListByIdFunction();
         // }
-        if(/*screenController.selectedTimeValue.value == "Any Time" &&*/ screenController.additionalSlotWorkerList.name == "Select Additional Slot") {
-          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWise);
-        }
-        else if(/*screenController.selectedTimeValue.value == "Any Time" && */screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
-          await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.additionalSlotWise);
+        if (/*screenController.selectedTimeValue.value == "Any Time" &&*/ screenController
+                .additionalSlotWorkerList.name ==
+            "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction(
+              searchType2: SearchType2.anyTimeWise);
+        } else if (/*screenController.selectedTimeValue.value == "Any Time" && */ screenController
+                .additionalSlotWorkerList.name !=
+            "Select Additional Slot") {
+          await screenController.getAllResourcesListByIdFunction(
+              searchType2: SearchType2.additionalSlotWise);
         }
         // else if(/*screenController.selectedTimeValue.value != "Any Time" &&*/ screenController.additionalSlotWorkerList.name != "Select Additional Slot") {
         //   await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.anyTimeWithAdditionalSlotWise);
         // }
-
-
       },
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.all(12.0),
           child: Text(
@@ -540,7 +628,6 @@ class CalenderTableModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.selectedDate.value,
@@ -554,7 +641,7 @@ class CalenderTableModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isServiceCalenderShow.value =
-              !screenController.isServiceCalenderShow.value;
+                  !screenController.isServiceCalenderShow.value;
 
               log("screenController.isCalenderShow.value : ${screenController.isServiceCalenderShow.value}");
             },
@@ -597,7 +684,7 @@ class ResourceCalenderTableModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isCalenderShow.value =
-              !screenController.isCalenderShow.value;
+                  !screenController.isCalenderShow.value;
 
               log("screenController.isCalenderShow.value : ${screenController.isCalenderShow.value}");
             },
@@ -645,14 +732,13 @@ class SelectDateModule extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-
                 String hour = "${selectedDay.hour}";
                 String minute = "${selectedDay.minute}";
 
                 /// For Hour Format
-                for(int i = 0; i < 10; i++) {
-                  if(selectedDay.hour.toString() == i.toString()) {
-                    if(selectedDay.hour.toString().length == 1) {
+                for (int i = 0; i < 10; i++) {
+                  if (selectedDay.hour.toString() == i.toString()) {
+                    if (selectedDay.hour.toString().length == 1) {
                       hour = "0${selectedDay.hour}";
                     }
                   }
@@ -660,8 +746,8 @@ class SelectDateModule extends StatelessWidget {
 
                 /// For Minute
                 for (int i = 0; i < 10; i++) {
-                  if(selectedDay.minute.toString() == i.toString()) {
-                    if(selectedDay.minute.toString().length == 1) {
+                  if (selectedDay.minute.toString() == i.toString()) {
+                    if (selectedDay.minute.toString().length == 1) {
                       minute = "0${selectedDay.minute}";
                     }
                   }
@@ -669,13 +755,14 @@ class SelectDateModule extends StatelessWidget {
 
                 screenController.selectedTime.value = "$hour:$minute:00";
 
-
-                screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.selectedDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
                 // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
 
-                screenController.isServiceCalenderShow.value = !screenController.isServiceCalenderShow.value;
+                screenController.isServiceCalenderShow.value =
+                    !screenController.isServiceCalenderShow.value;
                 screenController.loadUI();
               },
 
@@ -687,7 +774,7 @@ class SelectDateModule extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -697,19 +784,19 @@ class SelectDateModule extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -736,7 +823,7 @@ class SelectDateModule extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -789,25 +876,27 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-
-                String selectedDayDummy = selectedDay.toString().substring(0, selectedDay.toString().length - 14);
+                String selectedDayDummy = selectedDay
+                    .toString()
+                    .substring(0, selectedDay.toString().length - 14);
                 log("selectedDayDummy : $selectedDayDummy");
                 String d1 = DateTime.now().toString();
 
                 String todayDateDummy = d1.substring(0, d1.length - 16);
                 log("todayDateDummy : $todayDateDummy");
 
-                if(selectedDayDummy == todayDateDummy) {
+                if (selectedDayDummy == todayDateDummy) {
                   DateTime dummyDate = DateTime.now();
                   String hour = "${dummyDate.hour}";
                   String minute = "${dummyDate.minute}";
 
-                  screenController.selectedDate.value = "${dummyDate.year}-${dummyDate.month}-${dummyDate.day}";
+                  screenController.selectedDate.value =
+                      "${dummyDate.year}-${dummyDate.month}-${dummyDate.day}";
 
                   /// For Hour Format
-                  for(int i = 0; i < 10; i++) {
-                    if(dummyDate.hour.toString() == i.toString()) {
-                      if(dummyDate.hour.toString().length == 1) {
+                  for (int i = 0; i < 10; i++) {
+                    if (dummyDate.hour.toString() == i.toString()) {
+                      if (dummyDate.hour.toString().length == 1) {
                         hour = "0${dummyDate.hour}";
                       }
                     }
@@ -815,8 +904,8 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
 
                   /// For Minute
                   for (int i = 0; i < 10; i++) {
-                    if(dummyDate.minute.toString() == i.toString()) {
-                      if(dummyDate.minute.toString().length == 1) {
+                    if (dummyDate.minute.toString() == i.toString()) {
+                      if (dummyDate.minute.toString().length == 1) {
                         minute = "0${dummyDate.minute}";
                       }
                     }
@@ -828,9 +917,9 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                   String minute = "${selectedDay.minute}";
 
                   /// For Hour Format
-                  for(int i = 0; i < 10; i++) {
-                    if(selectedDay.hour.toString() == i.toString()) {
-                      if(selectedDay.hour.toString().length == 1) {
+                  for (int i = 0; i < 10; i++) {
+                    if (selectedDay.hour.toString() == i.toString()) {
+                      if (selectedDay.hour.toString().length == 1) {
                         hour = "0${selectedDay.hour}";
                       }
                     }
@@ -838,23 +927,24 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
 
                   /// For Minute
                   for (int i = 0; i < 10; i++) {
-                    if(selectedDay.minute.toString() == i.toString()) {
-                      if(selectedDay.minute.toString().length == 1) {
+                    if (selectedDay.minute.toString() == i.toString()) {
+                      if (selectedDay.minute.toString().length == 1) {
                         minute = "0${selectedDay.minute}";
                       }
                     }
                   }
 
                   screenController.selectedTime.value = "$hour:$minute:00";
-                  screenController.selectedDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                  screenController.selectedDate.value =
+                      "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
                   log("screenController.selectedDate.value : ${screenController.selectedDate.value}");
-
                 }
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
 
-                screenController.isCalenderShow.value = !screenController.isCalenderShow.value;
+                screenController.isCalenderShow.value =
+                    !screenController.isCalenderShow.value;
                 screenController.loadUI();
               },
 
@@ -866,7 +956,7 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -876,19 +966,19 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -915,7 +1005,7 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -941,7 +1031,8 @@ class SubmitButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await screenController.getAllResourcesListByIdFunction(searchType2: SearchType2.dateTimeWise);
+        await screenController.getAllResourcesListByIdFunction(
+            searchType2: SearchType2.dateTimeWise);
       },
       child: Container(
         alignment: Alignment.center,
@@ -955,8 +1046,7 @@ class SubmitButtonModule extends StatelessWidget {
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
-              ]
-          ),
+              ]),
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
@@ -972,7 +1062,6 @@ class SubmitButtonModule extends StatelessWidget {
     );
   }
 }
-
 
 // class AnytimeDropDownModule extends StatelessWidget {
 //   AnytimeDropDownModule({Key? key}) : super(key: key);
@@ -1036,11 +1125,15 @@ class AdditionalSlotDropDownModule extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<AdditionalSlotWorkerList>(
           value: screenController.additionalSlotWorkerList,
-          items:screenController.allAdditionalSlotList
-              .map<DropdownMenuItem<AdditionalSlotWorkerList>>((AdditionalSlotWorkerList value) {
+          items: screenController.allAdditionalSlotList
+              .map<DropdownMenuItem<AdditionalSlotWorkerList>>(
+                  (AdditionalSlotWorkerList value) {
             return DropdownMenuItem<AdditionalSlotWorkerList>(
               value: value,
-              child: Text(value.name!,style: const TextStyle(color:Colors.black),),
+              child: Text(
+                value.name!,
+                style: const TextStyle(color: Colors.black),
+              ),
             );
           }).toList(),
           onChanged: (newValue) {
@@ -1054,7 +1147,6 @@ class AdditionalSlotDropDownModule extends StatelessWidget {
   }
 }
 
-
 class SelectTimeModule extends StatelessWidget {
   SelectTimeModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookAppointmentScreenController>();
@@ -1064,36 +1156,45 @@ class SelectTimeModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Select Time", style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold
-        ),),
-        const SizedBox(height: 10,),
+        const Text(
+          "Select Time",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
         GridView.builder(
           itemCount: screenController.timeList.length,
           shrinkWrap: true,
-          physics:  const AlwaysScrollableScrollPhysics(),
-          gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
+          physics: const AlwaysScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             childAspectRatio: 1.9,
           ),
           itemBuilder: (context, i) {
-            return Obx(()=>
-              GestureDetector(
-                  onTap: (){
-                    screenController.selectedTimeIndex.value = i;
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color:screenController.selectedTimeIndex.value == i  ? AppColors.colorLightGrey1 : Colors.white,
-                        border: Border.all(color: AppColors.colorLightGrey.withOpacity(0.7), width: 2)
-                    ),
-                    child: Center(
-                      child: Text(screenController.timeList[i], style: const TextStyle(fontWeight: FontWeight.bold),),
+            return Obx(
+              () => GestureDetector(
+                onTap: () {
+                  screenController.selectedTimeIndex.value = i;
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: screenController.selectedTimeIndex.value == i
+                          ? AppColors.colorLightGrey1
+                          : Colors.white,
+                      border: Border.all(
+                          color: AppColors.colorLightGrey.withOpacity(0.7),
+                          width: 2)),
+                  child: Center(
+                    child: Text(
+                      screenController.timeList[i],
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
+                ),
               ),
             );
           },
@@ -1102,7 +1203,6 @@ class SelectTimeModule extends StatelessWidget {
     );
   }
 }
-
 
 /// Book Button
 class BookButtonModule extends StatelessWidget {
@@ -1113,18 +1213,19 @@ class BookButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-
-        if(UserDetails.isUserLoggedIn == true) {
+        if (UserDetails.isUserLoggedIn == true) {
           if (screenController.selectedResourceTimeSlotId == 0) {
             Fluttertoast.showToast(msg: "Please select time slot!");
           } else {
             if (screenController.isServiceSlot.value) {
-              await screenController.bookSelectedSlotFunction(userName: "", email: "");
+              await screenController.bookSelectedSlotFunction(
+                  userName: "", email: "");
             } else {
-              await screenController.bookAvailableTimeSlotFunction(userName: "", email: "");
+              await screenController.bookAvailableTimeSlotFunction(
+                  userName: "", email: "");
             }
           }
-        } else if(UserDetails.isUserLoggedIn == false) {
+        } else if (UserDetails.isUserLoggedIn == false) {
           if (screenController.selectedResourceTimeSlotId == 0) {
             Fluttertoast.showToast(msg: "Please select time slot!");
           } else {
@@ -1144,8 +1245,7 @@ class BookButtonModule extends StatelessWidget {
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
-              ]
-          ),
+              ]),
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
@@ -1160,7 +1260,6 @@ class BookButtonModule extends StatelessWidget {
       ),
     );
   }
-
 
   /// Bottom sheet
   Future _bottomSheetModule(BuildContext context) {
@@ -1183,27 +1282,24 @@ class BookButtonModule extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-
                     GestureDetector(
                       onTap: () => Get.back(),
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(),
                         ),
-                        child: const Icon(
-                            Icons.close_rounded
-                        ),
+                        child: const Icon(Icons.close_rounded),
                       ),
                     ),
                   ],
                 ),
                 const Divider(thickness: 1, color: Colors.grey),
-
                 Row(
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        Get.to(() => SignInScreen(), arguments: SignInRoute.fromBookScreen);
+                        Get.to(() => SignInScreen(),
+                            arguments: SignInRoute.fromBookScreen);
                       },
                       child: const Text(
                         "Log in",
@@ -1226,35 +1322,28 @@ class BookButtonModule extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-
-                _singleModule(text: "Book appointments and complete online forms faster with saved details"),
-
+                _singleModule(
+                    text:
+                        "Book appointments and complete online forms faster with saved details"),
                 const SizedBox(height: 5),
                 _singleModule(text: "Save your favourite healthcare providers"),
-
                 const SizedBox(height: 5),
                 _singleModule(text: "Manage your appointments easily"),
-
                 const SizedBox(height: 10),
-                 _socialMediaModule(),
-
+                _socialMediaModule(),
                 const SizedBox(height: 10),
                 _signUpModule(),
                 const SizedBox(height: 5),
-
                 const Text(
                   "or",
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
                 const SizedBox(height: 8),
-
                 guestButtonModule(),
-
               ],
             ),
           );
-        }
-        );
+        });
   }
 
   Widget _singleModule({required String text}) {
@@ -1276,7 +1365,6 @@ class BookButtonModule extends StatelessWidget {
       ],
     );
   }
-
 
   Widget _socialMediaModule() {
     return Row(
@@ -1330,10 +1418,10 @@ class BookButtonModule extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-
             GestureDetector(
               onTap: () {
-                Get.to(() => UserSignUpScreen(), arguments: SignInRoute.fromBookScreen);
+                Get.to(() => UserSignUpScreen(),
+                    arguments: SignInRoute.fromBookScreen);
               },
               child: const Text(
                 "Sign up ",
@@ -1344,7 +1432,6 @@ class BookButtonModule extends StatelessWidget {
                 ),
               ),
             ),
-
           ],
         ),
         const Text(
@@ -1362,9 +1449,11 @@ class BookButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (screenController.isServiceSlot.value) {
-          await screenController.bookSelectedSlotFunction(userName: "",email: "");
+          await screenController.bookSelectedSlotFunction(
+              userName: "", email: "");
         } else {
-          await screenController.bookAvailableTimeSlotFunction(userName: "", email: "");
+          await screenController.bookAvailableTimeSlotFunction(
+              userName: "", email: "");
         }
       },
       child: Container(
@@ -1383,6 +1472,4 @@ class BookButtonModule extends StatelessWidget {
       ),
     );
   }
-
 }
-

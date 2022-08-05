@@ -52,8 +52,9 @@ class BookAppointmentScreen extends StatelessWidget {
                                       const SizedBox(height: 10),
                                       bookAppointmentScreenController.isServiceCalenderShow.value
                                       ? SelectDateModule() : Container(),
-                                      const SizedBox(height: 10),
+                                      const SizedBox(height: 15),
                                       BookingServicesListModule(),
+                                      const SizedBox(height: 15),
                                     ],
                                   )
                                 : Column(

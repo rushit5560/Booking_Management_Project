@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:booking_management/user_side/controllers/user_chat_list_screen_controller/user_chat_list_screen_controller.dart';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/receive_message_model.dart';
 import 'package:booking_management/user_side/model/user_conversation_screen_model/send_message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../common_modules/constants/api_url.dart';
+import '../../../vendor_side/controllers/vendor_chat_list_screen_controller/vendor_chat_list_screen_controller.dart';
 import '../../model/user_conversation_screen_model/get_fcm_token_model.dart';
 
 class UserConversationScreenController extends GetxController {
@@ -19,6 +21,7 @@ class UserConversationScreenController extends GetxController {
   String peerUniqueId = Get.arguments[3];
   String customerId = Get.arguments[4];
   String senderEmail = Get.arguments[5];
+
   // List<SendMessageModel> userNewChatList = Get.arguments[2];
 
   /// Getting From API
@@ -32,6 +35,7 @@ class UserConversationScreenController extends GetxController {
   StreamSubscription? _streamSubscriptionChat;
 
   List<SendMessageModel>? userChatList;
+
   // List<SendMessageModel> userNewChatList = [];
   // List<SendMessageModel> userReversedChatList = [];
 
@@ -105,7 +109,7 @@ class UserConversationScreenController extends GetxController {
         .orderBy("created_at", descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
-              log("doc : ${doc.id}");
+              // log("doc : ${doc.id}");
 
               return ReceiveMessageModel.fromJson(doc.data(), doc.id);
             }).toList());
@@ -205,8 +209,9 @@ class UserConversationScreenController extends GetxController {
     readMessages();
     super.onInit();
   }
-}
 
+
+}
 
 // class UserChatMessageModel {
 //   final bool isSendByMe;
@@ -214,4 +219,3 @@ class UserConversationScreenController extends GetxController {
 //
 //   UserChatMessageModel({required this.isSendByMe, required this.message});
 // }
-

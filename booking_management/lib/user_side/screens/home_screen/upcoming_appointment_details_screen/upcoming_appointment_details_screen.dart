@@ -35,7 +35,8 @@ class UpcomingAppointmentDetailsScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               VendorDetailsModule(),
-                              const Divider(thickness: 1).commonSymmetricPadding(horizontal: 10),
+                              const Divider(thickness: 1)
+                                  .commonSymmetricPadding(horizontal: 10),
                               BookingDetailsModule(),
                             ],
                           ),

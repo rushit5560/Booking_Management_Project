@@ -13,8 +13,6 @@ import '../../../user_side/model/user_conversation_screen_model/get_fcm_token_mo
 import '../../model/appointment_details_screen_models/appointment_details_model.dart';
 import '../../model/vendor_appointment_list_screen_models/appointment_status_change_model.dart';
 
-
-
 class AppointmentDetailsScreenController extends GetxController {
   /// "appointmentId" From Appointment List Screen
   String bookingId = Get.arguments[0];
@@ -25,7 +23,7 @@ class AppointmentDetailsScreenController extends GetxController {
   ApiHeader apiHeader = ApiHeader();
 
   AppointmentDetailsData appointmentDetailsData = AppointmentDetailsData();
-  List<String> serviceList= [];
+  List<String> serviceList = [];
 
   String oppositeUserUniqueId = "";
   String oppositeUserFcmToken = "";
@@ -42,14 +40,16 @@ class AppointmentDetailsScreenController extends GetxController {
     log("Appointment Details API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment Details Response : ${response.body}");
 
-      AppointmentDetailsModel appointmentDetailsModel = AppointmentDetailsModel.fromJson(json.decode(response.body));
+      AppointmentDetailsModel appointmentDetailsModel =
+          AppointmentDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentDetailsModel.success.obs;
       serviceList = appointmentDetailsModel.list;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         appointmentDetailsData = appointmentDetailsModel.data;
         oppositeUserUniqueId = appointmentDetailsModel.data.vendor!.userId;
 
@@ -62,9 +62,7 @@ class AppointmentDetailsScreenController extends GetxController {
         log("getAppointmentDetailsByIdFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getAppointmentDetailsByIdFunction Error ::: $e");
     } finally {
       isLoading(false);
@@ -74,21 +72,25 @@ class AppointmentDetailsScreenController extends GetxController {
   /// Appointment for Confirm
   confirmAppointmentByIdFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorAppointmentStatusChangeApi + "?status=Confirm&id=$appointmentId";
+    String url = ApiUrl.vendorAppointmentStatusChangeApi +
+        "?status=Confirm&id=$appointmentId";
     log("Appointment Status Change API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       // log("Appointment Details API Response : ${response.body}");
 
-      AppointmentStatusChangeModel appointmentStatusChangeModel = AppointmentStatusChangeModel.fromJson(json.decode(response.body));
+      AppointmentStatusChangeModel appointmentStatusChangeModel =
+          AppointmentStatusChangeModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentStatusChangeModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Confirmed!");
 
         String title = "${UserDetails.userName} appointment confirmed";
-        String msg = "${UserDetails.userName} appointment confirmed for $date at $slotTime time";
+        String msg =
+            "${UserDetails.userName} appointment confirmed for $date at $slotTime time";
 
         await getUserFcmTokenFunction(title: title, body: msg);
 
@@ -97,33 +99,36 @@ class AppointmentDetailsScreenController extends GetxController {
         log("confirmAppointmentByIdFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-    } catch(e) {
+    } catch (e) {
       log("confirmAppointmentByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       isLoading(false);
-
     }
   }
 
   /// Appointment for Done
   doneAppointmentByIdFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorAppointmentStatusChangeApi + "?status=Done&id=$appointmentId";
+    String url = ApiUrl.vendorAppointmentStatusChangeApi +
+        "?status=Done&id=$appointmentId";
     log("Appointment Status Change API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       // log("Appointment Details API Response : ${response.body}");
 
-      AppointmentStatusChangeModel appointmentStatusChangeModel = AppointmentStatusChangeModel.fromJson(json.decode(response.body));
+      AppointmentStatusChangeModel appointmentStatusChangeModel =
+          AppointmentStatusChangeModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentStatusChangeModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: "Appointment Done!");
 
         String title = "${UserDetails.userName} appointment done";
-        String msg = "${UserDetails.userName} appointment done for $date at $slotTime time";
+        String msg =
+            "${UserDetails.userName} appointment done for $date at $slotTime time";
 
         await getUserFcmTokenFunction(title: title, body: msg);
 
@@ -132,7 +137,7 @@ class AppointmentDetailsScreenController extends GetxController {
         log("confirmAppointmentByIdFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-    } catch(e) {
+    } catch (e) {
       log("confirmAppointmentByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
@@ -147,8 +152,7 @@ class AppointmentDetailsScreenController extends GetxController {
     String url = ApiUrl.vendorAppointmentStatusCancelApi;
     log('vendorAppointmentStatusCancelApi Url : $url');
 
-    try{
-
+    try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
       request.headers.addAll(apiHeader.headers);
@@ -156,42 +160,39 @@ class AppointmentDetailsScreenController extends GetxController {
       request.fields['BookingId'] = "$appointmentId";
       request.fields['Reason'] = reasonFieldController.text.trim();
 
-
       log('request.fields: ${request.fields}');
       log('request.files: ${request.files}');
-
 
       var response = await request.send();
       log('response: ${response.request}');
 
       response.stream.transform(utf8.decoder).listen((value) {
-        VendorAppointmentCancelModel vendorAppointmentCancelModel = VendorAppointmentCancelModel.fromJson(json.decode(value));
+        VendorAppointmentCancelModel vendorAppointmentCancelModel =
+            VendorAppointmentCancelModel.fromJson(json.decode(value));
         log('response1 ::::::${vendorAppointmentCancelModel.statusCode}');
         isSuccessStatus = vendorAppointmentCancelModel.success.obs;
         log('vendorAppointmentStatusCancelApi status : $isSuccessStatus');
         //log('success : ${isSuccessStatus.}');
 
-        if(isSuccessStatus.value){
+        if (isSuccessStatus.value) {
           //UserDetails().vendorId = response1.data.id;
           log("Cancel Appointment");
           Fluttertoast.showToast(msg: 'Successfully Cancelled');
           reasonFieldController.clear();
           Get.back();
           //id = vendorAppointmentCancelModel.data.id;
-         // log('Cancel id : $id');
+          // log('Cancel id : $id');
         } else {
           // Fluttertoast.showToast(msg: "${response1.message}");
           log('False False');
         }
       });
-
-    } catch(e) {
+    } catch (e) {
       log('SignUp Error : $e');
     } finally {
       isLoading(false);
     }
   }
-
 
   /// Get Fcm Token
   getUserFcmTokenFunction({required String title, required String body}) async {
@@ -200,14 +201,16 @@ class AppointmentDetailsScreenController extends GetxController {
     log("Get User Fcm Token : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      GetFcmTokeModel getFcmTokeModel = GetFcmTokeModel.fromJson(json.decode(response.body));
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      GetFcmTokeModel getFcmTokeModel =
+          GetFcmTokeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFcmTokeModel.success.obs;
       log("getFcmTokeModel.success : ${getFcmTokeModel.success}");
       log("getFcmTokeModel.success : ${getFcmTokeModel.statusCode}");
       log("getFcmTokeModel.success : ${getFcmTokeModel.data.fcmToken}");
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         oppositeUserFcmToken = getFcmTokeModel.data.fcmToken;
 
         /// Send Chat Notification
@@ -226,8 +229,7 @@ class AppointmentDetailsScreenController extends GetxController {
       } else {
         log("getUserFcmTokenFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getUserFcmTokenFunction Error ::: $e");
     } finally {
       isLoading(false);
@@ -235,7 +237,8 @@ class AppointmentDetailsScreenController extends GetxController {
   }
 
   /// Add Notification
-  addNotificationFunction({required String title, required String message}) async {
+  addNotificationFunction(
+      {required String title, required String message}) async {
     isLoading(true);
     String url = ApiUrl.saveNotificationApi;
     log("Add Notification API URL : $url");
@@ -256,24 +259,22 @@ class AppointmentDetailsScreenController extends GetxController {
       log('response: ${response.statusCode}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
-        NotificationSaveModel notificationSaveModel = NotificationSaveModel.fromJson(json.decode(value));
+        NotificationSaveModel notificationSaveModel =
+            NotificationSaveModel.fromJson(json.decode(value));
         isSuccessStatus = notificationSaveModel.success.obs;
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           log(notificationSaveModel.message);
         } else {
           // log(notificationSaveModel.message);
           log("Add Notification Else Else");
         }
       });
-
-
-    } catch(e) {
+    } catch (e) {
       log("Add Notification Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override
@@ -282,7 +283,6 @@ class AppointmentDetailsScreenController extends GetxController {
     super.onInit();
   }
 
-
   /// Send Notification Function
   static void sendGeneralNotification({
     required String fcmToken,
@@ -290,7 +290,6 @@ class AppointmentDetailsScreenController extends GetxController {
     required String title,
     required int type,
   }) async {
-
     log("fcmToken : $fcmToken");
     log("body : $body");
     log("title : $title");
@@ -330,5 +329,4 @@ class AppointmentDetailsScreenController extends GetxController {
 
     // Get.back();
   }
-
 }

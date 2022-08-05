@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:booking_management/user_side/model/user_profile_screen_model/user_profile_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_chat_screen_models/user_image_get_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_header.dart';
@@ -25,6 +24,8 @@ class VendorChatListScreenController extends GetxController {
   String profileImage = "";
 
   String img = "";
+
+
 
   /// Get User ChatRoom List
   Stream<List<UserChatRoomListModel>> getChatRoomListFunction() {

@@ -6,7 +6,6 @@ import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/user_side/screens/user_conversation_screen/user_conversation_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
@@ -49,22 +48,29 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                                 "Something went wrong! ${snapshot.error}");
                           } else if (snapshot.hasData) {
                             final chatList = snapshot.data;
-                            return RefreshIndicator(
-                              onRefresh: () async {
-                                setState(() {});
-                                userChatListScreenController
-                                    .getChatRoomListFunction();
-                              },
-                              child: ListView.builder(
-                                itemCount: chatList!.length,
-                                shrinkWrap: true,
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                itemBuilder: (context, i) {
-                                  UserChatRoomListModel singleMsg = chatList[i];
+                            return Scrollbar(
+                              child: RefreshIndicator(
+                                triggerMode:
+                                    RefreshIndicatorTriggerMode.anywhere,
 
-                                  return _chatListTile(singleMsg, context);
+                                onRefresh: () async {
+                                  setState(() {});
+                                  userChatListScreenController
+                                      .getChatRoomListFunction();
                                 },
-                              ).commonAllSidePadding(15),
+                                child: ListView.builder(
+                                  itemCount: chatList!.length,
+                                  shrinkWrap: true,
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  itemBuilder: (context, i) {
+                                    UserChatRoomListModel singleMsg =
+                                        chatList[i];
+
+                                    return _chatListTile(singleMsg, context);
+                                  },
+                                ).commonAllSidePadding(15),
+                              ),
                             );
                             // return ListView(
                             //   physics: const BouncingScrollPhysics(),
@@ -148,7 +154,13 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return CustomCircularLoaderModule();
+                              return Container(
+                                padding: EdgeInsets.all(15),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.accentColor,
+                                  strokeWidth: 2,
+                                ),
+                              );
                             } else if (snapshot.hasData) {
                               return Image.network(
                                 ApiUrl.apiImagePath + snapshot.data.toString(),
@@ -159,9 +171,10 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                             }
 
                             return Container(
-                              padding: const EdgeInsets.all(8),
+                              padding: EdgeInsets.all(15),
                               child: CircularProgressIndicator(
                                 color: AppColors.accentColor,
+                                strokeWidth: 2,
                               ),
                             );
                           },
@@ -204,10 +217,13 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                       .get(),
                   builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                     Widget widget = Container();
+
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CustomCircularLoaderModule();
+                      return SizedBox();
                     } else if (snapshot.hasData) {
                       var data = snapshot.data!.docs;
+
+                      var msgCount = 0;
 
                       for (var element in data) {
                         Map usrData = element.data() as Map;
@@ -215,13 +231,22 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                         print("seen value is :  ${usrData["seen"]}");
 
                         if (usrData["seen"] == false) {
+                          msgCount++;
                           widget = Container(
-                            height: 12,
-                            width: 12,
+                            height: 25,
+                            width: 25,
                             margin: EdgeInsets.only(right: 8),
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: AppColors.accentColor,
                               shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                msgCount.toString(),
+                                style: TextStyle(
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
                             ),
                           );
                         }

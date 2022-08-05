@@ -18,19 +18,21 @@ import '../../model/user_business_details_model/get_business_hours_model.dart';
 import '../book_appointment_screen/book_appointment_screen.dart';
 import '../user_conversation_screen/user_conversation_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class ProfileModule extends StatelessWidget {
   ProfileModule({Key? key}) : super(key: key);
   final screenController = Get.find<BusinessDetailsScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    String imgUrl = ApiUrl.apiImagePath + screenController.vendorDetailsData!.vendor.businessLogo;
+    String imgUrl = ApiUrl.apiImagePath +
+        screenController.vendorDetailsData!.vendor.businessLogo;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
       child: Image.network(
         imgUrl,
-        errorBuilder: (context, st, ob){
+        errorBuilder: (context, st, ob) {
           return Image.asset(AppImages.logoImg);
         },
         fit: BoxFit.cover,
@@ -193,7 +195,6 @@ class OverviewModule extends StatelessWidget {
 
                   const SizedBox(height: 10),
                   bookAppointmentButtonModule(),
-
                 ],
               ),
             ),
@@ -240,27 +241,24 @@ class OverviewModule extends StatelessWidget {
             }
           },
         ),
-
         Expanded(child: Container()),
-
         IconButton(
           onPressed: () async {
-            if(UserDetails.isUserLoggedIn == true) {
-              screenController.isFavourite.value = !screenController.isFavourite.value;
+            if (UserDetails.isUserLoggedIn == true) {
+              screenController.isFavourite.value =
+                  !screenController.isFavourite.value;
               await screenController.addVendorInFavoriteFunction();
             } else {
-              Get.to(()=> SignInScreen(), transition: Transition.zoom);
+              Get.to(() => SignInScreen(), transition: Transition.zoom);
             }
             // screenController.loadUI();
           },
-          icon: Icon(
-              screenController.isFavourite.value == true
+          icon: Icon(screenController.isFavourite.value == true
               ? Icons.favorite_rounded
-              : Icons.favorite_border_rounded
-          ),
+              : Icons.favorite_border_rounded),
           color: screenController.isFavourite.value == true
-          ? Colors.red
-          : Colors.grey,
+              ? Colors.red
+              : Colors.grey,
         ),
       ],
     );
@@ -305,7 +303,8 @@ class OverviewModule extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    String phoneNo = screenController.vendorDetailsData!.vendor.phoneNo;
+                    String phoneNo =
+                        screenController.vendorDetailsData!.vendor.phoneNo;
 
                     String url = "tel:$phoneNo";
                     if (await canLaunch(url)) {
@@ -346,41 +345,49 @@ class OverviewModule extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    if(UserDetails.isUserLoggedIn == true) {
-
+                    if (UserDetails.isUserLoggedIn == true) {
                       Timestamp timeStamp = Timestamp.now();
 
                       /// CharRoom Id Generate
-                      String charRoomId = "${UserDetails.uniqueId}_${screenController.vendorUniqueId}";
+                      String charRoomId =
+                          "${UserDetails.uniqueId}_${screenController.vendorUniqueId}";
 
                       /// ChatRoom Data
                       Map<String, dynamic> chatRoomData = {
-                        "createdAt" : timeStamp,
-                        "createdBy" : UserDetails.email.toLowerCase(),
-                        "peerId" : screenController.vendorEmail.toLowerCase(),
-                        "roomId" : charRoomId,
-                        "createdName" : UserDetails.userName,
-                        "peerName" : screenController.vendorBusinessName,
-                        "users" : [UserDetails.email, screenController.vendorEmail],
-                        "customerid" : UserDetails.uniqueId,
-                        "vendorid" : screenController.vendorUniqueId
+                        "createdAt": timeStamp,
+                        "createdBy": UserDetails.email.toLowerCase(),
+                        "peerId": screenController.vendorEmail.toLowerCase(),
+                        "roomId": charRoomId,
+                        "createdName": UserDetails.userName,
+                        "peerName": screenController.vendorBusinessName,
+                        "users": [
+                          UserDetails.email,
+                          screenController.vendorEmail
+                        ],
+                        "customerid": UserDetails.uniqueId,
+                        "vendorid": screenController.vendorUniqueId
                       };
 
                       log("chatRoomData : $chatRoomData");
 
                       /// Create ChatRoom Function
-                      firebaseDatabase.createChatRoomOfTwoUsers(charRoomId, chatRoomData);
+                      firebaseDatabase.createChatRoomOfTwoUsers(
+                          charRoomId, chatRoomData);
 
-                      Get.to(()=> UserConversationScreen(),
-                          transition: Transition.zoom,
-                          arguments: [
-                            charRoomId,
-                            screenController.vendorEmail,
-                            screenController.vendorBusinessName,
-                            screenController.vendorUniqueId,
-                          ]);
+                      Get.to(
+                        () => UserConversationScreen(),
+                        transition: Transition.zoom,
+                        arguments: [
+                          charRoomId,
+                          screenController.vendorEmail,
+                          screenController.vendorBusinessName,
+                          screenController.vendorUniqueId,
+                          screenController.vendorId.toString(),
+                          screenController.vendorEmail,
+                        ],
+                      );
                     } else {
-                      Get.to(()=> SignInScreen(), transition: Transition.zoom);
+                      Get.to(() => SignInScreen(), transition: Transition.zoom);
                     }
                   },
                   child: Container(
@@ -390,9 +397,9 @@ class OverviewModule extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                              color: AppColors.colorLightGrey,
-                              blurStyle: BlurStyle.outer,
-                              blurRadius: 5,
+                            color: AppColors.colorLightGrey,
+                            blurStyle: BlurStyle.outer,
+                            blurRadius: 5,
                           ),
                         ]),
                     child: Center(
@@ -419,8 +426,7 @@ class OverviewModule extends StatelessWidget {
                 child: Text(
                   "Location -",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 )),
             Expanded(
                 flex: 3,
@@ -438,7 +444,7 @@ class OverviewModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-                () => UserMapScreen(),
+          () => UserMapScreen(),
           arguments: [
             screenController.vendorDetailsData!.vendor.latitude,
             screenController.vendorDetailsData!.vendor.longitude,
@@ -551,8 +557,7 @@ class OverviewModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(() => BookAppointmentScreen(),
-          arguments: screenController.vendorId
-        );
+            arguments: screenController.vendorId);
       },
       child: Container(
         alignment: Alignment.center,
@@ -591,14 +596,15 @@ class OverviewModule extends StatelessWidget {
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
         ),
-        const  SizedBox(height: 30),
+        const SizedBox(height: 30),
         ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 2,
             itemBuilder: (context, index) {
               return Container(
-                margin: const EdgeInsets.only(bottom: 15, left: 3, right: 3, top: 3),
+                margin: const EdgeInsets.only(
+                    bottom: 15, left: 3, right: 3, top: 3),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
@@ -707,18 +713,18 @@ class OverviewModule extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-
         ListView.builder(
           itemCount: screenController.businessHoursList.length,
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, i) {
-            BusinessHoursDatum singleItem = screenController.businessHoursList[i];
+            BusinessHoursDatum singleItem =
+                screenController.businessHoursList[i];
             return Row(
               children: [
                 Expanded(
                   child: Text(
-                      singleItem.day,
+                    singleItem.day,
                     textAlign: TextAlign.start,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -737,12 +743,9 @@ class OverviewModule extends StatelessWidget {
             );
           },
         ),
-
       ],
-
     );
   }
-
 }
 
 class ReviewModule extends StatelessWidget {
@@ -763,11 +766,14 @@ class ReviewModule extends StatelessWidget {
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     UserDetails.isUserLoggedIn == true
-                    ? ratting() : Container(),
+                        ? ratting()
+                        : Container(),
                     UserDetails.isUserLoggedIn == true
-                    ? const SizedBox(height: 20) : Container(),
+                        ? const SizedBox(height: 20)
+                        : Container(),
                     UserDetails.isUserLoggedIn == true
-                    ? reviewTextFieldAndButtonModule() : Container(),
+                        ? reviewTextFieldAndButtonModule()
+                        : Container(),
                     const SizedBox(height: 20),
                     showReviewList(),
                   ],
@@ -786,7 +792,8 @@ class ReviewModule extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         RatingBar.builder(
-          initialRating: double.parse(screenController.selectRating.value.toString()),
+          initialRating:
+              double.parse(screenController.selectRating.value.toString()),
           minRating: 1,
           direction: Axis.horizontal,
           allowHalfRating: false,
@@ -800,7 +807,6 @@ class ReviewModule extends StatelessWidget {
           ),
           onRatingUpdate: (rating) {
             screenController.selectRating.value = rating.toInt();
-
           },
         )
       ],
@@ -842,12 +848,13 @@ class ReviewModule extends StatelessWidget {
                 // if(screenController.reviewFormKey.currentState!.validate()){
                 // screenController.addReview();
                 // }
-                if(screenController.reviewFieldController.text.trim().isEmpty) {
+                if (screenController.reviewFieldController.text
+                    .trim()
+                    .isEmpty) {
                   Fluttertoast.showToast(msg: "Please enter some data!");
                 } else {
                   await screenController.addCustomerReviewFunction();
                 }
-
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -886,7 +893,6 @@ class ReviewModule extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: screenController.reviewList.length,
         itemBuilder: (context, index) {
-
           return Container(
             margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
@@ -929,8 +935,8 @@ class ReviewModule extends StatelessWidget {
                                   minRating: 1,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
-                                  itemCount:
-                                  screenController.reviewList[index].ratting,
+                                  itemCount: screenController
+                                      .reviewList[index].ratting,
                                   itemSize: 15,
                                   //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                                   itemBuilder: (context, _) => const Icon(
@@ -946,8 +952,7 @@ class ReviewModule extends StatelessWidget {
                                 const SizedBox(width: 15),
                                 Expanded(
                                   child: Text(
-                                    screenController
-                                        .reviewList[index].date,
+                                    screenController.reviewList[index].date,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(fontSize: 15),
@@ -962,7 +967,7 @@ class ReviewModule extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                      screenController.reviewList[index].description,
+                    screenController.reviewList[index].description,
                     // textAlign: TextAlign.start,
                   ),
                 ],

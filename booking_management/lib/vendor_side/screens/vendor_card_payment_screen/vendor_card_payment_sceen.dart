@@ -6,7 +6,6 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/common_ui/common_controller/card_payment_sceen_controller/card_payment_sceen_controller.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 

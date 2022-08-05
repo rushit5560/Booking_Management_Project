@@ -175,15 +175,15 @@ class OverviewModule extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   vendorName(),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                   ratting(),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                   description(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 5),
                   priceAndLocation(),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 8),
                   viewMapButtonModule(),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 8),
                   // serviceDropDown(context),
                   //SizedBox(height: 25,),
                   //ReviewTextFieldAndButtonModule(),
@@ -191,7 +191,7 @@ class OverviewModule extends StatelessWidget {
                   // resourcesList(),
                   businessHoursModule(),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   bookAppointmentButtonModule(),
 
                 ],
@@ -420,18 +420,14 @@ class OverviewModule extends StatelessWidget {
                   "Location -",
                   style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontWeight: FontWeight.bold),
                 )),
             Expanded(
                 flex: 3,
                 child: Text(screenController.vendorDetailsData!.vendor.address,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15)))
+                    style: const TextStyle(color: Colors.black)))
           ],
         ),
       ],
@@ -766,9 +762,12 @@ class ReviewModule extends StatelessWidget {
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ratting(),
-                    const SizedBox(height: 20),
-                    reviewTextFieldAndButtonModule(),
+                    UserDetails.isUserLoggedIn == true
+                    ? ratting() : Container(),
+                    UserDetails.isUserLoggedIn == true
+                    ? const SizedBox(height: 20) : Container(),
+                    UserDetails.isUserLoggedIn == true
+                    ? reviewTextFieldAndButtonModule() : Container(),
                     const SizedBox(height: 20),
                     showReviewList(),
                   ],
@@ -891,10 +890,7 @@ class ReviewModule extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+                borderRadius: BorderRadius.circular(20),
                 color: AppColors.colorLightGrey1),
             child: Padding(
               padding: const EdgeInsets.all(20),

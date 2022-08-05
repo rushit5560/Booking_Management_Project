@@ -30,8 +30,8 @@ class SignInScreen extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         /// From Common Widgets
-                        const HeaderTextModule(name: "Welcome \nBack"),
-                        const SizedBox(height: 20),
+                        // const HeaderTextModule(name: "Welcome \nBack"),
+                        // const SizedBox(height: 20),
                         EmailFieldModule(),
                         const SizedBox(height: 5),
                         PasswordFieldModule(),

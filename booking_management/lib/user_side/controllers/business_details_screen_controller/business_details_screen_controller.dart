@@ -131,7 +131,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
       log("vendor Review API Response : ${response.body}");
 
       GetVendorReviewsModel getVendorReviewsModel =

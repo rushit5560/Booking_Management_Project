@@ -18,6 +18,7 @@ class HeaderLogoModule extends StatelessWidget {
       AppLogo.homeLogo,
       height: Get.height * 0.10,
       scale: 0.9,
+      alignment: Alignment.center,
     );
   }
 }

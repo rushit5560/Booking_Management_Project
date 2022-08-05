@@ -22,6 +22,17 @@ class UserTransactionListModule extends StatelessWidget {
   }
 
   Widget _transactionListTile(i) {
+
+    String finalDate = "";
+
+    String d = screenController.transactionList[i].orderDate;
+    String d1 = d.substring(0, d.length - 17);
+    // finalDate = d1;
+    List<String> dateFormat = d1.split('-');
+    finalDate = "${dateFormat[2]}-${dateFormat[1]}-${dateFormat[0]}";
+
+
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -48,7 +59,7 @@ class UserTransactionListModule extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
+                /*Text(
                   screenController.transactionList[i].paidBy,
                   //maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -57,9 +68,9 @@ class UserTransactionListModule extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 10),*/
                 Text(
-                  screenController.transactionList[i].orderDate,
+                  finalDate,
                   //maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -71,7 +82,7 @@ class UserTransactionListModule extends StatelessWidget {
             ),
           ),
           Text(
-            screenController.transactionList[i].price.toString(),
+            "\$${screenController.transactionList[i].price.toString()}",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,

@@ -29,7 +29,12 @@ class VendorSignUpScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // From Common Widgets
-                        const HeaderLogoModule(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            HeaderLogoModule()
+                          ],
+                        ),
                         const SizedBox(height: 20),
                         // From Common Widgets
                         const HeaderTextModule(name: "Sign Up"),

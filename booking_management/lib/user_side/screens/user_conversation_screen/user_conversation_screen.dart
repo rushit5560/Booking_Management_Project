@@ -12,11 +12,10 @@ import '../../controllers/user_conversation_screen_controller/user_conversation_
 import '../../model/user_conversation_screen_model/send_message_model.dart';
 import 'user_conversation_screen_widgets.dart';
 
-
-
 class UserConversationScreen extends StatelessWidget {
   UserConversationScreen({Key? key}) : super(key: key);
-  final userConversationScreenController = Get.put(UserConversationScreenController());
+  final userConversationScreenController =
+      Get.put(UserConversationScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +32,12 @@ class UserConversationScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: StreamBuilder<List<ReceiveMessageModel>>(
-                        stream: userConversationScreenController.fetchChatFromFirebase(),
+                        stream: userConversationScreenController
+                            .fetchChatFromFirebase(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
-                            return Text("Something went wrong! ${snapshot.error}");
+                            return Text(
+                                "Something went wrong! ${snapshot.error}");
                           } else if (snapshot.hasData) {
                             final chatList = snapshot.data;
 
@@ -44,21 +45,19 @@ class UserConversationScreen extends StatelessWidget {
                               itemCount: chatList!.length,
                               reverse: true,
                               itemBuilder: (context, i) {
-
                                 ReceiveMessageModel singleMsg = chatList[i];
                                 // DocumentReference docRef= FirebaseFirestore.instance!.collection("Chats")!.get()!!;
 
-                                return SingleMessageBubble(singleMsg: singleMsg);
+                                return SingleMessageBubble(
+                                    singleMsg: singleMsg);
                               },
                             ).commonAllSidePadding(20);
-
                           } else {
                             return const CustomCircularLoaderModule();
                           }
                         },
                       ),
                     ),
-
                     MessageWriteTextFieldModule(),
                   ],
                 ),

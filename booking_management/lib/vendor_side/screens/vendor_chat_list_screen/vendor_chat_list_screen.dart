@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/common_widgets.dart';
@@ -12,8 +13,14 @@ import '../../../user_side/model/user_chat_list_screen_model/user_chat_list_scre
 import '../../../user_side/screens/user_conversation_screen/user_conversation_screen.dart';
 import '../../controllers/vendor_chat_list_screen_controller/vendor_chat_list_screen_controller.dart';
 
-class VendorChatListScreen extends StatelessWidget {
-  VendorChatListScreen({Key? key}) : super(key: key);
+class VendorChatListScreen extends StatefulWidget {
+  const VendorChatListScreen({Key? key}) : super(key: key);
+
+  @override
+  State<VendorChatListScreen> createState() => _VendorChatListScreenState();
+}
+
+class _VendorChatListScreenState extends State<VendorChatListScreen> {
   final vendorChatListScreenController =
       Get.put(VendorChatListScreenController());
 
@@ -27,38 +34,47 @@ class VendorChatListScreen extends StatelessWidget {
               title: 'Chat',
               appBarOption: AppBarOption.none,
             ),
-            // Expanded(
-            //   child: const VendorChatList().commonAllSidePadding(20),
-            // ),
             Expanded(
-              child: StreamBuilder<List<UserChatRoomListModel>>(
-                stream:
-                    vendorChatListScreenController.getChatRoomListFunction(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Something went wrong! ${snapshot.error}");
-                  } else if (snapshot.hasData) {
-                    final chatList = snapshot.data;
-                    return ListView.builder(
-                      itemCount: chatList!.length,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, i) {
-                        UserChatRoomListModel singleMsg = chatList[i];
+              child: Obx(
+                () => vendorChatListScreenController.isLoading.value
+                    ? const CustomCircularLoaderModule()
+                    : StreamBuilder<List<UserChatRoomListModel>>(
+                        stream: vendorChatListScreenController
+                            .getChatRoomListFunction(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text(
+                                "Something went wrong! ${snapshot.error}");
+                          } else if (snapshot.hasData) {
+                            final chatList = snapshot.data;
+                            return RefreshIndicator(
+                              onRefresh: () async {
+                                // setState(() {});
+                                vendorChatListScreenController
+                                    .getChatRoomListFunction();
+                              },
+                              child: ListView.builder(
+                                itemCount: chatList!.length,
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, i) {
+                                  UserChatRoomListModel singleMsg = chatList[i];
 
-                        return _chatListTile(singleMsg);
-                      },
-                    ).commonAllSidePadding(15);
-                    // return ListView(
-                    //   physics: const BouncingScrollPhysics(),
-                    //   children: categories!.map((val) {
-                    //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
-                    //   }).toList(),
-                    // ).commonAllSidePadding(padding: 15);
-                  } else {
-                    return const CustomCircularLoaderModule();
-                  }
-                },
+                                  return _chatListTile(singleMsg);
+                                },
+                              ).commonAllSidePadding(15),
+                            );
+                            // return ListView(
+                            //   physics: const BouncingScrollPhysics(),
+                            //   children: categories!.map((val) {
+                            //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+                            //   }).toList(),
+                            // ).commonAllSidePadding(padding: 15);
+                          } else {
+                            return const CustomCircularLoaderModule();
+                          }
+                        },
+                      ),
               ),
             ),
           ],
@@ -180,6 +196,40 @@ class VendorChatListScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                FutureBuilder(
+                  future: FirebaseFirestore.instance
+                      .collection('Chats')
+                      .where('room_id', isEqualTo: singleMsg.roomId)
+                      .where('seen', isEqualTo: false)
+                      .get(),
+                  builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    Widget widget = Container();
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CustomCircularLoaderModule();
+                    } else if (snapshot.hasData) {
+                      var data = snapshot.data!.docs;
+
+                      for (var element in data) {
+                        Map usrData = element.data() as Map;
+                        // print(usrData);
+                        print("seen value is :  ${usrData["seen"]}");
+
+                        if (usrData["seen"] == false) {
+                          widget = Container(
+                            height: 12,
+                            width: 12,
+                            margin: EdgeInsets.only(right: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                          );
+                        }
+                      }
+                    }
+                    return widget;
+                  },
                 ),
                 // const Text(
                 //   '12:00 PM',

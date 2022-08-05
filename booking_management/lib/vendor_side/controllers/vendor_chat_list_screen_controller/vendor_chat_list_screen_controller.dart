@@ -36,6 +36,10 @@ class VendorChatListScreenController extends GetxController {
         .where("users", arrayContains: userEmail)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
+              log("============================");
+              Map<String, dynamic> jsonData = doc.data();
+              String vendorId = jsonData["vendorid"];
+              log(" Firebase vendorId : $vendorId");
               var userchatDataList = UserChatRoomListModel.fromJson(
                 doc.data(),
                 img,

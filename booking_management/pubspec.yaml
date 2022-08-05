@@ -58,6 +58,7 @@ dependencies:
   html: ^0.15.0
   google_places_flutter: ^2.0.5
   uuid: ^3.0.6
+  liquid_pull_to_refresh: ^3.0.1
   flutter_bloc: ^8.0.1
   # syncfusion_flutter_xlsio: ^20.1.59-beta
   # excel: ^2.0.0-null-safety-3

@@ -16,6 +16,8 @@ class UserSearchResultsScreenController extends GetxController {
   String searchText = Get.arguments[0];
   String locationText = Get.arguments[1];
   SearchType searchType = Get.arguments[2];
+  String selectedLatitude = Get.arguments[3];
+  String selectedLongitude = Get.arguments[4];
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -263,8 +265,8 @@ class UserSearchResultsScreenController extends GetxController {
   @override
   void onInit() {
     // categoryFieldController.text = searchText;
-    latitude = UserDetails.latitude;
-    longitude = UserDetails.longitude;
+    latitude = locationText == "" ? UserDetails.latitude : selectedLatitude;
+    longitude = locationText == "" ? UserDetails.longitude : selectedLongitude;
     distance = '50';
 
     String tempLocation = locationText;

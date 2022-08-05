@@ -18,6 +18,7 @@ class ApiUrl {
   static const getFcmTokenApi = apiMainPath + "API/GetFCM";
   static const saveNotificationApi = apiMainPath + "API/NotificationUpsert";
   static const getNotificationApi = apiMainPath + "API/NotificationGetById";
+  static const getNotificationCountApi = apiMainPath + "API/NotificationCount";
 
   static const getUserProfileOnlyApi = apiMainPath + "API/";
   static const getAllCountryApi = apiMainPath + "API/GetAllCountry";

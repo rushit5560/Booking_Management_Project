@@ -337,11 +337,13 @@ class SearchLocationListModule extends StatelessWidget {
             itemBuilder: (context, i) {
               return ListTile(
                 onTap: () async {
-                  // final placeId = screenController.predictions[i].placeId;
-                  // final details = await screenController.googlePlace.details.get(placeId!);
+                  final placeId = screenController.predictions[i].placeId;
+                  final details = await screenController.googlePlace.details.get(placeId!);
 
-                  screenController.locationFieldController.text =
-                      screenController.predictions[1].description.toString();
+                  screenController.locationFieldController.text = screenController.predictions[i].description.toString();
+
+                  screenController.selectedFromListLatitude = "${details!.result!.geometry!.location!.lat}";
+                  screenController.selectedFromListLongitude = "${details.result!.geometry!.location!.lng}";
 
                   screenController.isLoading(true);
                   screenController.predictions.clear();
@@ -411,6 +413,8 @@ class SearchButtonModule extends StatelessWidget {
             screenController.categoryFieldController.text,
             screenController.locationFieldController.text,
             SearchType.none,
+            screenController.selectedFromListLatitude,
+            screenController.selectedFromListLongitude,
           ],
         )!.then((value) async {
           await screenController.getFavouriteVendorByIdFunction();

@@ -5,7 +5,6 @@ import 'package:booking_management/user_side/screens/user_appointment_list_scree
 import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import 'package:booking_management/user_side/screens/user_notification_screen/user_notification_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
@@ -189,6 +188,8 @@ class IndexScreen extends StatelessWidget {
                       log("${indexScreenController.menuIndex.value}");
 
                       indexScreenController.menuIndex.value = 2;
+                      // Counter make 0
+                      indexScreenController.notiCounter.value = 0;
                     } else {
                       Get.to(() => SignInScreen(), transition: Transition.zoom);
                     }
@@ -196,13 +197,43 @@ class IndexScreen extends StatelessWidget {
                   child: SizedBox(
                     height: 30,
                     width: 30,
-                    child: Image.asset(
-                      AppImages.menuNotificationImg,
-                      // indexScreenController.menuIndex.value == 2
-                      //     ? AppImages.menuNotificationImg
-                      //     : AppImages.menuNotification1Img,
-                      height: 25,
-                      color: AppColors.blackColor.withOpacity(0.7),
+                    child: Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: Image.asset(
+                            AppImages.menuNotificationImg,
+                            // indexScreenController.menuIndex.value == 2
+                            //     ? AppImages.menuNotificationImg
+                            //     : AppImages.menuNotification1Img,
+                            height: 25,
+                            color: AppColors.blackColor.withOpacity(0.7),
+                          ),
+                        ),
+                        UserDetails.isUserLoggedIn == true && indexScreenController.notiCounter.value != 0
+                        ? Obx(
+                          ()=> Container(
+                            height: 16,
+                            width: 16,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "${indexScreenController.notiCounter.value}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        : Container(),
+                      ],
                     ),
                   ),
                 ),

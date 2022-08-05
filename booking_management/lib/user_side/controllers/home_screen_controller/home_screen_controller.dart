@@ -37,6 +37,9 @@ class HomeScreenController extends GetxController {
   RxString selectedDisplayDate = "".obs;
   RxString selectedTime = "".obs;
 
+  String selectedFromListLatitude = "";
+  String selectedFromListLongitude = "";
+
   late GooglePlace googlePlace;
   List<AutocompletePrediction> predictions = [];
   Timer? debounce;
@@ -303,7 +306,7 @@ class HomeScreenController extends GetxController {
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      // request.headers.addAll(apiHeader.headers);
+      request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";

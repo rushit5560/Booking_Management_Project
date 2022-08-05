@@ -1,21 +1,21 @@
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/user_side/controllers/index_screen_controller/index_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/common_widgets.dart';
 import '../../../common_modules/custom_appbar/custom_appbar.dart';
-import '../../controllers/user_notification_screen_controller/user_notification_screen_controller.dart';
 import 'user_notification_screen_widgets.dart';
 
 class UserNotificationScreen extends StatelessWidget {
   UserNotificationScreen({Key? key}) : super(key: key);
-  final userNotificationScreenController =
-      Get.put(UserNotificationScreenController());
+  final indexScreenController =
+      Get.find<IndexScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        () => userNotificationScreenController.isLoading.value
+        () => indexScreenController.isLoading.value
             ? const CustomCircularLoaderModule()
             : SafeArea(
                 child: Column(
@@ -24,7 +24,7 @@ class UserNotificationScreen extends StatelessWidget {
                     const CommonAppBarModule(title: 'Notification'),
                     const SizedBox(height: 10),
                     Expanded(
-                      child: userNotificationScreenController.notificationList.isEmpty
+                      child: indexScreenController.notificationList.isEmpty
                           ? const Center(
                               child: Text("No Notification Received!"),
                             )

@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/common_functions.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/screens/business_details_screen/business_details_screen.dart';
 import 'package:booking_management/user_side/screens/user_search_results_screen/user_search_results_screen.dart';
@@ -897,6 +898,8 @@ class PartialCategoryListModule extends StatelessWidget {
             singleItem.id.toString(),
             "",
             SearchType.categoryWise,
+            UserDetails.latitude,
+            UserDetails.longitude,
           ],
         )!.then((value) async {
           await screenController.getFavouriteVendorByIdFunction();

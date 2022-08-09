@@ -17,7 +17,7 @@ class ScheduleMangementText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Schedule Management",
+    return const Text("Create time slots for selected date range",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
         .commonSymmetricPadding(horizontal: 10);
   }

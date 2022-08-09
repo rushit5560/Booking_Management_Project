@@ -27,7 +27,9 @@ class CustomerDrawer extends StatelessWidget {
                       customerDrawerOption: CustomerDrawerOption.profile,
                     )
                   : Container(),
-              const SizedBox(height: 20),
+              UserDetails.isUserLoggedIn == true
+                  ? const SizedBox(height: 20)
+                  : Container(),
 
               /*CustomerDrawerSingleItemModule(
                 img: AppImages.chatImg,
@@ -59,7 +61,9 @@ class CustomerDrawer extends StatelessWidget {
                       customerDrawerOption: CustomerDrawerOption.bookingHistory,
                     )
                   : Container(),
-              const SizedBox(height: 20),
+              UserDetails.isUserLoggedIn == true
+                  ? const SizedBox(height: 20)
+                  : Container(),
 
               // UserDetails.isUserLoggedIn == true
               // ? CustomerDrawerSingleItemModule(
@@ -77,7 +81,9 @@ class CustomerDrawer extends StatelessWidget {
                       customerDrawerOption: CustomerDrawerOption.transaction,
                     )
                   : Container(),
-              const SizedBox(height: 20),
+              UserDetails.isUserLoggedIn == true
+                  ? const SizedBox(height: 20)
+                  : Container(),
 
               // CustomerDrawerSingleItemModule(
               //   img: AppImages.helpImg,
@@ -93,7 +99,9 @@ class CustomerDrawer extends StatelessWidget {
                       customerDrawerOption: CustomerDrawerOption.changePassword,
                     )
                   : Container(),
-              const SizedBox(height: 20),
+              UserDetails.isUserLoggedIn == true
+                  ? const SizedBox(height: 20)
+                  : Container(),
 
               CustomerDrawerSingleItemModule(
                 img: AppImages.changePasswordImg,

@@ -1,5 +1,6 @@
 import 'package:booking_management/common_modules/common_functions.dart';
 import 'package:booking_management/common_modules/common_widgets.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/appointment_details_screen_controller/appointment_details_screen_controller.dart';
 import 'package:flutter/material.dart';
@@ -42,25 +43,41 @@ class VendorHomeScreen extends StatelessWidget {
                                     physics: const BouncingScrollPhysics(),
                                     child: Column(
                                       children: [
+
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Hello, ${UserDetails.userName}",
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ).commonSymmetricPadding(horizontal: 20),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10),
+
                                         PendingListTextModule(
                                                 size: 20,
                                                 text: "Today Resource Summary")
                                             .commonSymmetricPadding(
-                                                horizontal: 20),
+                                                horizontal: 20, vertical: 10),
                                         ResourcesModule(),
                                         const SizedBox(height: 10),
                                         PendingListTextModule(
                                                 size: 20,
                                                 text: "Today Appointment List")
                                             .commonSymmetricPadding(
-                                                horizontal: 20),
+                                                horizontal: 20, vertical: 10),
                                         TodayAppointmentListModule(),
                                       ],
                                     ).commonSymmetricPadding(horizontal: 20),
                                   ),
                                 ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),

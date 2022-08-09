@@ -156,7 +156,7 @@ class AddBusinessDocButtonModule extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
-            'Add',
+            'Upload',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,

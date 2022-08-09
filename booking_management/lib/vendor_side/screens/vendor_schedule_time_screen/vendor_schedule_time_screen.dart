@@ -23,7 +23,7 @@ class VendorScheduleTimeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const CommonAppBarModule(
-                      title: "Manage Resource",
+                      title: "Resource Schedule",
                       appBarOption: AppBarOption.singleBackButtonOption,
                     ),
                     Expanded(

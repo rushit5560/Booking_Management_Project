@@ -140,17 +140,17 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       });
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.scheduleManagement) {
-      if (UserDetails.isSubscription == false) {
-        Fluttertoast.showToast(
-          msg: 'Subscription Expired, Purchase any subscription plan',
-        );
-      } else {
+      // if (UserDetails.isSubscription == false) {
+      //   Fluttertoast.showToast(
+      //     msg: 'Subscription Expired, Purchase any subscription plan',
+      //   );
+      // } else {
         Get.to(() => VendorScheduleManagementScreen(),
                 transition: Transition.rightToLeft)!
             .then((value) async {
           await vendorHomeScreenController.getAppointmentListFunction();
         });
-      }
+      // }
     } else if (vendorSettingScreenOption == VendorDrawerOption.availableTime) {
       Get.to(() => VendorAvailableTimeScreen(),
           transition: Transition.rightToLeft);

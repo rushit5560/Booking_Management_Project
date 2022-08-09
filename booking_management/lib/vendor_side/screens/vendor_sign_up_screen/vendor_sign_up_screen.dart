@@ -31,9 +31,7 @@ class VendorSignUpScreen extends StatelessWidget {
                         // From Common Widgets
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            HeaderLogoModule()
-                          ],
+                          children: const [HeaderLogoModule()],
                         ),
                         const SizedBox(height: 20),
                         // From Common Widgets
@@ -80,21 +78,23 @@ class VendorSignUpScreen extends StatelessWidget {
                         PasswordFieldModule(),
                         const SizedBox(height: 5),
                         ConfirmPasswordFieldModule(),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         CountrySelectModule(),
                         const SizedBox(height: 20),
                         //VendorPortalCheckboxModule(),
                         TermsAndConditionCheckboxModule(),
-                        vendorSignUpScreenController.selectedCountryCode.value == "IN"
-                        ? Container()
-                        : PriceCheckboxModule(),
+                        vendorSignUpScreenController
+                                    .selectedCountryCode.value ==
+                                "IN"
+                            ? Container()
+                            : PriceCheckboxModule(),
                         AnyServiceCheckboxModule(),
                         const SizedBox(height: 20),
                         const TermsAndConditionText(),
                         const SizedBox(height: 25),
                         VendorSignUpButtonModule(),
                         const SizedBox(height: 25),
-                        SkipButton(),
+                        const SkipButton(),
                         const SizedBox(height: 25),
                         const CustomerSignUpTextModule(),
                         const SizedBox(height: 15),

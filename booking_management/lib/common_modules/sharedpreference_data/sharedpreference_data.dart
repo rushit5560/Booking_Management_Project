@@ -25,10 +25,12 @@ class SharedPreferenceData {
   //String slotDurationKey = "slotDurationKey";
   String businessIdKey = "businessIdKey";
   String serviceSlotKey = "serviceSlotKey";
+  String stripeIdKey = "stripeIdKey";
 
   String latitudeKey = "latitudeKey";
   String longitudeKey = "longitudeKey";
 
+  String vendorVerificationKey = "vendorVerification";
   String isSubscriptionKey = "isSubscription";
 
   String isUserFirstTimeKey = "isUserFirstTimeKey";
@@ -37,7 +39,6 @@ class SharedPreferenceData {
   String accountNameKey = "accountNameKey";
   String accountNumberKey = "accountNumberKey";
   String ifscCodeKey = "ifscCodeKey";
-
 
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
@@ -57,8 +58,10 @@ class SharedPreferenceData {
     required String country,
     required String subUrb,
     required String postCode,
+    String? stripeId,
     bool? isSubscription,
     //required String slotDuration
+    required bool vendorVerification,
     required String businessId,
     required bool serviceSlot,
     required String institutionName,
@@ -86,8 +89,10 @@ class SharedPreferenceData {
     prefs.remove(countryKey);
     prefs.remove(subUrbKey);
     prefs.remove(postCodeKey);
+    prefs.remove(stripeIdKey);
     prefs.remove(isSubscriptionKey);
     //prefs.remove(slotDurationKey);
+    prefs.remove(vendorVerificationKey);
     prefs.remove(businessIdKey);
     prefs.setBool(serviceSlotKey, false);
 
@@ -114,7 +119,9 @@ class SharedPreferenceData {
     prefs.setString(countryKey, country);
     prefs.setString(subUrbKey, subUrb);
     prefs.setString(postCodeKey, postCode);
+    prefs.setString(stripeIdKey, stripeId!);
     //prefs.setString(slotDurationKey, slotDuration);
+    prefs.setBool(vendorVerificationKey, vendorVerification);
     prefs.setString(businessIdKey, businessId);
     prefs.setBool(isSubscriptionKey, isSubscription ?? false);
     prefs.setBool(serviceSlotKey, serviceSlot);
@@ -141,11 +148,15 @@ class SharedPreferenceData {
     UserDetails.country = prefs.getString(countryKey) ?? "";
     UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
+    UserDetails.stripeId = prefs.getString(stripeIdKey) ?? "";
     //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
+    UserDetails.vendorVerification =
+        prefs.getBool(vendorVerificationKey) ?? false;
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
     UserDetails.isSubscription = prefs.getBool(isSubscriptionKey) ?? true;
     UserDetails.isServiceSlot = prefs.getBool(serviceSlotKey) ?? false;
-    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.institutionName =
+        prefs.getString(financialInstitutionNameKey) ?? "";
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
@@ -167,8 +178,10 @@ class SharedPreferenceData {
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
+    log("UserDetails.stripeId : ${UserDetails.stripeId}");
     //log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
     log("UserDetails.isSubscription : ${UserDetails.isSubscription}");
+    log("UserDetails.businessId : ${UserDetails.vendorVerification}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
     log("UserDetails.isServiceSlot : ${UserDetails.isServiceSlot}");
   }
@@ -195,14 +208,15 @@ class SharedPreferenceData {
     prefs.setString(countryKey, "");
     prefs.setString(subUrbKey, "");
     prefs.setString(postCodeKey, "");
+    prefs.setString(stripeIdKey, "");
     //prefs.setString(slotDurationKey, "");
     prefs.setString(isSubscriptionKey, "");
+    prefs.setBool(vendorVerificationKey, false);
     prefs.setString(businessIdKey, "");
     prefs.setString(financialInstitutionNameKey, "");
     prefs.setString(accountNameKey, "");
     prefs.setString(accountNumberKey, "");
     prefs.setString(ifscCodeKey, "");
-
 
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
     UserDetails.apiToken = prefs.getString(apiTokenKey) ?? "";
@@ -221,10 +235,14 @@ class SharedPreferenceData {
     UserDetails.country = prefs.getString(countryKey) ?? "";
     UserDetails.subUrb = prefs.getString(subUrbKey) ?? "";
     UserDetails.postCode = prefs.getString(postCodeKey) ?? "";
+    UserDetails.stripeId = prefs.getString(stripeIdKey) ?? "";
     //UserDetails.slotDuration = prefs.getString(slotDurationKey) ?? "";
     UserDetails.businessId = prefs.getString(isSubscriptionKey) ?? "";
     UserDetails.businessId = prefs.getString(businessIdKey) ?? "";
-    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.vendorVerification =
+        prefs.getBool(vendorVerificationKey) ?? false;
+    UserDetails.institutionName =
+        prefs.getString(financialInstitutionNameKey) ?? "";
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
@@ -246,8 +264,10 @@ class SharedPreferenceData {
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
+    log("UserDetails.stripeId : ${UserDetails.stripeId}");
     // log("UserDetails.slotDuration : ${UserDetails.slotDuration}");
-    log("UserDetails.businessId : ${UserDetails.isSubscription}");
+    log("UserDetails.issubscription : ${UserDetails.isSubscription}");
+    log("UserDetails.vendorVerification : ${UserDetails.vendorVerification}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
   }
 
@@ -288,7 +308,8 @@ class SharedPreferenceData {
     prefs.setString(accountNumberKey, accountNumber);
     prefs.setString(ifscCodeKey, ifscCode);
 
-    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.institutionName =
+        prefs.getString(financialInstitutionNameKey) ?? "";
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";

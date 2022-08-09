@@ -84,7 +84,7 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 18,
                     color: AppColors.blackColor,
                   ),
                 ),
@@ -144,111 +144,6 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
     );
   }
 
-  Widget _subscriptionPlanLitTile(SubscriptionWorkerList singleItem) {
-    return GestureDetector(
-      // onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft, arguments: singleItem.price),
-      onTap: () async {
-        /*await vendorSubscriptionPlanScreenController
-            .makePayment(singleItem.price);*/
-      },
-      child: Container(
-        margin: const EdgeInsets.only(left: 5, right: 5),
-        decoration: shadowDecoration(),
-        // margin: EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    // image: DecorationImage(
-                    //   image:
-                    //       NetworkImage("${ApiUrl.apiImagePath}${singleItem.image}"),
-                    //   fit: BoxFit.cover,
-                    // ),
-                  ),
-                  child:
-                      Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
-                          errorBuilder: (context, st, ob) {
-                    return Image.asset(AppImages.logoImg);
-                  }, fit: BoxFit.cover),
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        singleItem.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-
-                      Text(
-                        'From \$${singleItem.price} ${singleItem.currency} / ${singleItem.interval}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      //const SizedBox(height: 8),
-
-                      Html(data: singleItem.detail),
-                    ],
-                  ),
-                ),
-                // const SizedBox(width: 15),
-                // Image.asset(AppImages.rightArrowImg),
-              ],
-            ),
-            GestureDetector(
-              onTap: () async {
-                if (singleItem.isActive == true) {
-                  // Remove Plan Api Call
-                  await vendorSubscriptionPlanScreenController
-                      .cancelSubscriptionPlanFunction(
-                    productId: singleItem.id,
-                    id: singleItem.stripeSubscriptionId,
-                  );
-                } else {
-                  Get.to(
-                    () => const VendorCardPaymentScreen(),
-                    arguments: [
-                      singleItem.price,
-                    ],
-                  );
-                  // Purchase plan api call
-                  await vendorSubscriptionPlanScreenController
-                      .purchaseSubscriptionPlanFunction(
-                          productId: singleItem.id);
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: singleItem.isActive == true
-                        ? Colors.red
-                        : Colors.green),
-                child: Text(
-                  singleItem.isActive == true ? "Cancel" : "Purchase Now",
-                  style: const TextStyle(color: Colors.white),
-                ).commonSymmetricPadding(horizontal: 15, vertical: 10),
-              ),
-            ),
-          ],
-        ).commonAllSidePadding(10),
-      ).commonSymmetricPadding(vertical: 10),
-    );
-  }
-
   Widget subscriptionPlanListTile(SubscriptionWorkerList singleItem) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -259,8 +154,8 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: 60,
-                width: 60,
+                height: 75,
+                width: 75,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   // image: DecorationImage(
@@ -269,13 +164,12 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                   //   fit: BoxFit.cover,
                   // ),
                 ),
-                child:
-                    Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
-                        errorBuilder: (context, st, ob) {
+                child: Image.network("${singleItem.image}",
+                    errorBuilder: (context, st, ob) {
                   return Image.asset(AppImages.logoImg);
                 }, fit: BoxFit.cover),
               ),
-              const SizedBox(width: 15),
+              const SizedBox(width: 25),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,12 +231,13 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                         () => const VendorCardPaymentScreen(),
                         arguments: [
                           singleItem.price,
+                          singleItem.id,
                         ],
                       );
-                      // Purchase plan api call
-                      await vendorSubscriptionPlanScreenController
-                          .purchaseSubscriptionPlanFunction(
-                              productId: singleItem.id);
+                      // // Purchase plan api call
+                      // await vendorSubscriptionPlanScreenController
+                      //     .purchaseSubscriptionPlanFunction(
+                      //         productId: singleItem.id);
                     }
                   },
                   child: Container(
@@ -365,3 +260,109 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
     );
   }
 }
+
+//old sub listtile
+// Widget _subscriptionPlanLitTile(SubscriptionWorkerList singleItem) {
+//     return GestureDetector(
+//       // onTap: () => Get.to(()=> VendorCheckoutScreen(), transition: Transition.rightToLeft, arguments: singleItem.price),
+//       onTap: () async {
+//         /*await vendorSubscriptionPlanScreenController
+//             .makePayment(singleItem.price);*/
+//       },
+//       child: Container(
+//         margin: const EdgeInsets.only(left: 5, right: 5),
+//         decoration: shadowDecoration(),
+//         // margin: EdgeInsets.all(5),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.end,
+//           children: [
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Container(
+//                   height: 60,
+//                   width: 60,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(15),
+//                     // image: DecorationImage(
+//                     //   image:
+//                     //       NetworkImage("${ApiUrl.apiImagePath}${singleItem.image}"),
+//                     //   fit: BoxFit.cover,
+//                     // ),
+//                   ),
+//                   child:
+//                       Image.network("${ApiUrl.apiImagePath}${singleItem.image}",
+//                           errorBuilder: (context, st, ob) {
+//                     return Image.asset(AppImages.logoImg);
+//                   }, fit: BoxFit.cover),
+//                 ),
+//                 const SizedBox(width: 15),
+//                 Expanded(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         singleItem.name,
+//                         style: const TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 16,
+//                         ),
+//                       ),
+//                       const SizedBox(height: 8),
+
+//                       Text(
+//                         'From \$${singleItem.price} ${singleItem.currency} / ${singleItem.interval}',
+//                         style: const TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 14,
+//                         ),
+//                       ),
+//                       //const SizedBox(height: 8),
+
+//                       Html(data: singleItem.detail),
+//                     ],
+//                   ),
+//                 ),
+//                 // const SizedBox(width: 15),
+//                 // Image.asset(AppImages.rightArrowImg),
+//               ],
+//             ),
+//             GestureDetector(
+//               onTap: () async {
+//                 if (singleItem.isActive == true) {
+//                   // Remove Plan Api Call
+//                   await vendorSubscriptionPlanScreenController
+//                       .cancelSubscriptionPlanFunction(
+//                     productId: singleItem.id,
+//                     id: singleItem.stripeSubscriptionId,
+//                   );
+//                 } else {
+//                   Get.to(
+//                     () => const VendorCardPaymentScreen(),
+//                     arguments: [
+//                       singleItem.price,
+//                     ],
+//                   );
+//                   // Purchase plan api call
+//                   await vendorSubscriptionPlanScreenController
+//                       .purchaseSubscriptionPlanFunction(
+//                           productId: singleItem.id);
+//                 }
+//               },
+//               child: Container(
+//                 decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(10),
+//                     color: singleItem.isActive == true
+//                         ? Colors.red
+//                         : Colors.green),
+//                 child: Text(
+//                   singleItem.isActive == true ? "Cancel" : "Purchase Now",
+//                   style: const TextStyle(color: Colors.white),
+//                 ).commonSymmetricPadding(horizontal: 15, vertical: 10),
+//               ),
+//             ),
+//           ],
+//         ).commonAllSidePadding(10),
+//       ).commonSymmetricPadding(vertical: 10),
+//     );
+//   }

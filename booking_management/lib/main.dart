@@ -43,8 +43,8 @@ void main() async {
   );
 
   Stripe.publishableKey = PaymentKeys.publishKey;
-  Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
-  Stripe.urlScheme = 'flutterstripe';
+  // Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+  // Stripe.urlScheme = 'flutterstripe';
   await Stripe.instance.applySettings();
 
   /// For Background

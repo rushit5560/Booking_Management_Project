@@ -66,7 +66,6 @@ class FieldValidator {
     return null;
   }
 
-
   String? validateFinancialInstituteName(String value) {
     if (value.isEmpty) {
       return 'Financial institute name is required';
@@ -94,7 +93,6 @@ class FieldValidator {
     }
     return null;
   }
-
 
   String? validateState(String value) {
     if (value.isEmpty) {
@@ -146,14 +144,13 @@ class FieldValidator {
   }
 
   String? validateServiceName(String value) {
-    String  pattern = r'^(?=.*?[A-Z])';
-    RegExp regExp =  RegExp(pattern);
+    String pattern = r'^(?=.*?[A-Z])';
+    RegExp regExp = RegExp(pattern);
     //return
     if (value.isEmpty) {
       return 'Service name is required';
-    }
-    else{
-      if(!regExp.hasMatch(value[0])){
+    } else {
+      if (!regExp.hasMatch(value[0])) {
         return 'AtLeast 1 uppercase letter is required';
       }
     }
@@ -255,7 +252,7 @@ class FieldValidator {
   String? validatePrice(String value) {
     if (value.isEmpty) {
       return 'Price is required';
-    } else if(value.contains("-")) {
+    } else if (value.contains("-")) {
       return 'Invalid price';
     }
     return null;
@@ -370,9 +367,8 @@ class FieldValidator {
       return "Mobile number is required";
     } else if (value.contains("-")) {
       return 'Invalid mobile number';
-    }
-    else if (value.length != 10) {
-      return 'Mobile number must be of 10 digit';
+    } else if (value.length < 10 || value.length > 12) {
+      return 'Mobile number must be of 10 to 12 digit';
     } else {
       return null;
     }

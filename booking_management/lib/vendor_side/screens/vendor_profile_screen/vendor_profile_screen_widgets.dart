@@ -236,6 +236,14 @@ class _VendorProfileDetailsModuleState
                           // height: 100,
                           // width: 100,
                           fit: BoxFit.cover,
+                          errorBuilder: (ctx, obj, st) {
+                            return Image.asset(
+                              AppImages.logoImg,
+                              // height: 100,
+                              // width: 100,
+                              fit: BoxFit.fill,
+                            );
+                          },
                         ),
                       )
                     : ClipRRect(
@@ -1200,6 +1208,7 @@ class _VendorProfileDetailsModuleState
                         child: DropdownButton<String>(
                           value: screenController.slotDurationValue.value,
                           items: <String>[
+                            '0',
                             '15',
                             '30',
                             '45',
@@ -1602,7 +1611,8 @@ class _VendorProfileDetailsModuleState
           log('new: ${screenController.currentSlotDuration}');
 
           // ignore: unrelated_type_equality_checks
-          if (screenController.slotDurationValue.value == screenController.currentSlotDuration.value) {
+          if (screenController.slotDurationValue.value ==
+              screenController.currentSlotDuration.value) {
             await screenController.vendorEditProfileFunction();
           } else {
             deleteTimingSlotDurationAlertDialog();

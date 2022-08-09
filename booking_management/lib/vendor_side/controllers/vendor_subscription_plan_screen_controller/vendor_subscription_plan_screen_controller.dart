@@ -132,7 +132,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
   createPaymentIntent(int amount, String currency) async {
     try {
       Map<String, dynamic> body = {
-        "amount": calculateAmount(amount),
+        'amount': calculateAmount(amount),
         'currency': currency,
         'payment_method_types[]': 'card'
       };
@@ -205,7 +205,8 @@ class VendorSubscriptionPlanScreenController extends GetxController {
 
   getAllSubscriptionPlanFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorSubscriptionPlanApi + "?userId=${UserDetails.uniqueId}";
+    String url =
+        ApiUrl.vendorSubscriptionPlanApi + "?userId=${UserDetails.uniqueId}";
     log("Get All Subscription Plan API URL : $url");
 
     try {
@@ -214,7 +215,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
       log("Subscription Plan Response : ${response.body}");
 
       GetAllSubscriptionPlanModel getAllSubscriptionModel =
-      GetAllSubscriptionPlanModel.fromJson(json.decode(response.body));
+          GetAllSubscriptionPlanModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllSubscriptionModel.success.obs;
 
       if (isSuccessStatus.value) {
@@ -234,66 +235,64 @@ class VendorSubscriptionPlanScreenController extends GetxController {
     }
   }
 
-
-  cancelSubscriptionPlanFunction({required String productId,required  String id}) async {
+  cancelSubscriptionPlanFunction(
+      {required String productId, required String id}) async {
     isLoading(true);
-    String url = ApiUrl.deleteSubscriptionPlanApi
-        + "?userId=${UserDetails.uniqueId}"
-        + "&Id=$id"
-        + "&ProductId=$productId";
+    String url = ApiUrl.deleteSubscriptionPlanApi +
+        "?userId=${UserDetails.uniqueId}" +
+        "&Id=$id" +
+        "&ProductId=$productId";
     log("Cancel Subscription Api Url : $url");
 
     try {
-
-      http.Response response = await http.get(Uri.parse(url),headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("response : ${response.body}");
 
-      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel = DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
+      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
+          DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
       isSuccessStatus = deleteSubscriptionPlanModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
         await getAllSubscriptionPlanFunction();
       } else {
         log("cancelSubscriptionPlanFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("cancelSubscriptionPlanFunction Error ::: $e");
-    }finally {
+    } finally {
       isLoading(false);
     }
-
   }
 
   purchaseSubscriptionPlanFunction({required String productId}) async {
     isLoading(true);
-    String url = ApiUrl.purchaseSubscriptionPlanApi
-        + "?userId=${UserDetails.uniqueId}"
-        + "&Id=$productId";
+    String url = ApiUrl.purchaseSubscriptionPlanApi +
+        "?userId=${UserDetails.uniqueId}" +
+        "&Id=$productId";
     log("Purchase Subscription Api Url : $url");
 
     try {
-
-      http.Response response = await http.get(Uri.parse(url),headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("response : ${response.body}");
 
-      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel = DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
+      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
+          DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
       isSuccessStatus = deleteSubscriptionPlanModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
         // await getAllSubscriptionPlanFunction();
       } else {
         log("purchaseSubscriptionPlanFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("purchaseSubscriptionPlanFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override

@@ -20,8 +20,6 @@ import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_favourite_vendor_model.dart';
 import 'upcoming_appointment_details_screen/upcoming_appointment_details_screen.dart';
 
-
-
 /// Header Logo Module
 class HeaderModule extends StatelessWidget {
   const HeaderModule({Key? key}) : super(key: key);
@@ -164,7 +162,7 @@ class SearchCategoryField extends StatelessWidget {
                     },
                   ),
             border: InputBorder.none,
-            hintText: 'Search for a service providers or business',
+            hintText: 'Service/Business Name',
             hintStyle: const TextStyle(
               fontSize: 15,
               color: Colors.grey,
@@ -182,6 +180,17 @@ class SearchCategoryField extends StatelessWidget {
         onSuggestionSelected: (suggestion) {
           screenController.categoryFieldController.text = suggestion.toString();
           log("Text : ${screenController.categoryFieldController.text}");
+        },
+        noItemsFoundBuilder: (ctx) {
+          return const ListTile(
+            title: Text(
+              "Sorry, no business found for selected criteria. Please change location and try again!",
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 15,
+              ),
+            ),
+          );
         },
       ),
 
@@ -293,7 +302,7 @@ class SearchLocationField extends StatelessWidget {
           screenController.loadUI();
         },
         decoration: InputDecoration(
-          hintText: 'Search Location',
+          hintText: 'Location',
           hintStyle: const TextStyle(
             color: Colors.grey,
             fontSize: 15,
@@ -339,12 +348,16 @@ class SearchLocationListModule extends StatelessWidget {
               return ListTile(
                 onTap: () async {
                   final placeId = screenController.predictions[i].placeId;
-                  final details = await screenController.googlePlace.details.get(placeId!);
+                  final details =
+                      await screenController.googlePlace.details.get(placeId!);
 
-                  screenController.locationFieldController.text = screenController.predictions[i].description.toString();
+                  screenController.locationFieldController.text =
+                      screenController.predictions[i].description.toString();
 
-                  screenController.selectedFromListLatitude = "${details!.result!.geometry!.location!.lat}";
-                  screenController.selectedFromListLongitude = "${details.result!.geometry!.location!.lng}";
+                  screenController.selectedFromListLatitude =
+                      "${details!.result!.geometry!.location!.lat}";
+                  screenController.selectedFromListLongitude =
+                      "${details.result!.geometry!.location!.lng}";
 
                   screenController.isLoading(true);
                   screenController.predictions.clear();
@@ -417,7 +430,8 @@ class SearchButtonModule extends StatelessWidget {
             screenController.selectedFromListLatitude,
             screenController.selectedFromListLongitude,
           ],
-        )!.then((value) async {
+        )!
+            .then((value) async {
           await screenController.getFavouriteVendorByIdFunction();
         });
         screenController.predictions.clear();
@@ -729,36 +743,36 @@ class UpcomingAppointmentModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Upcoming Appointment',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Upcoming Appointment',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
-          const SizedBox(height: 15),
+        ),
+        const SizedBox(height: 15),
 
-         /* const DatePickerModule(),
+        /* const DatePickerModule(),
 
           const SizedBox(height: 10),
           screenController.isServiceCalenderShow.value
               ? SelectDateModule()
               : Container(),*/
 
-          ListView.builder(
-            itemCount: screenController.allUpcomingAppointmentList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, i) {
-              UpcomingAppointmentDatum singleItem =
-                  screenController.allUpcomingAppointmentList[i];
-              return _upcomingAppointmentListTile(singleItem);
-            },
-          ),
-        ],
-      );
+        ListView.builder(
+          itemCount: screenController.allUpcomingAppointmentList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, i) {
+            UpcomingAppointmentDatum singleItem =
+                screenController.allUpcomingAppointmentList[i];
+            return _upcomingAppointmentListTile(singleItem);
+          },
+        ),
+      ],
+    );
   }
 
   Widget _upcomingAppointmentListTile(UpcomingAppointmentDatum singleItem) {
@@ -901,7 +915,8 @@ class PartialCategoryListModule extends StatelessWidget {
             UserDetails.latitude,
             UserDetails.longitude,
           ],
-        )!.then((value) async {
+        )!
+            .then((value) async {
           await screenController.getFavouriteVendorByIdFunction();
         });
       },
@@ -930,11 +945,13 @@ class PartialCategoryListModule extends StatelessWidget {
                   //   fit: BoxFit.cover,
                   // ),
                 ),
-                child: Image.network(imgUrl,
-                  errorBuilder: (context, st, ob){
+                child: Image.network(
+                  imgUrl,
+                  errorBuilder: (context, st, ob) {
                     return Image.asset(AppImages.logoImg);
                   },
-                  fit: BoxFit.cover,),
+                  fit: BoxFit.cover,
+                ),
               ).commonAllSidePadding(10),
             ),
             Expanded(
@@ -1001,13 +1018,13 @@ class FavouriteVendorsModule extends StatelessWidget {
     String imgUrl = ApiUrl.apiImagePath + singleVendor.businessLogo;
     return GestureDetector(
       onTap: () {
-        Get.to(() => BusinessDetailScreen(),
-            arguments: [
-              singleVendor.id,
-              singleVendor.userId,
-              singleVendor.email,
-              singleVendor.businessName,
-            ])!.then((value) async {
+        Get.to(() => BusinessDetailScreen(), arguments: [
+          singleVendor.id,
+          singleVendor.userId,
+          singleVendor.email,
+          singleVendor.businessName,
+        ])!
+            .then((value) async {
           await screenController.getFavouriteVendorByIdFunction();
         });
       },
@@ -1066,10 +1083,10 @@ class FavouriteVendorsModule extends StatelessWidget {
                 ),
               ],
             ),
-
             IconButton(
               onPressed: () async {
-                await screenController.addVendorInFavoriteFunction(singleVendor.id);
+                await screenController
+                    .addVendorInFavoriteFunction(singleVendor.id);
                 // screenController.loadUI();
               },
               icon: const Icon(Icons.favorite_rounded),

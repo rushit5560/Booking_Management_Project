@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -73,7 +74,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -95,29 +96,34 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Text(
-        //       "Administrative Charges ",
-        //       style: TextStyle(
-        //         color: AppColors.colorGreyIconLight,
-        //         fontSize: 16,
-        //         fontWeight: FontWeight.w500,
-        //       ),
-        //     ),
-        //     Text(
-        //       "₹ ${(int.parse(cardScreenController.bookingPrice) / 100) * 10}",
-        //       style: TextStyle(
-        //         color: AppColors.colorGreyIconLight,
-        //         fontSize: 16,
-        //         fontWeight: FontWeight.w500,
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        SizedBox(height: 15),
+
+        UserDetails.roleName == "Customer"
+            ? Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Administrative Charges ",
+                      style: TextStyle(
+                        color: AppColors.colorGreyIconLight,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      "₹ ${(int.parse(cardScreenController.bookingPrice) / 100) * 10}",
+                      style: TextStyle(
+                        color: AppColors.colorGreyIconLight,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : const SizedBox(),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -310,14 +316,11 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
       // var adminCharges =
       //     (int.parse(cardScreenController.bookingPrice) / 100) * 10;
 
-      // Stripe.instance.createPaymentMethod(
-      //   const PaymentMethodParams.card(
-      //     billingDetails: BillingDetails(),
-      //   ),
-      //   {
-      //     "ApplicationFeeAmount": "$adminCharges",
-      //   },
-      // );
+      // Stripe
+      var stripeAccId = Stripe.stripeAccountId;
+
+
+
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -327,6 +330,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
           merchantDisplayName: UserDetails.userName,
           // Customer keys
           // customerId: cardScreenController.paymentIntentData!['customer'],
+
           customerEphemeralKeySecret:
               cardScreenController.paymentIntentData!['ephemeralKey'],
           customFlow: true,
@@ -340,25 +344,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
 
       await Stripe.instance.presentPaymentSheet();
       await cardScreenController.checkoutSubscriptionSuccess();
-      //     .catchError((error, stackTrace) {
-      //   log("Stripe error occured : ${error} ");
 
-      //   if (error is StripeException) {
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(
-      //         content: Text('Payment error : ${error.error.localizedMessage}'),
-      //       ),
-      //     );
-      //   } else {
-      //     // ScaffoldMessenger.of(context).showSnackBar(
-      //     //   SnackBar(
-      //     //     content: Text('Error : $error'),
-      //     //   ),
-      //     // );
-      //     // log("Error ::: $error");
-      //     throw error;
-      //   }
-      // });
 
       // cardScreenController.paymentState.value = "success";
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -414,36 +400,34 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
   }
 }
 
-
-
 // bloc pattern code
- // if (state.status == PaymentStatus.success) {
-                //   return Column(
-                //     children: [
-                //       const Text("The payment is successfull."),
-                //       SizedBox(height: 50),
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           context.read<PaymentBloc>().add(PaymentStart());
-                //         },
-                //         child: Text("back to home"),
-                //       ),
-                //     ],
-                //   );
-                // }
-                // if (state.status == PaymentStatus.failure) {
-                //   return Column(
-                //     children: [
-                //       Text("The payment is successfull."),
-                //       SizedBox(height: 50),
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           context.read<PaymentBloc>().add(PaymentStart());
-                //         },
-                //         child: Text("try again"),
-                //       ),
-                //     ],
-                //   );
-                // } else {
-                //   return const Center(child: CustomCircularLoaderModule());
-                // }
+// if (state.status == PaymentStatus.success) {
+//   return Column(
+//     children: [
+//       const Text("The payment is successfull."),
+//       SizedBox(height: 50),
+//       ElevatedButton(
+//         onPressed: () {
+//           context.read<PaymentBloc>().add(PaymentStart());
+//         },
+//         child: Text("back to home"),
+//       ),
+//     ],
+//   );
+// }
+// if (state.status == PaymentStatus.failure) {
+//   return Column(
+//     children: [
+//       Text("The payment is successfull."),
+//       SizedBox(height: 50),
+//       ElevatedButton(
+//         onPressed: () {
+//           context.read<PaymentBloc>().add(PaymentStart());
+//         },
+//         child: Text("try again"),
+//       ),
+//     ],
+//   );
+// } else {
+//   return const Center(child: CustomCircularLoaderModule());
+// }

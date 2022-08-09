@@ -5,6 +5,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/vendor_side/controllers/appointment_details_screen_controller/appointment_details_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/custom_drawer/vendor_drawer/vendor_drawer.dart';
 import '../../controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import 'vendor_home_screen_widgets.dart';
@@ -43,9 +44,38 @@ class VendorHomeScreen extends StatelessWidget {
                                     physics: const BouncingScrollPhysics(),
                                     child: Column(
                                       children: [
-
+                                        UserDetails.roleName == "Vendor" &&
+                                                UserDetails
+                                                        .vendorVerification ==
+                                                    false
+                                            ? Container(
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.accentColor,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(12),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Text(
+                                                    "Please complete your business profile to activate the account. If you have done already then your business will be visible to public as soon as the verification process completes from admin.",
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : const SizedBox(),
+                                        const SizedBox(height: 20),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Hello, ${UserDetails.userName}",
@@ -54,11 +84,11 @@ class VendorHomeScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,
                                               ),
-                                            ).commonSymmetricPadding(horizontal: 20),
+                                            ).commonSymmetricPadding(
+                                                horizontal: 20),
                                           ],
                                         ),
                                         const SizedBox(height: 10),
-
                                         PendingListTextModule(
                                                 size: 20,
                                                 text: "Today Resource Summary")

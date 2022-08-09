@@ -56,9 +56,9 @@ class VendorSignUpScreenController extends GetxController {
   RxBool priceCheckBox = false.obs;
   RxBool serviceCheckBox = false.obs;
   RxBool isSuccessStatus = false.obs;
-  RxString selectedCountry = "".obs;
+  RxString selectedCountry = "Select Country".obs;
 
-  RxString selectedCountryCode = "".obs;
+  RxString selectedCountryCode = "SC".obs;
 
   List<CountryData> countriesList = [CountryData()];
   CountryData? countryData;
@@ -78,6 +78,9 @@ class VendorSignUpScreenController extends GetxController {
 
       if (isSuccessStatus.value == true) {
         countriesList.clear();
+
+        countriesList
+            .add(CountryData(id: 0, code: "SC", country: "Select Country"));
         countriesList.addAll(countriesModel.workerList);
         countryData = countriesList[0];
         log("countryData :${countryData!.country}");
@@ -187,7 +190,7 @@ class VendorSignUpScreenController extends GetxController {
           Fluttertoast.showToast(
               msg: "${response1.message}. Please confirm your email.");
           clearSignUpFieldsFunction();
-          Get.off(SignInScreen(), transition: Transition.zoom);
+          Get.off(() => SignInScreen(), transition: Transition.zoom);
         } else {
           Fluttertoast.showToast(msg: response1.message);
           log('False False');

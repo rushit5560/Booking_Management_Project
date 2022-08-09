@@ -108,7 +108,8 @@ class SearchAppointmentField extends StatelessWidget {
 class PendingListTextModule extends StatelessWidget {
   final String text;
   final double size;
-  PendingListTextModule({Key? key, required this.text, required this.size}) : super(key: key);
+  PendingListTextModule({Key? key, required this.text, required this.size})
+      : super(key: key);
   final screenController = Get.find<VendorHomeScreenController>();
 
   @override
@@ -136,13 +137,18 @@ class TodayAppointmentListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.allAppointmentList.isEmpty
-        ? const Center(child: Text("No Record Found"))
+        ? const Center(
+            child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 45),
+            child: Text("No Record Found"),
+          ))
         : ListView.builder(
             itemCount: screenController.allAppointmentList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, i) {
-              AppointmentListModule singleItem = screenController.allAppointmentList[i];
+              AppointmentListModule singleItem =
+                  screenController.allAppointmentList[i];
               return _pendingListTile(singleItem);
             },
           );
@@ -325,7 +331,6 @@ class TodayAppointmentListModule extends StatelessWidget {
 
 }
 
-
 class ResourcesModule extends StatelessWidget {
   ResourcesModule({Key? key}) : super(key: key);
   final screenController = Get.find<VendorHomeScreenController>();
@@ -337,7 +342,8 @@ class ResourcesModule extends StatelessWidget {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, i) {
-        BookingResourceWorkerData singleItem = screenController.allResourcesList[i];
+        BookingResourceWorkerData singleItem =
+            screenController.allResourcesList[i];
         return _resourcesListTile(singleItem);
       },
     );
@@ -361,19 +367,21 @@ class ResourcesModule extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
-                decoration: BoxDecoration(
-                  // image: DecorationImage(
-                  //   image: NetworkImage(imgUrl),
-                  //   fit: BoxFit.cover,
-                  // ),
-                ),
-                child: Image.network(imgUrl,
-                  errorBuilder: (context, st, ob){
+                // decoration: BoxDecoration(
+                //     // image: DecorationImage(
+                //     //   image: NetworkImage(imgUrl),
+                //     //   fit: BoxFit.cover,
+                //     // ),
+                //     ),
+                child: Image.network(
+                  imgUrl,
+                  errorBuilder: (context, st, ob) {
                     return Image.asset(AppImages.logoImg);
-                  },),
+                  },
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -400,11 +408,11 @@ class ResourcesModule extends StatelessWidget {
                     //   overflow: TextOverflow.ellipsis,
                     // ),
                     const SizedBox(height: 5),
-                Text(
-                    "\$${singleItem.price}",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                    Text(
+                      "\$${singleItem.price}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     // screenController.isPriceDisplay.value
                     //     ? Text(
                     //   "\$${singleItem.price}",
@@ -419,88 +427,89 @@ class ResourcesModule extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           singleItem.timingList.isEmpty
-              ? Container()
+              ? Row(
+                  children: const [
+                    Text("Time slot is not available."),
+                  ],
+                )
               : GridView.builder(
-            itemCount: singleItem.timingList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 3,
-                crossAxisSpacing: 3,
-                childAspectRatio: 5
-            ),
-            itemBuilder: (context, i) {
-              return GestureDetector(
-                onTap: () async {
-                  log('booking: ${singleItem.timingList[i].id}');
-                  if(singleItem.timingList[i].booking == false) {
-                    await screenController.getBookingDetailsFunction(
-                        bookingId: singleItem.timingList[i].id.toString(),
+                  itemCount: singleItem.timingList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 3,
+                      crossAxisSpacing: 3,
+                      childAspectRatio: 5),
+                  itemBuilder: (context, i) {
+                    return GestureDetector(
+                      onTap: () async {
+                        log('booking: ${singleItem.timingList[i].id}');
+                        if (singleItem.timingList[i].booking == false) {
+                          await screenController.getBookingDetailsFunction(
+                            bookingId: singleItem.timingList[i].id.toString(),
+                          );
+                          _bottomSheetModule(context);
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                color: Colors.grey.shade300,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            color: singleItem.timingList[i].booking == false
+                                ? Colors.orangeAccent
+                                : null),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              singleItem.timingList[i].startDateTime,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: singleItem.timingList[i].isSelected ==
+                                          true
+                                      ? Colors.white
+                                      : Colors.black),
+                            ),
+                            Text(
+                              "-",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color:
+                                    singleItem.timingList[i].isSelected == true
+                                        ? Colors.white
+                                        : Colors.black,
+                              ),
+                            ).commonSymmetricPadding(horizontal: 5),
+                            Text(
+                              singleItem.timingList[i].endDateTime,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color:
+                                    singleItem.timingList[i].isSelected == true
+                                        ? Colors.white
+                                        : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ).commonAllSidePadding(3),
                     );
-                    _bottomSheetModule(context);
-                  }
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          color: Colors.grey.shade300,
-                          blurStyle: BlurStyle.outer,
-                        ),
-                      ],
-                      color: singleItem.timingList[i].booking == false
-                          ? Colors.orangeAccent
-                          : null
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        singleItem.timingList[i].startDateTime,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                            color: singleItem.timingList[i].isSelected == true
-                                ? Colors.white
-                                : Colors.black
-                        ),
-                      ),
-
-                      Text(
-                        "-",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: singleItem.timingList[i].isSelected == true
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ).commonSymmetricPadding(horizontal: 5),
-
-                      Text(
-                        singleItem.timingList[i].endDateTime,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                            color: singleItem.timingList[i].isSelected == true
-                                ? Colors.white
-                                : Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ).commonAllSidePadding(3),
-              );
-            },
-          ),
+                  },
+                ),
         ],
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8);
   }
-
 
   Future _bottomSheetModule(BuildContext context) {
     return showModalBottomSheet(
@@ -535,12 +544,16 @@ class ResourcesModule extends StatelessWidget {
                     ],
                   ),
                   const Divider(thickness: 1),
-
-                  _singleItemModule(heading: "Customer Name:", value: screenController.customerName),
+                  _singleItemModule(
+                      heading: "Customer Name:",
+                      value: screenController.customerName),
                   const SizedBox(height: 5),
-                  _singleItemModule(heading: "Vendor Name:", value: screenController.vendorName),
+                  _singleItemModule(
+                      heading: "Vendor Name:",
+                      value: screenController.vendorName),
                   const SizedBox(height: 5),
-                  _singleItemModule(heading: "Details:", value: screenController.details),
+                  _singleItemModule(
+                      heading: "Details:", value: screenController.details),
                   const SizedBox(height: 5),
                   const Text(
                     "Service Name:",
@@ -556,24 +569,25 @@ class ResourcesModule extends StatelessWidget {
                     itemBuilder: (context, i) {
                       return Text(
                         screenController.serviceName[i],
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 18
-                        ),);
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 18),
+                      );
                     },
                   ),
                   const SizedBox(height: 5),
-                  _singleItemModule(heading: "Availability:", value: screenController.availability),
+                  _singleItemModule(
+                      heading: "Availability:",
+                      value: screenController.availability),
                   const SizedBox(height: 5),
-                  _singleItemModule(heading: "Paid Amount:", value: screenController.amountPaid),
-
+                  _singleItemModule(
+                      heading: "Paid Amount:",
+                      value: screenController.amountPaid),
                 ],
               ),
             ),
           );
         });
   }
-
 
   Widget _singleItemModule({required String heading, required String value}) {
     return Column(
@@ -590,14 +604,9 @@ class ResourcesModule extends StatelessWidget {
         // const SizedBox(height: 5),
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 18
-          ),
+          style: const TextStyle(color: Colors.grey, fontSize: 18),
         ),
       ],
     );
   }
-
 }
-

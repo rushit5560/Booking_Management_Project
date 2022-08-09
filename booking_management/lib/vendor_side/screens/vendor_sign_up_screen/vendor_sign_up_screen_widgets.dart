@@ -7,6 +7,7 @@ import 'package:booking_management/user_side/model/vendor_details_screen_models/
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:booking_management/vendor_side/screens/terms_and_condition_screen/terms_and_condition_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/container_decorations.dart';
 import '../../../common_modules/field_decorations.dart';
@@ -252,6 +253,9 @@ class MobileFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.mobileFieldController,
       keyboardType: TextInputType.phone,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(12),
+      ],
       validator: (value) => FieldValidator().validateMobile(value!),
       decoration: vendorSignUpFormFieldDecoration(
           hintText: 'Mobile', controller: screenController),
@@ -417,14 +421,14 @@ class CountrySelectModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          "Country :",
-          style: TextStyle(
-            fontSize: 16,
-            color: AppColors.colorGreyIconDark,
-          ),
-        ),
-        const SizedBox(width: 10),
+        // Text(
+        //   "Country :",
+        //   style: TextStyle(
+        //     fontSize: 16,
+        //     color: AppColors.colorGreyIconDark,
+        //   ),
+        // ),
+        // const SizedBox(width: 10),
         Expanded(
           child: Container(
             height: 45,
@@ -460,11 +464,11 @@ class CountrySelectModule extends StatelessWidget {
                   screenController.isLoading(true);
                   screenController.countryData = newValue!;
                   // log("countryData : ${screenController.countryData!.code}");
-                  screenController.selectedCountryCode.value
-                  = "${screenController.countryData!.code}";
+                  screenController.selectedCountryCode.value =
+                      "${screenController.countryData!.code}";
 
-                  if(screenController.countryData!.code == "IN"){
-                   screenController.priceCheckBox.value = false;
+                  if (screenController.countryData!.code == "IN") {
+                    screenController.priceCheckBox.value = false;
                   }
                   screenController.isLoading(false);
                 },
@@ -543,7 +547,7 @@ class VendorPortalCheckboxModule extends StatelessWidget {
         Obx(
           () => Checkbox(
               value: screenController.vendorPortal.value,
-              activeColor: AppColors.colorLightGrey,
+              activeColor: AppColors.colorGreyIconDark,
               onChanged: (bool? newValue) {
                 //setState(() {
                 screenController.vendorPortal.value = newValue!;
@@ -571,7 +575,7 @@ class TermsAndConditionCheckboxModule extends StatelessWidget {
         Obx(
           () => Checkbox(
               value: screenController.termsAndConditionCheckBox.value,
-              activeColor: AppColors.colorLightGrey,
+              activeColor: AppColors.colorGreyIconDark,
               onChanged: (bool? newValue) {
                 //setState(() {
                 screenController.termsAndConditionCheckBox.value = newValue!;
@@ -599,7 +603,7 @@ class PriceCheckboxModule extends StatelessWidget {
         Obx(
           () => Checkbox(
               value: screenController.priceCheckBox.value,
-              activeColor: AppColors.colorLightGrey,
+              activeColor: AppColors.colorGreyIconDark,
               onChanged: (bool? newValue) {
                 //setState(() {
                 screenController.priceCheckBox.value = newValue!;
@@ -610,7 +614,7 @@ class PriceCheckboxModule extends StatelessWidget {
                 );
               }),
         ),
-        const Text("Price Display?")
+        const Text("Require payment integration ?")
       ],
     );
   }
@@ -627,7 +631,7 @@ class AnyServiceCheckboxModule extends StatelessWidget {
         Obx(
           () => Checkbox(
               value: screenController.serviceCheckBox.value,
-              activeColor: AppColors.colorLightGrey,
+              activeColor: AppColors.colorGreyIconDark,
               onChanged: (bool? newValue) {
                 //setState(() {
                 screenController.serviceCheckBox.value = newValue!;
@@ -638,7 +642,15 @@ class AnyServiceCheckboxModule extends StatelessWidget {
                 );
               }),
         ),
-        const Text("Do you have any Service?")
+        const Text("Require additional sub-service management"),
+        const SizedBox(width: 15),
+        const Tooltip(
+          message: "i.e: Hair cut under Salon, Kitchen under Cleaning",
+          child: Icon(
+            Icons.info,
+            color: Colors.grey,
+          ),
+        ),
       ],
     );
   }
@@ -653,8 +665,8 @@ class TermsAndConditionText extends StatelessWidget {
         onTap: () {
           Get.to(() => TermsAndConditionScreen());
         },
-        child: Text("Read our terms and conditions here",
-            style: const TextStyle(color: Colors.blue)));
+        child: const Text("Read our terms and conditions here",
+            style: TextStyle(color: Colors.blue)));
   }
 }
 
@@ -664,13 +676,39 @@ class VendorSignUpButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(screenController.selectedCountryCode.value);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
           onTap: () async {
             if (screenController.vendorSignUpFormKey.currentState!.validate()) {
-              await screenController.vendorSignUpFunction();
+              if (screenController.selectedCountryCode.value == "SC") {
+                Get.snackbar(
+                  "Country Required",
+                  "Please select your country region.",
+                  snackPosition: SnackPosition.BOTTOM,
+                  margin: const EdgeInsets.only(bottom: 8, left: 5, right: 5),
+                );
+              } else if (screenController.termsAndConditionCheckBox.value ==
+                  false) {
+                Get.snackbar(
+                  "Required Field",
+                  "Please accept terms and conditions",
+                  snackPosition: SnackPosition.BOTTOM,
+                  margin: const EdgeInsets.only(bottom: 8, left: 5, right: 5),
+                );
+              } else {
+                await screenController.vendorSignUpFunction();
+              }
+
+              // else if (screenController.serviceCheckBox.value == false) {
+              //   Get.snackbar(
+              //     "Required Field",
+              //     "Please accept additional sub-service field",
+              //   );
+              // }
+
             }
           },
           child: Container(

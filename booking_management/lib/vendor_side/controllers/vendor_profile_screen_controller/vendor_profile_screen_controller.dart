@@ -153,7 +153,8 @@ class VendorProfileScreenController extends GetxController {
 
         request.headers.addAll(headers);
 
-        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['BusinessName'] =
+            businessNameTextFieldController.text.trim();
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         request.fields['Duration'] = slotDurationValue.value;
@@ -163,13 +164,11 @@ class VendorProfileScreenController extends GetxController {
         request.fields['Longitude'] = selectedLongitude.value;
         request.fields['Latitude'] = selectedLatitude.value;
 
-
         var multiPart = http.MultipartFile(
           'file',
           stream,
           length,
         );
-
 
         request.files.add(multiPart);
 
@@ -183,7 +182,10 @@ class VendorProfileScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((value) {
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) {
           VendorEditProfileModel response1 =
               VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
@@ -210,7 +212,8 @@ class VendorProfileScreenController extends GetxController {
 
         request.headers.addAll(headers);
 
-        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['BusinessName'] =
+            businessNameTextFieldController.text.trim();
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         request.fields['Duration'] = slotDurationValue.value;
@@ -220,7 +223,6 @@ class VendorProfileScreenController extends GetxController {
         request.fields['Longitude'] = selectedLongitude.value;
         request.fields['Latitude'] = selectedLatitude.value;
 
-
         // request.fields['BusinessId'] = businessIdTextFieldController.text.trim();
         // request.fields['CategoryId'] = "${businessDropDownValue!.id}";
         // request.fields['Street'] = streetTextFieldController.text.trim();
@@ -228,10 +230,6 @@ class VendorProfileScreenController extends GetxController {
         // request.fields['Postcode'] = postCodeTextFieldController.text.trim();
         // request.fields['State'] = stateTextFieldController.text.trim();
         // request.fields['Country'] = countryTextFieldController.text.trim();
-
-
-
-
 
         // var multiPart = http.MultipartFile(
         //   'file',
@@ -248,10 +246,14 @@ class VendorProfileScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((value) {
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) {
           log("value : $value");
           // Future.delayed(Duration(milliseconds: 800), () {});
-          VendorEditProfileModel response1 = VendorEditProfileModel.fromJson(json.decode(value));
+          VendorEditProfileModel response1 =
+              VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
           isStatus = response1.statusCode.obs;
           log('status : $isStatus');
@@ -346,6 +348,7 @@ class VendorProfileScreenController extends GetxController {
     log("UserDetails.country : ${UserDetails.country}");
     log("UserDetails.subUrb : ${UserDetails.subUrb}");
     log("UserDetails.postCode : ${UserDetails.postCode}");
+    log("UserDetails.stripeId : ${UserDetails.stripeId}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
 
     isLoading(false);
@@ -426,7 +429,8 @@ class VendorProfileScreenController extends GetxController {
 
         currentSlotDuration.value =
             getUserDetailsByIdModel.data.duration.toString();
-        businessDropDownValue!.name = getUserDetailsByIdModel.data.categories.name;
+        businessDropDownValue!.name =
+            getUserDetailsByIdModel.data.categories.name;
         businessDropDownValue!.id = getUserDetailsByIdModel.data.categories.id;
         slotDuration = slotDurationValue.value;
         selectedLatitude.value = getUserDetailsByIdModel.data.latitude == ""
@@ -504,6 +508,7 @@ class VendorProfileScreenController extends GetxController {
   void onInit() {
     //await getDataFromPrefs();
     getAllBusinessTypeList();
+    getDataFromPrefs();
 
     googlePlace = GooglePlace(ApiUrl.googleApiKey);
 

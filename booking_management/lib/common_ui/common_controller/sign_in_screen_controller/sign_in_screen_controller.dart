@@ -53,13 +53,18 @@ class SignInScreenController extends GetxController {
       // }
 
       if (response.body.toString().contains("Please confirm your email")) {
-        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
-        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+        SignInVendorErrorModel signInVendorErrorModel =
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(
+            msg:
+                "Your account is in-active. Please check your email to activate.");
       } else if (response.body.toString().contains("417")) {
-        SignInVendorErrorModel signInVendorErrorModel = SignInVendorErrorModel.fromJson(json.decode(response.body));
+        SignInVendorErrorModel signInVendorErrorModel =
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
       } else {
-        SignInModel signInModel = SignInModel.fromJson(json.decode(response.body));
+        SignInModel signInModel =
+            SignInModel.fromJson(json.decode(response.body));
 
         isSuccessStatus = signInModel.success.obs;
 
@@ -80,8 +85,9 @@ class SignInScreenController extends GetxController {
             // String finalDob = dob.substring(0, dob.length - 9);
             // log("finalDob : $finalDob");
 
-            if (signInModel.message.toString().contains("Successfully Logged"))
-            {
+            if (signInModel.message
+                .toString()
+                .contains("Successfully Logged")) {
               log("user logged in ");
               sharedPreferenceData.setUserLoginDetailsInPrefs(
                 apiToken: signInModel.data.apiToken,
@@ -100,7 +106,9 @@ class SignInScreenController extends GetxController {
                 country: "",
                 subUrb: "",
                 postCode: "",
+                stripeId: "",
                 //slotDuration: ""
+                vendorVerification: false,
                 businessId: "",
                 serviceSlot: false,
                 institutionName: "",
@@ -130,31 +138,34 @@ class SignInScreenController extends GetxController {
             }
 
             sharedPreferenceData.setUserLoginDetailsInPrefs(
-              apiToken: signInModel.data.apiToken,
-              uniqueId: signInModel.data.id,
-              tableWiseId: signInModel.vendor.id,
-              userName: signInModel.data.userName,
-              email: signInModel.data.email,
-              phoneNo: signInModel.data.phoneNumber,
-              dob: "",
-              roleName: signInModel.role[0],
-              gender: "",
-              businessName: signInModel.vendor.businessName,
-              address: signInModel.vendor.address,
-              street: signInModel.vendor.street,
-              state: signInModel.vendor.state,
-              country: signInModel.vendor.country,
-              subUrb: signInModel.vendor.suburb,
-              postCode: signInModel.vendor.postcode,
-              isSubscription: isSub,
-              // slotDuration: signInModel.vendor.
-              businessId: signInModel.vendor.businessId,
-              serviceSlot: signInModel.vendor.isServiceSlots,
-              institutionName: signInModel.vendor.financialInstitutionName,
-              accountName: signInModel.vendor.accountName,
-              accountNumber: signInModel.vendor.accountNumber,
-              ifscCode: signInModel.vendor.accountCode
-            );
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.vendor.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: "",
+                roleName: signInModel.role[0],
+                gender: "",
+                businessName: signInModel.vendor.businessName,
+                address: signInModel.vendor.address,
+                street: signInModel.vendor.street,
+                state: signInModel.vendor.state,
+                country: signInModel.vendor.country,
+                subUrb: signInModel.vendor.suburb,
+                postCode: signInModel.vendor.postcode,
+                stripeId: signInModel.vendor.stripeId.isEmpty
+                    ? ""
+                    : signInModel.vendor.stripeId,
+                isSubscription: isSub,
+                // slotDuration: signInModel.vendor.
+                vendorVerification: signInModel.vendor.vendorVerification,
+                businessId: signInModel.vendor.businessId,
+                serviceSlot: signInModel.vendor.isServiceSlots,
+                institutionName: signInModel.vendor.financialInstitutionName,
+                accountName: signInModel.vendor.accountName,
+                accountNumber: signInModel.vendor.accountNumber,
+                ifscCode: signInModel.vendor.accountCode);
 
             // DateTime subscription = signInModel.vendor.nextPayment;
             //
@@ -187,7 +198,7 @@ class SignInScreenController extends GetxController {
       }
     } catch (e) {
       log('SignIn Error : $e');
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Invalid login attempt");
     } finally {
       isLoading(false);
     }

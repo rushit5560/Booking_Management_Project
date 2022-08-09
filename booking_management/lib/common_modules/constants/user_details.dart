@@ -24,6 +24,7 @@ class UserDetails {
   static String subUrb = "";
   static String postCode = "";
   static String slotDuration = "";
+  static bool vendorVerification = false;
   static String businessId = "";
   static bool isServiceSlot = false;
 
@@ -34,10 +35,10 @@ class UserDetails {
 
   static bool isUserFirstTime = true;
   static bool isSubscription = true;
+  static String stripeId = "";
 
   static String institutionName = "";
   static String accountName = "";
   static String accountNumber = "";
   static String ifscCode = "";
-
 }

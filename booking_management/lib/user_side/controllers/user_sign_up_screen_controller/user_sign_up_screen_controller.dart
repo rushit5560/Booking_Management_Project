@@ -16,8 +16,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
-
-
 class UserSignUpScreenController extends GetxController {
   SignInRoute signInRoute = Get.arguments ?? SignInRoute.none;
   RxBool isLoading = false.obs;
@@ -32,8 +30,7 @@ class UserSignUpScreenController extends GetxController {
 
   /// Fb Login
   FacebookUserProfile? profile;
-  final FacebookLogin  plugin = FacebookLogin(debug: true);
-
+  final FacebookLogin plugin = FacebookLogin(debug: true);
 
   final GlobalKey<FormState> userSignUpFormKey = GlobalKey<FormState>();
   final TextEditingController userNameFieldController = TextEditingController();
@@ -43,7 +40,8 @@ class UserSignUpScreenController extends GetxController {
   final TextEditingController emailFieldController = TextEditingController();
   final TextEditingController mobileFieldController = TextEditingController();
   final TextEditingController passwordFieldController = TextEditingController();
-  final TextEditingController cPasswordFieldController = TextEditingController();
+  final TextEditingController cPasswordFieldController =
+      TextEditingController();
   TextEditingController dobFieldController = TextEditingController();
   TextEditingController stateFieldController = TextEditingController();
   TextEditingController cityFieldController = TextEditingController();
@@ -60,7 +58,6 @@ class UserSignUpScreenController extends GetxController {
       selectedDate.value = DateFormat.yMMMd("en_US").format(d);
       dobFieldController.text = selectedDate.value;
       log('selectedDate : ${selectedDate.value}');
-
     }
   }
 
@@ -70,7 +67,7 @@ class UserSignUpScreenController extends GetxController {
     String url = ApiUrl.userSignUpApi;
     log('Url : $url');
 
-    try{
+    try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
       request.fields['UserName'] = userNameFieldController.text.trim();
@@ -81,39 +78,39 @@ class UserSignUpScreenController extends GetxController {
 
       log('request.fields: ${request.fields}');
 
-
       var response = await request.send();
       log('response: ${response.request}');
 
       response.stream.transform(utf8.decoder).listen((value) async {
-        UserSignUpModel response1 = UserSignUpModel.fromJson(json.decode(value));
+        UserSignUpModel response1 =
+            UserSignUpModel.fromJson(json.decode(value));
         log('response1 :::::: ${response1.statusCode}');
         isStatus = response1.statusCode.obs;
 
-        if(isStatus.value == 200) {
+        if (isStatus.value == 200) {
           // UserDetails.customerId = response1.data.id;
-          Fluttertoast.showToast(msg: "${response1.message}. Please confirm your email.");
+          Fluttertoast.showToast(
+              msg: "${response1.message}. Please confirm your email.");
           clearSignUpFieldsFunction();
 
-          if(signInRoute == SignInRoute.fromBookScreen) {
-           Get.back();
-           Get.back();
+          if (signInRoute == SignInRoute.fromBookScreen) {
+            Get.back();
+            Get.back();
           } else {
             Get.off(() => SignInScreen(), transition: Transition.zoom);
           }
         } else {
+          log(response1.data.toString());
           Fluttertoast.showToast(msg: response1.message);
           log('False False');
         }
       });
-
-    } catch(e) {
+    } catch (e) {
       log('SignUp Error : $e');
     } finally {
       isLoading(false);
     }
   }
-
 
   Future signInWithGoogleFunction() async {
     isLoading(true);
@@ -121,10 +118,11 @@ class UserSignUpScreenController extends GetxController {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     googleSignIn.signOut();
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount.authentication;
+          await googleSignInAccount.authentication;
       final AuthCredential authCredential = GoogleAuthProvider.credential(
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken);
@@ -170,8 +168,8 @@ class UserSignUpScreenController extends GetxController {
 
     await subPartOfFacebookLogin();
     await plugin.logOut();
-
   }
+
   subPartOfFacebookLogin() async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     final plugin1 = plugin;
@@ -189,15 +187,13 @@ class UserSignUpScreenController extends GetxController {
         emailFieldController.text = email!;
       }
       imageUrl = await plugin1.getProfileImageUrl(width: 100);
-      if(profile != null) {
-        if(profile!.userId.isNotEmpty) {
-
+      if (profile != null) {
+        if (profile!.userId.isNotEmpty) {
           String userName = profile!.name!;
           userNameFieldController.text = userName.wordCapitalize();
           passwordFieldController.text = "${userNameFieldController.text}@123";
 
           await userSignUpFunction();
-
 
           // prefs.setString('userId', profile!.userId);
           // prefs.setString('userName', profile!.firstName!);
@@ -211,7 +207,6 @@ class UserSignUpScreenController extends GetxController {
           // log('id: $userId, username : $uName, email : $uEmail, photo : $uPhotoUrl');
         }
       }
-
     }
   }
 

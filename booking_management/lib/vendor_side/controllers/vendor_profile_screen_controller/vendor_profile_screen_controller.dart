@@ -393,6 +393,7 @@ class VendorProfileScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.uniqueId}";
     log('Url : $url');
+    log('Url : ${{UserDetails.apiToken}}');
 
     try {
       http.Response response =

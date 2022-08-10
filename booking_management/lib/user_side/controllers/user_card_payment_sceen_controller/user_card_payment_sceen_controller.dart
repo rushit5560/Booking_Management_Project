@@ -1,20 +1,21 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
-import 'package:booking_management/vendor_side/controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
-import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
+import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import 'package:booking_management/common_ui/model/sign_out_model/sign_out_model.dart';
+import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
+import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
 
-import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/payment_keys.dart';
-import '../../../user_side/model/vendor_details_screen_models/country_model.dart';
 
-class VendorCardPaymentScreenController extends GetxController {
+class UserCardPaymentScreenController extends GetxController {
   var bookingPrice = Get.arguments[0];
   var bookingSubId = Get.arguments[1];
   final size = Get.size;
@@ -137,15 +138,15 @@ class VendorCardPaymentScreenController extends GetxController {
   }
 
   checkoutSubscriptionSuccess() async {
-    final vendorSubscriptionPlanScreenController =
-        Get.find<VendorSubscriptionPlanScreenController>();
-    await vendorSubscriptionPlanScreenController
-        .purchaseSubscriptionPlanFunction(
-      productId: bookingSubId,
-    );
+    // final vendorSubscriptionPlanScreenController =
+    //     Get.find<VendorSubscriptionPlanScreenController>();
+    // await vendorSubscriptionPlanScreenController
+    //     .purchaseSubscriptionPlanFunction(
+    //   productId: bookingSubId,
+    // );
     Get.snackbar(
       "Success",
-      "Subscription Purchased",
+      "Service Booked",
     );
 
     // Purchase plan api call
@@ -155,7 +156,7 @@ class VendorCardPaymentScreenController extends GetxController {
     log("booked amount price  == $bookingPrice");
     log("booked amount price  == $bookingPrice");
 
-    Get.to(() => VendorIndexScreen());
+    Get.to(() => InvoiceReportScreen());
   }
 
   @override

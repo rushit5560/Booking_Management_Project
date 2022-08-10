@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/common_functions.dart';
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
+import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/field_decorations.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/bank_info_screen_controller/bank_info_screen_controller.dart';
@@ -18,7 +19,7 @@ class BankInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: ()=> hideKeyboard(),
+        onTap: () => hideKeyboard(),
         child: SafeArea(
           child: Column(
             children: [
@@ -35,16 +36,23 @@ class BankInfoScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              FinancialInstituteNameFieldModule(),
-                              AccountNameFieldModule(),
-                              AccountNumberFieldModule(),
-                              IfscFieldModule(),
-
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(children: [
+                                  FinancialInstituteNameFieldModule(),
+                                  AccountNameFieldModule(),
+                                  AccountNumberFieldModule(),
+                                  IfscFieldModule(),
+                                ]),
+                              ),
                               const SizedBox(height: 20),
                               SaveChangesButtonModule(),
                             ],
-                          ),
-                        ),
+                          ).commonAllSidePadding(5),
+                        ).commonAllSidePadding(5),
                 ),
               ),
             ],

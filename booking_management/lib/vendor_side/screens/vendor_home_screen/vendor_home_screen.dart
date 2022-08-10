@@ -44,10 +44,7 @@ class VendorHomeScreen extends StatelessWidget {
                                     physics: const BouncingScrollPhysics(),
                                     child: Column(
                                       children: [
-                                        UserDetails.roleName == "Vendor" &&
-                                                UserDetails
-                                                        .vendorVerification ==
-                                                    false
+                                        UserDetails.vendorVerification == false
                                             ? Container(
                                                 decoration: BoxDecoration(
                                                   color: AppColors.accentColor,

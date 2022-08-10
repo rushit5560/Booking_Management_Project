@@ -10,7 +10,6 @@ import '../../../common_modules/field_validation.dart';
 import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import '../../controllers/user_sign_up_screen_controller/user_sign_up_screen_controller.dart';
 
-
 class UserNameFieldModule extends StatelessWidget {
   UserNameFieldModule({Key? key}) : super(key: key);
   final screenController = Get.find<UserSignUpScreenController>();
@@ -49,7 +48,6 @@ class FullNameFieldModule extends StatelessWidget {
     );
   }
 }
-
 
 class LastNameFieldModule extends StatelessWidget {
   LastNameFieldModule({Key? key}) : super(key: key);
@@ -154,12 +152,16 @@ class PasswordFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          ()=> TextFormField(
+      () => TextFormField(
         controller: screenController.passwordFieldController,
         keyboardType: TextInputType.text,
         obscureText: screenController.isPasswordVisible.value,
         validator: (value) => FieldValidator().validatePassword(value!),
-        decoration: signUpFormFieldDecoration(hintText: 'Password', index: 1, controller: screenController, context: context),
+        decoration: signUpFormFieldDecoration(
+            hintText: 'Password',
+            index: 1,
+            controller: screenController,
+            context: context),
       ),
     );
   }
@@ -171,18 +173,18 @@ class CPasswordFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>
-        TextFormField(
+    return Obx(
+      () => TextFormField(
         controller: screenController.cPasswordFieldController,
         keyboardType: TextInputType.text,
-          obscureText: screenController.isRePasswordVisible.value,
+        obscureText: screenController.isRePasswordVisible.value,
         validator: (value) {
           if (value!.isEmpty) {
             return "Confirm password is required";
-          } else if(screenController.passwordFieldController.text != screenController.cPasswordFieldController.text){
+          } else if (screenController.passwordFieldController.text !=
+              screenController.cPasswordFieldController.text) {
             return "Password and confirm password should be same";
-          }
-          else {
+          } else {
             return null;
           }
         },
@@ -206,9 +208,9 @@ class TermsAndConditionCheckboxModule extends StatelessWidget {
     return Row(
       children: [
         Obx(
-              () => Checkbox(
+          () => Checkbox(
               value: screenController.termsAndConditionCheckBox.value,
-              activeColor: AppColors.colorLightGrey,
+              activeColor: AppColors.colorGreyIconDark,
               onChanged: (bool? newValue) {
                 //setState(() {
                 screenController.termsAndConditionCheckBox.value = newValue!;
@@ -231,13 +233,13 @@ class TermsAndConditionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Get.to(() => TermsAndConditionScreen());
-      },
-        child: Text("Read our terms and conditions here", style: const TextStyle(color: Colors.blue)));
+        onTap: () {
+          Get.to(() => TermsAndConditionScreen());
+        },
+        child: Text("Read our terms and conditions here",
+            style: const TextStyle(color: Colors.blue)));
   }
 }
-
 
 class DOBFieldModule extends StatelessWidget {
   DOBFieldModule({Key? key}) : super(key: key);
@@ -327,7 +329,7 @@ class SignUpButtonModule extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () async {
-            if(screenController.userSignUpFormKey.currentState!.validate()){
+            if (screenController.userSignUpFormKey.currentState!.validate()) {
               await screenController.userSignUpFunction();
             }
           },
@@ -341,8 +343,7 @@ class SignUpButtonModule extends StatelessWidget {
                     color: Colors.grey.shade300,
                     blurStyle: BlurStyle.outer,
                   ),
-                ]
-            ),
+                ]),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
               child: Text(
@@ -369,16 +370,17 @@ class SkipButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-            onTap: (){
-              Get.offAll(()=> IndexScreen());
-            },
-            child: const Text(
-              "Skip",
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontSize: 16,
-              ),
-            ),),
+          onTap: () {
+            Get.offAll(() => IndexScreen());
+          },
+          child: const Text(
+            "Skip",
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 16,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -420,7 +422,7 @@ class SignInTextModule extends StatelessWidget {
         const Text('Already have an account? '),
         GestureDetector(
           onTap: () {
-            Get.off(()=> SignInScreen());
+            Get.off(() => SignInScreen());
           },
           child: const Text(
             'Sign In',

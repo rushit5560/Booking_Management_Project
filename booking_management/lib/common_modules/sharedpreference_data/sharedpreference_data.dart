@@ -39,6 +39,7 @@ class SharedPreferenceData {
   String accountNameKey = "accountNameKey";
   String accountNumberKey = "accountNumberKey";
   String ifscCodeKey = "ifscCodeKey";
+  String isPriceDisplayKey = "isPriceDisplayKey";
 
   /// This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
   setUserLoginDetailsInPrefs({
@@ -68,6 +69,7 @@ class SharedPreferenceData {
     required String accountName,
     required String accountNumber,
     required String ifscCode,
+    required bool isPriceDisplay,
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -100,6 +102,7 @@ class SharedPreferenceData {
     prefs.remove(accountNameKey);
     prefs.remove(accountNumberKey);
     prefs.remove(ifscCodeKey);
+    prefs.remove(isPriceDisplayKey);
 
     //Add UserId, Token & UserLoggedInStatus
     prefs.setBool(isUserLoggedInKey, true);
@@ -129,6 +132,7 @@ class SharedPreferenceData {
     prefs.setString(accountNameKey, accountName);
     prefs.setString(accountNumberKey, accountNumber);
     prefs.setString(ifscCodeKey, ifscCode);
+    prefs.setBool(isPriceDisplayKey, isPriceDisplay);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
@@ -160,6 +164,7 @@ class SharedPreferenceData {
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
+    UserDetails.isPriceDisplay = prefs.getBool(isPriceDisplayKey) ?? false;
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -184,6 +189,7 @@ class SharedPreferenceData {
     log("UserDetails.businessId : ${UserDetails.vendorVerification}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
     log("UserDetails.isServiceSlot : ${UserDetails.isServiceSlot}");
+    log("UserDetails.isPriceDisplay : ${UserDetails.isPriceDisplay}");
   }
 
   /// Clear All UserLoggedIn Data
@@ -217,6 +223,7 @@ class SharedPreferenceData {
     prefs.setString(accountNameKey, "");
     prefs.setString(accountNumberKey, "");
     prefs.setString(ifscCodeKey, "");
+    prefs.setBool(isPriceDisplayKey, false);
 
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;
     UserDetails.apiToken = prefs.getString(apiTokenKey) ?? "";
@@ -246,6 +253,7 @@ class SharedPreferenceData {
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";
+    UserDetails.isPriceDisplay = prefs.getBool(isPriceDisplayKey) ?? false;
 
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
@@ -269,6 +277,7 @@ class SharedPreferenceData {
     log("UserDetails.issubscription : ${UserDetails.isSubscription}");
     log("UserDetails.vendorVerification : ${UserDetails.vendorVerification}");
     log("UserDetails.businessId : ${UserDetails.businessId}");
+    log("UserDetails.isPriceDisplay : ${UserDetails.isPriceDisplay}");
   }
 
   /// Set Latitude & Longitude
@@ -308,8 +317,7 @@ class SharedPreferenceData {
     prefs.setString(accountNumberKey, accountNumber);
     prefs.setString(ifscCodeKey, ifscCode);
 
-    UserDetails.institutionName =
-        prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";

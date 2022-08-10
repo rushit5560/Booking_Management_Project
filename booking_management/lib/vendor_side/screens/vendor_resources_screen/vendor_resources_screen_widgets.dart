@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/screens/choose_court_screen/choose_court_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen.dart';
@@ -102,7 +103,7 @@ class VendorResourcesListModule extends StatelessWidget {
                               //   ),
                               // ),
                               //const SizedBox(height: 8),
-                              Row(
+                              UserDetails.isPriceDisplay ? Row(
                                 children: [
                                   const Text(
                                     'price:',
@@ -122,8 +123,9 @@ class VendorResourcesListModule extends StatelessWidget {
                                     ),
                                   ),
                                 ],
-                              ),
-                              const SizedBox(height: 8),
+                              ) : Container(),
+                              UserDetails.isPriceDisplay
+                                  ? const SizedBox(height: 8) : Container(),
                               Row(
                                 children: [
                                   const Text(

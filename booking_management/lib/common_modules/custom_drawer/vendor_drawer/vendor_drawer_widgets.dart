@@ -99,9 +99,9 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       {required VendorDrawerOption vendorSettingScreenOption}) async {
     if (vendorSettingScreenOption == VendorDrawerOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption == VendorDrawerOption.myCustomer) {
+    } /*else if (vendorSettingScreenOption == VendorDrawerOption.myCustomer) {
       Get.to(() => MyCustomerScreen(), transition: Transition.rightToLeft);
-    } else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
+    }*/ else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
       Get.to(() => VendorChatListScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.bookingHistory) {
       Get.to(() => const VendorBookingHistoryScreen(),

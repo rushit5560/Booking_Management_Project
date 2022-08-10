@@ -115,6 +115,7 @@ class SignInScreenController extends GetxController {
                 accountName: "",
                 accountNumber: "",
                 ifscCode: "",
+                isPriceDisplay: false
               );
               log("Fcm Token : ${UserDetails.fcmToken}");
               if (signInRoute == SignInRoute.fromBookScreen) {
@@ -165,7 +166,9 @@ class SignInScreenController extends GetxController {
                 institutionName: signInModel.vendor.financialInstitutionName,
                 accountName: signInModel.vendor.accountName,
                 accountNumber: signInModel.vendor.accountNumber,
-                ifscCode: signInModel.vendor.accountCode);
+                ifscCode: signInModel.vendor.accountCode,
+                isPriceDisplay: signInModel.vendor.isPriceDisplay,
+            );
 
             // DateTime subscription = signInModel.vendor.nextPayment;
             //

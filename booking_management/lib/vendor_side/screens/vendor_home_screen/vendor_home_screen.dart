@@ -70,6 +70,35 @@ class VendorHomeScreen extends StatelessWidget {
                                               )
                                             : const SizedBox(),
                                         const SizedBox(height: 20),
+                                        vendorHomeScreenController
+                                                .isBookingAvailability.value
+                                            ? Container(
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.accentColor,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(12),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(12),
+                                                  child: Text(
+                                                    vendorHomeScreenController.bookingAvailabilityString,
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(),
+                                        vendorHomeScreenController.isBookingAvailability.value
+                                            ? const SizedBox(height: 20)
+                                            : Container(),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,

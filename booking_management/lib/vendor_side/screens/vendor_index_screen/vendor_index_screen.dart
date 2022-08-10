@@ -1,6 +1,6 @@
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/vendor_side/screens/vendor_appointment_list_screen/vendor_appointment_list_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
@@ -239,17 +239,47 @@ class VendorIndexScreen extends StatelessWidget {
                     log("${vendorIndexScreenController.vendorMenuIndex.value}");
 
                     vendorIndexScreenController.vendorMenuIndex.value = 2;
+                    vendorIndexScreenController.notiCounter.value = 0;
                   },
                   child: SizedBox(
                     height: 30,
                     width: 30,
-                    child: Image.asset(
-                      AppImages.menuNotificationImg,
-                      // vendorIndexScreenController.vendorMenuIndex.value == 2
-                      //     ? AppImages.menuNotificationImg
-                      //     : AppImages.menuNotification1Img,
-                      height: 25,
-                      color: AppColors.blackColor.withOpacity(0.7),
+                    child: Stack(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: Image.asset(
+                            AppImages.menuNotificationImg,
+                            // vendorIndexScreenController.vendorMenuIndex.value == 2
+                            //     ? AppImages.menuNotificationImg
+                            //     : AppImages.menuNotification1Img,
+                            height: 25,
+                            color: AppColors.blackColor.withOpacity(0.7),
+                          ),
+                        ),
+                        UserDetails.isUserLoggedIn == true && vendorIndexScreenController.notiCounter.value != 0
+                            ? Obx(
+                              ()=> Container(
+                            height: 16,
+                            width: 16,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "${vendorIndexScreenController.notiCounter.value}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                            : Container(),
+                      ],
                     ),
                   ),
                 ),

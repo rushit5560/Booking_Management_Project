@@ -83,3 +83,7 @@ enum SubscriptionOption {
   drawer,
   direct,
 }
+
+enum SearchWise {
+  none, dateWise
+}

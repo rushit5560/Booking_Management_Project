@@ -364,7 +364,7 @@ class SubmitButton extends StatelessWidget {
         } else if(screenController.endDate.value == "Select End Date") {
           Fluttertoast.showToast(msg: "Please select end date");
         } else {
-          await screenController.getFilterInvoiceReportFunction();
+          // await screenController.getFilterInvoiceReportFunction();
         }
       },
       child: Container(

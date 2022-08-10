@@ -22,7 +22,7 @@ class CustomerReportScreenController extends GetxController {
   RxBool isStartDateCalenderShow = false.obs;
   RxBool isEndDateCalenderShow = false.obs;
   /// DD List
-  List<String> statusList = ["AllCustomer", "Active", "Deactivate", "Guest"];
+  List<String> statusList = ["AllCustomer", "Guest"];
   RxString selectedStatusValue = "AllCustomer".obs;
 
 
@@ -61,7 +61,7 @@ class CustomerReportScreenController extends GetxController {
   /// Filter Customer Report List
   getFilterCustomerReportFunction({required String status}) async {
     isLoading(true);
-    String url = ApiUrl.customerReportApi + "?vendorId=${UserDetails.uniqueId}" + "&Status=$status";
+    String url = ApiUrl.customerReportApi + "?vendorid=${UserDetails.uniqueId}" + "&Status=$status";
 
     log("Customer Report Api Url : $url");
 

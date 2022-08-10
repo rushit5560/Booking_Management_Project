@@ -7,6 +7,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_profile_screen_controller/vendor_profile_screen_controller.dart';
+import 'package:booking_management/vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -189,6 +190,24 @@ class _VendorProfileDetailsModuleState
           businessIdTextField(),
           const SizedBox(height: 40),
           saveButtonModule(),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              uploadVerifyDocButtonModule(),
+            ],
+          ),
+          /*Row(
+            children: [
+              Expanded(
+                child: saveButtonModule(),
+              ),
+              Expanded(
+                child: uploadVerifyDocButtonModule(),
+              ),
+            ],
+          ),*/
+
         ],
       ).commonAllSidePadding(20),
     );
@@ -1640,6 +1659,44 @@ class _VendorProfileDetailsModuleState
           ),
         ),
       ),
+    );
+  }
+
+  Widget uploadVerifyDocButtonModule() {
+    return GestureDetector(
+      onTap: () {
+        Get.to(()=> VendorBusinessDocumentScreen(),
+        transition: Transition.zoom);
+      },
+      child: const Text(
+        'Upload verification documents',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+          decoration: TextDecoration.underline,
+        ),
+      ),
+      /*child: Container(
+        decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Upload verification documents',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),*/
     );
   }
 

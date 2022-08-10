@@ -28,21 +28,21 @@ class InvoiceReportScreen extends StatelessWidget {
                     const SizedBox(height: 10),
 
                     /// Select Start Date Module
-                    StartDateSelectModule(),
+                    /*StartDateSelectModule(),
                     invoiceReportScreenController.isStartDateCalenderShow.value
                         ? SelectStartDateCalender()
-                        : Container(),
+                        : Container(),*/
 
-                    const SizedBox(height: 10),
+                    // const SizedBox(height: 10),
 
                     /// Select End Date Module
-                    EndDateSelectModule(),
+                    /*EndDateSelectModule(),
                     invoiceReportScreenController.isEndDateCalenderShow.value
                         ? SelectEndDateCalender()
-                        : Container(),
+                        : Container(),*/
 
-                    const SizedBox(height: 15),
-                    SubmitButton(),
+                    // const SizedBox(height: 15),
+                    // SubmitButton(),
 
                     Expanded(child: AppointmentReportListModule()),
                   ],

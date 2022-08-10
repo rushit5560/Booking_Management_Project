@@ -35,7 +35,7 @@ class VendorInvoiceListScreenController extends GetxController {
   /// Get All Order List
   getAllOrderListFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorGetAllOrdersApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorGetAllOrdersApi + "?vendorid=${UserDetails.tableWiseId}";
     log("Get All Order API URL : $url");
     log('header: ${apiHeader.headers}');
 

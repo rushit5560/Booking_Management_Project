@@ -3,10 +3,12 @@ import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
 import 'package:booking_management/vendor_side/model/get_search_with_resource_list_model/get_search_with_resource_list_model.dart';
 import 'package:booking_management/vendor_side/model/get_vendor_auto_schedule_model/get_vendor_auto_schedule_model.dart';
+import 'package:booking_management/vendor_side/model/vendor_schedule_time_screen_model/available_timing_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -30,6 +32,7 @@ class VendorScheduleManagementScreenController extends GetxController {
   List<BookingResourceWorkerData> allResourcesList = [];
 
   ApiHeader apiHeader = ApiHeader();
+  RxBool isTiming = true.obs;
 
   int resourceId = 0;
   List<WorkerList> searchWithResourceList = [];
@@ -80,11 +83,12 @@ class VendorScheduleManagementScreenController extends GetxController {
     } catch (e) {
       log("getVendorAutoScheduleFunction Error ::: $e");
     } finally {
-      isLoading(false);
+      // isLoading(false);
+      await getSearchWithResourceListFunction();
     }
   }
 
-  getAllResourceListFunction() async {
+  getAllResourceListFunction({SearchWise searchWise = SearchWise.none}) async {
     isLoading(true);
     String url =
         ApiUrl.getAllResourceListApi + "?Id=${UserDetails.tableWiseId}";
@@ -106,8 +110,9 @@ class VendorScheduleManagementScreenController extends GetxController {
         for (int i = 0; i < allResourcesList.length; i++) {
           resourceId = allResourcesList[i].id;
           log('Resource id: $resourceId');
-          allResourcesList[i].timingList =
-              await getSearchWithResourceListFunction();
+          Map<String, dynamic> mapData = await getSearchWithResourceListFunction(searchWise: searchWise);
+          allResourcesList[i].timingList = mapData["timeList"];
+          allResourcesList[i].nextDate = mapData["nextDate"];
         }
       } else {
         log("getResourcesFunction Else Else");
@@ -116,12 +121,15 @@ class VendorScheduleManagementScreenController extends GetxController {
     } catch (e) {
       log("getResourcesFunction Error ::: $e");
     } finally {
-      isLoading(false);
+      //todo
+      // isLoading(false);
+      await getTimingFunction();
     }
   }
 
-  Future<List<TimingSlot>> getSearchWithResourceListFunction() async {
+  getSearchWithResourceListFunction({SearchWise searchWise = SearchWise.none}) async {
     isLoading(true);
+    String nextDate = "";
     List<TimingSlot> timeList = [];
     DateTime dateTime = DateTime.now();
     String hour = "${dateTime.hour}";
@@ -130,11 +138,11 @@ class VendorScheduleManagementScreenController extends GetxController {
     String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     String timeModule = "$hour:$minute:00";
 
-    String url = ApiUrl.vendorResourceScheduleApi +
-        "?Id=$resourceId" "&dDate=${dateModule}T$timeModule";
+    String url = searchWise == SearchWise.none
+    ? ApiUrl.vendorResourceScheduleApi + "?Id=$resourceId" "&dDate=${dateModule}T$timeModule"
+    : ApiUrl.vendorResourceScheduleApi + "?Id=$resourceId" "&dDate=${scheduleTimingDate.value}" ;
 
-    ApiUrl.getAllSearchWithResourceListApi +
-        "?Id=$resourceId&dDate=${scheduleTimingDate.value}";
+    // ApiUrl.getAllSearchWithResourceListApi + "?Id=$resourceId&dDate=${scheduleTimingDate.value}";
     log("Search With Resource List Api Url : $url");
     log('Header: ${apiHeader.headers}');
 
@@ -148,6 +156,7 @@ class VendorScheduleManagementScreenController extends GetxController {
       isSuccessStatus = getSearchWithResourceListModel.success.obs;
 
       if (isSuccessStatus.value) {
+        nextDate = getSearchWithResourceListModel.nextDate;
         log("Success: $isSuccessStatus");
         searchWithResourceList = getSearchWithResourceListModel.workerList;
 
@@ -183,7 +192,34 @@ class VendorScheduleManagementScreenController extends GetxController {
       isLoading(false);
     }
 
-    return timeList;
+    // return timeList;
+    return {"timeList": timeList, "nextDate": nextDate};
+  }
+
+  Future<void> getTimingFunction() async {
+    isLoading(true);
+    String url = ApiUrl.getTimingApi + "?userId=${UserDetails.uniqueId}";
+    log("Get Timing Api Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("response body 111 : ${response.body}");
+
+      AvailableTimingModel availableTimingModel = AvailableTimingModel.fromJson(json.decode(response.body));
+      isSuccessStatus = availableTimingModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        isTiming = availableTimingModel.timings.obs;
+        log("isTiming : ${isTiming.value}");
+      } else {
+        log("getTimingFunction Else");
+      }
+    } catch(e) {
+      log("getTimingFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
   }
 
   loadUI() {

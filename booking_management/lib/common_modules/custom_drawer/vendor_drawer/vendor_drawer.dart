@@ -59,7 +59,6 @@ class VendorDrawer extends StatelessWidget {
                   collapsed: Container(),
                   expanded: Column(
                     children: [
-                      //todo
                       const SizedBox(height: 10),
                       VendorDrawerSingleItemModule(
                         img: AppImages.profileImg,
@@ -147,14 +146,14 @@ class VendorDrawer extends StatelessWidget {
               VendorDrawerSingleItemModule(
                 img: AppImages.profileImg,
                 name: 'My Customer',
-                vendorDrawerOption: VendorDrawerOption.myCustomer,
+                vendorDrawerOption: VendorDrawerOption.customerReport,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Invoices',
-                vendorDrawerOption: VendorDrawerOption.invoices,
+                vendorDrawerOption: VendorDrawerOption.invoiceReport,
               ),
               const SizedBox(height: 20),
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
+import 'package:booking_management/vendor_side/model/vendor_home_screen_models/booking_availability_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_home_screen_models/vendor_home_screen_models.dart';
 import 'package:booking_management/vendor_side/model/vendor_schedule_time_screen_model/get_all_time_list_by_resource_id_model.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,9 @@ class VendorHomeScreenController extends GetxController {
   String details = "";
   String availability = "";
   String amountPaid = "";
+
+  RxBool isBookingAvailability = false.obs;
+  String bookingAvailabilityString = "";
 
   /// Pending Appointments
   getAppointmentListFunction() async {
@@ -112,7 +116,8 @@ class VendorHomeScreenController extends GetxController {
     } catch (e) {
       log("getResourcesFunction Error ::: $e");
     } finally {
-      isLoading(false);
+      // isLoading(false);
+      await getBookingAvailabilityFunction();
     }
   }
 
@@ -245,6 +250,33 @@ class VendorHomeScreenController extends GetxController {
     } finally {
       // isLoading(false);
     }
+  }
+
+  // todo - Get Booking Availability Function
+  Future<void> getBookingAvailabilityFunction() async {
+    isLoading(true);
+    String url = ApiUrl.getBookingAvailabilityApi + "?userId=${UserDetails.uniqueId}";
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("getBookingAvailabilityFunction Response : ${response.body}");
+
+      BookingAvailabilityModel bookingAvailabilityModel = BookingAvailabilityModel.fromJson(json.decode(response.body));
+      isSuccessStatus = bookingAvailabilityModel.success.obs;
+
+      if(isSuccessStatus.value) {
+        isBookingAvailability = bookingAvailabilityModel.availability.obs;
+        bookingAvailabilityString = bookingAvailabilityModel.message;
+      } else {
+        log("getBookingAvailabilityFunction Else");
+      }
+
+    } catch(e) {
+      log("getBookingAvailabilityFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+
   }
 
   @override

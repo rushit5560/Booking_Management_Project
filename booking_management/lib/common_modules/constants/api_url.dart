@@ -188,9 +188,9 @@ class ApiUrl {
   static const vendorGetResourceDetailsApi =
       apiMainPath + "API/ResourceGetById"; // Get By Id
 
-  static const appointmentReportApi = apiMainPath + "API/AppointmentReport";
-  static const customerReportApi = apiMainPath + "API/CustomerReport";
-  static const invoiceReportApi = apiMainPath + "API/InvoiceReport";
+  static const appointmentReportApi = apiMainPath + "API/APIAppointmentlist";
+  static const customerReportApi = apiMainPath + "API/Customer";
+  static const invoiceReportApi = apiMainPath + "API/InvoiceIndex";
   static const subscriptionReportApi = apiMainPath + "API/SubscriptionReport";
 
   /// Vendor Dashboard
@@ -213,4 +213,7 @@ class ApiUrl {
   static const getAllResourceListApi = apiMainPath + "API/ResourceList";
   static const getAllSearchWithResourceListApi =
       apiMainPath + "API/ResourceSchedule";
+
+  static const getBookingAvailabilityApi = apiMainPath + "API/AvailabilityBooking";
+  static const getTimingApi = apiMainPath + "API/ScheduleCheck";
 }

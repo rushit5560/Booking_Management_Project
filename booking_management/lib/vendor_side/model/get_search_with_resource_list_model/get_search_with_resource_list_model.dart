@@ -13,22 +13,30 @@ class GetSearchWithResourceListModel {
     required this.statusCode,
     required this.success,
     required this.workerList,
+    required this.errorMessage,
+    required this.nextDate,
   });
 
   int statusCode;
   bool success;
   List<WorkerList> workerList;
+  String errorMessage;
+  String nextDate;
 
   factory GetSearchWithResourceListModel.fromJson(Map<String, dynamic> json) => GetSearchWithResourceListModel(
     statusCode: json["statusCode"] ?? 0,
     success: json["success"] ?? false,
     workerList: List<WorkerList>.from(json["workerList"].map((x) => WorkerList.fromJson(x)) ?? {}),
+    errorMessage: json["errorMessage"] ?? "",
+    nextDate: json["nextDate"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
     "success": success,
     "workerList": List<dynamic>.from(workerList.map((x) => x.toJson())),
+    "errorMessage": errorMessage,
+    "nextDate": nextDate,
   };
 }
 

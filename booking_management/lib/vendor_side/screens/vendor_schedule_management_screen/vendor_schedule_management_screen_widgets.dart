@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_schedule_management_screen_controller/vendor_schedule_management_screen_controller.dart';
@@ -607,7 +608,7 @@ class SearchScheduleSubmitButton extends StatelessWidget {
         if (screenController.scheduleTimingDate.value == "Select Date") {
           Fluttertoast.showToast(msg: "Please select date");
         } else {
-          await screenController.getSearchWithResourceListFunction();
+          await screenController.getAllResourceListFunction(searchWise: SearchWise.dateWise);
         }
         //await screenController.getFilterAppointmentReportFunction();
       },
@@ -678,15 +679,15 @@ class ResourceScheduleListModule extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
-                decoration: BoxDecoration(
-                    // image: DecorationImage(
-                    //   image: NetworkImage(imgUrl),
-                    //   fit: BoxFit.cover,
-                    // ),
-                    ),
+                // decoration: BoxDecoration(
+                //     // image: DecorationImage(
+                //     //   image: NetworkImage(imgUrl),
+                //     //   fit: BoxFit.cover,
+                //     // ),
+                //     ),
                 child: Image.network(
                   imgUrl,
                   errorBuilder: (context, st, ob) {
@@ -730,8 +731,35 @@ class ResourceScheduleListModule extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          singleItem.timingList.isEmpty
-              ? Container()
+          singleItem.timingList.isEmpty && singleItem.nextDate.isEmpty
+              ? Row(
+            children: const [Text("Time slot is not available.")],
+          )
+              : singleItem.nextDate.isNotEmpty
+          ? Row(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  String nextDate = singleItem.nextDate;
+                  List<String> dateModuleList = nextDate.split('/');
+                  for (int i = 0; i < dateModuleList.length; i++) {
+                    log("dateModuleList : ${dateModuleList[i]}");
+                  }
+                  log("dateModuleList.length : ${dateModuleList.length}");
+                  screenController.scheduleTimingDate.value =
+                  "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
+                  await screenController.getAllResourceListFunction(searchWise: SearchWise.dateWise);
+                },
+                child: Text(
+                  "Next Available ${singleItem.nextDate}",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: AppColors.accentColor,
+                  ),
+                ),
+              ),
+            ],
+          )
               : GridView.builder(
                   itemCount: singleItem.timingList.length,
                   shrinkWrap: true,

@@ -134,8 +134,8 @@ class AppointmentReportScreenController extends GetxController {
   getFilterAppointmentReportFunction() async {
     isLoading(true);
     String url = selectedStatusValue.value == "Select Status"
-    ? ApiUrl.appointmentReportApi + "?fromDate=$startDate" + "&toDate=$endDate" + "&option" + "&vendorId=${UserDetails.uniqueId}"
-    : ApiUrl.appointmentReportApi + "?fromDate=$startDate" + "&toDate=$endDate" + "&option=$selectedStatusValue" + "&vendorId=${UserDetails.uniqueId}";
+    ? ApiUrl.appointmentReportApi + "&userId=${UserDetails.uniqueId}" + "?fromDate=$startDate" + "&toDate=$endDate" /*+ "&option"*/
+    : ApiUrl.appointmentReportApi + "&userId=${UserDetails.uniqueId}" + "?fromDate=$startDate" + "&toDate=$endDate" + "&option=$selectedStatusValue";
 
     log("Appointment Report Api Url : $url");
     log('header: ${apiHeader.headers}');

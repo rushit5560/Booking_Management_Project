@@ -41,4 +41,5 @@ class UserDetails {
   static String accountName = "";
   static String accountNumber = "";
   static String ifscCode = "";
+  static bool isPriceDisplay = false;
 }

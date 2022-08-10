@@ -28,7 +28,7 @@ class InvoiceReportScreenController extends GetxController {
   /// Invoice Report All List
   getInvoiceReportFunction() async {
     isLoading(true);
-    String url = ApiUrl.invoiceReportApi + "?vendorId=${UserDetails.uniqueId}";
+    String url = ApiUrl.invoiceReportApi + "?vendorid=${UserDetails.tableWiseId}";
     log("Appointment Report Api Url : $url");
 
     try {
@@ -57,7 +57,7 @@ class InvoiceReportScreenController extends GetxController {
   }
 
   /// Filter Invoice Report List
-  getFilterInvoiceReportFunction() async {
+  /*getFilterInvoiceReportFunction() async {
     isLoading(true);
     String url = ApiUrl.invoiceReportApi + "?fromDate=$startDate" + "&toDate=$endDate" + "&vendorId=${UserDetails.uniqueId}";
 
@@ -86,7 +86,7 @@ class InvoiceReportScreenController extends GetxController {
       isLoading(false);
     }
 
-  }
+  }*/
 
   @override
   void onInit() {

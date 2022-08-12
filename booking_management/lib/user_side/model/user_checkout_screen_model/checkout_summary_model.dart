@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-CheckoutSummaryModel checkoutSummaryModelFromJson(String str) => CheckoutSummaryModel.fromJson(json.decode(str));
+CheckoutSummaryModel checkoutSummaryModelFromJson(String str) =>
+    CheckoutSummaryModel.fromJson(json.decode(str));
 
-String checkoutSummaryModelToJson(CheckoutSummaryModel data) => json.encode(data.toJson());
+String checkoutSummaryModelToJson(CheckoutSummaryModel data) =>
+    json.encode(data.toJson());
 
 class CheckoutSummaryModel {
   CheckoutSummaryModel({
@@ -15,17 +17,18 @@ class CheckoutSummaryModel {
   bool success;
   WorkerList workerList;
 
-  factory CheckoutSummaryModel.fromJson(Map<String, dynamic> json) => CheckoutSummaryModel(
-    statusCode: json["statusCode"] ?? 0,
-    success: json["success"] ?? false,
-    workerList: WorkerList.fromJson(json["workerList"] ?? {}),
-  );
+  factory CheckoutSummaryModel.fromJson(Map<String, dynamic> json) =>
+      CheckoutSummaryModel(
+        statusCode: json["statusCode"] ?? 0,
+        success: json["success"] ?? false,
+        workerList: WorkerList.fromJson(json["workerList"] ?? {}),
+      );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "success": success,
-    "workerList": workerList.toJson(),
-  };
+        "statusCode": statusCode,
+        "success": success,
+        "workerList": workerList.toJson(),
+      };
 }
 
 class WorkerList {
@@ -44,20 +47,20 @@ class WorkerList {
   Booking booking;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
-    id: json["id"] ?? 0,
-    bookingId: json["bookingId"] ?? "",
-    price: json["price"] ?? 0.0,
-    quantity: json["quantity"] ?? 0,
-    booking: Booking.fromJson(json["booking"] ?? {}),
-  );
+        id: json["id"] ?? 0,
+        bookingId: json["bookingId"] ?? "",
+        price: json["price"] ?? 0.0,
+        quantity: json["quantity"] ?? 0,
+        booking: Booking.fromJson(json["booking"] ?? {}),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "bookingId": bookingId,
-    "price": price,
-    "quantity": quantity,
-    "booking": booking.toJson(),
-  };
+        "id": id,
+        "bookingId": bookingId,
+        "price": price,
+        "quantity": quantity,
+        "booking": booking.toJson(),
+      };
 }
 
 class Booking {
@@ -100,44 +103,44 @@ class Booking {
   String serviceName;
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
-    id: json["id"] ?? 0,
-    bookingId: json["bookingId"] ?? "",
-    vendorId: json["vendorId"] ?? 0,
-    vendor: Vendor.fromJson(json["vendor"] ?? {}),
-    // customer: json["customer"],
-    customerId: json["customerId"] ?? 0,
-    bookingFor: json["bookingFor"] ?? "",
-    bookingForId: json["bookingForId"] ?? "",
-    startDateTime: json["startDateTime"] ?? "",
-    endDateTime: json["endDateTime"] ?? "",
-    firstName: json["firstName"] ?? "",
-    email: json["email"] ?? "",
-    phoneNo: json["phoneNo"] ?? "",
-    notes: json["notes"] ?? "",
-    status: json["status"] ?? "",
-    bookingItems: json["bookingItems"] ?? "",
-    serviceName: json["serviceName"] ?? "",
-  );
+        id: json["id"] ?? 0,
+        bookingId: json["bookingId"] ?? "",
+        vendorId: json["vendorId"] ?? 0,
+        vendor: Vendor.fromJson(json["vendor"] ?? {}),
+        // customer: json["customer"],
+        customerId: json["customerId"] ?? 0,
+        bookingFor: json["bookingFor"] ?? "",
+        bookingForId: json["bookingForId"] ?? "",
+        startDateTime: json["startDateTime"] ?? "",
+        endDateTime: json["endDateTime"] ?? "",
+        firstName: json["firstName"] ?? "",
+        email: json["email"] ?? "",
+        phoneNo: json["phoneNo"] ?? "",
+        notes: json["notes"] ?? "",
+        status: json["status"] ?? "",
+        bookingItems: json["bookingItems"] ?? "",
+        serviceName: json["serviceName"] ?? "",
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "bookingId": bookingId,
-    "vendorId": vendorId,
-    "vendor": vendor.toJson(),
-    // "customer": customer,
-    "customerId": customerId,
-    "bookingFor": bookingFor,
-    "bookingForId": bookingForId,
-    "startDateTime": startDateTime,
-    "endDateTime": endDateTime,
-    "firstName": firstName,
-    "email": email,
-    "phoneNo": phoneNo,
-    "notes": notes,
-    "status": status,
-    "bookingItems": bookingItems,
-    "serviceName": serviceName,
-  };
+        "id": id,
+        "bookingId": bookingId,
+        "vendorId": vendorId,
+        "vendor": vendor.toJson(),
+        // "customer": customer,
+        "customerId": customerId,
+        "bookingFor": bookingFor,
+        "bookingForId": bookingForId,
+        "startDateTime": startDateTime,
+        "endDateTime": endDateTime,
+        "firstName": firstName,
+        "email": email,
+        "phoneNo": phoneNo,
+        "notes": notes,
+        "status": status,
+        "bookingItems": bookingItems,
+        "serviceName": serviceName,
+      };
 }
 
 class Vendor {
@@ -188,6 +191,8 @@ class Vendor {
     required this.additionalSlot,
     required this.resourceList,
     required this.resourceId,
+    required this.stripeId,
+    required this.vendorStripeAccountId,
   });
 
   int id;
@@ -236,102 +241,108 @@ class Vendor {
   String additionalSlot;
   String resourceList;
   String resourceId;
+  String stripeId;
+  String vendorStripeAccountId;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
-    id: json["id"] ?? 0,
-    // categories: json["categories"],
-    categoryId: json["categoryId"] ?? 0,
-    businessName: json["businessName"] ?? "",
-    businessLogo: json["businessLogo"] ?? "",
-    street: json["street"] ?? "",
-    suburb: json["suburb"] ?? "",
-    postcode: json["postcode"] ?? "",
-    state: json["state"] ?? "",
-    country: json["country"] ?? "",
-    userName: json["userName"] ?? "",
-    email: json["email"] ?? "",
-    phoneNo: json["phoneNo"] ?? "",
-    address: json["address"] ?? "",
-    isActive: json["isActive"] ?? false,
-    userId: json["userId"] ?? "",
-    vendorPortal: json["vendorPortal"] ?? false,
-    vendorVerification: json["vendorVerification"] ?? false,
-    businessId: json["businessId"] ?? "",
-    isResource: json["isResource"] ?? false,
-    isPriceDisplay: json["isPriceDisplay"] ?? false,
-    confirmation: json["confirmation"] ?? false,
-    isServiceSlots: json["isServiceSlots"] ?? false,
-    latitude: json["latitude"] ?? "",
-    longitude: json["longitude"] ?? "",
-    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
-    // applicationUser: json["applicationUser"],
-    modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
-    // applicationUserModifier: json["applicationUserModifier"],
-    review: json["review"] ?? "",
-    rating: json["rating"] ?? 0.0,
-    vendorWorkingHours: json["vendorWorkingHours"] ?? "",
-    status: json["status"] ?? "",
-    category: json["category"] ?? "",
-    passwordHash: json["passwordHash"] ?? "",
-    workingHoursStatus: json["workingHoursStatus"] ?? "",
-    avilableTime: json["avilableTime"] ?? "",
-    dDate: json["dDate"] ?? "",
-    duration: json["duration"] ?? "",
-    startTime: json["startTime"] ?? "",
-    endTime: json["endTime"] ?? "",
-    vendorList: json["vendorList"] ?? "",
-    additionalSlot: json["additionalSlot"] ?? "",
-    resourceList: json["resourceList"] ?? "",
-    resourceId: json["resourceId"] ?? "",
-  );
+        id: json["id"] ?? 0,
+        // categories: json["categories"],
+        categoryId: json["categoryId"] ?? 0,
+        businessName: json["businessName"] ?? "",
+        businessLogo: json["businessLogo"] ?? "",
+        street: json["street"] ?? "",
+        suburb: json["suburb"] ?? "",
+        postcode: json["postcode"] ?? "",
+        state: json["state"] ?? "",
+        country: json["country"] ?? "",
+        userName: json["userName"] ?? "",
+        email: json["email"] ?? "",
+        phoneNo: json["phoneNo"] ?? "",
+        address: json["address"] ?? "",
+        isActive: json["isActive"] ?? false,
+        userId: json["userId"] ?? "",
+        vendorPortal: json["vendorPortal"] ?? false,
+        vendorVerification: json["vendorVerification"] ?? false,
+        businessId: json["businessId"] ?? "",
+        isResource: json["isResource"] ?? false,
+        isPriceDisplay: json["isPriceDisplay"] ?? false,
+        confirmation: json["confirmation"] ?? false,
+        isServiceSlots: json["isServiceSlots"] ?? false,
+        latitude: json["latitude"] ?? "",
+        longitude: json["longitude"] ?? "",
+        vendorVerificationDate: json["vendorVerificationDate"] ?? "",
+        // applicationUser: json["applicationUser"],
+        modifiedBy: json["modifiedBy"] ?? "",
+        modifiedOn: json["modifiedOn"] ?? "",
+        // applicationUserModifier: json["applicationUserModifier"],
+        review: json["review"] ?? "",
+        rating: json["rating"] ?? 0.0,
+        vendorWorkingHours: json["vendorWorkingHours"] ?? "",
+        status: json["status"] ?? "",
+        category: json["category"] ?? "",
+        passwordHash: json["passwordHash"] ?? "",
+        workingHoursStatus: json["workingHoursStatus"] ?? "",
+        avilableTime: json["avilableTime"] ?? "",
+        dDate: json["dDate"] ?? "",
+        duration: json["duration"] ?? "",
+        startTime: json["startTime"] ?? "",
+        endTime: json["endTime"] ?? "",
+        vendorList: json["vendorList"] ?? "",
+        additionalSlot: json["additionalSlot"] ?? "",
+        resourceList: json["resourceList"] ?? "",
+        resourceId: json["resourceId"] ?? "",
+        stripeId: json["stripeId"] ?? "",
+        vendorStripeAccountId: json["vendorStripeAccountId"] ?? "",
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    // "categories": categories,
-    "categoryId": categoryId,
-    "businessName": businessName,
-    "businessLogo": businessLogo,
-    "street": street,
-    "suburb": suburb,
-    "postcode": postcode,
-    "state": state,
-    "country": country,
-    "userName": userName,
-    "email": email,
-    "phoneNo": phoneNo,
-    "address": address,
-    "isActive": isActive,
-    "userId": userId,
-    "vendorPortal": vendorPortal,
-    "vendorVerification": vendorVerification,
-    "businessId": businessId,
-    "isResource": isResource,
-    "isPriceDisplay": isPriceDisplay,
-    "confirmation": confirmation,
-    "isServiceSlots": isServiceSlots,
-    "latitude": latitude,
-    "longitude": longitude,
-    "vendorVerificationDate": vendorVerificationDate,
-    // "applicationUser": applicationUser,
-    "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
-    // "applicationUserModifier": applicationUserModifier,
-    "review": review,
-    "rating": rating,
-    "vendorWorkingHours": vendorWorkingHours,
-    "status": status,
-    "category": category,
-    "passwordHash": passwordHash,
-    "workingHoursStatus": workingHoursStatus,
-    "avilableTime": avilableTime,
-    "dDate": dDate,
-    "duration": duration,
-    "startTime": startTime,
-    "endTime": endTime,
-    "vendorList": vendorList,
-    "additionalSlot": additionalSlot,
-    "resourceList": resourceList,
-    "resourceId": resourceId,
-  };
+        "id": id,
+        // "categories": categories,
+        "categoryId": categoryId,
+        "businessName": businessName,
+        "businessLogo": businessLogo,
+        "street": street,
+        "suburb": suburb,
+        "postcode": postcode,
+        "state": state,
+        "country": country,
+        "userName": userName,
+        "email": email,
+        "phoneNo": phoneNo,
+        "address": address,
+        "isActive": isActive,
+        "userId": userId,
+        "vendorPortal": vendorPortal,
+        "vendorVerification": vendorVerification,
+        "businessId": businessId,
+        "isResource": isResource,
+        "isPriceDisplay": isPriceDisplay,
+        "confirmation": confirmation,
+        "isServiceSlots": isServiceSlots,
+        "latitude": latitude,
+        "longitude": longitude,
+        "vendorVerificationDate": vendorVerificationDate,
+        // "applicationUser": applicationUser,
+        "modifiedBy": modifiedBy,
+        "modifiedOn": modifiedOn,
+        // "applicationUserModifier": applicationUserModifier,
+        "review": review,
+        "rating": rating,
+        "vendorWorkingHours": vendorWorkingHours,
+        "status": status,
+        "category": category,
+        "passwordHash": passwordHash,
+        "workingHoursStatus": workingHoursStatus,
+        "avilableTime": avilableTime,
+        "dDate": dDate,
+        "duration": duration,
+        "startTime": startTime,
+        "endTime": endTime,
+        "vendorList": vendorList,
+        "additionalSlot": additionalSlot,
+        "resourceList": resourceList,
+        "resourceId": resourceId,
+        "stripeId": stripeId,
+        "vendorStripeAccountId": vendorStripeAccountId,
+      };
 }

@@ -30,7 +30,7 @@ class HomeScreenController extends GetxController {
   List<FavouriteVendorDetails> favouriteVendorList = [];
 
   AppointDetailsData? appointDetailsData;
-  List<String> serviceList= [];
+  List<String> serviceList = [];
 
   RxBool isServiceCalenderShow = false.obs;
   RxString selectedDate = "".obs;
@@ -59,7 +59,7 @@ class HomeScreenController extends GetxController {
       http.Response response = await http.get(
         Uri.parse(url), /*headers: apiHeader.headers*/
       );
-      // log("Category Response : ${response.body}");
+      log("Category Response : ${response.body}");
 
       GetAllCategoryModel getAllCategoryModel =
           GetAllCategoryModel.fromJson(json.decode(response.body));
@@ -68,7 +68,7 @@ class HomeScreenController extends GetxController {
       if (isSuccessStatus.value) {
         allCategoryList.clear();
         allCategoryList = getAllCategoryModel.data;
-        // log("allCategoryList : ${allCategoryList.length}");
+        log("allCategoryList : ${allCategoryList.length}");
       } else {
         log("getAllCategoriesFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
@@ -92,57 +92,53 @@ class HomeScreenController extends GetxController {
           SearchModel.fromJson(json.decode(response.body));
       isSuccessStatus = searchModel.success.obs;
 
-      if(isSuccessStatus.value){
+      if (isSuccessStatus.value) {
         List<String> searchList = searchModel.data;
         log("searchList : $searchList");
         return searchText.isEmpty
             ? searchList
             : searchList.where((element) {
-          String searchListString = element.toLowerCase();
-          String searchTextNew = searchText.toLowerCase();
+                String searchListString = element.toLowerCase();
+                String searchTextNew = searchText.toLowerCase();
 
-          return searchListString.contains(searchTextNew);
-        }).toList();
-      } else{
+                return searchListString.contains(searchTextNew);
+              }).toList();
+      } else {
         Fluttertoast.showToast(msg: searchModel.message);
       }
-
-
-
-
     } catch (e) {
       log("getCategorySearchFunction Error :::$e");
       return [];
     }
   }
 
-  Future<List<String>> getLocationSearchFunction(String searchText) async {
-    String url = ApiUrl.locationSearchApi + "?prefix=$searchText";
-    log("Search Location Api Url : $url");
+  // Future<List<String>> getLocationSearchFunction(String searchText) async {
+  //   String url = ApiUrl.locationSearchApi + "?prefix=$searchText";
+  //   log("Search Location Api Url : $url");
 
-    try {
-      http.Response response = await http.get(Uri.parse(url));
-      log("Get Location Api Response : ${response.body}");
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(url));
+  //     log("Get Location Api Response : ${response.body}");
 
-      SearchModel searchModel =
-          SearchModel.fromJson(json.decode(response.body));
+  //     SearchModel searchModel =
+  //         SearchModel.fromJson(json.decode(response.body));
 
-      List<String> locationSearchList = searchModel.data;
-      log("searchList : $locationSearchList");
+  //     List<String> locationSearchList = searchModel.data;
+  //     log("searchList : $locationSearchList");
 
-      return searchText.isEmpty
-          ? locationSearchList
-          : locationSearchList.where((element) {
-              String searchListString = element.toLowerCase();
-              String searchTextNew = searchText.toLowerCase();
+  //     return searchText.isEmpty
+  //         ? locationSearchList
+  //         : locationSearchList.where((element) {
+  //             String searchListString = element.toLowerCase();
+  //             String searchTextNew = searchText.toLowerCase();
 
-              return searchListString.contains(searchTextNew);
-            }).toList();
-    } catch (e) {
-      log("getLocationSearchFunction Error :::$e");
-      return [];
-    }
-  }
+  //             return searchListString.contains(searchTextNew);
+  //           }).toList();
+  //   } catch (e) {
+  //     log("getLocationSearchFunction Error :::$e");
+  //     return [];
+  //   }
+  // }
 
   /// Get All Upcoming Appointment
   getAllUpcomingAppointmentFunction() async {
@@ -272,17 +268,20 @@ class HomeScreenController extends GetxController {
   /// Get Favourite Vendor List
   getFavouriteVendorByIdFunction() async {
     isLoading(true);
-    String url = ApiUrl.favouriteVendorListApi + "?cutomerid=${UserDetails.tableWiseId}";
+    String url =
+        ApiUrl.favouriteVendorListApi + "?cutomerid=${UserDetails.tableWiseId}";
     log("Favourite vendor List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       // log("Favourite Vendor Response : ${response.body}");
 
-      GetFavouriteVendorModel getFavouriteVendorModel = GetFavouriteVendorModel.fromJson(json.decode(response.body));
+      GetFavouriteVendorModel getFavouriteVendorModel =
+          GetFavouriteVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFavouriteVendorModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         favouriteVendorList.clear();
         favouriteVendorList = getFavouriteVendorModel.data;
         log("favouriteVendorList : ${favouriteVendorList.length}");
@@ -290,13 +289,13 @@ class HomeScreenController extends GetxController {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getFavouriteVendorByIdFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getFavouriteVendorByIdFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
+
   /// Add Vendor in Favorite
   addVendorInFavoriteFunction(int vendorId) async {
     // isLoading(true);
@@ -319,7 +318,7 @@ class HomeScreenController extends GetxController {
 
       response.stream.transform(utf8.decoder).listen((value) async {
         AddVendorInFavouriteModel addVendorInFavouriteModel =
-        AddVendorInFavouriteModel.fromJson(json.decode(value));
+            AddVendorInFavouriteModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorInFavouriteModel.success.obs;
         log("Body : ${addVendorInFavouriteModel.statusCode}");
 
@@ -337,10 +336,6 @@ class HomeScreenController extends GetxController {
       await getFavouriteVendorByIdFunction();
     }
   }
-
-
-
-
 
   @override
   void onInit() {

@@ -443,10 +443,17 @@ class VendorProfileScreenController extends GetxController {
             : getUserDetailsByIdModel.data.longitude;
 
         kGooglePlex = CameraPosition(
-          target: LatLng(double.parse(selectedLatitude.value),
-              double.parse(selectedLongitude.value)),
+          target: LatLng(
+            double.parse(selectedLatitude.value.isEmpty
+                ? "44.92057"
+                : selectedLatitude.value),
+            double.parse(selectedLongitude.value.isEmpty
+                ? "-93.44786"
+                : selectedLongitude.value),
+          ),
           zoom: 16,
         );
+
         log("kGooglePlex : $kGooglePlex");
         log('slotDuration: $slotDuration');
 

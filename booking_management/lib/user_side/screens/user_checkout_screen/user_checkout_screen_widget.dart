@@ -2,6 +2,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
+import 'package:booking_management/user_side/screens/user_card_payment_screen/user_card_payment_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -322,13 +323,13 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
         if (screenController.checkOutFormKey.currentState!.validate()) {
           if (screenController.isPriceDisplay) {
-            // Get.to(
-            //   () => const CardPaymentScreen(),
-            //   arguments: [
-            //     screenController.bookingPrice,
-            //   ],
-            // );
-            await screenController.initPaymentSheet(context);
+            Get.to(
+              () => const UserCardPaymentScreen(),
+              arguments: [
+                screenController.bookingPrice.split(".")[0].toString(),
+                screenController.bookingId,
+              ],
+            );
           } else {
             await screenController.checkOutSubmitFunction();
           }

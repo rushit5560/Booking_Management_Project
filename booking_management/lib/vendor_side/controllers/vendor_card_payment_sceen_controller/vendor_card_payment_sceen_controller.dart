@@ -5,6 +5,7 @@ import 'package:booking_management/vendor_side/controllers/vendor_subscription_p
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
@@ -64,6 +65,7 @@ class VendorCardPaymentScreenController extends GetxController {
 
   Future<void> initPaymentSheet(context) async {
     try {
+      // isLoading(true);
       print(bookingPrice);
 
       // var decimalList = cardScreenController.bookingPrice.split(".")[0];
@@ -121,32 +123,31 @@ class VendorCardPaymentScreenController extends GetxController {
         Get.snackbar(
           "Payment Failure",
           "${e.error.message}",
-          colorText: Colors.white,
+          colorText: Colors.black,
         );
         log("Make Payment Error ::: ${e.error.localizedMessage}");
       } else {
         Get.snackbar(
           "Payment Failure",
           "$e",
-          colorText: Colors.white,
+          colorText: Colors.black,
         );
         log("Error ::: $e");
         rethrow;
       }
+    } finally {
+      isLoading(false);
     }
   }
 
   checkoutSubscriptionSuccess() async {
-    final vendorSubscriptionPlanScreenController =
-        Get.find<VendorSubscriptionPlanScreenController>();
-    await vendorSubscriptionPlanScreenController
-        .purchaseSubscriptionPlanFunction(
-      productId: bookingSubId,
-    );
-    Get.snackbar(
-      "Success",
-      "Subscription Purchased",
-    );
+    await sendEmailVendorSubConfirm().whenComplete(() {
+      Get.snackbar(
+        "Success",
+        "Subscription Purchased",
+      );
+      Get.to(() => VendorIndexScreen());
+    });
 
     // Purchase plan api call
     log("booked sub id success == $bookingSubId");
@@ -154,8 +155,43 @@ class VendorCardPaymentScreenController extends GetxController {
 
     log("booked amount price  == $bookingPrice");
     log("booked amount price  == $bookingPrice");
+  }
 
-    Get.to(() => VendorIndexScreen());
+  Future<void> sendEmailVendorSubConfirm() async {
+    // isLoading(true);
+    log("Get user id is  : ${UserDetails.uniqueId}");
+    String url = ApiUrl.vendorSendEmailApi + "?userId=${UserDetails.uniqueId}";
+    log("Get Send Email Url  : $url");
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        /*headers: apiHeader.headers*/
+      );
+      log("Get Send Email response : ${response.body}");
+
+      var resData = jsonDecode(response.body);
+
+      // GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel =
+      //     GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      var statCode = resData["statusCode"];
+      var resMsg = resData["message"];
+      var successStat = resData["success"];
+      log("status code is : $statCode");
+      log("res message  is : $resMsg");
+
+      if (successStat == true) {
+        log("Time List : $resMsg");
+      } else {
+        log("Get Send Email false Else Else");
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+    } catch (e) {
+      log("Get Send Email Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    } finally {
+      // isLoading(true);
+    }
   }
 
   @override

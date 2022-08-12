@@ -1,15 +1,14 @@
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_card_payment_sceen_controller/user_card_payment_sceen_controller.dart';
-import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
+import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 
-import '../../../common_modules/common_widgets.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/custom_appbar/custom_appbar.dart';
 
@@ -26,27 +25,40 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CommonAppBarModule(
-                title: "Payment Details",
-                appBarOption: AppBarOption.singleBackButtonOption,
+      body: Obx(
+        () => cardScreenController.isLoading.value
+            ? const CustomCircularLoaderModule()
+            : SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CommonAppBarModule(
+                        title: "Payment Details",
+                        appBarOption: AppBarOption.singleBackButtonOption,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      showPaymentSummaryWidget(context),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              showPaymentSummaryWidget(context),
-            ],
-          ),
-        ),
       ),
     );
   }
 
   showPaymentSummaryWidget(BuildContext context) {
+    var bookPrice = int.parse(cardScreenController.bookingPrice);
+    int adminPrice = cardScreenController.calculateAdminCharges(bookPrice);
+    int userPrice = bookPrice - adminPrice;
+
+    // int adminCharges =
+    //     cardScreenController.calculateAdminCharges(bookPrice.toInt());
+
+    // int userAmountToPay = bookPrice.toInt() - adminCharges;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -71,7 +83,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               ),
             ),
             Text(
-              "\$ ${cardScreenController.bookingPrice}",
+              "\$ $userPrice",
               style: TextStyle(
                 color: AppColors.colorGreyIconLight,
                 fontSize: 16,
@@ -95,7 +107,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
                       ),
                     ),
                     Text(
-                      "₹ ${(int.parse(cardScreenController.bookingPrice) / 100) * 10}",
+                      "\$ $adminPrice",
                       style: TextStyle(
                         color: AppColors.colorGreyIconLight,
                         fontSize: 16,
@@ -119,7 +131,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               ),
             ),
             Text(
-              "\$ ${cardScreenController.bookingPrice}",
+              "\$ ${bookPrice.toString()}",
               style: TextStyle(
                 color: AppColors.blackColor,
                 fontSize: 19,
@@ -133,7 +145,17 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () async {
-            await cardScreenController.initPaymentSheet(context);
+            var uPrice = userPrice * 100;
+            var aPrice = adminPrice * 100;
+
+            log("user price : ${uPrice}");
+            log("admin price : ${aPrice}");
+            cardScreenController.isLoading(true);
+            await cardScreenController.initPaymentSheet(
+              context: context,
+              adminFeesAmount: aPrice,
+              userPayingAmount: uPrice,
+            );
           },
           child: const Text("Procedd to Pay"),
           style: ElevatedButton.styleFrom(

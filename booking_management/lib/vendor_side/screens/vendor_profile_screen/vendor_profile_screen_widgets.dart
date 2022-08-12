@@ -207,7 +207,6 @@ class _VendorProfileDetailsModuleState
               ),
             ],
           ),*/
-
         ],
       ).commonAllSidePadding(20),
     );
@@ -1665,8 +1664,8 @@ class _VendorProfileDetailsModuleState
   Widget uploadVerifyDocButtonModule() {
     return GestureDetector(
       onTap: () {
-        Get.to(()=> VendorBusinessDocumentScreen(),
-        transition: Transition.zoom);
+        Get.to(() => VendorBusinessDocumentScreen(),
+            transition: Transition.zoom);
       },
       child: const Text(
         'Upload verification documents',

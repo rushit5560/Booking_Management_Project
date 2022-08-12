@@ -881,21 +881,26 @@ class PartialCategoryListModule extends StatelessWidget {
         const SizedBox(height: 10),
         SizedBox(
           height: 150,
-          child: GridView.builder(
-            itemCount: screenController.allCategoryList.length,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemBuilder: (context, i) {
-              CategoryDatum singleItem = screenController.allCategoryList[i];
-              return _categoryListModule(singleItem);
-            },
-          ),
+          child: screenController.allCategoryList.length == 0
+              ? SizedBox(
+                  child: Text("No Categories availbale"),
+                )
+              : GridView.builder(
+                  itemCount: screenController.allCategoryList.length,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, i) {
+                    CategoryDatum singleItem =
+                        screenController.allCategoryList[i];
+                    return _categoryListModule(singleItem);
+                  },
+                ),
         ),
       ],
     );

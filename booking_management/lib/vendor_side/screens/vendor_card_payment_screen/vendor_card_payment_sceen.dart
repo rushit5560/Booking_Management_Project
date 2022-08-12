@@ -14,6 +14,7 @@ import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/custom_appbar/custom_appbar.dart';
 import '../../../user_side/model/vendor_details_screen_models/country_model.dart';
 import '../../controllers/vendor_card_payment_sceen_controller/vendor_card_payment_sceen_controller.dart';
+import '../../controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
 
 class VendorCardPaymentScreen extends StatefulWidget {
   const VendorCardPaymentScreen({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
     return Scaffold(
       body: Obx(
         () => SafeArea(
-          child: cardScreenController.isLoading.value == true
+          child: cardScreenController.isLoading.value
               ? const CustomCircularLoaderModule()
               : SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -139,6 +140,13 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () async {
+            cardScreenController.isLoading(true);
+            final vendorSubscriptionPlanScreenController =
+                Get.find<VendorSubscriptionPlanScreenController>();
+            await vendorSubscriptionPlanScreenController
+                .purchaseSubscriptionPlanFunction(
+              productId: cardScreenController.bookingSubId,
+            );
             await cardScreenController.initPaymentSheet(context);
           },
           child: const Text("Procedd to Pay"),

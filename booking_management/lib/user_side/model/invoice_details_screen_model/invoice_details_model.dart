@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-InvoiceDetailsModel invoiceDetailsModelFromJson(String str) => InvoiceDetailsModel.fromJson(json.decode(str));
+InvoiceDetailsModel invoiceDetailsModelFromJson(String str) =>
+    InvoiceDetailsModel.fromJson(json.decode(str));
 
-String invoiceDetailsModelToJson(InvoiceDetailsModel data) => json.encode(data.toJson());
+String invoiceDetailsModelToJson(InvoiceDetailsModel data) =>
+    json.encode(data.toJson());
 
 class InvoiceDetailsModel {
   InvoiceDetailsModel({
@@ -17,19 +19,20 @@ class InvoiceDetailsModel {
   InvoiceDetailsData workerList;
   List<String> list;
 
-  factory InvoiceDetailsModel.fromJson(Map<String, dynamic> json) => InvoiceDetailsModel(
-    statusCode: json["statusCode"] ?? 0,
-    success: json["success"] ?? false,
-    workerList: InvoiceDetailsData.fromJson(json["workerList"] ?? {}),
-    list: List<String>.from(json["list"].map((x) => x)),
-  );
+  factory InvoiceDetailsModel.fromJson(Map<String, dynamic> json) =>
+      InvoiceDetailsModel(
+        statusCode: json["statusCode"] ?? 0,
+        success: json["success"] ?? false,
+        workerList: InvoiceDetailsData.fromJson(json["workerList"] ?? {}),
+        list: List<String>.from(json["list"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "success": success,
-    "workerList": workerList.toJson(),
-    "list": List<dynamic>.from(list.map((x) => x)),
-  };
+        "statusCode": statusCode,
+        "success": success,
+        "workerList": workerList.toJson(),
+        "list": List<dynamic>.from(list.map((x) => x)),
+      };
 }
 
 class InvoiceDetailsData {
@@ -48,6 +51,9 @@ class InvoiceDetailsData {
     this.createdOn,
     this.modifiedBy,
     this.modifiedOn,
+    this.firstName,
+    this.email,
+    this.phoneNo,
     // required this.applicationUserCreator,
     // required this.applicationUserModifier,
     this.bookingId,
@@ -58,7 +64,6 @@ class InvoiceDetailsData {
     this.bookingItems,
     // this.resourceList,
     // this.service,
-
   });
 
   int? id;
@@ -75,6 +80,10 @@ class InvoiceDetailsData {
   String? createdOn;
   String? modifiedBy;
   String? modifiedOn;
+
+  String? firstName;
+  String? email;
+  String? phoneNo;
   // ApplicationUser applicationUserCreator;
   // dynamic applicationUserModifier;
   String? bookingId;
@@ -86,61 +95,68 @@ class InvoiceDetailsData {
   // List<String>? resourceList;
   // String? service;
 
-  factory InvoiceDetailsData.fromJson(Map<String, dynamic> json) => InvoiceDetailsData(
-    id: json["id"] ?? 0,
-    transactionFor: json["transactionFor"] ?? "",
-    transactionForId: json["transactionForId"] ?? "",
-    transactionDate: json["transactionDate"] ?? "",
-    transactionCode: json["transactionCode"] ?? "",
-    transactionStatus: json["transactionStatus"] ?? "",
-    detail: json["detail"] ?? "",
-    transactionBy: json["transactionBy"] ?? "",
-    // applicationUsercustomer: ApplicationUser.fromJson(json["applicationUsercustomer"]),
-    isActive: json["isActive"] ?? false,
-    createdBy: json["createdBy"] ?? "",
-    createdOn: json["createdOn"] ?? "",
-    modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
-    // applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"]),
-    // applicationUserModifier: json["applicationUserModifier"],
-    bookingId: json["bookingId"] ?? "",
-    paymentIntentId: json["paymentIntentId"] ?? "",
-    customer: Customer.fromJson(json["customer"] ?? {}),
-    vendor: Vendor.fromJson(json["vendor"] ?? {}),
-    order: Order.fromJson(json["order"] ?? {}),
-    bookingItems: BookingItems.fromJson(json["bookingItems"] ?? {}),
-    // resourceList: List<String>.from(json["serviceName"].map((x) => x)).isEmpty
-    // ? []
-    // : List<String>.from(json["serviceName"].map((x) => x)),
-    // service: json["service"] ?? "",
-  );
+  factory InvoiceDetailsData.fromJson(Map<String, dynamic> json) =>
+      InvoiceDetailsData(
+        id: json["id"] ?? 0,
+        transactionFor: json["transactionFor"] ?? "",
+        transactionForId: json["transactionForId"] ?? "",
+        transactionDate: json["transactionDate"] ?? "",
+        transactionCode: json["transactionCode"] ?? "",
+        transactionStatus: json["transactionStatus"] ?? "",
+        detail: json["detail"] ?? "",
+        transactionBy: json["transactionBy"] ?? "",
+        // applicationUsercustomer: ApplicationUser.fromJson(json["applicationUsercustomer"]),
+        isActive: json["isActive"] ?? false,
+        createdBy: json["createdBy"] ?? "",
+        createdOn: json["createdOn"] ?? "",
+        modifiedBy: json["modifiedBy"] ?? "",
+        modifiedOn: json["modifiedOn"] ?? "",
+        firstName: json["firstName"] ?? "",
+        email: json["email"] ?? "",
+        phoneNo: json["phoneNo"] ?? "",
+        // applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"]),
+        // applicationUserModifier: json["applicationUserModifier"],
+        bookingId: json["bookingId"] ?? "",
+        paymentIntentId: json["paymentIntentId"] ?? "",
+        customer: Customer.fromJson(json["customer"] ?? {}),
+        vendor: Vendor.fromJson(json["vendor"] ?? {}),
+        order: Order.fromJson(json["order"] ?? {}),
+        bookingItems: BookingItems.fromJson(json["bookingItems"] ?? {}),
+        // resourceList: List<String>.from(json["serviceName"].map((x) => x)).isEmpty
+        // ? []
+        // : List<String>.from(json["serviceName"].map((x) => x)),
+        // service: json["service"] ?? "",
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "transactionFor": transactionFor,
-    "transactionForId": transactionForId,
-    "transactionDate": transactionDate,
-    "transactionCode": transactionCode,
-    "transactionStatus": transactionStatus,
-    "detail": detail,
-    "transactionBy": transactionBy,
-    // "applicationUsercustomer": applicationUsercustomer.toJson(),
-    "isActive": isActive,
-    "createdBy": createdBy,
-    "createdOn": createdOn,
-    "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
-    // "applicationUserCreator": applicationUserCreator.toJson(),
-    // "applicationUserModifier": applicationUserModifier,
-    "bookingId": bookingId,
-    "paymentIntentId": paymentIntentId,
-    "customer": customer!.toJson(),
-    "vendor": vendor!.toJson(),
-    "order": order!.toJson(),
-    "bookingItems": bookingItems!.toJson(),
-    // "serviceName": List<dynamic>.from(resourceList!.map((x) => x)),
-    // "service": service,
-  };
+        "id": id,
+        "transactionFor": transactionFor,
+        "transactionForId": transactionForId,
+        "transactionDate": transactionDate,
+        "transactionCode": transactionCode,
+        "transactionStatus": transactionStatus,
+        "detail": detail,
+        "transactionBy": transactionBy,
+        // "applicationUsercustomer": applicationUsercustomer.toJson(),
+        "isActive": isActive,
+        "createdBy": createdBy,
+        "createdOn": createdOn,
+        "modifiedBy": modifiedBy,
+        "modifiedOn": modifiedOn,
+        "firstName": firstName,
+        "email": email,
+        "phoneNo": phoneNo,
+        // "applicationUserCreator": applicationUserCreator.toJson(),
+        // "applicationUserModifier": applicationUserModifier,
+        "bookingId": bookingId,
+        "paymentIntentId": paymentIntentId,
+        "customer": customer!.toJson(),
+        "vendor": vendor!.toJson(),
+        "order": order!.toJson(),
+        "bookingItems": bookingItems!.toJson(),
+        // "serviceName": List<dynamic>.from(resourceList!.map((x) => x)),
+        // "service": service,
+      };
 }
 
 class BookingItems {
@@ -159,20 +175,20 @@ class BookingItems {
   String booking;
 
   factory BookingItems.fromJson(Map<String, dynamic> json) => BookingItems(
-    id: json["id"] ?? 0,
-    bookingId: json["bookingId"] ?? "",
-    price: double.parse(json["price"].toString()),
-    quantity: json["quantity"] ?? 0,
-    booking: json["booking"] ?? "",
-  );
+        id: json["id"] ?? 0,
+        bookingId: json["bookingId"] ?? "",
+        price: double.parse(json["price"].toString()),
+        quantity: json["quantity"] ?? 0,
+        booking: json["booking"] ?? "",
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "bookingId": bookingId,
-    "price": price,
-    "quantity": quantity,
-    "booking": booking,
-  };
+        "id": id,
+        "bookingId": bookingId,
+        "price": price,
+        "quantity": quantity,
+        "booking": booking,
+      };
 }
 
 class Customer {
@@ -213,42 +229,42 @@ class Customer {
   bool isPriceDisplay;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
-    id: json["id"] ?? 0,
-    email: json["email"] ?? "",
-    phoneNo: json["phoneNo"] ?? "",
-    gender: json["gender"] ?? "",
-    userName: json["userName"] ?? "",
-    dateOfBirth: json["dateOfBirth"] ?? "",
-    isActive: json["isActive"] ?? false,
-    userId: json["userId"] ?? "",
-    // applicationUser: ApplicationUser.fromJson(json["applicationUser"]),
-    modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
-    // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"]),
-    passwordHash: json["passwordHash"] ?? "",
-    notes: json["notes"] ?? "",
-    bookingId: json["bookingId"] ?? "",
-    isPriceDisplay: json["isPriceDisplay"] ?? false,
-  );
+        id: json["id"] ?? 0,
+        email: json["email"] ?? "",
+        phoneNo: json["phoneNo"] ?? "",
+        gender: json["gender"] ?? "",
+        userName: json["userName"] ?? "",
+        dateOfBirth: json["dateOfBirth"] ?? "",
+        isActive: json["isActive"] ?? false,
+        userId: json["userId"] ?? "",
+        // applicationUser: ApplicationUser.fromJson(json["applicationUser"]),
+        modifiedBy: json["modifiedBy"] ?? "",
+        modifiedOn: json["modifiedOn"] ?? "",
+        // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"]),
+        passwordHash: json["passwordHash"] ?? "",
+        notes: json["notes"] ?? "",
+        bookingId: json["bookingId"] ?? "",
+        isPriceDisplay: json["isPriceDisplay"] ?? false,
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "email": email,
-    "phoneNo": phoneNo,
-    "gender": gender,
-    "userName": userName,
-    "dateOfBirth": dateOfBirth,
-    "isActive": isActive,
-    "userId": userId,
-    // "applicationUser": applicationUser.toJson(),
-    "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
-    // "applicationUserModifier": applicationUserModifier.toJson(),
-    "passwordHash": passwordHash,
-    "notes": notes,
-    "bookingId": bookingId,
-    "isPriceDisplay": isPriceDisplay,
-  };
+        "id": id,
+        "email": email,
+        "phoneNo": phoneNo,
+        "gender": gender,
+        "userName": userName,
+        "dateOfBirth": dateOfBirth,
+        "isActive": isActive,
+        "userId": userId,
+        // "applicationUser": applicationUser.toJson(),
+        "modifiedBy": modifiedBy,
+        "modifiedOn": modifiedOn,
+        // "applicationUserModifier": applicationUserModifier.toJson(),
+        "passwordHash": passwordHash,
+        "notes": notes,
+        "bookingId": bookingId,
+        "isPriceDisplay": isPriceDisplay,
+      };
 }
 
 class Order {
@@ -269,22 +285,22 @@ class Order {
   // ApplicationUser applicationUserCreator;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
-    id: json["id"] ?? 0,
-    bookingId: json["bookingId"] ?? "",
-    orderDate: json["orderDate"] ?? "",
-    price: json["price"] ?? 0.0,
-    paidBy: json["paidBy"] ?? "",
-    // applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"]),
-  );
+        id: json["id"] ?? 0,
+        bookingId: json["bookingId"] ?? "",
+        orderDate: json["orderDate"] ?? "",
+        price: json["price"] ?? 0.0,
+        paidBy: json["paidBy"] ?? "",
+        // applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "bookingId": bookingId,
-    "orderDate": orderDate,
-    "price": price,
-    "paidBy": paidBy,
-    // "applicationUserCreator": applicationUserCreator.toJson(),
-  };
+        "id": id,
+        "bookingId": bookingId,
+        "orderDate": orderDate,
+        "price": price,
+        "paidBy": paidBy,
+        // "applicationUserCreator": applicationUserCreator.toJson(),
+      };
 }
 
 class Vendor {
@@ -385,100 +401,100 @@ class Vendor {
   String resourceId;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
-    id: json["id"] ?? 0,
-    // categories: json["categories"],
-    categoryId: json["categoryId"] ?? 0,
-    businessName: json["businessName"] ?? "",
-    businessLogo: json["businessLogo"] ?? "",
-    street: json["street"] ?? "",
-    suburb: json["suburb"] ?? "",
-    postcode: json["postcode"] ?? "",
-    state: json["state"] ?? "",
-    country: json["country"] ?? "",
-    userName: json["userName"] ?? "",
-    email: json["email"] ?? "",
-    phoneNo: json["phoneNo"] ?? "",
-    address: json["address"] ?? "",
-    isActive: json["isActive"] ?? false,
-    userId: json["userId"] ?? "",
-    vendorPortal: json["vendorPortal"] ?? false,
-    vendorVerification: json["vendorVerification"] ?? false,
-    businessId: json["businessId"] ?? "",
-    isResource: json["isResource"] ?? false,
-    isPriceDisplay: json["isPriceDisplay"] ?? false,
-    confirmation: json["confirmation"] ?? false,
-    isServiceSlots: json["isServiceSlots"] ?? false,
-    latitude: json["latitude"] ?? "",
-    longitude: json["longitude"] ?? "",
-    vendorVerificationDate: json["vendorVerificationDate"] ?? "",
-    // applicationUser: json["applicationUser"],
-    modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
-    // applicationUserModifier: json["applicationUserModifier"],
-    review: json["review"] ?? "",
-    rating: json["rating"] ?? "",
-    vendorWorkingHours: json["vendorWorkingHours"] ?? "",
-    status: json["status"] ?? "",
-    category: json["category"] ?? "",
-    passwordHash: json["passwordHash"] ?? "",
-    workingHoursStatus: json["workingHoursStatus"] ?? "",
-    avilableTime: json["avilableTime"] ?? "",
-    dDate: json["dDate"] ?? "",
-    duration: json["duration"] ?? "",
-    startTime: json["startTime"] ?? "",
-    endTime: json["endTime"] ?? "",
-    vendorList: json["vendorList"] ?? "",
-    additionalSlot: json["additionalSlot"] ?? "",
-    resourceList: json["resourceList"] ?? "",
-    resourceId: json["resourceId"] ?? "",
-  );
+        id: json["id"] ?? 0,
+        // categories: json["categories"],
+        categoryId: json["categoryId"] ?? 0,
+        businessName: json["businessName"] ?? "",
+        businessLogo: json["businessLogo"] ?? "",
+        street: json["street"] ?? "",
+        suburb: json["suburb"] ?? "",
+        postcode: json["postcode"] ?? "",
+        state: json["state"] ?? "",
+        country: json["country"] ?? "",
+        userName: json["userName"] ?? "",
+        email: json["email"] ?? "",
+        phoneNo: json["phoneNo"] ?? "",
+        address: json["address"] ?? "",
+        isActive: json["isActive"] ?? false,
+        userId: json["userId"] ?? "",
+        vendorPortal: json["vendorPortal"] ?? false,
+        vendorVerification: json["vendorVerification"] ?? false,
+        businessId: json["businessId"] ?? "",
+        isResource: json["isResource"] ?? false,
+        isPriceDisplay: json["isPriceDisplay"] ?? false,
+        confirmation: json["confirmation"] ?? false,
+        isServiceSlots: json["isServiceSlots"] ?? false,
+        latitude: json["latitude"] ?? "",
+        longitude: json["longitude"] ?? "",
+        vendorVerificationDate: json["vendorVerificationDate"] ?? "",
+        // applicationUser: json["applicationUser"],
+        modifiedBy: json["modifiedBy"] ?? "",
+        modifiedOn: json["modifiedOn"] ?? "",
+        // applicationUserModifier: json["applicationUserModifier"],
+        review: json["review"] ?? "",
+        rating: json["rating"] ?? "",
+        vendorWorkingHours: json["vendorWorkingHours"] ?? "",
+        status: json["status"] ?? "",
+        category: json["category"] ?? "",
+        passwordHash: json["passwordHash"] ?? "",
+        workingHoursStatus: json["workingHoursStatus"] ?? "",
+        avilableTime: json["avilableTime"] ?? "",
+        dDate: json["dDate"] ?? "",
+        duration: json["duration"] ?? "",
+        startTime: json["startTime"] ?? "",
+        endTime: json["endTime"] ?? "",
+        vendorList: json["vendorList"] ?? "",
+        additionalSlot: json["additionalSlot"] ?? "",
+        resourceList: json["resourceList"] ?? "",
+        resourceId: json["resourceId"] ?? "",
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    // "categories": categories,
-    "categoryId": categoryId,
-    "businessName": businessName,
-    "businessLogo": businessLogo,
-    "street": street,
-    "suburb": suburb,
-    "postcode": postcode,
-    "state": state,
-    "country": country,
-    "userName": userName,
-    "email": email,
-    "phoneNo": phoneNo,
-    "address": address,
-    "isActive": isActive,
-    "userId": userId,
-    "vendorPortal": vendorPortal,
-    "vendorVerification": vendorVerification,
-    "businessId": businessId,
-    "isResource": isResource,
-    "isPriceDisplay": isPriceDisplay,
-    "confirmation": confirmation,
-    "isServiceSlots": isServiceSlots,
-    "latitude": latitude,
-    "longitude": longitude,
-    "vendorVerificationDate": vendorVerificationDate,
-    // "applicationUser": applicationUser,
-    "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
-    // "applicationUserModifier": applicationUserModifier,
-    "review": review,
-    "rating": rating,
-    "vendorWorkingHours": vendorWorkingHours,
-    "status": status,
-    "category": category,
-    "passwordHash": passwordHash,
-    "workingHoursStatus": workingHoursStatus,
-    "avilableTime": avilableTime,
-    "dDate": dDate,
-    "duration": duration,
-    "startTime": startTime,
-    "endTime": endTime,
-    "vendorList": vendorList,
-    "additionalSlot": additionalSlot,
-    "resourceList": resourceList,
-    "resourceId": resourceId,
-  };
+        "id": id,
+        // "categories": categories,
+        "categoryId": categoryId,
+        "businessName": businessName,
+        "businessLogo": businessLogo,
+        "street": street,
+        "suburb": suburb,
+        "postcode": postcode,
+        "state": state,
+        "country": country,
+        "userName": userName,
+        "email": email,
+        "phoneNo": phoneNo,
+        "address": address,
+        "isActive": isActive,
+        "userId": userId,
+        "vendorPortal": vendorPortal,
+        "vendorVerification": vendorVerification,
+        "businessId": businessId,
+        "isResource": isResource,
+        "isPriceDisplay": isPriceDisplay,
+        "confirmation": confirmation,
+        "isServiceSlots": isServiceSlots,
+        "latitude": latitude,
+        "longitude": longitude,
+        "vendorVerificationDate": vendorVerificationDate,
+        // "applicationUser": applicationUser,
+        "modifiedBy": modifiedBy,
+        "modifiedOn": modifiedOn,
+        // "applicationUserModifier": applicationUserModifier,
+        "review": review,
+        "rating": rating,
+        "vendorWorkingHours": vendorWorkingHours,
+        "status": status,
+        "category": category,
+        "passwordHash": passwordHash,
+        "workingHoursStatus": workingHoursStatus,
+        "avilableTime": avilableTime,
+        "dDate": dDate,
+        "duration": duration,
+        "startTime": startTime,
+        "endTime": endTime,
+        "vendorList": vendorList,
+        "additionalSlot": additionalSlot,
+        "resourceList": resourceList,
+        "resourceId": resourceId,
+      };
 }

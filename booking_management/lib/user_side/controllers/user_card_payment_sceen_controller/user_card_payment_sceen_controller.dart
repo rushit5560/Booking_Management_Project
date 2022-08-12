@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/common_ui/model/sign_out_model/sign_out_model.dart';
+import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
 import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/payment_keys.dart';
 
 class UserCardPaymentScreenController extends GetxController {
-  var bookingPrice = Get.arguments[0];
-  var bookingSubId = Get.arguments[1];
+  String bookingPrice = Get.arguments[0];
+  String bookingSubId = Get.arguments[1];
   final size = Get.size;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -26,22 +27,29 @@ class UserCardPaymentScreenController extends GetxController {
 
   calculateAmount(int amount) {
     int price = amount * 100;
-    return price.toString();
+    return price;
   }
 
-  Future<Map<String, dynamic>> createPaymentIntent(
-    int amount,
-    String currency,
-  ) async {
+  calculateAdminCharges(int amount) {
+    int price = amount * 100;
+    int calPrice = (amount * 0.10).toInt();
+    return calPrice;
+  }
+
+  Future<Map<String, dynamic>> createPaymentIntent({
+    required int userPayingAmount,
+    required int adminFeesAmount,
+    required String currency,
+  }) async {
     try {
       Stripe.merchantIdentifier;
 
       Map<String, dynamic> body = {
-        'amount': calculateAmount(amount),
+        'amount': userPayingAmount.toString(),
         'currency': currency,
         'payment_method_types[]': 'card',
-        // "transfer_data[amount]": "200",
-        // "transfer_data[destination]": "acct_1LUVm2QPJWRM3XBj",
+        "transfer_data[amount]": adminFeesAmount.toString(),
+        "transfer_data[destination]": "acct_1LUVm2QPJWRM3XBj",
       };
       log('body: $body');
 
@@ -63,23 +71,22 @@ class UserCardPaymentScreenController extends GetxController {
     }
   }
 
-  Future<void> initPaymentSheet(context) async {
+  Future<void> initPaymentSheet(
+      {context, userPayingAmount, adminFeesAmount}) async {
     try {
       print(bookingPrice);
 
-      // var decimalList = cardScreenController.bookingPrice.split(".")[0];
-      // var price = int.tryParse(decimalList);
+      var price = double.parse(bookingPrice);
 
-      var price = bookingPrice;
+      log("price passing is : $price");
 
-      print(price.runtimeType);
-      print(price);
+      paymentIntentData = await createPaymentIntent(
+        userPayingAmount: userPayingAmount,
+        adminFeesAmount: adminFeesAmount,
+        currency: "aud",
+      );
 
-      paymentIntentData = await createPaymentIntent(price!, "aud");
-
-      // final data = await createTestPaymentSheet();
-
-      log('paymentIntentData: ${paymentIntentData}');
+      log('paymentIntentData: $paymentIntentData');
       // var adminCharges =
       //     (int.parse(cardScreenController.bookingPrice) / 100) * 10;
 
@@ -92,24 +99,18 @@ class UserCardPaymentScreenController extends GetxController {
           paymentIntentClientSecret: paymentIntentData!['client_secret'],
           merchantDisplayName: UserDetails.userName,
           customerId: paymentIntentData!['customer'],
-          // Customer keys
-          // customerId: cardScreenController.paymentIntentData!['customer'],
-
           customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
           customFlow: true,
-
           style: ThemeMode.light,
           testEnv: true,
           applePay: false,
           googlePay: false,
-
-          // merchantCountryCode: 'US',
+          merchantCountryCode: 'AUS',
         ),
       );
 
       await Stripe.instance.presentPaymentSheet();
       await Stripe.instance.confirmPaymentSheetPayment();
-
       await checkoutSubscriptionSuccess();
 
       // await getPaymentIdFunction(
@@ -122,31 +123,34 @@ class UserCardPaymentScreenController extends GetxController {
         Get.snackbar(
           "Payment Failure",
           "${e.error.message}",
-          colorText: Colors.white,
+          colorText: Colors.black,
         );
         log("Make Payment Error ::: ${e.error.localizedMessage}");
       } else {
         Get.snackbar(
           "Payment Failure",
           "$e",
-          colorText: Colors.white,
+          colorText: Colors.black,
         );
         log("Error ::: $e");
         rethrow;
       }
+    } finally {
+      isLoading(false);
     }
   }
 
   checkoutSubscriptionSuccess() async {
-    // final vendorSubscriptionPlanScreenController =
-    //     Get.find<VendorSubscriptionPlanScreenController>();
+    final userCheckoutController = Get.find<UserCheckoutScreenController>();
     // await vendorSubscriptionPlanScreenController
     //     .purchaseSubscriptionPlanFunction(
     //   productId: bookingSubId,
     // );
+
+    await userCheckoutController.checkOutSubmitFunction();
     Get.snackbar(
       "Success",
-      "Service Booked",
+      "Appointment Successfully Booked",
     );
 
     // Purchase plan api call
@@ -162,7 +166,7 @@ class UserCardPaymentScreenController extends GetxController {
   @override
   void dispose() {
     super.dispose();
-    bookingPrice = null;
-    bookingSubId = null;
+    bookingPrice = "";
+    bookingSubId = "";
   }
 }

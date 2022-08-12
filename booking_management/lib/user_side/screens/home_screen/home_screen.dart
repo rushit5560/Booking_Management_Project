@@ -1,6 +1,7 @@
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/user_side/screens/user_appointment_list_screen/user_appointment_list_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,20 +27,20 @@ class HomeScreen extends StatelessWidget {
                       const HeaderModule(),
                       const SizedBox(height: 10),
                       UserDetails.isUserLoggedIn == true
-                      ? Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Hello, ${UserDetails.userName}",
-                            maxLines: 2,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ).commonSymmetricPadding(horizontal: 15),
-                        ],
-                      )
-                      : Container(),
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Hello, " + UserDetails.userName,
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ).commonSymmetricPadding(horizontal: 15),
+                              ],
+                            )
+                          : Container(),
                       const SizedBox(height: 15),
                       Column(
                         children: [
@@ -62,19 +63,20 @@ class HomeScreen extends StatelessWidget {
                       homeScreenController.favouriteVendorList.isEmpty
                           ? Container()
                           : FavouriteVendorsModule()
-                          .commonSymmetricPadding(horizontal: 20),
+                              .commonSymmetricPadding(horizontal: 20),
                       const SizedBox(height: 20),
 
-                      UserDetails.isUserLoggedIn == true ?
-                      UpcomingAppointmentModule().commonSymmetricPadding(horizontal: 20)
-                          :  Container(),
+                      UserDetails.isUserLoggedIn == true
+                          ? UpcomingAppointmentModule()
+                              .commonSymmetricPadding(horizontal: 20)
+                          : Container(),
                       const SizedBox(height: 15),
 
-                      PartialCategoryListModule()
-                          .commonSymmetricPadding(horizontal: 20),
+                      homeScreenController.allCategoryList == null
+                          ? SizedBox()
+                          : PartialCategoryListModule()
+                              .commonSymmetricPadding(horizontal: 20),
                       const SizedBox(height: 15),
-
-
                     ],
                   ),
                 ),

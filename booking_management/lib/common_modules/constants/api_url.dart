@@ -3,8 +3,13 @@ class ApiUrl {
       "AAAAPMN5_nM:APA91bHk_HS5tqZwzSyV-_2uP8ktyuhl_sp7HwkbFMP9lsiNHhWDvSxW1vvEMJ_skX2m_nHQp4QInHVPQGig9tkugj81_aoimCMY4ke7_2oZvck5cPtrRUFs9jj7jMJ-29HEfXc3_TTa";
   static const googleApiKey = "AIzaSyDKcmqROew5b-45jQbybMpPXpWjiByOutc";
 
-  static const apiMainPath = "https://setdaytime.com.au/";
-  static const apiImagePath = "https://setdaytime.com.au/";
+  //old hosted api urls
+  // static const apiMainPath = "https://setdaytime.com.au/";
+  // static const apiImagePath = "https://setdaytime.com.au/";
+
+  // new hosted api urls
+  static const apiMainPath = "http://5.189.147.159:7001/";
+  static const apiImagePath = "http://5.189.147.159:7001/";
 
   // static const apiMainPath = "http://192.168.0.103:8080/";
   // static const apiImagePath = "http://192.168.0.103:8080/";
@@ -48,7 +53,8 @@ class ApiUrl {
       apiMainPath + "API/customerdashboardView";
 
   static const searchApi = apiMainPath + "API/Search";
-  static const locationSearchApi = apiMainPath + "API/Location";
+  //no location api is there
+  // static const locationSearchApi = apiMainPath + "API/Location";
 
   /// Cst - Search Filter API
   static const searchFilterApi = apiMainPath + "API/Searchbussinesstype";
@@ -101,6 +107,7 @@ class ApiUrl {
       apiMainPath + "Appointments/APIAppointmentDone";
   static const vendorEditProfileApi = apiMainPath + "API/VendorProfile";
   static const vendorGetProfileImageApi = apiMainPath + "API/ChatImage";
+  static const vendorSendEmailApi = apiMainPath + "API/SendEmail";
   static const vendorSaveLatLongApi = apiMainPath + "API/SaveLatitudeLongitude";
 
   /// Vendor - Services
@@ -144,8 +151,10 @@ class ApiUrl {
   static const vendorSubscriptionPlanApi =
       apiMainPath + "API/SubscriptionGetAll";
   static const saveVendorBankInfoApi = apiMainPath + "API/BankInfo";
-  static const deleteSubscriptionPlanApi = apiMainPath + "API/CancelSubscription";
-  static const purchaseSubscriptionPlanApi = apiMainPath + "API/SubscribeUserInStripe";
+  static const deleteSubscriptionPlanApi =
+      apiMainPath + "API/CancelSubscription";
+  static const purchaseSubscriptionPlanApi =
+      apiMainPath + "API/SubscribeUserInStripe";
 
   /// vendor - Available Time
   static const vendorAvailableTimeApi =
@@ -214,6 +223,7 @@ class ApiUrl {
   static const getAllSearchWithResourceListApi =
       apiMainPath + "API/ResourceSchedule";
 
-  static const getBookingAvailabilityApi = apiMainPath + "API/AvailabilityBooking";
+  static const getBookingAvailabilityApi =
+      apiMainPath + "API/AvailabilityBooking";
   static const getTimingApi = apiMainPath + "API/ScheduleCheck";
 }

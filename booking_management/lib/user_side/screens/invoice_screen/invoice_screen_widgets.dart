@@ -99,18 +99,18 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        screenController.invoiceDetailsData.customer!.userName,
+                        screenController.invoiceDetailsData.vendor!.userName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: AppColors.blackColor),
                       ),
                       Text(
-                        screenController.invoiceDetailsData.customer!.email,
+                        screenController.invoiceDetailsData.vendor!.email,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.invoiceDetailsData.customer!.phoneNo,
+                        screenController.invoiceDetailsData.vendor!.phoneNo,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -135,17 +135,17 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        screenController.invoiceDetailsData.vendor!.userName,
+                        screenController.invoiceDetailsData.firstName!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.invoiceDetailsData.vendor!.email,
+                        screenController.invoiceDetailsData.email!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.invoiceDetailsData.vendor!.phoneNo,
+                        screenController.invoiceDetailsData.phoneNo!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

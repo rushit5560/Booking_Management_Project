@@ -52,6 +52,8 @@ class UserCheckoutScreenController extends GetxController {
   String bookingPrice = "";
   int bookingQty = 0;
   int bookingTotalAmount = 0;
+  String stripeID = "";
+  String vendorAccountStripeId = "";
   int transactionId = 0;
 
   GlobalKey<FormState> checkOutFormKey = GlobalKey();
@@ -130,7 +132,11 @@ class UserCheckoutScreenController extends GetxController {
 
         isPriceDisplay =
             checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay;
+        stripeID = checkoutSummaryModel.workerList.booking.vendor.stripeId;
+        vendorAccountStripeId = checkoutSummaryModel
+            .workerList.booking.vendor.vendorStripeAccountId;
         log("isprice display is : ${checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay}");
+
         String startBookDate =
             checkoutSummaryModel.workerList.booking.startDateTime;
         String bDate1 = startBookDate.substring(0, startBookDate.length - 9);
@@ -160,6 +166,8 @@ class UserCheckoutScreenController extends GetxController {
         // log("bookingPrice : $bookingPrice");
         // log("bookingQty : $bookingQty");
         // log("bookingTotalAmount : $bookingTotalAmount");
+        log("stripeID : $stripeID");
+        log("vendorAccountStripeId : $vendorAccountStripeId");
       } else {
         //Fluttertoast.showToast(msg: "Something went wrong!");
         log("getCheckoutSummaryFunction Else Else");
@@ -228,7 +236,7 @@ class UserCheckoutScreenController extends GetxController {
     log("Checkout Submit : $url");
     int durationVar = 0;
 
-    if(isEvent == true) {
+    if (isEvent == true) {
       durationVar = quantityValue.value;
     }
 
@@ -237,26 +245,28 @@ class UserCheckoutScreenController extends GetxController {
       // request.headers.addAll(apiHeader.headers);
 
       if (UserDetails.isUserLoggedIn == true) {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Duration'] = "$duration";
-            request.fields['Email'] = emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['Quantity'] = "$durationVar";
-            request.fields['ResourceId'] = "$selectedResource";
-            request.fields['UserId'] = UserDetails.uniqueId;
+        request.fields['BookingId'] = bookingId;
+        request.fields['Duration'] = "$duration";
+        request.fields['Email'] =
+            emailFieldController.text.trim().toLowerCase();
+        request.fields['FullName'] = fNameFieldController.text.trim();
+        request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+        request.fields['Notes'] = notesFieldController.text.trim();
+        request.fields['PhoneNo'] = phoneFieldController.text;
+        request.fields['Quantity'] = "$durationVar";
+        request.fields['ResourceId'] = "$selectedResource";
+        request.fields['UserId'] = UserDetails.uniqueId;
       } else {
-            request.fields['BookingId'] = bookingId;
-            request.fields['Duration'] = "$duration";
-            request.fields['Email'] = emailFieldController.text.trim().toLowerCase();
-            request.fields['FullName'] = fNameFieldController.text.trim();
-            request.fields['IsPriceDisplay'] = "$isPriceDisplay";
-            request.fields['Notes'] = notesFieldController.text.trim();
-            request.fields['PhoneNo'] = phoneFieldController.text;
-            request.fields['Quantity'] = "$durationVar";
-            request.fields['ResourceId'] = "$selectedResource";
+        request.fields['BookingId'] = bookingId;
+        request.fields['Duration'] = "$duration";
+        request.fields['Email'] =
+            emailFieldController.text.trim().toLowerCase();
+        request.fields['FullName'] = fNameFieldController.text.trim();
+        request.fields['IsPriceDisplay'] = "$isPriceDisplay";
+        request.fields['Notes'] = notesFieldController.text.trim();
+        request.fields['PhoneNo'] = phoneFieldController.text;
+        request.fields['Quantity'] = "$durationVar";
+        request.fields['ResourceId'] = "$selectedResource";
       }
       // request.fields['UserName'] = fNameFieldController.text.trim();
 
@@ -289,130 +299,6 @@ class UserCheckoutScreenController extends GetxController {
     } finally {
       isLoading(false);
     }
-  }
-
-  /// For Stripe payment sheet
-  Future<void> initPaymentSheet(
-    context,
-  ) async {
-    try {
-      print(bookingPrice);
-      var decimalList = bookingPrice.split(".")[0];
-      var price = int.tryParse(decimalList);
-
-      print(price.runtimeType);
-      print(price);
-
-      paymentIntentData = await createPaymentIntent(price!, "USD");
-
-      log('paymentIntentData: $paymentIntentData');
-      // var adminCharges =
-      //     (int.parse(cardScreenController.bookingPrice) / 100) * 10;
-
-      // Stripe.instance.createPaymentMethod(
-      //   const PaymentMethodParams.card(
-      //     billingDetails: BillingDetails(),
-      //   ),
-      //   {
-      //     "ApplicationFeeAmount": "$adminCharges",
-      //   },
-      // );
-
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          //client_secret
-          paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          merchantDisplayName: UserDetails.userName,
-          // Customer keys
-          // customerId: cardScreenController.paymentIntentData!['customer'],
-          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
-          customFlow: true,
-
-          style: ThemeMode.light,
-          testEnv: true,
-
-          merchantCountryCode: 'US',
-        ),
-      );
-
-      await Stripe.instance.presentPaymentSheet();
-      await checkOutSubmitFunction();
-
-      //     .whenComplete(() async {
-      //   if (paymentIntentData!['id'] == null) {
-      //     log('Failed');
-      //     log('id: ${paymentIntentData!['id']}');
-      //     Get.snackbar(
-      //       "Failed",
-      //       "Failed payment Id",
-      //       snackPosition: SnackPosition.BOTTOM,
-      //     );
-      //   } else {
-      //     log('payment id: ${paymentIntentData!['id']}');
-
-      ///now finally display payment sheeet
-
-      // await getPaymentIdFunction(
-      //   paymentIntentData!['id'],
-      //   paymentIntentData!['client_secret'],
-      // );
-      //   }
-      // });
-    } catch (e) {
-      if (e is StripeException) {
-        // cardScreenController.paymentState.value = "failure";
-
-        Get.snackbar(
-          "Payment Failure",
-          "${e.error.message}",
-          colorText: Colors.black,
-        );
-        log("Make Payment Error ::: ${e.error.localizedMessage}");
-      } else {
-        // cardScreenController.paymentState.value = "failure";
-        Get.snackbar(
-          "Payment Failure",
-          "$e",
-          colorText: Colors.black,
-        );
-        log("Error ::: $e");
-        rethrow;
-      }
-    }
-  }
-
-  Future<Map<String, dynamic>> createPaymentIntent(
-    int amount,
-    String currency,
-  ) async {
-    try {
-      Map<String, dynamic> body = {
-        "amount": calculateAmount(amount),
-        'currency': currency,
-        'payment_method_types[]': 'card'
-      };
-      log('body: $body');
-
-      var response = await http.post(
-          Uri.parse('https://api.stripe.com/v1/payment_intents'),
-          body: body,
-          headers: {
-            'Authorization': 'Bearer ${PaymentKeys.secretKey}',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          });
-      // log("payment intent res body: ${response.body}");
-      //log("response.statusCode: ${response.statusCode}");
-      return jsonDecode(response.body.toString());
-    } catch (e) {
-      log("Create Payment Intent error found ::: $e");
-      print("error occured : ${e.toString()}");
-      rethrow;
-    }
-  }
-
-  calculateAmount(int amount) {
-    int price = amount * 100;
-    return price.toString();
   }
 
   getStripeKeyFunction() async {

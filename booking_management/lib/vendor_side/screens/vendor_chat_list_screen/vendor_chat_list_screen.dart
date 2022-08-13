@@ -208,6 +208,41 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                     ],
                   ),
                 ),
+                // FutureBuilder(
+                //   future: FirebaseFirestore.instance
+                //       .collection('Chats')
+                //       .where('room_id', isEqualTo: singleMsg.roomId)
+                //       .where('seen', isEqualTo: false)
+                //       .get(),
+                //   builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+                //     Widget widget = Container();
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return const CustomCircularLoaderModule();
+                //     } else if (snapshot.hasData) {
+                //       var data = snapshot.data!.docs;
+
+                //       for (var element in data) {
+                //         Map usrData = element.data() as Map;
+                //         // print(usrData);
+                //         print("seen value is :  ${usrData["seen"]}");
+
+                //         if (usrData["seen"] == false) {
+                //           widget = Container(
+                //             height: 12,
+                //             width: 12,
+                //             margin: const EdgeInsets.only(right: 8),
+                //             decoration: const BoxDecoration(
+                //               color: Colors.green,
+                //               shape: BoxShape.circle,
+                //             ),
+                //           );
+                //         }
+                //       }
+                //     }
+                //     return widget;
+                //   },
+                // ),
+
                 FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('Chats')
@@ -216,10 +251,13 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                       .get(),
                   builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                     Widget widget = Container();
+
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CustomCircularLoaderModule();
+                      return SizedBox();
                     } else if (snapshot.hasData) {
                       var data = snapshot.data!.docs;
+
+                      var msgCount = 0;
 
                       for (var element in data) {
                         Map usrData = element.data() as Map;
@@ -227,13 +265,22 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                         print("seen value is :  ${usrData["seen"]}");
 
                         if (usrData["seen"] == false) {
+                          msgCount++;
                           widget = Container(
-                            height: 12,
-                            width: 12,
-                            margin: const EdgeInsets.only(right: 8),
-                            decoration: const BoxDecoration(
-                              color: Colors.green,
+                            height: 25,
+                            width: 25,
+                            margin: EdgeInsets.only(right: 8),
+                            decoration: BoxDecoration(
+                              color: AppColors.accentColor,
                               shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                msgCount.toString(),
+                                style: TextStyle(
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
                             ),
                           );
                         }

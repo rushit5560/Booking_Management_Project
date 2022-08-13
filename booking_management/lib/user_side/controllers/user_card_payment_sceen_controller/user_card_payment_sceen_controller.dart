@@ -91,7 +91,7 @@ class UserCardPaymentScreenController extends GetxController {
       //     (int.parse(cardScreenController.bookingPrice) / 100) * 10;
 
       // Stripe
-      var stripeAccId = Stripe.stripeAccountId;
+      // var stripeAccId = Stripe.stripeAccountId;
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -160,7 +160,7 @@ class UserCardPaymentScreenController extends GetxController {
     log("booked amount price  == $bookingPrice");
     log("booked amount price  == $bookingPrice");
 
-    Get.to(() => InvoiceReportScreen());
+    Get.off(() => InvoiceReportScreen());
   }
 
   @override

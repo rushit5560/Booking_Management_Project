@@ -10,34 +10,36 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class UserBookingHistoryScreenController extends GetxController{
+class UserBookingHistoryScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   RxInt isStatus = 0.obs;
-   ApiHeader apiHeader = ApiHeader();
+  ApiHeader apiHeader = ApiHeader();
 
   List<Datum> historyList = [];
   AppointDetailsData? appointDetailsData;
-  List<String> serviceList= [];
-
-
+  List<String> serviceList = [];
 
   userBookingHistoryFunction() async {
     isLoading(true);
-    String url = ApiUrl.userBookingHistoryApi + "?cutomerid=${UserDetails.uniqueId}";
+    String url =
+        ApiUrl.userBookingHistoryApi + "?cutomerid=${UserDetails.uniqueId}";
+    log('customer token is : ${UserDetails.apiToken}');
     log('customer Id: ${UserDetails.uniqueId}');
     log('Url : $url');
-    try{
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
 
       log('Response : ${response.body}');
 
-      UserBookingHistoryModel bookingHistoryModel = UserBookingHistoryModel.fromJson(json.decode(response.body));
+      UserBookingHistoryModel bookingHistoryModel =
+          UserBookingHistoryModel.fromJson(json.decode(response.body));
       isSuccessStatus = bookingHistoryModel.success.obs;
       isStatus = bookingHistoryModel.statusCode.obs;
       log("status : $isStatus");
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         historyList.clear();
         historyList = bookingHistoryModel.data;
         log('allHistoryList : $historyList');
@@ -45,7 +47,7 @@ class UserBookingHistoryScreenController extends GetxController{
         log('Get All History Else Else');
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-    } catch(e) {
+    } catch (e) {
       log('userBookingHistoryFunction Error ::: $e');
     } finally {
       isLoading(false);
@@ -60,11 +62,11 @@ class UserBookingHistoryScreenController extends GetxController{
 
     try {
       http.Response response =
-      await http.get(Uri.parse(url), headers: apiHeader.headers);
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment Details Response : ${response.body}");
 
       GetAppointmentDetailsModel getAppointmentDetailsModel =
-      GetAppointmentDetailsModel.fromJson(json.decode(response.body));
+          GetAppointmentDetailsModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAppointmentDetailsModel.success.obs;
 
       if (isSuccessStatus.value) {
@@ -81,8 +83,6 @@ class UserBookingHistoryScreenController extends GetxController{
       isLoading(false);
     }
   }
-
-
 
   @override
   void onInit() {

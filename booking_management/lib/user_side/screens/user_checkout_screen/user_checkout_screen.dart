@@ -7,6 +7,10 @@ import 'package:booking_management/user_side/screens/user_checkout_screen/user_c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/constants/app_colors.dart';
+import '../../../common_modules/constants/app_images.dart';
+import '../../../common_ui/commom_widgets/common_dialogs/alert_dialog.dart';
+
 class UserCheckoutScreen extends StatelessWidget {
   UserCheckoutScreen({Key? key}) : super(key: key);
 
@@ -14,34 +18,107 @@ class UserCheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(
-        ()=> userCheckoutScreenController.isLoading.value
-        ? const CustomCircularLoaderModule()
-        : SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CommonAppBarModule(title: "Checkout", appBarOption: AppBarOption.singleBackButtonOption),
-                const SizedBox(height: 20,),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // SelectPaymentMethod(),
-                    BookingSummaryModule(),
-                    const SizedBox(height: 10),
-                    PersonalInformationFormModule(),
-                    const SizedBox(height: 30),
-                    ConfirmAndPayButtonModule(),
-                  ],
-                ).commonAllSidePadding(20),
-
-              ],
-            ),
-          ),
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return CustomAlertDialog();
+          },
+        );
+        return shouldPop!;
+      },
+      child: Scaffold(
+        body: Obx(
+          () => userCheckoutScreenController.isLoading.value
+              ? const CustomCircularLoaderModule()
+              : SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        customAppbar(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // SelectPaymentMethod(),
+                            BookingSummaryModule(),
+                            const SizedBox(height: 10),
+                            PersonalInformationFormModule(),
+                            const SizedBox(height: 30),
+                            ConfirmAndPayButtonModule(),
+                          ],
+                        ).commonAllSidePadding(20),
+                      ],
+                    ),
+                  ),
+                ),
         ),
       ),
+    );
+  }
+
+  customAppbar() {
+    return Container(
+      height: 55,
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+          color: AppColors.accentColor
+          //color: Colors.grey
+          ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            leftSideButton(),
+            Row(
+              children: [
+                Text(
+                  "Checkout",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ],
+            ),
+            rightSideButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget leftSideButton() {
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return const CustomAlertDialog();
+        },
+      ),
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: Image.asset(AppImages.backArrowImg),
+      ),
+    );
+  }
+
+  Widget rightSideButton() {
+    return const SizedBox(
+      height: 50,
+      width: 50,
     );
   }
 }

@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../../controllers/booking_success_screen_controller/booking_success_screen_controller.dart';
 
-
 /// Round Green
 class RoundCorrectModule extends StatelessWidget {
   const RoundCorrectModule({Key? key}) : super(key: key);
@@ -57,9 +56,7 @@ class BookingDetailsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          "Appointment booked with "
-        ),
+        const Text("Appointment booked with "),
         const SizedBox(height: 3),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,9 +65,7 @@ class BookingDetailsModule extends StatelessWidget {
               "${screenController.vendorName} ",
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const Text(
-                "on "
-            ),
+            const Text("on "),
           ],
         ),
         const SizedBox(height: 3),
@@ -87,54 +82,80 @@ class BookingDetailsModule extends StatelessWidget {
 class ButtonsModule extends StatelessWidget {
   ButtonsModule({Key? key}) : super(key: key);
   final screenController = Get.find<BookingSuccessScreenController>();
-  final bookAppointmentScreenController = Get.find<BookAppointmentScreenController>();
+  final bookAppointmentScreenController =
+      Get.find<BookAppointmentScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return bookAppointmentScreenController.isPriceDisplay.value
-    ? Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () {
-              Get.to(
-                () => InvoiceScreen(),
-                transition: Transition.zoom,
-                arguments: screenController.bookingId,
-              );
-            },
-            child: Container(
-                alignment: Alignment.center,
-                width: Get.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        spreadRadius: 3,
-                        blurRadius: 5,
-                        color: Colors.grey.shade300,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ]
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.to(
+                    () => InvoiceScreen(),
+                    transition: Transition.zoom,
+                    arguments: screenController.bookingId,
+                  );
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          color: Colors.grey.shade300,
+                          blurStyle: BlurStyle.outer,
+                        ),
+                      ]),
+                  child: const Text(
                     'View Invoice',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     ),
                   ),
+                ).commonSymmetricPadding(horizontal: 10),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.offAll(() => IndexScreen(), transition: Transition.zoom);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            color: Colors.grey.shade300,
+                            blurStyle: BlurStyle.outer,
+                          ),
+                        ]),
+                    child: const Text(
+                      'Continue Booking',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
                 ),
-              ).commonSymmetricPadding(horizontal: 10),
-          ),
-
-        ),
-        Expanded(
-          child: GestureDetector(
+              ),
+            ],
+          )
+        : GestureDetector(
             onTap: () {
-              Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+              Get.offAll(() => IndexScreen(), transition: Transition.zoom);
             },
             child: Container(
               alignment: Alignment.center,
@@ -149,8 +170,7 @@ class ButtonsModule extends StatelessWidget {
                         color: Colors.grey.shade300,
                         blurStyle: BlurStyle.outer,
                       ),
-                    ]
-                ),
+                    ]),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Text(
@@ -163,42 +183,6 @@ class ButtonsModule extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ),
-      ],
-    )
-    : GestureDetector(
-      onTap: () {
-        Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        width: Get.width,
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  spreadRadius: 3,
-                  blurRadius: 5,
-                  color: Colors.grey.shade300,
-                  blurStyle: BlurStyle.outer,
-                ),
-              ]
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Text(
-              'Continue Booking',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
-

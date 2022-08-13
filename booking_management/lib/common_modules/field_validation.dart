@@ -10,7 +10,8 @@ class FieldValidator {
     return null;*/
     if (value.isEmpty) {
       return 'Full name is required';
-    } else if (!value[0].contains(RegExp(r'^(?=.*?[A-Z])'))) {
+    } else if (!value[0].contains(RegExp(r'^(?=.*?[A-Z])')) ||
+        !value[0].contains(RegExp(r'^(?=.*?[a-z])'))) {
       return "First character should be alphabet";
     } else {
       return null;
@@ -130,16 +131,17 @@ class FieldValidator {
   }
 
   String? validateUserName(String value) {
-    String pattern = r'^(?=.*?[A-Z])';
-    RegExp regExp = RegExp(pattern);
+    // String pattern = r'^(?=.*?[A-Z])';
+    // RegExp regExp = RegExp(pattern);
     //return
     if (value.isEmpty) {
       return 'Username is required';
-    } else {
-      if (!regExp.hasMatch(value)) {
-        return 'Atleast 1 uppercase letter is required';
-      }
     }
+    // else {
+    //   if (!regExp.hasMatch(value)) {
+    //     return 'Atleast 1 uppercase letter is required';
+    //   }
+    // }
     return null;
   }
 

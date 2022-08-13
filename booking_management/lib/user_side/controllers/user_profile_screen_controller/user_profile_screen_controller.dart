@@ -19,8 +19,6 @@ class UserProfileScreenController extends GetxController {
   RxInt isStatus = 0.obs;
   File? file;
 
-
-
   String? userImage;
 
   // RxString selectedDate = UserDetails.dob.obs;
@@ -48,6 +46,7 @@ class UserProfileScreenController extends GetxController {
     Map<String, String> headers = <String, String>{
       'Authorization': UserDetails.apiToken
     };
+    log('UserDetails.userid: ${UserDetails.uniqueId}');
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
     try {
@@ -60,7 +59,8 @@ class UserProfileScreenController extends GetxController {
 
         var length = await file!.length();
 
-        request.files.add(await http.MultipartFile.fromPath("image", file!.path));
+        request.files
+            .add(await http.MultipartFile.fromPath("image", file!.path));
         request.headers.addAll(headers);
 
         request.fields['Id'] = UserDetails.tableWiseId.toString();
@@ -188,11 +188,11 @@ class UserProfileScreenController extends GetxController {
         nameTextFieldController.text = userProfileDetailsModel.data!.userName!;
         emailTextFieldController.text = userProfileDetailsModel.data!.email!;
         mobileTextFieldController.text = userProfileDetailsModel.data!.phoneNo!;
-        userImage = userProfileDetailsModel.data!.image!;
-
+        userImage = userProfileDetailsModel.data!.image ?? "";
 
         gender.value = userProfileDetailsModel.data!.gender!;
-        selectedDate = DateTime.parse(userProfileDetailsModel.data!.dateOfBirth!);
+        selectedDate =
+            DateTime.parse(userProfileDetailsModel.data!.dateOfBirth!);
 
         // if(userProfileDetailsModel.data.dateOfBirth.length > 10) {
         //   String dob = userProfileDetailsModel.data.dateOfBirth;
@@ -206,6 +206,7 @@ class UserProfileScreenController extends GetxController {
       }
     } catch (e) {
       log('Get All User Details Error ::: $e');
+      rethrow;
     } finally {
       isLoading(false);
     }

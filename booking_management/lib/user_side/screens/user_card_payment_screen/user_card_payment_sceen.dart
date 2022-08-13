@@ -9,8 +9,10 @@ import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vend
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/custom_appbar/custom_appbar.dart';
+import '../../../common_ui/commom_widgets/common_dialogs/alert_dialog.dart';
 
 class UserCardPaymentScreen extends StatefulWidget {
   const UserCardPaymentScreen({Key? key}) : super(key: key);
@@ -24,27 +26,35 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(
-        () => cardScreenController.isLoading.value
-            ? const CustomCircularLoaderModule()
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CommonAppBarModule(
-                        title: "Payment Details",
-                        appBarOption: AppBarOption.singleBackButtonOption,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      showPaymentSummaryWidget(context),
-                    ],
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return const CustomAlertDialog();
+          },
+        );
+        return shouldPop!;
+      },
+      child: Scaffold(
+        body: Obx(
+          () => cardScreenController.isLoading.value
+              ? const CustomCircularLoaderModule()
+              : SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        customAppbar(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        showPaymentSummaryWidget(context),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }
@@ -169,5 +179,66 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
         ),
       ],
     ).commonSymmetricPadding(horizontal: 20, vertical: 10);
+  }
+
+  customAppbar() {
+    return Container(
+      height: 55,
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+          color: AppColors.accentColor
+          //color: Colors.grey
+          ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            leftSideButton(),
+            Row(
+              children: [
+                Text(
+                  "Payment",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ],
+            ),
+            rightSideButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget leftSideButton() {
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return const CustomAlertDialog();
+        },
+      ),
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: Image.asset(AppImages.backArrowImg),
+      ),
+    );
+  }
+
+  Widget rightSideButton() {
+    return const SizedBox(
+      height: 50,
+      width: 50,
+    );
   }
 }

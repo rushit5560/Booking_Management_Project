@@ -12,8 +12,7 @@ import '../../model/user_conversation_screen_model/send_message_model.dart';
 class SingleMessageBubble extends StatelessWidget {
   final ReceiveMessageModel singleMsg;
 
-  SingleMessageBubble({Key? key, required this.singleMsg})
-      : super(key: key);
+  SingleMessageBubble({Key? key, required this.singleMsg}) : super(key: key);
 
   final screenController = Get.find<UserConversationScreenController>();
 
@@ -41,7 +40,7 @@ class SingleMessageBubble extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  if(isSendByMe == true) {
+                  if (isSendByMe == true) {
                     log("singleMsg.id : ${singleMsg.docId}");
                     showAlertDialog(context, singleMsg.docId);
                   }
@@ -78,7 +77,6 @@ class SingleMessageBubble extends StatelessWidget {
   }
 
   showAlertDialog(BuildContext context, String docId) {
-
     Widget okButton = TextButton(
       onPressed: () {
         screenController.deleteSingleMessage(docId);
@@ -111,8 +109,6 @@ class SingleMessageBubble extends StatelessWidget {
       },
     );
   }
-
-
 }
 
 class MessageWriteTextFieldModule extends StatelessWidget {
@@ -130,9 +126,10 @@ class MessageWriteTextFieldModule extends StatelessWidget {
         color: AppColors.colorLightGrey,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8),
         child: TextFormField(
           cursorColor: Colors.grey,
+          textInputAction: TextInputAction.done,
           controller: screenController.messageFieldController,
           decoration: conversationScreenFieldDecoration(
             hintText: 'Type a message',

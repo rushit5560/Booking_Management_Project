@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -27,34 +28,38 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Form(
-        key: screenController.profileFormKey,
-        child: Column(
-          children: [
-            const SizedBox(height: 15),
-            profile(),
-            const SizedBox(height: 30),
-            nameTextField(),
-            // const SizedBox(height: 15),
-            emailTextField(),
-            const SizedBox(height: 15),
-            // addressTextField(),
-            // const SizedBox(height: 15,),
-            mobileTextField(),
-            const SizedBox(height: 15),
-            dateOfBirthTextField(context),
-            const SizedBox(height: 15),
-            _radioButton(),
-            const SizedBox(height: 15),
-            // cityTextField(),
-            const SizedBox(height: 15),
-            // stateTextField(),
-            const SizedBox(height: 15),
-            // countryTextField(),
-            const SizedBox(height: 15),
-            saveButtonModule(),
-          ],
-        ).commonAllSidePadding(20),
+      child: Obx(
+        () => screenController.isLoading.value
+            ? const CustomCircularLoaderModule()
+            : Form(
+                key: screenController.profileFormKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 15),
+                    profile(),
+                    const SizedBox(height: 30),
+                    nameTextField(),
+                    // const SizedBox(height: 15),
+                    emailTextField(),
+                    const SizedBox(height: 15),
+                    // addressTextField(),
+                    // const SizedBox(height: 15,),
+                    mobileTextField(),
+                    const SizedBox(height: 15),
+                    dateOfBirthTextField(context),
+                    const SizedBox(height: 15),
+                    _radioButton(),
+                    const SizedBox(height: 15),
+                    // cityTextField(),
+                    const SizedBox(height: 15),
+                    // stateTextField(),
+                    const SizedBox(height: 15),
+                    // countryTextField(),
+                    const SizedBox(height: 15),
+                    saveButtonModule(),
+                  ],
+                ).commonAllSidePadding(20),
+              ),
       ),
     );
   }
@@ -87,39 +92,37 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
           height: 120,
           width: 120,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: screenController.file != null
-                ? ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.file(
-                screenController.file!,
-                // height: 100,
-                // width: 100,
-                fit: BoxFit.cover,
-              ),
-            ) :screenController.userImage != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      ApiUrl.apiImagePath + screenController.userImage!,
-                      // height: 100,
-                      // width: 100,
-                      fit: BoxFit.cover,
-
-
-                    ),
-                  )
-
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          AppImages.vendorImg,
-                          // height: 100,
-                          // width: 100,
-                          fit: BoxFit.fill,
-                        ),
+              child: screenController.file != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.file(
+                        screenController.file!,
+                        // height: 100,
+                        // width: 100,
+                        fit: BoxFit.cover,
                       ),
-          ),
+                    )
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        ApiUrl.apiImagePath + screenController.userImage!,
+                        // height: 100,
+                        // width: 100,
+                        fit: BoxFit.cover,
+                        errorBuilder: (ctx, obj, st) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              AppImages.vendorImg,
+                              // height: 100,
+                              // width: 100,
+                              fit: BoxFit.fill,
+                            ),
+                          );
+                        },
+                      ),
+                    )),
         ),
         GestureDetector(
           onTap: () {

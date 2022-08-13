@@ -46,6 +46,8 @@ class SignInScreen extends StatelessWidget {
                         const SizedBox(height: 40),
                         const SignUpTextModule(),
                         const SizedBox(height: 10),
+                        const SignInSkipButton(),
+                        const SizedBox(height: 10),
                       ],
                     ).commonAllSidePadding(20),
                   ),

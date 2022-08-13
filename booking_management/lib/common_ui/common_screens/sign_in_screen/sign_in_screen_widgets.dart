@@ -1,11 +1,11 @@
 import 'package:booking_management/common_ui/common_screens/forgot_password_screen/forgot_password_screen.dart';
+import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
 import '../../../user_side/screens/user_sign_up_screen/user_sign_up_screen.dart';
 import '../../common_controller/sign_in_screen_controller/sign_in_screen_controller.dart';
-
 
 class EmailFieldModule extends StatelessWidget {
   EmailFieldModule({Key? key}) : super(key: key);
@@ -17,7 +17,8 @@ class EmailFieldModule extends StatelessWidget {
       controller: screenController.unameFieldController,
       keyboardType: TextInputType.text,
       validator: (value) => FieldValidator().validateUserName(value!),
-      decoration: signInFormFieldDecoration(hintText: 'User Name', controller: screenController),
+      decoration: signInFormFieldDecoration(
+          hintText: 'User Name', controller: screenController),
     );
   }
 }
@@ -28,13 +29,39 @@ class PasswordFieldModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      ()=> TextFormField(
+      () => TextFormField(
         controller: screenController.passwordFieldController,
         keyboardType: TextInputType.visiblePassword,
         obscureText: screenController.isPasswordVisible.value,
         validator: (value) => FieldValidator().validatePassword(value!),
-        decoration: signInFormFieldDecoration(hintText: 'Password', index: 1, controller: screenController),
+        decoration: signInFormFieldDecoration(
+            hintText: 'Password', index: 1, controller: screenController),
       ),
+    );
+  }
+}
+
+class SignInSkipButton extends StatelessWidget {
+  const SignInSkipButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.offAll(() => IndexScreen());
+          },
+          child: const Text(
+            "Skip",
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -45,8 +72,8 @@ class SignInButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async{
-        if(screenController.signInFormKey.currentState!.validate()){
+      onTap: () async {
+        if (screenController.signInFormKey.currentState!.validate()) {
           // if(screenController.emailFieldController.text == "user@gmail.com"){
           //   Get.offAll(()=> IndexScreen());
           // } else if(screenController.emailFieldController.text == "vendor@gmail.com"){
@@ -54,9 +81,9 @@ class SignInButtonModule extends StatelessWidget {
           // }
           //Get.offAll(()=> IndexScreen());
           await screenController.signInFunction(
-            // userName: screenController.unameFieldController.text.trim(),
-            // password: screenController.passwordFieldController.text.trim(),
-          );
+              // userName: screenController.unameFieldController.text.trim(),
+              // password: screenController.passwordFieldController.text.trim(),
+              );
         }
       },
       child: Container(
@@ -92,8 +119,8 @@ class ForgotPasswordTextModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()async {
-        Get.to(()=> ForgotPasswordScreen());
+      onTap: () async {
+        Get.to(() => ForgotPasswordScreen());
         //await screenController.forgotPasswordFunction();
       },
       child: Container(
@@ -121,7 +148,7 @@ class SignUpTextModule extends StatelessWidget {
         const Text("Don't have an account? "),
         GestureDetector(
           onTap: () {
-            Get.off(()=> UserSignUpScreen());
+            Get.off(() => UserSignUpScreen());
           },
           child: const Text(
             'Sign Up',
@@ -134,6 +161,3 @@ class SignUpTextModule extends StatelessWidget {
     );
   }
 }
-
-
-

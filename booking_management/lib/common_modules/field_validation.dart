@@ -10,10 +10,14 @@ class FieldValidator {
     return null;*/
     if (value.isEmpty) {
       return 'Full name is required';
-    } else if (!value[0].contains(RegExp(r'^(?=.*?[A-Z])')) ||
-        !value[0].contains(RegExp(r'^(?=.*?[a-z])'))) {
-      return "First character should be alphabet";
-    } else {
+    }
+
+    // else if (!value[0].contains(RegExp(r'^(?=.*?[A-Z])')) ||
+    //     !value[0].contains(RegExp(r'^(?=.*?[a-z])'))) {
+    //   return "First character should be alphabet";
+    // }
+
+    else {
       return null;
     }
   }

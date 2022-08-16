@@ -133,8 +133,7 @@ class BookingServicesListModule extends StatelessWidget {
                 itemCount: screenController.allServicesList.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder: (context,i){
-
+                separatorBuilder: (context, i) {
                   return const SizedBox(height: 10);
                 },
                 itemBuilder: (context, i) {
@@ -162,7 +161,6 @@ class BookingServicesListModule extends StatelessWidget {
         ],
       ),
       child: ExpandablePanel(
-
         header: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
@@ -193,8 +191,7 @@ class BookingServicesListModule extends StatelessWidget {
             itemCount: screenController.allServicesList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (context,i){
-
+            separatorBuilder: (context, i) {
               return const SizedBox(height: 10);
             },
             itemBuilder: (context, i) {
@@ -1214,8 +1211,75 @@ class BookButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (UserDetails.isUserLoggedIn == true) {
-          if (screenController.selectedResourceTimeSlotId == 0) {
-            Fluttertoast.showToast(msg: "Please select time slot!");
+          if (screenController.allServicesList.isEmpty) {
+            int timeSlotsCount = 0;
+            // var servicesCount = screenController.allResourcesList.length;
+
+            for (int i = 0; i < screenController.allResourcesList.length; i++) {
+              if (screenController.allResourcesList[i].timingList.isEmpty) {
+                timeSlotsCount++;
+                log("timeSlotsCount : $timeSlotsCount");
+              }
+            }
+
+            if (timeSlotsCount == screenController.allResourcesList.length) {
+              Fluttertoast.showToast(
+                msg: "There is no time slots available to book appointment !",
+              );
+            } else if (timeSlotsCount !=
+                screenController.allResourcesList.length) {
+              if (screenController.selectedResourceTimeSlotId == 0) {
+                Fluttertoast.showToast(msg: "Please select time slot!");
+              } else {
+                //api calling
+                if (screenController.isServiceSlot.value) {
+                  if (screenController.selectedServiceList.isEmpty) {
+                    Fluttertoast.showToast(msg: "No services available !");
+                  } else {
+                    await screenController.bookSelectedSlotFunction(
+                        userName: "", email: "");
+                  }
+                } else {
+                  await screenController.bookAvailableTimeSlotFunction(
+                      userName: "", email: "");
+                }
+              }
+            }
+
+            // if (screenController.allResourcesList[i].timingList.isEmpty) {
+            //   timeSlotsCount++;
+            // } else if (screenController
+            //     .allResourcesList[i].timingList.isNotEmpty) {
+            //
+            //   log("else if ----- first ");
+            //   log("services are : $servicesCount \n& not available timeslot are : $timeSlotsCount");
+            //
+            // } else {
+            //   log("else ----- first ");
+            //   log("services are : $servicesCount \n& not available timeslot are : $timeSlotsCount");
+            // }
+
+            //   if (servicesCount == timeSlotsCount) {
+            //     log("if ----- second");
+            //     log("services are : $servicesCount \n& not available timeslot are : $timeSlotsCount");
+            //
+            //     var notAvailTimeslotsCount = 0;
+            //
+            //     Fluttertoast.showToast(
+            //       msg: "There is no time slots available to book appointment !",
+            //     );
+
+            // } else if (screenController.selectedResourceTimeSlotId == 0) {
+            //   log("else second ----");
+            //
+            //   Fluttertoast.showToast(msg: "Please select time slot!");
+            // }
+
+            // else if (screenController.allResourcesList[0].timingList.isEmpty &&
+            //     screenController.allResourcesList[0].nextDate.isEmpty) {
+            //   Fluttertoast.showToast(
+            //       msg: "There is no time slots available to book appointment !");
+            // }
           } else {
             if (screenController.isServiceSlot.value) {
               await screenController.bookSelectedSlotFunction(
@@ -1224,6 +1288,7 @@ class BookButtonModule extends StatelessWidget {
               await screenController.bookAvailableTimeSlotFunction(
                   userName: "", email: "");
             }
+            // }
           }
         } else if (UserDetails.isUserLoggedIn == false) {
           if (screenController.selectedResourceTimeSlotId == 0) {

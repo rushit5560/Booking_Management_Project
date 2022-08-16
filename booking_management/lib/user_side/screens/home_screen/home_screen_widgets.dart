@@ -184,7 +184,7 @@ class SearchCategoryField extends StatelessWidget {
         noItemsFoundBuilder: (ctx) {
           return const ListTile(
             title: Text(
-              "Sorry, no business found for selected criteria. Please change location and try again!",
+              "No Service/Business Name Found!",
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 15,
@@ -420,7 +420,6 @@ class SearchButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // if(screenController.categoryFieldController.text.isNotEmpty) {
-        screenController.predictions.clear();
         Get.to(
           () => UserSearchResultsScreen(),
           arguments: [
@@ -433,10 +432,13 @@ class SearchButtonModule extends StatelessWidget {
         )!
             .then((value) async {
           await screenController.getFavouriteVendorByIdFunction();
+
+          screenController.predictions.clear();
+
+          screenController.locationFieldController.clear();
+          screenController.locationFieldController.removeListener(() {});
+          screenController.categoryFieldController.clear();
         });
-        screenController.predictions.clear();
-        screenController.categoryFieldController.clear();
-        screenController.locationFieldController.clear();
         hideKeyboard();
 
         // }
@@ -939,28 +941,28 @@ class PartialCategoryListModule extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              flex: 75,
+              flex: 80,
               child: Container(
-                height: 50,
-                width: 50,
+                height: 100,
+                width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  // image: DecorationImage(
-                  //   image: NetworkImage(imgUrl),
-                  //   fit: BoxFit.cover,
-                  // ),
+                  color: AppColors.colorLightGrey2,
                 ),
-                child: Image.network(
-                  imgUrl,
-                  errorBuilder: (context, st, ob) {
-                    return Image.asset(AppImages.logoImg);
-                  },
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    imgUrl,
+                    errorBuilder: (context, st, ob) {
+                      return Image.asset(AppImages.logoImg);
+                    },
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ).commonAllSidePadding(10),
             ),
             Expanded(
-              flex: 25,
+              flex: 20,
               child: Center(
                 child: Text(
                   singleItem.name,
@@ -988,7 +990,7 @@ class FavouriteVendorsModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
-          'Favourites Vendor',
+          'Favourite Vendors',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -1052,19 +1054,22 @@ class FavouriteVendorsModule extends StatelessWidget {
             Column(
               children: [
                 Expanded(
-                  flex: 60,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                        image: NetworkImage(imgUrl),
-                        fit: BoxFit.cover,
+                  flex: 65,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          image: NetworkImage(imgUrl),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 40,
+                  flex: 20,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

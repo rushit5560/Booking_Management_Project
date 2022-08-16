@@ -20,6 +20,17 @@ class SingleMessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isSendByMe;
 
+    var msgSentDay = DateTime.fromMicrosecondsSinceEpoch(
+            singleMsg.createdAt.microsecondsSinceEpoch)
+        .toString()
+        .split(" ")[0];
+    var msgSentHourTime = DateTime.fromMicrosecondsSinceEpoch(
+            singleMsg.createdAt.microsecondsSinceEpoch)
+        .hour;
+    var msgSentMinTime = DateTime.fromMicrosecondsSinceEpoch(
+            singleMsg.createdAt.microsecondsSinceEpoch)
+        .minute;
+
     singleMsg.senderId == UserDetails.email
         ? isSendByMe = true
         : isSendByMe = false;
@@ -48,7 +59,9 @@ class SingleMessageBubble extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: AppColors.colorLightGrey,
+                    color: isSendByMe
+                        ? AppColors.accentColor
+                        : AppColors.colorLightGrey2,
                     borderRadius: BorderRadius.only(
                       topRight: const Radius.circular(15),
                       topLeft: const Radius.circular(15),
@@ -67,6 +80,14 @@ class SingleMessageBubble extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "$msgSentDay at $msgSentHourTime:$msgSentMinTime",
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 10,
                 ),
               ),
             ],

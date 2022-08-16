@@ -19,30 +19,36 @@ class BusinessDetailScreen extends StatelessWidget {
             Obx(
               () => vendorDetailsScreenController.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
-                  : Column(
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 35,
-                            child: ProfileModule(),
-                        ),
-                        const SizedBox(height: 20),
-                        Expanded(
-                          flex: 65,
-                          child: Column(
-                            children: [
-                              TabViewModule(),
-                              const SizedBox(height: 20),
-                              Expanded(
-                                child: vendorDetailsScreenController.isOverviewSelected.value
-                                    ? OverviewModule()
-                                    : ReviewModule(),
+                  : SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                    child: SizedBox(
+                      height: Get.size.height,
+                      child: Column(
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 35,
+                                child: ProfileModule(),
+                            ),
+                            const SizedBox(height: 20),
+                            Expanded(
+                              flex: 65,
+                              child: Column(
+                                children: [
+                                  TabViewModule(),
+                                  const SizedBox(height: 20),
+                                  Expanded(
+                                    child: vendorDetailsScreenController.isOverviewSelected.value
+                                        ? OverviewModule()
+                                        : ReviewModule(),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
                     ),
+                  ),
             ),
             const BackArrow()
           ],

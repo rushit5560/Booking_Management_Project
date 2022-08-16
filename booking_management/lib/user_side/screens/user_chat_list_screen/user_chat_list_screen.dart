@@ -52,7 +52,6 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                               child: RefreshIndicator(
                                 triggerMode:
                                     RefreshIndicatorTriggerMode.anywhere,
-
                                 onRefresh: () async {
                                   setState(() {});
                                   userChatListScreenController

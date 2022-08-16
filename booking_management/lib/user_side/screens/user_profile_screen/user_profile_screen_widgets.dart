@@ -106,7 +106,9 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        ApiUrl.apiImagePath + screenController.userImage!,
+                        screenController.userImage == null
+                            ? ""
+                            : ApiUrl.apiImagePath + screenController.userImage!,
                         // height: 100,
                         // width: 100,
                         fit: BoxFit.cover,

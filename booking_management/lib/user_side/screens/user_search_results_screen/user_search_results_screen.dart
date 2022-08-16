@@ -48,7 +48,20 @@ class UserSearchResultsScreen extends StatelessWidget {
                             const SizedBox(height: 30),
                             userSearchResultsScreenController
                                     .searchVendorList.isEmpty
-                                ? const Center(child: Text("No Data Available"))
+                                ? const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 20),
+                                      child: Text(
+                                        "Sorry, no business found for selected criteria. Please change location and try again!",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                 : BusinessListModule(),
                           ],
                         ).commonAllSidePadding(20),

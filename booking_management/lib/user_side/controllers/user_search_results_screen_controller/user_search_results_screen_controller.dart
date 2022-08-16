@@ -32,6 +32,7 @@ class UserSearchResultsScreenController extends GetxController {
   List<SearchVendorDatum> searchVendorList = [];
 
   String distance = "Distance";
+  String dropdownDistance = "Distance";
   String date = "Date";
   String rating = "Rating";
 
@@ -268,6 +269,7 @@ class UserSearchResultsScreenController extends GetxController {
     latitude = locationText == "" ? UserDetails.latitude : selectedLatitude;
     longitude = locationText == "" ? UserDetails.longitude : selectedLongitude;
     distance = '50';
+    dropdownDistance = '50 Km';
 
     String tempLocation = locationText;
     locationText = tempLocation.replaceAll(" ", "");

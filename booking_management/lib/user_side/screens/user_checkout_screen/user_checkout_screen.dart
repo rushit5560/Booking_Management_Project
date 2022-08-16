@@ -23,7 +23,7 @@ class UserCheckoutScreen extends StatelessWidget {
         final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) {
-            return CustomAlertDialog();
+            return const CustomAlertDialog();
           },
         );
         return shouldPop!;

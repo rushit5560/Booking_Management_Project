@@ -264,7 +264,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         ),
                         isExpanded: true,
                         focusColor: Colors.white,
-                        value: screenController.distance,
+                        value: screenController.dropdownDistance,
                         //elevation: 5,
                         style: TextStyle(
                           color: AppColors.colorGreyIconDark,
@@ -272,13 +272,13 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         // iconEnabledColor: Colors.black,
                         items: <String>[
                           'Distance',
-                          '1',
-                          '5',
-                          '10',
-                          '15',
-                          '20',
-                          '25',
-                          '50'
+                          '1 Km',
+                          '5 Km',
+                          '10 Km',
+                          '15 Km',
+                          '20 Km',
+                          '25 Km',
+                          '50 Km'
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -294,8 +294,12 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
                         // ),
                         onChanged: (newValue) async {
                           setState(() {
-                            screenController.distance = newValue!;
+                            screenController.dropdownDistance = newValue!;
+
+                            screenController.distance =
+                                screenController.dropdownDistance.split(" ")[0];
                           });
+                          log("distance is :  ${screenController.distance}");
 
                           if (screenController.searchType ==
                               SearchType.categoryWise) {
@@ -591,6 +595,7 @@ class BusinessListModule extends StatelessWidget {
 
   Widget _vendorListTile(SearchVendorDatum singleItem) {
     String imgUrl = ApiUrl.apiImagePath + singleItem.businessLogo;
+    log("Business Logo : $imgUrl");
     return GestureDetector(
       onTap: () {
         Get.to(() => BusinessDetailScreen(), arguments: [
@@ -684,8 +689,16 @@ class BusinessListModule extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     imgUrl,
+                    fit: BoxFit.cover,
+                    height: 125,
+                    width: 125,
                     errorBuilder: (context, st, ob) {
-                      return Image.asset(AppImages.logoImg);
+                      return Image.asset(
+                        AppImages.logoImg,
+                        fit: BoxFit.cover,
+                        height: 125,
+                        width: 125,
+                      );
                     },
                   ),
                 ),
@@ -710,7 +723,7 @@ class BusinessListModule extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 3),
+                              const SizedBox(height: 5),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -747,32 +760,27 @@ class BusinessListModule extends StatelessWidget {
                                         ),
                                 ],
                               ),
-                              const SizedBox(height: 3),
+                              const SizedBox(height: 5),
                               Text(
                                 "Location - ${singleItem.address}",
-                                maxLines: 1,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const SizedBox(height: 3),
+                              const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Container(
-                                      height: 10,
-                                      width: 10,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color:
-                                              singleItem.workingHoursStatus ==
-                                                      "Close"
-                                                  ? Colors.red
-                                                  : Colors.green),
-                                    ),
+                                  Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: singleItem.workingHoursStatus ==
+                                                "Close"
+                                            ? Colors.red
+                                            : Colors.green),
                                   ),
                                   const SizedBox(width: 5),
                                   Expanded(
@@ -837,7 +845,7 @@ class BusinessListModule extends StatelessWidget {
                       ],
                     ),*/
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 2),
                     GestureDetector(
                       onTap: () {
                         Get.to(

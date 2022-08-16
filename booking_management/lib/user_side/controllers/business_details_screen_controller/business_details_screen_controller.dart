@@ -61,8 +61,9 @@ class BusinessDetailsScreenController extends GetxController {
     log("Vendor Details API URL : $url");
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       log("Vendor Details Response : ${response.body}");
 
       VendorDetailsModel vendorDetailsModel =
@@ -130,8 +131,9 @@ class BusinessDetailsScreenController extends GetxController {
     log("Vendor Review API URL : $url");
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       log("vendor Review API Response : ${response.body}");
 
       GetVendorReviewsModel getVendorReviewsModel =
@@ -166,7 +168,7 @@ class BusinessDetailsScreenController extends GetxController {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-       request.headers.addAll(apiHeader.headers);
+      request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
@@ -187,14 +189,17 @@ class BusinessDetailsScreenController extends GetxController {
         AddCustomerReviewsModel addCustomerReviewsModel =
             AddCustomerReviewsModel.fromJson(json.decode(dataLine));
         isSuccessStatus = addCustomerReviewsModel.success.obs;
+        log("response body : ${addCustomerReviewsModel.data}");
 
         if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: addCustomerReviewsModel.data);
           await getVendorReviewFunction();
-        } else {
-          log("addCustomerReviewFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
         }
+
+        // else {
+        //   log("addCustomerReviewFunction Else Else");
+        //   Fluttertoast.showToast(msg: "Something went wrong!");
+        // }
       });
 
       /*Map<String, dynamic> data = {
@@ -235,15 +240,18 @@ class BusinessDetailsScreenController extends GetxController {
     log("Get Business Hours API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), /*headers: apiHeader.headers*/);
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
       log("Business Hours API URL : ${response.body}");
 
-      GetBusinessHoursModel getBusinessHoursModel = GetBusinessHoursModel.fromJson(json.decode(response.body));
+      GetBusinessHoursModel getBusinessHoursModel =
+          GetBusinessHoursModel.fromJson(json.decode(response.body));
       isSuccessStatus.value = getBusinessHoursModel.success;
 
       if (isSuccessStatus.value) {
         businessHoursList = getBusinessHoursModel.data;
-        for(int i = 0; i < businessHoursList.length; i++) {
+        for (int i = 0; i < businessHoursList.length; i++) {
           log("businessHoursList : ${businessHoursList[i].day}");
         }
       } else {
@@ -298,7 +306,7 @@ class BusinessDetailsScreenController extends GetxController {
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
 
-       request.headers.addAll(apiHeader.headers);
+      request.headers.addAll(apiHeader.headers);
 
       request.fields['VendorId'] = "$vendorId";
       request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
@@ -317,7 +325,7 @@ class BusinessDetailsScreenController extends GetxController {
 
         if (isSuccessStatus.value) {
           vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
-          if(vendorDetailsData!.favourites) {
+          if (vendorDetailsData!.favourites) {
             Fluttertoast.showToast(msg: "Added in favourite");
           } else {
             Fluttertoast.showToast(msg: "Removed from favourite");
@@ -335,27 +343,29 @@ class BusinessDetailsScreenController extends GetxController {
     }
   }
 
-
   getFavVendorFunction(int vendorId) async {
     isLoading(true);
-    String url = ApiUrl.getFavVendorApi + "?VendorId=$vendorId" + "&CustomerId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.getFavVendorApi +
+        "?VendorId=$vendorId" +
+        "&CustomerId=${UserDetails.tableWiseId}";
     log("Get Fav Vendor API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("response : ${response.body}");
 
-      GetFavoriteVendorModel getFavoriteVendorModel = GetFavoriteVendorModel.fromJson(json.decode(response.body));
+      GetFavoriteVendorModel getFavoriteVendorModel =
+          GetFavoriteVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFavoriteVendorModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         isFavourite.value = getFavoriteVendorModel.workerList.isLike;
         log("isFavourite.value : ${isFavourite.value}");
       } else {
         log("getFavVendorFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getFavVendorFunction Error ::: $e");
     } finally {
       await getVendorReviewFunction();

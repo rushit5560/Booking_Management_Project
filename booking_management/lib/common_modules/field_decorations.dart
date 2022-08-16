@@ -66,42 +66,43 @@ InputDecoration signUpFormFieldDecoration({
           const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
       suffixIcon: index == 1
           ? Obx(
-            () => GestureDetector(
-          onTap: () {
-            controller.isPasswordVisible.value =
-            !controller.isPasswordVisible.value;
-          },
-          child: Icon(
-              controller.isPasswordVisible.value
-                  ? Icons.visibility_off_rounded
-                  : Icons.visibility_rounded,
-              size: 20,
-              color: Colors.grey),
-        ),
-      ) : index == 3 ?
-                  Obx(
-                  () => GestureDetector(
+              () => GestureDetector(
                 onTap: () {
-                  controller.isRePasswordVisible.value =
-                  !controller.isRePasswordVisible.value;
+                  controller.isPasswordVisible.value =
+                      !controller.isPasswordVisible.value;
                 },
                 child: Icon(
-                    controller.isRePasswordVisible.value
+                    controller.isPasswordVisible.value
                         ? Icons.visibility_off_rounded
                         : Icons.visibility_rounded,
                     size: 20,
                     color: Colors.grey),
               ),
-              )
-          : index == 2
-              ? GestureDetector(
-                  onTap: () {
-                    controller.selectDate(context);
-                  },
-                  child: const Icon(Icons.calendar_today_rounded,
-                      size: 20, color: Colors.grey),
+            )
+          : index == 3
+              ? Obx(
+                  () => GestureDetector(
+                    onTap: () {
+                      controller.isRePasswordVisible.value =
+                          !controller.isRePasswordVisible.value;
+                    },
+                    child: Icon(
+                        controller.isRePasswordVisible.value
+                            ? Icons.visibility_off_rounded
+                            : Icons.visibility_rounded,
+                        size: 20,
+                        color: Colors.grey),
+                  ),
                 )
-              : null);
+              : index == 2
+                  ? GestureDetector(
+                      onTap: () {
+                        controller.selectDate(context);
+                      },
+                      child: const Icon(Icons.calendar_today_rounded,
+                          size: 20, color: Colors.grey),
+                    )
+                  : null);
 }
 
 InputDecoration forgotPasswordFormFieldDecoration(
@@ -139,9 +140,9 @@ InputDecoration forgotPasswordFormFieldDecoration(
 
 InputDecoration changePasswordFormFieldDecoration(
     {required String hintText,
-      int index = 0,
-      required UserChangePasswordScreenController controller,
-      required BuildContext context}) {
+    int index = 0,
+    required UserChangePasswordScreenController controller,
+    required BuildContext context}) {
   return InputDecoration(
       hintText: hintText,
       hintStyle: const TextStyle(color: Colors.grey),
@@ -150,53 +151,55 @@ InputDecoration changePasswordFormFieldDecoration(
       focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black)),
       errorBorder:
-      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+          const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
       focusedErrorBorder:
-      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+          const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
       suffixIcon: index == 1
           ? Obx(
-            () => GestureDetector(
-          onTap: () {
-            controller.isPasswordVisible.value =
-            !controller.isPasswordVisible.value;
-          },
-          child: Icon(
-              controller.isPasswordVisible.value
-                  ? Icons.visibility_off_rounded
-                  : Icons.visibility_rounded,
-              size: 20,
-              color: Colors.grey),
-        ),
-      ): index == 2
+              () => GestureDetector(
+                onTap: () {
+                  controller.isPasswordVisible.value =
+                      !controller.isPasswordVisible.value;
+                },
+                child: Icon(
+                    controller.isPasswordVisible.value
+                        ? Icons.visibility_off_rounded
+                        : Icons.visibility_rounded,
+                    size: 20,
+                    color: Colors.grey),
+              ),
+            )
+          : index == 2
               ? Obx(
-                () => GestureDetector(
-              onTap: () {
-                controller.isNewPasswordVisible.value =
-                !controller.isNewPasswordVisible.value;
-              },
-              child: Icon(
-                  controller.isNewPasswordVisible.value
-                      ? Icons.visibility_off_rounded
-                      : Icons.visibility_rounded,
-                  size: 20,
-                  color: Colors.grey),
-            ),
-          ) :index == 3
-          ? Obx(
-            () => GestureDetector(
-          onTap: () {
-            controller.isConfirmPasswordVisible.value =
-            !controller.isConfirmPasswordVisible.value;
-          },
-          child: Icon(
-              controller.isConfirmPasswordVisible.value
-                  ? Icons.visibility_off_rounded
-                  : Icons.visibility_rounded,
-              size: 20,
-              color: Colors.grey),
-        ),
-      )
-          : null);
+                  () => GestureDetector(
+                    onTap: () {
+                      controller.isNewPasswordVisible.value =
+                          !controller.isNewPasswordVisible.value;
+                    },
+                    child: Icon(
+                        controller.isNewPasswordVisible.value
+                            ? Icons.visibility_off_rounded
+                            : Icons.visibility_rounded,
+                        size: 20,
+                        color: Colors.grey),
+                  ),
+                )
+              : index == 3
+                  ? Obx(
+                      () => GestureDetector(
+                        onTap: () {
+                          controller.isConfirmPasswordVisible.value =
+                              !controller.isConfirmPasswordVisible.value;
+                        },
+                        child: Icon(
+                            controller.isConfirmPasswordVisible.value
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded,
+                            size: 20,
+                            color: Colors.grey),
+                      ),
+                    )
+                  : null);
 }
 
 InputDecoration vendorSignUpFormFieldDecoration(
@@ -228,28 +231,29 @@ InputDecoration vendorSignUpFormFieldDecoration(
                     size: 20,
                     color: Colors.grey),
               ),
-            ) : index == 3
-          ? Obx(
-            () => GestureDetector(
-          onTap: () {
-            controller.isCPasswordVisible.value =
-            !controller.isCPasswordVisible.value;
-          },
-          child: Icon(
-              controller.isCPasswordVisible.value
-                  ? Icons.visibility_off_rounded
-                  : Icons.visibility_rounded,
-              size: 20,
-              color: Colors.grey),
-        ),
-      )
-          : index == 2
-              ? GestureDetector(
-                  onTap: () {},
-                  child: const Icon(Icons.calendar_today_rounded,
-                      size: 20, color: Colors.grey),
+            )
+          : index == 3
+              ? Obx(
+                  () => GestureDetector(
+                    onTap: () {
+                      controller.isCPasswordVisible.value =
+                          !controller.isCPasswordVisible.value;
+                    },
+                    child: Icon(
+                        controller.isCPasswordVisible.value
+                            ? Icons.visibility_off_rounded
+                            : Icons.visibility_rounded,
+                        size: 20,
+                        color: Colors.grey),
+                  ),
                 )
-              : null);
+              : index == 2
+                  ? GestureDetector(
+                      onTap: () {},
+                      child: const Icon(Icons.calendar_today_rounded,
+                          size: 20, color: Colors.grey),
+                    )
+                  : null);
 }
 
 InputDecoration conversationScreenFieldDecoration(
@@ -276,17 +280,15 @@ InputDecoration conversationScreenFieldDecoration(
     suffixIcon: GestureDetector(
       onTap: () async {
         // controller.messageFieldController.clear();
-        if(controller.messageFieldController.text.isNotEmpty) {
-
+        if (controller.messageFieldController.text.isNotEmpty) {
           /// Create Message Model Wise
           SendMessageModel sendMsg = SendMessageModel(
-            roomId: roomId,
-            senderId: senderEmail,
-            receiverId: receiverEmail,
-            message: controller.messageFieldController.text,
-            createdAt: Timestamp.now(),
-            seen: false
-          );
+              roomId: roomId,
+              senderId: senderEmail,
+              receiverId: receiverEmail,
+              message: controller.messageFieldController.text,
+              createdAt: Timestamp.now(),
+              seen: false);
 
           /// Insert this Msg in Current List
           // controller.userChatList.insert(0, sendMsg);
@@ -295,7 +297,11 @@ InputDecoration conversationScreenFieldDecoration(
           await controller.sendMessageFunction(sendMsg);
         }
       },
-      child: Image.asset(AppImages.sendImg, scale: 0.75),
+      child: Image.asset(
+        AppImages.sendImg,
+        scale: 0.85,
+        color: AppColors.blackColor,
+      ),
     ),
     /*prefixIcon: GestureDetector(
       onTap: () {},
@@ -304,23 +310,22 @@ InputDecoration conversationScreenFieldDecoration(
   );
 }
 
-
 InputDecoration vendorBankFormFieldDecoration(
     {required String hintText,
-      int index = 0,
-      required VendorWalletScreenController controller}) {
+    int index = 0,
+    required VendorWalletScreenController controller}) {
   return InputDecoration(
-      hintText: hintText,
-      hintStyle: const TextStyle(color: Colors.grey),
-      enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black)),
-      focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black)),
-      errorBorder:
-      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-      focusedErrorBorder:
-      const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-      );
+    hintText: hintText,
+    hintStyle: const TextStyle(color: Colors.grey),
+    enabledBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+    focusedBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+    errorBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+    focusedErrorBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+  );
 }
 
 InputDecoration checkoutFormFieldDecoration({required String hintText}) {
@@ -328,14 +333,14 @@ InputDecoration checkoutFormFieldDecoration({required String hintText}) {
     hintText: hintText,
     counterText: "",
     hintStyle: const TextStyle(color: Colors.grey),
-    enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
-    focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
+    enabledBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+    focusedBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
     errorBorder:
-    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
     focusedErrorBorder:
-    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
   );
 }
 
@@ -357,18 +362,17 @@ InputDecoration serviceFormFieldDecoration({required String hintText}) {
   );
 }
 
-
 InputDecoration bankInfoFieldDecoration({required String hintText}) {
   return InputDecoration(
     hintText: hintText,
     hintStyle: const TextStyle(color: Colors.grey),
-    enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
-    focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black)),
+    enabledBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+    focusedBorder:
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
     errorBorder:
-    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
     focusedErrorBorder:
-    const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
   );
 }

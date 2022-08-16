@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 
+import '../../../common_modules/constants/app_images.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/custom_appbar/custom_appbar.dart';
+import '../../../common_ui/commom_widgets/common_dialogs/alert_dialog.dart';
 import '../../../user_side/model/vendor_details_screen_models/country_model.dart';
 import '../../controllers/vendor_card_payment_sceen_controller/vendor_card_payment_sceen_controller.dart';
 import '../../controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
@@ -29,27 +31,95 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(
-        () => SafeArea(
-          child: cardScreenController.isLoading.value
-              ? const CustomCircularLoaderModule()
-              : SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CommonAppBarModule(
-                        title: "Payment Checkout",
-                        appBarOption: AppBarOption.singleBackButtonOption,
-                      ),
-                      const SizedBox(height: 20),
-                      showPaymentSummaryWidget(context),
-                    ],
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return const CustomAlertDialog();
+          },
+        );
+        return shouldPop!;
+      },
+      child: Scaffold(
+        body: Obx(
+          () => SafeArea(
+            child: cardScreenController.isLoading.value
+                ? const CustomCircularLoaderModule()
+                : SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        customAppbar(),
+                        const SizedBox(height: 20),
+                        showPaymentSummaryWidget(context),
+                      ],
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
+    );
+  }
+  customAppbar() {
+    return Container(
+      height: 55,
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+          color: AppColors.accentColor
+        //color: Colors.grey
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            leftSideButton(),
+            Row(
+              children: [
+                Text(
+                  "Checkout",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ],
+            ),
+            rightSideButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget leftSideButton() {
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return const CustomAlertDialog();
+        },
+      ),
+      child: SizedBox(
+        height: 50,
+        width: 50,
+        child: Image.asset(AppImages.backArrowImg),
+      ),
+    );
+  }
+
+  Widget rightSideButton() {
+    return const SizedBox(
+      height: 50,
+      width: 50,
     );
   }
 
@@ -149,7 +219,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
             );
             await cardScreenController.initPaymentSheet(context);
           },
-          child: const Text("Procedd to Pay"),
+          child: const Text("Proceed to Pay"),
           style: ElevatedButton.styleFrom(
               primary: AppColors.accentColor,
               fixedSize: Size(Get.size.width, 50),

@@ -67,37 +67,52 @@ class SocialMediaLoginModule extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () async {
-            await userSignUpScreenController.signInWithGoogleFunction();
-          },
-          child: Container(
-            height: 30,
-            width: 30,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppImages.googleLoginImg),
-                fit: BoxFit.cover,
+        // GestureDetector(
+        //   onTap: () async {
+        //     // await userSignUpScreenController.signInWithGoogleFunction();
+        //   },
+        //   child:
+
+          Tooltip(
+            message: "This feature is coming soon",
+            preferBelow: true,
+            triggerMode: TooltipTriggerMode.tap,
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(AppImages.googleLoginImg),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-        ),
+        // ),
         const SizedBox(width: 60),
-        GestureDetector(
-          onTap: () async {
-            await userSignUpScreenController.signInWithFacebookFunction();
-          },
-          child: Container(
-            height: 30,
-            width: 30,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppImages.fbLoginImg),
-                fit: BoxFit.cover,
+        // GestureDetector(
+        //   onTap: () async {
+        //     await userSignUpScreenController.signInWithFacebookFunction();
+        //   },
+        //   child:
+
+        Tooltip(
+          message: "This feature is coming soon",
+          preferBelow: true,
+          triggerMode: TooltipTriggerMode.tap,
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(AppImages.fbLoginImg),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-        ),
+
+        // ),
       ],
     );
   }

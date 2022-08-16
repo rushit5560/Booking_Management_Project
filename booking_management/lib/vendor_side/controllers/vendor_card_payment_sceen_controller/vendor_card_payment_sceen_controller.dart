@@ -80,7 +80,7 @@ class VendorCardPaymentScreenController extends GetxController {
 
       // final data = await createTestPaymentSheet();
 
-      log('paymentIntentData: ${paymentIntentData}');
+      log('paymentIntentData: $paymentIntentData');
       // var adminCharges =
       //     (int.parse(cardScreenController.bookingPrice) / 100) * 10;
 

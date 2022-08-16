@@ -855,7 +855,7 @@ class BookAppointmentScreenController extends GetxController {
 
     isLoading(true);
     String url = ApiUrl.bookSelectedSlotApi +
-        "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&ServiceId=$serviceId";
+        "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&ServiceId=${serviceId.isEmpty? "2" :serviceId}";
     log("Book Selected Slot API URL : $url");
     log("token is: ${UserDetails.apiToken}");
 

@@ -169,31 +169,35 @@ class OverviewModule extends StatelessWidget {
     log('overview1: ${screenController.isOverviewSelected.value}');
     log('review1: ${screenController.isReviewSelected.value}');
     return Obx(() => screenController.isLoading.value
-        ? const Center(child: CircularProgressIndicator())
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
         : SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 10),
                   vendorName(),
-                  // const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ratting(),
-                  // const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   description(),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 15),
                   priceAndLocation(),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 15),
                   viewMapButtonModule(),
                   const SizedBox(height: 8),
                   // serviceDropDown(context),
                   //SizedBox(height: 25,),
                   //ReviewTextFieldAndButtonModule(),
-                  // const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   // resourcesList(),
                   businessHoursModule(),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   bookAppointmentButtonModule(),
                 ],
               ),
@@ -297,7 +301,7 @@ class OverviewModule extends StatelessWidget {
           ],
         ),*/
         // const SizedBox(height: 15),
-        Row(
+        Column(
           children: [
             Row(
               children: [
@@ -330,7 +334,7 @@ class OverviewModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 20),
                 Text(
                   screenController.vendorDetailsData!.vendor.phoneNo.isNotEmpty
                       ? screenController.vendorDetailsData!.vendor.phoneNo
@@ -340,7 +344,7 @@ class OverviewModule extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(width: 20),
+            const SizedBox(height: 15),
             Row(
               children: [
                 GestureDetector(
@@ -407,12 +411,12 @@ class OverviewModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                // const SizedBox(width: 10),
-                /*Text(
-                  "Message",
+                const SizedBox(width: 20),
+                const Text(
+                  "Chat us",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w500),
-                ),*/
+                ),
               ],
             ),
           ],
@@ -443,13 +447,19 @@ class OverviewModule extends StatelessWidget {
   Widget viewMapButtonModule() {
     return GestureDetector(
       onTap: () {
-        Get.to(
-          () => UserMapScreen(),
-          arguments: [
-            screenController.vendorDetailsData!.vendor.latitude,
-            screenController.vendorDetailsData!.vendor.longitude,
-          ],
-        );
+        if (screenController.vendorDetailsData!.vendor.latitude.isEmpty ||
+            screenController.vendorDetailsData!.vendor.longitude.isEmpty) {
+          Fluttertoast.showToast(
+              msg: "Vendor has not provided his location details.");
+        } else {
+          Get.to(
+            () => UserMapScreen(),
+            arguments: [
+              screenController.vendorDetailsData!.vendor.latitude,
+              screenController.vendorDetailsData!.vendor.longitude,
+            ],
+          );
+        }
       },
       child: Container(
         decoration:
@@ -760,6 +770,7 @@ class ReviewModule extends StatelessWidget {
       () => screenController.isLoading.value
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
@@ -814,6 +825,15 @@ class ReviewModule extends StatelessWidget {
   }
 
   Widget reviewTextFieldAndButtonModule() {
+    var oulineInputBorder = OutlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColors.colorGreyIconDark,
+        width: 1,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(12),
+      ),
+    );
     return Form(
       key: screenController.reviewFormKey,
       child: Row(
@@ -822,19 +842,17 @@ class ReviewModule extends StatelessWidget {
             flex: 3,
             child: TextFormField(
               controller: screenController.reviewFieldController,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 250,
               validator: (value) => FieldValidator().validateReview(value!),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Add Review",
                 hintStyle: TextStyle(color: Colors.grey),
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                errorBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
+                enabledBorder: oulineInputBorder,
+                focusedBorder: oulineInputBorder,
+                errorBorder: oulineInputBorder,
+                focusedErrorBorder: oulineInputBorder,
               ),
             ),
           ),
@@ -854,6 +872,7 @@ class ReviewModule extends StatelessWidget {
                   Fluttertoast.showToast(msg: "Please enter some data!");
                 } else {
                   await screenController.addCustomerReviewFunction();
+                  screenController.reviewFieldController.clear();
                 }
               },
               child: Container(
@@ -933,11 +952,14 @@ class ReviewModule extends StatelessWidget {
                                 RatingBar.builder(
                                   initialRating: 5,
                                   minRating: 1,
+                                  ignoreGestures: true,
                                   direction: Axis.horizontal,
-                                  allowHalfRating: true,
+                                  allowHalfRating: false,
+
                                   itemCount: screenController
                                       .reviewList[index].ratting,
                                   itemSize: 15,
+
                                   //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                                   itemBuilder: (context, _) => const Icon(
                                     Icons.star,
@@ -968,7 +990,8 @@ class ReviewModule extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     screenController.reviewList[index].description,
-                    // textAlign: TextAlign.start,
+                    maxLines: null,
+                    textAlign: TextAlign.justify,
                   ),
                 ],
               ),

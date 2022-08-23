@@ -205,7 +205,7 @@ class VendorCardPaymentScreenController extends GetxController {
       await Stripe.instance.presentPaymentSheet();
       await Stripe.instance.confirmPaymentSheetPayment();
 
-      // await checkoutSubscriptionSuccess();
+      await checkoutSubscriptionSuccess();
 
       // await getPaymentIdFunction(
       //   paymentIntentData!['id'],

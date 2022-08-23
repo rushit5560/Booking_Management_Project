@@ -108,6 +108,7 @@ class VendorAppointmentListScreenController extends GetxController {
       }
     } catch (e) {
       log("getAppointmentListFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }

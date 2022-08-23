@@ -21,7 +21,7 @@ class AddAdditionalSlotFormModule extends StatelessWidget {
         key: vendorAdditionalSlotScreenController.additionalSlotAddFormKey,
         child: Column(
           children: [
-            AdditionalSlotNameFieldModule(),
+            // AdditionalSlotNameFieldModule(),
             const SizedBox(height: 20),
             AdditionalSlotTimeDurationModule(),
             const SizedBox(height: 20),

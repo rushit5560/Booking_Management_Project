@@ -53,6 +53,9 @@ class UserCardPaymentScreenController extends GetxController {
       };
       log('body: $body');
 
+      //    Subscription subscription =
+      // Subscription.create(params);
+
       var response = await http.post(
           Uri.parse('https://api.stripe.com/v1/payment_intents'),
           body: body,
@@ -105,7 +108,6 @@ class UserCardPaymentScreenController extends GetxController {
           testEnv: true,
           applePay: false,
           googlePay: false,
-          merchantCountryCode: 'AUS',
         ),
       );
 
@@ -147,7 +149,7 @@ class UserCardPaymentScreenController extends GetxController {
     //   productId: bookingSubId,
     // );
 
-    await userCheckoutController.checkOutSubmitFunction();
+    // await userCheckoutController.checkOutSubmitFunction();
     Get.snackbar(
       "Success",
       "Appointment Successfully Booked",

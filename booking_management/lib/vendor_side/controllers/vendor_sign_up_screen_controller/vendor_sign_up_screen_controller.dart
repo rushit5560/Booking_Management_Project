@@ -177,7 +177,7 @@ class VendorSignUpScreenController extends GetxController {
 
       response.stream.transform(utf8.decoder).listen((value) {
         VendorSignUpModel response1 =
-            VendorSignUpModel.fromJson(json.decode(value));
+            VendorSignUpModel.fromJson(json.decode(value)); 
         log('response1 ::::::${response1.statusCode}');
         isStatus = response1.statusCode.obs;
         log('status : $isStatus');

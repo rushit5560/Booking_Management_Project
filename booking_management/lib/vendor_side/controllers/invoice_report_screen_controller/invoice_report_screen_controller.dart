@@ -24,36 +24,36 @@ class InvoiceReportScreenController extends GetxController {
 
   DateTime selectedStartDate = DateTime.now();
 
-
   /// Invoice Report All List
   getInvoiceReportFunction() async {
     isLoading(true);
-    String url = ApiUrl.invoiceReportApi + "?vendorid=${UserDetails.tableWiseId}";
-    log("Appointment Report Api Url : $url");
+    String url =
+        ApiUrl.invoiceReportApi + "?vendorid=${UserDetails.tableWiseId}";
+    log("Invoice Report Api Url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
-      log("Appointment Report Response : ${response.body}");
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("InvoiceReport Response : ${response.body}");
 
-      InvoiceReportModel invoiceReportModel = InvoiceReportModel.fromJson(json.decode(response.body));
+      InvoiceReportModel invoiceReportModel =
+          InvoiceReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = invoiceReportModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         invoiceReportList.clear();
 
         invoiceReportList = invoiceReportModel.workerList;
-        log("appointmentReportList : ${invoiceReportList.length}");
+        log("InvoiceReportList : ${invoiceReportList.length}");
       } else {
-        log("getAppointmentReportFunction Else Else");
+        log("InvoiceReport Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
-      log("getAppointmentReportFunction Error ::: $e");
+    } catch (e) {
+      log("InvoiceReport Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   /// Filter Invoice Report List
@@ -98,5 +98,4 @@ class InvoiceReportScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
 }

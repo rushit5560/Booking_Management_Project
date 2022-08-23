@@ -49,7 +49,7 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                                   .allSubscriptionList[i];
                           return subscriptionPlanListTile(singleItem);
                         },
-                      ).commonSymmetricPadding(horizontal: 20),
+                      ).commonSymmetricPadding(horizontal: 15),
                     ),
                   ],
                 ),
@@ -146,7 +146,17 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
 
   Widget subscriptionPlanListTile(SubscriptionWorkerList singleItem) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(12),
+        ),
+        border: Border.all(
+          color: AppColors.accentColor,
+          width: 0.8,
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: ExpandablePanel(
         header: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -232,6 +242,8 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                         arguments: [
                           singleItem.price,
                           singleItem.id,
+                          singleItem.interval,
+                          singleItem.currency,
                         ],
                       );
                       // // Purchase plan api call

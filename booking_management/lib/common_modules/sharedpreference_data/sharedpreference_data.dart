@@ -317,7 +317,8 @@ class SharedPreferenceData {
     prefs.setString(accountNumberKey, accountNumber);
     prefs.setString(ifscCodeKey, ifscCode);
 
-    UserDetails.institutionName = prefs.getString(financialInstitutionNameKey) ?? "";
+    UserDetails.institutionName =
+        prefs.getString(financialInstitutionNameKey) ?? "";
     UserDetails.accountName = prefs.getString(accountNameKey) ?? "";
     UserDetails.accountNumber = prefs.getString(accountNumberKey) ?? "";
     UserDetails.ifscCode = prefs.getString(ifscCodeKey) ?? "";

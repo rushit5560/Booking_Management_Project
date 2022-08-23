@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 
 class OrderDetailFormModule extends StatelessWidget {
   OrderDetailFormModule({Key? key}) : super(key: key);
-  final vendorInvoiceListScreenController = Get.find<VendorInvoiceListScreenController>();
+  final vendorInvoiceListScreenController =
+      Get.find<VendorInvoiceListScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +110,7 @@ class OrderDetailFormModule extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 5),
+
                 /// Invoice To
                 Expanded(
                   child: Column(
@@ -171,7 +173,7 @@ class OrderDetailFormModule extends StatelessWidget {
                     Text(
                       "XXXXXXXXXXXX-1234",
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.ellipsis,  
                     ),
                     Text(
                       "HDFC Bank",
@@ -243,16 +245,18 @@ class OrderDetailFormModule extends StatelessWidget {
             const SizedBox(height: 10),
 
             Row(
-              children:  [
+              children: [
                 Expanded(
                   flex: 60,
                   child: ListView.builder(
-                    itemCount: vendorInvoiceListScreenController.descriptionList.length,
+                    itemCount: vendorInvoiceListScreenController
+                        .descriptionList.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, i) {
                       return Text(
-                        vendorInvoiceListScreenController.descriptionList[i].toString(),
+                        vendorInvoiceListScreenController.descriptionList[i]
+                            .toString(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -263,7 +267,6 @@ class OrderDetailFormModule extends StatelessWidget {
                     },
                   ),
                 ),
-
                 Expanded(
                   flex: 20,
                   child: Text(
@@ -271,7 +274,7 @@ class OrderDetailFormModule extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style:  const TextStyle(
+                    style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -430,7 +433,6 @@ class OrderDetailFormModule extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   flex: 20,
                   child: Text(

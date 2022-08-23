@@ -21,7 +21,6 @@ class VendorDrawer extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-
               // My Business Collapse menu
               Container(
                 // height: 40,
@@ -38,7 +37,8 @@ class VendorDrawer extends StatelessWidget {
                 ),
                 child: ExpandablePanel(
                   header: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10),
                     child: Row(
                       children: [
                         Image.asset(AppImages.profileImg, scale: 1),
@@ -55,7 +55,6 @@ class VendorDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   collapsed: Container(),
                   expanded: Column(
                     children: [
@@ -66,35 +65,30 @@ class VendorDrawer extends StatelessWidget {
                         vendorDrawerOption: VendorDrawerOption.profile,
                       ),
                       const SizedBox(height: 20),
-
                       VendorDrawerSingleItemModule(
                         img: AppImages.profileImg,
                         name: 'Bank Details',
                         vendorDrawerOption: VendorDrawerOption.bankAccountInfo,
                       ),
                       const SizedBox(height: 20),
-
                       VendorDrawerSingleItemModule(
                         img: AppImages.resourcesImg,
                         name: 'Business Hours',
                         vendorDrawerOption: VendorDrawerOption.availableTime,
                       ),
                       const SizedBox(height: 20),
-
                       VendorDrawerSingleItemModule(
                         img: AppImages.resourcesImg,
                         name: 'Business Document',
                         vendorDrawerOption: VendorDrawerOption.businessDocument,
                       ),
                       const SizedBox(height: 20),
-
                       VendorDrawerSingleItemModule(
                         img: AppImages.resourcesImg,
                         name: 'Reviews',
                         vendorDrawerOption: VendorDrawerOption.review,
                       ),
                       const SizedBox(height: 10),
-
                     ],
                   ).commonAllSidePadding(5),
                 ),
@@ -124,15 +118,15 @@ class VendorDrawer extends StatelessWidget {
 
               UserDetails.isServiceSlot
                   ? VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Manage Services',
-                vendorDrawerOption: VendorDrawerOption.services,
-              )
+                      img: AppImages.resourcesImg,
+                      name: 'Manage Services',
+                      vendorDrawerOption: VendorDrawerOption.services,
+                    )
                   : VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Manage Additional Slot',
-                vendorDrawerOption: VendorDrawerOption.additionalSlot,
-              ),
+                      img: AppImages.resourcesImg,
+                      name: 'Manage Additional Slot',
+                      vendorDrawerOption: VendorDrawerOption.additionalSlot,
+                    ),
               const SizedBox(height: 20),
 
               /// Appointment report
@@ -171,7 +165,8 @@ class VendorDrawer extends StatelessWidget {
                 ),
                 child: ExpandablePanel(
                   header: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10),
                     child: Row(
                       children: [
                         Image.asset(AppImages.profileImg, scale: 1),
@@ -188,34 +183,29 @@ class VendorDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   collapsed: Container(),
                   expanded: Column(
                     children: [
                       const SizedBox(height: 10),
-
                       VendorDrawerSingleItemModule(
                         img: AppImages.subscriptionsImg,
                         name: 'Manage',
                         vendorDrawerOption: VendorDrawerOption.subscription,
                       ),
                       const SizedBox(height: 20),
-
                       VendorDrawerSingleItemModule(
                         img: AppImages.resourcesImg,
                         name: 'Subscription Report',
-                        vendorDrawerOption: VendorDrawerOption.subscriptionReport,
+                        vendorDrawerOption:
+                            VendorDrawerOption.subscriptionReport,
                       ),
                       const SizedBox(height: 20),
-
                       const SizedBox(height: 10),
-
                     ],
                   ).commonAllSidePadding(5),
                 ),
               ),
               const SizedBox(height: 20),
-
 
               VendorDrawerSingleItemModule(
                 img: AppImages.changePasswordImg,
@@ -224,14 +214,10 @@ class VendorDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-
-
-
-
               /// OLD
 
               /// Customer report
-             /* VendorDrawerSingleItemModule(
+              /* VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,
                 name: 'Customer Report',
                 vendorDrawerOption: VendorDrawerOption.customerReport,
@@ -245,8 +231,6 @@ class VendorDrawer extends StatelessWidget {
                 vendorDrawerOption: VendorDrawerOption.invoiceReport,
               ),
               const SizedBox(height: 20),*/
-
-
 
               VendorDrawerSingleItemModule(
                 img: AppImages.resourcesImg,

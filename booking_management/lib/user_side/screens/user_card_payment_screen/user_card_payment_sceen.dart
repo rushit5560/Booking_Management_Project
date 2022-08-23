@@ -158,8 +158,8 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
             var uPrice = userPrice * 100;
             var aPrice = adminPrice * 100;
 
-            log("user price : ${uPrice}");
-            log("admin price : ${aPrice}");
+            log("user price : $uPrice");
+            log("admin price : $aPrice");
             cardScreenController.isLoading(true);
             await cardScreenController.initPaymentSheet(
               context: context,
@@ -173,7 +173,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               fixedSize: Size(Get.size.width, 50),
               textStyle: TextStyle(
                 color: AppColors.whiteColor,
-                fontSize: 15,
+                fontSize: 17,
                 fontWeight: FontWeight.w500,
               )),
         ),

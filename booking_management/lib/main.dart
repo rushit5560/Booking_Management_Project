@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_theme.dart';
@@ -11,9 +12,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
+import 'common_modules/constants/api_url.dart';
 import 'common_modules/constants/payment_keys.dart';
 import 'common_modules/constants/user_details.dart';
+import 'user_side/model/get_stripe_secret_key_model/get_stripe_secret_key_model.dart';
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -41,6 +44,36 @@ void main() async {
       statusBarIconBrightness: Brightness.light,
     ),
   );
+
+  String? secretKey;
+  String? publishableKey;
+  String url = ApiUrl.getSecretKeyApi;
+  log("Get Stripe Secret Key API URL : $url");
+
+  try {
+    http.Response response = await http.get(
+      Uri.parse(url),
+    );
+    log("Stripe Secret Key Response : ${response.body}");
+
+    GetStripeSecretKeyModel getStripeSecretKeyModel =
+        GetStripeSecretKeyModel.fromJson(json.decode(response.body));
+    var isSuccessStatus = getStripeSecretKeyModel.success.obs;
+
+    if (isSuccessStatus.value) {
+      PaymentKeys.secretKey = getStripeSecretKeyModel.workerList.secretKey;
+      PaymentKeys.publishKey =
+          getStripeSecretKeyModel.workerList.publishableKey;
+
+      //Fluttertoast.showToast(msg: "Something went wrong!");
+      log("getStripeKeyFunction success");
+    }
+  } catch (e) {
+    log("getStripeKeyFunction Error ::: $e");
+  } finally {
+    log("secretKey : ${PaymentKeys.secretKey}");
+    log("publishableKey : ${PaymentKeys.publishKey}");
+  }
 
   Stripe.publishableKey = PaymentKeys.publishKey;
   // Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';

@@ -92,8 +92,8 @@ class CustomerReportListModule extends StatelessWidget {
               print(singleItem.email);
               print(singleItem.firstName);
               print(singleItem.phoneNo);
-              print(singleItem.customer.userName);
-              print(singleItem.customer.phoneNo);
+              // print(singleItem.customer.userName);
+              // print(singleItem.customer.phoneNo);
               return _appointmentListTile(singleItem);
             },
           ).commonAllSidePadding(10);

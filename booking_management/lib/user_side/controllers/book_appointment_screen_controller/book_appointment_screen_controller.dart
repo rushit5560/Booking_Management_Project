@@ -855,7 +855,7 @@ class BookAppointmentScreenController extends GetxController {
 
     isLoading(true);
     String url = ApiUrl.bookSelectedSlotApi +
-        "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&ServiceId=${serviceId.isEmpty? "2" :serviceId}";
+        "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&ServiceId=${serviceId.isEmpty ? "2" : serviceId}";
     log("Book Selected Slot API URL : $url");
     log("token is: ${UserDetails.apiToken}");
 
@@ -937,16 +937,19 @@ class BookAppointmentScreenController extends GetxController {
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
           await addVendorInFavoriteFunction();
-          Get.to(() => UserCheckoutScreen(), arguments: [
-            bookingId,
-            userName,
-            email,
-            selectedResourceIsEvent,
-            additionalSlotWorkerList.id,
-            selectedResource,
-            true,
-            isEvent.value,
-          ]);
+          Get.to(
+            () => UserCheckoutScreen(),
+            arguments: [
+              bookingId,
+              userName,
+              email,
+              selectedResourceIsEvent,
+              additionalSlotWorkerList.id,
+              selectedResource,
+              true,
+              isEvent.value,
+            ],
+          );
         } else {
           log("bookAvailableTimeSlotFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
@@ -985,7 +988,7 @@ class BookAppointmentScreenController extends GetxController {
         log("Body : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
+          vendorDetailsData!.favourites = vendorDetailsData!.favourites;
           if (vendorDetailsData!.favourites) {
             //Fluttertoast.showToast(msg: "Added in favourite");
           } else {

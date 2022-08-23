@@ -153,7 +153,8 @@ class BookingSummaryModule extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text("\$${screenController.bookingPrice.toString()}"),
+                        Text(
+                            "\$${screenController.bookingPrice.value * screenController.quantityValue.value}"),
                       ],
                     ).commonSymmetricPadding(horizontal: 10)
                   ],
@@ -171,7 +172,7 @@ class BookingSummaryModule extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Text(screenController.bookingQty.toString()),
+              Text(screenController.quantityValue.value.toString()),
             ],
           ).commonSymmetricPadding(horizontal: 10),
 
@@ -295,6 +296,7 @@ class PersonalInformationFormModule extends StatelessWidget {
                 onChanged: (newValue) {
                   screenController.isLoading(true);
                   screenController.quantityValue.value = newValue!;
+
                   // log("countryData : ${screenController.countryData!.code}");
                   // screenController.selectedCountryCode.value
                   // = "${screenController.countryData!.code}";
@@ -326,10 +328,17 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
             Get.to(
               () => const UserCardPaymentScreen(),
               arguments: [
-                screenController.bookingPrice.split(".")[0].toString(),
+                (screenController.bookingPrice.value *
+                        screenController.quantityValue.value)
+                    .toString()
+                    .split(".")[0]
+                    .toString(),
                 screenController.bookingId,
               ],
-            );
+            )!
+                .whenComplete(() async {
+              await screenController.checkOutSubmitFunction();
+            });
           } else {
             await screenController.checkOutSubmitFunction();
           }

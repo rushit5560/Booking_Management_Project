@@ -90,33 +90,32 @@ class SignInScreenController extends GetxController {
                 .contains("Successfully Logged")) {
               log("user logged in ");
               sharedPreferenceData.setUserLoginDetailsInPrefs(
-                apiToken: signInModel.data.apiToken,
-                uniqueId: signInModel.data.id,
-                tableWiseId: signInModel.customer.id,
-                userName: signInModel.data.userName,
-                email: signInModel.data.email,
-                phoneNo: signInModel.data.phoneNumber,
-                dob: signInModel.customer.dateOfBirth,
-                roleName: signInModel.role[0],
-                gender: signInModel.customer.gender,
-                businessName: "",
-                address: "",
-                street: "",
-                state: "",
-                country: "",
-                subUrb: "",
-                postCode: "",
-                stripeId: "",
-                //slotDuration: ""
-                vendorVerification: false,
-                businessId: "",
-                serviceSlot: false,
-                institutionName: "",
-                accountName: "",
-                accountNumber: "",
-                ifscCode: "",
-                isPriceDisplay: false
-              );
+                  apiToken: signInModel.data.apiToken,
+                  uniqueId: signInModel.data.id,
+                  tableWiseId: signInModel.customer.id,
+                  userName: signInModel.data.userName,
+                  email: signInModel.data.email,
+                  phoneNo: signInModel.data.phoneNumber,
+                  dob: signInModel.customer.dateOfBirth,
+                  roleName: signInModel.role[0],
+                  gender: signInModel.customer.gender,
+                  businessName: "",
+                  address: "",
+                  street: "",
+                  state: "",
+                  country: "",
+                  subUrb: "",
+                  postCode: "",
+                  stripeId: "",
+                  //slotDuration: ""
+                  vendorVerification: false,
+                  businessId: "",
+                  serviceSlot: false,
+                  institutionName: "",
+                  accountName: "",
+                  accountNumber: "",
+                  ifscCode: "",
+                  isPriceDisplay: false);
               log("Fcm Token : ${UserDetails.fcmToken}");
               if (signInRoute == SignInRoute.fromBookScreen) {
                 Get.back();
@@ -139,35 +138,35 @@ class SignInScreenController extends GetxController {
             }
 
             sharedPreferenceData.setUserLoginDetailsInPrefs(
-                apiToken: signInModel.data.apiToken,
-                uniqueId: signInModel.data.id,
-                tableWiseId: signInModel.vendor.id,
-                userName: signInModel.data.userName,
-                email: signInModel.data.email,
-                phoneNo: signInModel.data.phoneNumber,
-                dob: "",
-                roleName: signInModel.role[0],
-                gender: "",
-                businessName: signInModel.vendor.businessName,
-                address: signInModel.vendor.address,
-                street: signInModel.vendor.street,
-                state: signInModel.vendor.state,
-                country: signInModel.vendor.country,
-                subUrb: signInModel.vendor.suburb,
-                postCode: signInModel.vendor.postcode,
-                stripeId: signInModel.vendor.stripeId.isEmpty
-                    ? ""
-                    : signInModel.vendor.stripeId,
-                isSubscription: isSub,
-                // slotDuration: signInModel.vendor.
-                vendorVerification: signInModel.vendor.vendorVerification,
-                businessId: signInModel.vendor.businessId,
-                serviceSlot: signInModel.vendor.isServiceSlots,
-                institutionName: signInModel.vendor.financialInstitutionName,
-                accountName: signInModel.vendor.accountName,
-                accountNumber: signInModel.vendor.accountNumber,
-                ifscCode: signInModel.vendor.accountCode,
-                isPriceDisplay: signInModel.vendor.isPriceDisplay,
+              apiToken: signInModel.data.apiToken,
+              uniqueId: signInModel.data.id,
+              tableWiseId: signInModel.vendor.id,
+              userName: signInModel.data.userName,
+              email: signInModel.data.email,
+              phoneNo: signInModel.data.phoneNumber,
+              dob: "",
+              roleName: signInModel.role[0],
+              gender: "",
+              businessName: signInModel.vendor.businessName,
+              address: signInModel.vendor.address,
+              street: signInModel.vendor.street,
+              state: signInModel.vendor.state,
+              country: signInModel.vendor.country,
+              subUrb: signInModel.vendor.suburb,
+              postCode: signInModel.vendor.postcode,
+              stripeId: signInModel.vendor.stripeId.isEmpty
+                  ? ""
+                  : signInModel.vendor.stripeId,
+              isSubscription: isSub,
+              // slotDuration: signInModel.vendor.
+              vendorVerification: signInModel.vendor.vendorVerification,
+              businessId: signInModel.vendor.businessId,
+              serviceSlot: signInModel.vendor.isServiceSlots,
+              institutionName: signInModel.vendor.financialInstitutionName,
+              accountName: signInModel.vendor.accountName,
+              accountNumber: signInModel.vendor.accountNumber,
+              ifscCode: signInModel.vendor.accountCode,
+              isPriceDisplay: signInModel.vendor.isPriceDisplay,
             );
 
             // DateTime subscription = signInModel.vendor.nextPayment;

@@ -49,7 +49,7 @@ class UserCheckoutScreenController extends GetxController {
   String bookingTime = "";
   String endBookingTime = "";
   String endBookingDate = "";
-  String bookingPrice = "";
+  RxDouble bookingPrice = 10.00.obs;
   int bookingQty = 0;
   int bookingTotalAmount = 0;
   String stripeID = "";
@@ -151,7 +151,7 @@ class UserCheckoutScreenController extends GetxController {
         String endTime1 = endBookDate.substring(11, endBookDate.length - 3);
         endBookingTime = endTime1;
         //
-        bookingPrice = checkoutSummaryModel.workerList.price.toString();
+        bookingPrice.value = checkoutSummaryModel.workerList.price;
         bookingQty = checkoutSummaryModel.workerList.quantity;
         // bookingTotalAmount = bookingPrice * bookingQty;
         //
@@ -182,7 +182,7 @@ class UserCheckoutScreenController extends GetxController {
       // } else {
       //   isLoading(false);
       // }
-      getStripeKeyFunction();
+      // getStripeKeyFunction();
     }
   }
 
@@ -233,7 +233,7 @@ class UserCheckoutScreenController extends GetxController {
   checkOutSubmitFunction() async {
     isLoading(true);
     String url = ApiUrl.checkoutSubmitApi;
-    log("Checkout Submit : $url");
+    log("Checkout Submit func after purchase : $url");
     int durationVar = 0;
 
     if (isEvent == true) {
@@ -308,7 +308,7 @@ class UserCheckoutScreenController extends GetxController {
 
     try {
       http.Response response = await http.get(
-        Uri.parse(url), /*headers: apiHeader.headers*/
+        Uri.parse(url),
       );
       log("Stripe Secret Key Response : ${response.body}");
 

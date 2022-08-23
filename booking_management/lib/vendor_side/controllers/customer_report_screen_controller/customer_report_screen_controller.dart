@@ -21,75 +21,76 @@ class CustomerReportScreenController extends GetxController {
   RxString endDate = "Select End Date".obs;
   RxBool isStartDateCalenderShow = false.obs;
   RxBool isEndDateCalenderShow = false.obs;
+
   /// DD List
   List<String> statusList = ["AllCustomer", "Guest"];
   RxString selectedStatusValue = "AllCustomer".obs;
-
-
 
   /// Customer Report All List
   getCustomerReportFunction() async {
     isLoading(true);
     String url = ApiUrl.customerReportApi + "?vendorId=${UserDetails.uniqueId}";
-    log("Appointment Report Api Url : $url");
+    log("Customer Report Api Url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
-      log("Appointment Report Response : ${response.body}");
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Customer Report Response : ${response.body}");
 
-      CustomerReportModel customerReportModel = CustomerReportModel.fromJson(json.decode(response.body));
+      CustomerReportModel customerReportModel =
+          CustomerReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = customerReportModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         customerReportList.clear();
 
-        customerReportList = customerReportModel.workerList;
-        log("appointmentReportList : ${customerReportList.length}");
+        customerReportList = customerReportModel.data;
+        log("Customer report list : ${customerReportList.length}");
       } else {
-        log("getAppointmentReportFunction Else Else");
+        log("Customer report Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
-      log("getAppointmentReportFunction Error ::: $e");
+    } catch (e) {
+      log("Customer report Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }
-
   }
 
   /// Filter Customer Report List
   getFilterCustomerReportFunction({required String status}) async {
     isLoading(true);
-    String url = ApiUrl.customerReportApi + "?vendorid=${UserDetails.uniqueId}" + "&Status=$status";
+    String url = ApiUrl.customerReportApi +
+        "?vendorid=${UserDetails.uniqueId}" +
+        "&Status=$status";
 
     log("Customer Report Api Url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Customer Report Response : ${response.body}");
 
-      CustomerReportModel customerReportModel = CustomerReportModel.fromJson(json.decode(response.body));
+      CustomerReportModel customerReportModel =
+          CustomerReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = customerReportModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         customerReportList.clear();
 
-        customerReportList = customerReportModel.workerList;
+        customerReportList = customerReportModel.data;
         log("customerReportList : ${customerReportList.length}");
       } else {
         log("getFilterCustomerReportFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getFilterCustomerReportFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
-
 
   @override
   void onInit() {
@@ -101,5 +102,4 @@ class CustomerReportScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
 }

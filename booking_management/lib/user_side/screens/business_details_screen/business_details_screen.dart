@@ -7,7 +7,8 @@ import 'business_details_screen_widgets.dart';
 
 class BusinessDetailScreen extends StatelessWidget {
   BusinessDetailScreen({Key? key}) : super(key: key);
-  final vendorDetailsScreenController = Get.put(BusinessDetailsScreenController());
+  final vendorDetailsScreenController =
+      Get.put(BusinessDetailsScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +21,15 @@ class BusinessDetailScreen extends StatelessWidget {
               () => vendorDetailsScreenController.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
                   : SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                    child: SizedBox(
-                      height: Get.size.height,
-                      child: Column(
+                      // physics: const ClampingScrollPhysics(),
+                      child: SizedBox(
+                        height: Get.size.height + Get.size.height * 0.1,
+                        child: Column(
                           //crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
-                              flex: 35,
-                                child: ProfileModule(),
+                              flex: 25,
+                              child: ProfileModule(),
                             ),
                             const SizedBox(height: 20),
                             Expanded(
@@ -38,7 +39,8 @@ class BusinessDetailScreen extends StatelessWidget {
                                   TabViewModule(),
                                   const SizedBox(height: 20),
                                   Expanded(
-                                    child: vendorDetailsScreenController.isOverviewSelected.value
+                                    child: vendorDetailsScreenController
+                                            .isOverviewSelected.value
                                         ? OverviewModule()
                                         : ReviewModule(),
                                   ),
@@ -47,8 +49,8 @@ class BusinessDetailScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
                     ),
-                  ),
             ),
             const BackArrow()
           ],

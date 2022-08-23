@@ -62,6 +62,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
       ),
     );
   }
+
   customAppbar() {
     return Container(
       height: 55,
@@ -71,8 +72,8 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
               bottomRight: Radius.circular(25),
               bottomLeft: Radius.circular(25)),
           color: AppColors.accentColor
-        //color: Colors.grey
-      ),
+          //color: Colors.grey
+          ),
       child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Row(
@@ -135,7 +136,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 25),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -183,7 +184,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
                 ),
               )
             : const SizedBox(),
-        const SizedBox(height: 8),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -211,13 +212,13 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
         ElevatedButton(
           onPressed: () async {
             cardScreenController.isLoading(true);
-            final vendorSubscriptionPlanScreenController =
-                Get.find<VendorSubscriptionPlanScreenController>();
-            await vendorSubscriptionPlanScreenController
-                .purchaseSubscriptionPlanFunction(
-              productId: cardScreenController.bookingSubId,
-            );
-            await cardScreenController.initPaymentSheet(context);
+            // final vendorSubscriptionPlanScreenController =
+            //     Get.find<VendorSubscriptionPlanScreenController>();
+            // await vendorSubscriptionPlanScreenController
+            //     .purchaseSubscriptionPlanFunction(
+            //   productId: cardScreenController.bookingSubId,
+            // );
+            await cardScreenController.initPaymentSheet();
           },
           child: const Text("Proceed to Pay"),
           style: ElevatedButton.styleFrom(

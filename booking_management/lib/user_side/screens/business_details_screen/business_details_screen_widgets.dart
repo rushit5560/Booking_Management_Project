@@ -770,7 +770,7 @@ class ReviewModule extends StatelessWidget {
       () => screenController.isLoading.value
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(

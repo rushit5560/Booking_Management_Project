@@ -115,7 +115,10 @@ class VendorAdditionalSlotScreenController extends GetxController {
 
       var response = await request.send();
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         AddAdditionalSlotModel addAdditionalSlotModel =
             AddAdditionalSlotModel.fromJson(json.decode(value));
         isSuccessStatus = addAdditionalSlotModel.success.obs;
@@ -213,7 +216,10 @@ class VendorAdditionalSlotScreenController extends GetxController {
 
       var response = await request.send();
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         UpdateAdditionalSlotModel updateAdditionalSlotModel =
             UpdateAdditionalSlotModel.fromJson(json.decode(value));
         isSuccessStatus = updateAdditionalSlotModel.success.obs;

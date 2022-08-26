@@ -50,15 +50,15 @@ class VendorScheduleManagementScreenController extends GetxController {
       trueList.add({
         "StartTimes": startDate.value,
         "EndTimes": endDate.value,
-        "VendorId": "${UserDetails.tableWiseId}"
       });
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
       request.fields['bookings'] = jsonEncode(trueList);
+      request.fields['VendorId'] = UserDetails.uniqueId;
 
-      log("Fields : ${request.fields}");
+      log("auto schedule Fields : ${request.fields}");
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
@@ -82,6 +82,7 @@ class VendorScheduleManagementScreenController extends GetxController {
       });
     } catch (e) {
       log("getVendorAutoScheduleFunction Error ::: $e");
+      rethrow;
     } finally {
       // isLoading(false);
       await getSearchWithResourceListFunction();
@@ -110,7 +111,8 @@ class VendorScheduleManagementScreenController extends GetxController {
         for (int i = 0; i < allResourcesList.length; i++) {
           resourceId = allResourcesList[i].id;
           log('Resource id: $resourceId');
-          Map<String, dynamic> mapData = await getSearchWithResourceListFunction(searchWise: searchWise);
+          Map<String, dynamic> mapData =
+              await getSearchWithResourceListFunction(searchWise: searchWise);
           allResourcesList[i].timingList = mapData["timeList"];
           allResourcesList[i].nextDate = mapData["nextDate"];
         }
@@ -127,7 +129,8 @@ class VendorScheduleManagementScreenController extends GetxController {
     }
   }
 
-  getSearchWithResourceListFunction({SearchWise searchWise = SearchWise.none}) async {
+  getSearchWithResourceListFunction(
+      {SearchWise searchWise = SearchWise.none}) async {
     isLoading(true);
     String nextDate = "";
     List<TimingSlot> timeList = [];
@@ -139,8 +142,10 @@ class VendorScheduleManagementScreenController extends GetxController {
     String timeModule = "$hour:$minute:00";
 
     String url = searchWise == SearchWise.none
-    ? ApiUrl.vendorResourceScheduleApi + "?Id=$resourceId" "&dDate=${dateModule}T$timeModule"
-    : ApiUrl.vendorResourceScheduleApi + "?Id=$resourceId" "&dDate=${scheduleTimingDate.value}" ;
+        ? ApiUrl.vendorResourceScheduleApi +
+            "?Id=$resourceId" "&dDate=${dateModule}T$timeModule"
+        : ApiUrl.vendorResourceScheduleApi +
+            "?Id=$resourceId" "&dDate=${scheduleTimingDate.value}";
 
     // ApiUrl.getAllSearchWithResourceListApi + "?Id=$resourceId&dDate=${scheduleTimingDate.value}";
     log("Search With Resource List Api Url : $url");
@@ -202,24 +207,25 @@ class VendorScheduleManagementScreenController extends GetxController {
     log("Get Timing Api Url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("response body 111 : ${response.body}");
 
-      AvailableTimingModel availableTimingModel = AvailableTimingModel.fromJson(json.decode(response.body));
+      AvailableTimingModel availableTimingModel =
+          AvailableTimingModel.fromJson(json.decode(response.body));
       isSuccessStatus = availableTimingModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         isTiming = availableTimingModel.timings.obs;
         log("isTiming : ${isTiming.value}");
       } else {
         log("getTimingFunction Else");
       }
-    } catch(e) {
+    } catch (e) {
       log("getTimingFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   loadUI() {

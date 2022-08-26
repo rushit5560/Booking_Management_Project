@@ -13,14 +13,15 @@ import '../../model/vendor_schedule_time_screen_model/get_all_schedule_time_mode
 import '../../model/vendor_schedule_time_screen_model/get_all_time_list_by_resource_id_model.dart';
 import '../../model/vendor_schedule_time_screen_model/set_schedule_time_model.dart';
 
-
 class VendorScheduleTimeScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
   ApiHeader apiHeader = ApiHeader();
 
-  List<WorkerList1> getResourceList = [WorkerList1(resourceName: "Select Resources", id: 0)];
+  List<WorkerList1> getResourceList = [
+    WorkerList1(resourceName: "Select Resources", id: 0)
+  ];
   WorkerList1 selectResourceValue = WorkerList1();
 
   RxBool isCalenderShow = false.obs;
@@ -31,24 +32,25 @@ class VendorScheduleTimeScreenController extends GetxController {
 
   // List<AllResourcesWorkerList> getAllResourcesList = [];
 
-
-
   /// Get All Resources - DD
   getAllResourceAPIFunction() async {
     isLoading(true);
 
-    String url = ApiUrl.vendorGetAllResourcesApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorGetAllResourcesApi +
+        "?VendorId=${UserDetails.tableWiseId}";
     log('Url : $url');
-    Map<String, String> headers= <String,String>{
+    Map<String, String> headers = <String, String>{
       'Authorization': UserDetails.apiToken
     };
     log('headers: $headers');
 
     try {
-      http.Response response = await http.post(Uri.parse(url),headers: headers);
+      http.Response response =
+          await http.post(Uri.parse(url), headers: headers);
       log('Response : ${response.body}');
 
-      GetAllResorcesListModel getAllResorcesListModelModel = GetAllResorcesListModel.fromJson(json.decode(response.body));
+      GetAllResorcesListModel getAllResorcesListModelModel =
+          GetAllResorcesListModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllResorcesListModelModel.success.obs;
 
       log("status: $isSuccessStatus");
@@ -73,7 +75,6 @@ class VendorScheduleTimeScreenController extends GetxController {
     }
   }
 
-
   /// Get Slot List
   getAllSLotsFunction() async {
     isLoading(true);
@@ -95,27 +96,30 @@ class VendorScheduleTimeScreenController extends GetxController {
       log('response: ${response.statusCode}');
       log('response: $response');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         log("value ::: $value");
-        GetAllScheduleTimeModel getAllScheduleTimeModel = GetAllScheduleTimeModel.fromJson(json.decode(value));
+        GetAllScheduleTimeModel getAllScheduleTimeModel =
+            GetAllScheduleTimeModel.fromJson(json.decode(value));
         isSuccessStatus = getAllScheduleTimeModel.success.obs;
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           allScheduleTimeList.clear();
 
           allScheduleTimeList = getAllScheduleTimeModel.workerList;
           log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
 
-          for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
+          for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
             checkScheduleTimeList.add(true);
           }
-
         } else {
           log("getAllSLotsFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
       });
-    } catch(e) {
+    } catch (e) {
       log("getAllSLotsFunction Error ::: $e");
     } finally {
       isLoading(false);
@@ -131,11 +135,10 @@ class VendorScheduleTimeScreenController extends GetxController {
     try {
       List trueList = [];
 
-      for(int i = 0; i < allScheduleTimeList.length - 1; i++) {
-        if(checkScheduleTimeList[i] == true) {
-
+      for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
+        if (checkScheduleTimeList[i] == true) {
           String startTime = allScheduleTimeList[i];
-          String endTime = allScheduleTimeList[i+1];
+          String endTime = allScheduleTimeList[i + 1];
 
           /// Remove AM & PM
           String start = startTime.substring(0, startTime.length - 3);
@@ -164,14 +167,18 @@ class VendorScheduleTimeScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) {
-        SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(dataLine));
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((dataLine) {
+        SetScheduleTimeModel setScheduleTimeModel =
+            SetScheduleTimeModel.fromJson(json.decode(dataLine));
         isSuccessStatus = setScheduleTimeModel.success.obs;
         log("setScheduleTimeModel.statusCode : ${setScheduleTimeModel.statusCode}");
         log("setScheduleTimeModel.success : ${setScheduleTimeModel.success}");
         log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: setScheduleTimeModel.message);
         } else {
           log("setSelectedScheduleTimeFunction Else Else");
@@ -193,8 +200,7 @@ class VendorScheduleTimeScreenController extends GetxController {
       //   Fluttertoast.showToast(msg: "Something went wrong!");
       // }
 
-
-    } catch(e) {
+    } catch (e) {
       log("setSelectedScheduleTimeFunction Error ::: $e");
     } finally {
       isLoading(false);
@@ -208,31 +214,36 @@ class VendorScheduleTimeScreenController extends GetxController {
     String timeModule = "${dateTime.hour}:${dateTime.minute}:00";
     List<String> timeList = [];
     isLoading(true);
-    String url = ApiUrl.getResourcesTimeSlotApi + "?Id=$resId&dDate=${dateModule}T$timeModule&Duration&Time";
+    String url = ApiUrl.getResourcesTimeSlotApi +
+        "?Id=$resId&dDate=${dateModule}T$timeModule&Duration&Time";
     log("Get Resources Time List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Resource Time List : ${response.body}");
 
-      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel = GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
-      isSuccessStatus =  getAllTimeListByResourceIdModel.success.obs;
+      GetAllTimeListByResourceIdModel getAllTimeListByResourceIdModel =
+          GetAllTimeListByResourceIdModel.fromJson(json.decode(response.body));
+      isSuccessStatus = getAllTimeListByResourceIdModel.success.obs;
 
-      if(isSuccessStatus.value) {
-
-        for(int i =0; i < getAllTimeListByResourceIdModel.workerList!.length; i++) {
-          String t = getAllTimeListByResourceIdModel.workerList![i].startDateTime.substring(11, getAllTimeListByResourceIdModel.workerList!.length-3);
+      if (isSuccessStatus.value) {
+        for (int i = 0;
+            i < getAllTimeListByResourceIdModel.workerList!.length;
+            i++) {
+          String t = getAllTimeListByResourceIdModel
+              .workerList![i].startDateTime
+              .substring(
+                  11, getAllTimeListByResourceIdModel.workerList!.length - 3);
           timeList.add(t);
         }
 
         log("Time List : $timeList");
-
       } else {
         log("getResourcesTimeListFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
     } finally {
       isLoading(true);
@@ -240,7 +251,6 @@ class VendorScheduleTimeScreenController extends GetxController {
 
     return timeList;
   }
-
 
   /// Get All Resources By Id
   /*getAllResourcesByIdFunction() async {
@@ -290,5 +300,4 @@ class VendorScheduleTimeScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
 }

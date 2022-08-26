@@ -381,7 +381,7 @@ class CustomerDetailsModule extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                screenController.appointmentDetailsData.customer!.userName,
+                screenController.cstName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -409,7 +409,7 @@ class CustomerDetailsModule extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                screenController.appointmentDetailsData.customer!.email,
+                screenController.cstEmail,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -437,7 +437,7 @@ class CustomerDetailsModule extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                screenController.appointmentDetailsData.customer!.phoneNo,
+                screenController.cstPhoneNo,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -450,32 +450,32 @@ class CustomerDetailsModule extends StatelessWidget {
         ),
         const SizedBox(height: 5),
 
-        Row(
-          children: [
-            const Expanded(
-              child: Text(
-                  "Gender :",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Text(
-                screenController.appointmentDetailsData.customer!.gender,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     const Expanded(
+        //       child: Text(
+        //           "Gender :",
+        //         maxLines: 1,
+        //         overflow: TextOverflow.ellipsis,
+        //         style: TextStyle(
+        //           fontSize: 16,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       child: Text(
+        //         screenController.appointmentDetailsData.customer!.gender,
+        //         maxLines: 1,
+        //         overflow: TextOverflow.ellipsis,
+        //         style: const TextStyle(
+        //           fontSize: 16,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
 
       ],
     );

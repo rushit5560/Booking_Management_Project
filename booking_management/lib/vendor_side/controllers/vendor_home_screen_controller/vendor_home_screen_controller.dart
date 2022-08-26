@@ -255,28 +255,31 @@ class VendorHomeScreenController extends GetxController {
   // todo - Get Booking Availability Function
   Future<void> getBookingAvailabilityFunction() async {
     isLoading(true);
-    String url = ApiUrl.getBookingAvailabilityApi + "?userId=${UserDetails.uniqueId}";
+    String url =
+        ApiUrl.getBookingAvailabilityApi + "?userId=${UserDetails.uniqueId}";
+
+    log("get appointment details url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("getBookingAvailabilityFunction Response : ${response.body}");
 
-      BookingAvailabilityModel bookingAvailabilityModel = BookingAvailabilityModel.fromJson(json.decode(response.body));
+      BookingAvailabilityModel bookingAvailabilityModel =
+          BookingAvailabilityModel.fromJson(json.decode(response.body));
       isSuccessStatus = bookingAvailabilityModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         isBookingAvailability = bookingAvailabilityModel.availability.obs;
         bookingAvailabilityString = bookingAvailabilityModel.message;
       } else {
         log("getBookingAvailabilityFunction Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getBookingAvailabilityFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override

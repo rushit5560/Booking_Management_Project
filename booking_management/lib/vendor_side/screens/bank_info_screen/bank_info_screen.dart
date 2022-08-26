@@ -18,6 +18,7 @@ class BankInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () => hideKeyboard(),
         child: SafeArea(
@@ -41,18 +42,24 @@ class BankInfoScreen extends StatelessWidget {
                                   border: Border.all(),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Column(children: [
-                                  FinancialInstituteNameFieldModule(),
-                                  AccountNameFieldModule(),
-                                  AccountNumberFieldModule(),
-                                  IfscFieldModule(),
-                                ]),
+                                child: SingleChildScrollView(
+                                  physics: const ClampingScrollPhysics(),
+                                  child: Column(
+                                    children: [
+                                      FinancialInstituteNameFieldModule(),
+                                      AccountNameFieldModule(),
+                                      AccountNumberFieldModule(),
+                                      IfscFieldModule(),
+                                    ],
+                                  ).commonSymmetricPadding(
+                                      horizontal: 8, vertical: 15),
+                                ),
                               ),
                               const SizedBox(height: 20),
                               SaveChangesButtonModule(),
                             ],
                           ).commonAllSidePadding(5),
-                        ).commonAllSidePadding(5),
+                        ).commonAllSidePadding(10),
                 ),
               ),
             ],

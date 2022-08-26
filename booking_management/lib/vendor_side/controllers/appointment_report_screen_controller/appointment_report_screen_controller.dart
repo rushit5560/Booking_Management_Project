@@ -8,24 +8,28 @@ import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
 import '../../model/appointment_report_screen_model/appointment_report_model.dart';
 
-
-
 class AppointmentReportScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
   ApiHeader apiHeader = ApiHeader();
-  List<AppointmentItem> appointmentReportList = [];
+  List<AppointmentListModule> appointmentReportList = [];
 
   /// For Filter
   RxString startDate = "Select Start Date".obs;
   RxString endDate = "Select End Date".obs;
   RxBool isStartDateCalenderShow = false.obs;
   RxBool isEndDateCalenderShow = false.obs;
-  /// DD List
-  List<String> statusList = ["Select Status", "Confirm", "Done", "Pending", "Cancel"];
-  RxString selectedStatusValue = "Select Status".obs;
 
+  /// DD List
+  List<String> statusList = [
+    "Select Status",
+    "Confirm",
+    "Done",
+    "Pending",
+    "Cancel"
+  ];
+  RxString selectedStatusValue = "Select Status".obs;
 
   DateTime selectedStartDate = DateTime.now();
 
@@ -97,72 +101,82 @@ class AppointmentReportScreenController extends GetxController {
   //   // }
   // }
 
-
-
   /// Appointment Report All List
   getAppointmentReportFunction() async {
     isLoading(true);
-    String url = ApiUrl.appointmentReportApi + "?vendorId=${UserDetails.uniqueId}";
+    String url =
+        ApiUrl.appointmentReportApi + "?userId=${UserDetails.uniqueId}";
     log("Appointment Report Api Url : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment Report Response : ${response.body}");
 
-      AppointmentReportModel appointmentReportModel = AppointmentReportModel.fromJson(json.decode(response.body));
+      AppointmentReportModel appointmentReportModel =
+          AppointmentReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentReportModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         appointmentReportList.clear();
 
-        appointmentReportList = appointmentReportModel.workerList;
+        appointmentReportList = appointmentReportModel.data;
         log("appointmentReportList : ${appointmentReportList.length}");
       } else {
-        log("getAppointmentReportFunction Else Else");
+        log("AppointmentReportFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
-      log("getAppointmentReportFunction Error ::: $e");
+    } catch (e) {
+      log("AppointmentReportFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }
-
   }
 
   /// Filter Appointment Report List
   getFilterAppointmentReportFunction() async {
     isLoading(true);
     String url = selectedStatusValue.value == "Select Status"
-    ? ApiUrl.appointmentReportApi + "&userId=${UserDetails.uniqueId}" + "?fromDate=$startDate" + "&toDate=$endDate" /*+ "&option"*/
-    : ApiUrl.appointmentReportApi + "&userId=${UserDetails.uniqueId}" + "?fromDate=$startDate" + "&toDate=$endDate" + "&option=$selectedStatusValue";
+        ? ApiUrl.appointmentReportApi +
+            "&userId=${UserDetails.uniqueId}" +
+            "&fromDate=$startDate" +
+            "&toDate=$endDate" /*+ "&option"*/
+        : ApiUrl.appointmentReportApi +
+            "&userId=${UserDetails.uniqueId}" +
+            "&fromDate=$startDate" +
+            "&toDate=$endDate" +
+            "&option=$selectedStatusValue";
 
     log("Appointment Report Api Url : $url");
     log('header: ${apiHeader.headers}');
 
     try {
-      http.Response response = await http.get(Uri.parse(url),  headers: apiHeader.headers);
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+
       log("Appointment Report Response : ${response.body}");
 
-      AppointmentReportModel appointmentReportModel = AppointmentReportModel.fromJson(json.decode(response.body));
+      AppointmentReportModel appointmentReportModel =
+          AppointmentReportModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentReportModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         appointmentReportList.clear();
 
-        appointmentReportList = appointmentReportModel.workerList;
-        log("appointmentReportList : ${appointmentReportList.length}");
+        appointmentReportList = appointmentReportModel.data;
+        log("FilterAppointmentReportList : ${appointmentReportList.length}");
       } else {
-        log("getAppointmentReportFunction Else Else");
+        log("FilterAppointmentReport Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
-      log("getAppointmentReportFunction Error ::: $e");
+    } catch (e) {
+      log("FilterAppointmentReport Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override
@@ -175,5 +189,4 @@ class AppointmentReportScreenController extends GetxController {
     isLoading(true);
     isLoading(false);
   }
-
 }

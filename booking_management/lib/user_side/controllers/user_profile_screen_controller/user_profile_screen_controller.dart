@@ -185,14 +185,15 @@ class UserProfileScreenController extends GetxController {
       log('getUserDetailsByIdModelStatus : $isStatus');
 
       if (isStatus.value == 200) {
-        nameTextFieldController.text = userProfileDetailsModel.data!.userName!;
+        nameTextFieldController.text =
+            userProfileDetailsModel.data!.userName ?? "";
         emailTextFieldController.text = userProfileDetailsModel.data!.email!;
         mobileTextFieldController.text = userProfileDetailsModel.data!.phoneNo!;
         userImage = userProfileDetailsModel.data!.image ?? "";
 
-        gender.value = userProfileDetailsModel.data!.gender!;
+        gender.value = userProfileDetailsModel.data!.gender ?? "";
         selectedDate =
-            DateTime.parse(userProfileDetailsModel.data!.dateOfBirth!);
+            DateTime.parse(userProfileDetailsModel.data!.dateOfBirth ?? "");
 
         // if(userProfileDetailsModel.data.dateOfBirth.length > 10) {
         //   String dob = userProfileDetailsModel.data.dateOfBirth;

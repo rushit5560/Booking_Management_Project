@@ -161,11 +161,16 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                                 ),
                               );
                             } else if (snapshot.hasData) {
-                              return Image.network(
-                                ApiUrl.apiImagePath + snapshot.data.toString(),
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(AppImages.profileImg);
-                                },
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  ApiUrl.apiImagePath +
+                                      snapshot.data.toString(),
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(AppImages.profileImg);
+                                  },
+                                ),
                               );
                             }
 

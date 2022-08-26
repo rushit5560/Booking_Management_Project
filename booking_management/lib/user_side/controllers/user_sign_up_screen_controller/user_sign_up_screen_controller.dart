@@ -81,7 +81,10 @@ class UserSignUpScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.request}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         UserSignUpModel response1 =
             UserSignUpModel.fromJson(json.decode(value));
         log('response1 :::::: ${response1.statusCode}');
@@ -107,6 +110,7 @@ class UserSignUpScreenController extends GetxController {
       });
     } catch (e) {
       log('SignUp Error : $e');
+      rethrow;
     } finally {
       isLoading(false);
     }

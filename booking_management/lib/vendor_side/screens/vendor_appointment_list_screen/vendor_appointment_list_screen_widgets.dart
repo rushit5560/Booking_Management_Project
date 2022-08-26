@@ -744,7 +744,7 @@ class AllAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(i) {
     return Text(
-      screenController.allAppointmentList[i].customer.userName,
+      screenController.allAppointmentList[i].firstName,
       style: const TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.bold,
@@ -945,7 +945,7 @@ class PendingAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(i) {
     return Text(
-      screenController.pendingAppointmentList[i].customer.userName,
+      screenController.pendingAppointmentList[i].firstName,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -954,6 +954,9 @@ class PendingAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
+    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    String date = dateList[0];
+
     return Row(
       children: [
         Image.asset(
@@ -964,7 +967,7 @@ class PendingAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.pendingAppointmentList[i].customer.dateOfBirth,
+          date,
           style: const TextStyle(fontSize: 9),
         ),
 
@@ -1151,7 +1154,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(i) {
     return Text(
-      screenController.confirmAppointmentList[i].customer.userName,
+      screenController.confirmAppointmentList[i].firstName,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -1160,6 +1163,8 @@ class ConfirmAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
+    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    String date = dateList[0];
     return Row(
       children: [
         Image.asset(
@@ -1170,7 +1175,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.confirmAppointmentList[i].customer.dateOfBirth,
+          date,
           style: const TextStyle(fontSize: 9),
         ),
 
@@ -1350,7 +1355,7 @@ class CancelAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(i) {
     return Text(
-      screenController.cancelAppointmentList[i].customer.userName,
+      screenController.cancelAppointmentList[i].firstName,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -1359,6 +1364,8 @@ class CancelAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
+    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    String date = dateList[0];
     return Row(
       children: [
         Image.asset(
@@ -1369,7 +1376,7 @@ class CancelAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.cancelAppointmentList[i].customer.dateOfBirth,
+          date,
           style: const TextStyle(fontSize: 9),
         ),
 
@@ -1549,7 +1556,7 @@ class DoneAppointmentListModule extends StatelessWidget {
 
   Widget _userNameModule(i) {
     return Text(
-      screenController.doneAppointmentList[i].customer.userName,
+      screenController.doneAppointmentList[i].firstName,
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
@@ -1558,6 +1565,8 @@ class DoneAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
+    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    String date = dateList[0];
     return Row(
       children: [
         Image.asset(
@@ -1568,7 +1577,7 @@ class DoneAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.doneAppointmentList[i].customer.dateOfBirth,
+          date,
           style: const TextStyle(fontSize: 9),
         ),
 

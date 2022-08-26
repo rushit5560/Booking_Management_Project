@@ -104,7 +104,7 @@ class BookAppointmentScreenController extends GetxController {
 
   RxBool isEvent = false.obs;
 
-  VendorDetailsData? vendorDetailsData;
+  VendorDetailsData vendorDetailsData = VendorDetailsData();
 
   /// 1) Get Booking Vendor
   getBookVendorDetailsByIdFunction() async {
@@ -874,7 +874,7 @@ class BookAppointmentScreenController extends GetxController {
         Fluttertoast.showToast(msg: bookAppointmentModel.message);
         String bookingId = bookAppointmentModel.id;
         log("bookingId : $bookingId");
-        await addVendorInFavoriteFunction();
+        // await addVendorInFavoriteFunction();
         Get.to(
           () => UserCheckoutScreen(),
           arguments: [
@@ -925,7 +925,10 @@ class BookAppointmentScreenController extends GetxController {
       log('request.fields: ${request.fields}');
       var response = await request.send();
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         log("value : $value");
 
         BookAppointmentModel bookAppointmentModel =
@@ -936,7 +939,7 @@ class BookAppointmentScreenController extends GetxController {
           Fluttertoast.showToast(msg: bookAppointmentModel.message);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
-          await addVendorInFavoriteFunction();
+          // await addVendorInFavoriteFunction();
           Get.to(
             () => UserCheckoutScreen(),
             arguments: [
@@ -981,19 +984,18 @@ class BookAppointmentScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
+        log("vendor favorite add body : ${json.decode(value)}");
         AddVendorInFavouriteModel addVendorInFavouriteModel =
             AddVendorInFavouriteModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorInFavouriteModel.success.obs;
-        log("Body : ${addVendorInFavouriteModel.statusCode}");
+        log("status code : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          vendorDetailsData!.favourites = vendorDetailsData!.favourites;
-          if (vendorDetailsData!.favourites) {
-            //Fluttertoast.showToast(msg: "Added in favourite");
-          } else {
-            //Fluttertoast.showToast(msg: "Removed from favourite");
-          }
+          Fluttertoast.showToast(msg: "Added to favourites");
         } else {
           Fluttertoast.showToast(msg: "Something went wrong!");
         }

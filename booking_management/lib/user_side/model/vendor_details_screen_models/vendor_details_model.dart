@@ -30,38 +30,38 @@ class VendorDetailsModel {
 
 class VendorDetailsData {
   VendorDetailsData({
-    required this.id,
-    required this.vendor,
-    required this.vendorId,
-    required this.customer,
-    required this.customerId,
-    required this.description,
-    required this.ratting,
-    required this.date,
-    required this.isActive,
-    required this.createdBy,
-    required this.createdOn,
-    required this.modifiedBy,
-    required this.modifiedOn,
-    required this.favourites,
+    this.id,
+    this.vendor,
+    this.vendorId,
+    this.customer,
+    this.customerId,
+    this.description,
+    this.ratting,
+    this.date,
+    this.isActive,
+    this.createdBy,
+    this.createdOn,
+    this.modifiedBy,
+    this.modifiedOn,
+    this.favourites,
     // this.applicationUserCreator,
     // this.applicationUserModifier,
   });
 
-  int id;
-  Vendor vendor;
-  int vendorId;
-  String customer;
-  int customerId;
-  String description;
-  int ratting;
-  String date;
-  bool isActive;
-  String createdBy;
-  String createdOn;
-  String modifiedBy;
-  String modifiedOn;
-  bool favourites;
+  int? id;
+  Vendor? vendor;
+  int? vendorId;
+  String? customer;
+  int? customerId;
+  String? description;
+  int? ratting;
+  String? date;
+  bool? isActive;
+  String? createdBy;
+  String? createdOn;
+  String? modifiedBy;
+  String? modifiedOn;
+  bool? favourites;
   // dynamic applicationUserCreator;
   // dynamic applicationUserModifier;
 
@@ -86,7 +86,7 @@ class VendorDetailsData {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "vendor": vendor.toJson(),
+    "vendor": vendor!.toJson(),
     "vendorId": vendorId,
     "customer": customer,
     "customerId": customerId,

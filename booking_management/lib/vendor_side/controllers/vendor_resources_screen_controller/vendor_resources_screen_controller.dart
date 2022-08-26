@@ -55,7 +55,6 @@ class VendorResourcesScreenController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getAllResourceAPI();
   }
@@ -63,6 +62,7 @@ class VendorResourcesScreenController extends GetxController {
   @override
   void dispose() {
     super.dispose();
+    file!.delete();
   }
 
   loadUI() {
@@ -228,53 +228,42 @@ class VendorResourcesScreenController extends GetxController {
     log("Update Resources API URL : $url");
 
     try {
-      // Map<String, String> headers = <String,String>{
-      //   'Authorization': UserDetails.apiToken
-      // };
+
       if (file != null) {
         var request = http.MultipartRequest('POST', Uri.parse(url));
-
-        var stream = http.ByteStream(file!.openRead());
-        stream.cast();
-
-        var length = await file!.length();
-
         request.headers.addAll(apiHeader.headers);
-        request.files
-            .add(await http.MultipartFile.fromPath("Image", file!.path));
 
-        request.fields['ResourceName'] =
-            updateResourceNameFieldController.text.trim();
-        request.fields['Details'] =
-            updateResourceDetailsFieldController.text.trim();
-        request.fields['Price'] =
-            updateResourcePriceFieldController.text.trim();
-        //request.fields['Image'] = updateServiceLongDesFieldController.text.trim();
+
+        // Image file add
+        request.files.add(await http.MultipartFile.fromPath("Image", file!.path));
+
+        // var stream = http.ByteStream(file!.openRead());
+        // stream.cast();
+        // var length = await file!.length();
+        // var multiPart = http.MultipartFile('Image', stream, length);
+        // request.files.add(multiPart);
+
+        request.fields['ResourceName'] = updateResourceNameFieldController.text.trim();
+        request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
+        request.fields['Price'] = updateResourcePriceFieldController.text.trim();
         request.fields['id'] = "$selectedItemId";
         request.fields['CreatedBy'] = UserDetails.uniqueId;
-        request.fields['Capacity'] =
-            updateResourceCapacityFieldController.text.trim();
+        request.fields['Capacity'] = updateResourceCapacityFieldController.text.trim();
         request.fields['isEvent'] = "$updateEvent";
 
+
+
         log("Fields : ${request.fields}");
-        log("Files : ${request.files}");
+        log("image Files len: ${request.files.length}");
+        log("image Filename: ${request.files.first.filename}");
         log("headers : ${apiHeader.headers}");
-
-        var multiPart = http.MultipartFile(
-          'Image',
-          stream,
-          length,
-        );
-        // var multiPart = await http.MultipartFile.fromPath(
-        //   "Image",
-        //   file!.path,
-        // );
-
-        request.files.add(multiPart);
 
         var response = await request.send();
 
-        response.stream.transform(utf8.decoder).listen((value) {
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) {
           log('value: $value');
           UpdateVendorResourceModel updateVendorResourceModel =
               UpdateVendorResourceModel.fromJson(json.decode(value));
@@ -291,43 +280,31 @@ class VendorResourcesScreenController extends GetxController {
             Fluttertoast.showToast(msg: "Something wnt wrong!");
           }
         });
-      } else if (file == null) {
+      }
+      else if (file == null) {
         var request = http.MultipartRequest('POST', Uri.parse(url));
-
-        //var stream = http.ByteStream(file!.openRead());
-        //stream.cast();
-
-        //var length = await file!.length();
-
         request.headers.addAll(apiHeader.headers);
 
-        request.fields['ResourceName'] =
-            updateResourceNameFieldController.text.trim();
-        request.fields['Details'] =
-            updateResourceDetailsFieldController.text.trim();
-        request.fields['Price'] =
-            updateResourcePriceFieldController.text.trim();
-        //request.fields['Image'] = updateServiceLongDesFieldController.text.trim();
+        request.fields['ResourceName'] = updateResourceNameFieldController.text.trim();
+        request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
+        request.fields['Price'] = updateResourcePriceFieldController.text.trim();
         request.fields['id'] = "$selectedItemId";
         request.fields['CreatedBy'] = UserDetails.uniqueId;
-        request.fields['Capacity'] =
-            updateResourceCapacityFieldController.text.trim();
+        request.fields['Capacity'] = updateResourceCapacityFieldController.text.trim();
         request.fields['isEvent'] = "$isEvent";
+
+        log("image is : $updatePhotoUrl");
 
         log("Fields : ${request.fields}");
         log("headers : ${apiHeader.headers}");
 
-        // var multiPart = http.MultipartFile(
-        //   'Image',
-        //   stream,
-        //   length,
-        // );
-
-        //request.files.add(multiPart);
 
         var response = await request.send();
 
-        response.stream.transform(utf8.decoder).listen((value) {
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) {
           UpdateVendorResourceModel updateVendorResourceModel =
               UpdateVendorResourceModel.fromJson(json.decode(value));
           isSuccessStatus = updateVendorResourceModel.success.obs;
@@ -335,7 +312,6 @@ class VendorResourcesScreenController extends GetxController {
 
           if (isSuccessStatus.value) {
             Fluttertoast.showToast(msg: updateVendorResourceModel.message);
-            // removeFieldData();
             getAllResourceAPI();
             Get.back();
           } else {
@@ -344,6 +320,8 @@ class VendorResourcesScreenController extends GetxController {
           }
         });
       }
+
+
     } catch (e) {
       log("updateVendorResource: $e");
     } finally {
@@ -367,6 +345,7 @@ class VendorResourcesScreenController extends GetxController {
       isSuccessStatus = getResourceDetailsModel.success.obs;
 
       if (isSuccessStatus.value) {
+
         selectedItemId = getResourceDetailsModel.workerList.id;
         updateResourceNameFieldController.text =
             getResourceDetailsModel.workerList.resourceName;
@@ -393,6 +372,7 @@ class VendorResourcesScreenController extends GetxController {
       }
     } catch (e) {
       log("getResourcesDetailsByIdFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }

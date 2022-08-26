@@ -30,25 +30,29 @@ class VendorScheduleTimeScreen extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            ResourcesDropDownModule(),
                             const SizedBox(height: 10),
+                            ResourcesDropDownModule(),
+                            const SizedBox(height: 15),
                             TableModule(),
-                            vendorScheduleTimeScreenController.isCalenderShow.value
+                            vendorScheduleTimeScreenController
+                                    .isCalenderShow.value
                                 ? ResourcesSelectDateModule()
                                 : Container(),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 30),
                             SubmitButtonModule(),
-                            const SizedBox(height: 20),
-                            vendorScheduleTimeScreenController.allScheduleTimeList.isEmpty
+                            const SizedBox(height: 30),
+                            vendorScheduleTimeScreenController
+                                    .allScheduleTimeList.isEmpty
                                 ? Container()
                                 : ScheduleListModule(),
-                            vendorScheduleTimeScreenController.allScheduleTimeList.isEmpty
+                            vendorScheduleTimeScreenController
+                                    .allScheduleTimeList.isEmpty
                                 ? Container()
                                 : SaveButtonModule(),
                             const SizedBox(height: 20),
                             // ResourcesListModule(),
                           ],
-                        ).commonAllSidePadding(10),
+                        ).commonAllSidePadding(15),
                       ),
                     ),
                   ],

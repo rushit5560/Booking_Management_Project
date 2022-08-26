@@ -91,9 +91,38 @@ class VendorCardPaymentScreenController extends GetxController {
     }
   }
 
+  Future<Map<String, dynamic>> getProduct() async {
+    try {
+      // Map<String, dynamic> body = {
+      //   'id': bookingSubId,
+      // };
+
+      var url = 'https://api.stripe.com/v1/products?id:$bookingSubId';
+
+      log("get product details url : $url");
+
+      var response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer ${PaymentKeys.secretKey}',
+          'Content-type': 'application/x-www-form-urlencoded'
+        },
+      );
+      log("\n\n response.statusCode: ${response.statusCode}");
+      log("get product res body: ${response.body}");
+      // log(response.body.toString());
+      return jsonDecode(response.body.toString());
+    } catch (e) {
+      log("Create Payment Intent error found ::: $e");
+      print("error occured : ${e.toString()}");
+      rethrow;
+    }
+  }
+
   //create vendor stripe subscription
   Future<Map<String, dynamic>> createSubscriptionPlan(
     String customerId,
+    String priceId,
   ) async {
     log("customer id Is : $customerId");
 
@@ -106,8 +135,8 @@ class VendorCardPaymentScreenController extends GetxController {
     String url = 'https://api.stripe.com/v1/subscriptions';
 
     Map<String, dynamic> body = {
-      "customer": "customer $customerId",
-      'items[0][price]': 'xxxxx_xxxxxxxxxxxxxxxxxx',
+      "customer": customerId,
+      'items[0][price]': priceId,
     };
     // Map<String, dynamic> body = {
     //   'customer': customerId,
@@ -118,10 +147,7 @@ class VendorCardPaymentScreenController extends GetxController {
     try {
       var response = await http.post(
         Uri.parse(url),
-        body: {
-          'customer': customerId,
-          'items[0][price]': 'price_1LZfm72eZvKYlo2CTSzfbawl',
-        },
+        body: body,
         headers: {
           'Authorization': 'Bearer ${PaymentKeys.secretKey}',
           'Content-type': 'application/x-www-form-urlencoded'
@@ -166,20 +192,23 @@ class VendorCardPaymentScreenController extends GetxController {
 
       // Stripe
       // var stripeAccId = Stripe.stripeAccountId;
-      // final customer = await createCustomer();
-      // final paymentMethod = await createPaymentMethod(
-      //   number: '4242424242424242',
-      //   expMonth: '03',
-      //   expYear: '23',
-      //   cvc: '123',
+      final customer = await createCustomer();
+      final paymentMethod = await createPaymentMethod(
+        number: '4242424242424242',
+        expMonth: '03',
+        expYear: '23',
+        cvc: '123',
+      );
+      await attachPaymentMethod(
+        paymentMethodId: paymentMethod['id'],
+        customerId: customer['id'],
+      );
+      final productBody = await getProduct();
+      // await createSubscrptionPrice();
+      // await createSubscriptionPlan(
+      //   customer['id'],
+      //   "price_1LU32KKo2grgSU3GamuFbz01",
       // );
-      // await attachPaymentMethod(paymentMethod['id'], paymentMethod['id']);
-      // await updateCustomer(paymentMethod['id'], customer['id']);
-      // await creat(
-      //   paymentIntentData!['customer'],
-      //   price.toString(),
-      // );
-      // await createSubscriptionPlan(customer['id']);
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -187,8 +216,6 @@ class VendorCardPaymentScreenController extends GetxController {
           paymentIntentClientSecret: paymentIntentData!['client_secret'],
           merchantDisplayName: UserDetails.userName,
           customerId: paymentIntentData!['customer'],
-          // Customer keys
-          // customerId: cardScreenController.paymentIntentData!['customer'],
 
           customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
           customFlow: true,
@@ -234,8 +261,10 @@ class VendorCardPaymentScreenController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>> attachPaymentMethod(
-      String paymentMethodId, String customerId) async {
+  Future<Map<String, dynamic>> attachPaymentMethod({
+    required String paymentMethodId,
+    required String customerId,
+  }) async {
     final String url =
         'https://api.stripe.com/v1/payment_methods/$paymentMethodId/attach';
     var response = await http.post(
@@ -329,54 +358,52 @@ class VendorCardPaymentScreenController extends GetxController {
     log("booked amount price  == $bookingPrice");
     log("booked amount price  == $bookingPrice");
   }
-  // //create vendor stripe price
-  // Future<Map<String, dynamic>> createSubscrptionPrice({
-  //   required String interval,
-  //   required String unitAmount,
-  //   required String currency,
-  //   required String productId,
-  // }) async {
-  //   log("interval  Is : $interval");
-  //   log("unitamount price Is : $unitAmount");
-  //   log("currency Is : $currency");
-  //   log("prodId Is : $productId");
 
-  //   String url = 'https://api.stripe.com/v1/prices';
+  //create vendor stripe price
+  Future<Map<String, dynamic>> createSubscrptionPrice() async {
+    log("interval  Is : $bookingInterval");
+    log("unitamount price Is : $bookingPrice");
+    log("currency Is : $bookingCurrency");
+    log("prodId Is : $bookingSubId");
 
-  //   Map<String, Object> recurring = {
-  //     "interval": interval,
-  //   };
+    String url = 'https://api.stripe.com/v1/prices';
 
-  //   Map<String, Object> params = {
-  //     "unit_amount": unitAmount,
-  //     "currency": "aud",
-  //     "recurring": recurring,
-  //     "product": productId,
-  //   };
+    Map<String, Object> recurring = {
+      'currency': bookingCurrency,
+      "interval": bookingInterval,
+    };
 
-  //   try {
-  //     var response = await http.post(
-  //       Uri.parse(url),
-  //       body: jsonEncode(params),
-  //       headers: {
-  //         'Authorization': 'Bearer ${PaymentKeys.secretKey}',
-  //         'Content-type': 'application/x-www-form-urlencoded'
-  //       },
-  //     );
-  //     log("price response is : ${response.body}");
-  //     if (response.statusCode == 200) {
-  //       log(json.decode(response.body));
-  //       return json.decode(response.body);
-  //     } else {
-  //       log(response.body);
+    Map<String, Object> params = {
+      // "unit_amount": bookingPrice,
+      "recurring": recurring,
+      "product": bookingSubId,
+    };
 
-  //       throw 'Failed to create price as a subscriber.';
-  //     }
-  //   } catch (e) {
-  //     log("create price error catched .../ ${e}");
-  //     rethrow;
-  //   }
-  // }
+    try {
+      var response = await http.post(
+        Uri.parse(url),
+        body: jsonEncode(params),
+        headers: {
+          'Authorization': 'Bearer ${PaymentKeys.secretKey}',
+          'Content-type': 'application/x-www-form-urlencoded'
+        },
+      );
+
+      var resBody = json.decode(response.body);
+      log("price response is : $resBody");
+      if (response.statusCode == 200) {
+        log("price api success");
+        return json.decode(response.body);
+      } else {
+        log("price response error else : $resBody");
+
+        throw 'Failed to create price as a subscriber.';
+      }
+    } catch (e) {
+      log("create price error catched .../ ${e}");
+      rethrow;
+    }
+  }
 
   Future<void> sendEmailVendorSubConfirm() async {
     // isLoading(true);

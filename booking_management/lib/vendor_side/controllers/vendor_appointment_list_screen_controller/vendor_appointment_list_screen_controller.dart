@@ -58,8 +58,7 @@ class VendorAppointmentListScreenController extends GetxController {
           await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Appointment List Response : ${response.body}");
 
-      AppointmentListModel appointmentListModel =
-          AppointmentListModel.fromJson(json.decode(response.body));
+      AppointmentListModel appointmentListModel = AppointmentListModel.fromJson(json.decode(response.body));
       isSuccessStatus = appointmentListModel.success.obs;
 
       if (isSuccessStatus.value) {

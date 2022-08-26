@@ -44,7 +44,9 @@ class InvoiceReportScreen extends StatelessWidget {
                     // const SizedBox(height: 15),
                     // SubmitButton(),
 
-                    Expanded(child: AppointmentReportListModule()),
+                    Expanded(
+                      child: AppointmentReportListModule(),
+                    ),
                   ],
                 ),
               ),

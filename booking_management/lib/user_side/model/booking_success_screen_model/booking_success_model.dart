@@ -34,7 +34,7 @@ class WorkerList {
     required this.bookingId,
     required this.vendorId,
     required this.vendor,
-    required this.customer,
+    // required this.customer,
     required this.customerId,
     required this.bookingFor,
     required this.bookingForId,
@@ -53,7 +53,7 @@ class WorkerList {
   String bookingId;
   int vendorId;
   Vendor vendor;
-  Customer customer;
+  // Customer customer;
   int customerId;
   String bookingFor;
   String bookingForId;
@@ -72,7 +72,7 @@ class WorkerList {
     bookingId: json["bookingId"] ?? "",
     vendorId: json["vendorId"] ?? 0,
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
-    customer: Customer.fromJson(json["customer"] ?? {}),
+    // customer: Customer.fromJson(json["customer"] ?? {}),
     customerId: json["customerId"] ?? 0,
     bookingFor: json["bookingFor"] ?? "",
     bookingForId: json["bookingForId"] ?? "",
@@ -92,7 +92,7 @@ class WorkerList {
     "bookingId": bookingId,
     "vendorId": vendorId,
     "vendor": vendor.toJson(),
-    "customer": customer.toJson(),
+    // "customer": customer.toJson(),
     "customerId": customerId,
     "bookingFor": bookingFor,
     "bookingForId": bookingForId,
@@ -188,16 +188,20 @@ class Customer {
 class Vendor {
   Vendor({
     required this.businessName,
+    required this.userId,
   });
 
   String businessName;
+  String userId;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
     businessName: json["businessName"] ?? "",
+     userId: json["userId"] ?? "", 
   );
 
   Map<String, dynamic> toJson() => {
     "businessName": businessName,
+    "userId": userId,
   };
 }
 

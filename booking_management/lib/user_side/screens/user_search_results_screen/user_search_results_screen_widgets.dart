@@ -703,7 +703,7 @@ class BusinessListModule extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: 15),
               Expanded(
                 flex: 5,
                 child: Column(

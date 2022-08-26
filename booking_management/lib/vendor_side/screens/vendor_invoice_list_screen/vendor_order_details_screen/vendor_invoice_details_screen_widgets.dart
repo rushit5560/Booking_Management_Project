@@ -1,17 +1,20 @@
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_invoice_details_screen_controller/vendor_invoice_details_screen_controller.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_invoice_list_screen_controller/vendor_invoice_list_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OrderDetailFormModule extends StatelessWidget {
   OrderDetailFormModule({Key? key}) : super(key: key);
-  final vendorInvoiceListScreenController =
-      Get.find<VendorInvoiceListScreenController>();
+  final vendorInvoiceDetailsScreenController =
+      Get.find<VendorInvoiceDetailsScreenController>();
 
   @override
   Widget build(BuildContext context) {
+    var d = vendorInvoiceDetailsScreenController.bookedDate;
+    var date = d.split("T")[0];
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -41,7 +44,7 @@ class OrderDetailFormModule extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           const Text(
-                            "Transaction : ",
+                            "issued : ",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -50,7 +53,7 @@ class OrderDetailFormModule extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${vendorInvoiceListScreenController.orderId}",
+                            date,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 16),
@@ -59,7 +62,7 @@ class OrderDetailFormModule extends StatelessWidget {
                       ),
                       // const SizedBox(height: 5),
                       // Text(
-                      //   vendorInvoiceListScreenController.orderDetailsData!.transactionDate,
+                      //   vendorInvoiceDetailsScreenController.orderDetailsData!.transactionDate,
                       //   maxLines: 1,
                       //   overflow: TextOverflow.ellipsis,
                       //   style: const TextStyle(
@@ -90,19 +93,20 @@ class OrderDetailFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        vendorInvoiceListScreenController.customerUserName,
+                        vendorInvoiceDetailsScreenController.customerUserName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        vendorInvoiceListScreenController.customerEmail,
+                        vendorInvoiceDetailsScreenController.customerEmail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        vendorInvoiceListScreenController.customerPhoneNumber,
+                        vendorInvoiceDetailsScreenController
+                            .customerPhoneNumber,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -127,19 +131,19 @@ class OrderDetailFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        vendorInvoiceListScreenController.vendorUserName,
+                        vendorInvoiceDetailsScreenController.vendorUserName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        vendorInvoiceListScreenController.vendorEmail,
+                        vendorInvoiceDetailsScreenController.vendorEmail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        vendorInvoiceListScreenController.vendorPhoneNumber,
+                        vendorInvoiceDetailsScreenController.vendorPhoneNumber,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -249,13 +253,13 @@ class OrderDetailFormModule extends StatelessWidget {
                 Expanded(
                   flex: 60,
                   child: ListView.builder(
-                    itemCount: vendorInvoiceListScreenController
+                    itemCount: vendorInvoiceDetailsScreenController
                         .descriptionList.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, i) {
                       return Text(
-                        vendorInvoiceListScreenController.descriptionList[i]
+                        vendorInvoiceDetailsScreenController.descriptionList[i]
                             .toString(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -270,7 +274,7 @@ class OrderDetailFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "${vendorInvoiceListScreenController.orderList.bookingItems!.quantity}",
+                    "${vendorInvoiceDetailsScreenController.orderList.bookingItems!.quantity}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -283,7 +287,7 @@ class OrderDetailFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "\$${vendorInvoiceListScreenController.orderList.bookingItems!.price}",
+                    "\$${vendorInvoiceDetailsScreenController.orderList.bookingItems!.price}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -436,7 +440,7 @@ class OrderDetailFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "\$${vendorInvoiceListScreenController.orderList.bookingItems!.price}",
+                    "\$${vendorInvoiceDetailsScreenController.orderList.bookingItems!.price}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,

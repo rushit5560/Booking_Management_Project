@@ -175,6 +175,21 @@ class BookingSummaryModule extends StatelessWidget {
               Text(screenController.quantityValue.value.toString()),
             ],
           ).commonSymmetricPadding(horizontal: 10),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Resource",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(screenController.selectedResource.toString()),
+            ],
+          ).commonSymmetricPadding(horizontal: 10),
 
           /*screenController.isPriceDisplay
               ? Column(
@@ -198,7 +213,7 @@ class BookingSummaryModule extends StatelessWidget {
                 )
               : Container(),*/
         ],
-      ).commonAllSidePadding(5),
+      ).commonSymmetricPadding(horizontal: 5, vertical: 15),
     );
   }
 }
@@ -335,10 +350,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                     .toString(),
                 screenController.bookingId,
               ],
-            )!
-                .whenComplete(() async {
-              await screenController.checkOutSubmitFunction();
-            });
+            );
           } else {
             await screenController.checkOutSubmitFunction();
           }

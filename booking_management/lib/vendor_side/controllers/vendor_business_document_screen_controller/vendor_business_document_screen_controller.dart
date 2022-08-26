@@ -10,7 +10,6 @@ import '../../../common_modules/constants/api_header.dart';
 import '../../model/business_document_screen_models/add_business_document_model.dart';
 import '../../model/business_document_screen_models/get_all_business_documents_model.dart';
 
-
 class VendorBusinessDocumentScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -30,34 +29,33 @@ class VendorBusinessDocumentScreenController extends GetxController {
   /// Get All Doc
   getAllBusinessDocumentsByIdFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorGetAllDocumentsApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url = ApiUrl.vendorGetAllDocumentsApi +
+        "?VendorId=${UserDetails.tableWiseId}";
     log("Get All Doc API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("All Doc Response : ${response.body}");
 
-      GetAllBusinessDocumentsModel getAllBusinessDocumentsModel = GetAllBusinessDocumentsModel.fromJson(json.decode(response.body));
+      GetAllBusinessDocumentsModel getAllBusinessDocumentsModel =
+          GetAllBusinessDocumentsModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllBusinessDocumentsModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         businessDocumentList.clear();
 
         businessDocumentList = getAllBusinessDocumentsModel.workerList;
         log("businessDocumentList : ${businessDocumentList.length}");
-
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getAllBusinessDocumentsByIdFunction Else Else");
       }
-
-
-    } catch(e) {
+    } catch (e) {
       log("getAllBusinessDocumentsByIdFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   /// Add Doc
@@ -73,7 +71,8 @@ class VendorBusinessDocumentScreenController extends GetxController {
       stream.cast();
       var length = await file!.length();
 
-      request.files.add(await http.MultipartFile.fromPath("DocumentPath", file!.path));
+      request.files
+          .add(await http.MultipartFile.fromPath("DocumentPath", file!.path));
 
       request.headers.addAll(apiHeader.headers);
 
@@ -94,13 +93,17 @@ class VendorBusinessDocumentScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
-        AddBusinessDocumentsModel addBusinessDocumentsModel = AddBusinessDocumentsModel.fromJson(json.decode(value));
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
+        AddBusinessDocumentsModel addBusinessDocumentsModel =
+            AddBusinessDocumentsModel.fromJson(json.decode(value));
         isSuccessStatus = addBusinessDocumentsModel.success.obs;
         log("Body : ${addBusinessDocumentsModel.statusCode}");
         log("Body : ${addBusinessDocumentsModel.message}");
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: addBusinessDocumentsModel.message);
           selectedDocTypeValue.value = "Attach photo identification";
           file!.delete();
@@ -110,15 +113,12 @@ class VendorBusinessDocumentScreenController extends GetxController {
           log("addBusinessDocumentFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
-
       });
-
-    } catch(e) {
+    } catch (e) {
       log("addBusinessDocumentFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override

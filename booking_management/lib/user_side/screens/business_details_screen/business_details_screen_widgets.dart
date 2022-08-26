@@ -26,7 +26,7 @@ class ProfileModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String imgUrl = ApiUrl.apiImagePath +
-        screenController.vendorDetailsData!.vendor.businessLogo;
+        screenController.vendorDetailsData!.vendor!.businessLogo;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -208,8 +208,8 @@ class OverviewModule extends StatelessWidget {
 
   Widget vendorName() {
     return Text(
-      screenController.vendorDetailsData!.vendor.businessName.isNotEmpty
-          ? screenController.vendorDetailsData!.vendor.businessName
+      screenController.vendorDetailsData!.vendor!.businessName.isNotEmpty
+          ? screenController.vendorDetailsData!.vendor!.businessName
           : "Abc",
       style: const TextStyle(
           color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),
@@ -228,7 +228,8 @@ class OverviewModule extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         RatingBar.builder(
-          initialRating: screenController.vendorDetailsData!.ratting.toDouble(),
+          initialRating:
+              screenController.vendorDetailsData!.ratting!.toDouble(),
           minRating: 1,
           direction: Axis.horizontal,
           allowHalfRating: true,
@@ -270,8 +271,8 @@ class OverviewModule extends StatelessWidget {
 
   Widget description() {
     return Text(
-      screenController.vendorDetailsData!.description.isNotEmpty
-          ? screenController.vendorDetailsData!.description
+      screenController.vendorDetailsData!.description!.isNotEmpty
+          ? screenController.vendorDetailsData!.description!
           : "Lorem Ipsum",
       style: const TextStyle(fontSize: 13, color: Colors.black),
     );
@@ -301,14 +302,14 @@ class OverviewModule extends StatelessWidget {
           ],
         ),*/
         // const SizedBox(height: 15),
-        Column(
+        Row(
           children: [
             Row(
               children: [
                 GestureDetector(
                   onTap: () async {
                     String phoneNo =
-                        screenController.vendorDetailsData!.vendor.phoneNo;
+                        screenController.vendorDetailsData!.vendor!.phoneNo;
 
                     String url = "tel:$phoneNo";
                     if (await canLaunch(url)) {
@@ -336,15 +337,15 @@ class OverviewModule extends StatelessWidget {
                 ),
                 const SizedBox(width: 20),
                 Text(
-                  screenController.vendorDetailsData!.vendor.phoneNo.isNotEmpty
-                      ? screenController.vendorDetailsData!.vendor.phoneNo
+                  screenController.vendorDetailsData!.vendor!.phoneNo.isNotEmpty
+                      ? screenController.vendorDetailsData!.vendor!.phoneNo
                       : "1234567890",
                   style: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w500),
                 )
               ],
             ),
-            const SizedBox(height: 15),
+            const SizedBox(width: 25),
             Row(
               children: [
                 GestureDetector(
@@ -413,7 +414,7 @@ class OverviewModule extends StatelessWidget {
                 ),
                 const SizedBox(width: 20),
                 const Text(
-                  "Chat us",
+                  "Chat with us",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w500),
                 ),
@@ -434,7 +435,7 @@ class OverviewModule extends StatelessWidget {
                 )),
             Expanded(
                 flex: 3,
-                child: Text(screenController.vendorDetailsData!.vendor.address,
+                child: Text(screenController.vendorDetailsData!.vendor!.address,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(color: Colors.black)))
@@ -447,16 +448,16 @@ class OverviewModule extends StatelessWidget {
   Widget viewMapButtonModule() {
     return GestureDetector(
       onTap: () {
-        if (screenController.vendorDetailsData!.vendor.latitude.isEmpty ||
-            screenController.vendorDetailsData!.vendor.longitude.isEmpty) {
+        if (screenController.vendorDetailsData!.vendor!.latitude.isEmpty ||
+            screenController.vendorDetailsData!.vendor!.longitude.isEmpty) {
           Fluttertoast.showToast(
               msg: "Vendor has not provided his location details.");
         } else {
           Get.to(
             () => UserMapScreen(),
             arguments: [
-              screenController.vendorDetailsData!.vendor.latitude,
-              screenController.vendorDetailsData!.vendor.longitude,
+              screenController.vendorDetailsData!.vendor!.latitude,
+              screenController.vendorDetailsData!.vendor!.longitude,
             ],
           );
         }

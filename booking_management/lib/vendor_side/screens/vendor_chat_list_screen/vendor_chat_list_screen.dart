@@ -155,11 +155,15 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                                   ),
                                 );
                               } else if (snapshot.hasData) {
-                                return Image.network(
-                                  ApiUrl.apiImagePath + snapshot.data!,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(AppImages.profileImg);
-                                  },
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    ApiUrl.apiImagePath + snapshot.data!,
+                                    fit: BoxFit.contain,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(AppImages.profileImg);
+                                    },
+                                  ),
                                 );
                               }
                               return Container(

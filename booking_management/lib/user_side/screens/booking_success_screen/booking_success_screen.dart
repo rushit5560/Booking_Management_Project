@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
 import '../../controllers/booking_success_screen_controller/booking_success_screen_controller.dart';
 import 'booking_success_screen_widgets.dart';
 
@@ -13,12 +14,14 @@ class BookingSuccessScreen extends StatelessWidget {
   final bookingSuccessScreenController =
       Get.put(BookingSuccessScreenController());
 
+  // final bookAppointmentScreenController =
+  //     Get.put(BookAppointmentScreenController());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         Fluttertoast.showToast(
-          msg: 'Please go to invoice or shopping',
+          msg: 'Please go to invoice or booking',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
         );

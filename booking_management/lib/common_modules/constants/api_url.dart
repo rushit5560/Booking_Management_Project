@@ -13,7 +13,7 @@ class ApiUrl {
 
   // main live api urls
   static const apiMainPath = "https://setdaytime-uat.azurewebsites.net/";
-  static const apiImagePath = "https://setdaytime-uat.azurewebsites.net";
+  static const apiImagePath = "https://setdaytime-uat.azurewebsites.net/";
 
   /// Common API
   static const getAllCountriesApi =

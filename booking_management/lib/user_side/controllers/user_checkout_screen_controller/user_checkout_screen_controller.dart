@@ -129,7 +129,6 @@ class UserCheckoutScreenController extends GetxController {
         vendorAddress =
             "${checkoutSummaryModel.workerList.booking.vendor.state}, ${checkoutSummaryModel.workerList.booking.vendor.country}, "
             "${checkoutSummaryModel.workerList.booking.vendor.postcode}";
-
         isPriceDisplay =
             checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay;
         stripeID = checkoutSummaryModel.workerList.booking.vendor.stripeId;
@@ -276,7 +275,10 @@ class UserCheckoutScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.request}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         log('value: $value');
         ConfirmCheckoutModel confirmCheckoutModel =
             ConfirmCheckoutModel.fromJson(json.decode(value));

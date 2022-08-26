@@ -10,7 +10,8 @@ import 'package:get/get.dart';
 
 import '../../model/vendor_invoice_list_screen_models/get_all_invoice_model.dart';
 
-class VendorInvoiceListScreenController extends GetxController {
+class VendorInvoiceDetailsScreenController extends GetxController {
+  String bookingId = Get.arguments;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
@@ -27,48 +28,15 @@ class VendorInvoiceListScreenController extends GetxController {
   String vendorEmail = "";
   String vendorPhoneNumber = "";
 
-  int orderId = 0;
+  String bookedDate = "";
   List<String> descriptionList = [];
   WorkerList orderList = WorkerList();
 
-  /// Get All Order List
-  getAllOrderListFunction() async {
-    isLoading(true);
-    String url =
-        ApiUrl.vendorGetAllOrdersApi + "?vendorid=${UserDetails.tableWiseId}";
-    log("Get All Order API URL : $url");
-    log('header: ${apiHeader.headers}');
-
-    try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Response Body : ${response.body}");
-
-      GetAllInvoiceModel getAllInvoiceModel =
-          GetAllInvoiceModel.fromJson(json.decode(response.body));
-      isSuccessStatus = getAllInvoiceModel.success.obs;
-
-      if (isSuccessStatus.value) {
-        allInvoiceList.clear();
-
-        allInvoiceList = getAllInvoiceModel.data;
-        for (int i = 0; i < allInvoiceList.length; i++) {}
-        log("getAllOrdersModel : ${allInvoiceList.length}");
-      } else {
-        log("getAllOrderListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
-      }
-    } catch (e) {
-      log("getAllOrderListFunction Error ::: $e");
-    } finally {
-      isLoading(false);
-    }
-  }
-
   /// Order Details By Id
-  getOrderDetailsByIdFunction({required int id}) async {
+  getOrderDetailsByIdFunction() async {
+    log("bookingidd is : $bookingId");
     isLoading(true);
-    String url = ApiUrl.vendorOrderDetailsApi + "?id=$id";
+    String url = ApiUrl.vendorOrderDetailsApi + "?id=$bookingId";
     log("Order Details API URL : $url");
     log('apiHeader.headers: ${apiHeader.headers}');
 
@@ -94,11 +62,11 @@ class VendorInvoiceListScreenController extends GetxController {
         log('customerUserName: $customerUserName');
 
         // Vendor
-        vendorUserName = getInvoiceDetailsModel.workerList.vendor!.userName;
+        vendorUserName = getInvoiceDetailsModel.workerList.vendor!.businessName;
         vendorEmail = getInvoiceDetailsModel.workerList.vendor!.email;
         vendorPhoneNumber = getInvoiceDetailsModel.workerList.vendor!.phoneNo;
 
-        orderId = getInvoiceDetailsModel.workerList.id!;
+        bookedDate = getInvoiceDetailsModel.workerList.startDateTime!;
       } else {
         log("getOrderDetailsByIdFunction Else Else");
       }
@@ -111,7 +79,7 @@ class VendorInvoiceListScreenController extends GetxController {
 
   @override
   void onInit() {
-    getAllOrderListFunction();
+    getOrderDetailsByIdFunction();
     super.onInit();
   }
 }

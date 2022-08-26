@@ -6,12 +6,14 @@ import 'package:booking_management/user_side/model/home_screen_models/get_all_ap
 import 'package:booking_management/user_side/model/home_screen_models/search_model.dart';
 import 'package:booking_management/user_side/model/user_business_details_model/add_vendor_in_favourite_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_place/google_place.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/user_details.dart';
+import '../../../common_modules/sharedpreference_data/sharedpreference_data.dart';
 import '../../model/home_screen_models/get_all_category_model.dart';
 import '../../model/home_screen_models/get_appointment_details_model.dart';
 import '../../model/home_screen_models/get_favourite_vendor_model.dart';
@@ -337,10 +339,41 @@ class HomeScreenController extends GetxController {
     }
   }
 
+  Position? position;
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+
+  void getCurrentLocation() async {
+    Position position1 = await determinePosition();
+    position = position1;
+
+    selectedFromListLatitude = position1.latitude.toString();
+    selectedFromListLongitude = position1.longitude.toString();
+    sharedPreferenceData.setLatAndLongInPrefs(
+      lat: "${position!.latitude}",
+      long: "${position!.longitude}",
+    );
+    log("position123 : $position");
+  }
+
+  Future<Position> determinePosition() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error("Location Permission are denied");
+      }
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
   @override
   void onInit() {
     getAllCategoriesFunction();
+    getCurrentLocation();
     googlePlace = GooglePlace(ApiUrl.googleApiKey);
+
     super.onInit();
   }
 

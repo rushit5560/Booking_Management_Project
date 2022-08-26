@@ -11,7 +11,8 @@ import '../../../controllers/vendor_additional_slot_screen_controller/vendor_add
 
 class UpdateAdditionalFormModule extends StatelessWidget {
   UpdateAdditionalFormModule({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class UpdateAdditionalFormModule extends StatelessWidget {
         key: vendorAdditionalSlotScreenController.additionalSlotUpdateFormKey,
         child: Column(
           children: [
-            UpdateAdditionalSlotNameFieldModule(),
+            // UpdateAdditionalSlotNameFieldModule(),
             const SizedBox(height: 20),
             UpdateAdditionalSlotTimeDurationModule(),
             const SizedBox(height: 20),
@@ -29,22 +30,22 @@ class UpdateAdditionalFormModule extends StatelessWidget {
             UpdateAdditionalSlotShortDesFieldModule(),
             const SizedBox(height: 20),
             UpdateAdditionalSlotLongDesFieldModule(),
-            const SizedBox(height: 30),
+            const SizedBox(height: 45),
 
             UpdateAdditionalSlotButton(),
             const SizedBox(height: 10),
           ],
         ),
-      ).commonAllSidePadding(10),
+      ).commonSymmetricPadding(vertical: 20, horizontal: 15),
     );
   }
 }
 
-
 /// Update Name
 class UpdateAdditionalSlotNameFieldModule extends StatelessWidget {
   UpdateAdditionalSlotNameFieldModule({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,6 @@ class UpdateAdditionalSlotNameFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -76,10 +76,13 @@ class UpdateAdditionalSlotNameFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorAdditionalSlotScreenController.updateAdditionalNameFieldController,
+              controller: vendorAdditionalSlotScreenController
+                  .updateAdditionalNameFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateServiceName(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Additional Slot Name'),
+              validator: (value) =>
+                  FieldValidator().validateServiceName(value!),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Additional Slot Name'),
             ),
           ],
         )
@@ -91,7 +94,8 @@ class UpdateAdditionalSlotNameFieldModule extends StatelessWidget {
 /// Update Price
 class UpdateAdditionalSlotPriceFieldModule extends StatelessWidget {
   UpdateAdditionalSlotPriceFieldModule({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +110,6 @@ class UpdateAdditionalSlotPriceFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -124,10 +127,12 @@ class UpdateAdditionalSlotPriceFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorAdditionalSlotScreenController.updateAdditionalPriceFieldController,
+              controller: vendorAdditionalSlotScreenController
+                  .updateAdditionalPriceFieldController,
               keyboardType: TextInputType.number,
               validator: (value) => FieldValidator().validatePrice(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Additional Slot Price'),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Additional Slot Price'),
             ),
           ],
         )
@@ -139,7 +144,8 @@ class UpdateAdditionalSlotPriceFieldModule extends StatelessWidget {
 /// Update Short Description
 class UpdateAdditionalSlotShortDesFieldModule extends StatelessWidget {
   UpdateAdditionalSlotShortDesFieldModule({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +160,6 @@ class UpdateAdditionalSlotShortDesFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -171,10 +176,13 @@ class UpdateAdditionalSlotShortDesFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorAdditionalSlotScreenController.updateAdditionalShortDescriptionFieldController,
+              controller: vendorAdditionalSlotScreenController
+                  .updateAdditionalShortDescriptionFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateShortDescription(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Short Description'),
+              validator: (value) =>
+                  FieldValidator().validateShortDescription(value!),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Short Description'),
             ),
           ],
         )
@@ -186,7 +194,8 @@ class UpdateAdditionalSlotShortDesFieldModule extends StatelessWidget {
 /// Update Long Description
 class UpdateAdditionalSlotLongDesFieldModule extends StatelessWidget {
   UpdateAdditionalSlotLongDesFieldModule({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +210,6 @@ class UpdateAdditionalSlotLongDesFieldModule extends StatelessWidget {
           ),
         ).commonSymmetricPadding(horizontal: 5),
         const SizedBox(height: 5),
-
         Stack(
           children: [
             Container(
@@ -218,10 +226,13 @@ class UpdateAdditionalSlotLongDesFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorAdditionalSlotScreenController.updateAdditionalLongDescriptionFieldController,
+              controller: vendorAdditionalSlotScreenController
+                  .updateAdditionalLongDescriptionFieldController,
               keyboardType: TextInputType.text,
-              validator: (value) => FieldValidator().validateLongDescription(value!),
-              decoration: serviceFormFieldDecoration(hintText: 'Long Description'),
+              validator: (value) =>
+                  FieldValidator().validateLongDescription(value!),
+              decoration:
+                  serviceFormFieldDecoration(hintText: 'Long Description'),
             ),
           ],
         )
@@ -233,7 +244,8 @@ class UpdateAdditionalSlotLongDesFieldModule extends StatelessWidget {
 /// Service Time Duration
 class UpdateAdditionalSlotTimeDurationModule extends StatelessWidget {
   UpdateAdditionalSlotTimeDurationModule({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +260,6 @@ class UpdateAdditionalSlotTimeDurationModule extends StatelessWidget {
             ),
           ),
         ),
-
         Expanded(
           child: Stack(
             children: [
@@ -267,18 +278,23 @@ class UpdateAdditionalSlotTimeDurationModule extends StatelessWidget {
                 ),
               ),
               Obx(
-                    ()=> DropdownButtonHideUnderline(
+                () => DropdownButtonHideUnderline(
                   child: DropdownButton<double>(
-                    value: vendorAdditionalSlotScreenController.updateAdditionalTimeDuration.value,
-                    items:vendorAdditionalSlotScreenController.timeDurationList
+                    value: vendorAdditionalSlotScreenController
+                        .updateAdditionalTimeDuration.value,
+                    items: vendorAdditionalSlotScreenController.timeDurationList
                         .map<DropdownMenuItem<double>>((double value) {
                       return DropdownMenuItem<double>(
                         value: value,
-                        child: Text("$value",style: const TextStyle(color:Colors.black),),
+                        child: Text(
+                          "$value",
+                          style: const TextStyle(color: Colors.black),
+                        ),
                       );
                     }).toList(),
                     onChanged: (newValue) {
-                      vendorAdditionalSlotScreenController.updateAdditionalTimeDuration.value = newValue!;
+                      vendorAdditionalSlotScreenController
+                          .updateAdditionalTimeDuration.value = newValue!;
                       log("selectTimeDuration : ${vendorAdditionalSlotScreenController.updateAdditionalTimeDuration}");
                       // vendorServicesScreenController.loadUI();
                     },
@@ -296,28 +312,30 @@ class UpdateAdditionalSlotTimeDurationModule extends StatelessWidget {
 /// Update Button
 class UpdateAdditionalSlotButton extends StatelessWidget {
   UpdateAdditionalSlotButton({Key? key}) : super(key: key);
-  final vendorAdditionalSlotScreenController = Get.put(VendorAdditionalSlotScreenController());
+  final vendorAdditionalSlotScreenController =
+      Get.put(VendorAdditionalSlotScreenController());
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(vendorAdditionalSlotScreenController.additionalSlotUpdateFormKey.currentState!.validate()) {
-          await vendorAdditionalSlotScreenController.updateVendorAdditionalSlotFunction();
+        if (vendorAdditionalSlotScreenController
+            .additionalSlotUpdateFormKey.currentState!
+            .validate()) {
+          await vendorAdditionalSlotScreenController
+              .updateVendorAdditionalSlotFunction();
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 3,
-                blurRadius: 5,
-                color: Colors.grey.shade300,
-                blurStyle: BlurStyle.outer,
-              ),
-            ]
-        ),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            spreadRadius: 3,
+            blurRadius: 5,
+            color: Colors.grey.shade300,
+            blurStyle: BlurStyle.outer,
+          ),
+        ]),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(

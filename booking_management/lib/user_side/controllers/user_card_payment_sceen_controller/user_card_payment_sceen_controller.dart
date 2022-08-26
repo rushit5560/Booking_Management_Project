@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
@@ -79,6 +80,7 @@ class UserCardPaymentScreenController extends GetxController {
     try {
       print(bookingPrice);
 
+      final checkoutController = Get.find<UserCheckoutScreenController>();
       var price = double.parse(bookingPrice);
 
       log("price passing is : $price");
@@ -113,7 +115,7 @@ class UserCardPaymentScreenController extends GetxController {
 
       await Stripe.instance.presentPaymentSheet();
       await Stripe.instance.confirmPaymentSheetPayment();
-      await checkoutSubscriptionSuccess();
+      await checkoutController.checkOutSubmitFunction();
 
       // await getPaymentIdFunction(
       //   paymentIntentData!['id'],
@@ -143,7 +145,7 @@ class UserCardPaymentScreenController extends GetxController {
   }
 
   checkoutSubscriptionSuccess() async {
-    final userCheckoutController = Get.find<UserCheckoutScreenController>();
+    // final userCheckoutController = Get.find<UserCheckoutScreenController>();
     // await vendorSubscriptionPlanScreenController
     //     .purchaseSubscriptionPlanFunction(
     //   productId: bookingSubId,
@@ -152,17 +154,23 @@ class UserCardPaymentScreenController extends GetxController {
     // await userCheckoutController.checkOutSubmitFunction();
     Get.snackbar(
       "Success",
-      "Appointment Successfully Booked",
+      "Appointment Booked Successfully",
     );
 
     // Purchase plan api call
-    log("booked sub id success == $bookingSubId");
-    log("booked sub id success == $bookingSubId");
+    // log("booked sub id success == $bookingSubId");
+    // log("booked sub id success == $bookingSubId");
 
-    log("booked amount price  == $bookingPrice");
-    log("booked amount price  == $bookingPrice");
-
-    Get.off(() => InvoiceReportScreen());
+    // log("booked amount price  == $bookingPrice");
+    // log("booked amount price  == $bookingPrice");
+    // isLoading(false);
+    // Timer(
+    //   const Duration(seconds: 2),
+    //   () {
+    //     Get.offAll(() => BookingSuccessScreen());
+    //   },
+    // );
+    // isLoading(false);
   }
 
   @override

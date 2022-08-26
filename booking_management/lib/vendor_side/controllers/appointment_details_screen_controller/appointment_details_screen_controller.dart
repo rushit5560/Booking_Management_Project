@@ -30,6 +30,11 @@ class AppointmentDetailsScreenController extends GetxController {
   String date = "";
   String slotTime = "";
 
+
+  String cstName = "";
+  String cstEmail = "";
+  String cstPhoneNo = "";
+
   TextEditingController reasonFieldController = TextEditingController();
   int id = 0;
 
@@ -56,6 +61,10 @@ class AppointmentDetailsScreenController extends GetxController {
         String dateTime = appointmentDetailsModel.data.startDateTime!;
         date = dateTime.substring(0, dateTime.length - 9);
         slotTime = dateTime.substring(11, dateTime.length - 3);
+
+        cstName = "${appointmentDetailsModel.data.firstName}";
+        cstEmail = "${appointmentDetailsModel.data.email}";
+        cstPhoneNo = "${appointmentDetailsModel.data.phoneNo}";
 
         log("appointmentDetailsData :: $appointmentDetailsData");
       } else {

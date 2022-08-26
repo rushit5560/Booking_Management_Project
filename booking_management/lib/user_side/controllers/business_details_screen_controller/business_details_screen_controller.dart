@@ -82,7 +82,7 @@ class BusinessDetailsScreenController extends GetxController {
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       // isLoading(false);
-      await getFavVendorFunction(vendorDetailsData!.vendor.id);
+      await getFavVendorFunction(vendorDetailsData!.vendor!.id);
     }
   }
 
@@ -324,8 +324,8 @@ class BusinessDetailsScreenController extends GetxController {
         log("Body : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
-          if (vendorDetailsData!.favourites) {
+          // vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
+          if (vendorDetailsData!.favourites!) {
             Fluttertoast.showToast(msg: "Added in favourite");
           } else {
             Fluttertoast.showToast(msg: "Removed from favourite");

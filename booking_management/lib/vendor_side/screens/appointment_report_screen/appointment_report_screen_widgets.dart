@@ -523,13 +523,13 @@ class AppointmentReportListModule extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, i) {
-        AppointmentItem singleItem = screenController.appointmentReportList[i];
+        AppointmentListModule singleItem = screenController.appointmentReportList[i];
         return _appointmentListTile(singleItem);
       },
     ).commonAllSidePadding(10);
   }
 
-  Widget _appointmentListTile(AppointmentItem singleItem) {
+  Widget _appointmentListTile(AppointmentListModule singleItem) {
     return Container(
       margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
       decoration: BoxDecoration(
@@ -597,7 +597,7 @@ class AppointmentReportListModule extends StatelessWidget {
                         const SizedBox(width: 5),
                         Expanded(
                           child: Text(
-                            singleItem.customer.userName,
+                            singleItem.firstName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             // style: TextStyle(fontWeight: FontWeight.bold),

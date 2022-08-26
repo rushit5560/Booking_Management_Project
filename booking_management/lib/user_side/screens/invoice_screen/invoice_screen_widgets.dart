@@ -14,6 +14,10 @@ class OrderInvoiceFormModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String date = screenController.invoiceDetailsData.startDateTime
+        .toString()
+        .split('T')[0];
+    // var date = screenController.invoiceDetailsData.startDateTime.toString();
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -49,7 +53,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           const Text(
-                            "Transaction : ",
+                            "issued : ",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -58,7 +62,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${screenController.invoiceDetailsData.id}",
+                            date,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 16),
@@ -135,17 +139,17 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        screenController.invoiceDetailsData.firstName!,
+                        screenController.cstName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.invoiceDetailsData.email!,
+                        screenController.cstEmail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.invoiceDetailsData.phoneNo!,
+                        screenController.cstPhoneNo,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -427,8 +431,8 @@ class OrderInvoiceFormModule extends StatelessWidget {
               ],
             ),*/
           ],
-        ).commonAllSidePadding(8),
-      ).commonAllSidePadding(10),
+        ).commonSymmetricPadding(horizontal: 12, vertical: 15),
+      ).commonAllSidePadding(15),
     );
   }
 }

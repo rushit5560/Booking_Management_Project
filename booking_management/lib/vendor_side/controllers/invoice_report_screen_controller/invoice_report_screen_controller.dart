@@ -43,7 +43,7 @@ class InvoiceReportScreenController extends GetxController {
       if (isSuccessStatus.value) {
         invoiceReportList.clear();
 
-        invoiceReportList = invoiceReportModel.workerList;
+        invoiceReportList = invoiceReportModel.data;
         log("InvoiceReportList : ${invoiceReportList.length}");
       } else {
         log("InvoiceReport Else Else");
@@ -51,6 +51,7 @@ class InvoiceReportScreenController extends GetxController {
       }
     } catch (e) {
       log("InvoiceReport Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }

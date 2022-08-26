@@ -251,9 +251,14 @@ class ScheduleListModule extends StatelessWidget {
         Row(
           children: [
             Expanded(child: Container()),
-            const Expanded(
+            Expanded(
               child: Text(
                 "Start Time",
+                style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
             const Expanded(

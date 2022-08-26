@@ -912,6 +912,7 @@ class PartialCategoryListModule extends StatelessWidget {
     String imgUrl = ApiUrl.apiImagePath + singleItem.image;
     return GestureDetector(
       onTap: () {
+        print("${UserDetails.latitude} and ${UserDetails.longitude}");
         Get.to(
           () => UserSearchResultsScreen(),
           transition: Transition.zoom,
@@ -1050,13 +1051,13 @@ class FavouriteVendorsModule extends StatelessWidget {
         ),
         child: Stack(
           alignment: Alignment.topRight,
-          children: [
+          children: [ 
             Column(
               children: [
                 Expanded(
                   flex: 65,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),

@@ -54,6 +54,7 @@ class InvoiceDetailsData {
     this.firstName,
     this.email,
     this.phoneNo,
+    this.startDateTime,
     // required this.applicationUserCreator,
     // required this.applicationUserModifier,
     this.bookingId,
@@ -80,6 +81,7 @@ class InvoiceDetailsData {
   String? createdOn;
   String? modifiedBy;
   String? modifiedOn;
+  String? startDateTime;
 
   String? firstName;
   String? email;
@@ -114,6 +116,7 @@ class InvoiceDetailsData {
         firstName: json["firstName"] ?? "",
         email: json["email"] ?? "",
         phoneNo: json["phoneNo"] ?? "",
+        startDateTime: json["startDateTime"] ?? "",
         // applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"]),
         // applicationUserModifier: json["applicationUserModifier"],
         bookingId: json["bookingId"] ?? "",

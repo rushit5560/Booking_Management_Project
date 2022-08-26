@@ -39,7 +39,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                               const Divider(thickness: 1),
                               ServiceDetailsModule(),
                             ],
-                          ).commonAllSidePadding(10),
+                          ).commonAllSidePadding(15),
                           Positioned(
                             bottom: 40,
                             // right: 40,

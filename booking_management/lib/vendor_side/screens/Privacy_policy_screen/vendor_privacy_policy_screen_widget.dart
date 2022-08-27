@@ -17,7 +17,7 @@ class PrivacyPolicyWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               screenController.pageTitle,
               style: TextStyle(

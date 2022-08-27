@@ -157,14 +157,29 @@ class UserSearchResultsScreenController extends GetxController {
   /// Category Search
   getSearchCategoryWiseFunction({required String catId}) async {
     isLoading(true);
-    String url = ApiUrl.searchVendorApi + "?categoryid=$catId";
+    String url = ApiUrl.searchVendorApi +
+        "?categoryid=$catId" +
+        "&Distance=$distance"
+            "&CurrentLatitude=$latitude" +
+        "&CurrentLongitude=$longitude";
+
+    // "&CurrentLatitude=$latitude" +
+    // "&CurrentLongitude=$longitude" +
+
+    // String url = ApiUrl.searchVendorApi +
+    //     "?category=$searchText" +
+    //     "&location=$locationText" +
+    //     "&rating=" +
+    //     "&CurrentLatitude=$latitude" +
+    //     "&CurrentLongitude=$longitude" +
+    //     "&Distance=$distance";
     log("Search Category Wise API URL : $url");
 
     try {
       http.Response response = await http.get(
         Uri.parse(url), /*headers: apiHeader.headers*/
       );
-      // log("Search Vendor List ${response.body}");
+      log("Search Vendor List ${response.body}");
 
       GetAllSearchVendorModel getAllSearchVendorModel =
           GetAllSearchVendorModel.fromJson(json.decode(response.body));
@@ -190,7 +205,7 @@ class UserSearchResultsScreenController extends GetxController {
   getSearchCategoryWithRatingWiseFunction() async {
     isLoading(true);
     String url = "";
-    date = "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
+    date = "${selectedDay.month}/${selectedDay.day}/${selectedDay.year}";
     /*if(distance != "Distance" && rating != "Rating") {
       url = ApiUrl.searchVendorApi + "?categoryid=$searchText&rating=$rating&CurrentLatitude=$latitude&CurrentLongitude=$longitude&Distance=$distance&location=$locationText";
     } else if(distance != "Distance" && rating == "Rating") {
@@ -241,7 +256,7 @@ class UserSearchResultsScreenController extends GetxController {
       http.Response response = await http.get(
         Uri.parse(url), /*headers: apiHeader.headers*/
       );
-      // log("Search Vendor List ${response.body}");
+      log("Search Vendor List ${response.body}");
 
       GetAllSearchVendorModel getAllSearchVendorModel =
           GetAllSearchVendorModel.fromJson(json.decode(response.body));
@@ -266,8 +281,11 @@ class UserSearchResultsScreenController extends GetxController {
   @override
   void onInit() {
     // categoryFieldController.text = searchText;
-    latitude = locationText == "" ? UserDetails.latitude : selectedLatitude;
-    longitude = locationText == "" ? UserDetails.longitude : selectedLongitude;
+    // latitude = locationText == "" ? UserDetails.latitude : selectedLatitude;
+    // longitude = locationText == "" ? UserDetails.longitude : selectedLongitude;
+
+    latitude = "-24.572987";
+    longitude = "149.974667";
     distance = '50';
     dropdownDistance = '50 Km';
 
@@ -275,10 +293,14 @@ class UserSearchResultsScreenController extends GetxController {
     locationText = tempLocation.replaceAll(" ", "");
 
     if (searchType == SearchType.categoryWise) {
-      getSearchCategoryWiseFunction(catId: searchText);
+      getSearchCategoryWiseFunction(
+        catId: searchText,
+      );
     } else if (searchType == SearchType.none) {
       getAllSearchVendorListFunction(
-          searchText: searchText, locationText: locationText);
+        searchText: searchText,
+        locationText: locationText,
+      );
     }
 
     super.onInit();

@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import '../../controllers/review_screen_controller/review_screen_controller.dart';
 import '../../model/review_screen_model/get_all_reviews_model.dart';
 
-
-
 class ReviewListModule extends StatelessWidget {
   ReviewListModule({Key? key}) : super(key: key);
   final screenController = Get.find<ReviewScreenController>();
@@ -18,7 +16,7 @@ class ReviewListModule extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         itemCount: screenController.reviewList.length,
-        itemBuilder: (context, i){
+        itemBuilder: (context, i) {
           VendorReviewObject singleItem = screenController.reviewList[i];
           return _reviewListTile(singleItem);
         });
@@ -29,8 +27,7 @@ class ReviewListModule extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: AppColors.colorLightGrey1
-      ),
+          color: AppColors.colorLightGrey1),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -53,8 +50,22 @@ class ReviewListModule extends StatelessWidget {
                         singleItem.customer.userName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
                       const SizedBox(height: 3),
+                      Text(
+                        singleItem.customer.email,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           RatingBar.builder(
@@ -86,13 +97,13 @@ class ReviewListModule extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 10,),
-
+            const SizedBox(
+              height: 10,
+            ),
             Text(singleItem.description)
           ],
         ),
       ),
     );
   }
-
 }

@@ -116,7 +116,7 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.asset(
-                              AppImages.vendorImg,
+                              AppImages.logoImg,
                               // height: 100,
                               // width: 100,
                               fit: BoxFit.fill,

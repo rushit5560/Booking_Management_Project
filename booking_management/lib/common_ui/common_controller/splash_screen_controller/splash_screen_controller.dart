@@ -93,6 +93,12 @@ class SplashScreenController extends GetxController {
     UserDetails.vendorVerification =
         prefs.getBool(sharedPreferenceData.vendorVerificationKey) ?? false;
 
+    //user lpcation details
+    UserDetails.longitude =
+        prefs.getString(sharedPreferenceData.longitudeKey) ?? "";
+    UserDetails.latitude =
+        prefs.getString(sharedPreferenceData.latitudeKey) ?? "";
+
     log("UserDetails.isUserLoggedIn : ${UserDetails.isUserLoggedIn}");
     log("UserDetails.apiToken : ${UserDetails.apiToken}");
     log("UserDetails.uniqueId : ${UserDetails.uniqueId}");
@@ -113,6 +119,8 @@ class SplashScreenController extends GetxController {
     log("UserDetails.businessId : ${UserDetails.businessId}");
     log("UserDetails.isPriceDisplay : ${UserDetails.isPriceDisplay}");
     log("UserDetails.vendorVerification : ${UserDetails.vendorVerification}");
+    log("UserDetails.latitude : ${UserDetails.latitude}");
+    log("UserDetails.longitude : ${UserDetails.longitude}");
 
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');

@@ -756,6 +756,7 @@ class SelectDateModule extends StatelessWidget {
                     "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
+                log("screenController.selectedadte.value : ${screenController.selectedDate.value}");
                 // screenController.selectedTime.value = "${selectedDay.hour}:${selectedDay.minute}:${selectedDay.second}";
 
                 screenController.isServiceCalenderShow.value =

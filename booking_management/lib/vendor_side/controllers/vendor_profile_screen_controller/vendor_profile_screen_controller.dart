@@ -95,7 +95,7 @@ class VendorProfileScreenController extends GetxController {
     '31'
   ];
 
-  RxString slotDurationValue = '15'.obs;
+  RxString slotDurationValue = '0'.obs;
   String slotDuration = "";
   //RxString businessTypeValue = 'Saloon'.obs;
   TimeOfDay selectedStartTime = TimeOfDay.now();

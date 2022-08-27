@@ -19,18 +19,21 @@ class ReviewScreenController extends GetxController {
 
   getAllReviewsFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorGetAllReviewApi + "?VendorId=${UserDetails.tableWiseId}"; // /*${UserDetails.tableWiseId}*/
+    String url = ApiUrl.vendorGetAllReviewApi +
+        "?VendorId=${UserDetails.tableWiseId}"; // /*${UserDetails.tableWiseId}*/
     log("Get All Review List API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Response Body : ${response.body}");
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log("Review Response Body : ${response.body}");
 
-      VendorAllReviewModel vendorAllReviewModel = VendorAllReviewModel.fromJson(json.decode(response.body));
+      VendorAllReviewModel vendorAllReviewModel =
+          VendorAllReviewModel.fromJson(json.decode(response.body));
 
       isSuccessStatus = vendorAllReviewModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         reviewList.clear();
         reviewList = vendorAllReviewModel.workerList;
 
@@ -62,14 +65,12 @@ class ReviewScreenController extends GetxController {
 
       });*/
 
-
-    } catch(e) {
+    } catch (e) {
       log("getAllReviewsFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
-
 
   @override
   void onInit() {

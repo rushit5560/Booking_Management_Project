@@ -912,7 +912,7 @@ class PartialCategoryListModule extends StatelessWidget {
     String imgUrl = ApiUrl.apiImagePath + singleItem.image;
     return GestureDetector(
       onTap: () {
-        print("${UserDetails.latitude} and ${UserDetails.longitude}");
+        log("latitude : ${UserDetails.latitude} \nlongitude : ${UserDetails.longitude}");
         Get.to(
           () => UserSearchResultsScreen(),
           transition: Transition.zoom,
@@ -1051,7 +1051,7 @@ class FavouriteVendorsModule extends StatelessWidget {
         ),
         child: Stack(
           alignment: Alignment.topRight,
-          children: [ 
+          children: [
             Column(
               children: [
                 Expanded(

@@ -285,6 +285,7 @@ class BookAppointmentScreenController extends GetxController {
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       log("isServiceSlot.value : ${isServiceSlot.value}");
+      selectedResourceTimeSlotId = 0;
       isLoading(false);
 
       // if(isServiceSlot.value == true) {
@@ -299,38 +300,38 @@ class BookAppointmentScreenController extends GetxController {
   /// 4) Get Resources Time List
   getResourcesTimeListFunction({required String resId}) async {
     log("Resource Id : $resId");
-    DateTime dateTime = DateTime.now();
+    // DateTime dateTime = DateTime.now();
     String nextDate = "";
 
-    String hour = "${dateTime.hour}";
-    String minute = "${dateTime.minute}";
+    // String hour = "${dateTime.hour}";
+    // String minute = "${dateTime.minute}";
 
-    /// For Hour Format
-    for (int i = 0; i < 10; i++) {
-      if (dateTime.hour.toString() == i.toString()) {
-        if (dateTime.hour.toString().length == 1) {
-          hour = "0${dateTime.hour}";
-        }
-      }
-    }
+    // /// For Hour Format
+    // for (int i = 0; i < 10; i++) {
+    //   if (dateTime.hour.toString() == i.toString()) {
+    //     if (dateTime.hour.toString().length == 1) {
+    //       hour = "0${dateTime.hour}";
+    //     }
+    //   }
+    // }
 
-    /// For Minute
-    for (int i = 0; i < 10; i++) {
-      if (dateTime.minute.toString() == i.toString()) {
-        if (dateTime.minute.toString().length == 1) {
-          minute = "0${dateTime.minute}";
-        }
-      }
-    }
+    // /// For Minute
+    // for (int i = 0; i < 10; i++) {
+    //   if (dateTime.minute.toString() == i.toString()) {
+    //     if (dateTime.minute.toString().length == 1) {
+    //       minute = "0${dateTime.minute}";
+    //     }
+    //   }
+    // }
 
-    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-    String timeModule = "$hour:$minute:00";
-    log("dateTime : $dateTime");
-    log("timeModule : $timeModule");
+    // String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    // String timeModule = "$hour:$minute:00";
+    // log("dateTime : $dateTime");
+    // log("timeModule : $timeModule");
     List<TimingSlot> timeList = [];
     isLoading(true);
     String url = ApiUrl.getResourcesTimeSlotApi +
-        "?Id=$resId&dDate=${dateModule}T$timeModule&Duration";
+        "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Duration";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -407,38 +408,38 @@ class BookAppointmentScreenController extends GetxController {
     String s2 = s1.substring(1, s1.length - 1);
     String serviceId = s2.replaceAll(" ", "");
 
-    String hour = "${dateTime.hour}";
-    String minute = "${dateTime.minute}";
+    // String hour = "${dateTime.hour}";
+    // String minute = "${dateTime.minute}";
 
     /// For Hour Format
-    for (int i = 0; i < 10; i++) {
-      if (dateTime.hour.toString() == i.toString()) {
-        if (dateTime.hour.toString().length == 1) {
-          hour = "0${dateTime.hour}";
-        }
-      }
-    }
+    // for (int i = 0; i < 10; i++) {
+    //   if (dateTime.hour.toString() == i.toString()) {
+    //     if (dateTime.hour.toString().length == 1) {
+    //       hour = "0${dateTime.hour}";
+    //     }
+    //   }
+    // }
 
-    /// For Minute
-    for (int i = 0; i < 10; i++) {
-      if (dateTime.minute.toString() == i.toString()) {
-        if (dateTime.minute.toString().length == 1) {
-          minute = "0${dateTime.minute}";
-        }
-      }
-    }
+    // /// For Minute
+    // for (int i = 0; i < 10; i++) {
+    //   if (dateTime.minute.toString() == i.toString()) {
+    //     if (dateTime.minute.toString().length == 1) {
+    //       minute = "0${dateTime.minute}";
+    //     }
+    //   }
+    // }
 
-    String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-    String timeModule = "$hour:$minute:00";
-    log("dateTime : $dateTime");
-    log("timeModule : $timeModule");
+    // String dateModule = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    // String timeModule = "$hour:$minute:00";
+    // log("dateTime : $dateTime");
+    // log("timeModule : $timeModule");
     List<TimingSlot> timeList = [];
     isLoading(true);
     String url = isToday == true
         ? ApiUrl.selectedServicesWiseResourceSlotSearchApi +
-            "?Id=$resId&dDate=${dateModule}T$timeModule&Service=$serviceId"
+            "?Id=$resId&dDate=${selectedDate.value}T${selectedTime.value}&Service=$serviceId"
         : ApiUrl.selectedServicesWiseResourceSlotSearchApi +
-            "?Id=$resId&dDate=$dateModule&Service=$serviceId";
+            "?Id=$resId&dDate=${selectedDate.value}&Service=$serviceId";
     log("Get Resources Time List API URL : $url");
 
     try {
@@ -853,49 +854,55 @@ class BookAppointmentScreenController extends GetxController {
     String s2 = s1.substring(1, s1.length - 1);
     String serviceId = s2.replaceAll(" ", "");
 
-    isLoading(true);
-    String url = ApiUrl.bookSelectedSlotApi +
-        "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&ServiceId=${serviceId.isEmpty ? "2" : serviceId}";
-    log("Book Selected Slot API URL : $url");
-    log("token is: ${UserDetails.apiToken}");
+    if (serviceId.isEmpty) {
+      Fluttertoast.showToast(msg: "Please select any service box!");
+    } else if (selectedResourceTimeSlotId == 0) {
+      Fluttertoast.showToast(msg: "Please select any timing slot!");
+    } else {
+      isLoading(true);
+      String url = ApiUrl.bookSelectedSlotApi +
+          "?ResourceId=$selectedResourceTimeSlotId&VendorId=${UserDetails.tableWiseId}&ServiceId=$serviceId";
+      log("Book Selected Slot API URL : $url");
+      log("token is: ${UserDetails.apiToken}");
 
-    try {
-      // UserCheckoutScreenController().makePayment();
-      http.Response response = await http.post(
-        Uri.parse(url), /*headers: apiHeader.headers*/
-      );
-      log("Book Slot API Response : ${response.body}");
-
-      BookAppointmentModel bookAppointmentModel =
-          BookAppointmentModel.fromJson(json.decode(response.body));
-      isSuccessStatus = bookAppointmentModel.success.obs;
-
-      if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: bookAppointmentModel.message);
-        String bookingId = bookAppointmentModel.id;
-        log("bookingId : $bookingId");
-        // await addVendorInFavoriteFunction();
-        Get.to(
-          () => UserCheckoutScreen(),
-          arguments: [
-            bookingId,
-            userName,
-            email,
-            selectedResourceIsEvent,
-            0,
-            selectedResource,
-            false,
-            isEvent.value,
-          ],
+      try {
+        // UserCheckoutScreenController().makePayment();
+        http.Response response = await http.post(
+          Uri.parse(url), /*headers: apiHeader.headers*/
         );
-      } else {
-        log("bookSelectedSlotFunction Else Else");
-        Fluttertoast.showToast(msg: bookAppointmentModel.errorMessage);
+        log("Book Slot API Response : ${response.body}");
+
+        BookAppointmentModel bookAppointmentModel =
+            BookAppointmentModel.fromJson(json.decode(response.body));
+        isSuccessStatus = bookAppointmentModel.success.obs;
+
+        if (isSuccessStatus.value) {
+          Fluttertoast.showToast(msg: bookAppointmentModel.message);
+          String bookingId = bookAppointmentModel.id;
+          log("bookingId : $bookingId");
+          // await addVendorInFavoriteFunction();
+          Get.to(
+            () => UserCheckoutScreen(),
+            arguments: [
+              bookingId,
+              userName,
+              email,
+              selectedResourceIsEvent,
+              0,
+              selectedResource,
+              false,
+              isEvent.value,
+            ],
+          );
+        } else {
+          log("bookSelectedSlotFunction Else Else");
+          Fluttertoast.showToast(msg: bookAppointmentModel.errorMessage);
+        }
+      } catch (e) {
+        log("bookSelectedSlotFunction Error ::: $e");
+      } finally {
+        isLoading(false);
       }
-    } catch (e) {
-      log("bookSelectedSlotFunction Error ::: $e");
-    } finally {
-      isLoading(false);
     }
   }
 

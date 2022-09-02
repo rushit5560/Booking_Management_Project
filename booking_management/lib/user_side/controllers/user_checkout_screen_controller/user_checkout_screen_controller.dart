@@ -152,6 +152,7 @@ class UserCheckoutScreenController extends GetxController {
         //
         bookingPrice.value = checkoutSummaryModel.workerList.price;
         bookingQty = checkoutSummaryModel.workerList.quantity;
+  
         // bookingTotalAmount = bookingPrice * bookingQty;
         //
         log("vendorName : $vendorName");

@@ -617,7 +617,7 @@ class _VendorProfileDetailsModuleState
                   border: InputBorder.none,
                 ),
                 validator: (value) =>
-                    FieldValidator().validateBusinessName123(value!),
+                    FieldValidator().validateBusinessName(value!),
               ),
             ],
           ),

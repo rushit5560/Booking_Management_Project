@@ -349,6 +349,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                     .split(".")[0]
                     .toString(),
                 screenController.bookingId,
+                screenController.vendorAccountStripeId,
               ],
             );
           } else {

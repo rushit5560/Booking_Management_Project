@@ -94,7 +94,10 @@ class UserProfileScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(utf8.decoder).listen((value) async {
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) async {
           UpdateUserProfileModel updateUserProfileModel =
               UpdateUserProfileModel.fromJson(json.decode(value));
           log('response1 :::::: ${updateUserProfileModel.statusCode}');
@@ -188,12 +191,14 @@ class UserProfileScreenController extends GetxController {
         nameTextFieldController.text =
             userProfileDetailsModel.data!.userName ?? "";
         emailTextFieldController.text = userProfileDetailsModel.data!.email!;
-        mobileTextFieldController.text = userProfileDetailsModel.data!.phoneNo!;
+        mobileTextFieldController.text =
+            userProfileDetailsModel.data!.phoneNo ?? "";
         userImage = userProfileDetailsModel.data!.image ?? "";
 
         gender.value = userProfileDetailsModel.data!.gender ?? "";
-        selectedDate =
-            DateTime.parse(userProfileDetailsModel.data!.dateOfBirth ?? "");
+        selectedDate = DateTime.parse(
+            userProfileDetailsModel.data!.dateOfBirth ??
+                DateTime.now().toIso8601String());
 
         // if(userProfileDetailsModel.data.dateOfBirth.length > 10) {
         //   String dob = userProfileDetailsModel.data.dateOfBirth;

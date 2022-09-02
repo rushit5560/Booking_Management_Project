@@ -203,7 +203,7 @@ class ApiUrl {
   static const invoiceReportApi = apiMainPath + "API/InvoiceIndex";
   static const subscriptionReportApi = apiMainPath + "API/SubscriptionReport";
 
-  /// Vendor Dashboard
+  /// Vendor DashboardResourceList
   static const vendorDashboardResourceListApi =
       apiMainPath + "API/ResourceList";
   static const vendorResourceScheduleApi = apiMainPath + "API/ResourceSchedule";

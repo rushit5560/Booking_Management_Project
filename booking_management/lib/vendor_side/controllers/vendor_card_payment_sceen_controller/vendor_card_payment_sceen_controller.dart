@@ -26,14 +26,56 @@ class VendorCardPaymentScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
+  final GlobalKey<FormState> cardFormKey = GlobalKey<FormState>();
   Map<String, dynamic>? paymentIntentData;
+
+  TextEditingController creditCardController = TextEditingController();
+  TextEditingController cvvController = TextEditingController();
+  TextEditingController expirationController = TextEditingController();
 
   calculateAmount(int amount) {
     int price = amount * 100;
     return price.toString();
   }
 
-  Future<Map<String, dynamic>> createCustomer() async {
+  proceedForVendorSubscription() async {
+    isLoading(true);
+
+    log(" card number : ${creditCardController.text}");
+    log(" expMonth number : ${expirationController}");
+    log(" expYear number : ${expirationController}");
+    log(" cvc number : ${cvvController.text}");
+
+    final _customer = await createCustomer();
+    final _paymentMethod = await createPaymentMethod(
+      // number: "4242424242424242",
+      // expMonth: "11",
+      // expYear: "27",
+      // cvc: "123",
+
+      number: creditCardController.text,
+      expMonth: expirationController.text.toString().split("/")[0],
+      expYear: expirationController.text.toString().split("/")[1],
+      cvc: cvvController.text,
+    );
+    await attachPaymentMethod(
+      paymentMethodId: _paymentMethod['id'],
+      customerId: _customer['id'],
+    );
+
+    await updateCustomer(
+      paymentMethodId: _paymentMethod['id'],
+      customerId: _customer['id'],
+    );
+    // await createSubscriptionPrice();
+    await createSubscriptionPlan(
+      customerId: _customer['id'],
+      priceId: "price_1LbhF3Ko2grgSU3Gn5Bqbf79",
+    );
+    isLoading(false);
+  }
+
+  Future<dynamic> createCustomer() async {
     String url = 'https://api.stripe.com/v1/customers';
     var response = await http.post(
       Uri.parse(url),
@@ -47,10 +89,10 @@ class VendorCardPaymentScreenController extends GetxController {
     );
     var resBody = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      log("create customer response if ${resBody}");
-      return json.decode(response.body);
+      log("create customer response  $resBody");
+      return resBody;
     } else {
-      log("create customer method else error ${resBody}");
+      log("create customer method else error $resBody");
 
       throw 'Failed to register as a customer.';
     }
@@ -120,11 +162,12 @@ class VendorCardPaymentScreenController extends GetxController {
   }
 
   //create vendor stripe subscription
-  Future<Map<String, dynamic>> createSubscriptionPlan(
-    String customerId,
-    String priceId,
-  ) async {
+  Future<Map<String, dynamic>> createSubscriptionPlan({
+    required String customerId,
+    required String priceId,
+  }) async {
     log("customer id Is : $customerId");
+    log("price id Is : $priceId");
 
     // List<Map<String, dynamic>> items = [
     //   {
@@ -138,12 +181,8 @@ class VendorCardPaymentScreenController extends GetxController {
       "customer": customerId,
       'items[0][price]': priceId,
     };
-    // Map<String, dynamic> body = {
-    //   'customer': customerId,
-    //   'items[0][price]': 'xxxxx_xxxxxxxxxxxxxxxxxx',
-    // };
 
-    log("before passing data map : ${jsonEncode(body)}");
+    log("before passing data map : $body");
     try {
       var response = await http.post(
         Uri.parse(url),
@@ -153,12 +192,15 @@ class VendorCardPaymentScreenController extends GetxController {
           'Content-type': 'application/x-www-form-urlencoded'
         },
       );
+      log("\n\n create subscription plan response : ${response.body}");
 
       var resBody = json.decode(response.body);
-      log("\n\n create subscription plan response : $resBody");
       if (response.statusCode == 200) {
+        log("\n\n create subscription plan response : $resBody");
         log("\n\n create subscription plan response success");
-        return json.decode(response.body);
+        Get.offAll(() => VendorIndexScreen());
+        Get.snackbar("Thank you", "Your subscription has been confirmed.");
+        return resBody;
       } else {
         log("\n\n subscription plan response error else : $resBody");
 
@@ -182,8 +224,6 @@ class VendorCardPaymentScreenController extends GetxController {
       print(price.runtimeType);
       print(price);
 
-      paymentIntentData = await createPaymentIntent(price!, "aud");
-
       // final data = await createTestPaymentSheet();
 
       log('paymentIntentData: $paymentIntentData');
@@ -192,23 +232,30 @@ class VendorCardPaymentScreenController extends GetxController {
 
       // Stripe
       // var stripeAccId = Stripe.stripeAccountId;
-      final customer = await createCustomer();
-      final paymentMethod = await createPaymentMethod(
-        number: '4242424242424242',
-        expMonth: '03',
-        expYear: '23',
-        cvc: '123',
-      );
-      await attachPaymentMethod(
-        paymentMethodId: paymentMethod['id'],
-        customerId: customer['id'],
-      );
+      // final customer = await createCustomer();
+      // paymentIntentData = await createPaymentIntent(price!, "aud");
+      // final paymentMethod = await createPaymentMethod(
+      //   number: '4242424242424242',
+      //   expMonth: '03',
+      //   expYear: '23',
+      //   cvc: '123',
+      // );
+      // await attachPaymentMethod(
+      //   paymentMethodId: paymentMethod['id'],
+      //   customerId: customer['id'],
+      // );
       final productBody = await getProduct();
       // await createSubscrptionPrice();
       // await createSubscriptionPlan(
       //   customer['id'],
       //   "price_1LU32KKo2grgSU3GamuFbz01",
       // );
+
+      //     final _customer = await _createCustomer();
+      // final _paymentMethod = await _createPaymentMethod(number: '4242424242424242', expMonth: '03', expYear: '23', cvc: '123');
+      // await _attachPaymentMethod(_paymentMethod['id'], _customer['id']);
+      // await _updateCustomer(_paymentMethod['id'], _customer['id']);
+      // await _createSubscriptions(_customer['id']);
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -287,8 +334,10 @@ class VendorCardPaymentScreenController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>> updateCustomer(
-      String paymentMethodId, String customerId) async {
+  Future<Map<String, dynamic>> updateCustomer({
+    required String paymentMethodId,
+    required String customerId,
+  }) async {
     final String url = 'https://api.stripe.com/v1/customers/$customerId';
 
     var response = await http.post(
@@ -311,11 +360,12 @@ class VendorCardPaymentScreenController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>> createPaymentMethod(
-      {required String number,
-      required String expMonth,
-      required String expYear,
-      required String cvc}) async {
+  Future<Map<String, dynamic>> createPaymentMethod({
+    required String number,
+    required String expMonth,
+    required String expYear,
+    required String cvc,
+  }) async {
     String url = 'https://api.stripe.com/v1/payment_methods';
     var response = await http.post(
       Uri.parse(url),
@@ -325,15 +375,15 @@ class VendorCardPaymentScreenController extends GetxController {
       },
       body: {
         'type': 'card',
-        'card[number]': number,
-        'card[exp_month]': expMonth,
-        'card[exp_year]': expYear,
-        'card[cvc]': cvc,
+        'card[number]': "${number}",
+        'card[exp_month]': "${expMonth}",
+        'card[exp_year]': "${expYear}",
+        'card[cvc]': "${cvc}",
       },
     );
     var resBody = json.decode(response.body);
     if (response.statusCode == 200) {
-      log("create payment method rezponse : $resBody");
+      log("create payment method response : $resBody");
       return json.decode(response.body);
     } else {
       log("create payment method error else : $resBody");
@@ -360,7 +410,7 @@ class VendorCardPaymentScreenController extends GetxController {
   }
 
   //create vendor stripe price
-  Future<Map<String, dynamic>> createSubscrptionPrice() async {
+  Future<Map<String, dynamic>> createSubscriptionPrice() async {
     log("interval  Is : $bookingInterval");
     log("unitamount price Is : $bookingPrice");
     log("currency Is : $bookingCurrency");
@@ -368,18 +418,21 @@ class VendorCardPaymentScreenController extends GetxController {
 
     String url = 'https://api.stripe.com/v1/prices';
 
-    Map<String, Object> recurring = {
+    Map<String, dynamic> recurring = {
       'currency': bookingCurrency,
-      "interval": bookingInterval,
+      'interval': bookingInterval,
     };
 
-    Map<String, Object> params = {
+    Map<String, dynamic> params = {
       // "unit_amount": bookingPrice,
+      'currency': bookingCurrency,
       "recurring": recurring,
       "product": bookingSubId,
     };
 
     try {
+      log("price response is : $params");
+
       var response = await http.post(
         Uri.parse(url),
         body: jsonEncode(params),
@@ -400,7 +453,7 @@ class VendorCardPaymentScreenController extends GetxController {
         throw 'Failed to create price as a subscriber.';
       }
     } catch (e) {
-      log("create price error catched .../ ${e}");
+      log("create price error catched .../ $e");
       rethrow;
     }
   }

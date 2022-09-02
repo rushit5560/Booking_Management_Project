@@ -136,6 +136,55 @@ class SignInScreenController extends GetxController {
             if (signInModel.message.contains("Subscription pending")) {
               isSub = false;
               log("vendor has no subscription");
+              log("logged in state");
+              log("subscription state is : $isSub");
+
+              sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.vendor.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: "",
+                roleName: signInModel.role[0],
+                gender: "",
+                businessName: signInModel.vendor.businessName,
+                address: signInModel.vendor.address,
+                street: signInModel.vendor.street,
+                state: signInModel.vendor.state,
+                country: signInModel.vendor.country,
+                subUrb: signInModel.vendor.suburb,
+                postCode: signInModel.vendor.postcode,
+                stripeId: signInModel.vendor.stripeId.isEmpty
+                    ? ""
+                    : signInModel.vendor.stripeId,
+                isSubscription: isSub,
+                // slotDuration: signInModel.vendor.
+                vendorVerification: signInModel.vendor.vendorVerification,
+                businessId: signInModel.vendor.businessId,
+                serviceSlot: signInModel.vendor.isServiceSlots,
+                institutionName: signInModel.vendor.financialInstitutionName,
+                accountName: signInModel.vendor.accountName,
+                accountNumber: signInModel.vendor.accountNumber,
+                ifscCode: signInModel.vendor.accountCode,
+                isPriceDisplay: signInModel.vendor.isPriceDisplay,
+              );
+
+              // DateTime subscription = signInModel.vendor.nextPayment;
+              //
+              // if(subscription == "") {
+              //   Get.offAll(()=> VendorSubscriptionPlanScreen(), transition: Transition.zoom);
+              // }
+              // else {
+              //   Get.offAll(() => VendorIndexScreen());
+              // }
+
+              log("navigate to subscription plan screen");
+              Get.offAll(
+                () => VendorSubscriptionPlanScreen(),
+                arguments: SubscriptionOption.direct,
+              );
             } else if (signInModel.message
                 .toString()
                 .contains("Successfully Logged")) {
@@ -185,16 +234,16 @@ class SignInScreenController extends GetxController {
               //   Get.offAll(() => VendorIndexScreen());
               // }
 
-              if (isSub == false) {
-                log("navigate to subscription plan screen");
-                Get.offAll(
-                  () => VendorSubscriptionPlanScreen(),
-                  arguments: SubscriptionOption.direct,
-                );
-              } else {
-                log("navigate to vendor index screen");
-                Get.offAll(() => VendorIndexScreen());
-              }
+              // if (isSub == false) {
+              log("navigate to subscription plan screen");
+              Get.offAll(
+                () => VendorSubscriptionPlanScreen(),
+                arguments: SubscriptionOption.direct,
+              );
+              // } else {
+              //   log("navigate to vendor index screen");
+              //   Get.offAll(() => VendorIndexScreen());
+              // }
 
               //Get.snackbar('LoggedIn Successfully.', '');
             }

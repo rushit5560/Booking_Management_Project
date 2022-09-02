@@ -45,6 +45,7 @@ class VendorScheduleTimeScreen extends StatelessWidget {
                                     .allScheduleTimeList.isEmpty
                                 ? Container()
                                 : ScheduleListModule(),
+                            const SizedBox(height: 20),
                             vendorScheduleTimeScreenController
                                     .allScheduleTimeList.isEmpty
                                 ? Container()

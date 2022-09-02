@@ -5,6 +5,7 @@ import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:credit_card_field/credit_card_field.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -53,6 +54,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
                       children: [
                         customAppbar(),
                         const SizedBox(height: 20),
+                        cardFormView(cardScreenController),
                         showPaymentSummaryWidget(context),
                       ],
                     ),
@@ -121,6 +123,113 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
     return const SizedBox(
       height: 50,
       width: 50,
+    );
+  }
+
+  cardFormView(VendorCardPaymentScreenController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      child: Form(
+        key: controller.cardFormKey,
+        child: Column(
+          children: [
+            TextFormField(
+              keyboardType: const TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
+              ),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Card Number",
+              ),
+              controller: controller.creditCardController,
+              maxLength: 16,
+              validator: (val) {
+                if (val!.isEmpty) {
+                  return "Please enter card number";
+                }
+              },
+              obscureText: false,
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              keyboardType: const TextInputType.numberWithOptions(
+                  signed: false, decimal: false),
+              controller: controller.cvvController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Card Expiry Date",
+              ),
+              onChanged: (value) {
+                setState(() {
+                  value = value.replaceAll(RegExp(r"\D"), "");
+                  switch (value.length) {
+                    case 0:
+                      controller.cvvController.text = "MM/YY";
+                      controller.cvvController.selection =
+                          const TextSelection.collapsed(offset: 0);
+                      break;
+                    case 1:
+                      controller.cvvController.text = "${value}M/YY";
+                      controller.cvvController.selection =
+                          const TextSelection.collapsed(offset: 1);
+                      break;
+                    case 2:
+                      controller.cvvController.text = "$value/YY";
+                      controller.cvvController.selection =
+                          const TextSelection.collapsed(offset: 2);
+                      break;
+                    case 3:
+                      controller.cvvController.text =
+                          "${value.substring(0, 2)}/${value.substring(2)}Y";
+                      controller.cvvController.selection =
+                          const TextSelection.collapsed(offset: 4);
+                      break;
+                    case 4:
+                      controller.cvvController.text =
+                          "${value.substring(0, 2)}/${value.substring(2, 4)}";
+                      controller.cvvController.selection =
+                          const TextSelection.collapsed(offset: 5);
+                      break;
+                  }
+                  if (value.length > 4) {
+                    controller.cvvController.text =
+                        "${value.substring(0, 2)}/${value.substring(2, 4)}";
+                    controller.cvvController.selection =
+                        const TextSelection.collapsed(offset: 5);
+                  }
+                });
+              },
+              cursorWidth: 0.0,
+              validator: (val) {
+                if (val!.isEmpty) {
+                  return "Please enter expiry date";
+                }
+              },
+              obscureText: false,
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              keyboardType: const TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
+              ),
+              maxLength: 3,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Card cvv Number",
+              ),
+              controller: controller.expirationController,
+              validator: (val) {
+                if (val!.isEmpty) {
+                  return "Please enter cvv number";
+                }
+              },
+              obscureText: false,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -211,14 +320,12 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () async {
-            cardScreenController.isLoading(true);
-            // final vendorSubscriptionPlanScreenController =
-            //     Get.find<VendorSubscriptionPlanScreenController>();
-            // await vendorSubscriptionPlanScreenController
-            //     .purchaseSubscriptionPlanFunction(
-            //   productId: cardScreenController.bookingSubId,
-            // );
-            await cardScreenController.initPaymentSheet();
+            var isValidate =
+                cardScreenController.cardFormKey.currentState!.validate();
+
+            if (isValidate) {
+              await cardScreenController.proceedForVendorSubscription();
+            }
           },
           child: const Text("Proceed to Pay"),
           style: ElevatedButton.styleFrom(
@@ -226,7 +333,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
               fixedSize: Size(Get.size.width, 50),
               textStyle: TextStyle(
                 color: AppColors.whiteColor,
-                fontSize: 15,
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
               )),
         ),

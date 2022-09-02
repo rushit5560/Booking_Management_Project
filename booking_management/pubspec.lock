@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  credit_card_field:
+    dependency: "direct main"
+    description:
+      name: credit_card_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   cross_file:
     dependency: transitive
     description:

@@ -9,7 +9,6 @@ import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_profile_screen_model/vendor_profile_details_model.dart';
-import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_get_user_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_update_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -377,6 +376,17 @@ class VendorProfileScreenController extends GetxController {
         businessDropDownValue = businessTypeLists[0];
         log('businessDropDownValue: ${businessDropDownValue!.name}');
         log('businessLists : ${businessTypeLists.length}');
+        kGooglePlex = CameraPosition(
+          target: LatLng(
+            double.parse(selectedLatitude.value.isEmpty
+                ? "44.92057"
+                : selectedLatitude.value),
+            double.parse(selectedLongitude.value.isEmpty
+                ? "-93.44786"
+                : selectedLongitude.value),
+          ),
+          zoom: 16,
+        );
       } else {
         log('Get All Business Else Else');
       }

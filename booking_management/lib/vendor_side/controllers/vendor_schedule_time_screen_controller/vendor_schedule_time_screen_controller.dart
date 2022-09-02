@@ -79,7 +79,7 @@ class VendorScheduleTimeScreenController extends GetxController {
   getAllSLotsFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorGetAllScheduleSlotApi;
-    log("Slot SPI URL : $url");
+    log("getAllSLots aPI URL : $url");
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -93,8 +93,8 @@ class VendorScheduleTimeScreenController extends GetxController {
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('response: ${response.statusCode}');
-      log('response: $response');
+      log('getAllSLots status code: ${response.statusCode}');
+      log('getAllSLots : $response');
 
       response.stream
           .transform(const Utf8Decoder())

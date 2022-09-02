@@ -20,6 +20,7 @@ import '../../../common_modules/constants/payment_keys.dart';
 class UserCardPaymentScreenController extends GetxController {
   String bookingPrice = Get.arguments[0];
   String bookingSubId = Get.arguments[1];
+  String vendorStripeAccId = Get.arguments[2];
   final size = Get.size;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -45,12 +46,19 @@ class UserCardPaymentScreenController extends GetxController {
     try {
       Stripe.merchantIdentifier;
 
+      log("vendor acc id is :::");
+      log(vendorStripeAccId);
+      log(vendorStripeAccId);
+      log(vendorStripeAccId);
+      log(vendorStripeAccId);
+      log(vendorStripeAccId);
+
       Map<String, dynamic> body = {
         'amount': userPayingAmount.toString(),
         'currency': currency,
         'payment_method_types[]': 'card',
         "transfer_data[amount]": adminFeesAmount.toString(),
-        "transfer_data[destination]": "acct_1LUVm2QPJWRM3XBj",
+        "transfer_data[destination]": vendorStripeAccId,
       };
       log('body: $body');
 

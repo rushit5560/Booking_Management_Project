@@ -281,11 +281,11 @@ class UserSearchResultsScreenController extends GetxController {
   @override
   void onInit() {
     // categoryFieldController.text = searchText;
-    // latitude = locationText == "" ? UserDetails.latitude : selectedLatitude;
-    // longitude = locationText == "" ? UserDetails.longitude : selectedLongitude;
+    latitude = locationText == "" ? UserDetails.latitude : selectedLatitude;
+    longitude = locationText == "" ? UserDetails.longitude : selectedLongitude;
 
-    latitude = "-24.572987";
-    longitude = "149.974667";
+    // latitude = "-24.572987";
+    // longitude = "149.974667";
     distance = '50';
     dropdownDistance = '50 Km';
 

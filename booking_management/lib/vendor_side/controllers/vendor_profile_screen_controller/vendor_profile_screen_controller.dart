@@ -8,6 +8,7 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/vendor_side/model/get_business_type_model/get_business_type_model.dart';
+import 'package:booking_management/vendor_side/model/vendor_profile_screen_model/timeslot_duration_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_profile_screen_model/vendor_profile_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_update_profile_model/vendor_update_profile_model.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,23 @@ class VendorProfileScreenController extends GetxController {
     '31'
   ];
 
+  List<TimeSlotDurationModel> timeSlotDurationList = [
+    TimeSlotDurationModel(name: "", value: "0"),
+    TimeSlotDurationModel(name: "15 Mins", value: "15"),
+    TimeSlotDurationModel(name: "30 Mins", value: "30"),
+    TimeSlotDurationModel(name: "45 Mins", value: "45"),
+    TimeSlotDurationModel(name: "1 Hour", value: "60"),
+    TimeSlotDurationModel(name: "2 Hour", value: "120"),
+    TimeSlotDurationModel(name: "3 Hour", value: "180"),
+    TimeSlotDurationModel(name: "4 Hour", value: "240"),
+    TimeSlotDurationModel(name: "5 Hour", value: "300"),
+    TimeSlotDurationModel(name: "6 Hour", value: "360"),
+    TimeSlotDurationModel(name: "7 Hour", value: "420"),
+    TimeSlotDurationModel(name: "8 Hour", value: "480"),
+    TimeSlotDurationModel(name: "9 Hour", value: "540"),
+    TimeSlotDurationModel(name: "10 Hour", value: "600"),
+  ];
+  TimeSlotDurationModel? timeSlotDurationModel;
   RxString slotDurationValue = '0'.obs;
   String slotDuration = "";
   //RxString businessTypeValue = 'Saloon'.obs;
@@ -126,7 +144,7 @@ class VendorProfileScreenController extends GetxController {
   vendorEditProfileFunction() async {
     isLoading(true);
     log('UserDetails.userId : ${UserDetails.userId}');
-    print('selectedStartTime : $selectedStartTime');
+    log('selectedStartTime : $selectedStartTime');
     //String date= (DateTime.parse(selectedStartTime.hour.toString()).toString()) + ":" + (DateTime.parse(selectedStartTime.minute.toString()).toString());
     //String date1= (selectedStartTime.hour.toString()) + ":" + (selectedStartTime.minute.toString());
     //log('date: $date');
@@ -152,8 +170,7 @@ class VendorProfileScreenController extends GetxController {
 
         request.headers.addAll(headers);
 
-        request.fields['BusinessName'] =
-            businessNameTextFieldController.text.trim();
+        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         request.fields['Duration'] = slotDurationValue.value;

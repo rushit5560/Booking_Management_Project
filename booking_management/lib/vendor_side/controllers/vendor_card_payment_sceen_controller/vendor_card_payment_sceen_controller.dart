@@ -21,6 +21,7 @@ class VendorCardPaymentScreenController extends GetxController {
   var bookingSubId = Get.arguments[1];
   var bookingInterval = Get.arguments[2];
   var bookingCurrency = Get.arguments[3];
+  var bookingPriceId = Get.arguments[4];
 
   final size = Get.size;
   RxBool isLoading = false.obs;
@@ -42,8 +43,8 @@ class VendorCardPaymentScreenController extends GetxController {
     isLoading(true);
 
     log(" card number : ${creditCardController.text}");
-    log(" expMonth number : ${expirationController}");
-    log(" expYear number : ${expirationController}");
+    log(" expMonth number : $expirationController");
+    log(" expYear number : $expirationController");
     log(" cvc number : ${cvvController.text}");
 
     final _customer = await createCustomer();
@@ -70,7 +71,7 @@ class VendorCardPaymentScreenController extends GetxController {
     // await createSubscriptionPrice();
     await createSubscriptionPlan(
       customerId: _customer['id'],
-      priceId: "price_1LbhF3Ko2grgSU3Gn5Bqbf79",
+      priceId: bookingPriceId,
     );
     isLoading(false);
   }

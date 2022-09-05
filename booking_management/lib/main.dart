@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'common_modules/constants/api_url.dart';
@@ -45,8 +44,8 @@ void main() async {
     ),
   );
 
-  String? secretKey;
-  String? publishableKey;
+  // String? secretKey;
+  // String? publishableKey;
   String url = ApiUrl.getSecretKeyApi;
   log("Get Stripe Secret Key API URL : $url");
 
@@ -102,17 +101,17 @@ void main() async {
           sound: true,
         );
 
-    final IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
-            requestAlertPermission: false,
-            requestBadgePermission: false,
-            requestSoundPermission: false,
-            onDidReceiveLocalNotification: (
-              int id,
-              String? title,
-              String? body,
-              String? payload,
-            ) async {});
+    // final IOSInitializationSettings initializationSettingsIOS =
+    //     IOSInitializationSettings(
+    //         requestAlertPermission: false,
+    //         requestBadgePermission: false,
+    //         requestSoundPermission: false,
+    //         onDidReceiveLocalNotification: (
+    //           int id,
+    //           String? title,
+    //           String? body,
+    //           String? payload,
+    //         ) async {});
 
     /// Create an Android Notification Channel.
     ///

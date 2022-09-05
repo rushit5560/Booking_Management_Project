@@ -642,8 +642,8 @@ class AnyServiceCheckboxModule extends StatelessWidget {
                 );
               }),
         ),
-        const Text("Require additional sub-service management"),
-        const SizedBox(width: 15),
+        const Expanded(child: Text("Require additional sub-service management")),
+        const SizedBox(width: 10),
         const Tooltip(
           message: "i.e: Hair cut under Salon, Kitchen under Cleaning",
           child: Icon(
@@ -676,7 +676,7 @@ class VendorSignUpButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(screenController.selectedCountryCode.value);
+    log(screenController.selectedCountryCode.value);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

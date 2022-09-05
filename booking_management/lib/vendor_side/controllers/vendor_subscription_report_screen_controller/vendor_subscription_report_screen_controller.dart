@@ -13,7 +13,7 @@ class VendorSubscriptionReportScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
   ApiHeader apiHeader = ApiHeader();
 
-  List subscriptionReportList = [];
+  List<SubscriptionData> subscriptionReportList = [];
 
   getSubscriptionReportFunction() async {
     isLoading(true);

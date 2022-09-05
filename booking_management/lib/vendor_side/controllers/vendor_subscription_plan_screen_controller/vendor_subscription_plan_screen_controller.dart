@@ -284,7 +284,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
-        // await getAllSubscriptionPlanFunction();
+        await getAllSubscriptionPlanFunction();
       } else {
         log("purchaseSubscriptionPlanFunction Else Else");
       }

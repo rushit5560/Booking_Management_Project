@@ -5,7 +5,7 @@ import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:credit_card_field/credit_card_field.dart';
+// import 'package:credit_card_field/credit_card_field.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';

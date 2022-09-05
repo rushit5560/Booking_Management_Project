@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_subscription_report_screen_controller/vendor_subscription_report_screen_controller.dart';
@@ -26,6 +28,12 @@ class SubscriptionReportListModule extends StatelessWidget {
   }
 
   Widget _subscriptionListTile(SubscriptionData singleItem) {
+
+    DateTime date = DateTime.parse(singleItem.transactionDate);
+    log("Day : ${date.day}");
+    log("Month : ${date.month}");
+    log("Year : ${date.year}");
+
     return Container(
       margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
       decoration: BoxDecoration(
@@ -86,7 +94,7 @@ class SubscriptionReportListModule extends StatelessWidget {
               const SizedBox(width: 5),
               Expanded(
                 child: Text(
-                  singleItem.transactionDate,
+                  "${date.day}-${date.month}-${date.year}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   // style: TextStyle(fontWeight: FontWeight.bold),

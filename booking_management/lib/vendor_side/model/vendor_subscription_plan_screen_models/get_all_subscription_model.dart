@@ -129,6 +129,7 @@ class SubscriptionWorkerList {
     // required this.finalPrice,
     required this.discountApplied,
     required this.stripeSubscriptionId,
+    required this.priceId,
   });
 
   String id;
@@ -142,6 +143,7 @@ class SubscriptionWorkerList {
   // dynamic finalPrice;
   bool discountApplied;
   String stripeSubscriptionId;
+  String priceId;
 
   factory SubscriptionWorkerList.fromJson(Map<String, dynamic> json) => SubscriptionWorkerList(
     id: json["id"] ?? "",
@@ -155,6 +157,7 @@ class SubscriptionWorkerList {
     // finalPrice: json["finalPrice"],
     discountApplied: json["discountApplied"] ?? false,
     stripeSubscriptionId: json["stripeSubscriptionId"] ?? "",
+    priceId: json["priceId"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -169,5 +172,6 @@ class SubscriptionWorkerList {
     // "finalPrice": finalPrice,
     "discountApplied": discountApplied,
     "stripeSubscriptionId": stripeSubscriptionId,
+    "priceId": priceId,
   };
 }

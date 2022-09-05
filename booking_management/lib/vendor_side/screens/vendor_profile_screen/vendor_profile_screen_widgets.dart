@@ -7,6 +7,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_profile_screen_controller/vendor_profile_screen_controller.dart';
+import 'package:booking_management/vendor_side/model/vendor_profile_screen_model/timeslot_duration_model.dart';
 import 'package:booking_management/vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -1207,7 +1208,9 @@ class _VendorProfileDetailsModuleState
                   ),
                 ),
                 Obx(
-                  () => Container(
+                  () => screenController.isLoading.value
+    ? Container()
+                  : Container(
                     padding: const EdgeInsets.only(left: 10),
                     width: Get.width,
                     //gives the width of the dropdown button
@@ -1223,35 +1226,21 @@ class _VendorProfileDetailsModuleState
                         ),
                       ),
                       child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: screenController.slotDurationValue.value,
-                          items: <String>[
-                            '0',
-                            '15',
-                            '30',
-                            '45',
-                            '60',
-                            '120',
-                            '180',
-                            '240',
-                            '300',
-                            '360',
-                            '420',
-                            '480',
-                            '540',
-                            '600',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
+                        child: DropdownButton<TimeSlotDurationModel>(
+                          value: screenController.timeSlotDurationModel,
+                          items: screenController.timeSlotDurationList.map<DropdownMenuItem<TimeSlotDurationModel>>((TimeSlotDurationModel value) {
+                            return DropdownMenuItem<TimeSlotDurationModel>(
                               value: value,
                               child: Text(
-                                value,
+                                value.name,
                                 style: const TextStyle(color: Colors.black),
                               ),
                             );
                           }).toList(),
                           onChanged: (value) {
                             screenController.isLoading(true);
-                            screenController.slotDurationValue.value = value!;
+                            screenController.timeSlotDurationModel = value!;
+                            screenController.slotDurationValue.value = screenController.timeSlotDurationModel!.value;
                             screenController.isLoading(false);
                           },
                         ),

@@ -1,5 +1,3 @@
-import 'package:booking_management/common_modules/constants/app_colors.dart';
-import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
@@ -11,12 +9,10 @@ import 'package:booking_management/vendor_side/screens/vendor_schedule_managemen
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_report_screen/vendor_subscription_report_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../vendor_side/screens/appointment_report_screen/appointment_report_screen.dart';
 import '../../../vendor_side/screens/customer_report_screen/customer_report_screen.dart';
-import '../../../vendor_side/screens/my_customer_screen/my_customer_screen.dart';
 import '../../../vendor_side/screens/review_screen/review_screen.dart';
 import '../../../vendor_side/screens/vendor_additional_slot_screen/vendor_additional_slot_screen.dart';
 import '../../../vendor_side/screens/vendor_booking_history_screen/vendor_booking_history_screen.dart';
@@ -30,6 +26,8 @@ import '../../../vendor_side/screens/vendor_subscription_plan_screen/vendor_subs
 import '../../../vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen.dart';
 import '../../constants/app_images.dart';
 import '../../constants/enums.dart';
+
+
 
 class VendorDrawerSingleItemModule extends StatelessWidget {
   final String name;
@@ -95,10 +93,12 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap(
-      {required VendorDrawerOption vendorSettingScreenOption}) async {
+  singleItemOnTap({required VendorDrawerOption vendorSettingScreenOption}) async {
     if (vendorSettingScreenOption == VendorDrawerOption.profile) {
-      Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft);
+      Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft)!
+          .then((value) async {
+        await vendorHomeScreenController.getAppointmentListFunction();
+      });
     } /*else if (vendorSettingScreenOption == VendorDrawerOption.myCustomer) {
       Get.to(() => MyCustomerScreen(), transition: Transition.rightToLeft);
     }*/ else if (vendorSettingScreenOption == VendorDrawerOption.chat) {

@@ -16,12 +16,11 @@ class BankInfoScreenController extends GetxController {
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController financialInstituteNameController = TextEditingController();
+  TextEditingController financialInstituteNameController =
+      TextEditingController();
   TextEditingController accountNameController = TextEditingController();
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController ifscCodeController = TextEditingController();
-
-
 
   // Save Bank Info
   saveBankInfoFunction() async {
@@ -30,7 +29,6 @@ class BankInfoScreenController extends GetxController {
     log("save Bank Info Api Url : $url");
 
     try {
-
       Map<String, String> headers = <String, String>{
         'Authorization': UserDetails.apiToken
       };
@@ -39,7 +37,8 @@ class BankInfoScreenController extends GetxController {
 
       request.headers.addAll(headers);
 
-      request.fields['FinancialInstitutionName'] = financialInstituteNameController.text.trim();
+      request.fields['FinancialInstitutionName'] =
+          financialInstituteNameController.text.trim();
       request.fields['AccountName'] = accountNameController.text.trim();
       request.fields['AccountNumber'] = accountNumberController.text.trim();
       request.fields['AccountCode'] = ifscCodeController.text.trim();
@@ -52,32 +51,40 @@ class BankInfoScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.request}');
 
-      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         log("value : $value");
-        GetBankInfoModel getBankInfoModel = GetBankInfoModel.fromJson(json.decode(value));
+        GetBankInfoModel getBankInfoModel =
+            GetBankInfoModel.fromJson(json.decode(value));
         isSuccessStatus = getBankInfoModel.success.obs;
 
-        if(isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Bank Account Information update successfully");
+        var body = jsonDecode(value);
+        if (isSuccessStatus.value) {
+          Fluttertoast.showToast(
+              msg: "Bank Account Information update successfully");
           await sharedPreferenceData.setBankInfoInPrefs(
             instituteName: getBankInfoModel.workerList.financialInstitutionName,
             accountName: getBankInfoModel.workerList.accountName,
             accountNumber: getBankInfoModel.workerList.accountNumber,
             ifscCode: getBankInfoModel.workerList.accountCode,
           );
+        } else if (body["statusCode"].toString().contains("417")) {
+          Fluttertoast.showToast(msg: body["errorMessage"]);
+          log("saveBankInfoFunction Else if");
+          // Get.snackbar("", message);
         } else {
           log("saveBankInfoFunction Else Else");
         }
       });
-
-
-    } catch(e) {
+    } catch (e) {
       log("saveBankInfoFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }
   }
-
 
   @override
   void onInit() {
@@ -87,6 +94,4 @@ class BankInfoScreenController extends GetxController {
     ifscCodeController.text = UserDetails.ifscCode;
     super.onInit();
   }
-
-
 }

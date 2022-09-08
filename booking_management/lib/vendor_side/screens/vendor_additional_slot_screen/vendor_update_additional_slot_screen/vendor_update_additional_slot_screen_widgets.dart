@@ -209,11 +209,12 @@ class UpdateAdditionalSlotLongDesFieldModule extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ).commonSymmetricPadding(horizontal: 5),
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         Stack(
           children: [
             Container(
-              height: 46,
+              // height: 46,
+              padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
@@ -224,15 +225,16 @@ class UpdateAdditionalSlotLongDesFieldModule extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            TextFormField(
-              controller: vendorAdditionalSlotScreenController
-                  .updateAdditionalLongDescriptionFieldController,
-              keyboardType: TextInputType.text,
-              validator: (value) =>
-                  FieldValidator().validateLongDescription(value!),
-              decoration:
-                  serviceFormFieldDecoration(hintText: 'Long Description'),
+              child: TextFormField(
+                maxLines: null,
+                controller: vendorAdditionalSlotScreenController
+                    .updateAdditionalLongDescriptionFieldController,
+                keyboardType: TextInputType.multiline,
+                validator: (value) =>
+                    FieldValidator().validateLongDescription(value!),
+                decoration:
+                    serviceFormFieldDecoration(hintText: 'Long Description'),
+              ),
             ),
           ],
         )
@@ -251,15 +253,14 @@ class UpdateAdditionalSlotTimeDurationModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(
-          child: Text(
-            "Time Duration",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+        const Text(
+          "Time Duration",
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(width: 10),
         Expanded(
           child: Stack(
             children: [
@@ -276,32 +277,41 @@ class UpdateAdditionalSlotTimeDurationModule extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Obx(
-                () => DropdownButtonHideUnderline(
-                  child: DropdownButton<double>(
-                    value: vendorAdditionalSlotScreenController
-                        .updateAdditionalTimeDuration.value,
-                    items: vendorAdditionalSlotScreenController.timeDurationList
-                        .map<DropdownMenuItem<double>>((double value) {
-                      return DropdownMenuItem<double>(
-                        value: value,
-                        child: Text(
-                          "$value",
-                          style: const TextStyle(color: Colors.black),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      vendorAdditionalSlotScreenController
-                          .updateAdditionalTimeDuration.value = newValue!;
-                      log("selectTimeDuration : ${vendorAdditionalSlotScreenController.updateAdditionalTimeDuration}");
-                      // vendorServicesScreenController.loadUI();
-                    },
-                  ),
-                ).commonSymmetricPadding(horizontal: 5),
+                child: Obx(
+                  () => DropdownButtonHideUnderline(
+                    child: DropdownButton<double>(
+                      value: vendorAdditionalSlotScreenController
+                          .updateAdditionalTimeDuration.value,
+                      items: vendorAdditionalSlotScreenController
+                          .timeDurationList
+                          .map<DropdownMenuItem<double>>((double value) {
+                        return DropdownMenuItem<double>(
+                          value: value,
+                          child: Text(
+                            "$value",
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        vendorAdditionalSlotScreenController
+                            .updateAdditionalTimeDuration.value = newValue!;
+                        log("selectTimeDuration : ${vendorAdditionalSlotScreenController.updateAdditionalTimeDuration}");
+                        // vendorServicesScreenController.loadUI();
+                      },
+                    ),
+                  ).commonSymmetricPadding(horizontal: 5),
+                ),
               ),
             ],
+          ),
+        ),
+        const SizedBox(width: 10),
+        const Text(
+          "In Hour",
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

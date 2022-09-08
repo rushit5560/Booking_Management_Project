@@ -51,7 +51,7 @@ class ResourcesDropDownModule extends StatelessWidget {
             screenController.isLoading(false);
           },
         ),
-      ).commonSymmetricPadding(horizontal: 5),
+      ).commonSymmetricPadding(horizontal: 12),
     );
   }
 }
@@ -261,9 +261,14 @@ class ScheduleListModule extends StatelessWidget {
                 ),
               ),
             ),
-            const Expanded(
+            Expanded(
               child: Text(
                 "End Time",
+                style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
           ],
@@ -343,17 +348,19 @@ class SubmitButtonModule extends StatelessWidget {
         }
       },
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
-          BoxShadow(
-            spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              // spreadRadius: 5,
+              blurRadius: 5,
+              color: Colors.grey.shade400,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
         child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Text(
             'Submit',
             style: TextStyle(

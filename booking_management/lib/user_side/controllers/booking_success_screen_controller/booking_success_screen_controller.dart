@@ -40,7 +40,7 @@ class BookingSuccessScreenController extends GetxController {
   getBookingSuccessFunction() async {
     isLoading(true);
     // log("${successId}");
-    log('Sucees Id: ${successId}');
+    log('Sucees Id: $successId');
     log(successId);
     String url = ApiUrl.bookingSuccessApi + "?id=$successId";
     log("Success API URL : $url");
@@ -69,7 +69,6 @@ class BookingSuccessScreenController extends GetxController {
         slotTime = "$sTime to $eTime";
 
         //todo
-
 
         log("bookingId :$bookingId");
         log("vendorName :$vendorName");
@@ -111,12 +110,13 @@ class BookingSuccessScreenController extends GetxController {
           fcmToken: oppositeUserFcmToken, // Getting From API
           title: "${UserDetails.userName} booked appointment",
           body:
-              "${UserDetails.userName} booked appointment for $date at $slotTime time",
+              "${UserDetails.userName} booked appointment for serviceName on $date at $slotTime",
+
           type: 0,
         );
 
         message =
-            "${UserDetails.userName} booked appointment for $date at $slotTime time";
+            "${UserDetails.userName} booked appointment for serviceName on $date at $slotTime";
 
         log("oppositeUserFcmToken : $oppositeUserFcmToken");
       } else {
@@ -149,12 +149,13 @@ class BookingSuccessScreenController extends GetxController {
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('response: ${response.statusCode}');
+      // log('response: ${response.}');
 
       response.stream
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((value) async {
+        log("res body is : $value");
         NotificationSaveModel notificationSaveModel =
             NotificationSaveModel.fromJson(json.decode(value));
         isSuccessStatus = notificationSaveModel.success.obs;

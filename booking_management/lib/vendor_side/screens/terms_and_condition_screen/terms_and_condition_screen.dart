@@ -6,26 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TermsAndConditionScreen extends StatelessWidget {
-   TermsAndConditionScreen({Key? key}) : super(key: key);
+  TermsAndConditionScreen({Key? key}) : super(key: key);
 
   final termsAndConditionScreenController =
-  Get.put(TermsAndConditionScreenController());
+      Get.put(TermsAndConditionScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx(()=>
-        termsAndConditionScreenController.isLoading.value ?
-          const Center(child: CircularProgressIndicator()):
-          Column(
-            children:  [
-              const CommonAppBarModule(title: "Terms and Condition", appBarOption: AppBarOption.singleBackButtonOption),
-              SizedBox(height: 10),
-
-              TermsAndConditionWidget()
-            ],
-          ),
+        child: Obx(
+          () => termsAndConditionScreenController.isLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    const CommonAppBarModule(
+                      title: "Terms and Conditions",
+                      appBarOption: AppBarOption.singleBackButtonOption,
+                    ),
+                    const SizedBox(height: 10),
+                    TermsAndConditionWidget()
+                  ],
+                ),
         ),
       ),
     );

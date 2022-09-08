@@ -155,11 +155,12 @@ class FieldValidator {
     //return
     if (value.isEmpty) {
       return 'Service name is required';
-    } else {
-      if (!regExp.hasMatch(value[0])) {
-        return 'AtLeast 1 uppercase letter is required';
-      }
     }
+    // else {
+    //   if (!regExp.hasMatch(value[0])) {
+    //     return 'AtLeast 1 uppercase letter is required';
+    //   }
+    // }
     return null;
   }
 

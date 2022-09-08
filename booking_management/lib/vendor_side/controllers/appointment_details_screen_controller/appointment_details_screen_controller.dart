@@ -30,7 +30,6 @@ class AppointmentDetailsScreenController extends GetxController {
   String date = "";
   String slotTime = "";
 
-
   String cstName = "";
   String cstEmail = "";
   String cstPhoneNo = "";

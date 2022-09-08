@@ -267,19 +267,18 @@ InputDecoration conversationScreenFieldDecoration(
     hintStyle: const TextStyle(color: Colors.grey),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
-      borderSide: BorderSide(color: AppColors.colorLightGrey),
+      borderSide: BorderSide(color: AppColors.accentColor),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
-      borderSide: BorderSide(color: AppColors.colorLightGrey),
+      borderSide: BorderSide(color: AppColors.accentColor),
     ),
     fillColor: Colors.white,
     filled: true,
     isDense: true,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-    suffixIcon: GestureDetector(
-      onTap: () async {
-        // controller.messageFieldController.clear();
+    suffixIcon: IconButton(
+      onPressed: () async {
         if (controller.messageFieldController.text.isNotEmpty) {
           /// Create Message Model Wise
           SendMessageModel sendMsg = SendMessageModel(
@@ -297,12 +296,41 @@ InputDecoration conversationScreenFieldDecoration(
           await controller.sendMessageFunction(sendMsg);
         }
       },
-      child: Image.asset(
-        AppImages.sendImg,
-        scale: 0.85,
-        color: AppColors.blackColor,
+      icon: Icon(
+        Icons.send_rounded,
+        size: 24,
+        color: AppColors.colorGreyIconDark,
       ),
     ),
+
+    // GestureDetector(
+    //   onTap: () async {
+    //     // controller.messageFieldController.clear();
+    //     if (controller.messageFieldController.text.isNotEmpty) {
+    //       /// Create Message Model Wise
+    //       SendMessageModel sendMsg = SendMessageModel(
+    //           roomId: roomId,
+    //           senderId: senderEmail,
+    //           receiverId: receiverEmail,
+    //           message: controller.messageFieldController.text,
+    //           createdAt: Timestamp.now(),
+    //           seen: false);
+
+    //       /// Insert this Msg in Current List
+    //       // controller.userChatList.insert(0, sendMsg);
+
+    //       /// Msg Store in Firebase
+    //       await controller.sendMessageFunction(sendMsg);
+    //     }
+    //   },
+    //   child:
+
+    //   Image.asset(
+    //     AppImages.sendImg,
+    //     scale: 0.85,
+    //     color: AppColors.blackColor,
+    //   ),
+    // ),
     /*prefixIcon: GestureDetector(
       onTap: () {},
       child: Image.asset(AppImages.emojiImg, scale: 0.75),

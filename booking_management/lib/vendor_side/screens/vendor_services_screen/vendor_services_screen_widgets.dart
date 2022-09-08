@@ -17,15 +17,17 @@ class AddServicesButton extends StatelessWidget {
       onTap: () =>
           Get.to(() => VendorAddServiceScreen(), transition: Transition.zoom),
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
-          BoxShadow(
-            spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 3,
+              blurRadius: 5,
+              color: Colors.grey.shade400,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
@@ -128,10 +130,9 @@ class ServicesListModule extends StatelessWidget {
                           title: "Are you sure ?",
                           body: "You want to delete this service ",
                           onYesPressed: () async {
+                            Get.back();
                             await screenController.deleteVendorServiceFunction(
                                 resourceId: "${singleItem.id}");
-
-                            Get.back();
                           },
                           onNoPressed: () {
                             Get.back();
@@ -167,7 +168,7 @@ class ServicesListModule extends StatelessWidget {
     return Text(
       singleItem.name,
       style: const TextStyle(
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -175,23 +176,23 @@ class ServicesListModule extends StatelessWidget {
 
   Widget _serviceModule(WorkerList1 singleItem) {
     return Text(singleItem.categories.name,
-        style: const TextStyle(fontSize: 12));
+        style: const TextStyle(fontSize: 14));
   }
 
   // Widget _userMobileNoModule(WorkerList1 singleItem){
   //   return Text(
   //       singleItem.mobileNo,
-  //       style: const TextStyle(fontSize: 12));
+  //       style: const TextStyle(fontSize: 14));
   // }
 
   Widget _priceModule(WorkerList1 singleItem) {
     return Text(singleItem.price.toString(),
-        style: const TextStyle(fontSize: 12));
+        style: const TextStyle(fontSize: 14));
   }
 
   Widget _timeDurationModule(WorkerList1 singleItem) {
     return Text("Time Duration : ${singleItem.timeDuration.toString()}",
-        style: const TextStyle(fontSize: 12));
+        style: const TextStyle(fontSize: 14));
   }
 
   showBottomSheet(BuildContext context) {

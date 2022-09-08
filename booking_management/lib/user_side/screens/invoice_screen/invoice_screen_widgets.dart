@@ -1,5 +1,6 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_logos.dart';
+import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -139,17 +140,29 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
+                        // screenController.cstName.isEmpty
+                        //     ? UserDetails.userName
+                        //     :
+
                         screenController.cstName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.cstEmail,
+                        // screenController.cstEmail.isEmpty
+                        //     ? UserDetails.email
+                        //     :
+
+                        screenController.cstName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        screenController.cstPhoneNo,
+                        // screenController.cstPhoneNo.isEmpty
+                        //     ? UserDetails.phoneNo
+                        //     :
+
+                        screenController.cstName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

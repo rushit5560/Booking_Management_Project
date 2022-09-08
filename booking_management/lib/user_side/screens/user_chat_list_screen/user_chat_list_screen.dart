@@ -48,29 +48,36 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                                 "Something went wrong! ${snapshot.error}");
                           } else if (snapshot.hasData) {
                             final chatList = snapshot.data;
-                            return Scrollbar(
-                              child: RefreshIndicator(
-                                triggerMode:
-                                    RefreshIndicatorTriggerMode.anywhere,
-                                onRefresh: () async {
-                                  setState(() {});
-                                  userChatListScreenController
-                                      .getChatRoomListFunction();
-                                },
-                                child: ListView.builder(
-                                  itemCount: chatList!.length,
-                                  shrinkWrap: true,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  itemBuilder: (context, i) {
-                                    UserChatRoomListModel singleMsg =
-                                        chatList[i];
+                            log(" chatlist len : ${chatList!.length.toString()}");
 
-                                    return _chatListTile(singleMsg, context);
-                                  },
-                                ).commonAllSidePadding(15),
-                              ),
-                            );
+                            return chatList.isEmpty
+                                ? const Center(
+                                    child: Text("No chat data available"),
+                                  )
+                                : Scrollbar(
+                                    child: RefreshIndicator(
+                                      triggerMode:
+                                          RefreshIndicatorTriggerMode.anywhere,
+                                      onRefresh: () async {
+                                        setState(() {});
+                                        userChatListScreenController
+                                            .getChatRoomListFunction();
+                                      },
+                                      child: ListView.builder(
+                                        itemCount: chatList.length,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        itemBuilder: (context, i) {
+                                          UserChatRoomListModel singleMsg =
+                                              chatList[i];
+
+                                          return _chatListTile(
+                                              singleMsg, context);
+                                        },
+                                      ).commonAllSidePadding(15),
+                                    ),
+                                  );
                             // return ListView(
                             //   physics: const BouncingScrollPhysics(),
                             //   children: categories!.map((val) {
@@ -154,13 +161,15 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Container(
-                                padding: EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(15),
                                 child: CircularProgressIndicator(
                                   color: AppColors.accentColor,
                                   strokeWidth: 2,
                                 ),
                               );
                             } else if (snapshot.hasData) {
+                              log(ApiUrl.apiImagePath +
+                                  snapshot.data.toString());
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
@@ -175,7 +184,7 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                             }
 
                             return Container(
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               child: CircularProgressIndicator(
                                 color: AppColors.accentColor,
                                 strokeWidth: 2,
@@ -231,28 +240,31 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
 
                       for (var element in data) {
                         Map usrData = element.data() as Map;
-                        // print(usrData);
-                        print("seen value is :  ${usrData["seen"]}");
 
-                        if (usrData["seen"] == false) {
-                          msgCount++;
-                          widget = Container(
-                            height: 25,
-                            width: 25,
-                            margin: EdgeInsets.only(right: 8),
-                            decoration: BoxDecoration(
-                              color: AppColors.accentColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                msgCount.toString(),
-                                style: TextStyle(
-                                  color: AppColors.whiteColor,
+                        log("sender email is :  ${usrData["sender_id"]}");
+                        log("stored user email is :  ${UserDetails.email}");
+
+                        if (usrData["sender_id"] != UserDetails.email) {
+                          if (usrData["seen"] == false) {
+                            msgCount++;
+                            widget = Container(
+                              height: 25,
+                              width: 25,
+                              margin: const EdgeInsets.only(right: 8),
+                              decoration: BoxDecoration(
+                                color: AppColors.accentColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  msgCount.toString(),
+                                  style: TextStyle(
+                                    color: AppColors.whiteColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         }
                       }
                     }

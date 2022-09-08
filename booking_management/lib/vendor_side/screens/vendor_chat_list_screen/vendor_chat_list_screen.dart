@@ -46,26 +46,30 @@ class _VendorChatListScreenState extends State<VendorChatListScreen> {
                     return Text("Something went wrong! ${snapshot.error}");
                   } else if (snapshot.hasData) {
                     final chatList = snapshot.data;
-                    return RefreshIndicator(
-                      triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                      onRefresh: () async {
-                        setState(() {});
-                        vendorChatListScreenController
-                            .getChatRoomListFunction();
-                      },
-                      child: ListView.builder(
-                        itemCount: chatList!.length,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, i) {
-                          UserChatRoomListModel singleMsg = chatList[i];
+                    return chatList!.isEmpty
+                        ? const Center(
+                            child: Text("No chat data available"),
+                          )
+                        : RefreshIndicator(
+                            triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                            onRefresh: () async {
+                              setState(() {});
+                              vendorChatListScreenController
+                                  .getChatRoomListFunction();
+                            },
+                            child: ListView.builder(
+                              itemCount: chatList.length,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, i) {
+                                UserChatRoomListModel singleMsg = chatList[i];
 
-                          return _chatListTile(singleMsg);
-                        },
-                      ).commonAllSidePadding(15),
-                    );
+                                return _chatListTile(singleMsg);
+                              },
+                            ).commonAllSidePadding(15),
+                          );
                     // return ListView(
                     //   physics: const BouncingScrollPhysics(),
                     //   children: categories!.map((val) {

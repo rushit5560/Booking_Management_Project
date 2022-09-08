@@ -64,7 +64,7 @@ class UserSearchResultsScreen extends StatelessWidget {
                                   )
                                 : BusinessListModule(),
                           ],
-                        ).commonAllSidePadding(20),
+                        ).commonSymmetricPadding(horizontal: 12, vertical: 20),
                       ),
                     ),
                   ],

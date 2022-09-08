@@ -1,6 +1,7 @@
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
+import 'package:booking_management/user_side/screens/user_chat_list_screen/user_chat_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -52,7 +53,7 @@ class CommonAppBarModule extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          color: AppColors.blackColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -62,9 +63,10 @@ class CommonAppBarModule extends StatelessWidget {
                     maxLines: 1,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: AppColors.blackColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                      color: AppColors.whiteColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
             rightSideButton(),
           ],
@@ -85,9 +87,17 @@ class CommonAppBarModule extends StatelessWidget {
         height: 50,
         width: 50,
         child: appBarOption == AppBarOption.singleBackButtonOption
-            ? Image.asset(AppImages.backArrowImg)
+            ? Image.asset(
+                AppImages.backArrowImg,
+                color: AppColors.whiteColor,
+                scale: 0.85,
+              )
             : appBarOption == AppBarOption.userConversationScreen
-                ? Image.asset(AppImages.backArrowImg)
+                ? Image.asset(
+                    AppImages.backArrowImg,
+                    color: AppColors.whiteColor,
+                    scale: 0.85,
+                  )
                 : appBarOption == AppBarOption.none
                     ? null
                     : Container(),

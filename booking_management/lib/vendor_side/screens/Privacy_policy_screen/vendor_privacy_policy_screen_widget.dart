@@ -18,15 +18,15 @@ class PrivacyPolicyWidget extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            Text(
-              screenController.pageTitle,
-              style: TextStyle(
-                color: AppColors.blackColor,
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 15),
+            // Text(
+            //   screenController.pageTitle,
+            //   style: TextStyle(
+            //     color: AppColors.blackColor,
+            //     fontSize: 17,
+            //     fontWeight: FontWeight.w700,
+            //   ),
+            // ),
+            // const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Html(data: screenController.pageDescription),

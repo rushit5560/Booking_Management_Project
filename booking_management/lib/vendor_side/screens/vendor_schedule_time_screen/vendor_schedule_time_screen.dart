@@ -8,8 +8,15 @@ import 'package:get/get.dart';
 import '../../controllers/vendor_schedule_time_screen_controller/vendor_schedule_time_screen_controller.dart';
 import 'vendor_schedule_time_screen_widgets.dart';
 
-class VendorScheduleTimeScreen extends StatelessWidget {
+class VendorScheduleTimeScreen extends StatefulWidget {
   VendorScheduleTimeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<VendorScheduleTimeScreen> createState() =>
+      _VendorScheduleTimeScreenState();
+}
+
+class _VendorScheduleTimeScreenState extends State<VendorScheduleTimeScreen> {
   final vendorScheduleTimeScreenController =
       Get.put(VendorScheduleTimeScreenController());
 

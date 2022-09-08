@@ -207,6 +207,15 @@ class ResourceDetailsModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var border = OutlineInputBorder(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(15),
+      ),
+      borderSide: BorderSide(
+        color: AppColors.whiteColor,
+        width: 0.1,
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -217,33 +226,42 @@ class ResourceDetailsModule extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ).commonSymmetricPadding(horizontal: 5),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         Stack(
           children: [
-            Container(
-              height: 46,
-              decoration: BoxDecoration(
-                //color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                //border: Border.all(color: AppColors.colorLightGrey),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.colorLightGrey,
-                    blurRadius: 5,
-                    //spreadRadius: 5,
-                    blurStyle: BlurStyle.outer,
+            Expanded(
+              child: Container(
+                // height: 200,
+                decoration: BoxDecoration(
+                  // color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: AppColors.colorLightGrey),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.colorLightGrey,
+                      blurRadius: 5,
+                      // spreadRadius: 5,
+                      blurStyle: BlurStyle.outer,
+                    ),
+                  ],
+                ),
+                child: TextFormField(
+                  maxLines: null,
+                  controller: vendorResourcesScreenController
+                      .updateResourceDetailsFieldController,
+                  keyboardType: TextInputType.multiline,
+
+                  validator: (value) =>
+                      FieldValidator().validateResourceDetail(value!),
+                  decoration: InputDecoration(
+                    hintText: "Resource Details",
+                    focusedBorder: border,
+                    border: border,
+                    enabledBorder: border,
                   ),
-                ],
+                  // serviceFormFieldDecoration(hintText: 'Resource Details'),
+                ),
               ),
-            ),
-            TextFormField(
-              controller: vendorResourcesScreenController
-                  .updateResourceDetailsFieldController,
-              keyboardType: TextInputType.text,
-              validator: (value) =>
-                  FieldValidator().validateResourceDetail(value!),
-              decoration:
-                  serviceFormFieldDecoration(hintText: 'Resource Details'),
             ),
           ],
         )

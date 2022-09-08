@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,34 +70,33 @@ class AdditionalSlotListModule extends StatelessWidget {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   //flex: 68,
-                  child: Row(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _categoryModule(singleItem),
-                            const SizedBox(height: 8),
+                      _categoryModule(singleItem),
+                      const SizedBox(height: 5),
 
-                            _serviceModule(singleItem),
-                            const SizedBox(height: 8),
+                      _serviceModule(singleItem),
+                      const SizedBox(height: 8),
 
-                            // _userMobileNoModule(singleItem),
-                            // const SizedBox(height: 8),
-                            _priceModule(singleItem),
-                            const SizedBox(height: 8),
-                            _timeDurationModule(singleItem),
-                          ],
-                        ),
-                      ),
+                      // _userMobileNoModule(singleItem),
+                      // const SizedBox(height: 8),
+                      _priceModule(singleItem),
+                      const SizedBox(height: 8),
+                      _timeDurationModule(singleItem),
+                      const SizedBox(height: 2),
                     ],
                   ),
                 ),
 
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: () async {
@@ -127,10 +127,10 @@ class AdditionalSlotListModule extends StatelessWidget {
                           title: "Are You Sure ?",
                           body: "You want to delete this resource ",
                           onYesPressed: () async {
+                            Get.back();
                             await screenController
                                 .deleteVendorAdditionalSlotFunction(
                                     resourceId: "${singleItem.id}");
-                            Get.back();
                           },
                           onNoPressed: () {
                             Get.back();
@@ -156,17 +156,24 @@ class AdditionalSlotListModule extends StatelessWidget {
 
   Widget _categoryModule(AdditionalSlotWorkerList singleItem) {
     return Text(
-      singleItem.name!,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
+      singleItem.shortDescription!,
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: AppColors.blackColor,
       ),
     );
   }
 
   Widget _serviceModule(AdditionalSlotWorkerList singleItem) {
-    return Text(singleItem.categories!.name,
-        style: const TextStyle(fontSize: 12));
+    return Text(
+      singleItem.categories!.name,
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: AppColors.blackColor,
+      ),
+    );
   }
 
   // Widget _userMobileNoModule(AdditionalSlotWorkerList singleItem){
@@ -176,12 +183,24 @@ class AdditionalSlotListModule extends StatelessWidget {
   // }
 
   Widget _priceModule(AdditionalSlotWorkerList singleItem) {
-    return Text(singleItem.price.toString(),
-        style: const TextStyle(fontSize: 12));
+    return Text(
+      singleItem.price.toString(),
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: AppColors.blackColor,
+      ),
+    );
   }
 
   Widget _timeDurationModule(AdditionalSlotWorkerList singleItem) {
-    return Text("Time Duration : ${singleItem.timeDuration.toString()}",
-        style: const TextStyle(fontSize: 12));
+    return Text(
+      "Time Duration : ${singleItem.timeDuration.toString()}",
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: AppColors.blackColor,
+      ),
+    );
   }
 }

@@ -152,7 +152,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
 
               // const SizedBox(width: 10),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Container(
                   padding: const EdgeInsets.only(right: 8),
                   height: 45,
@@ -232,9 +232,9 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
               ),
               const SizedBox(width: 10),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Container(
-                  padding: const EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.only(right: 4),
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -320,7 +320,7 @@ class _PopularSearchAndDistanceState extends State<PopularSearchAndDistance> {
               ),
               const SizedBox(width: 10),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Container(
                   padding: const EdgeInsets.only(
                     left: 15,

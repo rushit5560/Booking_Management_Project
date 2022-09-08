@@ -53,6 +53,8 @@ class SignInScreenController extends GetxController {
       //   Get.to(() => VendorIndexScreen());
       // }
 
+      var body = jsonDecode(response.body);
+
       if (response.body.toString().contains("Please confirm your email")) {
         SignInVendorErrorModel signInVendorErrorModel =
             SignInVendorErrorModel.fromJson(json.decode(response.body));
@@ -63,6 +65,8 @@ class SignInScreenController extends GetxController {
         SignInVendorErrorModel signInVendorErrorModel =
             SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+      } else if (body["statusCode"].toString().contains("417")) {
+        Get.snackbar("Login Failed", body["errorMessage"]);
       } else {
         SignInModel signInModel =
             SignInModel.fromJson(json.decode(response.body));
@@ -80,7 +84,8 @@ class SignInScreenController extends GetxController {
 
           else if (signInModel.role[0] == "Customer") {
             log('customer side');
-            Get.snackbar(signInModel.message, '');
+            Get.snackbar(
+                "${signInModel.data.userName} you are Login Successfully", '');
 
             // String dob = signInModel.customer.dateOfBirth;
             // String finalDob = dob.substring(0, dob.length - 9);
@@ -130,7 +135,8 @@ class SignInScreenController extends GetxController {
           } else if (signInModel.role[0] == "Vendor") {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
-            // Get.snackbar(signInModel.message, '');
+            Get.snackbar(
+                "${signInModel.data.userName} you are Login Successfully", '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
@@ -245,7 +251,6 @@ class SignInScreenController extends GetxController {
               //   Get.offAll(() => VendorIndexScreen());
               // }
 
-              //Get.snackbar('LoggedIn Successfully.', '');
             }
           }
         } else {
@@ -258,6 +263,7 @@ class SignInScreenController extends GetxController {
     } catch (e) {
       log('SignIn Error : $e');
       Fluttertoast.showToast(msg: "Invalid login attempt");
+      rethrow;
     } finally {
       isLoading(false);
     }

@@ -85,7 +85,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "General Inspection",
+              "Service price amount",
               style: TextStyle(
                 color: AppColors.colorGreyIconLight,
                 fontSize: 16,
@@ -102,38 +102,36 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
             ),
           ],
         ),
-        UserDetails.roleName == "Customer"
-            ? Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Administrative Charges ",
-                      style: TextStyle(
-                        color: AppColors.colorGreyIconLight,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      "\$ $adminPrice",
-                      style: TextStyle(
-                        color: AppColors.colorGreyIconLight,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Administrative Charges ",
+                style: TextStyle(
+                  color: AppColors.colorGreyIconLight,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
-              )
-            : const SizedBox(),
-        const SizedBox(height: 8),
+              ),
+              Text(
+                "\$ $adminPrice",
+                style: TextStyle(
+                  color: AppColors.colorGreyIconLight,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Total ",
+              "Total amount",
               style: TextStyle(
                 color: AppColors.blackColor,
                 fontSize: 19,
@@ -167,7 +165,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               userPayingAmount: uPrice,
             );
           },
-          child: const Text("Procedd to Pay"),
+          child: const Text("Proceed to Pay"),
           style: ElevatedButton.styleFrom(
               primary: AppColors.accentColor,
               fixedSize: Size(Get.size.width, 50),

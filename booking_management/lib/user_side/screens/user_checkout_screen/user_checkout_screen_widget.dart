@@ -176,20 +176,20 @@ class BookingSummaryModule extends StatelessWidget {
             ],
           ).commonSymmetricPadding(horizontal: 10),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Resource",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Text(screenController.selectedResource.toString()),
-            ],
-          ).commonSymmetricPadding(horizontal: 10),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     const Text(
+          //       "Resource",
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.bold,
+          //         fontSize: 16,
+          //       ),
+          //     ),
+          //     const SizedBox(width: 10),
+          //     Text(screenController.selectedResource.toString()),
+          //   ],
+          // ).commonSymmetricPadding(horizontal: 10),
 
           /*screenController.isPriceDisplay
               ? Column(

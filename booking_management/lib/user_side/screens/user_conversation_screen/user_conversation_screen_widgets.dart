@@ -144,7 +144,7 @@ class MessageWriteTextFieldModule extends StatelessWidget {
           topLeft: Radius.circular(25),
           topRight: Radius.circular(25),
         ),
-        color: AppColors.colorLightGrey,
+        color: AppColors.accentColor,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),

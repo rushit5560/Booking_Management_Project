@@ -22,7 +22,7 @@ class CustomerDrawer extends StatelessWidget {
             children: [
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                      img: AppImages.profileImg,
+                      img: AppImages.profileSvgLogo,
                       name: 'Profile',
                       customerDrawerOption: CustomerDrawerOption.profile,
                     )
@@ -76,7 +76,7 @@ class CustomerDrawer extends StatelessWidget {
 
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                      img: AppImages.paymentImg,
+                      img: AppImages.transactionsSvgLogo,
                       name: 'Transactions',
                       customerDrawerOption: CustomerDrawerOption.transaction,
                     )
@@ -94,7 +94,7 @@ class CustomerDrawer extends StatelessWidget {
 
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                      img: AppImages.changePasswordImg,
+                      img: AppImages.changePassSvgLogo,
                       name: 'Change Password',
                       customerDrawerOption: CustomerDrawerOption.changePassword,
                     )
@@ -104,14 +104,14 @@ class CustomerDrawer extends StatelessWidget {
                   : Container(),
 
               CustomerDrawerSingleItemModule(
-                img: AppImages.changePasswordImg,
-                name: 'Terms And Condition',
+                img: AppImages.termsAndCondSvgLogo,
+                name: 'Terms And Conditions',
                 customerDrawerOption: CustomerDrawerOption.termsAndCondition,
               ),
               const SizedBox(height: 20),
 
               CustomerDrawerSingleItemModule(
-                img: AppImages.changePasswordImg,
+                img: AppImages.privacyPolicySvgLogo,
                 name: 'Privacy Policy',
                 customerDrawerOption: CustomerDrawerOption.privacyPolicy,
               ),
@@ -119,12 +119,12 @@ class CustomerDrawer extends StatelessWidget {
               const SizedBox(height: 20),
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                      img: AppImages.logoutImg,
+                      img: AppImages.logoutSvgLogo,
                       name: 'Logout',
                       customerDrawerOption: CustomerDrawerOption.logOut,
                     )
                   : CustomerDrawerSingleItemModule(
-                      img: AppImages.logoutImg,
+                      img: AppImages.loginSvgLogo,
                       name: 'Login',
                       customerDrawerOption: CustomerDrawerOption.login,
                     ),

@@ -92,14 +92,14 @@ class VendorIndexScreen extends StatelessWidget {
                                 ? AppImages.menuHomeImg
                                 : AppImages.menuHome1Img,
                             height: 25,
-                            color: AppColors.blackColor.withOpacity(0.7),
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(width: 10),
                           Text(
                             "Home",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor.withOpacity(0.7),
+                              color: AppColors.whiteColor,
                             ),
                           )
                         ],
@@ -123,7 +123,7 @@ class VendorIndexScreen extends StatelessWidget {
                       //     ? AppImages.menuHomeImg
                       //     : AppImages.menuHome1Img,
                       height: 25,
-                      color: AppColors.blackColor.withOpacity(0.7),
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ),
@@ -155,14 +155,14 @@ class VendorIndexScreen extends StatelessWidget {
                                 ? AppImages.menuListImg
                                 : AppImages.menuList1Img,
                             height: 25,
-                            color: AppColors.blackColor.withOpacity(0.7),
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(width: 10),
                           Text(
                             "Appointment",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor.withOpacity(0.7),
+                              color: AppColors.whiteColor,
                             ),
                           )
                         ],
@@ -186,7 +186,7 @@ class VendorIndexScreen extends StatelessWidget {
                       //     ? AppImages.menuListImg
                       //     : AppImages.menuList1Img,
                       height: 25,
-                      color: AppColors.blackColor.withOpacity(0.7),
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ),
@@ -218,14 +218,14 @@ class VendorIndexScreen extends StatelessWidget {
                                 ? AppImages.menuNotificationImg
                                 : AppImages.menuNotification1Img,
                             height: 25,
-                            color: AppColors.blackColor.withOpacity(0.7),
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(width: 10),
                           Text(
                             "Notification",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor.withOpacity(0.7),
+                              color: AppColors.whiteColor,
                             ),
                           )
                         ],
@@ -255,29 +255,31 @@ class VendorIndexScreen extends StatelessWidget {
                             //     ? AppImages.menuNotificationImg
                             //     : AppImages.menuNotification1Img,
                             height: 25,
-                            color: AppColors.blackColor.withOpacity(0.7),
+                            color: AppColors.whiteColor,
                           ),
                         ),
-                        UserDetails.isUserLoggedIn == true && vendorIndexScreenController.notiCounter.value != 0
+                        UserDetails.isUserLoggedIn == true &&
+                                vendorIndexScreenController.notiCounter.value !=
+                                    0
                             ? Obx(
-                              ()=> Container(
-                            height: 16,
-                            width: 16,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.red,
-                            ),
-                            child: Center(
-                              child: Text(
-                                "${vendorIndexScreenController.notiCounter.value}",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
+                                () => Container(
+                                  height: 16,
+                                  width: 16,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.red,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "${vendorIndexScreenController.notiCounter.value}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
                             : Container(),
                       ],
                     ),
@@ -308,14 +310,14 @@ class VendorIndexScreen extends StatelessWidget {
                           Image.asset(
                             AppImages.chatImg,
                             height: 25,
-                            color: AppColors.blackColor.withOpacity(0.7),
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(width: 10),
                           Text(
                             "Chat",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor.withOpacity(0.7),
+                              color: AppColors.whiteColor,
                             ),
                           )
                         ],
@@ -335,7 +337,7 @@ class VendorIndexScreen extends StatelessWidget {
                     width: 30,
                     child: Image.asset(
                       AppImages.chatImg,
-                      color: AppColors.blackColor.withOpacity(0.7),
+                      color: AppColors.whiteColor,
                       height: 25,
                     ),
                   ),

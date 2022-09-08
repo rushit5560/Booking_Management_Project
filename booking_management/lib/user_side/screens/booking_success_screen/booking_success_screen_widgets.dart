@@ -70,7 +70,7 @@ class BookingDetailsModule extends StatelessWidget {
         ),
         const SizedBox(height: 3),
         Text(
-          "${screenController.date} ${screenController.slotTime}",
+          "${screenController.date} at ${screenController.slotTime}",
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ],

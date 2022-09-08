@@ -870,7 +870,8 @@ class ReviewModule extends StatelessWidget {
                 if (screenController.reviewFieldController.text
                     .trim()
                     .isEmpty) {
-                  Fluttertoast.showToast(msg: "Please enter some data!");
+                  Fluttertoast.showToast(
+                      msg: "Enter your valuable comments for review.");
                 } else {
                   await screenController.addCustomerReviewFunction();
                   screenController.reviewFieldController.clear();

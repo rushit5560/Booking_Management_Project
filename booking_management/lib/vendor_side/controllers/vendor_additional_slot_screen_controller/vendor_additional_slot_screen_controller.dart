@@ -41,6 +41,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
   TextEditingController additionalLongDescriptionFieldController =
       TextEditingController();
   RxDouble selectAdditionalTimeDuration = 0.5.obs;
+  RxInt timeDurationIs = 30.obs;
 
   /// Update Additional Form Field
   GlobalKey<FormState> additionalSlotUpdateFormKey = GlobalKey();
@@ -65,22 +66,22 @@ class VendorAdditionalSlotScreenController extends GetxController {
     try {
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log('Response : $response');
+      log('getVendorAllAdditionalSlot Response : ${response.body}');
 
       GetAllAdditionalSlotModel getAllAdditionalSlotModel =
           GetAllAdditionalSlotModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllAdditionalSlotModel.success.obs;
-      log("Status Code : ${getAllAdditionalSlotModel.statusCode}");
+      log("getVendorAllAdditionalSlot Status Code : ${getAllAdditionalSlotModel.statusCode}");
 
       if (isSuccessStatus.value) {
         // allAdditionalSlotList.clear();
         allAdditionalSlotList = [];
         allAdditionalSlotList = getAllAdditionalSlotModel.workerList;
         for (int i = 0; i < allAdditionalSlotList.length; i++) {
-          log("allAdditionalSlotList : ${allAdditionalSlotList[i].name}");
+          log("Additional Slot number ${i} : ${allAdditionalSlotList[i].name.toString()}");
         }
       } else {
-        log("Something went wrong!");
+        log("getVendorAllAdditionalSlot Something went wrong!");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
     } catch (e) {
@@ -97,6 +98,26 @@ class VendorAdditionalSlotScreenController extends GetxController {
     log("Add Additional Slot API URL : $url");
 
     try {
+      int timeDuration = 0;
+      if (selectAdditionalTimeDuration.value == 0.5) {
+        timeDuration = 30;
+      } else if (selectAdditionalTimeDuration.value == 1) {
+        timeDuration = 60;
+      } else if (selectAdditionalTimeDuration.value == 1.5) {
+        timeDuration = 90;
+      } else if (selectAdditionalTimeDuration.value == 2) {
+        timeDuration = 120;
+      } else if (selectAdditionalTimeDuration.value == 2.5) {
+        timeDuration = 150;
+      } else if (selectAdditionalTimeDuration.value == 3) {
+        timeDuration = 180;
+      } else if (selectAdditionalTimeDuration.value == 3.5) {
+        timeDuration = 210;
+      } else if (selectAdditionalTimeDuration.value == 4) {
+        timeDuration = 240;
+      }
+
+      log("time durtation is : $timeDuration");
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
@@ -106,12 +127,12 @@ class VendorAdditionalSlotScreenController extends GetxController {
       request.fields['Price'] = additionalPriceFieldController.text.trim();
       request.fields['LongDescription'] =
           additionalLongDescriptionFieldController.text.trim();
-      request.fields['TimeDuration'] = "${selectAdditionalTimeDuration.value}";
+      request.fields['TimeDuration'] = "$timeDuration";
       request.fields['CreatedBy'] = UserDetails.uniqueId;
       request.fields['VendorId'] = "${UserDetails.tableWiseId}";
 
-      log("Fields : ${request.fields}");
-      log("headers : ${apiHeader.headers}");
+      log("Add Additional Slot Fields : ${request.fields}");
+      log("Add Additional Slot headers : ${apiHeader.headers}");
 
       var response = await request.send();
 
@@ -119,13 +140,14 @@ class VendorAdditionalSlotScreenController extends GetxController {
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((value) async {
+        log("Add Additional Slot res body $value");
         AddAdditionalSlotModel addAdditionalSlotModel =
             AddAdditionalSlotModel.fromJson(json.decode(value));
         isSuccessStatus = addAdditionalSlotModel.success.obs;
-        log("Code : ${addAdditionalSlotModel.statusCode}");
+        log("Add Additional Slot stCode : ${addAdditionalSlotModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: addAdditionalSlotModel.message);
+          Fluttertoast.showToast(msg: "Additional slot added successfully");
           _removeFieldData();
           await getVendorAllAdditionalSlotFunction();
           Get.back();
@@ -196,6 +218,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
         timeDuration = 240;
       }
 
+      log("update time duration : $timeDuration");
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
@@ -226,7 +249,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
         log("Code : ${updateAdditionalSlotModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: updateAdditionalSlotModel.message);
+          Fluttertoast.showToast(msg: "Additional slot updated successfully");
           // removeFieldData();
           await getVendorAllAdditionalSlotFunction();
           Get.back();

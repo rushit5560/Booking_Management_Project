@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_home_screen_controller/vendor_home_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/Privacy_policy_screen/vendor_privacy_policy_screen.dart';
@@ -9,6 +10,7 @@ import 'package:booking_management/vendor_side/screens/vendor_schedule_managemen
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_subscription_report_screen/vendor_subscription_report_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../user_side/screens/user_change_password_screen/user_change_password_screen.dart';
 import '../../../vendor_side/screens/appointment_report_screen/appointment_report_screen.dart';
@@ -26,8 +28,6 @@ import '../../../vendor_side/screens/vendor_subscription_plan_screen/vendor_subs
 import '../../../vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen.dart';
 import '../../constants/app_images.dart';
 import '../../constants/enums.dart';
-
-
 
 class VendorDrawerSingleItemModule extends StatelessWidget {
   final String name;
@@ -71,7 +71,12 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Image.asset(img, scale: 1),
+                    SvgPicture.asset(
+                      img,
+                      height: 20,
+                      width: 20,
+                      color: AppColors.blackColor,
+                    ),
                     const SizedBox(width: 20),
                     Expanded(
                       child: Text(
@@ -93,7 +98,8 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
     );
   }
 
-  singleItemOnTap({required VendorDrawerOption vendorSettingScreenOption}) async {
+  singleItemOnTap(
+      {required VendorDrawerOption vendorSettingScreenOption}) async {
     if (vendorSettingScreenOption == VendorDrawerOption.profile) {
       Get.to(() => VendorProfileScreen(), transition: Transition.rightToLeft)!
           .then((value) async {
@@ -101,7 +107,8 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       });
     } /*else if (vendorSettingScreenOption == VendorDrawerOption.myCustomer) {
       Get.to(() => MyCustomerScreen(), transition: Transition.rightToLeft);
-    }*/ else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
+    }*/
+    else if (vendorSettingScreenOption == VendorDrawerOption.chat) {
       Get.to(() => VendorChatListScreen(), transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption == VendorDrawerOption.bookingHistory) {
       Get.to(() => const VendorBookingHistoryScreen(),
@@ -145,11 +152,11 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
       //     msg: 'Subscription Expired, Purchase any subscription plan',
       //   );
       // } else {
-        Get.to(() => VendorScheduleManagementScreen(),
-                transition: Transition.rightToLeft)!
-            .then((value) async {
-          await vendorHomeScreenController.getAppointmentListFunction();
-        });
+      Get.to(() => VendorScheduleManagementScreen(),
+              transition: Transition.rightToLeft)!
+          .then((value) async {
+        await vendorHomeScreenController.getAppointmentListFunction();
+      });
       // }
     } else if (vendorSettingScreenOption == VendorDrawerOption.availableTime) {
       Get.to(() => VendorAvailableTimeScreen(),
@@ -186,8 +193,7 @@ class VendorDrawerSingleItemModule extends StatelessWidget {
           transition: Transition.rightToLeft);
     } else if (vendorSettingScreenOption ==
         VendorDrawerOption.bankAccountInfo) {
-      Get.to(() => BankInfoScreen(),
-          transition: Transition.rightToLeft);
+      Get.to(() => BankInfoScreen(), transition: Transition.rightToLeft);
     }
   }
 }

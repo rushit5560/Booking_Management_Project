@@ -145,7 +145,10 @@ class UserProfileScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(utf8.decoder).listen((value) async {
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) async {
           UpdateUserProfileModel updateUserProfileModel =
               UpdateUserProfileModel.fromJson(json.decode(value));
           log('response1 :::::: ${updateUserProfileModel.statusCode}');

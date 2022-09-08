@@ -74,6 +74,7 @@ class UserCardPaymentScreenController extends GetxController {
           });
       log("response.statusCode: ${response.statusCode}");
       log("payment intent res body: ${response.body}");
+
       // log(response.body.toString());
       return jsonDecode(response.body.toString());
     } catch (e) {

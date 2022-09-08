@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/custom_drawer/vendor_drawer/vendor_drawer_widgets.dart';
@@ -5,6 +6,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:booking_management/common_ui/common_controller/custom_drawer_controller/custom_drawer_controller.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../constants/app_images.dart';
@@ -41,7 +43,12 @@ class VendorDrawer extends StatelessWidget {
                         horizontal: 8.0, vertical: 10),
                     child: Row(
                       children: [
-                        Image.asset(AppImages.profileImg, scale: 1),
+                        SvgPicture.asset(
+                          AppImages.profileSvgLogo,
+                          height: 20,
+                          width: 20,
+                          color: AppColors.blackColor,
+                        ),
                         const SizedBox(width: 20),
                         const Expanded(
                           child: Text(
@@ -60,31 +67,31 @@ class VendorDrawer extends StatelessWidget {
                     children: [
                       const SizedBox(height: 10),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.profileImg,
+                        img: AppImages.settingsSvgLogo,
                         name: 'Settings',
                         vendorDrawerOption: VendorDrawerOption.profile,
                       ),
                       const SizedBox(height: 20),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.profileImg,
+                        img: AppImages.bankDetailsSvgLogo,
                         name: 'Bank Details',
                         vendorDrawerOption: VendorDrawerOption.bankAccountInfo,
                       ),
                       const SizedBox(height: 20),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.resourcesImg,
+                        img: AppImages.businessHoursSvgLogo,
                         name: 'Business Hours',
                         vendorDrawerOption: VendorDrawerOption.availableTime,
                       ),
                       const SizedBox(height: 20),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.resourcesImg,
+                        img: AppImages.businessDocSvgLogo,
                         name: 'Business Document',
                         vendorDrawerOption: VendorDrawerOption.businessDocument,
                       ),
                       const SizedBox(height: 20),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.resourcesImg,
+                        img: AppImages.businessReviewSvgLogo,
                         name: 'Reviews',
                         vendorDrawerOption: VendorDrawerOption.review,
                       ),
@@ -96,21 +103,21 @@ class VendorDrawer extends StatelessWidget {
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
+                img: AppImages.addResourceSvgLogo,
                 name: 'Add Resources',
                 vendorDrawerOption: VendorDrawerOption.resources,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
+                img: AppImages.resourceScheduleSvgLogo,
                 name: 'Resource Schedule',
                 vendorDrawerOption: VendorDrawerOption.scheduleTime,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
+                img: AppImages.scheduleManageSvgLogo,
                 name: 'Schedule Management',
                 vendorDrawerOption: VendorDrawerOption.scheduleManagement,
               ),
@@ -118,12 +125,12 @@ class VendorDrawer extends StatelessWidget {
 
               UserDetails.isServiceSlot
                   ? VendorDrawerSingleItemModule(
-                      img: AppImages.resourcesImg,
+                      img: AppImages.scheduleManageSvgLogo,
                       name: 'Manage Services',
                       vendorDrawerOption: VendorDrawerOption.services,
                     )
                   : VendorDrawerSingleItemModule(
-                      img: AppImages.resourcesImg,
+                      img: AppImages.additionalSlotSvgLogo,
                       name: 'Manage Additional Slot',
                       vendorDrawerOption: VendorDrawerOption.additionalSlot,
                     ),
@@ -131,21 +138,21 @@ class VendorDrawer extends StatelessWidget {
 
               /// Appointment report
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
+                img: AppImages.appointReportSvgLogo,
                 name: 'Appointment Report',
                 vendorDrawerOption: VendorDrawerOption.appointmentReport,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.profileImg,
+                img: AppImages.profileSvgLogo,
                 name: 'My Customer',
                 vendorDrawerOption: VendorDrawerOption.customerReport,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
+                img: AppImages.invoiceSvgLogo,
                 name: 'Invoices',
                 vendorDrawerOption: VendorDrawerOption.invoiceReport,
               ),
@@ -169,7 +176,12 @@ class VendorDrawer extends StatelessWidget {
                         horizontal: 8.0, vertical: 10),
                     child: Row(
                       children: [
-                        Image.asset(AppImages.profileImg, scale: 1),
+                        SvgPicture.asset(
+                          AppImages.subscriptionsSvgLogo,
+                          height: 20,
+                          width: 20,
+                          color: AppColors.blackColor,
+                        ),
                         const SizedBox(width: 20),
                         const Expanded(
                           child: Text(
@@ -188,13 +200,13 @@ class VendorDrawer extends StatelessWidget {
                     children: [
                       const SizedBox(height: 10),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.subscriptionsImg,
+                        img: AppImages.scheduleManageSvgLogo,
                         name: 'Manage',
                         vendorDrawerOption: VendorDrawerOption.subscription,
                       ),
                       const SizedBox(height: 20),
                       VendorDrawerSingleItemModule(
-                        img: AppImages.resourcesImg,
+                        img: AppImages.appointReportSvgLogo,
                         name: 'Subscription Report',
                         vendorDrawerOption:
                             VendorDrawerOption.subscriptionReport,
@@ -208,7 +220,7 @@ class VendorDrawer extends StatelessWidget {
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.changePasswordImg,
+                img: AppImages.changePassSvgLogo,
                 name: 'Change Password',
                 vendorDrawerOption: VendorDrawerOption.changePassword,
               ),
@@ -233,21 +245,21 @@ class VendorDrawer extends StatelessWidget {
               const SizedBox(height: 20),*/
 
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
-                name: 'Terms & Condition',
+                img: AppImages.termsAndCondSvgLogo,
+                name: 'Terms & Conditions',
                 vendorDrawerOption: VendorDrawerOption.termsAndCondition,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.resourcesImg,
+                img: AppImages.privacyPolicySvgLogo,
                 name: 'Privacy Policy',
                 vendorDrawerOption: VendorDrawerOption.privacyPolicy,
               ),
               const SizedBox(height: 20),
 
               VendorDrawerSingleItemModule(
-                img: AppImages.logoutImg,
+                img: AppImages.logoutSvgLogo,
                 name: 'Logout',
                 vendorDrawerOption: VendorDrawerOption.logout,
               ),

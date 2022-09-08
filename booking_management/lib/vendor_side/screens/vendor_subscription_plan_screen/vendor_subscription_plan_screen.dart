@@ -237,7 +237,6 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                         id: singleItem.stripeSubscriptionId,
                       );
                     } else {
-
                       Get.to(
                         () => const VendorCardPaymentScreen(),
                         arguments: [

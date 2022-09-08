@@ -1,6 +1,7 @@
 class AppImages {
   static const root = "assets/images/";
   static const gifRoot = "assets/gifs/";
+  static const svgRoot = "assets/svgs/";
 
   static const logoImg = root + "logo.png";
   static const shapeImg = root + "shape.png";
@@ -40,7 +41,31 @@ class AppImages {
   static const callingImg = root + "calling.png";
   static const msgImg = root + "msg.png";
 
+  //gifs
   static const splashAnimationGif = gifRoot + "splash_animation.gif";
   static const loadingAnimationGif = gifRoot + "loading_animation.gif";
 
+  //svgs
+  static const loginSvgLogo = svgRoot + "login_logo.svg";
+  static const logoutSvgLogo = svgRoot + "logout_logo.svg";
+  static const privacyPolicySvgLogo = svgRoot + "privacy_policy_logo.svg";
+  static const termsAndCondSvgLogo = svgRoot + "terms_cond_logo.svg";
+  static const changePassSvgLogo = svgRoot + "change_password_logo.svg";
+  static const transactionsSvgLogo = svgRoot + "logout_logo.svg";
+  static const profileSvgLogo = svgRoot + "user_profile_logo.svg";
+
+  //vendor svgs
+  static const myBusinessSvgLogo = svgRoot + "my_business_logo.svg";
+  static const settingsSvgLogo = svgRoot + "settings_logo.svg";
+  static const bankDetailsSvgLogo = svgRoot + "bank_details_logo.svg";
+  static const businessHoursSvgLogo = svgRoot + "business_hours_logo.svg";
+  static const businessDocSvgLogo = svgRoot + "business_document_logo.svg";
+  static const businessReviewSvgLogo = svgRoot + "review_logo.svg";
+  static const addResourceSvgLogo = svgRoot + "add_resource.svg";
+  static const resourceScheduleSvgLogo = svgRoot + "resource_schedule.svg";
+  static const scheduleManageSvgLogo = svgRoot + "schedule_manage_logo.svg";
+  static const additionalSlotSvgLogo = svgRoot + "addition_slot.svg";
+  static const appointReportSvgLogo = svgRoot + "appointments_logo.svg";
+  static const invoiceSvgLogo = svgRoot + "invoice_logo.svg";
+  static const subscriptionsSvgLogo = svgRoot + "subscription_logo.svg";
 }

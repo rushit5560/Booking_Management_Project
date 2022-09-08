@@ -44,6 +44,7 @@ class VendorDetailsModule extends StatelessWidget {
             }),
           ),
         ),
+        const SizedBox(width: 10),
         Expanded(
           flex: 70,
           child: Column(
@@ -58,7 +59,7 @@ class VendorDetailsModule extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              // const SizedBox(height: 5),
+              const SizedBox(height: 5),
 
               RatingBar.builder(
                 initialRating: double.parse(

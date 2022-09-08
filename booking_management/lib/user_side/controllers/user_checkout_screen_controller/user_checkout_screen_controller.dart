@@ -125,7 +125,7 @@ class UserCheckoutScreenController extends GetxController {
             checkoutSummaryModel.workerList.booking.vendor.businessName;
         vendorImg = checkoutSummaryModel.workerList.booking.vendor.businessLogo;
         vendorRating = double.parse(
-            checkoutSummaryModel.workerList.booking.vendor.rating.toString());
+            checkoutSummaryModel.workerList.review.ratting.toString());
         vendorAddress =
             "${checkoutSummaryModel.workerList.booking.vendor.state}, ${checkoutSummaryModel.workerList.booking.vendor.country}, "
             "${checkoutSummaryModel.workerList.booking.vendor.postcode}";
@@ -152,7 +152,7 @@ class UserCheckoutScreenController extends GetxController {
         //
         bookingPrice.value = checkoutSummaryModel.workerList.price;
         bookingQty = checkoutSummaryModel.workerList.quantity;
-  
+
         // bookingTotalAmount = bookingPrice * bookingQty;
         //
         log("vendorName : $vendorName");
@@ -242,7 +242,7 @@ class UserCheckoutScreenController extends GetxController {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      // request.headers.addAll(apiHeader.headers);
+      request.headers.addAll(apiHeader.headers);
 
       if (UserDetails.isUserLoggedIn == true) {
         request.fields['BookingId'] = bookingId;
@@ -270,17 +270,16 @@ class UserCheckoutScreenController extends GetxController {
       }
       // request.fields['UserName'] = fNameFieldController.text.trim();
 
-      log("Fields : ${request.fields}");
-      log('request.headers: ${request.headers}');
+      log("Checkout Submit func Fields : ${request.fields}");
+      log('Checkout Submit func request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('response: ${response.request}');
 
       response.stream
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((value) async {
-        log('value: $value');
+        log('Checkout Submit func res body : $value');
         ConfirmCheckoutModel confirmCheckoutModel =
             ConfirmCheckoutModel.fromJson(json.decode(value));
         isSuccessStatus = confirmCheckoutModel.success.obs;

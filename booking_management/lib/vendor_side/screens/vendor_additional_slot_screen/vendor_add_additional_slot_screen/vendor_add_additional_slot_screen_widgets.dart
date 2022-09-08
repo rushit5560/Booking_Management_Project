@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../../common_modules/constants/app_colors.dart';
@@ -128,9 +129,15 @@ class AdditionalSlotPriceFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+              ],
               controller: vendorAdditionalSlotScreenController
                   .additionalPriceFieldController,
-              keyboardType: TextInputType.number,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: false,
+                signed: false,
+              ),
               validator: (value) => FieldValidator().validatePrice(value!),
               decoration:
                   serviceFormFieldDecoration(hintText: 'Additional Slot Price'),
@@ -212,11 +219,11 @@ class AdditionalSlotLongDesFieldModule extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ).commonSymmetricPadding(horizontal: 5, vertical: 5),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         Stack(
           children: [
             Container(
-              height: 46,
+              padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
@@ -227,15 +234,16 @@ class AdditionalSlotLongDesFieldModule extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            TextFormField(
-              controller: vendorAdditionalSlotScreenController
-                  .additionalLongDescriptionFieldController,
-              keyboardType: TextInputType.text,
-              validator: (value) =>
-                  FieldValidator().validateLongDescription(value!),
-              decoration:
-                  serviceFormFieldDecoration(hintText: 'Long Description'),
+              child: TextFormField(
+                maxLines: null,
+                controller: vendorAdditionalSlotScreenController
+                    .additionalLongDescriptionFieldController,
+                keyboardType: TextInputType.multiline,
+                validator: (value) =>
+                    FieldValidator().validateLongDescription(value!),
+                decoration:
+                    serviceFormFieldDecoration(hintText: 'Long Description'),
+              ),
             ),
           ],
         )
@@ -253,20 +261,19 @@ class AdditionalSlotTimeDurationModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      // crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Expanded(
-          flex: 4,
-          child: Text(
-            "Time Duration",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+        const Text(
+          "Time Duration",
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(width: 10),
         Expanded(
-          flex: 6,
+          // flex: 5,
           child: Stack(
             children: [
               Container(
@@ -286,34 +293,44 @@ class AdditionalSlotTimeDurationModule extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Obx(
-                () => DropdownButtonHideUnderline(
-                  child: DropdownButton<double>(
-                    value: vendorAdditionalSlotScreenController
-                        .selectAdditionalTimeDuration.value,
-                    isExpanded: true,
-                    items: vendorAdditionalSlotScreenController.timeDurationList
-                        .map<DropdownMenuItem<double>>((double value) {
-                      return DropdownMenuItem<double>(
-                        value: value,
-                        child: Text(
-                          "$value",
-                          style: const TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 1)),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      vendorAdditionalSlotScreenController
-                          .selectAdditionalTimeDuration.value = newValue!;
-                      log("selectTimeDuration : ${vendorAdditionalSlotScreenController.selectAdditionalTimeDuration}");
-                      // vendorServicesScreenController.loadUI();
-                    },
-                  ),
-                ).commonSymmetricPadding(horizontal: 10),
+                child: Obx(
+                  () => DropdownButtonHideUnderline(
+                    child: DropdownButton<double>(
+                      value: vendorAdditionalSlotScreenController
+                          .selectAdditionalTimeDuration.value,
+                      isExpanded: true,
+                      items: vendorAdditionalSlotScreenController
+                          .timeDurationList
+                          .map<DropdownMenuItem<double>>((double value) {
+                        return DropdownMenuItem<double>(
+                          value: value,
+                          child: Text(
+                            "$value",
+                            style: const TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 1)),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        vendorAdditionalSlotScreenController
+                            .selectAdditionalTimeDuration.value = newValue!;
+
+                        log("selectTimeDuration : ${vendorAdditionalSlotScreenController.selectAdditionalTimeDuration}");
+                        // vendorServicesScreenController.loadUI();
+                      },
+                    ),
+                  ).commonSymmetricPadding(horizontal: 12),
+                ),
               ),
             ],
+          ),
+        ),
+        const SizedBox(width: 10),
+        const Text(
+          "In Hour",
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

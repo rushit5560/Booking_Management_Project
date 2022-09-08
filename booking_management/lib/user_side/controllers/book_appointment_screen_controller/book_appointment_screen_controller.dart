@@ -116,7 +116,7 @@ class BookAppointmentScreenController extends GetxController {
       http.Response response = await http.get(
         Uri.parse(url), /*headers: apiHeader.headers*/
       );
-      // log("Book Vendor Details Response : ${response.body}");
+      log("Book Vendor Details Response : ${response.body}");
 
       GetVendorBookingModel getVendorBookingModel =
           GetVendorBookingModel.fromJson(json.decode(response.body));
@@ -941,9 +941,10 @@ class BookAppointmentScreenController extends GetxController {
         BookAppointmentModel bookAppointmentModel =
             BookAppointmentModel.fromJson(json.decode(value));
         isSuccessStatus = bookAppointmentModel.success.obs;
-        log('bookAppointmentModel: ${bookAppointmentModel.message}');
+        var msg = bookAppointmentModel.message.split(".")[0];
+        log('bookAppointmentModel: ${msg}');
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: bookAppointmentModel.message);
+          Fluttertoast.showToast(msg: msg);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
           // await addVendorInFavoriteFunction();

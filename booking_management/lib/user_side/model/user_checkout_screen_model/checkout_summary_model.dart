@@ -32,19 +32,20 @@ class CheckoutSummaryModel {
 }
 
 class WorkerList {
-  WorkerList({
-    required this.id,
-    required this.bookingId,
-    required this.price,
-    required this.quantity,
-    required this.booking,
-  });
+  WorkerList(
+      {required this.id,
+      required this.bookingId,
+      required this.price,
+      required this.quantity,
+      required this.booking,
+      required this.review});
 
   int id;
   String bookingId;
   double price;
   int quantity;
   Booking booking;
+  Review review;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
         id: json["id"] ?? 0,
@@ -52,6 +53,7 @@ class WorkerList {
         price: json["price"] ?? 0.0,
         quantity: json["quantity"] ?? 0,
         booking: Booking.fromJson(json["booking"] ?? {}),
+        review: Review.fromJson(json["review"] ?? {}),
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +62,7 @@ class WorkerList {
         "price": price,
         "quantity": quantity,
         "booking": booking.toJson(),
+        "review": review.toJson(),
       };
 }
 
@@ -344,5 +347,85 @@ class Vendor {
         "resourceId": resourceId,
         "stripeId": stripeId,
         "vendorStripeAccountId": vendorStripeAccountId,
+      };
+}
+
+class Review {
+  Review({
+    required this.id,
+    // required this.vendor,
+    required this.vendorId,
+    // required this.customer,
+    required this.customerId,
+    required this.description,
+    required this.ratting,
+    required this.date,
+    required this.isActive,
+    required this.createdBy,
+    required this.createdOn,
+    required this.modifiedBy,
+    required this.modifiedOn,
+    required this.applicationUserCreator,
+    required this.applicationUserModifier,
+    required this.favourites,
+    required this.category,
+  });
+
+  int id;
+  // Vendor vendor;
+  int vendorId;
+  // dynamic customer;
+  int customerId;
+  String description;
+  int ratting;
+  String date;
+  bool isActive;
+  String createdBy;
+  String createdOn;
+  String modifiedBy;
+  String modifiedOn;
+  String applicationUserCreator;
+  String applicationUserModifier;
+  String favourites;
+  String category;
+
+  factory Review.fromJson(Map<String, dynamic> json) => Review(
+        id: json["id"] ?? 0,
+        // vendor: Vendor.fromJson(json["vendor"]),
+        vendorId: json["vendorId"] ?? 0,
+        // customer: json["customer"] ?? "",
+        customerId: json["customerId"] ?? 0,
+        description: json["description"] ?? "",
+        ratting: json["ratting"] ?? 0,
+        date: json["date"] ?? "",
+        isActive: json["isActive"] ?? false,
+        createdBy: json["createdBy"] ?? "",
+        createdOn: json["createdOn"] ?? "",
+        modifiedBy: json["modifiedBy"] ?? "",
+        modifiedOn: json["modifiedOn"] ?? "",
+        applicationUserCreator: json["applicationUserCreator"] ?? "",
+        applicationUserModifier: json["applicationUserModifier"] ?? "",
+        favourites: json["favourites"] ?? "",
+        category: json["category"] ?? "",
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        // "vendor": vendor.toJson(),
+        "vendorId": vendorId,
+        // "customer": customer,
+        "customerId": customerId,
+        "description": description,
+        "ratting": ratting,
+        "date": date,
+        "isActive": isActive,
+        "createdBy": createdBy,
+        "createdOn": createdOn,
+        "modifiedBy": modifiedBy,
+        "modifiedOn": modifiedOn,
+        "applicationUserCreator": applicationUserCreator,
+        "applicationUserModifier": applicationUserModifier,
+        "favourites": favourites,
+        "category": category,
       };
 }

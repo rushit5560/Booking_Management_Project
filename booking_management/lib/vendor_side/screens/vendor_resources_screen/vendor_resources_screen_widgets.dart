@@ -65,6 +65,9 @@ class VendorResourcesListModule extends StatelessWidget {
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, i) {
+              var price = screenController.getResourceList[i].price
+                  .toString()
+                  .split(".")[0];
               return GestureDetector(
                 onTap: () {
                   //Get.to(() => ChooseCourtScreen());
@@ -73,13 +76,35 @@ class VendorResourcesListModule extends StatelessWidget {
                   //margin: const EdgeInsets.only(left: 5, right: 5),
                   decoration: shadowDecoration(),
                   child: Padding(
-                    padding: const EdgeInsets.all(5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
+                                child: Image.network(
+                                  ApiUrl.apiImagePath +
+                                      "${screenController.getResourceList[i].image}",
+                                  height: 65,
+                                  width: 65,
+                                  errorBuilder: (ctx, obj, st) {
+                                    return Image.asset(
+                                      AppImages.vendorImg,
+                                      height: 65,
+                                      width: 65,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 10),
                               Text(
                                 screenController
                                     .getResourceList[i].resourceName!,
@@ -92,7 +117,8 @@ class VendorResourcesListModule extends StatelessWidget {
                               ),
                               //const SizedBox(height: 8),
                               Html(
-                                data: screenController.getResourceList[i].details!,
+                                data: screenController
+                                    .getResourceList[i].details!,
                               ),
                               // Text(
                               //   screenController.getResourceList[i].details!,
@@ -103,29 +129,32 @@ class VendorResourcesListModule extends StatelessWidget {
                               //   ),
                               // ),
                               //const SizedBox(height: 8),
-                              UserDetails.isPriceDisplay ? Row(
-                                children: [
-                                  const Text(
-                                    'price:',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    '${screenController.getResourceList[i].price}',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ) : Container(),
                               UserDetails.isPriceDisplay
-                                  ? const SizedBox(height: 8) : Container(),
+                                  ? Row(
+                                      children: [
+                                        const Text(
+                                          'price:',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          price,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
+                              UserDetails.isPriceDisplay
+                                  ? const SizedBox(height: 8)
+                                  : Container(),
                               Row(
                                 children: [
                                   const Text(
@@ -172,12 +201,11 @@ class VendorResourcesListModule extends StatelessWidget {
                                     title: "Are you sure ?",
                                     body: "You want to delete this resource ",
                                     onYesPressed: () async {
+                                      Get.back();
                                       await screenController
                                           .deleteVendorResourceFunction(
                                               resourceId:
                                                   "${screenController.getResourceList[i].id}");
-
-                                      Get.back();
                                     },
                                     onNoPressed: () {
                                       Get.back();
@@ -193,7 +221,7 @@ class VendorResourcesListModule extends StatelessWidget {
                       ],
                     ),
                   ),
-                ).commonSymmetricPadding(vertical: 10),
+                ).commonSymmetricPadding(vertical: 12),
               );
             },
           );

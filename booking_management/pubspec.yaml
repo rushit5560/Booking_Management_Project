@@ -59,6 +59,7 @@ dependencies:
   google_places_flutter: ^2.0.5
   uuid: ^3.0.6
   badges: ^2.0.3
+  flutter_svg: ^0.22.0
   expandable: ^5.0.1
   # credit_card_field: ^1.0.2
   # syncfusion_flutter_xlsio: ^20.1.59-beta
@@ -103,6 +104,8 @@ flutter:
   assets:
     - assets/images/
     - assets/gifs/
+    - assets/cardinfo/
+    - assets/svgs/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

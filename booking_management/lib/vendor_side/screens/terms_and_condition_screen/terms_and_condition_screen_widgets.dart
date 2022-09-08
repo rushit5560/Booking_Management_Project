@@ -1,4 +1,3 @@
-import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/vendor_side/controllers/terms_and_condition_screen_controller/terms_and_condition_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -20,15 +19,15 @@ class TermsAndConditionWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(
-              screenController.pageTitle,
-              style: TextStyle(
-                color: AppColors.blackColor,
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 15),
+            // Text(
+            //   screenController.pageTitle,
+            //   style: TextStyle(
+            //     color: AppColors.blackColor,
+            //     fontSize: 17,
+            //     fontWeight: FontWeight.w700,
+            //   ),
+            // ),
+            // const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Html(

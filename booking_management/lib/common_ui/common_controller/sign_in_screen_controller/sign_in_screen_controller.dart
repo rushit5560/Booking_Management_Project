@@ -116,7 +116,7 @@ class SignInScreenController extends GetxController {
                 postCode: "",
                 stripeId: "",
                 //slotDuration: ""
-                vendorVerification: false,s
+                vendorVerification: false,
                 businessId: "",
                 serviceSlot: false,
                 institutionName: "",

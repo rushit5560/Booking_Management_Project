@@ -55,7 +55,7 @@ class SignInScreenController extends GetxController {
 
       var body = jsonDecode(response.body);
 
-      log(body);
+      // log(body);
 
       if (response.body.toString().contains("Please confirm your email")) {
         SignInVendorErrorModel signInVendorErrorModel =

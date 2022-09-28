@@ -91,6 +91,7 @@ class ApiUrl {
   static const invoiceDetailsApi = apiMainPath + "API/InvoiceDetails";
   static const getSecretKeyApi = apiMainPath + "API/StripeSettings";
   static const transactionApi = apiMainPath + "API/Transaction";
+  static const stripeCustomerApi = apiMainPath + "API/StripeCustomer";
 
   /// Cst - Order List
   static const getAllCustomerOrderList = apiMainPath + "API/customerorderList";
@@ -156,6 +157,9 @@ class ApiUrl {
       apiMainPath + "API/CancelSubscription";
   static const purchaseSubscriptionPlanApi =
       apiMainPath + "API/SubscribeUserInStripe";
+  static const subscriptionSuccessCallApi =
+      apiMainPath + "API/SubscriptionSuccess";
+
 
   /// vendor - Available Time
   static const vendorAvailableTimeApi =

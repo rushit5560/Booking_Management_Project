@@ -18,36 +18,83 @@ class VendorSubscriptionReportScreenController extends GetxController {
   getSubscriptionReportFunction() async {
     isLoading(true);
     String url = ApiUrl.subscriptionReportApi + "?id=${UserDetails.uniqueId}";
-    log("Appointment Report Api Url : $url");
+    log("subscription Report Api Url : $url");
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Appointment Report Response : ${response.body}");
+      var request = http.MultipartRequest('GET', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
 
-      VendorSubscriptionReportModel vendorSubscriptionReportModel =
-          VendorSubscriptionReportModel.fromJson(json.decode(response.body));
-      isSuccessStatus = vendorSubscriptionReportModel.success.obs;
-      log('isSuccessStatus: $isSuccessStatus');
+      var response = await request.send();
+      log("st code : ${response.statusCode}");
+      log("headers : ${response.request!.headers}");
 
-      if (isSuccessStatus.value) {
-        subscriptionReportList.clear();
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) {
+        log("response body is : $value");
+        VendorSubscriptionReportModel vendorSubscriptionReportModel =
+            VendorSubscriptionReportModel.fromJson(json.decode(value));
+        isSuccessStatus = vendorSubscriptionReportModel.success.obs;
+        log('isSuccessStatus: $isSuccessStatus');
 
-        // print(vendorSubscriptionReportModel)
+        if (isSuccessStatus.value) {
+          subscriptionReportList.clear();
 
-        subscriptionReportList = vendorSubscriptionReportModel.workerList;
-        log("subscriptionReportList : ${subscriptionReportList.length}");
-        // log("transaction by : ${subscriptionReportList}");
-      } else {
-        log("getSubscriptionReportFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
-      }
+          // print(vendorSubscriptionReportModel)
+
+          subscriptionReportList = vendorSubscriptionReportModel.workerList;
+          log("subscriptionReportList : ${subscriptionReportList.length}");
+          // log("transaction by : ${subscriptionReportList}");
+        } else {
+          log("getSubscriptionReportFunction Else Else");
+          Fluttertoast.showToast(msg: "Something went wrong!");
+        }
+      });
     } catch (e) {
       log("getSubscriptionReportFunction Error ::: $e");
+
+      rethrow;
     } finally {
       isLoading(false);
     }
   }
+
+  // getSubscriptionReportFunction() async {
+  //   isLoading(true);
+  //   String url = ApiUrl.subscriptionReportApi + "?id=${UserDetails.uniqueId}";
+  //   log("Appointment Report Api Url : $url");
+
+  //   try {
+  //     http.Response response =
+  //         await http.get(Uri.parse(url), headers: apiHeader.headers);
+  //     log("Appointment Report Response : ${response.body}");
+
+  //     VendorSubscriptionReportModel vendorSubscriptionReportModel =
+  //         VendorSubscriptionReportModel.fromJson(json.decode(response.body));
+  //     isSuccessStatus = vendorSubscriptionReportModel.success.obs;
+  //     log('isSuccessStatus: $isSuccessStatus');
+
+  //     if (isSuccessStatus.value) {
+  //       subscriptionReportList.clear();
+
+  //       // print(vendorSubscriptionReportModel)
+
+  //       subscriptionReportList = vendorSubscriptionReportModel.workerList;
+  //       log("subscriptionReportList : ${subscriptionReportList.length}");
+  //       // log("transaction by : ${subscriptionReportList}");
+  //     } else {
+  //       log("getSubscriptionReportFunction Else Else");
+  //       Fluttertoast.showToast(msg: "Something went wrong!");
+  //     }
+  //   } catch (e) {
+  //     log("getSubscriptionReportFunction Error ::: $e");
+
+  //     rethrow;
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
   @override
   void onInit() {

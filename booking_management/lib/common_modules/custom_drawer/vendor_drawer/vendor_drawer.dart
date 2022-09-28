@@ -125,7 +125,7 @@ class VendorDrawer extends StatelessWidget {
 
               UserDetails.isServiceSlot
                   ? VendorDrawerSingleItemModule(
-                      img: AppImages.scheduleManageSvgLogo,
+                      img: AppImages.manageServicesSvgLogo,
                       name: 'Manage Services',
                       vendorDrawerOption: VendorDrawerOption.services,
                     )

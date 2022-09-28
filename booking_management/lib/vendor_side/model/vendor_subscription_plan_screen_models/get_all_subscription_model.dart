@@ -88,9 +88,11 @@ class SubscriptionWorkerList {
 
 import 'dart:convert';
 
-GetAllSubscriptionPlanModel getAllSubscriptionPlanModelFromJson(String str) => GetAllSubscriptionPlanModel.fromJson(json.decode(str));
+GetAllSubscriptionPlanModel getAllSubscriptionPlanModelFromJson(String str) =>
+    GetAllSubscriptionPlanModel.fromJson(json.decode(str));
 
-String getAllSubscriptionPlanModelToJson(GetAllSubscriptionPlanModel data) => json.encode(data.toJson());
+String getAllSubscriptionPlanModelToJson(GetAllSubscriptionPlanModel data) =>
+    json.encode(data.toJson());
 
 class GetAllSubscriptionPlanModel {
   GetAllSubscriptionPlanModel({
@@ -103,17 +105,19 @@ class GetAllSubscriptionPlanModel {
   bool success;
   List<SubscriptionWorkerList> workerList;
 
-  factory GetAllSubscriptionPlanModel.fromJson(Map<String, dynamic> json) => GetAllSubscriptionPlanModel(
-    statusCode: json["statusCode"] ?? 0,
-    success: json["success"] ?? false,
-    workerList: List<SubscriptionWorkerList>.from(json["workerList"].map((x) => SubscriptionWorkerList.fromJson(x ?? {}))),
-  );
+  factory GetAllSubscriptionPlanModel.fromJson(Map<String, dynamic> json) =>
+      GetAllSubscriptionPlanModel(
+        statusCode: json["statusCode"] ?? 0,
+        success: json["success"] ?? false,
+        workerList: List<SubscriptionWorkerList>.from(json["workerList"]
+            .map((x) => SubscriptionWorkerList.fromJson(x ?? {}))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "success": success,
-    "workerList": List<dynamic>.from(workerList.map((x) => x.toJson())),
-  };
+        "statusCode": statusCode,
+        "success": success,
+        "workerList": List<dynamic>.from(workerList.map((x) => x.toJson())),
+      };
 }
 
 class SubscriptionWorkerList {
@@ -145,33 +149,34 @@ class SubscriptionWorkerList {
   String stripeSubscriptionId;
   String priceId;
 
-  factory SubscriptionWorkerList.fromJson(Map<String, dynamic> json) => SubscriptionWorkerList(
-    id: json["id"] ?? "",
-    name: json["name"] ?? "",
-    detail: json["detail"] ?? "",
-    interval: json["interval"] ?? "",
-    price: json["price"] ?? 0,
-    image: json["image"] ?? "",
-    isActive: json["isActive"] ?? false,
-    currency: json["currency"] ?? "",
-    // finalPrice: json["finalPrice"],
-    discountApplied: json["discountApplied"] ?? false,
-    stripeSubscriptionId: json["stripeSubscriptionId"] ?? "",
-    priceId: json["priceId"] ?? "",
-  );
+  factory SubscriptionWorkerList.fromJson(Map<String, dynamic> json) =>
+      SubscriptionWorkerList(
+        id: json["id"] ?? "",
+        name: json["name"] ?? "",
+        detail: json["detail"] ?? "",
+        interval: json["interval"] ?? "",
+        price: json["price"].toInt() ?? 0,
+        image: json["image"] ?? "",
+        isActive: json["isActive"] ?? false,
+        currency: json["currency"] ?? "",
+        // finalPrice: json["finalPrice"],
+        discountApplied: json["discountApplied"] ?? false,
+        stripeSubscriptionId: json["stripeSubscriptionId"] ?? "",
+        priceId: json["priceId"] ?? "",
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "detail": detail,
-    "interval": interval,
-    "price": price,
-    "image": image,
-    "isActive": isActive,
-    "currency": currency,
-    // "finalPrice": finalPrice,
-    "discountApplied": discountApplied,
-    "stripeSubscriptionId": stripeSubscriptionId,
-    "priceId": priceId,
-  };
+        "id": id,
+        "name": name,
+        "detail": detail,
+        "interval": interval,
+        "price": price,
+        "image": image,
+        "isActive": isActive,
+        "currency": currency,
+        // "finalPrice": finalPrice,
+        "discountApplied": discountApplied,
+        "stripeSubscriptionId": stripeSubscriptionId,
+        "priceId": priceId,
+      };
 }

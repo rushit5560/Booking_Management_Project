@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../common_modules/sharedpreference_data/sharedpreference_data.dart';
 
-
 class IndexScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -28,7 +27,6 @@ class IndexScreenController extends GetxController {
   List<NotificationData> notificationList = [];
   List<NotificationData> _notificationListData = [];
 
-
   Position? position;
 
   void getCurrentLocation() async {
@@ -41,21 +39,18 @@ class IndexScreenController extends GetxController {
     log("position123 : $position");
   }
 
-
   Future<Position> determinePosition() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
 
-    if(permission == LocationPermission.denied) {
+    if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if(permission == LocationPermission.denied) {
+      if (permission == LocationPermission.denied) {
         return Future.error("Location Permission are denied");
       }
     }
     return await Geolocator.getCurrentPosition();
   }
-
-
 
   /// Get Notification Count
   getNotificationCountFunction() async {
@@ -63,24 +58,24 @@ class IndexScreenController extends GetxController {
     log("Get Noti Count Api Url : $url");
 
     try {
-      http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers);
-      log("response 121212: ${response.body}");
-      NotificationCountModel notificationCountModel = NotificationCountModel.fromJson(json.decode(response.body));
+      http.Response response =
+          await http.post(Uri.parse(url), headers: apiHeader.headers);
+      log("status code 121212: ${response.statusCode}");
+      NotificationCountModel notificationCountModel =
+          NotificationCountModel.fromJson(json.decode(response.body));
       isSuccessStatus = notificationCountModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         notiCounter = notificationCountModel.workerList.obs;
         log("notiCounter : $notiCounter");
       } else {
         log("getNotificationCountFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getNotificationCountFunction Error ::: $e");
     } finally {
       await getNotificationListFunction();
     }
-
   }
 
   /// Get Notification List
@@ -90,12 +85,14 @@ class IndexScreenController extends GetxController {
     log("Notification Get API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
 
-      NotificationGetModel notificationGetModel = NotificationGetModel.fromJson(json.decode(response.body));
+      NotificationGetModel notificationGetModel =
+          NotificationGetModel.fromJson(json.decode(response.body));
       isSuccessStatus = notificationGetModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         notificationList.clear();
         _notificationListData = notificationGetModel.workerList;
         notificationList = _notificationListData;
@@ -103,14 +100,12 @@ class IndexScreenController extends GetxController {
       } else {
         log("getNotificationListFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getNotificationListFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
-
 
   @override
   void onInit() {

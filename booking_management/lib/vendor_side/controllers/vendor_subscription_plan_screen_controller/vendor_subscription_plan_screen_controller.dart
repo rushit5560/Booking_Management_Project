@@ -230,6 +230,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
       }
     } catch (e) {
       log("getAllSubscriptionPlanFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }
@@ -262,6 +263,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
     } catch (e) {
       log("cancelSubscriptionPlanFunction Error ::: $e");
     } finally {
+      await getAllSubscriptionPlanFunction();
       isLoading(false);
     }
   }

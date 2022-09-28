@@ -186,48 +186,48 @@ class UserCheckoutScreenController extends GetxController {
     }
   }
 
-  /// get payment Id From payment
-  Future<void> getPaymentIdFunction(String id, String secretKey) async {
-    // isLoading(true);
-    String url = ApiUrl.getPaymentIdApi;
-    log("getPaymentId : $url");
+  // /// get payment Id From payment
+  // Future<void> getPaymentIdFunction(String id, String secretKey) async {
+  //   // isLoading(true);
+  //   String url = ApiUrl.getPaymentIdApi;
+  //   log("getPaymentId : $url");
 
-    try {
-      var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+  //   try {
+  //     var request = http.MultipartRequest('POST', Uri.parse(url));
+  //     request.headers.addAll(apiHeader.headers);
 
-      request.fields['BookingId'] = bookingId;
-      request.fields['sessionId'] = secretKey;
-      request.fields['paymentIntentld'] = id;
+  //     request.fields['BookingId'] = bookingId;
+  //     request.fields['sessionId'] = secretKey;
+  //     request.fields['paymentIntentld'] = id;
 
-      log("Fields : ${request.fields}");
-      log('request.headers: ${request.headers}');
+  //     log("Fields : ${request.fields}");
+  //     log('request.headers: ${request.headers}');
 
-      var response = await request.send();
-      // log('getPaymentId response: ${response.}');
+  //     var response = await request.send();
+  //     // log('getPaymentId response: ${response.}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
-        GetPaymentIdModel getPaymentIdModel =
-            GetPaymentIdModel.fromJson(json.decode(value));
-        isSuccessStatus = getPaymentIdModel.success.obs;
+  //     response.stream.transform(utf8.decoder).listen((value) async {
+  //       GetPaymentIdModel getPaymentIdModel =
+  //           GetPaymentIdModel.fromJson(json.decode(value));
+  //       isSuccessStatus = getPaymentIdModel.success.obs;
 
-        log('isSuccessStatus: $isSuccessStatus');
-        if (isSuccessStatus.value) {
-          transactionId = getPaymentIdModel.workerList.id;
-          log("transactionId : $transactionId");
-        } else {
-          //Fluttertoast.showToast(msg: "Something went wrong!");
-          log("getPaymentId Else Else");
-        }
-      });
-      // finally display payment sheet
-    } catch (e) {
-      log("getPaymentId Error ::: $e");
-    } finally {
-      //isLoading(false);
+  //       log('isSuccessStatus: $isSuccessStatus');
+  //       if (isSuccessStatus.value) {
+  //         transactionId = getPaymentIdModel.workerList.id;
+  //         log("transactionId : $transactionId");
+  //       } else {
+  //         //Fluttertoast.showToast(msg: "Something went wrong!");
+  //         log("getPaymentId Else Else");
+  //       }
+  //     });
+  //     // finally display payment sheet
+  //   } catch (e) {
+  //     log("getPaymentId Error ::: $e");
+  //   } finally {
+  //     //isLoading(false);
 
-    }
-  }
+  //   }
+  // }
 
   /// Submit Button
   checkOutSubmitFunction() async {

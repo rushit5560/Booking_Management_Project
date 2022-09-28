@@ -68,7 +68,7 @@ class VendorCardPaymentScreenController extends GetxController {
     log(" cvc number : ${cvvController.text}");
     log("booking product id is : $bookingSubProdId");
 
-    final _customer = await createCustomer();
+    final customerStripeId = await getStripeCustomer();
 
     // var _customer = subscribeUserInStripeFunction(
     //   productId: bookingSubProdId,
@@ -81,23 +81,32 @@ class VendorCardPaymentScreenController extends GetxController {
     );
     await attachPaymentMethod(
       paymentMethodId: _paymentMethod['id'],
-      customerId: _customer['id'],
+      customerId: customerStripeId,
     );
 
     await updateCustomer(
       paymentMethodId: _paymentMethod['id'],
-      customerId: _customer['id'],
+      customerId: customerStripeId,
     );
     // await createSubscriptionPrice();
-    await createSubscriptionPlan(
-      customerId: _customer['id'],
+    var subPlan = await createSubscriptionPlan(
+      customerId: customerStripeId,
       priceId: bookingPriceId,
+    );
+
+    await subscribeUserInStripeFunction(
+      productId: bookingSubProdId,
+    );
+    await subscriptionSuccessCall(
+      subscriptionUserId: subPlan["id"],
+      paymentIntentId: _paymentMethod['id'],
     );
     isLoading(false);
   }
 
-  Future<dynamic> createCustomer() async {
-    String url = 'https://api.stripe.com/v1/customers';
+  Future<dynamic> searchCustomerIfExist() async {
+    String url = 'https://api.stripe.com/v1/customers/search';
+
     var response = await http.post(
       Uri.parse(url),
       headers: {
@@ -105,18 +114,46 @@ class VendorCardPaymentScreenController extends GetxController {
         'Content-type': 'application/x-www-form-urlencoded'
       },
       body: {
-        "description": UserDetails.userName,
+        "name": UserDetails.userName,
         "email": UserDetails.email,
       },
     );
     var resBody = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      log("create customer response  $resBody");
+      log("searchCustomerIfExist response  $resBody");
       return resBody;
     } else {
-      log("create customer method else error $resBody");
+      log("searchCustomerIfExist else error $resBody");
 
-      throw 'Failed to register as a customer.';
+      throw 'Failed to searchCustomerIfExist.';
+    }
+  }
+
+  Future<dynamic> getStripeCustomer() async {
+    String url = ApiUrl.stripeCustomerApi + "?userId=${UserDetails.uniqueId}";
+
+    try {
+      var response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+      log("getStripeCustomer url  $url");
+      var resBody = jsonDecode(response.body);
+      log("getStripeCustomer response  $resBody");
+      if (resBody["statusCode"] == 200) {
+        // log("getStripeCustomer response  $resBody");
+        log("getStripeCustomer code  ${resBody["statusCode"]}");
+        var customerStripeId = "";
+        customerStripeId = resBody["data"];
+        log("getStripeCustomer id is :  $customerStripeId");
+        return customerStripeId;
+      } else {
+        // log("getStripeCustomer else error $resBody");
+
+        throw 'Failed to getStripeCustomer.';
+      }
+    } catch (e) {
+      log("getStripeCustomer Error ::: $e");
     }
   }
 
@@ -133,8 +170,9 @@ class VendorCardPaymentScreenController extends GetxController {
         Uri.parse(url),
         headers: apiHeader.headers,
       );
+
       log("subscribeUserInStripeFunction st code : ${response.statusCode}");
-      log("subscribeUserInStripeFunction response : ${response.body}");
+      log("subscribeUserInStripeFunction response body : ${response.body}");
 
       DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
           DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
@@ -151,7 +189,7 @@ class VendorCardPaymentScreenController extends GetxController {
     } catch (e) {
       log("subscribeUserInStripeFunction Error ::: $e");
     } finally {
-      // isLoading(false);
+      isLoading(false);
     }
   }
 
@@ -268,6 +306,60 @@ class VendorCardPaymentScreenController extends GetxController {
     }
   }
 
+  subscriptionSuccessCall({
+    required String subscriptionUserId,
+    required String paymentIntentId,
+  }) async {
+    log("userId Is : ${UserDetails.userId}");
+    log("userUniqueId Is : ${UserDetails.uniqueId}");
+    log("subscriptionUserId Is : $subscriptionUserId");
+    log("paymentIntentId Is : $paymentIntentId");
+
+    // Map<String, dynamic> body = {
+    //   "subscriptionUserId": subscriptionUserId,
+    //   "paymentIntentId": paymentIntentId,
+    //   "userId": UserDetails.uniqueId,
+    // };
+
+    String url = ApiUrl.subscriptionSuccessCallApi +
+        "?userId=${UserDetails.uniqueId}" +
+        "&subscriptionUserId=$subscriptionUserId" +
+        "&paymentIntentId=$paymentIntentId";
+
+    log("subscriptionSuccessCall Api Url : $url");
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+
+      log("subscriptionSuccessCall st code : ${response.statusCode}");
+      log("subscriptionSuccessCall response body : ${response.body}");
+
+      var resBody = json.decode(response.body);
+
+      // DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
+      //     DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
+      isSuccessStatus.value = resBody["success"];
+
+      if (isSuccessStatus.value) {
+        Fluttertoast.showToast(msg: resBody["success"]);
+        // await getAllSubscriptionPlanFunction();
+
+        return resBody;
+      } else {
+        log("subscriptionSuccessCall Else Else");
+      }
+    } catch (e) {
+      log("subscriptionSuccessCall Error ::: $e");
+
+      rethrow;
+    } finally {
+      isLoading(false);
+    }
+  }
+
   // Future<void> initPaymentSheet() async {
   //   try {
   //     // isLoading(true);
@@ -310,8 +402,8 @@ class VendorCardPaymentScreenController extends GetxController {
 
   //     //     final _customer = await _createCustomer();
   //     // final _paymentMethod = await _createPaymentMethod(number: '4242424242424242', expMonth: '03', expYear: '23', cvc: '123');
-  //     // await _attachPaymentMethod(_paymentMethod['id'], _customer['id']);
-  //     // await _updateCustomer(_paymentMethod['id'], _customer['id']);
+  //     // await _attachPaymentMethod(_paymentMethod['id'],customerStripeId);
+  //     // await _updateCustomer(_paymentMethod['id'],customerStripeId);
   //     // await _createSubscriptions(_customer['id']);
 
   //     await Stripe.instance.initPaymentSheet(
@@ -386,6 +478,11 @@ class VendorCardPaymentScreenController extends GetxController {
       log("attachPaymentMethod rezponse : $resBody");
       return json.decode(response.body);
     } else {
+      isLoading(false);
+      Get.snackbar(
+        "Payment Failed",
+        resBody["message"],
+      );
       log("attachPaymentMethoderror else : $resBody");
       throw 'Failed to attach PaymentMethod.';
     }

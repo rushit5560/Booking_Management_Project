@@ -55,6 +55,8 @@ class SignInScreenController extends GetxController {
 
       var body = jsonDecode(response.body);
 
+      log(body);
+
       if (response.body.toString().contains("Please confirm your email")) {
         SignInVendorErrorModel signInVendorErrorModel =
             SignInVendorErrorModel.fromJson(json.decode(response.body));
@@ -96,32 +98,33 @@ class SignInScreenController extends GetxController {
                 .contains("Successfully Logged")) {
               log("user logged in ");
               sharedPreferenceData.setUserLoginDetailsInPrefs(
-                  apiToken: signInModel.data.apiToken,
-                  uniqueId: signInModel.data.id,
-                  tableWiseId: signInModel.customer.id,
-                  userName: signInModel.data.userName,
-                  email: signInModel.data.email,
-                  phoneNo: signInModel.data.phoneNumber,
-                  dob: signInModel.customer.dateOfBirth,
-                  roleName: signInModel.role[0],
-                  gender: signInModel.customer.gender,
-                  businessName: "",
-                  address: "",
-                  street: "",
-                  state: "",
-                  country: "",
-                  subUrb: "",
-                  postCode: "",
-                  stripeId: "",
-                  //slotDuration: ""
-                  vendorVerification: false,
-                  businessId: "",
-                  serviceSlot: false,
-                  institutionName: "",
-                  accountName: "",
-                  accountNumber: "",
-                  ifscCode: "",
-                  isPriceDisplay: false);
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.customer.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: signInModel.customer.dateOfBirth,
+                roleName: signInModel.role[0],
+                gender: signInModel.customer.gender,
+                businessName: "",
+                address: "",
+                street: "",
+                state: "",
+                country: "",
+                subUrb: "",
+                postCode: "",
+                stripeId: "",
+                //slotDuration: ""
+                vendorVerification: false,s
+                businessId: "",
+                serviceSlot: false,
+                institutionName: "",
+                accountName: "",
+                accountNumber: "",
+                ifscCode: "",
+                isPriceDisplay: false,
+              );
               log("Fcm Token : ${UserDetails.fcmToken}");
               if (signInRoute == SignInRoute.fromBookScreen) {
                 Get.back();

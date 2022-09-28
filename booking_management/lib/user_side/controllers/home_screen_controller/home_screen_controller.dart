@@ -145,30 +145,32 @@ class HomeScreenController extends GetxController {
   /// Get All Upcoming Appointment
   getAllUpcomingAppointmentFunction() async {
     isLoading(true);
-    String url =
-        ApiUrl.getAllUpcomingAppointment + "?cutomerid=${UserDetails.uniqueId}";
+    String url = ApiUrl.getAllUpcomingAppointment +
+        "?customerid=${UserDetails.uniqueId}";
     log("Upcoming Appointment API URL : $url");
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+
+      log(" getAllUpcomingAppointment res body : ${response.body}");
 
       GetAllAppointmentListModel getAllAppointmentListModel =
           GetAllAppointmentListModel.fromJson(json.decode(response.body));
-
       isSuccessStatus = getAllAppointmentListModel.success.obs;
-
       if (isSuccessStatus.value) {
         allUpcomingAppointmentList.clear();
 
         allUpcomingAppointmentList = getAllAppointmentListModel.data;
-        log("allUpcomingAppointmentList : $allUpcomingAppointmentList");
+        log(" getAllUpcomingAppointment list : $allUpcomingAppointmentList");
       } else {
-        log("getAllUpcomingAppointment Else Else");
+        log(" getAllUpcomingAppointment Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
     } catch (e) {
-      log("getAllUpcomingAppointment Error ::: $e");
+      log(" getAllUpcomingAppointment Error ::: $e");
     } finally {
       // isLoading(false);
       await getFavouriteVendorByIdFunction();
@@ -181,7 +183,7 @@ class HomeScreenController extends GetxController {
     String url = ApiUrl.getAllUpcomingAppointment +
         "?cutomerid=${UserDetails.uniqueId}" +
         "&dDate=${selectedDate.value}";
-    log("Upcoming Appointment API URL : $url");
+    log("getAllUpcomingAppointmentDateWise API URL : $url");
 
     try {
       http.Response response =
@@ -196,13 +198,13 @@ class HomeScreenController extends GetxController {
         allUpcomingAppointmentList.clear();
 
         allUpcomingAppointmentList = getAllAppointmentListModel.data;
-        log("allUpcomingAppointmentList Date Wise : ${allUpcomingAppointmentList.length}");
+        log("getAllUpcomingAppointmentDateWise : ${allUpcomingAppointmentList.length}");
       } else {
-        log("getAllUpcomingAppointment Else Else");
+        log("getAllUpcomingAppointmentDateWise Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
     } catch (e) {
-      log("getAllUpcomingAppointment Error ::: $e");
+      log("getAllUpcomingAppointmentDateWise  Error ::: $e");
     } finally {
       isLoading(false);
     }

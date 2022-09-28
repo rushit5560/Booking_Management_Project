@@ -153,7 +153,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         //     ? UserDetails.email
                         //     :
 
-                        screenController.cstName,
+                        screenController.cstEmail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -162,7 +162,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         //     ? UserDetails.phoneNo
                         //     :
 
-                        screenController.cstName,
+                        screenController.cstPhoneNo,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

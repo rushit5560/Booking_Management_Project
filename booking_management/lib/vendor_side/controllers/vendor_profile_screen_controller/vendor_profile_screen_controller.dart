@@ -170,7 +170,8 @@ class VendorProfileScreenController extends GetxController {
 
         request.headers.addAll(headers);
 
-        request.fields['BusinessName'] = businessNameTextFieldController.text.trim();
+        request.fields['BusinessName'] =
+            businessNameTextFieldController.text.trim();
         request.fields['Address'] = addressTextFieldController.text.trim();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
         request.fields['Duration'] = slotDurationValue.value;

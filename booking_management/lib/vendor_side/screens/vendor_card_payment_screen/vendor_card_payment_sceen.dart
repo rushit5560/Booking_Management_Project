@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../common_modules/constants/app_images.dart';
@@ -158,6 +159,7 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
                 CardNumberInputFormatter(),
               ],
               controller: controller.creditCardController,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 border: border,
                 enabledBorder: border,
@@ -177,6 +179,9 @@ class _VendorCardPaymentScreenState extends State<VendorCardPaymentScreen> {
                     'Num controller has = ${cardScreenController.creditCardController.text}');
                 cardScreenController.paymentCard.number =
                     CardUtils.getCleanedNumber(value!);
+              },
+              onChanged: (String? val) {
+                getCardTypeFrmNumber();
               },
             ),
             const SizedBox(height: 12),
@@ -572,25 +577,25 @@ class CardUtils {
     Icon? icon;
     switch (cardType) {
       case CardType.Master:
-        img = 'mastercard.png';
+        img = 'mastercard_card.svg';
         break;
       case CardType.Visa:
-        img = 'visa.png';
+        img = 'visa_card.svg';
         break;
       case CardType.Verve:
-        img = 'verve.png';
+        img = 'verve_card.svg';
         break;
       case CardType.AmericanExpress:
-        img = 'american_express.png';
+        img = 'american_express_card.svg';
         break;
       case CardType.Discover:
-        img = 'discover.png';
+        img = 'discover_card.svg';
         break;
       case CardType.DinersClub:
-        img = 'dinners_club.png';
+        img = 'dinners_club_card.svg';
         break;
       case CardType.Jcb:
-        img = 'jcb.png';
+        img = 'jcb_card.svg';
         break;
       case CardType.Others:
         icon = Icon(
@@ -609,8 +614,8 @@ class CardUtils {
     }
     Widget? widget;
     if (img.isNotEmpty) {
-      widget = Image.asset(
-        'assets/images/$img',
+      widget = SvgPicture.asset(
+        'assets/svgs/$img',
         width: 30.0,
       );
     } else {

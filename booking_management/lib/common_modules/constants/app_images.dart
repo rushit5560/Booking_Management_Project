@@ -51,7 +51,7 @@ class AppImages {
   static const privacyPolicySvgLogo = svgRoot + "privacy_policy_logo.svg";
   static const termsAndCondSvgLogo = svgRoot + "terms_cond_logo.svg";
   static const changePassSvgLogo = svgRoot + "change_password_logo.svg";
-  static const transactionsSvgLogo = svgRoot + "logout_logo.svg";
+  // static const transactionsSvgLogo = svgRoot + "wallet_logo.svg";
   static const profileSvgLogo = svgRoot + "user_profile_logo.svg";
 
   //vendor svgs
@@ -64,6 +64,7 @@ class AppImages {
   static const addResourceSvgLogo = svgRoot + "add_resource.svg";
   static const resourceScheduleSvgLogo = svgRoot + "resource_schedule.svg";
   static const scheduleManageSvgLogo = svgRoot + "schedule_manage_logo.svg";
+  static const manageServicesSvgLogo = svgRoot + "manage_services.svg";
   static const additionalSlotSvgLogo = svgRoot + "addition_slot.svg";
   static const appointReportSvgLogo = svgRoot + "appointments_logo.svg";
   static const invoiceSvgLogo = svgRoot + "invoice_logo.svg";

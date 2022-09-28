@@ -76,7 +76,7 @@ class CustomerDrawer extends StatelessWidget {
 
               UserDetails.isUserLoggedIn == true
                   ? CustomerDrawerSingleItemModule(
-                      img: AppImages.transactionsSvgLogo,
+                      img: AppImages.scheduleManageSvgLogo,
                       name: 'Transactions',
                       customerDrawerOption: CustomerDrawerOption.transaction,
                     )

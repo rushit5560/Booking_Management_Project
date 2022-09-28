@@ -33,6 +33,9 @@ class CustomerReportScreenController extends GetxController {
     log("Customer Report Api Url : $url");
 
     try {
+
+
+
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Customer Report Response : ${response.body}");

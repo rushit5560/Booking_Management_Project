@@ -72,8 +72,20 @@ class UserCardPaymentScreenController extends GetxController {
             'Authorization': 'Bearer ${PaymentKeys.secretKey}',
             'Content-type': 'application/x-www-form-urlencoded'
           });
-      log("response.statusCode: ${response.statusCode}");
-      log("payment intent res body: ${response.body}");
+
+      var resBody = jsonDecode(response.body);
+
+      var resCode = response.statusCode;
+      log("response.statusCode: ${resCode}");
+      log("payment intent res body: $resBody");
+
+      if (resCode != 200) {
+        var errorMsg = resBody["error"]["code"];
+        Get.snackbar("Payment Failed", "Vendor Account has $errorMsg");
+        isLoading(false);
+      } else {
+        isLoading(true);
+      }
 
       // log(response.body.toString());
       return jsonDecode(response.body.toString());

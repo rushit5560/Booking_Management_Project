@@ -58,6 +58,7 @@ class Data {
     required this.frogotToken,
     required this.fcmToken,
     required this.id,
+    required this.fullName,
     required this.userName,
     required this.normalizedUserName,
     required this.email,
@@ -78,6 +79,7 @@ class Data {
   String frogotToken;
   String fcmToken;
   String id;
+  String fullName;
   String userName;
   String normalizedUserName;
   String email;
@@ -98,6 +100,7 @@ class Data {
         frogotToken: json["frogotToken"] ?? "",
         fcmToken: json["fcmToken"] ?? "",
         id: json["id"] ?? "",
+        fullName: json["fullName"] ?? "",
         userName: json["userName"] ?? "",
         normalizedUserName: json["normalizedUserName"] ?? "",
         email: json["email"] ?? "",
@@ -119,6 +122,7 @@ class Data {
         "id": id,
         "fcmToken": fcmToken,
         "userName": userName,
+        "fullName": fullName,
         "normalizedUserName": normalizedUserName,
         "email": email,
         "normalizedEmail": normalizedEmail,

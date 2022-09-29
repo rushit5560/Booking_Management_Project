@@ -58,8 +58,9 @@ class IndexScreenController extends GetxController {
     log("Get Noti Count Api Url : $url");
 
     try {
-      http.Response response =
-          await http.post(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.post(
+        Uri.parse(url),
+      );
       log("status code 121212: ${response.statusCode}");
       NotificationCountModel notificationCountModel =
           NotificationCountModel.fromJson(json.decode(response.body));

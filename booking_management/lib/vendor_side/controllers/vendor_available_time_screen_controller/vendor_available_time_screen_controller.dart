@@ -25,7 +25,6 @@ class VendorAvailableTimeScreenController extends GetxController {
   RxBool isFridayOn = false.obs;
   RxBool isSaturdayOn = false.obs;
 
-
   /// Sunday
   // RxString sundayStartHourTime = "09".obs;
   // RxString sundayStartMinuteTime = "30".obs;
@@ -82,22 +81,23 @@ class VendorAvailableTimeScreenController extends GetxController {
   RxString saturdayStartTime = "00:00".obs;
   RxString saturdayEndTime = "00:00".obs;
 
-
-
   /// Get Available Time
   getVendorAvailableTimeFunction() async {
     isLoading(true);
-    String url = ApiUrl.vendorAvailableTimeApi + "?VendorId=${UserDetails.tableWiseId}";
+    String url =
+        ApiUrl.vendorAvailableTimeApi + "?VendorId=${UserDetails.tableWiseId}";
     log("Get All Vendor API URL : $url");
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Get All Vendor Response : ${response.body}");
 
-      GetVendorAvailableTimeModel getVendorAvailableTimeModel = GetVendorAvailableTimeModel.fromJson(json.decode(response.body));
+      GetVendorAvailableTimeModel getVendorAvailableTimeModel =
+          GetVendorAvailableTimeModel.fromJson(json.decode(response.body));
       isSuccessStatus = getVendorAvailableTimeModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         allAvailableTimeList.clear();
 
         allAvailableTimeList = getVendorAvailableTimeModel.workerList;
@@ -107,126 +107,116 @@ class VendorAvailableTimeScreenController extends GetxController {
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getVendorAvailableTimeFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
   }
-  /// Set Values From API Response
-  void setListValuesFunction(List<AvailableTimeWorkerList> allAvailableTimeList) {
-    if(allAvailableTimeList.isNotEmpty) {
-      for(int i = 0; i < allAvailableTimeList.length; i++) {
 
-        if(allAvailableTimeList[i].day == "Sunday") {
+  /// Set Values From API Response
+  void setListValuesFunction(
+      List<AvailableTimeWorkerList> allAvailableTimeList) {
+    if (allAvailableTimeList.isNotEmpty) {
+      for (int i = 0; i < allAvailableTimeList.length; i++) {
+        if (allAvailableTimeList[i].day == "Sunday") {
           isSundayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             sundayStartTime.value = allAvailableTimeList[i].startTime;
             sundayEndTime.value = allAvailableTimeList[i].endTime;
           }
-        }
-        else if(allAvailableTimeList[i].day == "Monday") {
+        } else if (allAvailableTimeList[i].day == "Monday") {
           isMondayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             mondayStartTime.value = allAvailableTimeList[i].startTime;
             mondayEndTime.value = allAvailableTimeList[i].endTime;
           }
-        }
-        else if(allAvailableTimeList[i].day == "Tuesday") {
+        } else if (allAvailableTimeList[i].day == "Tuesday") {
           isTuesdayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             tuesdayStartTime.value = allAvailableTimeList[i].startTime;
             tuesdayEndTime.value = allAvailableTimeList[i].endTime;
           }
-        }
-        else if(allAvailableTimeList[i].day == "Wednesday") {
+        } else if (allAvailableTimeList[i].day == "Wednesday") {
           isWednesdayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             wednesdayStartTime.value = allAvailableTimeList[i].startTime;
             wednesdayEndTime.value = allAvailableTimeList[i].endTime;
           }
-        }
-        else if(allAvailableTimeList[i].day == "Thursday") {
+        } else if (allAvailableTimeList[i].day == "Thursday") {
           isThursdayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             thursdayStartTime.value = allAvailableTimeList[i].startTime;
             thursdayEndTime.value = allAvailableTimeList[i].endTime;
           }
-        }
-        else if(allAvailableTimeList[i].day == "Friday") {
+        } else if (allAvailableTimeList[i].day == "Friday") {
           isFridayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             fridayStartTime.value = allAvailableTimeList[i].startTime;
             fridayEndTime.value = allAvailableTimeList[i].endTime;
           }
-        }
-        else if(allAvailableTimeList[i].day == "Saturday") {
+        } else if (allAvailableTimeList[i].day == "Saturday") {
           isSaturdayOn.value = allAvailableTimeList[i].isActive;
-          if(allAvailableTimeList[i].isActive == true) {
+          if (allAvailableTimeList[i].isActive == true) {
             saturdayStartTime.value = allAvailableTimeList[i].startTime;
             saturdayEndTime.value = allAvailableTimeList[i].endTime;
           }
         }
-
       }
     }
   }
-
 
   setVendorAvailableTimeFunction() async {
     isLoading(true);
     String url = ApiUrl.vendorSetAvailableTimeApi;
     log("Set Vendor Avail Time API URL : $url");
-    
-    try {
 
+    try {
       List trueList = [];
 
-
-      if(isSundayOn.value) {
+      if (isSundayOn.value) {
         trueList.add({
-          "Day" : "Sunday",
-          "StartTime" : sundayStartTime.value,
-          "EndTime" : sundayEndTime.value
+          "Day": "Sunday",
+          "StartTime": sundayStartTime.value,
+          "EndTime": sundayEndTime.value
         });
       }
-      if(isMondayOn.value) {
+      if (isMondayOn.value) {
         trueList.add({
           "Day": "Monday",
           "StartTime": mondayStartTime.value,
           "EndTime": mondayEndTime.value
         });
       }
-      if(isTuesdayOn.value) {
+      if (isTuesdayOn.value) {
         trueList.add({
           "Day": "Tuesday",
           "StartTime": tuesdayStartTime.value,
           "EndTime": tuesdayEndTime.value
         });
       }
-      if(isWednesdayOn.value) {
+      if (isWednesdayOn.value) {
         trueList.add({
           "Day": "Wednesday",
           "StartTime": wednesdayStartTime.value,
           "EndTime": wednesdayEndTime.value
         });
       }
-      if(isThursdayOn.value) {
+      if (isThursdayOn.value) {
         trueList.add({
           "Day": "Thursday",
           "StartTime": thursdayStartTime.value,
           "EndTime": thursdayEndTime.value
         });
       }
-      if(isFridayOn.value) {
+      if (isFridayOn.value) {
         trueList.add({
           "Day": "Friday",
           "StartTime": fridayStartTime.value,
           "EndTime": fridayEndTime.value
         });
       }
-      if(isSaturdayOn.value) {
+      if (isSaturdayOn.value) {
         trueList.add({
           "Day": "Saturday",
           "StartTime": saturdayStartTime.value,
@@ -246,17 +236,20 @@ class VendorAvailableTimeScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(const Utf8Decoder()).transform(const LineSplitter()).listen((dataLine) {
-        SetVendorAvailableTimeModel setVendorAvailableTimeModel = SetVendorAvailableTimeModel.fromJson(json.decode(dataLine));
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((dataLine) {
+        SetVendorAvailableTimeModel setVendorAvailableTimeModel =
+            SetVendorAvailableTimeModel.fromJson(json.decode(dataLine));
         isSuccessStatus = setVendorAvailableTimeModel.success.obs;
 
-        if(isSuccessStatus.value) {
+        if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: setVendorAvailableTimeModel.message);
         } else {
           log("setVendorAvailableTimeFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
-
       });
 
       /*response.stream.transform(utf8.decoder).listen((value) async {
@@ -272,13 +265,11 @@ class VendorAvailableTimeScreenController extends GetxController {
 
       });*/
 
-
-    } catch(e) {
+    } catch (e) {
       log("setVendorAvailableTimeFunction Error ::: $e");
     } finally {
       isLoading(false);
     }
-
   }
 
   @override
@@ -286,5 +277,4 @@ class VendorAvailableTimeScreenController extends GetxController {
     getVendorAvailableTimeFunction();
     super.onInit();
   }
-
 }

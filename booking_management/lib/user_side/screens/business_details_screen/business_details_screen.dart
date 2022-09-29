@@ -19,9 +19,11 @@ class BusinessDetailScreen extends StatelessWidget {
           children: [
             Obx(
               () => vendorDetailsScreenController.isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
                   : SingleChildScrollView(
-                      // physics: const ClampingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       child: SizedBox(
                         height: Get.size.height + Get.size.height * 0.1,
                         child: Column(

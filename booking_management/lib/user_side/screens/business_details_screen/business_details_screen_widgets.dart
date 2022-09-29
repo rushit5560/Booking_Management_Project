@@ -173,7 +173,7 @@ class OverviewModule extends StatelessWidget {
             child: CircularProgressIndicator(),
           )
         : SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Column(
@@ -769,9 +769,11 @@ class ReviewModule extends StatelessWidget {
     // log('review1: ${screenController.isReviewSelected.value}');
     return Obx(
       () => screenController.isLoading.value
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
           : SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(

@@ -26,25 +26,26 @@ class UserTransactionScreenController extends GetxController {
     log('API token: ${apiHeader.headers}');
 
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response =
+          await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Get User Transaction Response: ${response.body}');
 
-      GetUserTransactionModel getUserTransactionModel = GetUserTransactionModel.fromJson(json.decode(response.body));
+      GetUserTransactionModel getUserTransactionModel =
+          GetUserTransactionModel.fromJson(json.decode(response.body));
       isSuccessStatus = getUserTransactionModel.success.obs;
 
-      if(isSuccessStatus.value) {
+      if (isSuccessStatus.value) {
         transactionList = getUserTransactionModel.workerList;
-        for(int i=0; i < transactionList.length; i++){
+        for (int i = 0; i < transactionList.length; i++) {
           orderDate = transactionList[i].orderDate;
-          String bDate1 = orderDate.substring(0, orderDate.length-17);
+          String bDate1 = orderDate.substring(0, orderDate.length - 17);
           orderDate1 = bDate1;
         }
         log("transactionList : ${transactionList.length}");
       } else {
         log("getTransactionListFunction Else Else");
       }
-
-    } catch(e) {
+    } catch (e) {
       log("getTransactionListFunction Error ::: $e");
     } finally {
       isLoading(false);

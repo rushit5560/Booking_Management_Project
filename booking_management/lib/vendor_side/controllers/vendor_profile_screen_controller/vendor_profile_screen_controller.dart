@@ -424,9 +424,11 @@ class VendorProfileScreenController extends GetxController {
     log('Url : ${{UserDetails.apiToken}}');
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(
+        Uri.parse(url),
+      );
       log('Get All User Details Response : ${response.body}');
+      log('Get All User Details Response : ${json.decode(response.body)}');
 
       VendorProfileDetailsModel getUserDetailsByIdModel =
           VendorProfileDetailsModel.fromJson(json.decode(response.body));

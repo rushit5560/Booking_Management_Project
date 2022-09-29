@@ -23,7 +23,6 @@ class InvoiceScreenController extends GetxController {
   String cstEmail = "";
   String cstPhoneNo = "";
 
-
   List<String> descriptionList = [];
 
   getInvoiceDetailsFunction() async {
@@ -48,13 +47,13 @@ class InvoiceScreenController extends GetxController {
         cstName = "${invoiceDetailsModel.workerList.firstName}";
         cstEmail = "${invoiceDetailsModel.workerList.email}";
         cstPhoneNo = "${invoiceDetailsModel.workerList.phoneNo}";
-
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!");
         log("getInvoiceDetailsFunction Else Else");
       }
     } catch (e) {
       log("getInvoiceDetailsFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }

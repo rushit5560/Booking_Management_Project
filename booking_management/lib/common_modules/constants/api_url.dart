@@ -8,12 +8,12 @@ class ApiUrl {
   // static const apiImagePath = "https://setdaytime.com.au/";
 
   // new hosted api urls
-  // static const apiMainPath = "http://5.189.147.159:7001/";
-  // static const apiImagePath = "http://5.189.147.159:7001/";
+  static const apiMainPath = "http://5.189.147.159:7001/";
+  static const apiImagePath = "http://5.189.147.159:7001/";
 
   // main live api urls
-  static const apiMainPath = "https://setdaytime-uat.azurewebsites.net/";
-  static const apiImagePath = "https://setdaytime-uat.azurewebsites.net/";
+  // static const apiMainPath = "https://setdaytime-uat.azurewebsites.net/";
+  // static const apiImagePath = "https://setdaytime-uat.azurewebsites.net/";
 
   /// Common API
   static const getAllCountriesApi =
@@ -159,7 +159,6 @@ class ApiUrl {
       apiMainPath + "API/SubscribeUserInStripe";
   static const subscriptionSuccessCallApi =
       apiMainPath + "API/SubscriptionSuccess";
-
 
   /// vendor - Available Time
   static const vendorAvailableTimeApi =

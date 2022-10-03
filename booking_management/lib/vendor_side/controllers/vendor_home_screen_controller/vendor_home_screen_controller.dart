@@ -96,7 +96,9 @@ class VendorHomeScreenController extends GetxController {
     try {
       http.Response response = await http.get(
         Uri.parse(url),
+        headers: apiHeader.headers,
       );
+      log("Get Resources api response code : ${response.statusCode}");
       log("Get Resources api response : ${response.body}");
 
       GetBookingResourcesModel getBookingResourcesModel =

@@ -15,33 +15,32 @@ class VendorWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx(
-          ()=> Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const CommonAppBarModule(title: "Wallet", appBarOption: AppBarOption.singleBackButtonOption),
-              const SizedBox(height: 10),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const AvailableBalTextModule(),
-                    const SizedBox(height: 15),
-                    const BalanceAmountModule(),
-                    const WalletSelectableTabModule(),
-                    Expanded(
-                        child: vendorWalletScreenController.isTransactionSelected.value == 0
-                            ? const TransactionsListModule()
-                            : const BankDetailsFormModule()
-                    ),
-                  ],
-                ).commonAllSidePadding(20),
-              ),
-
-            ],
-          )
-        ),
+        child: Obx(() => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const CommonAppBarModule(
+                    title: "Wallet",
+                    appBarOption: AppBarOption.singleBackButtonOption),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AvailableBalTextModule(),
+                      const SizedBox(height: 15),
+                      const BalanceAmountModule(),
+                      const WalletSelectableTabModule(),
+                      Expanded(
+                          child: vendorWalletScreenController
+                                      .isTransactionSelected.value ==
+                                  0
+                              ? const TransactionsListModule()
+                              : const BankDetailsFormModule()),
+                    ],
+                  ).commonAllSidePadding(20),
+                ),
+              ],
+            )),
       ),
     );
   }

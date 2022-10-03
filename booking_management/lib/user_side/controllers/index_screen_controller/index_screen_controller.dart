@@ -55,20 +55,20 @@ class IndexScreenController extends GetxController {
   /// Get Notification Count
   getNotificationCountFunction() async {
     String url = ApiUrl.getNotificationCountApi + "?id=${UserDetails.uniqueId}";
-    log("Get Noti Count Api Url : $url");
+    log("Get Notification Count Api Url : $url");
 
     try {
       http.Response response = await http.post(
         Uri.parse(url),
       );
-      log("status code 121212: ${response.statusCode}");
+      log("Get Notification Count status code : ${response.statusCode}");
       NotificationCountModel notificationCountModel =
           NotificationCountModel.fromJson(json.decode(response.body));
       isSuccessStatus = notificationCountModel.success.obs;
 
       if (isSuccessStatus.value) {
         notiCounter = notificationCountModel.workerList.obs;
-        log("notiCounter : $notiCounter");
+        log("Get Notification Counter : $notiCounter");
       } else {
         log("getNotificationCountFunction Else Else");
       }
@@ -92,6 +92,7 @@ class IndexScreenController extends GetxController {
       NotificationGetModel notificationGetModel =
           NotificationGetModel.fromJson(json.decode(response.body));
       isSuccessStatus = notificationGetModel.success.obs;
+      log("notificationList res body: ${response.body}");
 
       if (isSuccessStatus.value) {
         notificationList.clear();

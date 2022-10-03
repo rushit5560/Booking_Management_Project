@@ -154,7 +154,7 @@ class BookingSummaryModule extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                            "\$${screenController.bookingPrice.value * screenController.quantityValue.value}"),
+                            "${screenController.priceCurrencySymbol} ${screenController.bookingPrice.value * screenController.quantityValue.value}"),
                       ],
                     ).commonSymmetricPadding(horizontal: 10)
                   ],
@@ -350,6 +350,8 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                     .toString(),
                 screenController.bookingId,
                 screenController.vendorAccountStripeId,
+                screenController.priceCurrencySymbol,
+                screenController.quantityValue.value.toString(),
               ],
             );
           } else {

@@ -62,10 +62,10 @@ class VendorCardPaymentScreenController extends GetxController {
     var expMonth = expirationController.text.toString().split("/")[0];
     var expYear = expirationController.text.toString().split("/")[1];
 
-    log(" card number : ${creditCardController.text}");
-    log(" expMonth number : $expMonth");
-    log(" expYear number : $expYear");
-    log(" cvc number : ${cvvController.text}");
+    log("card number : ${creditCardController.text}");
+    log("expMonth number : $expMonth");
+    log("expYear number : $expYear");
+    log("cvc number : ${cvvController.text}");
     log("booking product id is : $bookingSubProdId");
 
     final customerStripeId = await getStripeCustomer();
@@ -102,31 +102,6 @@ class VendorCardPaymentScreenController extends GetxController {
       paymentIntentId: _paymentMethod['id'],
     );
     isLoading(false);
-  }
-
-  Future<dynamic> searchCustomerIfExist() async {
-    String url = 'https://api.stripe.com/v1/customers/search';
-
-    var response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Authorization': 'Bearer ${PaymentKeys.secretKey}',
-        'Content-type': 'application/x-www-form-urlencoded'
-      },
-      body: {
-        "name": UserDetails.userName,
-        "email": UserDetails.email,
-      },
-    );
-    var resBody = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      log("searchCustomerIfExist response  $resBody");
-      return resBody;
-    } else {
-      log("searchCustomerIfExist else error $resBody");
-
-      throw 'Failed to searchCustomerIfExist.';
-    }
   }
 
   Future<dynamic> getStripeCustomer() async {

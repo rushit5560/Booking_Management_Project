@@ -199,7 +199,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                   CommonWidgets.yesOrNoDialog(
                                     context: context,
                                     title: "Are you sure ?",
-                                    body: "You want to delete this resource ",
+                                    body: "You want to delete this resource.",
                                     onYesPressed: () async {
                                       Get.back();
                                       await screenController

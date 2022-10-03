@@ -1,83 +1,88 @@
 import 'dart:convert';
 
-CustomerReportModel customerReportModelFromJson(String str) => CustomerReportModel.fromJson(json.decode(str));
+CustomerReportModel customerReportModelFromJson(String str) =>
+    CustomerReportModel.fromJson(json.decode(str));
 
-String customerReportModelToJson(CustomerReportModel data) => json.encode(data.toJson());
+String customerReportModelToJson(CustomerReportModel data) =>
+    json.encode(data.toJson());
 
 class CustomerReportModel {
-    CustomerReportModel({
-        required this.statusCode,
-        required this.success,
-        required this.data,
-    });
+  CustomerReportModel({
+    required this.statusCode,
+    required this.success,
+    required this.data,
+  });
 
-    int statusCode;
-    bool success;
-    List<CustomerReportData> data;
+  int statusCode;
+  bool success;
+  List<CustomerReportData> data;
 
-    factory CustomerReportModel.fromJson(Map<String, dynamic> json) => CustomerReportModel(
+  factory CustomerReportModel.fromJson(Map<String, dynamic> json) =>
+      CustomerReportModel(
         statusCode: json["statusCode"] ?? 0,
         success: json["success"] ?? false,
-        data: List<CustomerReportData>.from(json["data"].map((x) => CustomerReportData.fromJson(x ?? {}))),
-    );
+        data: List<CustomerReportData>.from(
+            json["data"].map((x) => CustomerReportData.fromJson(x ?? {}))),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "statusCode": statusCode,
         "success": success,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    };
+      };
 }
 
 class CustomerReportData {
-    CustomerReportData({
-        required this.id,
-        required this.bookingId,
-        required this.vendorId,
-        required this.vendor,
-        required this.customer,
-        required this.customerId,
-        required this.bookingFor,
-        required this.bookingForId,
-        required this.bookingForName,
-        required this.startDateTime,
-        required this.endDateTime,
-        required this.firstName,
-        required this.email,
-        required this.phoneNo,
-        required this.notes,
-        required this.status,
-        required this.bookingItems,
-        required this.serviceName,
-        required this.service,
-        required this.price,
-        required this.startDate,
-        required this.endDate,
-    });
+  CustomerReportData({
+    required this.id,
+    required this.bookingId,
+    required this.vendorId,
+    required this.vendor,
+    required this.customer,
+    required this.customerId,
+    required this.bookingFor,
+    required this.bookingForId,
+    required this.bookingForName,
+    required this.startDateTime,
+    required this.endDateTime,
+    required this.firstName,
+    required this.email,
+    required this.phoneNo,
+    required this.notes,
+    required this.status,
+    required this.bookingItems,
+    required this.serviceName,
+    required this.service,
+    required this.price,
+    required this.startDate,
+    required this.endDate,
+  });
 
-    int id;
-    String bookingId;
-    int vendorId;
-    Vendor vendor;
-    Customer customer;
-    String customerId;
-    String bookingFor;
-    String bookingForId;
-    String bookingForName;
-    String startDateTime;
-    String endDateTime;
-    String firstName;
-    String email;
-    String phoneNo;
-    String notes;
-    String status;
-    String bookingItems;
-    String serviceName;
-    String service;
-    String price;
-    String startDate;
-    String endDate;
+  int id;
+  String bookingId;
+  int vendorId;
+  Vendor vendor;
+  Customer customer;
+  String customerId;
+  String bookingFor;
+  String bookingForId;
+  String bookingForName;
+  String startDateTime;
+  String endDateTime;
+  String firstName;
+  String email;
+  String phoneNo;
+  String notes;
+  String status;
+  String bookingItems;
+  String serviceName;
+  String service;
+  String price;
+  String startDate;
+  String endDate;
 
-    factory CustomerReportData.fromJson(Map<String, dynamic> json) => CustomerReportData(
+  factory CustomerReportData.fromJson(Map<String, dynamic> json) =>
+      CustomerReportData(
         id: json["id"] ?? 0,
         bookingId: json["bookingId"] ?? "",
         vendorId: json["vendorId"] ?? 0,
@@ -97,12 +102,12 @@ class CustomerReportData {
         bookingItems: json["bookingItems"] ?? "",
         serviceName: json["serviceName"] ?? "",
         service: json["service"] ?? "",
-        price: json["price"] ?? "",
+        price: json["price"] == "" ? "" : json["price"].toString(),
         startDate: json["startDate"] ?? "",
         endDate: json["endDate"] ?? "",
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "bookingId": bookingId,
         "vendorId": vendorId,
@@ -125,133 +130,133 @@ class CustomerReportData {
         "price": price,
         "startDate": startDate,
         "endDate": endDate,
-    };
+      };
 }
 
 class Vendor {
-    Vendor({
-        required this.id,
-        // required this.categories,
-        required this.categoryId,
-        required this.businessName,
-        required this.businessLogo,
-        required this.street,
-        required this.suburb,
-        required this.postcode,
-        required this.state,
-        required this.country,
-        required this.userName,
-        required this.email,
-        required this.phoneNo,
-        required this.address,
-        required this.isActive,
-        required this.userId,
-        required this.vendorPortal,
-        required this.vendorVerification,
-        required this.businessId,
-        required this.isResource,
-        required this.isPriceDisplay,
-        required this.confirmation,
-        required this.isServiceSlots,
-        required this.latitude,
-        required this.longitude,
-        required this.firstPayment,
-        required this.nextPayment,
-        required this.vendorVerificationDate,
-        // required this.applicationUser,
-        required this.modifiedBy,
-        required this.modifiedOn,
-        // required this.applicationUserModifier,
-        required this.review,
-        required this.rating,
-        required this.vendorWorkingHours,
-        required this.status,
-        required this.category,
-        required this.passwordHash,
-        required this.workingHoursStatus,
-        required this.avilableTime,
-        required this.dDate,
-        required this.duration,
-        required this.startTime,
-        required this.endTime,
-        required this.vendorList,
-        required this.additionalSlot,
-        required this.resourceList,
-        required this.resourceId,
-        required this.service,
-        required this.resource,
-        required this.termsConditions,
-        required this.fullName,
-        required this.stripeId,
-        required this.vendorStripeAccountId,
-        required this.financialInstitutionName,
-        required this.accountName,
-        required this.accountCode,
-        required this.accountNumber,
-        required this.countryList,
-    });
+  Vendor({
+    required this.id,
+    // required this.categories,
+    required this.categoryId,
+    required this.businessName,
+    required this.businessLogo,
+    required this.street,
+    required this.suburb,
+    required this.postcode,
+    required this.state,
+    required this.country,
+    required this.userName,
+    required this.email,
+    required this.phoneNo,
+    required this.address,
+    required this.isActive,
+    required this.userId,
+    required this.vendorPortal,
+    required this.vendorVerification,
+    required this.businessId,
+    required this.isResource,
+    required this.isPriceDisplay,
+    required this.confirmation,
+    required this.isServiceSlots,
+    required this.latitude,
+    required this.longitude,
+    required this.firstPayment,
+    required this.nextPayment,
+    required this.vendorVerificationDate,
+    // required this.applicationUser,
+    required this.modifiedBy,
+    required this.modifiedOn,
+    // required this.applicationUserModifier,
+    required this.review,
+    required this.rating,
+    required this.vendorWorkingHours,
+    required this.status,
+    required this.category,
+    required this.passwordHash,
+    required this.workingHoursStatus,
+    required this.avilableTime,
+    required this.dDate,
+    required this.duration,
+    required this.startTime,
+    required this.endTime,
+    required this.vendorList,
+    required this.additionalSlot,
+    required this.resourceList,
+    required this.resourceId,
+    required this.service,
+    required this.resource,
+    required this.termsConditions,
+    required this.fullName,
+    required this.stripeId,
+    required this.vendorStripeAccountId,
+    required this.financialInstitutionName,
+    required this.accountName,
+    required this.accountCode,
+    required this.accountNumber,
+    required this.countryList,
+  });
 
-    int id;
-    // dynamic categories;
-    int categoryId;
-    String businessName;
-    String businessLogo;
-    String street;
-    String suburb;
-    String postcode;
-    String state;
-    String country;
-    String userName;
-    String email;
-    String phoneNo;
-    String address;
-    bool isActive;
-    String userId;
-    bool vendorPortal;
-    bool vendorVerification;
-    String businessId;
-    bool isResource;
-    bool isPriceDisplay;
-    bool confirmation;
-    bool isServiceSlots;
-    String latitude;
-    String longitude;
-    String firstPayment;
-    String nextPayment;
-    String vendorVerificationDate;
-    // ApplicationUser applicationUser;
-    String modifiedBy;
-    String modifiedOn;
-    // dynamic applicationUserModifier;
-    String review;
-    String rating;
-    String vendorWorkingHours;
-    String status;
-    String category;
-    String passwordHash;
-    String workingHoursStatus;
-    String avilableTime;
-    String dDate;
-    String duration;
-    String startTime;
-    String endTime;
-    String vendorList;
-    String additionalSlot;
-    String resourceList;
-    String resourceId;
-    String service;
-    String resource;
-    bool termsConditions;
-    String fullName;
-    String stripeId;
-    String vendorStripeAccountId;
-    String financialInstitutionName;
-    String accountName;
-    String accountCode;
-    String accountNumber;
-    String countryList;
+  int id;
+  // dynamic categories;
+  int categoryId;
+  String businessName;
+  String businessLogo;
+  String street;
+  String suburb;
+  String postcode;
+  String state;
+  String country;
+  String userName;
+  String email;
+  String phoneNo;
+  String address;
+  bool isActive;
+  String userId;
+  bool vendorPortal;
+  bool vendorVerification;
+  String businessId;
+  bool isResource;
+  bool isPriceDisplay;
+  bool confirmation;
+  bool isServiceSlots;
+  String latitude;
+  String longitude;
+  String firstPayment;
+  String nextPayment;
+  String vendorVerificationDate;
+  // ApplicationUser applicationUser;
+  String modifiedBy;
+  String modifiedOn;
+  // dynamic applicationUserModifier;
+  String review;
+  String rating;
+  String vendorWorkingHours;
+  String status;
+  String category;
+  String passwordHash;
+  String workingHoursStatus;
+  String avilableTime;
+  String dDate;
+  String duration;
+  String startTime;
+  String endTime;
+  String vendorList;
+  String additionalSlot;
+  String resourceList;
+  String resourceId;
+  String service;
+  String resource;
+  bool termsConditions;
+  String fullName;
+  String stripeId;
+  String vendorStripeAccountId;
+  String financialInstitutionName;
+  String accountName;
+  String accountCode;
+  String accountNumber;
+  String countryList;
 
-    factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+  factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
         id: json["id"] ?? 0,
         // categories: json["categories"],
         categoryId: json["categoryId"] ?? 0,
@@ -311,9 +316,9 @@ class Vendor {
         accountCode: json["accountCode"] ?? "",
         accountNumber: json["accountNumber"] ?? "",
         countryList: json["countryList"] ?? "",
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         // "categories": categories,
         "categoryId": categoryId,
@@ -373,9 +378,8 @@ class Vendor {
         "accountCode": accountCode,
         "accountNumber": accountNumber,
         "countryList": countryList,
-    };
+      };
 }
-
 
 class Customer {
   Customer({

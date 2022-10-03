@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/common_ui/model/sign_out_model/sign_out_model.dart';
@@ -16,14 +17,19 @@ import 'package:get/get.dart';
 
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/payment_keys.dart';
+import '../../model/get_payment_id_model/get_payment_id_model.dart';
 
 class UserCardPaymentScreenController extends GetxController {
   String bookingPrice = Get.arguments[0];
   String bookingSubId = Get.arguments[1];
   String vendorStripeAccId = Get.arguments[2];
+  String payCurrencySymbol = Get.arguments[3];
+  String orderQuantity = Get.arguments[4];
   final size = Get.size;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
+
+  ApiHeader apiHeader = ApiHeader();
 
   Map<String, dynamic>? paymentIntentData;
 
@@ -46,12 +52,7 @@ class UserCardPaymentScreenController extends GetxController {
     try {
       Stripe.merchantIdentifier;
 
-      log("vendor acc id is :::");
-      log(vendorStripeAccId);
-      log(vendorStripeAccId);
-      log(vendorStripeAccId);
-      log(vendorStripeAccId);
-      log(vendorStripeAccId);
+      log("vendor acc id is ::: $vendorStripeAccId");
 
       Map<String, dynamic> body = {
         'amount': userPayingAmount.toString(),
@@ -76,7 +77,7 @@ class UserCardPaymentScreenController extends GetxController {
       var resBody = jsonDecode(response.body);
 
       var resCode = response.statusCode;
-      log("response.statusCode: ${resCode}");
+      log("response.statusCode: $resCode");
       log("payment intent res body: $resBody");
 
       if (resCode != 200) {
@@ -109,7 +110,7 @@ class UserCardPaymentScreenController extends GetxController {
       paymentIntentData = await createPaymentIntent(
         userPayingAmount: userPayingAmount,
         adminFeesAmount: adminFeesAmount,
-        currency: "aud",
+        currency: payCurrencySymbol == "\$" ? "aud" : "inr",
       );
 
       log('paymentIntentData: $paymentIntentData');

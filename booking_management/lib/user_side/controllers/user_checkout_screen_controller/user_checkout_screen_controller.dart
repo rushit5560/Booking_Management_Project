@@ -49,6 +49,7 @@ class UserCheckoutScreenController extends GetxController {
   String bookingTime = "";
   String endBookingTime = "";
   String endBookingDate = "";
+  String priceCurrencySymbol = "";
   RxDouble bookingPrice = 10.00.obs;
   int bookingQty = 0;
   int bookingTotalAmount = 0;
@@ -89,6 +90,7 @@ class UserCheckoutScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         // isPriceDisplay = checkoutModel.workerList.isPriceDisplay;
+        phoneFieldController.text = checkoutModel.workerList.phoneNo;
 
         log("worker email : ${checkoutModel.workerList.email}");
         // log("isPriceDisplay : $isPriceDisplay");
@@ -132,6 +134,11 @@ class UserCheckoutScreenController extends GetxController {
         isPriceDisplay =
             checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay;
         stripeID = checkoutSummaryModel.workerList.booking.vendor.stripeId;
+
+        priceCurrencySymbol =
+            checkoutSummaryModel.workerList.booking.vendor.country == "AU"
+                ? "\$"
+                : "₹";
         vendorAccountStripeId = checkoutSummaryModel
             .workerList.booking.vendor.vendorStripeAccountId;
         log("isprice display is : ${checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay}");
@@ -287,9 +294,13 @@ class UserCheckoutScreenController extends GetxController {
         if (isSuccessStatus.value) {
           returnId = confirmCheckoutModel.id;
           log("returnId : $returnId");
-          Get.to(
-            () => BookingSuccessScreen(),
-            arguments: returnId,
+          makeTransactionInDb(returnId).then(
+            (value) {
+              Get.to(
+                () => BookingSuccessScreen(),
+                arguments: returnId,
+              );
+            },
           );
         } else {
           //Fluttertoast.showToast(msg: "Something went wrong!");
@@ -334,6 +345,62 @@ class UserCheckoutScreenController extends GetxController {
     }
   }
 
+  Future<void> makeTransactionInDb(String bookingSuccessId) async {
+    isLoading(true);
+
+    log('book Success Id: $bookingSuccessId');
+    String url = ApiUrl.transactionApi;
+    log("makeTransactionInDb url : $url");
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['bookingId'] = bookingSuccessId;
+      request.fields['FullName'] = UserDetails.userName;
+      request.fields['Email'] = UserDetails.email;
+
+      request.fields['PhoneNo'] = UserDetails.phoneNo;
+      request.fields['Notes'] = "";
+      request.fields['Quantity'] = "";
+      request.fields['UserId'] =
+          UserDetails.isUserLoggedIn ? UserDetails.uniqueId : "";
+
+      // request.fields['sessionId'] = secretKey;
+      // request.fields['paymentIntentld'] = id;
+
+      log("makeTransactionInDb Fields : ${request.fields}");
+      log('makeTransactionInDb headers: ${request.headers}');
+
+      var response = await request.send();
+
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
+        log('makeTransactionInDb response body: $value');
+        GetPaymentIdModel getPaymentIdModel =
+            GetPaymentIdModel.fromJson(json.decode(value));
+        isSuccessStatus = getPaymentIdModel.success.obs;
+
+        log('isSuccessStatus: $isSuccessStatus');
+        if (isSuccessStatus.value) {
+          var transactionId = getPaymentIdModel.workerList.id;
+          var bookingIdGet = getPaymentIdModel.workerList.bookingId;
+          log("transactionId : $transactionId");
+          log("bookingIdGet : $bookingIdGet");
+        } else {
+          // Fluttertoast.showToast(msg: "Something went wrong!");
+          log("makeTransactionInDb Else Else");
+        }
+      });
+    } catch (e) {
+      log("makeTransactionInDb Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
   @override
   void onInit() {
     if (UserDetails.isUserLoggedIn == true) {
@@ -347,7 +414,6 @@ class UserCheckoutScreenController extends GetxController {
       fNameFieldController.text = userName;
       emailFieldController.text = userEmail;
     }
-
     getCheckoutFunction();
 
     // log("selectedResourceIsEvent : $selectedResourceIsEvent");

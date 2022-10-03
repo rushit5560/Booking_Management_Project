@@ -39,21 +39,20 @@ class VendorScheduleTimeScreenController extends GetxController {
     String url = ApiUrl.vendorGetAllResourcesApi +
         "?VendorId=${UserDetails.tableWiseId}";
     log('Url : $url');
-    Map<String, String> headers = <String, String>{
-      'Authorization': UserDetails.apiToken
-    };
-    log('headers: $headers');
 
     try {
-      http.Response response =
-          await http.post(Uri.parse(url), headers: headers);
-      log('Response : ${response.body}');
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+      log('getAllResourceAPI Response st code : ${response.statusCode}');
+      log('getAllResourceAPI Response : ${response.body}');
 
       GetAllResorcesListModel getAllResorcesListModelModel =
           GetAllResorcesListModel.fromJson(json.decode(response.body));
       isSuccessStatus = getAllResorcesListModelModel.success.obs;
 
-      log("status: $isSuccessStatus");
+      log("getAllResourceAPI status: $isSuccessStatus");
 
       if (isSuccessStatus.value) {
         getResourceList = getAllResorcesListModelModel.workerList;
@@ -64,11 +63,13 @@ class VendorScheduleTimeScreenController extends GetxController {
         //   await getResourcesTimeListFunction(resId: getResourceList[i].id.toString());
         // }
       } else {
-        log('SignIn False False');
+        log('getAllResourceAPI False False');
         Get.snackbar("${getAllResorcesListModelModel.success}", '');
       }
     } catch (e) {
-      log('SignIn Error : $e');
+      log(' getAllResourceAPI Error : $e');
+
+      rethrow;
     } finally {
       isLoading(false);
       // await getAllResourcesByIdFunction();

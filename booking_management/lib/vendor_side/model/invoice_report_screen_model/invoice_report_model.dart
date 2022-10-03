@@ -99,7 +99,8 @@ class InvoiceReportData {
         createdOn: json["createdOn"] ?? "",
         modifiedBy: json["modifiedBy"] ?? "",
         modifiedOn: json["modifiedOn"] ?? "",
-        applicationUserCreator: ApplicationUserCreator.fromJson(json["applicationUserCreator"] ?? {}),
+        applicationUserCreator: ApplicationUserCreator.fromJson(
+            json["applicationUserCreator"] ?? {}),
         // applicationUserModifier: json["applicationUserModifier"] ?? "",
         bookingId: json["bookingId"] ?? "",
         paymentIntentId: json["paymentIntentId"] ?? "",
@@ -243,7 +244,7 @@ class Order {
   int id;
   String bookingId;
   String orderDate;
-  double price;
+  String price;
   String paidBy;
   // ApplicationUser applicationUserCreator;
 
@@ -251,7 +252,7 @@ class Order {
         id: json["id"] ?? 0,
         bookingId: json["bookingId"] ?? "",
         orderDate: json["orderDate"] ?? "",
-        price: double.parse(json["price"].toString()),
+        price: json["price"] == "" ? "" : json["price"].toString(),
         paidBy: json["paidBy"] ?? "",
         // applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"]),
       );
@@ -265,7 +266,6 @@ class Order {
         // "applicationUserCreator": applicationUserCreator.toJson(),
       };
 }
-
 
 class ApplicationUserCreator {
   ApplicationUserCreator({
@@ -316,53 +316,54 @@ class ApplicationUserCreator {
   // bool lockoutEnabled;
   // int accessFailedCount;
 
-  factory ApplicationUserCreator.fromJson(Map<String, dynamic> json) => ApplicationUserCreator(
-    // apiToken: json["apiToken"],
-    // frogotToken: json["frogotToken"],
-    // fcmToken: json["fcmToken"],
-    // termsConditions: json["termsConditions"],
-    fullName: json["fullName"] ?? "",
-    // returnUrl: json["returnUrl"],
-    // externalLogins: json["externalLogins"],
-    // id: json["id"],
-    // userName: json["userName"],
-    // normalizedUserName: json["normalizedUserName"],
-    // email: json["email"],
-    // normalizedEmail: json["normalizedEmail"],
-    // emailConfirmed: json["emailConfirmed"],
-    // passwordHash: json["passwordHash"],
-    // securityStamp: json["securityStamp"],
-    // concurrencyStamp: json["concurrencyStamp"],
-    // phoneNumber: json["phoneNumber"],
-    // phoneNumberConfirmed: json["phoneNumberConfirmed"],
-    // twoFactorEnabled: json["twoFactorEnabled"],
-    // lockoutEnd: json["lockoutEnd"],
-    // lockoutEnabled: json["lockoutEnabled"],
-    // accessFailedCount: json["accessFailedCount"],
-  );
+  factory ApplicationUserCreator.fromJson(Map<String, dynamic> json) =>
+      ApplicationUserCreator(
+        // apiToken: json["apiToken"],
+        // frogotToken: json["frogotToken"],
+        // fcmToken: json["fcmToken"],
+        // termsConditions: json["termsConditions"],
+        fullName: json["fullName"] ?? "",
+        // returnUrl: json["returnUrl"],
+        // externalLogins: json["externalLogins"],
+        // id: json["id"],
+        // userName: json["userName"],
+        // normalizedUserName: json["normalizedUserName"],
+        // email: json["email"],
+        // normalizedEmail: json["normalizedEmail"],
+        // emailConfirmed: json["emailConfirmed"],
+        // passwordHash: json["passwordHash"],
+        // securityStamp: json["securityStamp"],
+        // concurrencyStamp: json["concurrencyStamp"],
+        // phoneNumber: json["phoneNumber"],
+        // phoneNumberConfirmed: json["phoneNumberConfirmed"],
+        // twoFactorEnabled: json["twoFactorEnabled"],
+        // lockoutEnd: json["lockoutEnd"],
+        // lockoutEnabled: json["lockoutEnabled"],
+        // accessFailedCount: json["accessFailedCount"],
+      );
 
   Map<String, dynamic> toJson() => {
-    // "apiToken": apiToken,
-    // "frogotToken": frogotToken,
-    // "fcmToken": fcmToken,
-    // "termsConditions": termsConditions,
-    "fullName": fullName,
-    // "returnUrl": returnUrl,
-    // "externalLogins": externalLogins,
-    // "id": id,
-    // "userName": userName,
-    // "normalizedUserName": normalizedUserName,
-    // "email": email,
-    // "normalizedEmail": normalizedEmail,
-    // "emailConfirmed": emailConfirmed,
-    // "passwordHash": passwordHash,
-    // "securityStamp": securityStamp,
-    // "concurrencyStamp": concurrencyStamp,
-    // "phoneNumber": phoneNumber,
-    // "phoneNumberConfirmed": phoneNumberConfirmed,
-    // "twoFactorEnabled": twoFactorEnabled,
-    // "lockoutEnd": lockoutEnd,
-    // "lockoutEnabled": lockoutEnabled,
-    // "accessFailedCount": accessFailedCount,
-  };
+        // "apiToken": apiToken,
+        // "frogotToken": frogotToken,
+        // "fcmToken": fcmToken,
+        // "termsConditions": termsConditions,
+        "fullName": fullName,
+        // "returnUrl": returnUrl,
+        // "externalLogins": externalLogins,
+        // "id": id,
+        // "userName": userName,
+        // "normalizedUserName": normalizedUserName,
+        // "email": email,
+        // "normalizedEmail": normalizedEmail,
+        // "emailConfirmed": emailConfirmed,
+        // "passwordHash": passwordHash,
+        // "securityStamp": securityStamp,
+        // "concurrencyStamp": concurrencyStamp,
+        // "phoneNumber": phoneNumber,
+        // "phoneNumberConfirmed": phoneNumberConfirmed,
+        // "twoFactorEnabled": twoFactorEnabled,
+        // "lockoutEnd": lockoutEnd,
+        // "lockoutEnabled": lockoutEnabled,
+        // "accessFailedCount": accessFailedCount,
+      };
 }

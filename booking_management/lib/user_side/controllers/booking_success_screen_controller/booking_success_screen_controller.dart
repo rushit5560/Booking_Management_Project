@@ -37,63 +37,62 @@ class BookingSuccessScreenController extends GetxController {
   /// Db Notification Module
   String message = "";
 
-  //make transaction From payment in DB
-  Future<void> makeTransactionInDb() async {
-    isLoading(true);
+  // Future<void> makeTransactionInDb() async {
+  //   isLoading(true);
 
-    log('Success Id: $successId');
-    String url = ApiUrl.transactionApi;
-    log("makeTransactionInDb url : $url");
+  //   log('Success Id: $successId');
+  //   String url = ApiUrl.transactionApi;
+  //   log("makeTransactionInDb url : $url");
 
-    try {
-      var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+  //   try {
+  //     var request = http.MultipartRequest('POST', Uri.parse(url));
+  //     request.headers.addAll(apiHeader.headers);
 
-      request.fields['bookingId'] = successId;
-      request.fields['FullName'] = UserDetails.userName;
-      request.fields['Email'] = UserDetails.email;
+  //     request.fields['bookingId'] = successId;
+  //     request.fields['FullName'] = UserDetails.userName;
+  //     request.fields['Email'] = UserDetails.email;
 
-      request.fields['PhoneNo'] = UserDetails.phoneNo;
-      request.fields['Notes'] = "";
-      request.fields['Quantity'] = "";
-      request.fields['UserId'] =
-          UserDetails.isUserLoggedIn ? UserDetails.uniqueId : "";
+  //     request.fields['PhoneNo'] = UserDetails.phoneNo;
+  //     request.fields['Notes'] = "";
+  //     request.fields['Quantity'] = "";
+  //     request.fields['UserId'] =
+  //         UserDetails.isUserLoggedIn ? UserDetails.uniqueId : "";
 
-      // request.fields['sessionId'] = secretKey;
-      // request.fields['paymentIntentld'] = id;
+  //     // request.fields['sessionId'] = secretKey;
+  //     // request.fields['paymentIntentld'] = id;
 
-      log("makeTransactionInDb Fields : ${request.fields}");
-      log('makeTransactionInDb headers: ${request.headers}');
+  //     log("makeTransactionInDb Fields : ${request.fields}");
+  //     log('makeTransactionInDb headers: ${request.headers}');
 
-      var response = await request.send();
+  //     var response = await request.send();
 
-      response.stream
-          .transform(const Utf8Decoder())
-          .transform(const LineSplitter())
-          .listen((value) async {
-        log('makeTransactionInDb response body: $value');
-        GetPaymentIdModel getPaymentIdModel =
-            GetPaymentIdModel.fromJson(json.decode(value));
-        isSuccessStatus = getPaymentIdModel.success.obs;
+  //     response.stream
+  //         .transform(const Utf8Decoder())
+  //         .transform(const LineSplitter())
+  //         .listen((value) async {
+  //       log('makeTransactionInDb response body: $value');
+  //       GetPaymentIdModel getPaymentIdModel =
+  //           GetPaymentIdModel.fromJson(json.decode(value));
+  //       isSuccessStatus = getPaymentIdModel.success.obs;
 
-        log('isSuccessStatus: $isSuccessStatus');
-        if (isSuccessStatus.value) {
-          var transactionId = getPaymentIdModel.workerList.id;
-          var bookingIdGet = getPaymentIdModel.workerList.bookingId;
-          log("transactionId : $transactionId");
-          log("bookingIdGet : $bookingIdGet");
-        } else {
-          // Fluttertoast.showToast(msg: "Something went wrong!");
-          log("makeTransactionInDb Else Else");
-        }
-      });
-    } catch (e) {
-      log("makeTransactionInDb Error ::: $e");
-    } finally {
-      // isLoading(false);
-      getBookingSuccessFunction();
-    }
-  }
+  //       log('isSuccessStatus: $isSuccessStatus');
+  //       if (isSuccessStatus.value) {
+  //         var transactionId = getPaymentIdModel.workerList.id;
+  //         var bookingIdGet = getPaymentIdModel.workerList.bookingId;
+  //         log("transactionId : $transactionId");
+  //         log("bookingIdGet : $bookingIdGet");
+  //       } else {
+  //         // Fluttertoast.showToast(msg: "Something went wrong!");
+  //         log("makeTransactionInDb Else Else");
+  //       }
+  //     });
+  //   } catch (e) {
+  //     log("makeTransactionInDb Error ::: $e");
+  //   } finally {
+  //     // isLoading(false);
+  //     getBookingSuccessFunction();
+  //   }
+  // }
 
   /// Getting Booking Success
   getBookingSuccessFunction() async {
@@ -237,7 +236,7 @@ class BookingSuccessScreenController extends GetxController {
   void onInit() {
     log('Sucees Id: $successId');
 
-    makeTransactionInDb();
+    getBookingSuccessFunction();
     // getBookingSuccessFunction();
     super.onInit();
   }

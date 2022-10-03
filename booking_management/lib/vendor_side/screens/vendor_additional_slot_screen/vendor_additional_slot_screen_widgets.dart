@@ -125,7 +125,7 @@ class AdditionalSlotListModule extends StatelessWidget {
                         CommonWidgets.yesOrNoDialog(
                           context: context,
                           title: "Are You Sure ?",
-                          body: "You want to delete this resource ",
+                          body: "You want to delete this additional slot.",
                           onYesPressed: () async {
                             Get.back();
                             await screenController

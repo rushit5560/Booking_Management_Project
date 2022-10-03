@@ -285,6 +285,7 @@ class HomeScreenController extends GetxController {
           GetFavouriteVendorModel.fromJson(json.decode(response.body));
       isSuccessStatus = getFavouriteVendorModel.success.obs;
 
+      log("Favourite vendor List API res body  : ${response.body}");
       if (isSuccessStatus.value) {
         favouriteVendorList.clear();
         favouriteVendorList = getFavouriteVendorModel.data;

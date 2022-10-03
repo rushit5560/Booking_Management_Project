@@ -93,7 +93,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               ),
             ),
             Text(
-              "\$ $userPrice",
+              "${cardScreenController.payCurrencySymbol} $userPrice",
               style: TextStyle(
                 color: AppColors.colorGreyIconLight,
                 fontSize: 16,
@@ -116,7 +116,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
                 ),
               ),
               Text(
-                "\$ $adminPrice",
+                "${cardScreenController.payCurrencySymbol} $adminPrice",
                 style: TextStyle(
                   color: AppColors.colorGreyIconLight,
                   fontSize: 16,
@@ -139,7 +139,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               ),
             ),
             Text(
-              "\$ ${bookPrice.toString()}",
+              "${cardScreenController.payCurrencySymbol} ${bookPrice.toString()}",
               style: TextStyle(
                 color: AppColors.blackColor,
                 fontSize: 19,

@@ -38,9 +38,7 @@ class UserCheckoutScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         customAppbar(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        // const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

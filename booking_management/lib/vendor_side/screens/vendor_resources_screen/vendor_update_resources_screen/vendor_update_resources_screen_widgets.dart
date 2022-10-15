@@ -43,7 +43,7 @@ class UpdateResourceFormModule extends StatelessWidget {
           ],
         ),
       ),
-    ).commonAllSidePadding(10);
+    ).commonSymmetricPadding(horizontal: 12, vertical: 15);
   }
 }
 
@@ -213,7 +213,7 @@ class ResourceDetailsModule extends StatelessWidget {
       ),
       borderSide: BorderSide(
         color: AppColors.whiteColor,
-        width: 0.1,
+        width: 0,
       ),
     );
     return Column(
@@ -235,7 +235,7 @@ class ResourceDetailsModule extends StatelessWidget {
                 decoration: BoxDecoration(
                   // color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: AppColors.colorLightGrey),
+                  // border: Border.all(color: AppColors.colorLightGrey),
                   boxShadow: [
                     BoxShadow(
                       color: AppColors.colorLightGrey,

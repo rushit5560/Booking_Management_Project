@@ -236,8 +236,10 @@ class VendorSubscriptionPlanScreenController extends GetxController {
     }
   }
 
-  cancelSubscriptionPlanFunction(
-      {required String productId, required String id}) async {
+  cancelSubscriptionPlanFunction({
+    required String productId,
+    required String id,
+  }) async {
     isLoading(true);
     String url = ApiUrl.deleteSubscriptionPlanApi +
         "?userId=${UserDetails.uniqueId}" +
@@ -245,10 +247,14 @@ class VendorSubscriptionPlanScreenController extends GetxController {
         "&ProductId=$productId";
     log("Cancel Subscription Api Url : $url");
 
+    log("headers :  ${apiHeader.headers}");
+
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("response : ${response.body}");
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+      log("Cancel Subscription response body : ${response.body}");
 
       DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
           DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));

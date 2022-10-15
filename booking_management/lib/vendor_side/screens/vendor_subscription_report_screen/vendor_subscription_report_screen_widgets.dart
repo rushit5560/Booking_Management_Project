@@ -13,7 +13,7 @@ class SubscriptionReportListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenController.subscriptionReportList.isEmpty
+    return screenController.subscriptionReportList == []
         ? const Center(child: Text("No data available!"))
         : ListView.builder(
             itemCount: screenController.subscriptionReportList.length,
@@ -28,7 +28,6 @@ class SubscriptionReportListModule extends StatelessWidget {
   }
 
   Widget _subscriptionListTile(SubscriptionData singleItem) {
-
     DateTime date = DateTime.parse(singleItem.transactionDate);
     log("Day : ${date.day}");
     log("Month : ${date.month}");

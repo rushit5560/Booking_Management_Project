@@ -90,18 +90,17 @@ class VendorScheduleTimeScreenController extends GetxController {
       request.fields['ResourceId'] = "${selectResourceValue.id}";
       request.fields['StartTime'] = selectedDate.value;
 
-      log("Fields : ${request.fields}");
-      log('request.headers: ${request.headers}');
+      log("getAllSLots Fields : ${request.fields}");
+      log('getAllSLots request.headers: ${request.headers}');
 
       var response = await request.send();
       log('getAllSLots status code: ${response.statusCode}');
-      log('getAllSLots : $response');
 
       response.stream
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((value) async {
-        log("value ::: $value");
+        log("getAllSlots value ::: $value");
         GetAllScheduleTimeModel getAllScheduleTimeModel =
             GetAllScheduleTimeModel.fromJson(json.decode(value));
         isSuccessStatus = getAllScheduleTimeModel.success.obs;
@@ -122,6 +121,8 @@ class VendorScheduleTimeScreenController extends GetxController {
       });
     } catch (e) {
       log("getAllSLotsFunction Error ::: $e");
+
+      rethrow;
     } finally {
       isLoading(false);
     }

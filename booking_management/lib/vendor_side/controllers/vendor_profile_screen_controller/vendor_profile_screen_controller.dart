@@ -151,11 +151,6 @@ class VendorProfileScreenController extends GetxController {
     String url = ApiUrl.vendorEditProfileApi;
     log('Url : $url');
 
-    Map<String, String> headers = <String, String>{
-      'Authorization': UserDetails.apiToken
-    };
-    log('UserDetails.apiToken: ${UserDetails.apiToken}');
-
     try {
       if (file != null) {
         var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -168,7 +163,7 @@ class VendorProfileScreenController extends GetxController {
         request.files
             .add(await http.MultipartFile.fromPath("file", file!.path));
 
-        request.headers.addAll(headers);
+        request.headers.addAll(apiHeader.headers);
 
         request.fields['BusinessName'] =
             businessNameTextFieldController.text.trim();
@@ -227,7 +222,7 @@ class VendorProfileScreenController extends GetxController {
         //
         // var length = await file!.length();
 
-        request.headers.addAll(headers);
+        request.headers.addAll(apiHeader.headers);
 
         request.fields['BusinessName'] =
             businessNameTextFieldController.text.trim();
@@ -316,7 +311,7 @@ class VendorProfileScreenController extends GetxController {
   }
 
   getDataFromPrefs() async {
-    isLoading(true);
+    // isLoading(true);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
     prefs.getString(sharedPreferenceData.apiTokenKey) ?? "";
@@ -369,7 +364,6 @@ class VendorProfileScreenController extends GetxController {
     log("UserDetails.businessId : ${UserDetails.businessId}");
 
     isLoading(false);
-    loadUI();
   }
 
   getAllBusinessTypeList() async {
@@ -418,7 +412,7 @@ class VendorProfileScreenController extends GetxController {
 
   /// Get User Details By Id
   getUserDetailsById() async {
-    isLoading(true);
+    // isLoading(true);
     String url = ApiUrl.getUserDetailsByIdApi + "?id=${UserDetails.uniqueId}";
     log('Url : $url');
     log('Url : ${{UserDetails.apiToken}}');
@@ -428,7 +422,6 @@ class VendorProfileScreenController extends GetxController {
         Uri.parse(url),
       );
       log('Get All User Details Response : ${response.body}');
-      log('Get All User Details Response : ${json.decode(response.body)}');
 
       VendorProfileDetailsModel getUserDetailsByIdModel =
           VendorProfileDetailsModel.fromJson(json.decode(response.body));
@@ -463,7 +456,7 @@ class VendorProfileScreenController extends GetxController {
         businessDropDownValue!.name =
             getUserDetailsByIdModel.data.categories.name;
         businessDropDownValue!.id = getUserDetailsByIdModel.data.categories.id;
-        slotDuration = slotDurationValue.value;
+        slotDurationValue.value = slotDurationValue.value;
         selectedLatitude.value = getUserDetailsByIdModel.data.latitude == ""
             ? UserDetails.latitude
             : getUserDetailsByIdModel.data.latitude;
@@ -485,7 +478,7 @@ class VendorProfileScreenController extends GetxController {
         );
 
         log("kGooglePlex : $kGooglePlex");
-        log('slotDuration: $slotDuration');
+        log('slotDuration: ${slotDurationValue.value}');
 
         //log('businessLists : ${businessTypeLists.length}');
 
@@ -508,7 +501,8 @@ class VendorProfileScreenController extends GetxController {
     } catch (e) {
       log('Get All User Details False False: $e');
     } finally {
-      isLoading(false);
+      getDataFromPrefs();
+      // isLoading(false);
     }
   }
 
@@ -546,7 +540,6 @@ class VendorProfileScreenController extends GetxController {
   void onInit() {
     //await getDataFromPrefs();
     getAllBusinessTypeList();
-    getDataFromPrefs();
 
     googlePlace = GooglePlace(ApiUrl.googleApiKey);
 

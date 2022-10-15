@@ -180,7 +180,7 @@ class BookingItems {
   factory BookingItems.fromJson(Map<String, dynamic> json) => BookingItems(
         id: json["id"] ?? 0,
         bookingId: json["bookingId"] ?? "",
-        price: double.parse(json["price"] ?? ""),
+        price: double.parse((json["price"] ?? 0).toString()),
         quantity: json["quantity"] ?? 0,
         booking: json["booking"] ?? "",
       );

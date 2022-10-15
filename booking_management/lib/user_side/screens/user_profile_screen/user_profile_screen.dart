@@ -22,8 +22,9 @@ class UserProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const CommonAppBarModule(
-                        title: "Profile",
-                        appBarOption: AppBarOption.singleBackButtonOption),
+                      title: "Profile",
+                      appBarOption: AppBarOption.singleBackButtonOption,
+                    ),
                     Expanded(
                       child: ProfileDetailsModule(),
                     )

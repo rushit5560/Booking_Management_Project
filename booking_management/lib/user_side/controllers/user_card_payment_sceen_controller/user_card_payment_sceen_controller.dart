@@ -25,6 +25,7 @@ class UserCardPaymentScreenController extends GetxController {
   String vendorStripeAccId = Get.arguments[2];
   String payCurrencySymbol = Get.arguments[3];
   String orderQuantity = Get.arguments[4];
+  String bookingUserName = Get.arguments[5];
   final size = Get.size;
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -100,12 +101,15 @@ class UserCardPaymentScreenController extends GetxController {
   Future<void> initPaymentSheet(
       {context, userPayingAmount, adminFeesAmount}) async {
     try {
+      isLoading(true);
       print(bookingPrice);
 
       final checkoutController = Get.find<UserCheckoutScreenController>();
       var price = double.parse(bookingPrice);
 
+      log("booking UserName is : $bookingUserName");
       log("price passing is : $price");
+      log("price symbol is : $payCurrencySymbol");
 
       paymentIntentData = await createPaymentIntent(
         userPayingAmount: userPayingAmount,
@@ -124,7 +128,9 @@ class UserCardPaymentScreenController extends GetxController {
         paymentSheetParameters: SetupPaymentSheetParameters(
           //client_secret
           paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          merchantDisplayName: UserDetails.userName,
+          merchantDisplayName: UserDetails.userName == ''
+              ? bookingUserName
+              : UserDetails.userName,
           customerId: paymentIntentData!['customer'],
           customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
           customFlow: true,

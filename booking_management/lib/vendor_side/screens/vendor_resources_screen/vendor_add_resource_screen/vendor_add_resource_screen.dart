@@ -6,23 +6,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VendorAddResourceScreen extends StatelessWidget {
-   VendorAddResourceScreen({Key? key}) : super(key: key);
-  final vendorResourcesScreenController = Get.find<VendorResourcesScreenController>();
+  VendorAddResourceScreen({Key? key}) : super(key: key);
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx(()=>
-        vendorResourcesScreenController.isLoading.value ?
-            const Center(child: CircularProgressIndicator()) :
-           Column(
-            children: [
-              const CommonAppBarModule(title: "Add Resources", appBarOption: AppBarOption.singleBackButtonOption),
-              const SizedBox(height: 10),
-              Expanded(child: AddResourceFormModule()),
-            ],
-          ),
+        child: Obx(
+          () => vendorResourcesScreenController.isLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    const CommonAppBarModule(
+                      title: "Add Resources",
+                      appBarOption: AppBarOption.singleBackButtonOption,
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: AddResourceFormModule(),
+                    ),
+                  ],
+                ),
         ),
       ),
     );

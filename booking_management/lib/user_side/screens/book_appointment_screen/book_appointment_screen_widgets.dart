@@ -1137,7 +1137,7 @@ class AdditionalSlotDropDownModule extends StatelessWidget {
           }).toList(),
           onChanged: (newValue) {
             screenController.additionalSlotWorkerList = newValue!;
-            log("selectAdditionalSlotDuration : ${screenController.additionalSlotWorkerList}");
+            log("selectAdditionalSlotDuration : ${screenController.additionalSlotWorkerList.name}");
             screenController.loadUI();
           },
         ),
@@ -1437,10 +1437,10 @@ class BookButtonModule extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () async {
-            await screenController.signInWithGoogleFunction();
-          },
+        Tooltip(
+          message: "This feature is coming soon",
+          preferBelow: true,
+          triggerMode: TooltipTriggerMode.tap,
           child: Container(
             height: 30,
             width: 30,
@@ -1452,11 +1452,26 @@ class BookButtonModule extends StatelessWidget {
             ),
           ),
         ),
+        // GestureDetector(
+        //   onTap: () async {
+        //     await screenController.signInWithGoogleFunction();
+        //   },
+        //   child: Container(
+        //     height: 30,
+        //     width: 30,
+        //     decoration: const BoxDecoration(
+        //       image: DecorationImage(
+        //         image: AssetImage(AppImages.googleLoginImg),
+        //         fit: BoxFit.cover,
+        //       ),
+        //     ),
+        //   ),
+        // ),
         const SizedBox(width: 60),
-        GestureDetector(
-          onTap: () async {
-            await screenController.signInWithFacebookFunction();
-          },
+        Tooltip(
+          message: "This feature is coming soon",
+          preferBelow: true,
+          triggerMode: TooltipTriggerMode.tap,
           child: Container(
             height: 30,
             width: 30,
@@ -1468,6 +1483,22 @@ class BookButtonModule extends StatelessWidget {
             ),
           ),
         ),
+
+        // GestureDetector(
+        //   onTap: () async {
+        //     await screenController.signInWithFacebookFunction();
+        //   },
+        //   child: Container(
+        //     height: 30,
+        //     width: 30,
+        //     decoration: const BoxDecoration(
+        //       image: DecorationImage(
+        //         image: AssetImage(AppImages.fbLoginImg),
+        //         fit: BoxFit.cover,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -1515,6 +1546,7 @@ class BookButtonModule extends StatelessWidget {
   Widget guestButtonModule() {
     return GestureDetector(
       onTap: () async {
+        Get.back();
         if (screenController.isServiceSlot.value) {
           await screenController.bookSelectedSlotFunction(
               userName: "", email: "");

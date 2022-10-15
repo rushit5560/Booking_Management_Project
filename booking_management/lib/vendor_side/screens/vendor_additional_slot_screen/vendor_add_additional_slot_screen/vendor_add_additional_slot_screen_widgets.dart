@@ -20,21 +20,24 @@ class AddAdditionalSlotFormModule extends StatelessWidget {
     return SingleChildScrollView(
       child: Form(
         key: vendorAdditionalSlotScreenController.additionalSlotAddFormKey,
-        child: Column(
-          children: [
-            // AdditionalSlotNameFieldModule(),
-            const SizedBox(height: 20),
-            AdditionalSlotTimeDurationModule(),
-            const SizedBox(height: 20),
-            AdditionalSlotPriceFieldModule(),
-            const SizedBox(height: 20),
-            AdditionalSlotShortDesFieldModule(),
-            const SizedBox(height: 20),
-            AdditionalSlotLongDesFieldModule(),
-            const SizedBox(height: 30),
-            AdditionalSlotCreateButton(),
-            const SizedBox(height: 10),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Column(
+            children: [
+              // AdditionalSlotNameFieldModule(),
+              const SizedBox(height: 20),
+              AdditionalSlotTimeDurationModule(),
+              const SizedBox(height: 20),
+              AdditionalSlotPriceFieldModule(),
+              const SizedBox(height: 20),
+              AdditionalSlotShortDesFieldModule(),
+              const SizedBox(height: 20),
+              AdditionalSlotLongDesFieldModule(),
+              const SizedBox(height: 30),
+              AdditionalSlotCreateButton(),
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ).commonAllSidePadding(10),
     );

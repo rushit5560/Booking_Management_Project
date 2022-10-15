@@ -241,10 +241,10 @@ class UserCheckoutScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.checkoutSubmitApi;
     log("Checkout Submit func after purchase : $url");
-    int durationVar = 0;
+    int quantityVar = 1;
 
     if (isEvent == true) {
-      durationVar = quantityValue.value;
+      quantityVar = quantityValue.value;
     }
 
     try {
@@ -260,7 +260,7 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['IsPriceDisplay'] = "$isPriceDisplay";
         request.fields['Notes'] = notesFieldController.text.trim();
         request.fields['PhoneNo'] = phoneFieldController.text;
-        request.fields['Quantity'] = "$durationVar";
+        request.fields['Quantity'] = "$quantityVar";
         request.fields['ResourceId'] = "$selectedResource";
         request.fields['UserId'] = UserDetails.uniqueId;
       } else {
@@ -272,7 +272,7 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['IsPriceDisplay'] = "$isPriceDisplay";
         request.fields['Notes'] = notesFieldController.text.trim();
         request.fields['PhoneNo'] = phoneFieldController.text;
-        request.fields['Quantity'] = "$durationVar";
+        request.fields['Quantity'] = "$quantityVar";
         request.fields['ResourceId'] = "$selectedResource";
       }
       // request.fields['UserName'] = fNameFieldController.text.trim();
@@ -294,7 +294,11 @@ class UserCheckoutScreenController extends GetxController {
         if (isSuccessStatus.value) {
           returnId = confirmCheckoutModel.id;
           log("returnId : $returnId");
-          makeTransactionInDb(returnId).then(
+          makeTransactionInDb(
+            bookingSuccessId: returnId,
+            quantityValue: quantityVar.toString(),
+            userBookingNotes: notesFieldController.text.trim(),
+          ).then(
             (value) {
               Get.to(
                 () => BookingSuccessScreen(),
@@ -345,10 +349,16 @@ class UserCheckoutScreenController extends GetxController {
     }
   }
 
-  Future<void> makeTransactionInDb(String bookingSuccessId) async {
+  Future<void> makeTransactionInDb({
+    required String bookingSuccessId,
+    required String quantityValue,
+    required String userBookingNotes,
+  }) async {
     isLoading(true);
 
     log('book Success Id: $bookingSuccessId');
+    log('booking quantity value is : $quantityValue');
+    log('booking notes text is : $userBookingNotes');
     String url = ApiUrl.transactionApi;
     log("makeTransactionInDb url : $url");
 
@@ -356,15 +366,26 @@ class UserCheckoutScreenController extends GetxController {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['bookingId'] = bookingSuccessId;
-      request.fields['FullName'] = UserDetails.userName;
-      request.fields['Email'] = UserDetails.email;
+      if (UserDetails.isUserLoggedIn) {
+        request.fields['bookingId'] = bookingSuccessId;
+        request.fields['FullName'] = UserDetails.userName;
+        request.fields['Email'] = UserDetails.email;
 
-      request.fields['PhoneNo'] = UserDetails.phoneNo;
-      request.fields['Notes'] = "";
-      request.fields['Quantity'] = "";
-      request.fields['UserId'] =
-          UserDetails.isUserLoggedIn ? UserDetails.uniqueId : "";
+        request.fields['PhoneNo'] = UserDetails.phoneNo;
+        request.fields['Notes'] = userBookingNotes;
+        request.fields['Quantity'] = quantityValue;
+        request.fields['UserId'] = UserDetails.uniqueId;
+      } else {
+        request.fields['bookingId'] = bookingSuccessId;
+        request.fields['FullName'] = UserDetails.userName;
+        request.fields['Email'] = UserDetails.email;
+
+        request.fields['PhoneNo'] = UserDetails.phoneNo;
+        request.fields['Notes'] = userBookingNotes;
+        request.fields['Quantity'] = quantityValue;
+        // request.fields['UserId'] =
+        //     UserDetails.isUserLoggedIn ? UserDetails.uniqueId : "";
+      }
 
       // request.fields['sessionId'] = secretKey;
       // request.fields['paymentIntentld'] = id;

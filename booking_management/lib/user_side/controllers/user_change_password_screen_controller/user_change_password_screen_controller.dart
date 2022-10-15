@@ -34,10 +34,7 @@ class UserChangePasswordScreenController extends GetxController {
     String url = ApiUrl.userChangePasswordApi;
     log('Url : $url');
 
-    // Map<String, String> headers= <String,String>{
-    //   'Authorization': UserDetails.apiToken
-    // };
-    log('UserDetails.apiToken: ${UserDetails.apiToken}');
+    log('changePassword headers: ${apiHeader.headers}');
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -49,11 +46,11 @@ class UserChangePasswordScreenController extends GetxController {
       request.fields['NewPassword'] = newPasswordController.text.trim();
       request.fields['Verifypassword'] = confirmPasswordController.text.trim();
 
-      log('request.fields: ${request.fields}');
+      log('changePassword fields ${request.fields}');
       // log('request.files: ${request.files}');
 
       var response = await request.send();
-      log('response: ${response.request}');
+      log('changePassword response: ${response.request}');
 
       response.stream
           .transform(const Utf8Decoder())
@@ -61,7 +58,7 @@ class UserChangePasswordScreenController extends GetxController {
           .listen((value) {
         UserChangePasswordModel response1 =
             UserChangePasswordModel.fromJson(json.decode(value));
-        log('response1 ::::::${response1.statusCode}');
+        log('changePassword st code ::::::${response1.message}');
         isStatus = response1.statusCode.obs;
         log('status : $isStatus');
         log('success : ${response1.statusCode}');
@@ -71,6 +68,7 @@ class UserChangePasswordScreenController extends GetxController {
           //log("Vendor Id: ${UserDetails().vendorId}");
           Fluttertoast.showToast(msg: response1.message);
           clearChangePasswordFieldsFunction();
+          Get.back();
           //Get.off(SignInScreen(), transition: Transition.zoom);
 
         } else {

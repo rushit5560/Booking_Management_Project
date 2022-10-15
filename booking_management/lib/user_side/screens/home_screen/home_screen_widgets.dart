@@ -969,7 +969,8 @@ class PartialCategoryListModule extends StatelessWidget {
                   singleItem.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500, fontSize: 14),
                 ),
               ),
             ),

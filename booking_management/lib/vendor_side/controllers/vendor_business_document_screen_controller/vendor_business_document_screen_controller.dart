@@ -19,6 +19,8 @@ class VendorBusinessDocumentScreenController extends GetxController {
   List<DocumentWorkerList> businessDocumentList = [];
   File? file;
 
+  
+
   /// Add Doc Fields
   RxString selectedDocTypeValue = "Attach photo identification".obs;
   List<String> docTypeList = [

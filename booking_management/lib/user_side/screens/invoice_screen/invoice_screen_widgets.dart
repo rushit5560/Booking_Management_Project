@@ -111,7 +111,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       ),
                       Text(
                         screenController.invoiceDetailsData.vendor!.email,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
@@ -154,7 +154,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         //     :
 
                         screenController.cstEmail,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
@@ -283,7 +283,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           // fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                          fontSize: 14,
                         ),
                       );
                     },
@@ -298,7 +298,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       // fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -311,7 +311,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       // fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 14,
                     ),
                   ),
                 ),

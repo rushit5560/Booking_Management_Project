@@ -752,12 +752,12 @@ class BusinessListModule extends StatelessWidget {
                                       )
                                     ],
                                   ),
-                                  screenController.distance == "Distance"
+                                  /*screenController.distance == "Distance"
                                       ? Container()
                                       : Text(
                                           "${screenController.distance} km",
                                           style: const TextStyle(fontSize: 13),
-                                        ),
+                                        ),*/
                                 ],
                               ),
                               const SizedBox(height: 5),

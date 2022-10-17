@@ -246,7 +246,7 @@ class SignInScreenController extends GetxController {
               // if (isSub == false) {
               log("navigate to subscription plan screen");
               Get.offAll(
-                () => VendorSubscriptionPlanScreen(),
+                () => VendorIndexScreen(),
                 arguments: SubscriptionOption.direct,
               );
               // } else {

@@ -7,29 +7,28 @@ import 'package:get/get.dart';
 
 import 'vendor_subscription_report_screen_widgets.dart';
 
-
 class VendorSubscriptionReportScreen extends StatelessWidget {
   VendorSubscriptionReportScreen({Key? key}) : super(key: key);
-  final vendorSubscriptionReportScreenController = Get.put(VendorSubscriptionReportScreenController());
+  final vendorSubscriptionReportScreenController =
+      Get.put(VendorSubscriptionReportScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-          ()=> vendorSubscriptionReportScreenController.isLoading.value
-              ? const CustomCircularLoaderModule()
-              : SafeArea(
-            child: Column(
-              children: [
-                const CommonAppBarModule(
-                  title: "Subscription Report",
-                  appBarOption: AppBarOption.singleBackButtonOption,
+        () => vendorSubscriptionReportScreenController.isLoading.value
+            ? const CustomCircularLoaderModule()
+            : SafeArea(
+                child: Column(
+                  children: [
+                    const CommonAppBarModule(
+                      title: "Subscription Report",
+                      appBarOption: AppBarOption.singleBackButtonOption,
+                    ),
+                    Expanded(child: SubscriptionReportListModule()),
+                  ],
                 ),
-
-                Expanded(child: SubscriptionReportListModule()),
-              ],
-            ),
-          ),
+              ),
       ),
     );
   }

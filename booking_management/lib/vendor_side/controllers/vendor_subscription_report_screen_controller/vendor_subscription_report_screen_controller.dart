@@ -18,25 +18,25 @@ class VendorSubscriptionReportScreenController extends GetxController {
   getSubscriptionReportFunction() async {
     isLoading(true);
     String url = ApiUrl.subscriptionReportApi + "?id=${UserDetails.uniqueId}";
-    log("subscription Report Api Url : $url");
+    log("getSubscriptionReport Api Url : $url");
 
     try {
       var request = http.MultipartRequest('GET', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
       var response = await request.send();
-      log("st code : ${response.statusCode}");
-      log("headers : ${response.request!.headers}");
+      log("getSubscriptionReport st code : ${response.statusCode}");
+      log("getSubscriptionReport headers : ${response.request!.headers}");
 
       response.stream
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((value) {
-        log("response body is : $value");
+        log("getSubscriptionReport response body is : $value");
         VendorSubscriptionReportModel vendorSubscriptionReportModel =
             VendorSubscriptionReportModel.fromJson(json.decode(value));
         isSuccessStatus = vendorSubscriptionReportModel.success.obs;
-        log('isSuccessStatus: $isSuccessStatus');
+        log('getSubscriptionReport isSuccessStatus: $isSuccessStatus');
 
         if (isSuccessStatus.value) {
           subscriptionReportList.clear();
@@ -44,7 +44,8 @@ class VendorSubscriptionReportScreenController extends GetxController {
           // print(vendorSubscriptionReportModel)
 
           subscriptionReportList = vendorSubscriptionReportModel.workerList;
-          log("subscriptionReportList : ${subscriptionReportList.length}");
+          log("getSubscriptionReport List : ${subscriptionReportList.length}");
+
           // log("transaction by : ${subscriptionReportList}");
         } else {
           log("getSubscriptionReportFunction Else Else");
@@ -97,8 +98,8 @@ class VendorSubscriptionReportScreenController extends GetxController {
   // }
 
   @override
-  void onInit() {
-    getSubscriptionReportFunction();
+  Future<void> onInit() async {
     super.onInit();
+    await getSubscriptionReportFunction();
   }
 }

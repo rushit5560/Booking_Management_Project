@@ -8,6 +8,7 @@ import 'package:booking_management/common_modules/field_decorations.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -70,8 +71,12 @@ class ResourceProfileModule extends StatelessWidget {
                     height: 100, width: 100, fit: BoxFit.fill))
             : ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(AppImages.profileImg,
-                    height: 100, width: 100, fit: BoxFit.fill)),
+                child: SvgPicture.asset(AppImages.resourceScheduleSvgLogo,
+                    height: 100, width: 100, fit: BoxFit.fill),
+
+                //  Image.asset(AppImages.profileImg,
+                //     height: 100, width: 100, fit: BoxFit.fill)
+              ),
         GestureDetector(
           onTap: () {
             openGallery();

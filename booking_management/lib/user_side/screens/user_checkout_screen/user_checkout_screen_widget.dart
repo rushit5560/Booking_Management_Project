@@ -352,6 +352,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                 screenController.vendorAccountStripeId,
                 screenController.priceCurrencySymbol,
                 screenController.quantityValue.value.toString(),
+                screenController.fNameFieldController.text.toString(),
               ],
             );
           } else {

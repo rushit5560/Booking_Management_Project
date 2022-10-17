@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 class VendorProfileScreen extends StatelessWidget {
   VendorProfileScreen({Key? key}) : super(key: key);
 
-  final vendorProfileScreenController = Get.put(VendorProfileScreenController());
+  final vendorProfileScreenController =
+      Get.put(VendorProfileScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,8 @@ class VendorProfileScreen extends StatelessWidget {
                       : vendorProfileScreenController.isMapShow.value
                           ? MapShowModule()
                           : SingleChildScrollView(
-                              child: VendorProfileDetailsModule().commonAllSidePadding(20),
+                              child: VendorProfileDetailsModule()
+                                  .commonAllSidePadding(20),
                             ),
                 ),
               )

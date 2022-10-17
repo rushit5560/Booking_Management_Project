@@ -264,8 +264,11 @@ class VendorHomeScreenController extends GetxController {
     log("get appointment details url : $url");
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+      log("getBookingAvailabilityFunction header : ${apiHeader.headers}");
       log("getBookingAvailabilityFunction Response : ${response.body}");
 
       BookingAvailabilityModel bookingAvailabilityModel =

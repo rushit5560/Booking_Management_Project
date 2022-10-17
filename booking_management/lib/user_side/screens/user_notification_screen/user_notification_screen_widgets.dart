@@ -46,7 +46,7 @@ class NotificationListModule extends StatelessWidget {
         log("time is : $time");
 
         return Container(
-          margin: const EdgeInsets.only(bottom: 5),
+          margin: const EdgeInsets.only(bottom: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             boxShadow: [

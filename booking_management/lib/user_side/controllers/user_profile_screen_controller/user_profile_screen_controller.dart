@@ -43,11 +43,8 @@ class UserProfileScreenController extends GetxController {
     String url = ApiUrl.userProfileApi;
     log("Update User Profile url: $url");
 
-    // Map<String, String> headers = <String, String>{
-    //   'Authorization': UserDetails.apiToken
-    // };
+
     log('UserDetails.userid: ${UserDetails.uniqueId}');
-    log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
     try {
       if (file != null) {
@@ -178,8 +175,10 @@ class UserProfileScreenController extends GetxController {
     log('header: ${apiHeader.headers}');
 
     try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
       log('Get All User Details Response : ${response.body}');
 
       UserProfileDetailsModel userProfileDetailsModel =

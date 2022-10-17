@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -71,6 +72,18 @@ class BusinessDocumentList extends StatelessWidget {
           color: AppColors.colorLightGrey1),
       child: Row(
         children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12),
+            ),
+            child: Image.network(
+              ApiUrl.apiImagePath + singleItem.documentPath,
+              height: 45,
+              width: 45,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +125,8 @@ class BusinessDocumentList extends StatelessWidget {
               const SizedBox(height: 8),
               GestureDetector(
                 onTap: () {
-                  if(singleItem.isVerify == false && singleItem.isCancel == true) {
+                  if (singleItem.isVerify == false &&
+                      singleItem.isCancel == true) {
                     _rejectBottomSheet(context, singleItem);
                   }
                 },
@@ -137,12 +151,13 @@ class BusinessDocumentList extends StatelessWidget {
             ],
           ),
         ],
-      ).commonAllSidePadding(20),
+      ).commonAllSidePadding(16),
     );
   }
 
   /// Bottom Sheet
-  Future _bottomSheetModule(BuildContext context, DocumentWorkerList singleItem) {
+  Future _bottomSheetModule(
+      BuildContext context, DocumentWorkerList singleItem) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -218,7 +233,8 @@ class BusinessDocumentList extends StatelessWidget {
     );
   }
 
-  Future _rejectBottomSheet(BuildContext context, DocumentWorkerList singleItem) {
+  Future _rejectBottomSheet(
+      BuildContext context, DocumentWorkerList singleItem) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -259,5 +275,4 @@ class BusinessDocumentList extends StatelessWidget {
       ],
     );
   }
-
 }

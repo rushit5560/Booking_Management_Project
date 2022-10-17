@@ -158,7 +158,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
 
             log("user price : $uPrice");
             log("admin price : $aPrice");
-            cardScreenController.isLoading(true);
+
             await cardScreenController.initPaymentSheet(
               context: context,
               adminFeesAmount: aPrice,

@@ -177,12 +177,15 @@ class VendorServicesScreenController extends GetxController {
       request.fields['VendorId'] = "${UserDetails.tableWiseId}";
       request.fields['Id'] = "$selectedItemId";
 
-      log("Fields : ${request.fields}");
+      log("Fields123 : ${request.fields}");
       log("headers : ${apiHeader.headers}");
 
       var response = await request.send();
 
-      response.stream.transform(utf8.decoder).listen((value) {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) {
         UpdateVendorServiceModel updateVendorServiceModel =
             UpdateVendorServiceModel.fromJson(json.decode(value));
         isSuccessStatus = updateVendorServiceModel.success.obs;

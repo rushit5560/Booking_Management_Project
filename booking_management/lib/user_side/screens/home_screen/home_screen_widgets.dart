@@ -763,7 +763,9 @@ class UpcomingAppointmentModule extends StatelessWidget {
               ? SelectDateModule()
               : Container(),*/
 
-        ListView.builder(
+        screenController.allUpcomingAppointmentList.isEmpty
+        ? const Center(child: Text('No Upcoming Appointment'))
+        : ListView.builder(
           itemCount: screenController.allUpcomingAppointmentList.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

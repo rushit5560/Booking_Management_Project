@@ -82,7 +82,11 @@ class BusinessDetailsScreenController extends GetxController {
       Fluttertoast.showToast(msg: "Something went wrong!");
     } finally {
       // isLoading(false);
-      await getFavVendorFunction(vendorDetailsData!.vendor!.id);
+      if(UserDetails.isUserLoggedIn == true) {
+        await getFavVendorFunction(vendorDetailsData!.vendor!.id);
+      } else {
+        await getVendorReviewFunction();
+      }
     }
   }
 

@@ -57,7 +57,7 @@ class ResourceProfileModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      clipBehavior: Clip.none,
+      // clipBehavior: Clip.none,
       children: [
         Container(
           height: 150,
@@ -86,7 +86,7 @@ class ResourceProfileModule extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
           ),
-        )
+        ),
 
         /*ClipRRect(
             borderRadius: BorderRadius.circular(10),
@@ -115,7 +115,7 @@ class ResourceProfileModule extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Image.network(vendorResourcesScreenController.updatePhotoUrl,
                 height: 100, width: 100, fit: BoxFit.fill))*/
-        ,
+
         GestureDetector(
           onTap: () {
             openGallery();
@@ -396,6 +396,7 @@ class EventCheckBoxModule extends StatelessWidget {
                     .updateResourceCapacityFieldController
                     .clear();
               }
+              log('updateEvent123 : ${vendorResourcesScreenController.updateEvent.value}');
               vendorResourcesScreenController.isLoading(false);
               // if(vendorResourcesScreenController.isSundayOn.value == false) {
               //   vendorResourcesScreenController.sundayStartTime.value = "00:00";

@@ -151,9 +151,9 @@ class VendorProfileScreenController extends GetxController {
     String url = ApiUrl.vendorEditProfileApi;
     log('Url : $url');
 
-    Map<String, String> headers = <String, String>{
-      'Authorization': UserDetails.apiToken
-    };
+    // Map<String, String> headers = <String, String>{
+    //   'Authorization': UserDetails.apiToken
+    // };
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
     try {
@@ -168,7 +168,7 @@ class VendorProfileScreenController extends GetxController {
         request.files
             .add(await http.MultipartFile.fromPath("file", file!.path));
 
-        request.headers.addAll(headers);
+        request.headers.addAll(apiHeader.headers);
 
         request.fields['BusinessName'] =
             businessNameTextFieldController.text.trim();
@@ -203,6 +203,7 @@ class VendorProfileScreenController extends GetxController {
             .transform(const Utf8Decoder())
             .transform(const LineSplitter())
             .listen((value) {
+              log('value123 : $value');
           VendorEditProfileModel response1 =
               VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
@@ -227,7 +228,7 @@ class VendorProfileScreenController extends GetxController {
         //
         // var length = await file!.length();
 
-        request.headers.addAll(headers);
+        request.headers.addAll(apiHeader.headers);
 
         request.fields['BusinessName'] =
             businessNameTextFieldController.text.trim();
@@ -440,6 +441,8 @@ class VendorProfileScreenController extends GetxController {
       if (isStatus.value == 200) {
         log("Success");
         vendorProfile = getUserDetailsByIdModel.data.businessLogo;
+        log('vendorProfileApi : ${getUserDetailsByIdModel.data.businessLogo}');
+        log('vendorProfile : $vendorProfile');
         businessIdTextFieldController.text =
             getUserDetailsByIdModel.data.businessId;
         categoryId.value = getUserDetailsByIdModel.data.categoryId.toString();
@@ -457,6 +460,12 @@ class VendorProfileScreenController extends GetxController {
             getUserDetailsByIdModel.data.postcode;
         slotDurationValue.value =
             getUserDetailsByIdModel.data.duration.toString();
+
+        for(int i =0; i < timeSlotDurationList.length; i++) {
+          if(timeSlotDurationList[i].value == slotDurationValue.value) {
+            timeSlotDurationModel = timeSlotDurationList[i];
+          }
+        }
 
         currentSlotDuration.value =
             getUserDetailsByIdModel.data.duration.toString();

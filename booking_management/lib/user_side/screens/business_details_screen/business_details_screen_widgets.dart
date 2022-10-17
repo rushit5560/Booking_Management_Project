@@ -179,26 +179,27 @@ class OverviewModule extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                   vendorName(),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                   ratting(),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                   description(),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   priceAndLocation(),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   viewMapButtonModule(),
-                  const SizedBox(height: 8),
+                  // const SizedBox(height: 8),
                   // serviceDropDown(context),
                   //SizedBox(height: 25,),
                   //ReviewTextFieldAndButtonModule(),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   // resourcesList(),
                   businessHoursModule(),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   bookAppointmentButtonModule(),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -833,9 +834,7 @@ class ReviewModule extends StatelessWidget {
         color: AppColors.colorGreyIconDark,
         width: 1,
       ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(12),
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(12)),
     );
     return Form(
       key: screenController.reviewFormKey,
@@ -911,7 +910,9 @@ class ReviewModule extends StatelessWidget {
   }
 
   Widget showReviewList() {
-    return ListView.builder(
+    return screenController.reviewList.isEmpty
+    ? const Center(child: Text('Vendor has no reviews.'))
+    : ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         itemCount: screenController.reviewList.length,

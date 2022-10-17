@@ -86,6 +86,8 @@ class BankInfoScreenController extends GetxController {
     }
   }
 
+
+
   @override
   void onInit() {
     financialInstituteNameController.text = UserDetails.institutionName;

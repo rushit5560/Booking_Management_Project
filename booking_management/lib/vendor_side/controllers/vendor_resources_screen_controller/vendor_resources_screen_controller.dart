@@ -249,9 +249,9 @@ class VendorResourcesScreenController extends GetxController {
         request.fields['CreatedBy'] = UserDetails.uniqueId;
         request.fields['Capacity'] =
             updateResourceCapacityFieldController.text.trim();
-        request.fields['isEvent'] = "$updateEvent";
+        request.fields['isEvent'] = "${updateEvent.value}";
 
-        log("Fields : ${request.fields}");
+        log("Fields123 : ${request.fields}");
         log("image Files len: ${request.files.length}");
         log("image Filename: ${request.files.first.filename}");
         log("headers : ${apiHeader.headers}");
@@ -292,11 +292,11 @@ class VendorResourcesScreenController extends GetxController {
         request.fields['CreatedBy'] = UserDetails.uniqueId;
         request.fields['Capacity'] =
             updateResourceCapacityFieldController.text.trim();
-        request.fields['isEvent'] = "$isEvent";
+        request.fields['isEvent'] = "${updateEvent.value}";
 
         log("image is : $updatePhotoUrl");
 
-        log("Fields : ${request.fields}");
+        log("Fields1234 : ${request.fields}");
         log("headers : ${apiHeader.headers}");
 
         var response = await request.send();
@@ -352,7 +352,8 @@ class VendorResourcesScreenController extends GetxController {
             getResourceDetailsModel.workerList.price.toString();
         updateResourceCapacityFieldController.text =
             getResourceDetailsModel.workerList.capacity.toString();
-        updateEvent = getResourceDetailsModel.workerList.isEvent.obs;
+        updateEvent.value = getResourceDetailsModel.workerList.isEvent;
+        log('isEvent123 : ${getResourceDetailsModel.workerList.isEvent}');
         updatePhotoUrl =
             "${ApiUrl.apiImagePath}${getResourceDetailsModel.workerList.image}";
         log("updatePhotoUrl : $updatePhotoUrl");

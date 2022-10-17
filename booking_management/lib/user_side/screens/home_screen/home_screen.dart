@@ -1,13 +1,13 @@
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/user_side/screens/user_appointment_list_screen/user_appointment_list_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/custom_drawer/customer_drawer/customer_drawer.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
 import 'home_screen_widgets.dart';
+
+
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -72,8 +72,8 @@ class HomeScreen extends StatelessWidget {
                           : Container(),
                       const SizedBox(height: 15),
 
-                      homeScreenController.allCategoryList == null
-                          ? SizedBox()
+                      homeScreenController.allCategoryList.isEmpty
+                          ? const SizedBox()
                           : PartialCategoryListModule()
                               .commonSymmetricPadding(horizontal: 20),
                       const SizedBox(height: 15),

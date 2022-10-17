@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:http_parser/http_parser.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/api_header.dart';
 import '../../model/user_profile_screen_model/update_user_profile_model.dart';
 import '../../model/user_profile_screen_model/user_profile_details_model.dart';
+
+
 
 class UserProfileScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -43,9 +43,9 @@ class UserProfileScreenController extends GetxController {
     String url = ApiUrl.userProfileApi;
     log("Update User Profile url: $url");
 
-    Map<String, String> headers = <String, String>{
-      'Authorization': UserDetails.apiToken
-    };
+    // Map<String, String> headers = <String, String>{
+    //   'Authorization': UserDetails.apiToken
+    // };
     log('UserDetails.userid: ${UserDetails.uniqueId}');
     log('UserDetails.apiToken: ${UserDetails.apiToken}');
 
@@ -61,7 +61,7 @@ class UserProfileScreenController extends GetxController {
 
         request.files
             .add(await http.MultipartFile.fromPath("image", file!.path));
-        request.headers.addAll(headers);
+        request.headers.addAll(apiHeader.headers);
 
         request.fields['Id'] = UserDetails.tableWiseId.toString();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();
@@ -73,8 +73,6 @@ class UserProfileScreenController extends GetxController {
           'image',
           stream,
           length,
-
-          //filename: "",
         );
 
         // var multiFile = await http.MultipartFile.fromPath(
@@ -122,7 +120,7 @@ class UserProfileScreenController extends GetxController {
         //
         // var length = await file!.length();
 
-        request.headers.addAll(headers);
+        request.headers.addAll(apiHeader.headers);
 
         request.fields['Id'] = UserDetails.tableWiseId.toString();
         request.fields['PhoneNo'] = mobileTextFieldController.text.trim();

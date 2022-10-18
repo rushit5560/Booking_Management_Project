@@ -730,11 +730,11 @@ class BusinessListModule extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        singleItem.rating.toString(),
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                      const SizedBox(width: 5),
+                                      // Text(
+                                      //   singleItem.rating.toString(),
+                                      //   style: const TextStyle(fontSize: 12),
+                                      // ),
+                                      // const SizedBox(width: 5),
                                       RatingBar.builder(
                                         initialRating: double.parse(
                                             singleItem.rating.toString()),

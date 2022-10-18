@@ -8,6 +8,7 @@ class AppColors {
   static Color accentColor = Color(0xFF21bede);
   static Color whiteColor = Color.fromARGB(255, 255, 255, 255);
   static Color blackColor = Color.fromARGB(255, 0, 0, 0);
+  static Color redColor = Color.fromARGB(255, 240, 14, 14);
 
   static Color colorGreyIconLight = Color.fromARGB(255, 174, 174, 174);
   static Color colorGreyIconDark = Color.fromARGB(255, 95, 95, 95);

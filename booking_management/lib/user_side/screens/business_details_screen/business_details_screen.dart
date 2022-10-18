@@ -23,7 +23,7 @@ class BusinessDetailScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     )
                   : SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
+                      physics: const AlwaysScrollableScrollPhysics(),
                       child: SizedBox(
                         height: Get.size.height + Get.size.height * 0.1,
                         child: Column(

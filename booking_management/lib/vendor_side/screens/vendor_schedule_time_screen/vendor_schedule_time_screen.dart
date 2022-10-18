@@ -40,6 +40,8 @@ class _VendorScheduleTimeScreenState extends State<VendorScheduleTimeScreen> {
                             const SizedBox(height: 10),
                             ResourcesDropDownModule(),
                             const SizedBox(height: 15),
+                            ResourcesTimeTypeModule(),
+                            const SizedBox(height: 15),
                             TableModule(),
                             vendorScheduleTimeScreenController
                                     .isCalenderShow.value

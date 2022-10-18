@@ -23,6 +23,11 @@ class VendorScheduleTimeScreenController extends GetxController {
     WorkerList1(resourceName: "Select Resources", id: 0)
   ];
   WorkerList1 selectResourceValue = WorkerList1();
+  List<String> selectResourceTimeTypeList = [
+    "Hours",
+    "Days",
+  ];
+  RxString selectResourceTimeType = "Hours".obs;
 
   RxBool isCalenderShow = false.obs;
   RxString selectedDate = "".obs;
@@ -57,6 +62,9 @@ class VendorScheduleTimeScreenController extends GetxController {
       if (isSuccessStatus.value) {
         getResourceList = getAllResorcesListModelModel.workerList;
         selectResourceValue = getResourceList[0];
+        if (selectResourceValue.isEvent == true) {
+          selectResourceTimeType.value = "Days";
+        }
         log('getResourceList: $getResourceList');
 
         // for(int i = 0; i < getResourceList.length; i++) {

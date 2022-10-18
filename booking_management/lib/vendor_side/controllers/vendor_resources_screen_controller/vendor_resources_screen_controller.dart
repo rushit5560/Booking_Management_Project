@@ -10,11 +10,14 @@ import 'package:booking_management/vendor_side/model/vendor_get_all_resources_li
 import 'package:booking_management/vendor_side/model/vendor_get_all_resources_list_model/get_vendor_service_details_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_get_all_resources_list_model/update_vendor_resource_model.dart';
 import 'package:booking_management/vendor_side/model/vendor_get_all_resources_list_model/vendor_get_all_resources_model.dart';
+import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
+
+import '../../../common_modules/constants/app_colors.dart';
 
 class VendorResourcesScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -42,9 +45,18 @@ class VendorResourcesScreenController extends GetxController {
   TextEditingController updateResourceCapacityFieldController =
       TextEditingController();
 
+  /// criteria add values
+  TextEditingController criteriaNameController =
+      TextEditingController();
+
   /// isEvent checkbox value
   RxBool isEvent = false.obs;
   RxBool updateEvent = false.obs;
+
+  RxList<Widget> criteriaList = <Widget>[].obs;
+
+  /// isAdditional criteria required checkbox value
+  RxBool isAdditionalCriteria = false.obs;
 
   File? addFile;
   File? file;

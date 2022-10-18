@@ -47,6 +47,56 @@ class ResourcesDropDownModule extends StatelessWidget {
             screenController.isLoading(true);
             screenController.selectResourceValue = newValue!;
             log("selectTimeDuration : ${screenController.selectResourceValue}");
+
+            if (screenController.selectResourceValue.isEvent == true) {
+              screenController.selectResourceTimeType.value = "Days";
+            } else {
+              screenController.selectResourceTimeType.value = "Hours";
+            }
+            // vendorServicesScreenController.loadUI();
+            screenController.isLoading(false);
+          },
+        ),
+      ).commonSymmetricPadding(horizontal: 12),
+    );
+  }
+}
+
+class ResourcesTimeTypeModule extends StatelessWidget {
+  ResourcesTimeTypeModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VendorScheduleTimeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: screenController.selectResourceTimeType.value,
+          items: screenController.selectResourceTimeTypeList
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+                style: const TextStyle(color: Colors.black),
+              ),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            screenController.isLoading(true);
+            screenController.selectResourceTimeType.value = newValue!;
+            log("selectTimeDuration : ${screenController.selectResourceTimeType.value}");
             // vendorServicesScreenController.loadUI();
             screenController.isLoading(false);
           },
@@ -98,6 +148,8 @@ class TableModule extends StatelessWidget {
 }
 
 class ResourcesSelectDateModule extends StatelessWidget {
+  ResourcesSelectDateModule({Key? key}) : super(key: key);
+
   final screenController = Get.find<VendorScheduleTimeScreenController>();
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
@@ -108,10 +160,10 @@ class ResourcesSelectDateModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Select Date",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
+        // const Text(
+        //   "Select Date",
+        //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        // ),
         const SizedBox(height: 10),
         Material(
           elevation: 2,
@@ -121,117 +173,122 @@ class ResourcesSelectDateModule extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: TableCalendar(
-              focusedDay: focusedDay,
-              firstDay: DateTime.now(),
-              lastDay: DateTime(2050),
-              calendarFormat: format,
-              rangeStartDay: DateTime.now(),
-              onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                selectedDay = selectDay;
-                focusedDay = focusDay;
-                String month = "";
-                if (selectedDay.month == 1) {
-                  month = "january";
-                } else if (selectedDay.month == 2) {
-                  month = "February";
-                } else if (selectedDay.month == 3) {
-                  month = "March";
-                } else if (selectedDay.month == 4) {
-                  month = "April";
-                } else if (selectedDay.month == 5) {
-                  month = "May";
-                } else if (selectedDay.month == 6) {
-                  month = "June";
-                } else if (selectedDay.month == 7) {
-                  month = "July";
-                } else if (selectedDay.month == 8) {
-                  month = "August";
-                } else if (selectedDay.month == 9) {
-                  month = "September";
-                } else if (selectedDay.month == 10) {
-                  month = "October";
-                } else if (selectedDay.month == 11) {
-                  month = "November";
-                } else if (selectedDay.month == 12) {
-                  month = "December";
-                }
-                screenController.selectedDate.value =
-                    "${selectedDay.day}-$month-${selectedDay.year}";
-                screenController.isCalenderShow.value =
-                    !screenController.isCalenderShow.value;
-                screenController.loadUI();
-                // log('selectedDay :: $selectedDay');
-                // log('focusedDay :: $focusedDay');
-              },
+            child: Column(
+              children: [
+                TableCalendar(
+                  focusedDay: focusedDay,
+                  firstDay: DateTime.now(),
+                  lastDay: DateTime(2050),
+                  calendarFormat: format,
+                  rangeStartDay: DateTime.now(),
+                  onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                    selectedDay = selectDay;
+                    focusedDay = focusDay;
+                    String month = "";
+                    if (selectedDay.month == 1) {
+                      month = "january";
+                    } else if (selectedDay.month == 2) {
+                      month = "February";
+                    } else if (selectedDay.month == 3) {
+                      month = "March";
+                    } else if (selectedDay.month == 4) {
+                      month = "April";
+                    } else if (selectedDay.month == 5) {
+                      month = "May";
+                    } else if (selectedDay.month == 6) {
+                      month = "June";
+                    } else if (selectedDay.month == 7) {
+                      month = "July";
+                    } else if (selectedDay.month == 8) {
+                      month = "August";
+                    } else if (selectedDay.month == 9) {
+                      month = "September";
+                    } else if (selectedDay.month == 10) {
+                      month = "October";
+                    } else if (selectedDay.month == 11) {
+                      month = "November";
+                    } else if (selectedDay.month == 12) {
+                      month = "December";
+                    }
+                    screenController.selectedDate.value =
+                        "${selectedDay.day}-$month-${selectedDay.year}";
+                    screenController.isCalenderShow.value =
+                        !screenController.isCalenderShow.value;
+                    screenController.loadUI();
+                    // log('selectedDay :: $selectedDay');
+                    // log('focusedDay :: $focusedDay');
+                  },
 
-              // Day Changed
-              selectedDayPredicate: (DateTime date) {
-                return isSameDay(selectedDay, date);
-              },
-              // Style the Calender
-              calendarStyle: CalendarStyle(
-                isTodayHighlighted: false,
-                outsideDecoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                defaultTextStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-                weekendTextStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-                selectedTextStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-                todayTextStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-                defaultDecoration: const BoxDecoration(
-                    // borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.circle,
-                    color: Colors.white),
-                weekendDecoration: const BoxDecoration(
-                    //borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.circle,
-                    color: Colors.white),
-                todayDecoration: const BoxDecoration(
-                    //borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.circle,
-                    color: Colors.transparent),
-                selectedDecoration: BoxDecoration(
-                    //borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.circle,
-                    color: AppColors.colorLightGrey1),
-              ),
-              // Week Style
-              daysOfWeekStyle: const DaysOfWeekStyle(
-                // dowTextFormatter: (dowTextFormat, dynamic) {
-                //   return DateFormat.E(locale).format(dowTextFormat)[0];
-                // },
-                decoration: BoxDecoration(color: Colors.transparent),
-                weekdayStyle: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15),
+                  // Day Changed
+                  selectedDayPredicate: (DateTime date) {
+                    return isSameDay(selectedDay, date);
+                  },
+                  // Style the Calender
+                  calendarStyle: CalendarStyle(
+                    isTodayHighlighted: false,
+                    outsideDecoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    defaultTextStyle: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    weekendTextStyle: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    selectedTextStyle: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    todayTextStyle: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    defaultDecoration: const BoxDecoration(
+                        // borderRadius: BorderRadius.circular(10),
+                        shape: BoxShape.circle,
+                        color: Colors.white),
+                    weekendDecoration: const BoxDecoration(
+                        //borderRadius: BorderRadius.circular(10),
+                        shape: BoxShape.circle,
+                        color: Colors.white),
+                    todayDecoration: const BoxDecoration(
+                        //borderRadius: BorderRadius.circular(10),
+                        shape: BoxShape.circle,
+                        color: Colors.transparent),
+                    selectedDecoration: BoxDecoration(
+                        //borderRadius: BorderRadius.circular(10),
+                        shape: BoxShape.circle,
+                        color: AppColors.colorLightGrey1),
+                  ),
+                  // Week Style
+                  daysOfWeekStyle: const DaysOfWeekStyle(
+                    // dowTextFormatter: (dowTextFormat, dynamic) {
+                    //   return DateFormat.E(locale).format(dowTextFormat)[0];
+                    // },
+                    decoration: BoxDecoration(color: Colors.transparent),
+                    weekdayStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
 
-                weekendStyle: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15),
-              ),
-              // Month Style
-              headerStyle: HeaderStyle(
-                headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
-                formatButtonVisible: false,
-                titleCentered: true,
-                decoration: const BoxDecoration(color: Colors.white),
-                formatButtonDecoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                titleTextStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-                leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
-                    color: Colors.black),
-                rightChevronIcon: const Icon(Icons.arrow_forward_ios_rounded,
-                    color: Colors.black),
-              ),
+                    weekendStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  ),
+                  // Month Style
+                  headerStyle: HeaderStyle(
+                    headerPadding: const EdgeInsets.only(top: 10, bottom: 10),
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    decoration: const BoxDecoration(color: Colors.white),
+                    formatButtonDecoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    titleTextStyle: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                    leftChevronIcon: const Icon(Icons.arrow_back_ios_rounded,
+                        color: Colors.black),
+                    rightChevronIcon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.black),
+                  ),
+                ),
+              ],
             ),
           ),
         )

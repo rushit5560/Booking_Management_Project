@@ -142,7 +142,7 @@ class TabViewModule extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
                 child: Center(
                   child: Text(
-                    'Review',
+                    'Reviews',
                     textScaleFactor: 1.1,
                     style: TextStyle(
                       color: Colors.black,
@@ -846,7 +846,7 @@ class ReviewModule extends StatelessWidget {
               controller: screenController.reviewFieldController,
               keyboardType: TextInputType.multiline,
               maxLines: null,
-              maxLength: 250,
+              maxLength: 100,
               validator: (value) => FieldValidator().validateReview(value!),
               decoration: InputDecoration(
                 hintText: "Add Review",
@@ -911,25 +911,25 @@ class ReviewModule extends StatelessWidget {
 
   Widget showReviewList() {
     return screenController.reviewList.isEmpty
-    ? const Center(child: Text('Vendor has no reviews.'))
-    : ListView.builder(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: screenController.reviewList.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.colorLightGrey1),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+        ? const Center(child: Text('Vendor has no reviews.'))
+        : ListView.builder(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: screenController.reviewList.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.colorLightGrey1),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /*ClipRRect(
+                      Row(
+                        children: [
+                          /*ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
                           AppImages.vendorImg,
@@ -937,71 +937,73 @@ class ReviewModule extends StatelessWidget {
                         ),
                         //child: Image.network(screenController.reviewList[index].customer.image),
                       ),*/
-                      // const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              screenController
-                                  .reviewList[index].customer.userName,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
-                            ),
-                            const SizedBox(
-                              height: 3,
-                            ),
-                            Row(
+                          // const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                RatingBar.builder(
-                                  initialRating: 5,
-                                  minRating: 1,
-                                  ignoreGestures: true,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: false,
-
-                                  itemCount: screenController
-                                      .reviewList[index].ratting,
-                                  itemSize: 15,
-
-                                  //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    if (kDebugMode) {
-                                      print(rating);
-                                    }
-                                  },
+                                Text(
+                                  screenController.reviewList[index].customer
+                                      .userName.capitalizeFirst
+                                      .toString(),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
                                 ),
-                                const SizedBox(width: 15),
-                                Expanded(
-                                  child: Text(
-                                    screenController.reviewList[index].date,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
+                                const SizedBox(
+                                  height: 3,
+                                ),
+                                Row(
+                                  children: [
+                                    RatingBar.builder(
+                                      initialRating: 5,
+                                      minRating: 1,
+                                      ignoreGestures: true,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: false,
+
+                                      itemCount: screenController
+                                          .reviewList[index].ratting,
+                                      itemSize: 15,
+
+                                      //itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        if (kDebugMode) {
+                                          print(rating);
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(width: 15),
+                                    Expanded(
+                                      child: Text(
+                                        screenController.reviewList[index].date,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      )
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        screenController.reviewList[index].description,
+                        maxLines: null,
+                        textAlign: TextAlign.justify,
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    screenController.reviewList[index].description,
-                    maxLines: null,
-                    textAlign: TextAlign.justify,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+                ),
+              );
+            });
   }
 }

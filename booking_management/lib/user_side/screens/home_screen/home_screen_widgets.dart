@@ -764,17 +764,17 @@ class UpcomingAppointmentModule extends StatelessWidget {
               : Container(),*/
 
         screenController.allUpcomingAppointmentList.isEmpty
-        ? const Center(child: Text('No Upcoming Appointment'))
-        : ListView.builder(
-          itemCount: screenController.allUpcomingAppointmentList.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, i) {
-            UpcomingAppointmentDatum singleItem =
-                screenController.allUpcomingAppointmentList[i];
-            return _upcomingAppointmentListTile(singleItem);
-          },
-        ),
+            ? const Center(child: Text('No Upcoming Appointment'))
+            : ListView.builder(
+                itemCount: screenController.allUpcomingAppointmentList.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, i) {
+                  UpcomingAppointmentDatum singleItem =
+                      screenController.allUpcomingAppointmentList[i];
+                  return _upcomingAppointmentListTile(singleItem);
+                },
+              ),
       ],
     );
   }
@@ -957,7 +957,9 @@ class PartialCategoryListModule extends StatelessWidget {
                   child: Image.network(
                     imgUrl,
                     errorBuilder: (context, st, ob) {
-                      return Image.asset(AppImages.logoImg);
+                      return Image.asset(
+                        AppImages.logoImg,
+                      );
                     },
                     fit: BoxFit.cover,
                   ),

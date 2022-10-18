@@ -437,7 +437,7 @@ class _CriteriaManageUpdateModuleState
         Container(
           height: 40,
           width: 150,
-          margin: EdgeInsets.symmetric(vertical: 5),
+          margin: const EdgeInsets.symmetric(vertical: 5),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: AppColors.accentColor,
@@ -451,8 +451,21 @@ class _CriteriaManageUpdateModuleState
             onPressed: () {
               setState(() {});
 
-              vendorResourcesScreenController.criteriaList
-                  .add(CriteriaFormWidget());
+              int iNumber = vendorResourcesScreenController.criteriaList.length;
+
+              TextEditingController criteriaNameFieldController = TextEditingController();
+              TextEditingController criteriaOptionFieldController = TextEditingController();
+
+              vendorResourcesScreenController.criteriaNameControllerList.add(criteriaNameFieldController);
+              vendorResourcesScreenController.criteriaOptionControllerList.add(criteriaOptionFieldController);
+
+              vendorResourcesScreenController.criteriaList.add(
+                  CriteriaFormWidget(
+                    index: iNumber,
+                    criteriaNameFieldController: vendorResourcesScreenController.criteriaNameControllerList[iNumber],
+                    optionFieldController: vendorResourcesScreenController.criteriaOptionControllerList[iNumber],
+                  ),
+              );
             },
             child: const Center(
               child: Text(
@@ -469,16 +482,17 @@ class _CriteriaManageUpdateModuleState
         // Obx(
         //   () =>
         vendorResourcesScreenController.criteriaList.isEmpty
-            ? SizedBox()
+            ? const SizedBox()
             : ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                 itemCount: vendorResourcesScreenController.criteriaList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CriteriaFormWidget(
+                itemBuilder: (BuildContext context, int i) {
+                  return vendorResourcesScreenController.criteriaList[i];
+                 /* return CriteriaFormWidget(
                     index: index,
-                  );
+                  );*/
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
@@ -497,12 +511,20 @@ class _CriteriaManageUpdateModuleState
 }
 
 class CriteriaFormWidget extends StatefulWidget {
+  final int index;
+  TextEditingController criteriaNameFieldController;
+  TextEditingController optionFieldController;
+
+
   CriteriaFormWidget({
     Key? key,
-    this.index,
+    required this.index,
+    required this.criteriaNameFieldController,
+    required this.optionFieldController,
+
   }) : super(key: key);
 
-  final int? index;
+
 
   @override
   State<CriteriaFormWidget> createState() => _CriteriaFormWidgetState();
@@ -512,6 +534,9 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
   final vendorResourcesScreenController =
       Get.find<VendorResourcesScreenController>();
 
+  // TextEditingController criteriaNameFieldController = TextEditingController();
+  // TextEditingController optionFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
@@ -519,13 +544,11 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
         color: AppColors.colorGreyIconLight,
         width: 0.8,
       ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(12),
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(12)),
     );
     return Obx(
       () => vendorResourcesScreenController.isLoading.value
-          ? CustomCircularLoaderModule()
+          ? const CustomCircularLoaderModule()
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -547,6 +570,7 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
+                            controller: widget.criteriaNameFieldController,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 12),
@@ -572,6 +596,7 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
+                            controller: widget.optionFieldController,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 12),
@@ -590,7 +615,7 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                 Container(
                   height: 35,
                   width: 75,
-                  margin: EdgeInsets.symmetric(vertical: 5),
+                  margin: const EdgeInsets.symmetric(vertical: 5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.redColor,
@@ -605,8 +630,9 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                     onPressed: () {
                       vendorResourcesScreenController.isLoading(true);
                       setState(() {
-                        vendorResourcesScreenController.criteriaList
-                            .removeAt(widget.index!);
+                        vendorResourcesScreenController.criteriaList.removeAt(widget.index);
+                        vendorResourcesScreenController.criteriaNameControllerList.removeAt(widget.index);
+                        vendorResourcesScreenController.criteriaOptionControllerList.removeAt(widget.index);
                       });
                       vendorResourcesScreenController.isLoading(false);
                     },

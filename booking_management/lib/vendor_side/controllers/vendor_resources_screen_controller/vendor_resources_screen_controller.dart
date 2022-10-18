@@ -53,7 +53,15 @@ class VendorResourcesScreenController extends GetxController {
   RxBool isEvent = false.obs;
   RxBool updateEvent = false.obs;
 
-  RxList<Widget> criteriaList = <Widget>[].obs;
+  List<Widget> criteriaList = [];
+
+  List<TextEditingController> criteriaNameControllerList = [];
+  List<TextEditingController> criteriaOptionControllerList = [];
+
+  TextEditingController criteriaNameFieldController = TextEditingController();
+  TextEditingController criteriaOptionFieldController = TextEditingController();
+
+
 
   /// isAdditional criteria required checkbox value
   RxBool isAdditionalCriteria = false.obs;
@@ -68,6 +76,19 @@ class VendorResourcesScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    criteriaNameControllerList.add(criteriaNameFieldController);
+    criteriaOptionControllerList.add(criteriaOptionFieldController);
+
+    criteriaList = [
+      CriteriaFormWidget(
+        index: 0,
+        criteriaNameFieldController: criteriaNameControllerList[0],
+        optionFieldController: criteriaOptionControllerList[0],
+      ),
+    ];
+
+
     getAllResourceAPI();
   }
 

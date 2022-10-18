@@ -67,66 +67,49 @@ class SocialMediaLoginModule extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // GestureDetector(
-        //   onTap: () async {
-        //     // await userSignUpScreenController.signInWithGoogleFunction();
-        //   },
-        //   child:
-
-          Tooltip(
-            message: "This feature is coming soon",
-            preferBelow: true,
-            triggerMode: TooltipTriggerMode.tap,
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.googleLoginImg),
-                  fit: BoxFit.cover,
-                ),
+        GestureDetector(
+          onTap: () async {
+            await userSignUpScreenController.signInWithGoogleFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.googleLoginImg),
+                fit: BoxFit.cover,
               ),
             ),
           ),
-        // ),
+        ),
         const SizedBox(width: 60),
-        // GestureDetector(
-        //   onTap: () async {
-        //     await userSignUpScreenController.signInWithFacebookFunction();
-        //   },
-        //   child:
-
-        Tooltip(
-          message: "This feature is coming soon",
-          preferBelow: true,
-          triggerMode: TooltipTriggerMode.tap,
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.fbLoginImg),
-                  fit: BoxFit.cover,
-                ),
+        GestureDetector(
+          onTap: () async {
+            await userSignUpScreenController.signInWithFacebookFunction2();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.fbLoginImg),
+                fit: BoxFit.cover,
               ),
             ),
           ),
-
-        // ),
+        ),
       ],
     );
   }
 }
-
-
-
 
 class CustomCircularLoaderModule extends StatelessWidget {
   const CustomCircularLoaderModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator(color: AppColors.accentColor));
+    return Center(
+        child: CircularProgressIndicator(color: AppColors.accentColor));
     /*return Container(
       height: Get.height,
       width: Get.width,

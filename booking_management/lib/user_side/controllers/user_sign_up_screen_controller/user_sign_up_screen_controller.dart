@@ -26,6 +26,8 @@ class UserSignUpScreenController extends GetxController {
   RxBool termsAndConditionCheckBox = false.obs;
   File? file;
 
+  final fb = FacebookLogin();
+
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   /// Fb Login
@@ -58,6 +60,159 @@ class UserSignUpScreenController extends GetxController {
       selectedDate.value = DateFormat.yMMMd("en_US").format(d);
       dobFieldController.text = selectedDate.value;
       log('selectedDate : ${selectedDate.value}');
+    }
+  }
+
+  // Future signInWithGoogleFunction() async {
+  //   isLoading(true);
+
+  //   // SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final FirebaseAuth auth = FirebaseAuth.instance;
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
+  //   googleSignIn.signOut();
+  //   final GoogleSignInAccount? googleSignInAccount =
+  //       await googleSignIn.signIn();
+  //   if (googleSignInAccount != null) {
+  //     final GoogleSignInAuthentication googleSignInAuthentication =
+  //         await googleSignInAccount.authentication;
+  //     final AuthCredential authCredential = GoogleAuthProvider.credential(
+  //       idToken: googleSignInAuthentication.idToken,
+  //       accessToken: googleSignInAuthentication.accessToken,
+  //     );
+
+  //     // Getting users credential
+  //     UserCredential result = await auth.signInWithCredential(authCredential);
+  //     // User? user = result.user;
+  //     // log("Email: ${result.user!.email}");
+  //     // log("Username: ${result.user!.displayName}");
+  //     // log("User Id: ${result.user!.uid}");
+
+  //     //login = prefs.getString('userId');
+  //     //print(login);
+  //     if (result != null) {
+  //       String userName = result.user!.displayName!;
+  //       String email = result.user!.email!;
+  //       String googleKeyId = result.user!.uid;
+
+  //       log("Username : $userName");
+  //       log("email : $email");
+  //       log("googleKeyId : $googleKeyId");
+
+  //       // Navigator.of(context).push(
+  //       //   MaterialPageRoute(
+  //       //     builder: (context) => GoogleDetailsScreen(
+  //       //       userName: userName,
+  //       //       userEmail: email,
+  //       //       userGoogleKeyId: googleKeyId,
+  //       //     ),
+  //       //   ),
+  //       // );
+
+  //       // await socialMediaRegisterFunction(
+  //       //   userName: userName,
+  //       //   userEmail: email,
+  //       //   userId: googleKeyId,
+  //       // );
+
+  //     }
+  //   }
+
+  //   isLoading(false);
+  // }
+
+  Future signInWithFacebookFunction2() async {
+    //await fb.logOut();
+    isLoading(true);
+
+    final res = await fb.logIn(
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ],
+    );
+
+    // try {
+    //   final _instance = FacebookAuth.instance;
+    //   final result = await _instance.login(permissions: ['email']);
+    //   if (result.status == LoginStatus.success) {
+    //     log('login success');
+    //     log('${result.message}');
+    //     final OAuthCredential credential =
+    //         FacebookAuthProvider.credential(result.accessToken!.token);
+    //     log('${credential.secret}');
+    //     final a = await _auth.signInWithCredential(credential);
+    //     log('${a.additionalUserInfo}');
+    //     await _instance.getUserData().then((userData) async {
+    //       log('userData is : ${userData}');
+    //       await _auth.currentUser!.updateEmail(userData['email']);
+
+    //       log("usermail is ${userData['email']}");
+    //       log("username is ${a.additionalUserInfo!.username}");
+    //     });
+    //     return null;
+    //   } else if (result.status == LoginStatus.cancelled) {
+    //     return 'Login cancelled';
+    //   } else {
+    //     return 'Error';
+    //   }
+    // } catch (e) {
+    //   log("erro occured : ${e.toString()}");
+
+    //   rethrow;
+    // }
+
+    // Check result status
+    switch (res.status) {
+      case FacebookLoginStatus.success:
+        // Logged in
+
+        // Send access token to server for validation and auth
+        final FacebookAccessToken accessToken = res.accessToken!;
+        log('Access token: ${accessToken.token}');
+
+        // Get profile data
+        final profile = await fb.getUserProfile();
+        log('Hello, ${profile!.name}! You ID: ${profile.userId}');
+
+        // Get user profile image url
+        final imageUrl = await fb.getProfileImageUrl(width: 100);
+        log('Your profile image: $imageUrl');
+
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => FacebookDetailsScreen(
+        //       userName: profile.name!,
+        //       userId: profile.userId,
+        //       userImage: imageUrl!,
+        //     ),
+        //   ),
+        // );
+
+        // Get email (since we request email permission)
+        final email = await fb.getUserEmail();
+        log('Your profile email: $email');
+
+        // But user can decline permission
+        // if (email != null) {
+        //   String userName = "${profile.firstName}";
+        //   String fbKeyId = profile.userId;
+
+        //   // await socialMediaRegisterFunction(
+        //   //   userName: userName,
+        //   //   userEmail: email,
+        //   //   userId: fbKeyId,
+        //   // );
+
+        // }
+
+        break;
+      case FacebookLoginStatus.cancel:
+        // User cancel log in
+        break;
+      case FacebookLoginStatus.error:
+        // Log in failed
+        log('Error while log in: ${res.error}');
+        break;
     }
   }
 

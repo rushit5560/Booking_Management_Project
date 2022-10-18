@@ -1,4 +1,4 @@
-package com.example.booking_management;
+package com.setdaytime.booking;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.android.FlutterFragmentActivity;

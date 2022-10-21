@@ -223,6 +223,7 @@ class ApiUrl {
 
   /// Schedule management API
   static const getAutoScheduleApi = apiMainPath + "API/AutoSchedule";
+  static const getAutoScheduleNewApi = apiMainPath + "API/AutoScheduleNew";
   static const getAllResourceListApi = apiMainPath + "API/ResourceList";
   static const getAllSearchWithResourceListApi =
       apiMainPath + "API/ResourceSchedule";

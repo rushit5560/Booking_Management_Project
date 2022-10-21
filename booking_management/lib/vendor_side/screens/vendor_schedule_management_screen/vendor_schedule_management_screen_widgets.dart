@@ -374,19 +374,62 @@ class SelectResourcesModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: screenController.allResourcesList.length,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i) {
-        BookingResourceWorkerData singleItem =
-            screenController.allResourcesList[i];
-        return ResourceNameCheckBoxRow(
-          resourceText: singleItem.resourceName,
-          resourceCheckBool: screenController.resourcesCheckList[i],
-        );
-      },
+    return Column(
+      children: [
+        Row(
+          children: [
+            Checkbox(
+              fillColor: MaterialStateProperty.resolveWith(
+                      (states) => AppColors.accentColor),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
+              ),
+              value: screenController.isAllSelected.value,
+              onChanged: (value) {
+                screenController.isLoading(true);
+                screenController.isAllSelected.value = !screenController.isAllSelected.value;
+
+
+                if(screenController.isAllSelected.value == true) {
+                  screenController.selectedResourceIdList.clear();
+                  for (int i = 0; i < screenController.allResourcesList.length; i++) {
+                    screenController.allResourcesList[i].isSelected = true;
+                    screenController.selectedResourceIdList.add(screenController.allResourcesList[i].id);
+                  }
+                } else {
+                  screenController.selectedResourceIdList.clear();
+                  for (int i = 0; i < screenController.allResourcesList.length; i++) {
+                    screenController.allResourcesList[i].isSelected = false;
+                  }
+                }
+
+                log('selectedResourceIdList:${screenController.selectedResourceIdList}');
+
+                screenController.isLoading(false);
+              },
+            ),
+            const Text('All'),
+          ],
+        ),
+
+        ListView.builder(
+          itemCount: screenController.allResourcesList.length,
+          // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, i) {
+            BookingResourceWorkerData singleItem =
+                screenController.allResourcesList[i];
+            return ResourceNameCheckBoxRow(
+              resourceText: singleItem.resourceName,
+              resourceCheckBool: screenController.resourcesCheckList[i],
+              singleItem: singleItem,
+            );
+          },
+        ),
+      ],
     );
   }
 }
@@ -396,55 +439,57 @@ class ResourceNameCheckBoxRow extends StatelessWidget {
     Key? key,
     required this.resourceCheckBool,
     required this.resourceText,
+    required this.singleItem,
   }) : super(key: key);
 
   RxBool resourceCheckBool;
   final String resourceText;
   final screenController = Get.find<VendorScheduleManagementScreenController>();
+  final BookingResourceWorkerData singleItem;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Obx(
-          () => Checkbox(
-            fillColor: MaterialStateProperty.resolveWith(
-                (states) => AppColors.accentColor),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(4),
-              ),
+        Checkbox(
+          fillColor: MaterialStateProperty.resolveWith(
+                  (states) => AppColors.accentColor),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(4),
             ),
-            value: resourceCheckBool.value,
-            onChanged: (value) {
-              resourceCheckBool.value = !resourceCheckBool.value;
-
-              // if (resourceCheckBool.value == false) {
-              //   for (int i = 0; i < screenController.criteriaList.length; i++) {
-              //     vendorResourcesScreenController.criteriaNameControllerList[i]
-              //         .clear();
-              //     vendorResourcesScreenController
-              //         .criteriaOptionControllerList[i]
-              //         .clear();
-              //   }
-              //   vendorResourcesScreenController.criteriaList = [
-              //     CriteriaFormWidget(
-              //       index: 0,
-              //       criteriaNameFieldController: vendorResourcesScreenController
-              //           .criteriaNameControllerList[0],
-              //       optionFieldController: vendorResourcesScreenController
-              //           .criteriaOptionControllerList[0],
-              //     ),
-              //   ];
-              // }
-            },
           ),
+          value: singleItem.isSelected,
+          onChanged: (value) {
+            screenController.isLoading(true);
+            singleItem.isSelected = !singleItem.isSelected;
+            screenController.selectedResourceIdList.clear();
+            for(int i=0; i < screenController.allResourcesList.length; i++) {
+              if(screenController.allResourcesList[i].isSelected == true){
+                screenController.selectedResourceIdList.add(
+                    screenController.allResourcesList[i].id,
+                );
+              }
+            }
+
+            // If Select All Checkbox manually then All name checkbox make true otherwise false
+            if(screenController.selectedResourceIdList.length < screenController.allResourcesList.length) {
+              screenController.isAllSelected.value = false;
+            } else if(screenController.selectedResourceIdList.length == screenController.allResourcesList.length) {
+              screenController.isAllSelected.value = true;
+            }
+            //
+
+            log('selectedResourceIdList:${screenController.selectedResourceIdList}');
+
+            screenController.isLoading(false);
+          },
         ),
         const SizedBox(width: 5),
         Text(
           resourceText,
           maxLines: 2,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 15,
           ),
@@ -468,7 +513,12 @@ class SubmitButton extends StatelessWidget {
         } else if (screenController.endDate.value == "Select End Date") {
           Fluttertoast.showToast(msg: "Please select end date");
         } else {
-          await screenController.getAutoScheduleFunction();
+          if(screenController.selectedResourceIdList.isEmpty) {
+            Fluttertoast.showToast(msg: "Please select resources");
+          }
+          else {
+            await screenController.getAutoScheduleFunction();
+          }
         }
         //await screenController.getFilterAppointmentReportFunction();
       },

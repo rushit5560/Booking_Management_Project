@@ -34,32 +34,33 @@ class GetBookingResourcesModel {
 }
 
 class BookingResourceWorkerData {
-  BookingResourceWorkerData(
-      {required this.id,
-      required this.resourceName,
-      required this.details,
-      required this.image,
-      required this.isActive,
-      // this.applicationUserCreator,
-      // this.applicationUserModifier,
-      required this.orderBy,
-      required this.createdBy,
-      required this.createdOn,
-      required this.modifiedBy,
-      required this.modifiedOn,
-      required this.vendorBooking,
-      required this.vendorId,
-      required this.price,
-        required this.isEvent,
-        required this.capacity,
-      required this.dDate,
-      required this.duration,
-      required this.avilableTime,
-      required this.vendor,
-      required this.bookingAvailability,
-      required this.timingList,
-      required this.nextDate
-      });
+  BookingResourceWorkerData({
+    required this.id,
+    required this.resourceName,
+    required this.details,
+    required this.image,
+    required this.isActive,
+    // this.applicationUserCreator,
+    // this.applicationUserModifier,
+    required this.orderBy,
+    required this.createdBy,
+    required this.createdOn,
+    required this.modifiedBy,
+    required this.modifiedOn,
+    required this.vendorBooking,
+    required this.vendorId,
+    required this.price,
+    required this.isEvent,
+    required this.capacity,
+    required this.dDate,
+    required this.duration,
+    required this.avilableTime,
+    required this.vendor,
+    required this.bookingAvailability,
+    required this.timingList,
+    required this.nextDate,
+    required this.isSelected,
+  });
 
   int id;
   String resourceName;
@@ -86,6 +87,7 @@ class BookingResourceWorkerData {
   String bookingAvailability;
   List<TimingSlot> timingList;
   String nextDate;
+  bool isSelected;
 
   factory BookingResourceWorkerData.fromJson(Map<String, dynamic> json) =>
       BookingResourceWorkerData(
@@ -112,7 +114,8 @@ class BookingResourceWorkerData {
           vendor: json["vendor"] ?? "",
           bookingAvailability: json["bookingAvailability"] ?? "",
           timingList: json['timingList'] ?? [],
-          nextDate: json['nextDate'] ?? ""
+          nextDate: json['nextDate'] ?? "",
+        isSelected: true
       );
 
   Map<String, dynamic> toJson() => {

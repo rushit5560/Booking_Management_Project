@@ -34,6 +34,8 @@ class VendorScheduleManagementScreenController extends GetxController {
   List<String> resourcesNameList = [];
 
   List<BookingResourceWorkerData> allResourcesList = [];
+  RxBool isAllSelected = true.obs;
+  List selectedResourceIdList = [];
 
   ApiHeader apiHeader = ApiHeader();
   RxBool isTiming = true.obs;
@@ -44,29 +46,38 @@ class VendorScheduleManagementScreenController extends GetxController {
   /// Get Auto Schedule API Filter wise
   getAutoScheduleFunction() async {
     isLoading(true);
-    String url = ApiUrl.getAutoScheduleApi;
+    String url = ApiUrl.getAutoScheduleNewApi;
 
     log("Appointment Report Api Url : $url");
     log('header: ${apiHeader.headers}');
 
     try {
-      List trueList = [];
-      trueList.add({
-        "StartTimes": startDate.value,
-        "EndTimes": endDate.value,
-      });
+      // List trueList = [];
+      // trueList.add({
+      //   "StartTimes": startDate.value,
+      //   "EndTimes": endDate.value,
+      // });
+
+      // Selected Resource List To String Logic
+      String selectedResourcesString = "";
+      String tempString = selectedResourceIdList.toString();
+      String tempString2 = tempString.substring(1, tempString.length-1);
+      selectedResourcesString = tempString2;
+      //
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.headers.addAll(apiHeader.headers);
 
-      request.fields['bookings'] = jsonEncode(trueList);
-      request.fields['VendorId'] = UserDetails.uniqueId;
+      request.fields['StartTimes'] = startDate.value;
+      request.fields['EndTimes'] = endDate.value;
+      request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+      request.fields['ResourceListData'] = selectedResourcesString;
 
       log("auto schedule Fields : ${request.fields}");
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('response: ${response.statusCode}');
+      log('response1234: ${response.statusCode}');
 
       response.stream
           .transform(const Utf8Decoder())
@@ -84,6 +95,7 @@ class VendorScheduleManagementScreenController extends GetxController {
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
       });
+
     } catch (e) {
       log("getVendorAutoScheduleFunction Error ::: $e");
       rethrow;
@@ -126,6 +138,12 @@ class VendorScheduleManagementScreenController extends GetxController {
           allResourcesList[i].timingList = mapData["timeList"];
           allResourcesList[i].nextDate = mapData["nextDate"];
         }
+
+        for(int i = 0; i < allResourcesList.length; i++) {
+          selectedResourceIdList.add(allResourcesList[i].id);
+        }
+        log('selectedResourceIdList : $selectedResourceIdList');
+
       } else {
         log("getResourcesFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");

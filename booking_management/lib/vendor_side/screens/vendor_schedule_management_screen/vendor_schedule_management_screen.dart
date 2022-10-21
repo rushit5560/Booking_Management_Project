@@ -47,40 +47,45 @@ class VendorScheduleManagementScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(12),
                                 child: RichText(
                                   textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                        text: 'To manage schedule please add business timing from ',
-                                        style: TextStyle(
-                                          color: AppColors.whiteColor,
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                      text:
+                                          'To manage schedule please add business timing from ',
+                                      style: TextStyle(
+                                        color: AppColors.whiteColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                        text: 'Timings',
+                                        style: const TextStyle(
+                                          color: Colors.red,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16,
                                         ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Get.to(
+                                                    () =>
+                                                        VendorAvailableTimeScreen(),
+                                                    transition:
+                                                        Transition.zoom)!
+                                                .then((value) async {
+                                              await vendorScheduleManagementScreenController
+                                                  .getTimingFunction();
+                                            });
+                                          }),
+                                    TextSpan(
+                                      text: ' page.',
+                                      style: TextStyle(
+                                        color: AppColors.whiteColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
                                       ),
-                                      TextSpan(
-                                          text: 'Timings',
-                                          style: const TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              Get.to(()=> VendorAvailableTimeScreen(),
-                                                  transition: Transition.zoom)!.then((value) async {
-                                                await vendorScheduleManagementScreenController.getTimingFunction();
-                                              });
-                                            }),
-
-                                      TextSpan(
-                                        text: ' page.',
-                                        style: TextStyle(
-                                          color: AppColors.whiteColor,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ]),
-                                /*child: Row(
+                                    ),
+                                  ]),
+                                  /*child: Row(
                                   children: [
                                     Expanded(
                                       child: Text(
@@ -117,7 +122,8 @@ class VendorScheduleManagementScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),*/
-                              ),),
+                                ),
+                              ),
                             ).commonSymmetricPadding(horizontal: 10)
                           : const SizedBox(),
 
@@ -141,6 +147,7 @@ class VendorScheduleManagementScreen extends StatelessWidget {
                           ? SelectEndDateCalender()
                           : Container(),
 
+                      SelectResourcesModule(),
                       const SizedBox(height: 15),
                       SubmitButton(),
 

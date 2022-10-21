@@ -29,6 +29,10 @@ class VendorScheduleManagementScreenController extends GetxController {
   RxString scheduleTimingDate = "Select Date".obs;
   RxBool isScheduleTimingCalenderShow = false.obs;
 
+  RxBool allResourceCheckBoxValue = false.obs;
+  List<RxBool> resourcesCheckList = [];
+  List<String> resourcesNameList = [];
+
   List<BookingResourceWorkerData> allResourcesList = [];
 
   ApiHeader apiHeader = ApiHeader();
@@ -107,6 +111,12 @@ class VendorScheduleManagementScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         allResourcesList = getBookingResourcesModel.workerList;
+
+        for (int i = 0; i < allResourcesList.length; i++) {
+          RxBool resourceCheckValue = false.obs;
+          resourcesCheckList.add(resourceCheckValue);
+          resourcesNameList.add(allResourcesList[i].resourceName);
+        }
         log("allResourcesList : ${allResourcesList.length}");
         for (int i = 0; i < allResourcesList.length; i++) {
           resourceId = allResourcesList[i].id;
@@ -237,6 +247,8 @@ class VendorScheduleManagementScreenController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    resourcesCheckList.add(allResourceCheckBoxValue);
+    resourcesNameList.add("all");
     getAllResourceListFunction();
   }
 }

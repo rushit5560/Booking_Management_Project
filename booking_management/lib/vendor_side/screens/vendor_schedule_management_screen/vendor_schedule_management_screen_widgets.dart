@@ -367,6 +367,93 @@ class SelectEndDateCalender extends StatelessWidget {
   }
 }
 
+class SelectResourcesModule extends StatelessWidget {
+  SelectResourcesModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<VendorScheduleManagementScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: screenController.allResourcesList.length,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i) {
+        BookingResourceWorkerData singleItem =
+            screenController.allResourcesList[i];
+        return ResourceNameCheckBoxRow(
+          resourceText: singleItem.resourceName,
+          resourceCheckBool: screenController.resourcesCheckList[i],
+        );
+      },
+    );
+  }
+}
+
+class ResourceNameCheckBoxRow extends StatelessWidget {
+  ResourceNameCheckBoxRow({
+    Key? key,
+    required this.resourceCheckBool,
+    required this.resourceText,
+  }) : super(key: key);
+
+  RxBool resourceCheckBool;
+  final String resourceText;
+  final screenController = Get.find<VendorScheduleManagementScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Obx(
+          () => Checkbox(
+            fillColor: MaterialStateProperty.resolveWith(
+                (states) => AppColors.accentColor),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
+              ),
+            ),
+            value: resourceCheckBool.value,
+            onChanged: (value) {
+              resourceCheckBool.value = !resourceCheckBool.value;
+
+              // if (resourceCheckBool.value == false) {
+              //   for (int i = 0; i < screenController.criteriaList.length; i++) {
+              //     vendorResourcesScreenController.criteriaNameControllerList[i]
+              //         .clear();
+              //     vendorResourcesScreenController
+              //         .criteriaOptionControllerList[i]
+              //         .clear();
+              //   }
+              //   vendorResourcesScreenController.criteriaList = [
+              //     CriteriaFormWidget(
+              //       index: 0,
+              //       criteriaNameFieldController: vendorResourcesScreenController
+              //           .criteriaNameControllerList[0],
+              //       optionFieldController: vendorResourcesScreenController
+              //           .criteriaOptionControllerList[0],
+              //     ),
+              //   ];
+              // }
+            },
+          ),
+        ),
+        const SizedBox(width: 5),
+        Text(
+          resourceText,
+          maxLines: 2,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 15,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 /// Submit Button
 class SubmitButton extends StatelessWidget {
   SubmitButton({Key? key}) : super(key: key);
@@ -608,7 +695,8 @@ class SearchScheduleSubmitButton extends StatelessWidget {
         if (screenController.scheduleTimingDate.value == "Select Date") {
           Fluttertoast.showToast(msg: "Please select date");
         } else {
-          await screenController.getAllResourceListFunction(searchWise: SearchWise.dateWise);
+          await screenController.getAllResourceListFunction(
+              searchWise: SearchWise.dateWise);
         }
         //await screenController.getFilterAppointmentReportFunction();
       },
@@ -733,121 +821,123 @@ class ResourceScheduleListModule extends StatelessWidget {
           const SizedBox(height: 5),
           singleItem.timingList.isEmpty && singleItem.nextDate.isEmpty
               ? Row(
-            children: const [Text("Time slot is not available.")],
-          )
+                  children: const [Text("Time slot is not available.")],
+                )
               : singleItem.nextDate.isNotEmpty
-          ? Row(
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  String nextDate = singleItem.nextDate;
-                  List<String> dateModuleList = nextDate.split('/');
-                  for (int i = 0; i < dateModuleList.length; i++) {
-                    log("dateModuleList : ${dateModuleList[i]}");
-                  }
-                  log("dateModuleList.length : ${dateModuleList.length}");
-                  screenController.scheduleTimingDate.value =
-                  "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
-                  await screenController.getAllResourceListFunction(searchWise: SearchWise.dateWise);
-                },
-                child: Text(
-                  "Next Available ${singleItem.nextDate}",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: AppColors.accentColor,
-                  ),
-                ),
-              ),
-            ],
-          )
-              : GridView.builder(
-                  itemCount: singleItem.timingList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 3,
-                      crossAxisSpacing: 3,
-                      childAspectRatio: 5),
-                  itemBuilder: (context, i) {
-                    return GestureDetector(
-                      onTap: () {
-                        // /// First All Slot Set Unselected
-                        // for(int i = 0; i < screenController.allResourcesList.length; i++) {
-                        //   for(int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
-                        //     screenController.allResourcesList[i].timingList[j].isSelected = false;
-                        //   }
-                        // }
-                        //
-                        // /// Selected Item Become Blue
-                        // int selectedId = singleItem.timingList[i].id;
-                        // log("selectedId : $selectedId");
-                        // screenController.selectedResourceTimeSlotId = selectedId;
-                        //
-                        // for(int j=0; j < singleItem.timingList.length; j++) {
-                        //   if (singleItem.timingList[j].id == selectedId) {
-                        //     singleItem.timingList[j].isSelected = true;
-                        //   } else {
-                        //     singleItem.timingList[j].isSelected = false;
-                        //   }
-                        // }
-                        // screenController.loadUI();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Colors.grey.shade300,
-                              blurStyle: BlurStyle.outer,
+                  ? Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            String nextDate = singleItem.nextDate;
+                            List<String> dateModuleList = nextDate.split('/');
+                            for (int i = 0; i < dateModuleList.length; i++) {
+                              log("dateModuleList : ${dateModuleList[i]}");
+                            }
+                            log("dateModuleList.length : ${dateModuleList.length}");
+                            screenController.scheduleTimingDate.value =
+                                "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
+                            await screenController.getAllResourceListFunction(
+                                searchWise: SearchWise.dateWise);
+                          },
+                          child: Text(
+                            "Next Available ${singleItem.nextDate}",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: AppColors.accentColor,
                             ),
-                          ],
-                          // color: singleItem.timingList[i].isSelected == true
-                          //     ? Colors.blue
-                          //     : null
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              singleItem.timingList[i].startDateTime,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                  color: /*singleItem.timingList[i].isSelected == true
+                      ],
+                    )
+                  : GridView.builder(
+                      itemCount: singleItem.timingList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 3,
+                              crossAxisSpacing: 3,
+                              childAspectRatio: 5),
+                      itemBuilder: (context, i) {
+                        return GestureDetector(
+                          onTap: () {
+                            // /// First All Slot Set Unselected
+                            // for(int i = 0; i < screenController.allResourcesList.length; i++) {
+                            //   for(int j = 0; j < screenController.allResourcesList[i].timingList.length; j++) {
+                            //     screenController.allResourcesList[i].timingList[j].isSelected = false;
+                            //   }
+                            // }
+                            //
+                            // /// Selected Item Become Blue
+                            // int selectedId = singleItem.timingList[i].id;
+                            // log("selectedId : $selectedId");
+                            // screenController.selectedResourceTimeSlotId = selectedId;
+                            //
+                            // for(int j=0; j < singleItem.timingList.length; j++) {
+                            //   if (singleItem.timingList[j].id == selectedId) {
+                            //     singleItem.timingList[j].isSelected = true;
+                            //   } else {
+                            //     singleItem.timingList[j].isSelected = false;
+                            //   }
+                            // }
+                            // screenController.loadUI();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Colors.grey.shade300,
+                                  blurStyle: BlurStyle.outer,
+                                ),
+                              ],
+                              // color: singleItem.timingList[i].isSelected == true
+                              //     ? Colors.blue
+                              //     : null
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  singleItem.timingList[i].startDateTime,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: /*singleItem.timingList[i].isSelected == true
                                 ? Colors.white
                                 : */
-                                      Colors.black),
-                            ),
-                            Text(
-                              "-",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color: /*singleItem.timingList[i].isSelected == true
+                                          Colors.black),
+                                ),
+                                Text(
+                                  "-",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color: /*singleItem.timingList[i].isSelected == true
                               ? Colors.white
                               :*/
-                                    Colors.black,
-                              ),
-                            ).commonSymmetricPadding(horizontal: 5),
-                            Text(
-                              singleItem.timingList[i].endDateTime,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color: /*singleItem.timingList[i].isSelected == true
+                                        Colors.black,
+                                  ),
+                                ).commonSymmetricPadding(horizontal: 5),
+                                Text(
+                                  singleItem.timingList[i].endDateTime,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color: /*singleItem.timingList[i].isSelected == true
                               ? Colors.white
                               :*/
-                                    Colors.black,
-                              ),
+                                        Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ).commonAllSidePadding(3),
-                    );
-                  },
-                ),
+                          ).commonAllSidePadding(3),
+                        );
+                      },
+                    ),
         ],
       ).commonAllSidePadding(8),
     ).commonSymmetricPadding(vertical: 8, horizontal: 10);

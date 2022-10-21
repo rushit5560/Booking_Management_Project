@@ -211,7 +211,7 @@ class VendorDrawer extends StatelessWidget {
                         vendorDrawerOption:
                             VendorDrawerOption.subscriptionReport,
                       ),
-                      const SizedBox(height: 20),
+                      // const SizedBox(height: 20),
                       const SizedBox(height: 10),
                     ],
                   ).commonAllSidePadding(5),

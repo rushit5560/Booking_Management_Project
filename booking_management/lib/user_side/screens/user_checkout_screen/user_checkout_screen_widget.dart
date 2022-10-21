@@ -33,7 +33,7 @@ class BookingSummaryModule extends StatelessWidget {
                 child: Container(
                   height: 75,
                   width: 75,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       // image: DecorationImage(
                       //   image: NetworkImage(imgUrl),
                       //   fit: BoxFit.cover,
@@ -227,40 +227,46 @@ class PersonalInformationFormModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: screenController.checkOutFormKey,
-      child: Column(children: [
-        TextFormField(
-          controller: screenController.fNameFieldController,
-          keyboardType: TextInputType.text,
-          validator: (value) => FieldValidator().validateFirstName(value!),
-          decoration: checkoutFormFieldDecoration(hintText: 'First Name'),
-        ),
-        const SizedBox(height: 5),
-        TextFormField(
-          controller: screenController.emailFieldController,
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) => FieldValidator().validateEmail(value!),
-          decoration: checkoutFormFieldDecoration(hintText: 'Email'),
-        ),
-        const SizedBox(height: 5),
-        TextFormField(
-          controller: screenController.phoneFieldController,
-          keyboardType: TextInputType.phone,
-          maxLength: 10,
-          validator: (value) => FieldValidator().validateMobile(value!),
-          decoration: checkoutFormFieldDecoration(hintText: 'Mobile No'),
-        ),
-        const SizedBox(height: 5),
-        TextFormField(
-          controller: screenController.notesFieldController,
-          keyboardType: TextInputType.text,
-          // validator: (value) => FieldValidator().validateNotes(value!),
-          decoration: checkoutFormFieldDecoration(hintText: 'Notes'),
-        ),
-        const SizedBox(height: 10),
-        screenController.selectedResourceIsEvent == false
-            ? Container()
-            : quantityDropDownModule(),
-      ]),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: screenController.fNameFieldController,
+            keyboardType: TextInputType.text,
+            validator: (value) => FieldValidator().validateFirstName(value!),
+            decoration: checkoutFormFieldDecoration(hintText: 'First Name'),
+          ),
+          const SizedBox(height: 5),
+          TextFormField(
+            controller: screenController.emailFieldController,
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) => FieldValidator().validateEmail(value!),
+            decoration: checkoutFormFieldDecoration(hintText: 'Email'),
+          ),
+          const SizedBox(height: 5),
+          TextFormField(
+            controller: screenController.phoneFieldController,
+            keyboardType: TextInputType.phone,
+            maxLength: 10,
+            validator: (value) => FieldValidator().validateMobile(value!),
+            decoration: checkoutFormFieldDecoration(hintText: 'Mobile No'),
+          ),
+          const SizedBox(height: 5),
+          TextFormField(
+            controller: screenController.notesFieldController,
+            keyboardType: TextInputType.text,
+            // validator: (value) => FieldValidator().validateNotes(value!),
+            decoration: checkoutFormFieldDecoration(hintText: 'Notes'),
+          ),
+          const SizedBox(height: 10),
+          screenController.selectedResourceIsEvent == false
+              ? Container()
+              : quantityDropDownModule(),
+          const SizedBox(height: 10),
+          screenController.selectedResourceIsEvent == false
+              ? Container()
+              : AttendeeDetailsAddModule(),
+        ],
+      ),
     );
   }
 
@@ -323,6 +329,110 @@ class PersonalInformationFormModule extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class AttendeeDetailsAddModule extends StatelessWidget {
+  AttendeeDetailsAddModule({Key? key}) : super(key: key);
+  final screenController = Get.find<UserCheckoutScreenController>();
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: screenController.quantityValue.value,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return AttendeeDetailsForm();
+      },
+      separatorBuilder: (context, index) {
+        return Divider(
+          height: 10,
+          color: AppColors.colorGreyIconLight,
+          thickness: 0.8,
+        );
+      },
+    );
+  }
+}
+
+class AttendeeDetailsForm extends StatelessWidget {
+  AttendeeDetailsForm({Key? key}) : super(key: key);
+  final screenController = Get.find<UserCheckoutScreenController>();
+
+  final border = OutlineInputBorder(
+    borderRadius: const BorderRadius.all(
+      Radius.circular(12),
+    ),
+    borderSide: BorderSide(
+      color: AppColors.colorGreyIconLight,
+      width: 0.8,
+    ),
+  );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColors.colorGreyIconLight,
+          width: 0.8,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(12),
+        ),
+      ),
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+              labelText: "Attendee Name*",
+              border: border,
+              enabledBorder: border,
+              focusedBorder: border,
+            ),
+          ),
+          // DropdownButton<String>(
+          //   focusColor: Colors.white,
+          //   value: chosenValue,
+          //   //elevation: 5,
+          //   style: TextStyle(color: Colors.white),
+          //   iconEnabledColor: Colors.black,
+          //   items: <String>[
+          //     'Android',
+          //     'IOS',
+          //     'Flutter',
+          //     'Node',
+          //     'Java',
+          //     'Python',
+          //     'PHP',
+          //   ].map<DropdownMenuItem<String>>((String value) {
+          //     return DropdownMenuItem<String>(
+          //       value: value,
+          //       child: Text(
+          //         value,
+          //         style: TextStyle(color: Colors.black),
+          //       ),
+          //     );
+          //   }).toList(),
+          //   hint: Text(
+          //     "Age",
+          //     style: TextStyle(
+          //         color: Colors.black,
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.w500),
+          //   ),
+          //   onChanged: (String? value) {
+          //     // setState(() {
+          //     chosenValue = value;
+          //     // });
+          //   },
+          // ),
+        ],
+      ),
     );
   }
 }

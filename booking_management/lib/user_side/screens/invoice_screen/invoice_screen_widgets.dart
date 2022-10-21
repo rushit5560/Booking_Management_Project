@@ -305,7 +305,10 @@ class OrderInvoiceFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "\$${(screenController.invoiceDetailsData.bookingItems!.price * screenController.invoiceDetailsData.bookingItems!.quantity)}",
+                    "\$${(screenController.invoiceDetailsData.bookingItems!.price
+
+                    // * screenController.invoiceDetailsData.bookingItems!.quantity
+                    )}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -403,7 +406,11 @@ class OrderInvoiceFormModule extends StatelessWidget {
                 Expanded(
                   flex: 20,
                   child: Text(
-                    "\$${(screenController.invoiceDetailsData.bookingItems!.price * screenController.invoiceDetailsData.bookingItems!.quantity)}",
+                    "\$${(screenController.invoiceDetailsData.bookingItems!.price
+
+                    // * screenController.invoiceDetailsData.bookingItems!.quantity
+
+                    )}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,

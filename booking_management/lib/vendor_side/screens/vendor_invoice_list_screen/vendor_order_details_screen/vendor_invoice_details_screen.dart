@@ -18,10 +18,6 @@ class VendorInvoiceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("chirag");
-    log("chirag");
-    log("chirag");
-    log("chirag");
     return Scaffold(
       body: Obx(
         () => vendorInvoiceDetailsScreenController.isLoading.value

@@ -32,11 +32,10 @@ class UserSignUpScreen extends StatelessWidget {
                           /// From Common Widgets
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              HeaderLogoModule()
-                            ],
+                            children: const [HeaderLogoModule()],
                           ),
                           const SizedBox(height: 20),
+
                           /// From Common Widgets
                           const HeaderTextModule(name: "SignUp"),
                           const SizedBox(height: 20),
@@ -60,11 +59,15 @@ class UserSignUpScreen extends StatelessWidget {
                           const SizedBox(height: 25),
                           SignUpButtonModule(),
                           const SizedBox(height: 25),
+
                           /// From Common Widgets
                           const OrTextModule(),
                           const SizedBox(height: 15),
+
                           /// From Common Widgets
-                          SocialMediaLoginModule(userSignUpScreenController: userSignUpScreenController),
+                          SocialMediaLoginModule(
+                              userSignUpScreenController:
+                                  userSignUpScreenController),
                           const SizedBox(height: 25),
                           SkipButton(),
                           const SizedBox(height: 15),

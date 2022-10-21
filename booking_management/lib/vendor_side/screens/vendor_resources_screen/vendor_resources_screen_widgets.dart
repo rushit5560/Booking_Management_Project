@@ -54,18 +54,20 @@ class AddResourcesButton extends StatelessWidget {
 
 class VendorResourcesListModule extends StatelessWidget {
   VendorResourcesListModule({Key? key}) : super(key: key);
-  final screenController = Get.find<VendorResourcesScreenController>();
+  final vendorResourcesScreenController =
+      Get.find<VendorResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return screenController.getResourceList.isEmpty
+    return vendorResourcesScreenController.getResourceList.isEmpty
         ? const Center(child: Text("There is no resources list"))
         : ListView.builder(
-            itemCount: screenController.getResourceList.length,
+            itemCount: vendorResourcesScreenController.getResourceList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, i) {
-              var price = screenController.getResourceList[i].price
+              var price = vendorResourcesScreenController
+                  .getResourceList[i].price
                   .toString()
                   .split(".")[0];
               return GestureDetector(
@@ -92,7 +94,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                 ),
                                 child: Image.network(
                                   ApiUrl.apiImagePath +
-                                      "${screenController.getResourceList[i].image}",
+                                      "${vendorResourcesScreenController.getResourceList[i].image}",
                                   height: 65,
                                   width: 65,
                                   errorBuilder: (ctx, obj, st) {
@@ -106,7 +108,7 @@ class VendorResourcesListModule extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                screenController
+                                vendorResourcesScreenController
                                     .getResourceList[i].resourceName!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -117,11 +119,11 @@ class VendorResourcesListModule extends StatelessWidget {
                               ),
                               //const SizedBox(height: 8),
                               Html(
-                                data: screenController
+                                data: vendorResourcesScreenController
                                     .getResourceList[i].details!,
                               ),
                               // Text(
-                              //   screenController.getResourceList[i].details!,
+                              //   vendorResourcesScreenController.getResourceList[i].details!,
                               //   maxLines: 2,
                               //   overflow: TextOverflow.ellipsis,
                               //   style: const TextStyle(
@@ -167,7 +169,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
-                                    '${screenController.getResourceList[i].capacity}',
+                                    '${vendorResourcesScreenController.getResourceList[i].capacity}',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
@@ -182,40 +184,48 @@ class VendorResourcesListModule extends StatelessWidget {
                         Row(
                           children: [
                             GestureDetector(
-                                onTap: () async {
-                                  await screenController
-                                      .getResourcesDetailsByIdFunction(
-                                          id: screenController
-                                              .getResourceList[i].id!);
-                                  Get.to(
-                                    () => VendorUpdateResourcesScreen(),
-                                    transition: Transition.zoom,
-                                  );
-                                },
-                                child: const Icon(Icons.edit)),
-                            const SizedBox(width: 10),
+                              onTap: () async {
+                                // await vendorResourcesScreenController
+                                //     .getResourcesDetailsByIdFunction(
+                                //         id: vendorResourcesScreenController
+                                //             .getResourceList[i].id!);
+                                Get.to(
+                                  () => VendorUpdateResourcesScreen(),
+                                  transition: Transition.zoom,
+                                  arguments: vendorResourcesScreenController
+                                      .getResourceList[i].id!,
+                                );
+                              },
+                              child: const Icon(
+                                Icons.edit,
+                                size: 28,
+                              ),
+                            ),
+                            const SizedBox(width: 20),
                             GestureDetector(
-                                onTap: () {
-                                  CommonWidgets.yesOrNoDialog(
-                                    context: context,
-                                    title: "Are you sure ?",
-                                    body: "You want to delete this resource.",
-                                    onYesPressed: () async {
-                                      Get.back();
-                                      await screenController
-                                          .deleteVendorResourceFunction(
-                                              resourceId:
-                                                  "${screenController.getResourceList[i].id}");
-                                    },
-                                    onNoPressed: () {
-                                      Get.back();
-                                    },
-                                  );
-                                },
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ))
+                              onTap: () {
+                                CommonWidgets.yesOrNoDialog(
+                                  context: context,
+                                  title: "Are you sure ?",
+                                  body: "You want to delete this resource.",
+                                  onYesPressed: () async {
+                                    Get.back();
+                                    await vendorResourcesScreenController
+                                        .deleteVendorResourceFunction(
+                                            resourceId:
+                                                "${vendorResourcesScreenController.getResourceList[i].id}");
+                                  },
+                                  onNoPressed: () {
+                                    Get.back();
+                                  },
+                                );
+                              },
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 28,
+                              ),
+                            ),
                           ],
                         ),
                       ],

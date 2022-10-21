@@ -31,6 +31,8 @@ class VendorScheduleTimeScreenController extends GetxController {
 
   RxBool isCalenderShow = false.obs;
   RxString selectedDate = "".obs;
+  RxBool isEndCalenderShow = false.obs;
+  RxString selectedEndDate = "".obs;
 
   List<String> allScheduleTimeList = [];
   List<bool> checkScheduleTimeList = [];
@@ -91,42 +93,84 @@ class VendorScheduleTimeScreenController extends GetxController {
     log("getAllSLots aPI URL : $url");
 
     try {
-      var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
+      if (selectResourceTimeType == "Hours") {
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.headers.addAll(apiHeader.headers);
 
-      request.fields['VendorId'] = UserDetails.tableWiseId.toString();
-      request.fields['ResourceId'] = "${selectResourceValue.id}";
-      request.fields['StartTime'] = selectedDate.value;
+        request.fields['VendorId'] = UserDetails.tableWiseId.toString();
+        request.fields['ResourceId'] = "${selectResourceValue.id}";
+        request.fields['setEventDays'] = "false";
+        request.fields['StartTime'] = selectedDate.value;
 
-      log("getAllSLots Fields : ${request.fields}");
-      log('getAllSLots request.headers: ${request.headers}');
+        log("getAllSLots Fields : ${request.fields}");
+        log('getAllSLots request.headers: ${request.headers}');
 
-      var response = await request.send();
-      log('getAllSLots status code: ${response.statusCode}');
+        var response = await request.send();
+        log('getAllSLots status code: ${response.statusCode}');
 
-      response.stream
-          .transform(const Utf8Decoder())
-          .transform(const LineSplitter())
-          .listen((value) async {
-        log("getAllSlots value ::: $value");
-        GetAllScheduleTimeModel getAllScheduleTimeModel =
-            GetAllScheduleTimeModel.fromJson(json.decode(value));
-        isSuccessStatus = getAllScheduleTimeModel.success.obs;
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) async {
+          log("getAllSlots value ::: $value");
+          GetAllScheduleTimeModel getAllScheduleTimeModel =
+              GetAllScheduleTimeModel.fromJson(json.decode(value));
+          isSuccessStatus = getAllScheduleTimeModel.success.obs;
 
-        if (isSuccessStatus.value) {
-          allScheduleTimeList.clear();
+          if (isSuccessStatus.value) {
+            allScheduleTimeList.clear();
 
-          allScheduleTimeList = getAllScheduleTimeModel.workerList;
-          log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
+            allScheduleTimeList = getAllScheduleTimeModel.workerList;
+            log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
 
-          for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
-            checkScheduleTimeList.add(true);
+            for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
+              checkScheduleTimeList.add(true);
+            }
+          } else {
+            log("getAllSLotsFunction Else Else");
+            Fluttertoast.showToast(msg: "Something went wrong!");
           }
-        } else {
-          log("getAllSLotsFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
-        }
-      });
+        });
+      } else {
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['VendorId'] = UserDetails.tableWiseId.toString();
+        request.fields['ResourceId'] = "${selectResourceValue.id}";
+        request.fields['setEventDays'] = "true";
+        request.fields['StartTime'] = selectedDate.value;
+        request.fields['EndTime'] = selectedEndDate.value;
+
+        log("getAllSLots Fields : ${request.fields}");
+        log('getAllSLots request.headers: ${request.headers}');
+
+        var response = await request.send();
+        log('getAllSLots status code: ${response.statusCode}');
+
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((value) async {
+          log("getAllSlots value ::: $value");
+          GetAllScheduleTimeModel getAllScheduleTimeModel =
+              GetAllScheduleTimeModel.fromJson(json.decode(value));
+          isSuccessStatus = getAllScheduleTimeModel.success.obs;
+
+          if (isSuccessStatus.value) {
+            allScheduleTimeList.clear();
+
+            allScheduleTimeList = getAllScheduleTimeModel.workerList;
+            log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
+
+            for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
+              checkScheduleTimeList.add(true);
+            }
+          } else {
+            log("getAllSLotsFunction Else Else");
+            Fluttertoast.showToast(msg: "Something went wrong!");
+          }
+        });
+      }
     } catch (e) {
       log("getAllSLotsFunction Error ::: $e");
 

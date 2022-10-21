@@ -9,8 +9,6 @@ import '../../../common_modules/constants/app_images.dart';
 import '../../controllers/appointment_report_screen_controller/appointment_report_screen_controller.dart';
 import '../../model/appointment_report_screen_model/appointment_report_model.dart';
 
-
-
 /// Status DD Module
 class StatusDropDownModule extends StatelessWidget {
   StatusDropDownModule({Key? key}) : super(key: key);
@@ -38,7 +36,7 @@ class StatusDropDownModule extends StatelessWidget {
             // background color for the dropdown items
             buttonTheme: ButtonTheme.of(context).copyWith(
               alignedDropdown:
-              true, //If false (the default), then the dropdown's menu will be wider than its button.
+                  true, //If false (the default), then the dropdown's menu will be wider than its button.
             )),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
@@ -66,6 +64,7 @@ class StatusDropDownModule extends StatelessWidget {
             onChanged: (newValue) {
               screenController.isLoading(true);
               screenController.selectedStatusValue.value = newValue!;
+              screenController.getAppointmentReportFunction();
               screenController.isLoading(false);
               // if (screenController.searchType == SearchType.categoryWise) {
               //   await screenController.getSearchCategoryWithRatingWiseFunction();
@@ -102,7 +101,6 @@ class StartDateSelectModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.startDate.value,
@@ -116,7 +114,7 @@ class StartDateSelectModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isStartDateCalenderShow.value =
-              !screenController.isStartDateCalenderShow.value;
+                  !screenController.isStartDateCalenderShow.value;
 
               screenController.isEndDateCalenderShow.value = false;
 
@@ -167,14 +165,15 @@ class SelectStartDateCalender extends StatelessWidget {
 
                 screenController.selectedStartDate = selectedDay;
 
-                screenController.startDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.startDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
 
-                screenController.isStartDateCalenderShow.value = !screenController.isStartDateCalenderShow.value;
+                screenController.isStartDateCalenderShow.value =
+                    !screenController.isStartDateCalenderShow.value;
 
                 screenController.isEndDateCalenderShow.value = false;
 
                 screenController.loadUI();
-
               },
 
               // Day Changed
@@ -185,7 +184,7 @@ class SelectStartDateCalender extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -195,19 +194,19 @@ class SelectStartDateCalender extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -234,7 +233,7 @@ class SelectStartDateCalender extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -274,7 +273,6 @@ class EndDateSelectModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           /// Show Date as Text
           Text(
             screenController.endDate.value,
@@ -288,7 +286,7 @@ class EndDateSelectModule extends StatelessWidget {
           GestureDetector(
             onTap: () {
               screenController.isEndDateCalenderShow.value =
-              !screenController.isEndDateCalenderShow.value;
+                  !screenController.isEndDateCalenderShow.value;
 
               screenController.isStartDateCalenderShow.value = false;
 
@@ -337,14 +335,14 @@ class SelectEndDateCalender extends StatelessWidget {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
 
-                screenController.endDate.value = "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
-                screenController.isEndDateCalenderShow.value = !screenController.isEndDateCalenderShow.value;
-
+                screenController.endDate.value =
+                    "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.isEndDateCalenderShow.value =
+                    !screenController.isEndDateCalenderShow.value;
 
                 screenController.isStartDateCalenderShow.value = false;
 
                 screenController.loadUI();
-
               },
 
               // Day Changed
@@ -355,7 +353,7 @@ class SelectEndDateCalender extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: false,
                 outsideDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 defaultTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 weekendTextStyle: const TextStyle(
@@ -365,19 +363,19 @@ class SelectEndDateCalender extends StatelessWidget {
                 todayTextStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
                 defaultDecoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.circular(10),
+                    // borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 weekendDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.white),
                 todayDecoration: const BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: Colors.transparent),
                 selectedDecoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
+                    //borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.circle,
                     color: AppColors.colorLightGrey1),
               ),
@@ -404,7 +402,7 @@ class SelectEndDateCalender extends StatelessWidget {
                 titleCentered: true,
                 decoration: const BoxDecoration(color: Colors.white),
                 formatButtonDecoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 titleTextStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -431,9 +429,9 @@ class SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if(screenController.startDate.value == "Select Start Date") {
+        if (screenController.startDate.value == "Select Start Date") {
           Fluttertoast.showToast(msg: "Please select start date");
-        } else if(screenController.endDate.value == "Select End Date") {
+        } else if (screenController.endDate.value == "Select End Date") {
           Fluttertoast.showToast(msg: "Please select end date");
         } else {
           await screenController.getFilterAppointmentReportFunction();
@@ -517,16 +515,17 @@ class AppointmentReportListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return screenController.appointmentReportList.isEmpty
-    ? const Center(child: Text("No data available!"))
-    : ListView.builder(
-      itemCount: screenController.appointmentReportList.length,
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, i) {
-        AppointmentListModule singleItem = screenController.appointmentReportList[i];
-        return _appointmentListTile(singleItem);
-      },
-    ).commonAllSidePadding(10);
+        ? const Center(child: Text("No data available!"))
+        : ListView.builder(
+            itemCount: screenController.appointmentReportList.length,
+            physics: const BouncingScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              AppointmentListModule singleItem =
+                  screenController.appointmentReportList[i];
+              return _appointmentListTile(singleItem);
+            },
+          ).commonAllSidePadding(10);
   }
 
   Widget _appointmentListTile(AppointmentListModule singleItem) {
@@ -572,7 +571,7 @@ class AppointmentReportListModule extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                            "Vendor :",
+                          "Vendor :",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 5),
@@ -586,7 +585,6 @@ class AppointmentReportListModule extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -605,7 +603,6 @@ class AppointmentReportListModule extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -624,7 +621,6 @@ class AppointmentReportListModule extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -643,7 +639,6 @@ class AppointmentReportListModule extends StatelessWidget {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -669,7 +664,7 @@ class AppointmentReportListModule extends StatelessWidget {
                   Text(
                     singleItem.status,
                     style: const TextStyle(
-                       fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
                   ),
@@ -683,7 +678,4 @@ class AppointmentReportListModule extends StatelessWidget {
       ).commonAllSidePadding(10),
     );
   }
-
 }
-
-

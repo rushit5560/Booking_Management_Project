@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-GetResourceDetailsModel getResourceDetailsModelFromJson(String str) => GetResourceDetailsModel.fromJson(json.decode(str));
+GetResourceDetailsModel getResourceDetailsModelFromJson(String str) =>
+    GetResourceDetailsModel.fromJson(json.decode(str));
 
-String getResourceDetailsModelToJson(GetResourceDetailsModel data) => json.encode(data.toJson());
+String getResourceDetailsModelToJson(GetResourceDetailsModel data) =>
+    json.encode(data.toJson());
 
 class GetResourceDetailsModel {
   GetResourceDetailsModel({
@@ -19,17 +21,18 @@ class GetResourceDetailsModel {
   bool success;
   WorkerList workerList;
 
-  factory GetResourceDetailsModel.fromJson(Map<String, dynamic> json) => GetResourceDetailsModel(
-    statusCode: json["statusCode"] ?? 0,
-    success: json["success"] ?? false,
-    workerList: WorkerList.fromJson(json["workerList"] ?? {}),
-  );
+  factory GetResourceDetailsModel.fromJson(Map<String, dynamic> json) =>
+      GetResourceDetailsModel(
+        statusCode: json["statusCode"] ?? 0,
+        success: json["success"] ?? false,
+        workerList: WorkerList.fromJson(json["workerList"] ?? {}),
+      );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "success": success,
-    "workerList": workerList.toJson(),
-  };
+        "statusCode": statusCode,
+        "success": success,
+        "workerList": workerList.toJson(),
+      };
 }
 
 class WorkerList {
@@ -51,12 +54,14 @@ class WorkerList {
     required this.price,
     required this.capacity,
     required this.isEvent,
+    required this.requireCriteria,
     required this.dDate,
     required this.duration,
     required this.avilableTime,
     required this.vendor,
     required this.bookingAvailability,
-    required this.service
+    required this.service,
+    required this.criterias,
   });
 
   int id;
@@ -76,65 +81,101 @@ class WorkerList {
   double price;
   int capacity;
   bool isEvent;
+  bool requireCriteria;
   String dDate;
   String duration;
   String avilableTime;
   String vendor;
   String bookingAvailability;
   String service;
+  List<CriteriaData> criterias;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
-    id: json["id"] ?? 0,
-    resourceName: json["resourceName"] ?? "",
-    details: json["details"] ?? "",
-    image: json["image"] ?? "",
-    isActive: json["isActive"] ?? false,
-    //applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"] ?? {}),
-   // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"] ?? {}),
-    orderBy: json["orderBy"] ?? "",
-    createdBy: json["createdBy"] ?? "",
-    createdOn: json["createdOn"] ?? "",
-    modifiedBy: json["modifiedBy"] ?? "",
-    modifiedOn: json["modifiedOn"] ?? "",
-    vendorBooking: json["vendorBooking"] ?? "",
-    vendorId: json["vendorId"] ?? 0,
-    price: json["price"] ?? 0.0,
-    capacity: json["capacity"] ?? 0,
-    isEvent: json["isEvent"] ?? false,
-    dDate: json["dDate"] ?? "",
-    duration: json["duration"] ?? "",
-    avilableTime: json["avilableTime"] ?? "",
-    vendor: json["vendor"] ?? "",
-    bookingAvailability: json["bookingAvailability"] ?? "",
-    service: json["service"] ?? "",
-  );
+        id: json["id"] ?? 0,
+        resourceName: json["resourceName"] ?? "",
+        details: json["details"] ?? "",
+        image: json["image"] ?? "",
+        isActive: json["isActive"] ?? false,
+        //applicationUserCreator: ApplicationUser.fromJson(json["applicationUserCreator"] ?? {}),
+        // applicationUserModifier: ApplicationUser.fromJson(json["applicationUserModifier"] ?? {}),
+        orderBy: json["orderBy"] ?? "",
+        createdBy: json["createdBy"] ?? "",
+        createdOn: json["createdOn"] ?? "",
+        modifiedBy: json["modifiedBy"] ?? "",
+        modifiedOn: json["modifiedOn"] ?? "",
+        vendorBooking: json["vendorBooking"] ?? "",
+        vendorId: json["vendorId"] ?? 0,
+        price: json["price"] ?? 0.0,
+        capacity: json["capacity"] ?? 0,
+        isEvent: json["isEvent"] ?? false,
+        requireCriteria: json["requireCriteria"] ?? false,
+        dDate: json["dDate"] ?? "",
+        duration: json["duration"] ?? "",
+        avilableTime: json["avilableTime"] ?? "",
+        vendor: json["vendor"] ?? "",
+        bookingAvailability: json["bookingAvailability"] ?? "",
+        service: json["service"] ?? "",
+        criterias: List<CriteriaData>.from(
+            (json["criterias"] ?? []).map((x) => CriteriaData.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "resourceName": resourceName,
-    "details": details,
-    "image": image,
-    "isActive": isActive,
-    //"applicationUserCreator": applicationUserCreator.toJson(),
-    //"applicationUserModifier": applicationUserModifier.toJson(),
-    "orderBy": orderBy,
-    "createdBy": createdBy,
-    "createdOn": createdOn,
-    "modifiedBy": modifiedBy,
-    "modifiedOn": modifiedOn,
-    "vendorBooking": vendorBooking,
-    "vendorId": vendorId,
-    "price": price,
-    "capacity": capacity,
-    "isEvent": isEvent,
-    "dDate": dDate,
-    "duration": duration,
-    "avilableTime": avilableTime,
-    "vendor": vendor,
-    "bookingAvailability": bookingAvailability,
-    "service": service,
-  };
+        "id": id,
+        "resourceName": resourceName,
+        "details": details,
+        "image": image,
+        "isActive": isActive,
+        //"applicationUserCreator": applicationUserCreator.toJson(),
+        //"applicationUserModifier": applicationUserModifier.toJson(),
+        "orderBy": orderBy,
+        "createdBy": createdBy,
+        "createdOn": createdOn,
+        "modifiedBy": modifiedBy,
+        "modifiedOn": modifiedOn,
+        "vendorBooking": vendorBooking,
+        "vendorId": vendorId,
+        "price": price,
+        "capacity": capacity,
+        "isEvent": isEvent,
+        "requireCriteria": requireCriteria,
+        "dDate": dDate,
+        "duration": duration,
+        "avilableTime": avilableTime,
+        "vendor": vendor,
+        "bookingAvailability": bookingAvailability,
+        "service": service,
+        "criterias": List<dynamic>.from(criterias.map((x) => x.toJson())),
+      };
 }
+
+class CriteriaData {
+  CriteriaData({
+    required this.id,
+    required this.resourceId,
+    required this.name,
+    required this.options,
+  });
+
+  final int id;
+  final int resourceId;
+  final String name;
+  final String options;
+
+  factory CriteriaData.fromJson(Map<String, dynamic> json) => CriteriaData(
+        id: json["id"] ?? 0,
+        resourceId: json["resourceId"] ?? 0,
+        name: json["name"] ?? "",
+        options: json["options"] ?? "",
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "resourceId": resourceId,
+        "name": name,
+        "options": options,
+      };
+}
+
 
 /*class ApplicationUser {
   ApplicationUser({

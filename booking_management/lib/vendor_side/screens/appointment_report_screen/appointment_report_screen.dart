@@ -6,8 +6,6 @@ import '../../../common_modules/custom_appbar/custom_appbar.dart';
 import '../../controllers/appointment_report_screen_controller/appointment_report_screen_controller.dart';
 import 'appointment_report_screen_widgets.dart';
 
-
-
 class AppointmentReportScreen extends StatelessWidget {
   AppointmentReportScreen({Key? key}) : super(key: key);
   final appointmentReportScreenController =
@@ -29,31 +27,33 @@ class AppointmentReportScreen extends StatelessWidget {
                     StatusDropDownModule(),
 
                     /// Select Start Date Module
-                    StartDateSelectModule(),
-                    appointmentReportScreenController.isStartDateCalenderShow.value
-                        ? SelectStartDateCalender()
-                        : Container(),
+                    // StartDateSelectModule(),
+                    // appointmentReportScreenController.isStartDateCalenderShow.value
+                    //     ? SelectStartDateCalender()
+                    //     : Container(),
 
-                    const SizedBox(height: 10),
+                    // const SizedBox(height: 10),
 
-                    /// Select End Date Module
-                    EndDateSelectModule(),
-                    appointmentReportScreenController.isEndDateCalenderShow.value
-                        ? SelectEndDateCalender()
-                        : Container(),
+                    // /// Select End Date Module
+                    // EndDateSelectModule(),
+                    // appointmentReportScreenController.isEndDateCalenderShow.value
+                    //     ? SelectEndDateCalender()
+                    //     : Container(),
 
-                    const SizedBox(height: 15),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   mainAxisSize: MainAxisSize.max,
-                    //   children: [
-                    //     // ExcelButton(),
-                    //     SubmitButton(),
-                    //   ],
-                    // ),
-                    SubmitButton(),
+                    // const SizedBox(height: 15),
+                    // // Row(
+                    // //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // //   mainAxisSize: MainAxisSize.max,
+                    // //   children: [
+                    // //     // ExcelButton(),
+                    // //     SubmitButton(),
+                    // //   ],
+                    // // ),
+                    // SubmitButton(),
 
-                    Expanded(child: AppointmentReportListModule()),
+                    Expanded(
+                      child: AppointmentReportListModule(),
+                    ),
                   ],
                 ),
               ),

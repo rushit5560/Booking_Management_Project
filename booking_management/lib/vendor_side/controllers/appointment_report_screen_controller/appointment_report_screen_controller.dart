@@ -104,8 +104,11 @@ class AppointmentReportScreenController extends GetxController {
   /// Appointment Report All List
   getAppointmentReportFunction() async {
     isLoading(true);
-    String url =
-        ApiUrl.appointmentReportApi + "?userId=${UserDetails.uniqueId}";
+    String url = selectedStatusValue.value == "Select Status"
+        ? ApiUrl.appointmentReportApi + "?userId=${UserDetails.uniqueId}"
+        : ApiUrl.appointmentReportApi +
+            "?userId=${UserDetails.uniqueId}" +
+            "&option=$selectedStatusValue";
     log("Appointment Report Api Url : $url");
 
     try {

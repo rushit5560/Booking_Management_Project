@@ -415,6 +415,9 @@ class AppointmentReportListModule extends StatelessWidget {
   }
 
   Widget _appointmentListTile(InvoiceReportData singleItem) {
+    final transactionDate = singleItem.transactionDate.split("T")[0];
+    final transactionTime =
+        singleItem.transactionDate.split("T")[1].split(".")[0];
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -539,18 +542,32 @@ class AppointmentReportListModule extends StatelessWidget {
 
             /// Transaction Date
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "Transaction Date :",
+                  "Transaction Date : ",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(width: 5),
                 Expanded(
-                  child: Text(
-                    singleItem.transactionDate,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    // style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "date - $transactionDate",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        // style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "time - $transactionTime",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        // style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
               ],

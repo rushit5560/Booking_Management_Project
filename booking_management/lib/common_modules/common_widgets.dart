@@ -85,7 +85,7 @@ class SocialMediaLoginModule extends StatelessWidget {
         const SizedBox(width: 60),
         GestureDetector(
           onTap: () async {
-            await userSignUpScreenController.signInWithFacebookFunction2();
+            await userSignUpScreenController.signInWithFacebookFunction();
           },
           child: Container(
             height: 30,
@@ -109,7 +109,8 @@ class CustomCircularLoaderModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: CircularProgressIndicator(color: AppColors.accentColor));
+      child: CircularProgressIndicator(color: AppColors.accentColor),
+    );
     /*return Container(
       height: Get.height,
       width: Get.width,

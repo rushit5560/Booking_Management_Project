@@ -1,22 +1,17 @@
-import 'dart:io';
-
-import 'package:booking_management/common_modules/constants/enums.dart';
-import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
-import 'package:booking_management/vendor_side/controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_screen_widgets.dart';
-import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../common_modules/common_widgets.dart';
 import '../../../../common_modules/constants/app_colors.dart';
 import '../../../../common_modules/constants/app_images.dart';
+import '../../../controllers/vendor_resources_screen_controller/vendor_update_resources_screen_controller.dart';
 
 class VendorUpdateResourcesScreen extends StatelessWidget {
   VendorUpdateResourcesScreen({Key? key}) : super(key: key);
 
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorUpdateResourcesScreenController =
+      Get.put(VendorUpdateResourcesScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +21,24 @@ class VendorUpdateResourcesScreen extends StatelessWidget {
             //the return value will be from "Yes" or "No" options
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Exit Editing'),
-              content: Text('Do you want to exit editing?'),
+              title: const Text('Exit Editing'),
+              content: const Text('Do you want to exit editing?'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Get.back();
                   },
                   //return false when click on "NO"
-                  child: Text('No'),
+                  child: const Text('No'),
                 ),
                 TextButton(
                   onPressed: () {
-                    vendorResourcesScreenController.file = null;
+                    vendorUpdateResourcesScreenController.updateFile = null;
                     Get.back();
                     Get.back();
                   },
                   //return true when click on "Yes"
-                  child: Text('Yes'),
+                  child: const Text('Yes'),
                 ),
               ],
             ),
@@ -55,7 +50,7 @@ class VendorUpdateResourcesScreen extends StatelessWidget {
       onWillPop: showExitPopup,
       child: Scaffold(
         body: Obx(
-          () => vendorResourcesScreenController.isLoading.value
+          () => vendorUpdateResourcesScreenController.isLoading.value
               ? const CustomCircularLoaderModule()
               : SafeArea(
                   child: Column(
@@ -113,24 +108,24 @@ class VendorUpdateResourcesScreen extends StatelessWidget {
           //the return value will be from "Yes" or "No" options
           context: Get.context!,
           builder: (context) => AlertDialog(
-            title: Text('Exit Editing'),
-            content: Text('Do you want to exit editing?'),
+            title: const Text('Exit Editing'),
+            content: const Text('Do you want to exit editing?'),
             actions: [
               TextButton(
                 onPressed: () {
                   Get.back();
                 },
                 //return false when click on "NO"
-                child: Text('No'),
+                child: const Text('No'),
               ),
               TextButton(
                 onPressed: () {
-                  vendorResourcesScreenController.file = null;
+                  vendorUpdateResourcesScreenController.updateFile = null;
                   Get.back();
                   Get.back();
                 },
                 //return true when click on "Yes"
-                child: Text('Yes'),
+                child: const Text('Yes'),
               ),
             ],
           ),

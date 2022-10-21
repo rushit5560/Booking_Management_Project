@@ -4,6 +4,7 @@ import 'package:booking_management/common_modules/extension_methods/extension_me
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/vendor_resources_screen_controller/vendor_add_resources_screen_controller.dart';
 import '../../controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
 import 'vendor_resources_screen_widgets.dart';
 

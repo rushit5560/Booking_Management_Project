@@ -41,11 +41,76 @@ class _VendorScheduleTimeScreenState extends State<VendorScheduleTimeScreen> {
                             ResourcesDropDownModule(),
                             const SizedBox(height: 15),
                             ResourcesTimeTypeModule(),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
+                            vendorScheduleTimeScreenController
+                                        .selectResourceValue.isEvent ==
+                                    true
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        vendorScheduleTimeScreenController
+                                                    .selectResourceTimeType
+                                                    .value ==
+                                                "Hours"
+                                            ? "Select Date"
+                                            : "Select Start Date",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox(),
+                            const SizedBox(height: 10),
                             TableModule(),
+                            const SizedBox(height: 10),
                             vendorScheduleTimeScreenController
                                     .isCalenderShow.value
                                 ? ResourcesSelectDateModule()
+                                : Container(),
+                            const SizedBox(height: 10),
+                            vendorScheduleTimeScreenController
+                                        .selectResourceValue.isEvent ==
+                                    true
+                                ? vendorScheduleTimeScreenController
+                                            .selectResourceTimeType.value ==
+                                        "Hours"
+                                    ? const SizedBox()
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: const [
+                                          Text(
+                                            "Select End Date",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                : SizedBox(),
+                            vendorScheduleTimeScreenController
+                                        .selectResourceTimeType.value ==
+                                    "Hours"
+                                ? const SizedBox()
+                                : SizedBox(height: 10),
+                            vendorScheduleTimeScreenController
+                                        .selectResourceTimeType.value ==
+                                    "Hours"
+                                ? const SizedBox()
+                                : TableEndModule(),
+                            vendorScheduleTimeScreenController
+                                    .isEndCalenderShow.value
+                                ? vendorScheduleTimeScreenController
+                                            .selectResourceTimeType.value ==
+                                        "Hours"
+                                    ? const SizedBox()
+                                    : ResourcesSelectEndDateModule()
                                 : Container(),
                             const SizedBox(height: 30),
                             SubmitButtonModule(),

@@ -7,7 +7,7 @@ import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/common_modules/field_decorations.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
-import 'package:booking_management/vendor_side/controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
+import 'package:booking_management/vendor_side/controllers/vendor_resources_screen_controller/vendor_add_resources_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,15 +16,15 @@ import 'package:image_picker/image_picker.dart';
 
 class AddResourceFormModule extends StatelessWidget {
   AddResourceFormModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    log('vendorResourcesScreenController.isEvent.value: ${vendorResourcesScreenController.isEvent.value}');
+    log('VendorAddResourcesScreenController.isEvent.value: ${vendorAddResourcesScreenController.isEvent.value}');
     return SingleChildScrollView(
       child: Form(
-        key: vendorResourcesScreenController.resourceAddFormKey,
+        key: vendorAddResourcesScreenController.resourceAddFormKey,
         child: Obx(
           () => Column(
             children: [
@@ -41,10 +41,12 @@ class AddResourceFormModule extends StatelessWidget {
 
               ResourceCapacityFieldModule(),
               const SizedBox(height: 10),
-              IsAdditionalCriteriaModule(),
+              vendorAddResourcesScreenController.isEvent.value
+                  ? IsAdditionalCriteriaModule()
+                  : const SizedBox(),
               const SizedBox(height: 10),
-              vendorResourcesScreenController.isAdditionalCriteria.value
-                  ? CriteriaManageUpdateModule()
+              vendorAddResourcesScreenController.isAdditionalCriteria.value
+                  ? const CriteriaManageAddModule()
                   : const SizedBox(),
 
               // ServiceShortDesFieldModule(),
@@ -63,8 +65,8 @@ class AddResourceFormModule extends StatelessWidget {
 
 class ResourceProfileModule extends StatelessWidget {
   ResourceProfileModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
   final ImagePicker imagePicker = ImagePicker();
 
   @override
@@ -73,10 +75,10 @@ class ResourceProfileModule extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       clipBehavior: Clip.none,
       children: [
-        vendorResourcesScreenController.addFile != null
+        vendorAddResourcesScreenController.addFile != null
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.file(vendorResourcesScreenController.addFile!,
+                child: Image.file(vendorAddResourcesScreenController.addFile!,
                     height: 100, width: 100, fit: BoxFit.fill))
             : ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -106,9 +108,9 @@ class ResourceProfileModule extends StatelessWidget {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       //setState(() {
-      vendorResourcesScreenController.addFile = File(image.path);
-      vendorResourcesScreenController.loadUI();
-      log('Camera File Path : ${vendorResourcesScreenController.addFile}');
+      vendorAddResourcesScreenController.addFile = File(image.path);
+      vendorAddResourcesScreenController.loadUI();
+      log('Camera File Path : ${vendorAddResourcesScreenController.addFile}');
       log('Camera Image Path : ${image.path}');
       //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
       //renameImage();
@@ -119,8 +121,8 @@ class ResourceProfileModule extends StatelessWidget {
 
 class ResourceNameFieldModule extends StatelessWidget {
   ResourceNameFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +156,8 @@ class ResourceNameFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller:
-                  vendorResourcesScreenController.resourceNameFieldController,
+              controller: vendorAddResourcesScreenController
+                  .resourceNameFieldController,
               keyboardType: TextInputType.text,
               validator: (value) =>
                   FieldValidator().validateResourceName(value!),
@@ -170,8 +172,8 @@ class ResourceNameFieldModule extends StatelessWidget {
 
 class ResourceDetailsModule extends StatelessWidget {
   ResourceDetailsModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +207,7 @@ class ResourceDetailsModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: vendorResourcesScreenController
+              controller: vendorAddResourcesScreenController
                   .resourceDetailsFieldController,
               keyboardType: TextInputType.text,
               validator: (value) =>
@@ -222,8 +224,8 @@ class ResourceDetailsModule extends StatelessWidget {
 
 class ResourcePriceFieldModule extends StatelessWidget {
   ResourcePriceFieldModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -257,8 +259,8 @@ class ResourcePriceFieldModule extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller:
-                  vendorResourcesScreenController.resourcePriceFieldController,
+              controller: vendorAddResourcesScreenController
+                  .resourcePriceFieldController,
               keyboardType: TextInputType.number,
               validator: (value) => FieldValidator().validatePrice(value!),
               decoration:
@@ -274,8 +276,8 @@ class ResourcePriceFieldModule extends StatelessWidget {
 class ResourceCapacityFieldModule extends StatelessWidget {
   ResourceCapacityFieldModule({Key? key}) : super(key: key);
 
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -310,8 +312,8 @@ class ResourceCapacityFieldModule extends StatelessWidget {
             ),
             Obx(
               () => TextFormField(
-                readOnly: !vendorResourcesScreenController.isEvent.value,
-                controller: vendorResourcesScreenController
+                readOnly: !vendorAddResourcesScreenController.isEvent.value,
+                controller: vendorAddResourcesScreenController
                     .resourceCapacityFieldController,
                 keyboardType: TextInputType.number,
                 // validator: (value) => FieldValidator().validateCapacity(value!),
@@ -328,8 +330,8 @@ class ResourceCapacityFieldModule extends StatelessWidget {
 
 class IsEventCheckBoxModule extends StatelessWidget {
   IsEventCheckBoxModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -344,25 +346,28 @@ class IsEventCheckBoxModule extends StatelessWidget {
                 Radius.circular(4),
               ),
             ),
-            value: vendorResourcesScreenController.isEvent.value,
+            value: vendorAddResourcesScreenController.isEvent.value,
             onChanged: (value) {
-              vendorResourcesScreenController.isEvent.value =
-                  !vendorResourcesScreenController.isEvent.value;
+              vendorAddResourcesScreenController.isEvent.value =
+                  !vendorAddResourcesScreenController.isEvent.value;
 
-              if (vendorResourcesScreenController.isEvent.value == false) {
-                vendorResourcesScreenController.resourceCapacityFieldController
+              if (vendorAddResourcesScreenController.isEvent.value == false) {
+                vendorAddResourcesScreenController
+                    .resourceCapacityFieldController
                     .clear();
               }
             },
           ),
         ),
         const SizedBox(width: 5),
-        const Text(
-          "Enable multiple bookings with set capacity ",
-          maxLines: 2,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 15,
+        const Expanded(
+          child: Text(
+            "Enable multiple bookings with set capacity ",
+            maxLines: 2,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
           ),
         ),
       ],
@@ -372,8 +377,8 @@ class IsEventCheckBoxModule extends StatelessWidget {
 
 class IsAdditionalCriteriaModule extends StatelessWidget {
   IsAdditionalCriteriaModule({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -388,15 +393,36 @@ class IsAdditionalCriteriaModule extends StatelessWidget {
                 Radius.circular(4),
               ),
             ),
-            value: vendorResourcesScreenController.isAdditionalCriteria.value,
+            value:
+                vendorAddResourcesScreenController.isAdditionalCriteria.value,
             onChanged: (value) {
-              vendorResourcesScreenController.isAdditionalCriteria.value =
-                  !vendorResourcesScreenController.isAdditionalCriteria.value;
+              vendorAddResourcesScreenController.isAdditionalCriteria.value =
+                  !vendorAddResourcesScreenController
+                      .isAdditionalCriteria.value;
 
-              if (vendorResourcesScreenController.isAdditionalCriteria.value ==
+              if (vendorAddResourcesScreenController
+                      .isAdditionalCriteria.value ==
                   false) {
-                vendorResourcesScreenController.resourceCapacityFieldController
-                    .clear();
+                for (int i = 0;
+                    i < vendorAddResourcesScreenController.criteriaList.length;
+                    i++) {
+                  vendorAddResourcesScreenController
+                      .criteriaNameControllerList[i]
+                      .clear();
+                  vendorAddResourcesScreenController
+                      .criteriaOptionControllerList[i]
+                      .clear();
+                }
+                vendorAddResourcesScreenController.criteriaList = [
+                  CriteriaFormWidget(
+                    index: 0,
+                    criteriaNameFieldController:
+                        vendorAddResourcesScreenController
+                            .criteriaNameControllerList[0],
+                    optionFieldController: vendorAddResourcesScreenController
+                        .criteriaOptionControllerList[0],
+                  ),
+                ];
               }
             },
           ),
@@ -415,18 +441,17 @@ class IsAdditionalCriteriaModule extends StatelessWidget {
   }
 }
 
-class CriteriaManageUpdateModule extends StatefulWidget {
-  CriteriaManageUpdateModule({Key? key}) : super(key: key);
+class CriteriaManageAddModule extends StatefulWidget {
+  const CriteriaManageAddModule({Key? key}) : super(key: key);
 
   @override
-  State<CriteriaManageUpdateModule> createState() =>
-      _CriteriaManageUpdateModuleState();
+  State<CriteriaManageAddModule> createState() =>
+      _CriteriaManageAddModuleState();
 }
 
-class _CriteriaManageUpdateModuleState
-    extends State<CriteriaManageUpdateModule> {
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+class _CriteriaManageAddModuleState extends State<CriteriaManageAddModule> {
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -451,20 +476,28 @@ class _CriteriaManageUpdateModuleState
             onPressed: () {
               setState(() {});
 
-              int iNumber = vendorResourcesScreenController.criteriaList.length;
+              int iNumber =
+                  vendorAddResourcesScreenController.criteriaList.length;
 
-              TextEditingController criteriaNameFieldController = TextEditingController();
-              TextEditingController criteriaOptionFieldController = TextEditingController();
+              TextEditingController criteriaNameFieldController =
+                  TextEditingController();
+              TextEditingController criteriaOptionFieldController =
+                  TextEditingController();
 
-              vendorResourcesScreenController.criteriaNameControllerList.add(criteriaNameFieldController);
-              vendorResourcesScreenController.criteriaOptionControllerList.add(criteriaOptionFieldController);
+              vendorAddResourcesScreenController.criteriaNameControllerList
+                  .add(criteriaNameFieldController);
+              vendorAddResourcesScreenController.criteriaOptionControllerList
+                  .add(criteriaOptionFieldController);
 
-              vendorResourcesScreenController.criteriaList.add(
-                  CriteriaFormWidget(
-                    index: iNumber,
-                    criteriaNameFieldController: vendorResourcesScreenController.criteriaNameControllerList[iNumber],
-                    optionFieldController: vendorResourcesScreenController.criteriaOptionControllerList[iNumber],
-                  ),
+              vendorAddResourcesScreenController.criteriaList.add(
+                CriteriaFormWidget(
+                  index: iNumber,
+                  criteriaNameFieldController:
+                      vendorAddResourcesScreenController
+                          .criteriaNameControllerList[iNumber],
+                  optionFieldController: vendorAddResourcesScreenController
+                      .criteriaOptionControllerList[iNumber],
+                ),
               );
             },
             child: const Center(
@@ -481,16 +514,18 @@ class _CriteriaManageUpdateModuleState
         // ),
         // Obx(
         //   () =>
-        vendorResourcesScreenController.criteriaList.isEmpty
+        vendorAddResourcesScreenController.criteriaList.isEmpty
             ? const SizedBox()
             : ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                itemCount: vendorResourcesScreenController.criteriaList.length,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                itemCount:
+                    vendorAddResourcesScreenController.criteriaList.length,
                 itemBuilder: (BuildContext context, int i) {
-                  return vendorResourcesScreenController.criteriaList[i];
-                 /* return CriteriaFormWidget(
+                  return vendorAddResourcesScreenController.criteriaList[i];
+                  /* return CriteriaFormWidget(
                     index: index,
                   );*/
                 },
@@ -515,24 +550,20 @@ class CriteriaFormWidget extends StatefulWidget {
   TextEditingController criteriaNameFieldController;
   TextEditingController optionFieldController;
 
-
   CriteriaFormWidget({
     Key? key,
     required this.index,
     required this.criteriaNameFieldController,
     required this.optionFieldController,
-
   }) : super(key: key);
-
-
 
   @override
   State<CriteriaFormWidget> createState() => _CriteriaFormWidgetState();
 }
 
 class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   // TextEditingController criteriaNameFieldController = TextEditingController();
   // TextEditingController optionFieldController = TextEditingController();
@@ -547,7 +578,7 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
       borderRadius: const BorderRadius.all(Radius.circular(12)),
     );
     return Obx(
-      () => vendorResourcesScreenController.isLoading.value
+      () => vendorAddResourcesScreenController.isLoading.value
           ? const CustomCircularLoaderModule()
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -571,6 +602,7 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                           const SizedBox(height: 5),
                           TextFormField(
                             controller: widget.criteriaNameFieldController,
+                            textInputAction: TextInputAction.done,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 12),
@@ -597,6 +629,7 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                           const SizedBox(height: 5),
                           TextFormField(
                             controller: widget.optionFieldController,
+                            textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 12),
@@ -628,13 +661,18 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
                       ),
                     ),
                     onPressed: () {
-                      vendorResourcesScreenController.isLoading(true);
+                      vendorAddResourcesScreenController.isLoading(true);
                       setState(() {
-                        vendorResourcesScreenController.criteriaList.removeAt(widget.index);
-                        vendorResourcesScreenController.criteriaNameControllerList.removeAt(widget.index);
-                        vendorResourcesScreenController.criteriaOptionControllerList.removeAt(widget.index);
+                        vendorAddResourcesScreenController.criteriaList
+                            .removeAt(widget.index);
+                        vendorAddResourcesScreenController
+                            .criteriaNameControllerList
+                            .removeAt(widget.index);
+                        vendorAddResourcesScreenController
+                            .criteriaOptionControllerList
+                            .removeAt(widget.index);
                       });
-                      vendorResourcesScreenController.isLoading(false);
+                      vendorAddResourcesScreenController.isLoading(false);
                     },
                     child: const Center(
                       child: Text(
@@ -655,19 +693,44 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
 
 class ResourceCreateButton extends StatelessWidget {
   ResourceCreateButton({Key? key}) : super(key: key);
-  final vendorResourcesScreenController =
-      Get.find<VendorResourcesScreenController>();
+  final vendorAddResourcesScreenController =
+      Get.find<VendorAddResourcesScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (vendorResourcesScreenController.resourceAddFormKey.currentState!
+        if (vendorAddResourcesScreenController.resourceAddFormKey.currentState!
             .validate()) {
-          if (vendorResourcesScreenController.addFile == null) {
+          if (vendorAddResourcesScreenController.addFile == null) {
             Fluttertoast.showToast(msg: "Image is required");
           } else {
-            await vendorResourcesScreenController.addVendorResourcesFunction();
+            for (int i = 0;
+                i <
+                    vendorAddResourcesScreenController
+                        .criteriaNameControllerList.length;
+                i++) {
+              vendorAddResourcesScreenController.criteriaObjectList.add({
+                "Name": vendorAddResourcesScreenController
+                    .criteriaNameControllerList[i].text
+                    .trim(),
+                "Options": vendorAddResourcesScreenController
+                    .criteriaOptionControllerList[i].text
+                    .trim(),
+              });
+              log("criteria object  list  map :: ${vendorAddResourcesScreenController.criteriaObjectList[i]}");
+            }
+            // log("criteria object  list  map :: ${VendorAddResourcesScreenController.criteriaObjectList}");
+
+            // for (int i = 0;
+            //     i <
+            //         VendorAddResourcesScreenController
+            //             .criteriaOptionControllerList.length;
+            //     i++) {
+            //   log("criteriaOption list text :: ${VendorAddResourcesScreenController.criteriaOptionControllerList[i].text}");
+            // }
+            await vendorAddResourcesScreenController
+                .addVendorResourcesFunction();
           }
         }
       },

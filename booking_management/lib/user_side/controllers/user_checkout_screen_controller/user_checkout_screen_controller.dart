@@ -356,6 +356,8 @@ class UserCheckoutScreenController extends GetxController {
   }) async {
     isLoading(true);
 
+    final checkoutController = Get.find<UserCheckoutScreenController>();
+
     log('book Success Id: $bookingSuccessId');
     log('booking quantity value is : $quantityValue');
     log('booking notes text is : $userBookingNotes');
@@ -377,11 +379,13 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['UserId'] = UserDetails.uniqueId;
       } else {
         request.fields['bookingId'] = bookingSuccessId;
-        request.fields['FullName'] = UserDetails.userName;
-        request.fields['Email'] = UserDetails.email;
+        request.fields['FullName'] =
+            checkoutController.fNameFieldController.text;
+        request.fields['Email'] = checkoutController.emailFieldController.text;
 
-        request.fields['PhoneNo'] = UserDetails.phoneNo;
-        request.fields['Notes'] = userBookingNotes;
+        request.fields['PhoneNo'] =
+            checkoutController.phoneFieldController.text;
+        request.fields['Notes'] = checkoutController.notesFieldController.text;
         request.fields['Quantity'] = quantityValue;
         // request.fields['UserId'] =
         //     UserDetails.isUserLoggedIn ? UserDetails.uniqueId : "";

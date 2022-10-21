@@ -954,7 +954,8 @@ class PendingAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
-    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    List<String> dateList =
+        screenController.pendingAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
 
     return Row(
@@ -1163,7 +1164,8 @@ class ConfirmAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
-    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    List<String> dateList =
+        screenController.pendingAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
     return Row(
       children: [
@@ -1364,7 +1366,8 @@ class CancelAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
-    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    List<String> dateList =
+        screenController.pendingAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
     return Row(
       children: [
@@ -1565,7 +1568,8 @@ class DoneAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
-    List<String> dateList = screenController.pendingAppointmentList[i].startDateTime.split('T');
+    List<String> dateList =
+        screenController.pendingAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
     return Row(
       children: [

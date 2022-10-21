@@ -250,6 +250,7 @@ class VendorHomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getBookingDetailsFunction Error ::: $e");
+      rethrow;
     } finally {
       // isLoading(false);
     }

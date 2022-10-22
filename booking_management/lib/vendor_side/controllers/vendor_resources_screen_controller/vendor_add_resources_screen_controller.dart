@@ -111,13 +111,16 @@ class VendorAddResourcesScreenController extends GetxController {
       request.fields['Price'] = resourcePriceFieldController.text.trim();
       request.fields['vendorId'] = "${UserDetails.tableWiseId}";
       request.fields['CreatedBy'] = UserDetails.uniqueId;
-      request.fields['Capacity'] = resourceCapacityFieldController.text.trim();
+      request.fields['Capacity'] = resourceCapacityFieldController.text == ""
+          ? "0"
+          : resourceCapacityFieldController.text.trim();
       request.fields['IsEvent'] = "${isEvent.value}";
       request.fields['RequireCriteria'] = "${isAdditionalCriteria.value}";
 
       if (isAdditionalCriteria.value == true) {
         request.fields['Criterias'] = json.encode(criteriaObjectList);
       } else {
+        request.fields['Criterias'] = json.encode([]);
         log("require criterias is not true.");
       }
 
@@ -173,7 +176,6 @@ class VendorAddResourcesScreenController extends GetxController {
     }
   }
 
- 
   removeFieldData() {
     resourceNameFieldController.clear();
     resourceDetailsFieldController.clear();

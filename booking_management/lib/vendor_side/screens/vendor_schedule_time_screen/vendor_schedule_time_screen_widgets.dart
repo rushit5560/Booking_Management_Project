@@ -47,6 +47,7 @@ class ResourcesDropDownModule extends StatelessWidget {
           onChanged: (newValue) {
             screenController.isLoading(true);
             screenController.selectResourceValue = newValue!;
+            screenController.allScheduleTimeList.clear();
             log("selected resource is event ::: ${screenController.selectResourceValue.isEvent}");
 
             if (screenController.selectResourceValue.isEvent == true) {
@@ -531,7 +532,7 @@ class ScheduleListModule extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, i) {
-                    return /*screenController.allScheduleTimeList.length == i - 1
+                    /*screenController.allScheduleTimeList.length == i - 1
                   ? Row(
                       children: [
                         Expanded(
@@ -553,7 +554,8 @@ class ScheduleListModule extends StatelessWidget {
                       ],
                     )
                   : */
-                        Row(
+
+                    return Row(
                       children: [
                         Expanded(
                           child: Checkbox(
@@ -567,12 +569,22 @@ class ScheduleListModule extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            screenController.allScheduleTimeList[i],
+                            screenController.selectResourceTimeType.value ==
+                                    "Hours"
+                                ? screenController.allScheduleTimeList[i]
+                                    .split("T")[1]
+                                : screenController.allScheduleTimeList[i]
+                                    .split("T")[0],
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            screenController.allScheduleTimeList[i + 1],
+                            screenController.selectResourceTimeType.value ==
+                                    "Hours"
+                                ? screenController.allScheduleTimeList[i + 1]
+                                    .split("T")[1]
+                                : screenController.allScheduleTimeList[i + 1]
+                                    .split("T")[0],
                           ),
                         ),
                       ],

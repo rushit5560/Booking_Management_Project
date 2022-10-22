@@ -191,12 +191,16 @@ class VendorScheduleTimeScreenController extends GetxController {
 
       for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
         if (checkScheduleTimeList[i] == true) {
-          String startTime = allScheduleTimeList[i];
-          String endTime = allScheduleTimeList[i + 1];
+          String startTime = selectResourceTimeType.value == "Hours"
+              ? allScheduleTimeList[i].split("T")[1]
+              : allScheduleTimeList[i].split("T")[0];
+          String endTime = selectResourceTimeType.value == "Hours"
+              ? allScheduleTimeList[i + 1].split("T")[1]
+              : allScheduleTimeList[i + 1].split("T")[0];
 
           /// Remove AM & PM
-          String start = startTime.substring(0, startTime.length - 3);
-          String end = endTime.substring(0, endTime.length - 3);
+          String start = startTime;
+          String end = endTime;
 
           trueList.add({
             "ResourceId": selectResourceValue.id,
@@ -225,6 +229,7 @@ class VendorScheduleTimeScreenController extends GetxController {
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((dataLine) {
+        log('response body : ${dataLine}');
         SetScheduleTimeModel setScheduleTimeModel =
             SetScheduleTimeModel.fromJson(json.decode(dataLine));
         isSuccessStatus = setScheduleTimeModel.success.obs;
@@ -234,6 +239,8 @@ class VendorScheduleTimeScreenController extends GetxController {
 
         if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+
+          Get.back();
         } else {
           log("setSelectedScheduleTimeFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
@@ -256,6 +263,7 @@ class VendorScheduleTimeScreenController extends GetxController {
 
     } catch (e) {
       log("setSelectedScheduleTimeFunction Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
     }

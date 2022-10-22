@@ -21,6 +21,7 @@ class VendorUpdateResourcesScreenController extends GetxController {
   final int resourceId = Get.arguments;
 
   List<CriteriaData> criteriaGetList = [];
+  List<int> criteriaGetIndexList = [];
 
   /// Update Resource Form TextField
   GlobalKey<FormState> resourceUpdateFormKey = GlobalKey();
@@ -45,10 +46,10 @@ class VendorUpdateResourcesScreenController extends GetxController {
 
   List<Map<String, dynamic>> criteriaObjectUpdateList = [];
 
-  TextEditingController criteriaNameFieldUpdateController =
-      TextEditingController();
-  TextEditingController criteriaOptionFieldUpdateController =
-      TextEditingController();
+  // TextEditingController criteriaNameFieldUpdateController =
+  //     TextEditingController();
+  // TextEditingController criteriaOptionFieldUpdateController =
+  //     TextEditingController();
 
   File? updateFile;
 
@@ -157,7 +158,9 @@ class VendorUpdateResourcesScreenController extends GetxController {
         request.fields['id'] = "$selectedItemId";
         request.fields['CreatedBy'] = UserDetails.uniqueId;
         request.fields['Capacity'] =
-            updateResourceCapacityFieldController.text.trim();
+            updateResourceCapacityFieldController.text.isEmpty
+                ? "0"
+                : updateResourceCapacityFieldController.text.trim();
         request.fields['isEvent'] = "${updateEvent.value}";
         request.fields['RequireCriteria'] = "${updateRequireCriteria.value}";
         request.fields['id'] = "$resourceId";
@@ -191,7 +194,7 @@ class VendorUpdateResourcesScreenController extends GetxController {
             vendorResScreenController.getAllResourceAPI();
             Get.back();
           } else {
-            log("updateVendorResourcesFunction Else Else ${updateVendorResourceModel.message}");
+            log("updateVendorResourcesFunction if file ${updateVendorResourceModel.message}");
             Fluttertoast.showToast(msg: "Something want wrong!");
           }
         });
@@ -208,7 +211,9 @@ class VendorUpdateResourcesScreenController extends GetxController {
         request.fields['id'] = "$selectedItemId";
         request.fields['CreatedBy'] = UserDetails.uniqueId;
         request.fields['Capacity'] =
-            updateResourceCapacityFieldController.text.trim();
+            updateResourceCapacityFieldController.text.isEmpty
+                ? "0"
+                : updateResourceCapacityFieldController.text.trim();
         request.fields['isEvent'] = "${updateEvent.value}";
         request.fields['RequireCriteria'] = "${updateRequireCriteria.value}";
         request.fields['id'] = "$resourceId";
@@ -240,13 +245,15 @@ class VendorUpdateResourcesScreenController extends GetxController {
             vendorResScreenController.getAllResourceAPI();
             Get.back();
           } else {
-            log("updateVendorResourcesFunction Else Else ${updateVendorResourceModel.message}");
+            log("updateVendorResourcesFunction Else ${updateVendorResourceModel.message}");
             Fluttertoast.showToast(msg: "Something want wrong!");
           }
         });
       }
     } catch (e) {
       log("updateVendorResource: $e");
+
+      rethrow;
     } finally {
       isLoading(false);
     }
@@ -279,8 +286,8 @@ class VendorUpdateResourcesScreenController extends GetxController {
         updateResourceCapacityFieldController.text =
             getResourceDetailsModel.workerList.capacity.toString();
         updateEvent.value = getResourceDetailsModel.workerList.isEvent;
-        updateRequireCriteria.value = true;
-        // getResourceDetailsModel.workerList.requireCriteria;
+        updateRequireCriteria.value =
+            getResourceDetailsModel.workerList.requireCriteria;
 
         criteriaGetList = getResourceDetailsModel.workerList.criterias;
 
@@ -288,6 +295,10 @@ class VendorUpdateResourcesScreenController extends GetxController {
           log("criteria list is empty");
         } else {
           for (int i = 0; i < criteriaGetList.length; i++) {
+            criteriaGetIndexList.add(criteriaGetList[i].id);
+
+            log("criteriaGetIndexList is  :: ${criteriaGetIndexList.toString()}");
+
             //   criteriaList.add(
             //     CriteriaFormWidget(
             //       index: criteriaGetList[i].id,
@@ -303,22 +314,22 @@ class VendorUpdateResourcesScreenController extends GetxController {
 
             // int iNumber = criteriaGetList.length;
 
-            TextEditingController criteriaNameUpdateFieldController =
-                TextEditingController();
-            TextEditingController criteriaOptionUpdateFieldController =
-                TextEditingController();
+            // TextEditingController criteriaNameUpdateFieldController =
+            //     TextEditingController();
+            // TextEditingController criteriaOptionUpdateFieldController =
+            //     TextEditingController();
 
-            criteriaNameUpdateFieldController.text = criteriaGetList[i].name;
-            criteriaOptionUpdateFieldController.text =
-                criteriaGetList[i].options;
+            // criteriaNameUpdateFieldController.text = criteriaGetList[i].name;
+            // criteriaOptionUpdateFieldController.text =
+            //     criteriaGetList[i].options;
 
             criteriaNameUpdateControllerList
-                .add(criteriaNameUpdateFieldController);
+                .add(TextEditingController(text: criteriaGetList[i].name));
             criteriaOptionUpdateControllerList
-                .add(criteriaOptionUpdateFieldController);
+                .add(TextEditingController(text: criteriaGetList[i].options));
 
             criteriaUpdateList.add(
-              CriteriaFormWidget(
+              CriteriaFormUpdateWidget(
                 index: i,
                 criteriaNameFieldController:
                     criteriaNameUpdateControllerList[i],

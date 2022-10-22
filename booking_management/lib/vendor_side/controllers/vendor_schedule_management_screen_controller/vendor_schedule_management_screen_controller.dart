@@ -61,7 +61,7 @@ class VendorScheduleManagementScreenController extends GetxController {
       // Selected Resource List To String Logic
       String selectedResourcesString = "";
       String tempString = selectedResourceIdList.toString();
-      String tempString2 = tempString.substring(1, tempString.length-1);
+      String tempString2 = tempString.substring(1, tempString.length - 1);
       selectedResourcesString = tempString2;
       //
 
@@ -74,7 +74,7 @@ class VendorScheduleManagementScreenController extends GetxController {
       request.fields['ResourceListData'] = selectedResourcesString;
 
       log("auto schedule Fields : ${request.fields}");
-      log('request.headers: ${request.headers}');
+      // log('request.headers: ${request.headers}');
 
       var response = await request.send();
       log('response1234: ${response.statusCode}');
@@ -95,7 +95,6 @@ class VendorScheduleManagementScreenController extends GetxController {
           Fluttertoast.showToast(msg: "Something went wrong!");
         }
       });
-
     } catch (e) {
       log("getVendorAutoScheduleFunction Error ::: $e");
       rethrow;
@@ -139,11 +138,10 @@ class VendorScheduleManagementScreenController extends GetxController {
           allResourcesList[i].nextDate = mapData["nextDate"];
         }
 
-        for(int i = 0; i < allResourcesList.length; i++) {
+        for (int i = 0; i < allResourcesList.length; i++) {
           selectedResourceIdList.add(allResourcesList[i].id);
         }
         log('selectedResourceIdList : $selectedResourceIdList');
-
       } else {
         log("getResourcesFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");

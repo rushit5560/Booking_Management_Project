@@ -40,7 +40,7 @@ class UpdateResourceFormModule extends StatelessWidget {
               IsAdditionalCriteriaModule(),
               const SizedBox(height: 10),
               vendorUpdateResController.updateRequireCriteria.value
-                  ? CriteriaManageAddModule()
+                  ? CriteriaManageUpdateModule()
                   : const SizedBox(),
 
               //ServiceShortDesFieldModule(),
@@ -102,252 +102,283 @@ class IsAdditionalCriteriaModule extends StatelessWidget {
   }
 }
 
-class CriteriaManageAddModule extends StatefulWidget {
-  CriteriaManageAddModule({Key? key}) : super(key: key);
+// class CriteriaManageAddModule extends StatefulWidget {
+//   CriteriaManageAddModule({Key? key}) : super(key: key);
 
-  @override
-  State<CriteriaManageAddModule> createState() =>
-      _CriteriaManageAddModuleState();
-}
+//   @override
+//   State<CriteriaManageAddModule> createState() =>
+//       _CriteriaManageAddModuleState();
+// }
 
-class _CriteriaManageAddModuleState extends State<CriteriaManageAddModule> {
-  final vendorUpdateResController =
-      Get.find<VendorUpdateResourcesScreenController>();
+// class _CriteriaManageAddModuleState extends State<CriteriaManageAddModule> {
+//   final vendorUpdateResController =
+//       Get.find<VendorUpdateResourcesScreenController>();
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Obx(
-        //   () =>
-        Container(
-          height: 40,
-          width: 150,
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: AppColors.accentColor,
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: () {
-              setState(() {});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         // Obx(
+//         //   () =>
+//         Container(
+//           height: 40,
+//           width: 150,
+//           margin: const EdgeInsets.symmetric(vertical: 5),
+//           child: ElevatedButton(
+//             style: ElevatedButton.styleFrom(
+//               primary: AppColors.accentColor,
+//               padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+//               shape: const RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.all(
+//                   Radius.circular(10),
+//                 ),
+//               ),
+//             ),
+//             onPressed: () {
+//               setState(() {});
 
-              int iNumber = vendorUpdateResController.criteriaUpdateList.length;
+//               int iNumber = vendorUpdateResController.criteriaUpdateList.length;
 
-              TextEditingController criteriaNameFieldController =
-                  TextEditingController();
-              TextEditingController criteriaOptionFieldController =
-                  TextEditingController();
+//               TextEditingController criteriaNameFieldController =
+//                   TextEditingController();
+//               TextEditingController criteriaOptionFieldController =
+//                   TextEditingController();
 
-              vendorUpdateResController.criteriaNameUpdateControllerList
-                  .add(criteriaNameFieldController);
-              vendorUpdateResController.criteriaOptionUpdateControllerList
-                  .add(criteriaOptionFieldController);
+//               vendorUpdateResController.criteriaNameUpdateControllerList
+//                   .add(criteriaNameFieldController);
+//               vendorUpdateResController.criteriaOptionUpdateControllerList
+//                   .add(criteriaOptionFieldController);
 
-              vendorUpdateResController.criteriaUpdateList.add(
-                CriteriaFormWidget(
-                  index: iNumber,
-                  criteriaNameFieldController: vendorUpdateResController
-                      .criteriaNameUpdateControllerList[iNumber],
-                  optionFieldController: vendorUpdateResController
-                      .criteriaOptionUpdateControllerList[iNumber],
-                ),
-              );
-            },
-            child: const Center(
-              child: Text(
-                "Add Criteria",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-        ),
-        // ),
-        // Obx(
-        //   () =>
-        vendorUpdateResController.criteriaUpdateList.isEmpty
-            ? const SizedBox()
-            : ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                itemCount: vendorUpdateResController.criteriaUpdateList.length,
-                itemBuilder: (BuildContext context, int i) {
-                  return vendorUpdateResController.criteriaUpdateList[i];
-                  /* return CriteriaFormWidget(
-                    index: index,
-                  );*/
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    height: 25,
-                    color: AppColors.colorGreyIconLight,
-                    thickness: 0.6,
-                  );
-                },
-              ),
+//               vendorUpdateResController.criteriaUpdateList.add(
+//                 CriteriaFormWidget(
+//                   index: iNumber,
+//                   criteriaNameFieldController: vendorUpdateResController
+//                       .criteriaNameUpdateControllerList[iNumber],
+//                   optionFieldController: vendorUpdateResController
+//                       .criteriaOptionUpdateControllerList[iNumber],
+//                 ),
+//               );
+//             },
+//             child: const Center(
+//               child: Text(
+//                 "Add Criteria",
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.w500,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//         // ),
+//         // Obx(
+//         //   () =>
+//         vendorUpdateResController.criteriaUpdateList.isEmpty
+//             ? const SizedBox()
+//             : ListView.separated(
+//                 shrinkWrap: true,
+//                 physics: const NeverScrollableScrollPhysics(),
+//                 padding:
+//                     const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+//                 itemCount: vendorUpdateResController.criteriaUpdateList.length,
+//                 itemBuilder: (BuildContext context, int i) {
+//                   return vendorUpdateResController.criteriaUpdateList[i];
+//                   /* return CriteriaFormWidget(
+//                     index: index,
+//                   );*/
+//                 },
+//                 separatorBuilder: (BuildContext context, int index) {
+//                   return Divider(
+//                     height: 25,
+//                     color: AppColors.colorGreyIconLight,
+//                     thickness: 0.6,
+//                   );
+//                 },
+//               ),
 
-        // ),
-        // addCriteriaFormWidget(inputBorder),
-      ],
-    );
-  }
-}
+//         // ),
+//         // addCriteriaFormWidget(inputBorder),
+//       ],
+//     );
+//   }
+// }
 
-class CriteriaFormWidget extends StatefulWidget {
-  final int index;
-  TextEditingController criteriaNameFieldController;
-  TextEditingController optionFieldController;
+// class CriteriaFormWidget extends StatefulWidget {
+//   final int index;
+//   TextEditingController criteriaNameFieldController;
+//   TextEditingController optionFieldController;
 
-  CriteriaFormWidget({
-    Key? key,
-    required this.index,
-    required this.criteriaNameFieldController,
-    required this.optionFieldController,
-  }) : super(key: key);
+//   CriteriaFormWidget({
+//     Key? key,
+//     required this.index,
+//     required this.criteriaNameFieldController,
+//     required this.optionFieldController,
+//   }) : super(key: key);
 
-  @override
-  State<CriteriaFormWidget> createState() => _CriteriaFormWidgetState();
-}
+//   @override
+//   State<CriteriaFormWidget> createState() => _CriteriaFormWidgetState();
+// }
 
-class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
-  final vendorUpdateResController =
-      Get.find<VendorUpdateResourcesScreenController>();
+// class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
+//   final vendorUpdateResController =
+//       Get.find<VendorUpdateResourcesScreenController>();
 
-  // TextEditingController criteriaNameFieldController = TextEditingController();
-  // TextEditingController optionFieldController = TextEditingController();
+//   // TextEditingController criteriaNameFieldController = TextEditingController();
+//   // TextEditingController optionFieldController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    final inputBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: AppColors.colorGreyIconLight,
-        width: 0.8,
-      ),
-      borderRadius: const BorderRadius.all(Radius.circular(12)),
-    );
-    return Obx(
-      () => vendorUpdateResController.isLoading.value
-          ? const CustomCircularLoaderModule()
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Criteria Name*",
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          TextFormField(
-                            controller: widget.criteriaNameFieldController,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 12),
-                              isDense: true,
-                              border: inputBorder,
-                              enabledBorder: inputBorder,
-                              focusedBorder: inputBorder,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Option to select from*",
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          TextFormField(
-                            controller: widget.optionFieldController,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 12),
-                              isDense: true,
-                              border: inputBorder,
-                              enabledBorder: inputBorder,
-                              focusedBorder: inputBorder,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  height: 35,
-                  width: 75,
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.redColor,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2, vertical: 10),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      vendorUpdateResController.isLoading(true);
-                      setState(() {
-                        vendorUpdateResController.criteriaUpdateList
-                            .removeAt(widget.index);
-                        vendorUpdateResController
-                            .criteriaNameUpdateControllerList
-                            .removeAt(widget.index);
-                        vendorUpdateResController
-                            .criteriaOptionUpdateControllerList
-                            .removeAt(widget.index);
-                      });
-                      vendorUpdateResController.isLoading(false);
-                    },
-                    child: const Center(
-                      child: Text(
-                        "Remove",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final inputBorder = OutlineInputBorder(
+//       borderSide: BorderSide(
+//         color: AppColors.colorGreyIconLight,
+//         width: 0.8,
+//       ),
+//       borderRadius: const BorderRadius.all(Radius.circular(12)),
+//     );
+//     return Obx(
+//       () => vendorUpdateResController.isLoading.value
+//           ? const CustomCircularLoaderModule()
+//           : Row(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 Expanded(
+//                   child: Column(
+//                     children: [
+//                       Column(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const Text(
+//                             "Criteria Name*",
+//                             maxLines: 2,
+//                             style: TextStyle(
+//                               fontWeight: FontWeight.w500,
+//                               fontSize: 14,
+//                             ),
+//                           ),
+//                           const SizedBox(height: 5),
+//                           TextFormField(
+//                             controller: widget.criteriaNameFieldController,
+//                             textInputAction: TextInputAction.done,
+//                             decoration: InputDecoration(
+//                               contentPadding: const EdgeInsets.symmetric(
+//                                   vertical: 12, horizontal: 12),
+//                               isDense: true,
+//                               border: inputBorder,
+//                               enabledBorder: inputBorder,
+//                               focusedBorder: inputBorder,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       const SizedBox(height: 5),
+//                       Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const Text(
+//                             "Option to select from*",
+//                             maxLines: 2,
+//                             style: TextStyle(
+//                               fontWeight: FontWeight.w500,
+//                               fontSize: 14,
+//                             ),
+//                           ),
+//                           const SizedBox(height: 5),
+//                           TextFormField(
+//                             controller: widget.optionFieldController,
+//                             textInputAction: TextInputAction.next,
+//                             decoration: InputDecoration(
+//                               contentPadding: const EdgeInsets.symmetric(
+//                                   vertical: 12, horizontal: 12),
+//                               isDense: true,
+//                               border: inputBorder,
+//                               enabledBorder: inputBorder,
+//                               focusedBorder: inputBorder,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 const SizedBox(width: 8),
+//                 Container(
+//                   height: 35,
+//                   width: 75,
+//                   margin: const EdgeInsets.symmetric(vertical: 5),
+//                   child: ElevatedButton(
+//                     style: ElevatedButton.styleFrom(
+//                       primary: AppColors.redColor,
+//                       padding: const EdgeInsets.symmetric(
+//                           horizontal: 2, vertical: 10),
+//                       shape: const RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.all(
+//                           Radius.circular(10),
+//                         ),
+//                       ),
+//                     ),
+//                     onPressed: () {
+//                       vendorUpdateResController.isLoading(true);
+//                       setState(() {});
+//                       log('Criteria index number is :${widget.index}');
+//                       log('Criteria Name :${vendorUpdateResController.criteriaNameUpdateControllerList[widget.index].text}');
+//                       log('Criteria Option :${vendorUpdateResController.criteriaOptionUpdateControllerList[widget.index].text}');
+
+//                       vendorUpdateResController.criteriaUpdateList
+//                           .removeAt(widget.index);
+//                       vendorUpdateResController.criteriaNameUpdateControllerList
+//                           .removeAt(widget.index);
+//                       vendorUpdateResController
+//                           .criteriaOptionUpdateControllerList
+//                           .removeAt(widget.index);
+
+//                       // if (widget.index ==
+//                       //     vendorUpdateResController.criteriaGetIndexList
+//                       //         .indexWhere((element) {
+
+//                       //   vendorUpdateResController.criteriaGetIndexList
+//                       //       .removeAt(widget.index);
+
+//                       //         },)) {
+//                       // }
+
+//                       vendorUpdateResController.criteriaGetIndexList
+//                           .indexWhere((element) {
+//                         if (element == widget.index) {
+//                           vendorUpdateResController.criteriaGetIndexList
+//                               .removeAt(widget.index);
+//                         }
+//                         return true;
+//                       });
+
+//                       ///
+//                       // if (vendorUpdateResController
+//                       //         .criteriaGetIndexList.length >=
+//                       //     vendorUpdateResController
+//                       //         .criteriaUpdateList.length) {
+//                       //   vendorUpdateResController.criteriaGetIndexList
+//                       //       .removeAt(widget.index);
+//                       // }
+
+//                       vendorUpdateResController.isLoading(false);
+//                     },
+//                     child: const Center(
+//                       child: Text(
+//                         "Remove",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.w500,
+//                           fontSize: 13,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//     );
+//   }
+// }
 
 class ResourceProfileModule extends StatelessWidget {
   ResourceProfileModule({Key? key}) : super(key: key);
@@ -687,6 +718,13 @@ class EventCheckBoxModule extends StatelessWidget {
       children: [
         Obx(
           () => Checkbox(
+            fillColor: MaterialStateProperty.resolveWith(
+                (states) => AppColors.accentColor),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
+              ),
+            ),
             value: vendorUpdateResController.updateEvent.value,
             onChanged: (value) {
               vendorUpdateResController.isLoading(true);
@@ -708,10 +746,11 @@ class EventCheckBoxModule extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         const Text(
-          "Event",
+          "Enable multiple bookings with set capacity",
+          maxLines: 2,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
           ),
         ),
       ],
@@ -734,89 +773,100 @@ class _CriteriaManageUpdateModuleState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Obx(
-        //   () =>
-        Container(
-          height: 40,
-          width: 150,
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: AppColors.accentColor,
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+    return Obx(
+      () => vendorUpdateResController.isLoading.value
+          ? const CircularProgressIndicator()
+          : Column(
+              children: [
+                Container(
+                  height: 40,
+                  width: 150,
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.accentColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 2, vertical: 10),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {});
+                      vendorUpdateResController.isLoading(true);
+
+                      int iNumber =
+                          vendorUpdateResController.criteriaUpdateList.length;
+
+                      // TextEditingController criteriaNameFieldController =
+                      //     TextEditingController();
+                      // TextEditingController criteriaOptionFieldController =
+                      //     TextEditingController();
+
+                      log("adding to index number :: $iNumber");
+                      vendorUpdateResController.criteriaNameUpdateControllerList
+                          .add(TextEditingController(text: ""));
+                      vendorUpdateResController
+                          .criteriaOptionUpdateControllerList
+                          .add(TextEditingController(text: ""));
+
+                      vendorUpdateResController.criteriaUpdateList.add(
+                        CriteriaFormUpdateWidget(
+                          index: iNumber,
+                          criteriaNameFieldController: vendorUpdateResController
+                              .criteriaNameUpdateControllerList[iNumber],
+                          optionFieldController: vendorUpdateResController
+                              .criteriaOptionUpdateControllerList[iNumber],
+                        ),
+                      );
+                      vendorUpdateResController.isLoading(false);
+                    },
+                    child: const Center(
+                      child: Text(
+                        "Add Criteria",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                // ),
+                vendorUpdateResController.criteriaUpdateList.isEmpty
+                    ? const SizedBox()
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            vendorUpdateResController.criteriaUpdateList.length,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 8),
+                        itemBuilder: (BuildContext context, int index) {
+                          // return vendorUpdateResController.criteriaUpdateList[i];
+                          return CriteriaFormUpdateWidget(
+                            index: index,
+                            criteriaNameFieldController:
+                                vendorUpdateResController
+                                    .criteriaNameUpdateControllerList[index],
+                            optionFieldController: vendorUpdateResController
+                                .criteriaOptionUpdateControllerList[index],
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(
+                            height: 25,
+                            color: AppColors.colorGreyIconLight,
+                            thickness: 0.6,
+                          );
+                        },
+                      ),
+
+                // addCriteriaFormUpdateWidget(inputBorder),
+              ],
             ),
-            onPressed: () {
-              setState(() {});
-
-              int iNumber = vendorUpdateResController.criteriaUpdateList.length;
-
-              TextEditingController criteriaNameFieldController =
-                  TextEditingController();
-              TextEditingController criteriaOptionFieldController =
-                  TextEditingController();
-
-              vendorUpdateResController.criteriaNameUpdateControllerList
-                  .add(criteriaNameFieldController);
-              vendorUpdateResController.criteriaOptionUpdateControllerList
-                  .add(criteriaOptionFieldController);
-
-              vendorUpdateResController.criteriaUpdateList.add(
-                CriteriaFormUpdateWidget(
-                  index: iNumber,
-                  criteriaNameFieldController: vendorUpdateResController
-                      .criteriaNameUpdateControllerList[iNumber],
-                  optionFieldController: vendorUpdateResController
-                      .criteriaOptionUpdateControllerList[iNumber],
-                ),
-              );
-            },
-            child: const Center(
-              child: Text(
-                "Add Criteria",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-        ),
-        // ),
-        // Obx(
-        //   () =>
-        vendorUpdateResController.criteriaUpdateList.isEmpty
-            ? const SizedBox()
-            : ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                itemCount: vendorUpdateResController.criteriaUpdateList.length,
-                itemBuilder: (BuildContext context, int i) {
-                  return vendorUpdateResController.criteriaUpdateList[i];
-                  /* return CriteriaFormUpdateWidget(
-                    index: index,
-                  );*/
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    height: 25,
-                    color: AppColors.colorGreyIconLight,
-                    thickness: 0.6,
-                  );
-                },
-              ),
-
-        // ),
-        // addCriteriaFormUpdateWidget(inputBorder),
-      ],
     );
   }
 }
@@ -939,16 +989,71 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                     ),
                     onPressed: () {
                       vendorUpdateResController.isLoading(true);
-                      setState(() {
-                        vendorUpdateResController.criteriaUpdateList
+                      setState(() {});
+                      // vendorUpdateResController.isLoading(true);
+                      // vendorUpdateResController.criteriaUpdateList
+                      //     .removeAt(widget.index);
+                      // vendorUpdateResController.criteriaNameUpdateControllerList
+                      //     .removeAt(widget.index);
+                      // vendorUpdateResController
+                      //     .criteriaOptionUpdateControllerList
+                      //     .removeAt(widget.index);
+                      // vendorUpdateResController.isLoading(false);
+
+                      //  vendorUpdateResController.isLoading(true);
+                      setState(() {});
+                      log('Criteria index number is :${widget.index}');
+                      log('Criteria Name :${vendorUpdateResController.criteriaNameUpdateControllerList[widget.index].text}');
+                      log('Criteria Option :${vendorUpdateResController.criteriaOptionUpdateControllerList[widget.index].text}');
+
+                      vendorUpdateResController.criteriaUpdateList
+                          .removeAt(widget.index);
+                      vendorUpdateResController.criteriaNameUpdateControllerList
+                          .removeAt(widget.index);
+                      vendorUpdateResController
+                          .criteriaOptionUpdateControllerList
+                          .removeAt(widget.index);
+
+                      if (vendorUpdateResController
+                          .criteriaGetIndexList.isNotEmpty) {
+                        log("id index is not there :: ");
+
+                        // if(vendorUpdateResController
+                        //   .criteriaGetIndexList.){}
+                      } else {
+                        vendorUpdateResController.criteriaGetIndexList
                             .removeAt(widget.index);
-                        vendorUpdateResController
-                            .criteriaNameUpdateControllerList
-                            .removeAt(widget.index);
-                        vendorUpdateResController
-                            .criteriaOptionUpdateControllerList
-                            .removeAt(widget.index);
-                      });
+                        log("vendorUpdateResController.criteriaGetIndexList is :: ${vendorUpdateResController.criteriaGetIndexList}");
+                      }
+
+                      // if (widget.index ==
+                      //     vendorUpdateResController.criteriaGetIndexList
+                      //         .indexWhere((element) {
+
+                      //   vendorUpdateResController.criteriaGetIndexList
+                      //       .removeAt(widget.index);
+
+                      //         },)) {
+                      // }
+
+                      //     ((element) {
+                      //   if (element == widget.index) {
+                      //     log('Criteria id list  index number is :${widget.index}');
+                      //     vendorUpdateResController.criteriaGetIndexList
+                      //         .removeAt(widget.index);
+                      //   }
+                      //   return true;
+                      // });
+
+                      ///
+                      // if (vendorUpdateResController
+                      //         .criteriaGetIndexList.length >=
+                      //     vendorUpdateResController
+                      //         .criteriaUpdateList.length) {
+                      //   vendorUpdateResController.criteriaGetIndexList
+                      //       .removeAt(widget.index);
+                      // }
+
                       vendorUpdateResController.isLoading(false);
                     },
                     child: const Center(
@@ -982,23 +1087,55 @@ class ResourceUpdateButton extends StatelessWidget {
           // vendorUpdateResController.criteriaNameUpdateControllerList.clear();
 
           vendorUpdateResController.criteriaObjectUpdateList.clear();
-          for (int i = 0;
-              i <
-                  vendorUpdateResController
-                      .criteriaNameUpdateControllerList.length;
-              i++) {
-            vendorUpdateResController.criteriaObjectUpdateList.add(
-              {
-                // "id": vendorUpdateResController.criteriaGetList[i].id,
-                "Name": vendorUpdateResController
-                    .criteriaNameUpdateControllerList[i].text
-                    .trim(),
-                "Options": vendorUpdateResController
-                    .criteriaOptionUpdateControllerList[i].text
-                    .trim(),
-              },
-            );
-            log("criteria object list map :: ${vendorUpdateResController.criteriaObjectUpdateList[i]}");
+
+          if (vendorUpdateResController.updateEvent.isTrue) {
+            if (vendorUpdateResController.updateRequireCriteria.isTrue) {
+              for (int i = 0;
+                  i <
+                      vendorUpdateResController
+                          .criteriaNameUpdateControllerList.length;
+                  i++) {
+                if (vendorUpdateResController
+                            .criteriaNameUpdateControllerList[i].text
+                            .trim() ==
+                        "" ||
+                    vendorUpdateResController
+                            .criteriaOptionUpdateControllerList[i].text
+                            .trim() ==
+                        "") {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          "please provide criteria name and its options")));
+                } else {
+                  if (vendorUpdateResController.criteriaGetIndexList.isEmpty) {
+                    vendorUpdateResController.criteriaObjectUpdateList.add(
+                      {
+                        "Name": vendorUpdateResController
+                            .criteriaNameUpdateControllerList[i].text
+                            .trim(),
+                        "Options": vendorUpdateResController
+                            .criteriaOptionUpdateControllerList[i].text
+                            .trim(),
+                      },
+                    );
+                  } else {
+                    vendorUpdateResController.criteriaObjectUpdateList.add(
+                      {
+                        "id":
+                            "${vendorUpdateResController.criteriaGetIndexList[i]}",
+                        "Name": vendorUpdateResController
+                            .criteriaNameUpdateControllerList[i].text
+                            .trim(),
+                        "Options": vendorUpdateResController
+                            .criteriaOptionUpdateControllerList[i].text
+                            .trim(),
+                      },
+                    );
+                  }
+                  log("criteria object list map :: ${vendorUpdateResController.criteriaObjectUpdateList[i]}");
+                }
+              }
+            }
           }
           await vendorUpdateResController.updateVendorResourceFunction();
         }

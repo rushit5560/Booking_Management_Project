@@ -362,7 +362,7 @@ class IsEventCheckBoxModule extends StatelessWidget {
         const SizedBox(width: 5),
         const Expanded(
           child: Text(
-            "Enable multiple bookings with set capacity ",
+            "Enable multiple bookings with set capacity",
             maxLines: 2,
             style: TextStyle(
               fontWeight: FontWeight.w500,

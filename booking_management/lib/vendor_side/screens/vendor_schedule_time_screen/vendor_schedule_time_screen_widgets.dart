@@ -573,6 +573,7 @@ class ScheduleListModule extends StatelessWidget {
                                     "Hours"
                                 ? screenController.allScheduleTimeList[i]
                                     .split("T")[1]
+                                    .substring(0, 5)
                                 : screenController.allScheduleTimeList[i]
                                     .split("T")[0],
                           ),
@@ -583,6 +584,7 @@ class ScheduleListModule extends StatelessWidget {
                                     "Hours"
                                 ? screenController.allScheduleTimeList[i + 1]
                                     .split("T")[1]
+                                    .substring(0, 5)
                                 : screenController.allScheduleTimeList[i + 1]
                                     .split("T")[0],
                           ),

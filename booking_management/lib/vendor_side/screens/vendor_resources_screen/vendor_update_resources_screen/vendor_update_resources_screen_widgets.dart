@@ -797,8 +797,7 @@ class _CriteriaManageUpdateModuleState
                       setState(() {});
                       vendorUpdateResController.isLoading(true);
 
-                      int iNumber =
-                          vendorUpdateResController.criteriaUpdateList.length;
+                      int iNumber = vendorUpdateResController.criteriaUpdateList.length;
 
                       // TextEditingController criteriaNameFieldController =
                       //     TextEditingController();
@@ -815,12 +814,14 @@ class _CriteriaManageUpdateModuleState
                       vendorUpdateResController.criteriaUpdateList.add(
                         CriteriaFormUpdateWidget(
                           index: iNumber,
+                          id: 0,
                           criteriaNameFieldController: vendorUpdateResController
                               .criteriaNameUpdateControllerList[iNumber],
                           optionFieldController: vendorUpdateResController
                               .criteriaOptionUpdateControllerList[iNumber],
                         ),
                       );
+                      vendorUpdateResController.criteriaGetIndexList.add(0);
                       vendorUpdateResController.isLoading(false);
                     },
                     child: const Center(
@@ -848,6 +849,7 @@ class _CriteriaManageUpdateModuleState
                           // return vendorUpdateResController.criteriaUpdateList[i];
                           return CriteriaFormUpdateWidget(
                             index: index,
+                            id: 0,
                             criteriaNameFieldController:
                                 vendorUpdateResController
                                     .criteriaNameUpdateControllerList[index],
@@ -873,12 +875,14 @@ class _CriteriaManageUpdateModuleState
 
 class CriteriaFormUpdateWidget extends StatefulWidget {
   final int index;
+  final int id;
   TextEditingController criteriaNameFieldController;
   TextEditingController optionFieldController;
 
   CriteriaFormUpdateWidget({
     Key? key,
     required this.index,
+    required this.id,
     required this.criteriaNameFieldController,
     required this.optionFieldController,
   }) : super(key: key);
@@ -1006,23 +1010,18 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                       log('Criteria Name :${vendorUpdateResController.criteriaNameUpdateControllerList[widget.index].text}');
                       log('Criteria Option :${vendorUpdateResController.criteriaOptionUpdateControllerList[widget.index].text}');
 
-                      vendorUpdateResController.criteriaUpdateList
-                          .removeAt(widget.index);
-                      vendorUpdateResController.criteriaNameUpdateControllerList
-                          .removeAt(widget.index);
-                      vendorUpdateResController
-                          .criteriaOptionUpdateControllerList
-                          .removeAt(widget.index);
+                      vendorUpdateResController.criteriaUpdateList.removeAt(widget.index);
+                      vendorUpdateResController.criteriaNameUpdateControllerList.removeAt(widget.index);
+                      vendorUpdateResController.criteriaOptionUpdateControllerList.removeAt(widget.index);
 
                       if (vendorUpdateResController
-                          .criteriaGetIndexList.isNotEmpty) {
+                          .criteriaGetIndexList.isEmpty) {
                         log("id index is not there :: ");
 
                         // if(vendorUpdateResController
                         //   .criteriaGetIndexList.){}
                       } else {
-                        vendorUpdateResController.criteriaGetIndexList
-                            .removeAt(widget.index);
+                        vendorUpdateResController.criteriaGetIndexList.removeAt(widget.index);
                         log("vendorUpdateResController.criteriaGetIndexList is :: ${vendorUpdateResController.criteriaGetIndexList}");
                       }
 
@@ -1088,24 +1087,17 @@ class ResourceUpdateButton extends StatelessWidget {
 
           vendorUpdateResController.criteriaObjectUpdateList.clear();
 
-          if (vendorUpdateResController.updateEvent.isTrue) {
-            if (vendorUpdateResController.updateRequireCriteria.isTrue) {
-              for (int i = 0;
-                  i <
-                      vendorUpdateResController
-                          .criteriaNameUpdateControllerList.length;
-                  i++) {
-                if (vendorUpdateResController
-                            .criteriaNameUpdateControllerList[i].text
-                            .trim() ==
-                        "" ||
-                    vendorUpdateResController
-                            .criteriaOptionUpdateControllerList[i].text
-                            .trim() ==
-                        "") {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          "please provide criteria name and its options")));
+          if (vendorUpdateResController.updateEvent.value) {
+            if (vendorUpdateResController.updateRequireCriteria.value) {
+              for (int i = 0; i < vendorUpdateResController.criteriaNameUpdateControllerList.length; i++) {
+                if (vendorUpdateResController.criteriaNameUpdateControllerList[i].text.trim() == "" ||
+                    vendorUpdateResController.criteriaOptionUpdateControllerList[i].text.trim() == "") {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content:
+                          Text("please provide criteria name and its options"),
+                    ),
+                  );
                 } else {
                   if (vendorUpdateResController.criteriaGetIndexList.isEmpty) {
                     vendorUpdateResController.criteriaObjectUpdateList.add(

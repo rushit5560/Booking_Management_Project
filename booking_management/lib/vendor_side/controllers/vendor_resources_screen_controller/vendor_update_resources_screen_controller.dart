@@ -152,16 +152,12 @@ class VendorUpdateResourcesScreenController extends GetxController {
         // var multiPart = http.MultipartFile('Image', stream, length);
         // request.files.add(multiPart);
 
-        request.fields['ResourceName'] =
-            updateResourceNameFieldController.text.trim();
-        request.fields['Details'] =
-            updateResourceDetailsFieldController.text.trim();
-        request.fields['Price'] =
-            updateResourcePriceFieldController.text.trim();
+        request.fields['ResourceName'] = updateResourceNameFieldController.text.trim();
+        request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
+        request.fields['Price'] = updateResourcePriceFieldController.text.trim();
         request.fields['id'] = "$selectedItemId";
         request.fields['CreatedBy'] = UserDetails.uniqueId;
-        request.fields['Capacity'] =
-            updateResourceCapacityFieldController.text.isEmpty
+        request.fields['Capacity'] = updateResourceCapacityFieldController.text.isEmpty
                 ? "0"
                 : updateResourceCapacityFieldController.text.trim();
         request.fields['isEvent'] = "${updateEvent.value}";
@@ -280,17 +276,12 @@ class VendorUpdateResourcesScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         selectedItemId = getResourceDetailsModel.workerList.id;
-        updateResourceNameFieldController.text =
-            getResourceDetailsModel.workerList.resourceName;
-        updateResourceDetailsFieldController.text =
-            getResourceDetailsModel.workerList.details;
-        updateResourcePriceFieldController.text =
-            getResourceDetailsModel.workerList.price.toString();
-        updateResourceCapacityFieldController.text =
-            getResourceDetailsModel.workerList.capacity.toString();
+        updateResourceNameFieldController.text =getResourceDetailsModel.workerList.resourceName;
+        updateResourceDetailsFieldController.text = getResourceDetailsModel.workerList.details;
+        updateResourcePriceFieldController.text = getResourceDetailsModel.workerList.price.toString();
+        updateResourceCapacityFieldController.text = getResourceDetailsModel.workerList.capacity.toString();
         updateEvent.value = getResourceDetailsModel.workerList.isEvent;
-        updateRequireCriteria.value =
-            getResourceDetailsModel.workerList.requireCriteria;
+        updateRequireCriteria.value = getResourceDetailsModel.workerList.requireCriteria;
 
         criteriaGetList = getResourceDetailsModel.workerList.criterias;
 
@@ -301,11 +292,13 @@ class VendorUpdateResourcesScreenController extends GetxController {
             criteriaGetIndexList.add(criteriaGetList[i].id);
 
             // Criteria Getting from server & add in local list
-            apiResourceCriteriaList.add(CriteriaModel(
-              index: "${criteriaGetList[i].id}",
-              criteriaName: criteriaGetList[i].name,
-              criteriaOption: criteriaGetList[i].options,
-            ));
+            /*apiResourceCriteriaList.add(
+              CriteriaModel(
+                index: "${criteriaGetList[i].id}",
+                criteriaName: criteriaGetList[i].name,
+                criteriaOption: criteriaGetList[i].options,
+              ),
+            );*/
 
             log("criteriaGetIndexList is  :: ${criteriaGetIndexList.toString()}");
 
@@ -333,14 +326,13 @@ class VendorUpdateResourcesScreenController extends GetxController {
             // criteriaOptionUpdateFieldController.text =
             //     criteriaGetList[i].options;
 
-            criteriaNameUpdateControllerList
-                .add(TextEditingController(text: criteriaGetList[i].name));
-            criteriaOptionUpdateControllerList
-                .add(TextEditingController(text: criteriaGetList[i].options));
+            criteriaNameUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].name));
+            criteriaOptionUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].options));
 
             criteriaUpdateList.add(
               CriteriaFormUpdateWidget(
                 index: i,
+                id: criteriaGetList[i].id,
                 criteriaNameFieldController:
                     criteriaNameUpdateControllerList[i],
                 optionFieldController: criteriaOptionUpdateControllerList[i],

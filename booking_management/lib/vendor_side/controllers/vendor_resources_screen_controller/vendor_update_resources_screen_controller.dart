@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:booking_management/vendor_side/controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
+import 'package:booking_management/vendor_side/model/vendor_get_all_resources_list_model/criteria_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -57,6 +57,9 @@ class VendorUpdateResourcesScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
   int selectedItemId = 0;
+
+  List<CriteriaModel> apiResourceCriteriaList = [];
+  List<NewCriteriaModel> localResourceCriteriaList = [];
 
   @override
   void onInit() {
@@ -296,6 +299,13 @@ class VendorUpdateResourcesScreenController extends GetxController {
         } else {
           for (int i = 0; i < criteriaGetList.length; i++) {
             criteriaGetIndexList.add(criteriaGetList[i].id);
+
+            // Criteria Getting from server & add in local list
+            apiResourceCriteriaList.add(CriteriaModel(
+              index: "${criteriaGetList[i].id}",
+              criteriaName: criteriaGetList[i].name,
+              criteriaOption: criteriaGetList[i].options,
+            ));
 
             log("criteriaGetIndexList is  :: ${criteriaGetIndexList.toString()}");
 

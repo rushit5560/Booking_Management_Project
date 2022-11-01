@@ -37,6 +37,7 @@ class WorkerList {
     required this.price,
     required this.paidBy,
     required this.vendor,
+    required this.quantity,
   });
 
   int id;
@@ -45,12 +46,14 @@ class WorkerList {
   double price;
   String paidBy;
   Vendor vendor;
+  int quantity;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
     id: json["id"] ?? 0,
     bookingId: json["bookingId"] ?? "",
     orderDate: json["orderDate"] ?? "",
     price: json["price"] ?? 0.0,
+    quantity: json["quantity"] ?? 0,
     paidBy: json["paidBy"] ?? "",
     vendor: Vendor.fromJson(json["vendor"] ?? {}),
   );
@@ -62,6 +65,7 @@ class WorkerList {
     "price": price,
     "paidBy": paidBy,
     "vendor": vendor.toJson(),
+    "quantity": quantity,
   };
 }
 

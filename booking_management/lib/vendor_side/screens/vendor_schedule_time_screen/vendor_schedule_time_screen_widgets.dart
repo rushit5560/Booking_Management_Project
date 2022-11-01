@@ -528,7 +528,10 @@ class ScheduleListModule extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 ListView.builder(
-                  itemCount: screenController.allScheduleTimeList.length - 1,
+                  itemCount:
+                      screenController.selectResourceTimeType.value == "Hours"
+                          ? screenController.allScheduleTimeList.length - 1
+                          : screenController.allScheduleTimeList.length,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, i) {
@@ -585,7 +588,7 @@ class ScheduleListModule extends StatelessWidget {
                                 ? screenController.allScheduleTimeList[i + 1]
                                     .split("T")[1]
                                     .substring(0, 5)
-                                : screenController.allScheduleTimeList[i + 1]
+                                : screenController.allScheduleTimeList[i]
                                     .split("T")[0],
                           ),
                         ),

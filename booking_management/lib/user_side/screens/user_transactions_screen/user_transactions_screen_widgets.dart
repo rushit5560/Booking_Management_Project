@@ -3,7 +3,6 @@ import 'package:booking_management/user_side/controllers/user_transaction_screen
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class UserTransactionListModule extends StatelessWidget {
   UserTransactionListModule({Key? key}) : super(key: key);
 
@@ -22,7 +21,6 @@ class UserTransactionListModule extends StatelessWidget {
   }
 
   Widget _transactionListTile(i) {
-
     String finalDate = "";
 
     String d = screenController.transactionList[i].orderDate;
@@ -30,8 +28,6 @@ class UserTransactionListModule extends StatelessWidget {
     // finalDate = d1;
     List<String> dateFormat = d1.split('-');
     finalDate = "${dateFormat[2]}-${dateFormat[1]}-${dateFormat[0]}";
-
-
 
     return Container(
       decoration: BoxDecoration(
@@ -51,46 +47,56 @@ class UserTransactionListModule extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  screenController.transactionList[i].vendor.businessName,
+                  "Booking Id : ${screenController.transactionList[i].bookingId}",
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(height: 10),
-                /*Text(
-                  screenController.transactionList[i].paidBy,
-                  //maxLines: 1,
+                Text(
+                  "Paid by : ${screenController.transactionList[i].paidBy}",
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
-                const SizedBox(height: 10),*/
+                const SizedBox(height: 10),
                 Text(
                   finalDate,
-                  //maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
               ],
             ),
           ),
-          Text(
-            "\$${screenController.transactionList[i].price.toString()}",
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+          Column(
+            children: [
+              const Text(
+                "Paid",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              Text(
+                "\$${screenController.transactionList[i].price.toString()}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ],
           ),
         ],
       ).commonAllSidePadding(10),
     ).commonAllSidePadding(10);
   }
-
 }

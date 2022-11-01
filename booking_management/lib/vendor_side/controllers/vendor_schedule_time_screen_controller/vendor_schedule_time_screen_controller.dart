@@ -5,6 +5,7 @@ import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import '../../../common_modules/constants/api_url.dart';
 import '../../../common_modules/constants/user_details.dart';
 import '../../model/vendor_get_all_resources_list_model/vendor_get_all_resources_model.dart';
@@ -123,7 +124,7 @@ class VendorScheduleTimeScreenController extends GetxController {
             allScheduleTimeList = getAllScheduleTimeModel.workerList;
             log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
 
-            for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
+            for (int i = 0; i < allScheduleTimeList.length; i++) {
               checkScheduleTimeList.add(true);
             }
           } else {
@@ -189,78 +190,122 @@ class VendorScheduleTimeScreenController extends GetxController {
     try {
       List trueList = [];
 
-      for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
-        if (checkScheduleTimeList[i] == true) {
-          String startTime = selectResourceTimeType.value == "Hours"
-              ? allScheduleTimeList[i].split("T")[1]
-              : allScheduleTimeList[i].split("T")[0];
-          String endTime = selectResourceTimeType.value == "Hours"
-              ? allScheduleTimeList[i + 1].split("T")[1]
-              : allScheduleTimeList[i + 1].split("T")[0];
+      if (selectResourceTimeType.value == "Hours") {
+        for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
+          if (checkScheduleTimeList[i] == true) {
+            String startTime = allScheduleTimeList[i].split("T")[1];
+            String endTime = allScheduleTimeList[i + 1].split("T")[1];
 
-          /// Remove AM & PM
-          String start = startTime;
-          String end = endTime;
+            /// Remove AM & PM
+            String start = startTime;
+            String end = endTime;
 
-          trueList.add({
-            "ResourceId": selectResourceValue.id,
-            "ScheduleDate": selectedDate.value.toString(),
-            "start": start,
-            "end": end,
-          });
+            trueList.add({
+              "ResourceId": selectResourceValue.id,
+              "ScheduleDate": selectedDate.value.toString(),
+              "start": start,
+              "end": end,
+            });
+          }
         }
+
+        log("listData : $trueList");
+
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['bookings'] = jsonEncode(trueList);
+        request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+
+        log("Fields : ${request.fields}");
+        // log('request.headers: ${request.headers}');
+
+        var response = await request.send();
+        log('response: ${response.statusCode}');
+
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((dataLine) {
+          log('response body : $dataLine');
+          SetScheduleTimeModel setScheduleTimeModel =
+              SetScheduleTimeModel.fromJson(json.decode(dataLine));
+          isSuccessStatus = setScheduleTimeModel.success.obs;
+          log("setScheduleTimeModel.statusCode : ${setScheduleTimeModel.statusCode}");
+          log("setScheduleTimeModel.success : ${setScheduleTimeModel.success}");
+          log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
+
+          if (isSuccessStatus.value) {
+            Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+
+            Get.back();
+          } else {
+            log("setSelectedScheduleTimeFunction Else Else");
+            Fluttertoast.showToast(msg: "Something went wrong!");
+          }
+        });
+      } else {
+        for (int i = 0; i < allScheduleTimeList.length; i++) {
+          if (checkScheduleTimeList[i] == true) {
+            String startTime = DateFormat("d/MM/yyyy")
+                .format(DateTime.parse(allScheduleTimeList[i].toString()))
+                .split("T")[0];
+            String endTime = DateFormat("d/MM/yyyy")
+                .format(DateTime.parse(allScheduleTimeList[i].toString()))
+                .split("T")[0];
+
+            /// Rformat date for api call
+            String scheduleDate = DateFormat("d-MMMM-yyyy")
+                .format(DateTime.parse(allScheduleTimeList[i].toString()))
+                .split("T")[0];
+            String startDate = startTime;
+            String endDate = endTime;
+
+            trueList.add({
+              "ResourceId": selectResourceValue.id,
+              "ScheduleDate": scheduleDate.toString(),
+              "start": startDate,
+              "end": endDate,
+            });
+          }
+        }
+
+        // log("listData : $trueList");
+
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['bookings'] = jsonEncode(trueList);
+        // request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+
+        log("Fields : ${request.fields}");
+        log('request.headers: ${request.headers}');
+
+        var response = await request.send();
+        log('response: ${response.statusCode}');
+
+        response.stream
+            .transform(const Utf8Decoder())
+            .transform(const LineSplitter())
+            .listen((dataLine) {
+          log('response body : ${dataLine}');
+          SetScheduleTimeModel setScheduleTimeModel =
+              SetScheduleTimeModel.fromJson(json.decode(dataLine));
+          isSuccessStatus = setScheduleTimeModel.success.obs;
+          log("setScheduleTimeModel.statusCode : ${setScheduleTimeModel.statusCode}");
+          log("setScheduleTimeModel.success : ${setScheduleTimeModel.success}");
+          log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
+
+          if (isSuccessStatus.value) {
+            Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+
+            Get.back();
+          } else {
+            log("setSelectedScheduleTimeFunction Else Else");
+            Fluttertoast.showToast(msg: "Something went wrong!");
+          }
+        });
       }
-
-      log("listData : $trueList");
-
-      var request = http.MultipartRequest('POST', Uri.parse(url));
-      request.headers.addAll(apiHeader.headers);
-
-      request.fields['bookings'] = jsonEncode(trueList);
-      request.fields['VendorId'] = "${UserDetails.tableWiseId}";
-
-      log("Fields : ${request.fields}");
-      // log('request.headers: ${request.headers}');
-
-      var response = await request.send();
-      log('response: ${response.statusCode}');
-
-      response.stream
-          .transform(const Utf8Decoder())
-          .transform(const LineSplitter())
-          .listen((dataLine) {
-        log('response body : ${dataLine}');
-        SetScheduleTimeModel setScheduleTimeModel =
-            SetScheduleTimeModel.fromJson(json.decode(dataLine));
-        isSuccessStatus = setScheduleTimeModel.success.obs;
-        log("setScheduleTimeModel.statusCode : ${setScheduleTimeModel.statusCode}");
-        log("setScheduleTimeModel.success : ${setScheduleTimeModel.success}");
-        log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
-
-        if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: setScheduleTimeModel.message);
-
-          Get.back();
-        } else {
-          log("setSelectedScheduleTimeFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
-        }
-      });
-
-      // http.Response response = await http.post(Uri.parse(url), headers: apiHeader.headers, body: jsonEncode(listData));
-      // log("response : ${response.statusCode}");
-      // log("response : ${response.body}");
-      //
-      // SetScheduleTimeModel setScheduleTimeModel = SetScheduleTimeModel.fromJson(json.decode(response.body));
-      // isSuccessStatus = setScheduleTimeModel.success.obs;
-      //
-      // if(isSuccessStatus.value) {
-      //   Fluttertoast.showToast(msg: setScheduleTimeModel.message);
-      // } else {
-      //   log("setSelectedScheduleTimeFunction Else Else");
-      //   Fluttertoast.showToast(msg: "Something went wrong!");
-      // }
-
     } catch (e) {
       log("setSelectedScheduleTimeFunction Error ::: $e");
       rethrow;

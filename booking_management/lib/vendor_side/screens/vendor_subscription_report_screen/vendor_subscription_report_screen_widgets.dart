@@ -13,7 +13,7 @@ class SubscriptionReportListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenController.subscriptionReportList == []
+    return screenController.subscriptionReportList.isEmpty
         ? const Center(child: Text("No data available!"))
         : ListView.builder(
             itemCount: screenController.subscriptionReportList.length,

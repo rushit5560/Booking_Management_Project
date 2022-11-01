@@ -1137,6 +1137,7 @@ class ResourceUpdateButton extends StatelessWidget {
               }
             }
           }
+
           await vendorUpdateResController.updateVendorResourceFunction();
         }
       },

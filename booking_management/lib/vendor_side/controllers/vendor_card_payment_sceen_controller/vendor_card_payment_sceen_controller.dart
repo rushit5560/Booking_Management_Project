@@ -107,12 +107,13 @@ class VendorCardPaymentScreenController extends GetxController {
   Future<dynamic> getStripeCustomer() async {
     String url = ApiUrl.stripeCustomerApi + "?userId=${UserDetails.uniqueId}";
 
+    log("getStripeCustomer url  $url");
+    log("getStripeCustomer headers  ${apiHeader.headers}");
     try {
       var response = await http.get(
         Uri.parse(url),
         headers: apiHeader.headers,
       );
-      log("getStripeCustomer url  $url");
       var resBody = jsonDecode(response.body);
       log("getStripeCustomer response  $resBody");
       if (resBody["statusCode"] == 200) {

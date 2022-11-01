@@ -36,6 +36,7 @@ class VendorScheduleTimeScreenController extends GetxController {
   RxString selectedEndDate = "".obs;
 
   List<String> allScheduleTimeList = [];
+  List<String> allScheduleDaysList = [];
   List<bool> checkScheduleTimeList = [];
 
   // List<AllResourcesWorkerList> getAllResourcesList = [];
@@ -64,11 +65,12 @@ class VendorScheduleTimeScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         getResourceList = getAllResorcesListModelModel.workerList;
-        selectResourceValue = getResourceList[0];
+        selectResourceValue = getAllResorcesListModelModel.workerList[0];
         if (selectResourceValue.isEvent == true) {
-          selectResourceTimeType.value = "Days";
+          selectResourceTimeType = "Days".obs;
         }
         log('getResourceList: $getResourceList');
+        log('selectResourceTimeType: $selectResourceTimeType');
 
         // for(int i = 0; i < getResourceList.length; i++) {
         //   await getResourcesTimeListFunction(resId: getResourceList[i].id.toString());
@@ -81,10 +83,11 @@ class VendorScheduleTimeScreenController extends GetxController {
       log(' getAllResourceAPI Error : $e');
 
       rethrow;
-    } finally {
-      isLoading(false);
-      // await getAllResourcesByIdFunction();
     }
+    // finally {
+    //   // await getAllResourcesByIdFunction();
+    // }
+    isLoading(false);
   }
 
   /// Get Slot List
@@ -94,7 +97,7 @@ class VendorScheduleTimeScreenController extends GetxController {
     log("getAllSLots aPI URL : $url");
 
     try {
-      if (selectResourceTimeType == "Hours") {
+      if (selectResourceTimeType.value == "Hours") {
         var request = http.MultipartRequest('POST', Uri.parse(url));
         request.headers.addAll(apiHeader.headers);
 
@@ -142,11 +145,11 @@ class VendorScheduleTimeScreenController extends GetxController {
         request.fields['StartTime'] = selectedDate.value;
         request.fields['EndTime'] = selectedEndDate.value;
 
-        log("getAllSLots Fields : ${request.fields}");
-        log('getAllSLots request.headers: ${request.headers}');
+        log("getAllSLots days Fields : ${request.fields}");
+        log('getAllSLots days request.headers: ${request.headers}');
 
         var response = await request.send();
-        log('getAllSLots status code: ${response.statusCode}');
+        log('getAllSLots days status code: ${response.statusCode}');
 
         response.stream
             .transform(const Utf8Decoder())
@@ -158,16 +161,16 @@ class VendorScheduleTimeScreenController extends GetxController {
           isSuccessStatus = getAllScheduleTimeModel.success.obs;
 
           if (isSuccessStatus.value) {
-            allScheduleTimeList.clear();
+            allScheduleDaysList.clear();
 
-            allScheduleTimeList = getAllScheduleTimeModel.workerList;
+            allScheduleDaysList = getAllScheduleTimeModel.workerList;
             log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
 
-            for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
+            for (int i = 0; i < allScheduleDaysList.length; i++) {
               checkScheduleTimeList.add(true);
             }
           } else {
-            log("getAllSLotsFunction Else Else");
+            log("getAllSLotsFunction days Else Else");
             Fluttertoast.showToast(msg: "Something went wrong!");
           }
         });
@@ -176,9 +179,9 @@ class VendorScheduleTimeScreenController extends GetxController {
       log("getAllSLotsFunction Error ::: $e");
 
       rethrow;
-    } finally {
-      isLoading(false);
     }
+
+    isLoading(false);
   }
 
   /// Set Selected Schedule Timing

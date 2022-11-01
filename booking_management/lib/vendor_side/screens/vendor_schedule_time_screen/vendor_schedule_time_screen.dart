@@ -115,13 +115,18 @@ class _VendorScheduleTimeScreenState extends State<VendorScheduleTimeScreen> {
                             const SizedBox(height: 30),
                             SubmitButtonModule(),
                             const SizedBox(height: 30),
+
                             vendorScheduleTimeScreenController
-                                    .allScheduleTimeList.isEmpty
+                                        .allScheduleTimeList.isEmpty &&
+                                    vendorScheduleTimeScreenController
+                                        .allScheduleDaysList.isEmpty
                                 ? Container()
                                 : ScheduleListModule(),
                             const SizedBox(height: 20),
                             vendorScheduleTimeScreenController
-                                    .allScheduleTimeList.isEmpty
+                                        .allScheduleTimeList.isEmpty &&
+                                    vendorScheduleTimeScreenController
+                                        .allScheduleDaysList.isEmpty
                                 ? Container()
                                 : SaveButtonModule(),
                             const SizedBox(height: 20),

@@ -87,6 +87,7 @@ class ApiUrl {
   /// Cst - Checkout
   static const customerCheckoutApi = apiMainPath + "API/Checkout";
   static const customerCheckoutSummaryApi = apiMainPath + "API/BookingSummary";
+  static const getResourceCriteriasListApi = apiMainPath + "API/GetCriteria";
   static const checkoutSubmitApi = apiMainPath + "API/CheckoutUpsert";
   static const invoiceDetailsApi = apiMainPath + "API/InvoiceDetails";
   static const getSecretKeyApi = apiMainPath + "API/StripeSettings";

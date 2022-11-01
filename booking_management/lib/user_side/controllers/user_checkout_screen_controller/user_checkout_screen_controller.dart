@@ -18,6 +18,7 @@ import 'package:get/get.dart';
 import '../../model/user_checkout_screen_model/checkout_model.dart';
 import '../../model/user_checkout_screen_model/checkout_summary_model.dart';
 import '../../model/user_checkout_screen_model/confirm_checkout_model.dart';
+import '../../model/user_checkout_screen_model/criterialist_get_model.dart';
 
 class UserCheckoutScreenController extends GetxController {
   String bookingId = Get.arguments[0];
@@ -111,6 +112,7 @@ class UserCheckoutScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.customerCheckoutSummaryApi + "?id=$bookingId";
     log("Checkout Summary API URL : $url");
+    log("res id is  : ${selectedResource}");
 
     try {
       http.Response response = await http.get(
@@ -181,6 +183,96 @@ class UserCheckoutScreenController extends GetxController {
       }
     } catch (e) {
       log("getCheckoutSummaryFunction Error ::: $e");
+    } finally {
+      getResourceCriteria();
+      // isLoading(false);
+      // if(isPriceDisplay == true) {
+      //   //call api
+      //   await getPaymentIdFunction();
+      // } else {
+      //   isLoading(false);
+      // }
+      // getStripeKeyFunction();
+    }
+  }
+
+  /// getResourceCriteria Summary
+  getResourceCriteria() async {
+    isLoading(true);
+    String url = ApiUrl.getResourceCriteriasListApi +
+        "?resourceId=$selectedResource&no=1";
+    log("getResourceCriteria URL : $url");
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url), /*headers: apiHeader.headers*/
+      );
+      log("getResourceCriteria Response body: ${response.body}");
+
+      CriteriaListGetModel criteriaListGetModel =
+          CriteriaListGetModel.fromJson(json.decode(response.body));
+      isSuccessStatus = criteriaListGetModel.success.obs;
+
+      // if (isSuccessStatus.value) {
+      //   var criteriaList =
+      //       checkoutSummaryModel.workerList.booking.vendor.businessName;
+      //   vendorImg = checkoutSummaryModel.workerList.booking.vendor.businessLogo;
+      //   vendorRating = double.parse(
+      //       checkoutSummaryModel.workerList.review.ratting.toString());
+      //   vendorAddress =
+      //       "${checkoutSummaryModel.workerList.booking.vendor.state}, ${checkoutSummaryModel.workerList.booking.vendor.country}, "
+      //       "${checkoutSummaryModel.workerList.booking.vendor.postcode}";
+      //   isPriceDisplay =
+      //       checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay;
+      //   stripeID = checkoutSummaryModel.workerList.booking.vendor.stripeId;
+
+      //   priceCurrencySymbol =
+      //       checkoutSummaryModel.workerList.booking.vendor.country == "AU"
+      //           ? "\$"
+      //           : "₹";
+      //   vendorAccountStripeId = checkoutSummaryModel
+      //       .workerList.booking.vendor.vendorStripeAccountId;
+      //   log("isprice display is : ${checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay}");
+
+      //   String startBookDate =
+      //       checkoutSummaryModel.workerList.booking.startDateTime;
+      //   String bDate1 = startBookDate.substring(0, startBookDate.length - 9);
+      //   bookingDate = bDate1;
+      //   String bTime1 = startBookDate.substring(11, startBookDate.length - 3);
+      //   bookingTime = bTime1;
+
+      //   String endBookDate =
+      //       checkoutSummaryModel.workerList.booking.endDateTime;
+      //   // String endDate1 = endBookDate.substring(0, endBookDate.length - 23);
+      //   // endBookingDate = endDate1;
+      //   String endTime1 = endBookDate.substring(11, endBookDate.length - 3);
+      //   endBookingTime = endTime1;
+      //   //
+      //   bookingPrice.value = checkoutSummaryModel.workerList.price;
+      //   bookingQty = checkoutSummaryModel.workerList.quantity;
+
+      //   // bookingTotalAmount = bookingPrice * bookingQty;
+      //   //
+      //   log("vendorName : $vendorName");
+      //   log("vendorImg : $vendorImg");
+      //   log("vendorRating : $vendorRating");
+      //   log("vendorAddress : $vendorAddress");
+      //   log("bookingDate : $bookingDate");
+      //   log("bookingTime : $bookingTime");
+      //   //log("endBookingDate: $endBookingDate");
+      //   log("endBookingTime : $endBookingTime");
+      //   // log("bookingPrice : $bookingPrice");
+      //   // log("bookingQty : $bookingQty");
+      //   // log("bookingTotalAmount : $bookingTotalAmount");
+      //   log("stripeID : $stripeID");
+      //   log("vendorAccountStripeId : $vendorAccountStripeId");
+      // } else {
+      //   //Fluttertoast.showToast(msg: "Something went wrong!");
+      //   log("getCheckoutSummaryFunction Else Else");
+      // }
+    } catch (e) {
+      log("getResourceCriteria Error ::: $e");
+      rethrow;
     } finally {
       isLoading(false);
       // if(isPriceDisplay == true) {

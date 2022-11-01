@@ -97,6 +97,8 @@ class ResourcesTimeTypeModule extends StatelessWidget {
           }).toList(),
           onChanged: (newValue) {
             screenController.isLoading(true);
+            screenController.allScheduleTimeList.clear();
+            screenController.allScheduleDaysList.clear();
             screenController.selectResourceTimeType.value = newValue!;
             log("selectTimeDuration : ${screenController.selectResourceTimeType.value}");
             // vendorServicesScreenController.loadUI();
@@ -529,9 +531,9 @@ class ScheduleListModule extends StatelessWidget {
                 const SizedBox(height: 10),
                 ListView.builder(
                   itemCount:
-                      screenController.selectResourceTimeType.value == "Hours"
-                          ? screenController.allScheduleTimeList.length - 1
-                          : screenController.allScheduleTimeList.length,
+                      screenController.selectResourceTimeType.value == "Days"
+                          ? screenController.allScheduleDaysList.length
+                          : screenController.allScheduleTimeList.length - 1,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, i) {
@@ -558,42 +560,68 @@ class ScheduleListModule extends StatelessWidget {
                     )
                   : */
 
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: Checkbox(
-                            value: screenController.checkScheduleTimeList[i],
-                            onChanged: (bool? value) {
-                              screenController.checkScheduleTimeList[i] =
-                                  !screenController.checkScheduleTimeList[i];
-                              screenController.loadUI();
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            screenController.selectResourceTimeType.value ==
-                                    "Hours"
-                                ? screenController.allScheduleTimeList[i]
-                                    .split("T")[1]
-                                    .substring(0, 5)
-                                : screenController.allScheduleTimeList[i]
-                                    .split("T")[0],
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            screenController.selectResourceTimeType.value ==
-                                    "Hours"
-                                ? screenController.allScheduleTimeList[i + 1]
-                                    .split("T")[1]
-                                    .substring(0, 5)
-                                : screenController.allScheduleTimeList[i]
-                                    .split("T")[0],
-                          ),
-                        ),
-                      ],
-                    );
+                    return screenController.selectResourceTimeType.value ==
+                            "Days"
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: Checkbox(
+                                  value:
+                                      screenController.checkScheduleTimeList[i],
+                                  onChanged: (bool? value) {
+                                    screenController.isLoading(true);
+                                    screenController.checkScheduleTimeList[i] =
+                                        !screenController
+                                            .checkScheduleTimeList[i];
+                                    screenController.isLoading(false);
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  screenController.allScheduleDaysList[i]
+                                      .split("T")[0],
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  screenController.allScheduleDaysList[i]
+                                      .split("T")[0],
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Expanded(
+                                child: Checkbox(
+                                  value:
+                                      screenController.checkScheduleTimeList[i],
+                                  onChanged: (bool? value) {
+                                    screenController.isLoading(true);
+                                    screenController.checkScheduleTimeList[i] =
+                                        !screenController
+                                            .checkScheduleTimeList[i];
+                                    screenController.isLoading(false);
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  screenController.allScheduleTimeList[i]
+                                      .split("T")[1]
+                                      .substring(0, 5),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  screenController.allScheduleTimeList[i + 1]
+                                      .split("T")[1]
+                                      .substring(0, 5),
+                                ),
+                              ),
+                            ],
+                          );
                   },
                 ),
               ],

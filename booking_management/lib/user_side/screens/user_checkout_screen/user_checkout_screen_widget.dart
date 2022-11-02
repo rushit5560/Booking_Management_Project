@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -338,6 +340,26 @@ class PersonalInformationFormModule extends StatelessWidget {
                 onChanged: (newValue) {
                   screenController.isLoading(true);
                   screenController.quantityValue.value = newValue!;
+                  screenController.attendeeCritDetailsList.clear();
+                  screenController.attendeeNameControllerList.clear();
+                  for (int i = 0;
+                      i < screenController.quantityValue.value;
+                      i++) {
+                    screenController.critSubList.clear();
+                    for (int j = 0;
+                        j < screenController.criteriasCountList.length;
+                        j++) {
+                      screenController.critSubList.add(screenController
+                          .criteriasCountList[j].criteriasList[0].value);
+                    }
+                    screenController.attendeeCritDetailsList
+                        .add(screenController.critSubList);
+
+                    screenController.attendeeNameControllerList
+                        .add(TextEditingController());
+                  }
+
+                  log("screenController.attendeeCritDetailsList show : ${screenController.attendeeCritDetailsList}");
                   //todo - list reset logic
 
                   // log("countryData : ${screenController.countryData!.code}");
@@ -358,6 +380,7 @@ class PersonalInformationFormModule extends StatelessWidget {
 class AttendeeDetailsAddModule extends StatelessWidget {
   AttendeeDetailsAddModule({Key? key}) : super(key: key);
   final screenController = Get.find<UserCheckoutScreenController>();
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -365,7 +388,9 @@ class AttendeeDetailsAddModule extends StatelessWidget {
       itemCount: screenController.quantityValue.value,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return AttendeeDetailsForm();
+        return AttendeeDetailsForm(
+          attendeeFormIndex: index,
+        );
       },
       separatorBuilder: (context, index) {
         return Divider(
@@ -379,7 +404,10 @@ class AttendeeDetailsAddModule extends StatelessWidget {
 }
 
 class AttendeeDetailsForm extends StatelessWidget {
-  AttendeeDetailsForm({Key? key}) : super(key: key);
+  AttendeeDetailsForm({Key? key, required this.attendeeFormIndex})
+      : super(key: key);
+
+  final int attendeeFormIndex;
   final screenController = Get.find<UserCheckoutScreenController>();
 
   final border = OutlineInputBorder(
@@ -408,6 +436,8 @@ class AttendeeDetailsForm extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            controller:
+                screenController.attendeeNameControllerList[attendeeFormIndex],
             decoration: InputDecoration(
               isDense: true,
               contentPadding:
@@ -418,8 +448,8 @@ class AttendeeDetailsForm extends StatelessWidget {
               focusedBorder: border,
             ),
           ),
-          const SizedBox(height: 10),
-          ListView.separated(
+          const SizedBox(height: 5),
+          ListView.builder(
             itemCount: screenController.criteriasCountList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -431,11 +461,13 @@ class AttendeeDetailsForm extends StatelessWidget {
               return DropDownSelectWidget(
                 criteriaName: critDropDownName,
                 criteriaValuesList: critDropDownValuesList,
+                index: index,
+                attendeeFormIndex: attendeeFormIndex,
               );
             },
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: 10);
-            },
+            // separatorBuilder: (context, index) {
+            //   return const SizedBox(height: 5);
+            // },
           ),
         ],
       ),
@@ -443,64 +475,156 @@ class AttendeeDetailsForm extends StatelessWidget {
   }
 }
 
-class DropDownSelectWidget extends StatelessWidget {
-  DropDownSelectWidget(
-      {Key? key, required this.criteriaName, required this.criteriaValuesList})
-      : super(key: key);
+class DropDownSelectWidget extends StatefulWidget {
+  DropDownSelectWidget({
+    Key? key,
+    required this.criteriaName,
+    required this.criteriaValuesList,
+    required this.index,
+    required this.attendeeFormIndex,
+  }) : super(key: key);
 
+  final int index;
+  final int attendeeFormIndex;
   final String criteriaName;
   final List<SubCriteriasList> criteriaValuesList;
 
+  @override
+  State<DropDownSelectWidget> createState() => _DropDownSelectWidgetState();
+}
+
+class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
   final screenController = Get.find<UserCheckoutScreenController>();
+
+  SubCriteriasList? selectedValue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectedValue = widget.criteriaValuesList[0];
+    super.initState();
+  }
+
+  // widget.criteriaValuesList[0];
 
   @override
   Widget build(BuildContext context) {
-    
     return Expanded(
-      child: Container(
-        height: 45,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey, width: 0.65),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<SubCriteriasList>(
-            // Initial Value
-            hint: Text(criteriaName),
-
-            value: criteriaValuesList[0],
-            // Down Arrow Icon
-            icon: const Icon(Icons.keyboard_arrow_down),
-            style: const TextStyle(color: Colors.black),
-            isExpanded: true,
-            // Array list of items
-            items: criteriaValuesList.map((value) {
-              return DropdownMenuItem(
-                value: value,
-                child: Text(value.text.toString()),
-              );
-            }).toList(),
-
-            // screenController.countriesList.map((String items) {
-            //   return DropdownMenuItem(
-            //     value: items,
-            //     child: Text(items),
-            //   );
-            // }).toList(),
-            // After selecting the desired option,it will
-            // change button value to selected value
-            onChanged: (newValue) {
-              screenController.isLoading(true);
-              // criteriaValuesList = newValue!;
-
-              // log("countryData : ${screenController.countryData!.code}");
-              // screenController.selectedCountryCode.value
-              // = "${screenController.countryData!.code}";
-
-              screenController.isLoading(false);
-            },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: Text(
+              widget.criteriaName,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
           ),
-        ).commonSymmetricPadding(horizontal: 10),
+          Container(
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey, width: 0.65),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<SubCriteriasList>(
+                // Initial Value
+                // hint: Text(criteriaName),
+
+                value: selectedValue,
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
+                style: const TextStyle(color: Colors.black),
+                isExpanded: true,
+                // Array list of items
+                items: widget.criteriaValuesList.map((value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value.text.toString()),
+                  );
+                }).toList(),
+
+                // screenController.countriesList.map((String items) {
+                //   return DropdownMenuItem(
+                //     value: items,
+                //     child: Text(items),
+                //   );
+                // }).toList(),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (newValue) {
+                  screenController.isLoading(true);
+
+                  // screenController.attendeeCritDetailsList[attendeeFormIndex]
+                  //     .add();
+                  // log("attendeeFormIndex is :: $attendeeFormIndex");
+                  // log("index is :: $index");
+
+                  selectedValue = newValue!;
+
+                  for (int i = 0;
+                      i < screenController.attendeeCritDetailsList.length;
+                      i++) {
+                    if (i == widget.attendeeFormIndex) {
+                      List<String> tempList = screenController
+                          .attendeeCritDetailsList[widget.attendeeFormIndex];
+
+                      List<String> tempList2 = [];
+                      log('tempList : $tempList');
+                      log('iiiii : $i');
+
+                      for (int j = 0; j < tempList.length; j++) {
+                        if (j == widget.index) {
+                          tempList2.add(newValue.value);
+                        } else {
+                          tempList2.add(tempList[j]);
+                        }
+                      }
+                      log('tempList2 : $tempList2');
+
+                      // screenController.attendeeCritDetailsList[attendeeFormIndex].indexWhere((element) => element == index ? element[index]);
+                      // for(int j = 0; j < tempList.length; j++) {
+                      //   if(j == index) {
+                      //     tempList[index] = newValue!.value;
+                      // }
+                      // }
+
+                      screenController.attendeeCritDetailsList[
+                          widget.attendeeFormIndex] = tempList2;
+
+                      // for (int j = 0; j < screenController.critSubList.length; j++) {
+
+                      // if (j == index) {
+                      //   log("i is :: $i ");
+                      //   log("attendeeFormIndex is :: $attendeeFormIndex ");
+                      //   //todo - logic
+                      //   screenController
+                      //           .attendeeCritDetailsList[attendeeFormIndex]
+                      //       [index] = newValue!.value;
+                      //   // screenController..attendeeCritDetailsList[attendeeFormIndex].critSubList[index] = newValue!.value;
+                      // }
+                      // }
+                    }
+                  }
+
+                  log("screenController.attendeeCritDetailsList : ${screenController.attendeeCritDetailsList}");
+                  // screenController.critSubList.indexWhere(
+                  //   (element) {},
+                  // );
+
+                  // screenController.critSubList
+                  // criteriaValuesList = newValue!;
+
+                  // log("countryData : ${screenController.countryData!.code}");
+                  // screenController.selectedCountryCode.value
+                  // = "${screenController.countryData!.code}";
+
+                  screenController.isLoading(false);
+                },
+              ),
+            ).commonSymmetricPadding(horizontal: 10),
+          ),
+        ],
       ),
     );
   }
@@ -510,6 +634,7 @@ class DropDownSelectWidget extends StatelessWidget {
 class ConfirmAndPayButtonModule extends StatelessWidget {
   ConfirmAndPayButtonModule({Key? key}) : super(key: key);
   final screenController = Get.find<UserCheckoutScreenController>();
+
   // final bookAppointmentScreenController = Get.find<BookAppointmentScreenController>();
 
   @override
@@ -517,8 +642,26 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
+        screenController.selectedValuesPassList.clear();
         if (screenController.checkOutFormKey.currentState!.validate()) {
           if (screenController.isPriceDisplay) {
+            for (int i = 0;
+                i < screenController.attendeeCritDetailsList.length;
+                i++) {
+              screenController.selectedValuesPassList.add(
+                {
+                  "Name": screenController.attendeeNameControllerList[i].text,
+                  "Criterias": [
+                    for (int j = 0;
+                        j < screenController.attendeeCritDetailsList[i].length;
+                        j++)
+                      {"Id": screenController.attendeeCritDetailsList[i][j]}
+                  ],
+                },
+              );
+            }
+
+            log("screenController.selectedValuesPassList :: ${screenController.selectedValuesPassList}");
             Get.to(
               () => const UserCardPaymentScreen(),
               arguments: [
@@ -532,6 +675,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                 screenController.priceCurrencySymbol,
                 screenController.quantityValue.value.toString(),
                 screenController.fNameFieldController.text.toString(),
+                // screenController.selectedValuesPassList,
               ],
             );
           } else {
@@ -568,9 +712,6 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
     );
   }
 }
-
-
-
 
 // class SelectPaymentMethod extends StatelessWidget {
 //   const SelectPaymentMethod({Key? key}) : super(key: key);

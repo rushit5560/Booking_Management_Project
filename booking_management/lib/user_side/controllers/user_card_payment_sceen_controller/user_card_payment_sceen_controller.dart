@@ -143,13 +143,14 @@ class UserCardPaymentScreenController extends GetxController {
 
       await Stripe.instance.presentPaymentSheet();
       await Stripe.instance.confirmPaymentSheetPayment();
+
       await checkoutController.checkOutSubmitFunction();
 
       // await getPaymentIdFunction(
       //   paymentIntentData!['id'],
       //   paymentIntentData!['client_secret'],
       // );
-
+      isLoading(false);
     } catch (e) {
       if (e is StripeException) {
         Get.snackbar(

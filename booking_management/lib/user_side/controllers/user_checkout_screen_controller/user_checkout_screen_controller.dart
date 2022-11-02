@@ -76,11 +76,12 @@ class UserCheckoutScreenController extends GetxController {
 
   List<CriteriaCountList> criteriasCountList = [];
 
-  List<List<SubCriteriasList>> attendeeDetailsFormList = [];
+  List<String> critSubList = [];
+  List<List<String>> attendeeCritDetailsList = [];
 
-  List attendeeNameControllerList = [];
+  List<TextEditingController> attendeeNameControllerList = [];
   RxInt numberOfDropdown = 0.obs;
-  List selectedValuesList = [];
+  List<Map<String, dynamic>> selectedValuesPassList = [];
 
   /// Checkout
   getCheckoutFunction() async {
@@ -228,25 +229,26 @@ class UserCheckoutScreenController extends GetxController {
       isSuccessStatus = criteriaListGetModel.success.obs;
 
       if (isSuccessStatus.value) {
-        criteriasCountList = criteriaListGetModel.data[0].criteriaList;
+        if (criteriaListGetModel.data[0].criteriaList != []) {
+          criteriasCountList = criteriaListGetModel.data[0].criteriaList;
 
-        numberOfDropdown.value = criteriasCountList.length;
+          numberOfDropdown.value = criteriasCountList.length;
+          attendeeNameControllerList.clear();
 
-        for (int i = 0; i < numberOfDropdown.value; i++) {
-          String name = criteriasCountList[i].name;
+          attendeeNameControllerList.add(TextEditingController());
+          for (int i = 0; i < numberOfDropdown.value; i++) {
+            critSubList.add(criteriasCountList[i].criteriasList[0].value);
+            // for (int j = 0;
+            //     j < criteriasCountList[i].criteriasList.length;
+            //     j++) {
+            // }
 
-          selectedValuesList.add([
-            
-          ]);
-          attendeeDetailsFormList.add(
-            [
-              // for(int j =0; j < criteriasCountList[i].criteriasList.length ; j++)
-              SubCriteriasList(
-                text: criteriasCountList[i].criteriasList[0].text,
-                value: criteriasCountList[i].criteriasList[0].value,
-              ),
-            ],
-          );
+            // attendeeCritDetailsList.add(critSubList);
+            // critSubList.clear();
+          }
+
+          log("critSubList display is : ${critSubList.toString()}");
+          // log("attendeeCritDetailsList display is : ${attendeeCritDetailsList.toString()}");
         }
 
         String selectedValue = "";
@@ -256,8 +258,6 @@ class UserCheckoutScreenController extends GetxController {
         // vendorImg = checkoutSummaryModel.workerList.booking.vendor.businessLogo;
         // vendorRating = double.parse(
         //     checkoutSummaryModel.workerList.review.ratting.toString());
-
-        log("criteriasCountList display is : ${criteriasCountList.toString()}");
 
         // bookingTotalAmount = bookingPrice * bookingQty;
         //
@@ -351,6 +351,7 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['Quantity'] = "$quantityVar";
         request.fields['ResourceId'] = "$selectedResource";
         request.fields['UserId'] = UserDetails.uniqueId;
+        request.fields['Attendees'] = jsonEncode(selectedValuesPassList);
       } else {
         request.fields['BookingId'] = bookingId;
         request.fields['Duration'] = "$duration";
@@ -362,6 +363,7 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['PhoneNo'] = phoneFieldController.text;
         request.fields['Quantity'] = "$quantityVar";
         request.fields['ResourceId'] = "$selectedResource";
+        request.fields['Attendees'] = jsonEncode(selectedValuesPassList);
       }
       // request.fields['UserName'] = fNameFieldController.text.trim();
 

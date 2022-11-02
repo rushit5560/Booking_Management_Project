@@ -54,6 +54,7 @@ class BookAppointmentScreenController extends GetxController {
   String selectedAdditionalTime = "";
   List<int> selectedServiceList = [];
   RxString selectedDate = "".obs;
+  RxString selectedShowDate = "".obs;
   RxString selectedTime = "".obs;
   RxBool isServiceCalenderShow = false.obs;
   RxBool isCalenderShow = false.obs;
@@ -1056,6 +1057,7 @@ class BookAppointmentScreenController extends GetxController {
     }
 
     selectedDate.value = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    selectedShowDate.value = "${dateTime.day}-${dateTime.month}-${dateTime.year}";
     selectedTime.value = "$hour:$minute:00";
     log("selectedDate : ${selectedDate.value}");
   }

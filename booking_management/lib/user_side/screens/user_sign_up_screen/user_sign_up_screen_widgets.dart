@@ -374,7 +374,7 @@ class SkipButton extends StatelessWidget {
             Get.offAll(() => IndexScreen());
           },
           child: const Text(
-            "Skip",
+            "Home",
             style: TextStyle(
               decoration: TextDecoration.underline,
               fontSize: 16,

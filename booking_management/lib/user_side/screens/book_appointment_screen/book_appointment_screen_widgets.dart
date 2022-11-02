@@ -474,46 +474,64 @@ class BookingResourcesListModule extends StatelessWidget {
                                     singleItem.timingList[i].isSelected == true
                                         ? Colors.blue
                                         : null),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  singleItem.timingList[i].startDateTime,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                      color:
-                                          singleItem.timingList[i].isSelected ==
+                            child: screenController.isServiceSlot.value
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        singleItem.timingList[i].startDateTime,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: singleItem.timingList[i]
+                                                        .isSelected ==
+                                                    true
+                                                ? Colors.white
+                                                : Colors.black),
+                                      ),
+                                      Text(
+                                        "-",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: singleItem.timingList[i]
+                                                      .isSelected ==
                                                   true
                                               ? Colors.white
-                                              : Colors.black),
-                                ),
-                                Text(
-                                  "-",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
-                                    color:
-                                        singleItem.timingList[i].isSelected ==
-                                                true
-                                            ? Colors.white
-                                            : Colors.black,
+                                              : Colors.black,
+                                        ),
+                                      ).commonSymmetricPadding(horizontal: 5),
+                                      Text(
+                                        singleItem.timingList[i].endDateTime,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: singleItem.timingList[i]
+                                                      .isSelected ==
+                                                  true
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Select",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: singleItem.timingList[i]
+                                                      .isSelected ==
+                                                  true
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ).commonSymmetricPadding(horizontal: 5),
-                                Text(
-                                  singleItem.timingList[i].endDateTime,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
-                                    color:
-                                        singleItem.timingList[i].isSelected ==
-                                                true
-                                            ? Colors.white
-                                            : Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
                           ).commonAllSidePadding(3),
                         );
                       },
@@ -628,7 +646,7 @@ class CalenderTableModule extends StatelessWidget {
         children: [
           /// Show Date as Text
           Text(
-            screenController.selectedDate.value,
+            screenController.selectedShowDate.value,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -673,7 +691,7 @@ class ResourceCalenderTableModule extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            screenController.selectedDate.value,
+            screenController.selectedShowDate.value,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -755,6 +773,8 @@ class SelectDateModule extends StatelessWidget {
 
                 screenController.selectedDate.value =
                     "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                screenController.selectedShowDate.value =
+                    "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
 
                 log("screenController.selectedTime.value : ${screenController.selectedTime.value}");
                 log("screenController.selectedadte.value : ${screenController.selectedDate.value}");
@@ -936,6 +956,8 @@ class SelectAdditionalSlotDateModule extends StatelessWidget {
                   screenController.selectedTime.value = "$hour:$minute:00";
                   screenController.selectedDate.value =
                       "${selectedDay.year}-${selectedDay.month}-${selectedDay.day}";
+                  screenController.selectedShowDate.value =
+                      "${selectedDay.day}-${selectedDay.month}-${selectedDay.year}";
 
                   log("screenController.selectedDate.value : ${screenController.selectedDate.value}");
                 }

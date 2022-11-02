@@ -9,11 +9,13 @@ import 'package:booking_management/user_side/screens/booking_success_screen/book
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 //import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/user_checkout_screen_model/checkout_model.dart';
 import '../../model/user_checkout_screen_model/checkout_summary_model.dart';
@@ -48,6 +50,7 @@ class UserCheckoutScreenController extends GetxController {
   String vendorAddress = "";
   String bookingDate = "";
   String bookingTime = "";
+  String resourceName = "";
   String endBookingTime = "";
   String endBookingDate = "";
   String priceCurrencySymbol = "";
@@ -70,6 +73,14 @@ class UserCheckoutScreenController extends GetxController {
 
   List<int> quantityList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   RxInt quantityValue = 1.obs;
+
+  List<CriteriaCountList> criteriasCountList = [];
+
+  List<List<SubCriteriasList>> attendeeDetailsFormList = [];
+
+  List attendeeNameControllerList = [];
+  RxInt numberOfDropdown = 0.obs;
+  List selectedValuesList = [];
 
   /// Checkout
   getCheckoutFunction() async {
@@ -143,11 +154,14 @@ class UserCheckoutScreenController extends GetxController {
                 : "₹";
         vendorAccountStripeId = checkoutSummaryModel
             .workerList.booking.vendor.vendorStripeAccountId;
+        resourceName = checkoutSummaryModel.workerList.booking.resourceName;
         log("isprice display is : ${checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay}");
 
         String startBookDate =
             checkoutSummaryModel.workerList.booking.startDateTime;
-        String bDate1 = startBookDate.substring(0, startBookDate.length - 9);
+        String bDate1 = DateFormat("dd/MM/yyyy")
+            .format(DateTime.parse(startBookDate))
+            .split("T")[0];
         bookingDate = bDate1;
         String bTime1 = startBookDate.substring(11, startBookDate.length - 3);
         bookingTime = bTime1;
@@ -198,7 +212,7 @@ class UserCheckoutScreenController extends GetxController {
 
   /// getResourceCriteria Summary
   getResourceCriteria() async {
-    isLoading(true);
+    // isLoading(true);
     String url = ApiUrl.getResourceCriteriasListApi +
         "?resourceId=$selectedResource&no=1";
     log("getResourceCriteria URL : $url");
@@ -213,63 +227,45 @@ class UserCheckoutScreenController extends GetxController {
           CriteriaListGetModel.fromJson(json.decode(response.body));
       isSuccessStatus = criteriaListGetModel.success.obs;
 
-      // if (isSuccessStatus.value) {
-      //   var criteriaList =
-      //       checkoutSummaryModel.workerList.booking.vendor.businessName;
-      //   vendorImg = checkoutSummaryModel.workerList.booking.vendor.businessLogo;
-      //   vendorRating = double.parse(
-      //       checkoutSummaryModel.workerList.review.ratting.toString());
-      //   vendorAddress =
-      //       "${checkoutSummaryModel.workerList.booking.vendor.state}, ${checkoutSummaryModel.workerList.booking.vendor.country}, "
-      //       "${checkoutSummaryModel.workerList.booking.vendor.postcode}";
-      //   isPriceDisplay =
-      //       checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay;
-      //   stripeID = checkoutSummaryModel.workerList.booking.vendor.stripeId;
+      if (isSuccessStatus.value) {
+        criteriasCountList = criteriaListGetModel.data[0].criteriaList;
 
-      //   priceCurrencySymbol =
-      //       checkoutSummaryModel.workerList.booking.vendor.country == "AU"
-      //           ? "\$"
-      //           : "₹";
-      //   vendorAccountStripeId = checkoutSummaryModel
-      //       .workerList.booking.vendor.vendorStripeAccountId;
-      //   log("isprice display is : ${checkoutSummaryModel.workerList.booking.vendor.isPriceDisplay}");
+        numberOfDropdown.value = criteriasCountList.length;
 
-      //   String startBookDate =
-      //       checkoutSummaryModel.workerList.booking.startDateTime;
-      //   String bDate1 = startBookDate.substring(0, startBookDate.length - 9);
-      //   bookingDate = bDate1;
-      //   String bTime1 = startBookDate.substring(11, startBookDate.length - 3);
-      //   bookingTime = bTime1;
+        for (int i = 0; i < numberOfDropdown.value; i++) {
+          String name = criteriasCountList[i].name;
 
-      //   String endBookDate =
-      //       checkoutSummaryModel.workerList.booking.endDateTime;
-      //   // String endDate1 = endBookDate.substring(0, endBookDate.length - 23);
-      //   // endBookingDate = endDate1;
-      //   String endTime1 = endBookDate.substring(11, endBookDate.length - 3);
-      //   endBookingTime = endTime1;
-      //   //
-      //   bookingPrice.value = checkoutSummaryModel.workerList.price;
-      //   bookingQty = checkoutSummaryModel.workerList.quantity;
+          selectedValuesList.add([
+            
+          ]);
+          attendeeDetailsFormList.add(
+            [
+              // for(int j =0; j < criteriasCountList[i].criteriasList.length ; j++)
+              SubCriteriasList(
+                text: criteriasCountList[i].criteriasList[0].text,
+                value: criteriasCountList[i].criteriasList[0].value,
+              ),
+            ],
+          );
+        }
 
-      //   // bookingTotalAmount = bookingPrice * bookingQty;
-      //   //
-      //   log("vendorName : $vendorName");
-      //   log("vendorImg : $vendorImg");
-      //   log("vendorRating : $vendorRating");
-      //   log("vendorAddress : $vendorAddress");
-      //   log("bookingDate : $bookingDate");
-      //   log("bookingTime : $bookingTime");
-      //   //log("endBookingDate: $endBookingDate");
-      //   log("endBookingTime : $endBookingTime");
-      //   // log("bookingPrice : $bookingPrice");
-      //   // log("bookingQty : $bookingQty");
-      //   // log("bookingTotalAmount : $bookingTotalAmount");
-      //   log("stripeID : $stripeID");
-      //   log("vendorAccountStripeId : $vendorAccountStripeId");
-      // } else {
-      //   //Fluttertoast.showToast(msg: "Something went wrong!");
-      //   log("getCheckoutSummaryFunction Else Else");
-      // }
+        String selectedValue = "";
+
+        // var criteriaList =
+        //     checkoutSummaryModel.workerList.booking.vendor.businessName;
+        // vendorImg = checkoutSummaryModel.workerList.booking.vendor.businessLogo;
+        // vendorRating = double.parse(
+        //     checkoutSummaryModel.workerList.review.ratting.toString());
+
+        log("criteriasCountList display is : ${criteriasCountList.toString()}");
+
+        // bookingTotalAmount = bookingPrice * bookingQty;
+        //
+
+      } else {
+        //Fluttertoast.showToast(msg: "Something went wrong!");
+        log("getResourceCriteria Else Else");
+      }
     } catch (e) {
       log("getResourceCriteria Error ::: $e");
       rethrow;

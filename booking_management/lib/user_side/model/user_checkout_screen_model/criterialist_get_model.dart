@@ -55,7 +55,7 @@ class CriteriaDatum {
   // final dynamic name;
   // final int criteriaId;
   // final dynamic criteria;
-  final List<CriteriaList> criteriaList;
+  final List<CriteriaCountList> criteriaList;
   // final List<Criteria> criterias;
   // final dynamic selectCriteriaId;
 
@@ -66,8 +66,8 @@ class CriteriaDatum {
         // name: json["name"],
         // criteriaId: json["criteriaId"],
         // criteria: json["criteria"],
-        criteriaList: List<CriteriaList>.from(
-            (json["criteriaList"] ?? []).map((x) => CriteriaList.fromJson(x))),
+        criteriaList: List<CriteriaCountList>.from((json["criteriaList"] ?? [])
+            .map((x) => CriteriaCountList.fromJson(x))),
         // criterias: List<Criteria>.from(
         //     json["criterias"].map((x) => Criteria.fromJson(x))),
         // selectCriteriaId: json["selectCriteriaId"],
@@ -86,8 +86,8 @@ class CriteriaDatum {
       };
 }
 
-class CriteriaList {
-  CriteriaList({
+class CriteriaCountList {
+  CriteriaCountList({
     required this.name,
     required this.criteriasList,
   });
@@ -95,7 +95,8 @@ class CriteriaList {
   final String name;
   final List<SubCriteriasList> criteriasList;
 
-  factory CriteriaList.fromJson(Map<String, dynamic> json) => CriteriaList(
+  factory CriteriaCountList.fromJson(Map<String, dynamic> json) =>
+      CriteriaCountList(
         name: json["name"],
         criteriasList: List<SubCriteriasList>.from((json["criteriasList"] ?? [])
             .map((x) => SubCriteriasList.fromJson(x))),

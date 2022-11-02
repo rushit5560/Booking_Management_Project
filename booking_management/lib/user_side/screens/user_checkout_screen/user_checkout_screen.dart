@@ -49,7 +49,7 @@ class UserCheckoutScreen extends StatelessWidget {
                             const SizedBox(height: 30),
                             ConfirmAndPayButtonModule(),
                           ],
-                        ).commonAllSidePadding(20),
+                        ).commonSymmetricPadding(horizontal: 12, vertical: 20),
                       ],
                     ),
                   ),

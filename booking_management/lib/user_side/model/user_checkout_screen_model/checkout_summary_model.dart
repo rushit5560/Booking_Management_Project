@@ -32,18 +32,20 @@ class CheckoutSummaryModel {
 }
 
 class WorkerList {
-  WorkerList(
-      {required this.id,
-      required this.bookingId,
-      required this.price,
-      required this.quantity,
-      required this.booking,
-      required this.review});
+  WorkerList({
+    required this.id,
+    required this.bookingId,
+    required this.price,
+    required this.quantity,
+    required this.booking,
+    required this.review,
+  });
 
   int id;
   String bookingId;
   double price;
   int quantity;
+
   Booking booking;
   Review review;
 
@@ -83,6 +85,7 @@ class Booking {
     required this.phoneNo,
     required this.notes,
     required this.status,
+    required this.resourceName,
     required this.bookingItems,
     required this.serviceName,
   });
@@ -104,6 +107,7 @@ class Booking {
   String status;
   String bookingItems;
   String serviceName;
+  String resourceName;
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
         id: json["id"] ?? 0,
@@ -119,6 +123,7 @@ class Booking {
         firstName: json["firstName"] ?? "",
         email: json["email"] ?? "",
         phoneNo: json["phoneNo"] ?? "",
+        resourceName: json["resourceName"] ?? "",
         notes: json["notes"] ?? "",
         status: json["status"] ?? "",
         bookingItems: json["bookingItems"] ?? "",
@@ -139,6 +144,7 @@ class Booking {
         "firstName": firstName,
         "email": email,
         "phoneNo": phoneNo,
+        "resourceName": resourceName,
         "notes": notes,
         "status": status,
         "bookingItems": bookingItems,

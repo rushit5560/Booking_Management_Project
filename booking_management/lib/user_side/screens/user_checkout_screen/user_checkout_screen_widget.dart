@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
+import '../../model/user_checkout_screen_model/criterialist_get_model.dart';
 
 /// Booking Summary
 class BookingSummaryModule extends StatelessWidget {
@@ -98,6 +99,21 @@ class BookingSummaryModule extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
+                "Detail",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(screenController.resourceName),
+            ],
+          ).commonSymmetricPadding(horizontal: 10),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
                 "Date",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -108,36 +124,41 @@ class BookingSummaryModule extends StatelessWidget {
               Text(screenController.bookingDate),
             ],
           ).commonSymmetricPadding(horizontal: 10),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Start time",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Text(screenController.bookingTime),
-            ],
-          ).commonSymmetricPadding(horizontal: 10),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "End time",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Text(screenController.endBookingTime),
-            ],
-          ).commonSymmetricPadding(horizontal: 10),
+          screenController.isEvent ? Container() : const SizedBox(height: 10),
+
+          screenController.isEvent
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Start time",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(screenController.bookingTime),
+                  ],
+                ).commonSymmetricPadding(horizontal: 10),
+          screenController.isEvent ? Container() : const SizedBox(height: 10),
+          screenController.isEvent
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "End time",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(screenController.endBookingTime),
+                  ],
+                ).commonSymmetricPadding(horizontal: 10),
           screenController.isPriceDisplay
               ? Column(
                   children: [
@@ -317,6 +338,7 @@ class PersonalInformationFormModule extends StatelessWidget {
                 onChanged: (newValue) {
                   screenController.isLoading(true);
                   screenController.quantityValue.value = newValue!;
+                  //todo - list reset logic
 
                   // log("countryData : ${screenController.countryData!.code}");
                   // screenController.selectedCountryCode.value
@@ -369,6 +391,7 @@ class AttendeeDetailsForm extends StatelessWidget {
       width: 0.8,
     ),
   );
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -376,9 +399,9 @@ class AttendeeDetailsForm extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           color: AppColors.colorGreyIconLight,
-          width: 0.8,
+          width: 0.5,
         ),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
       ),
@@ -395,43 +418,89 @@ class AttendeeDetailsForm extends StatelessWidget {
               focusedBorder: border,
             ),
           ),
-          // DropdownButton<String>(
-          //   focusColor: Colors.white,
-          //   value: chosenValue,
-          //   //elevation: 5,
-          //   style: TextStyle(color: Colors.white),
-          //   iconEnabledColor: Colors.black,
-          //   items: <String>[
-          //     'Android',
-          //     'IOS',
-          //     'Flutter',
-          //     'Node',
-          //     'Java',
-          //     'Python',
-          //     'PHP',
-          //   ].map<DropdownMenuItem<String>>((String value) {
-          //     return DropdownMenuItem<String>(
-          //       value: value,
-          //       child: Text(
-          //         value,
-          //         style: TextStyle(color: Colors.black),
-          //       ),
-          //     );
-          //   }).toList(),
-          //   hint: Text(
-          //     "Age",
-          //     style: TextStyle(
-          //         color: Colors.black,
-          //         fontSize: 14,
-          //         fontWeight: FontWeight.w500),
-          //   ),
-          //   onChanged: (String? value) {
-          //     // setState(() {
-          //     chosenValue = value;
-          //     // });
-          //   },
-          // ),
+          const SizedBox(height: 10),
+          ListView.separated(
+            itemCount: screenController.criteriasCountList.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              var critDropDownValuesList =
+                  screenController.criteriasCountList[index].criteriasList;
+              var critDropDownName =
+                  screenController.criteriasCountList[index].name;
+              return DropDownSelectWidget(
+                criteriaName: critDropDownName,
+                criteriaValuesList: critDropDownValuesList,
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 10);
+            },
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class DropDownSelectWidget extends StatelessWidget {
+  DropDownSelectWidget(
+      {Key? key, required this.criteriaName, required this.criteriaValuesList})
+      : super(key: key);
+
+  final String criteriaName;
+  final List<SubCriteriasList> criteriaValuesList;
+
+  final screenController = Get.find<UserCheckoutScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Expanded(
+      child: Container(
+        height: 45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey, width: 0.65),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<SubCriteriasList>(
+            // Initial Value
+            hint: Text(criteriaName),
+
+            value: criteriaValuesList[0],
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),
+            style: const TextStyle(color: Colors.black),
+            isExpanded: true,
+            // Array list of items
+            items: criteriaValuesList.map((value) {
+              return DropdownMenuItem(
+                value: value,
+                child: Text(value.text.toString()),
+              );
+            }).toList(),
+
+            // screenController.countriesList.map((String items) {
+            //   return DropdownMenuItem(
+            //     value: items,
+            //     child: Text(items),
+            //   );
+            // }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            onChanged: (newValue) {
+              screenController.isLoading(true);
+              // criteriaValuesList = newValue!;
+
+              // log("countryData : ${screenController.countryData!.code}");
+              // screenController.selectedCountryCode.value
+              // = "${screenController.countryData!.code}";
+
+              screenController.isLoading(false);
+            },
+          ),
+        ).commonSymmetricPadding(horizontal: 10),
       ),
     );
   }

@@ -19,11 +19,11 @@ class UpdateResourceFormModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: vendorUpdateResController.resourceUpdateFormKey,
-      child: SingleChildScrollView(
-        child: Obx(
-          () => Column(
+    return Obx(
+      () => SingleChildScrollView(
+        child: Form(
+          key: vendorUpdateResController.resourceUpdateFormKey,
+          child: Column(
             children: [
               ResourceProfileModule(),
               const SizedBox(height: 20),

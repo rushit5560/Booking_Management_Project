@@ -21,7 +21,7 @@ class ReviewScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const CommonAppBarModule(
-                      title: "Review",
+                      title: "Reviews",
                       appBarOption: AppBarOption.singleBackButtonOption,
                     ),
                     Expanded(

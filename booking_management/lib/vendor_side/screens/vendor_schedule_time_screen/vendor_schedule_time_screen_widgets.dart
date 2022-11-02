@@ -642,7 +642,10 @@ class SubmitButtonModule extends StatelessWidget {
         if (screenController.selectedDate.value == "") {
           Fluttertoast.showToast(msg: "Please select date!");
         } else {
+          screenController.isLoading(true);
           await screenController.getAllSLotsFunction();
+          screenController.isLoading(true);
+          screenController.isLoading(false);
         }
       },
       child: Container(
@@ -681,7 +684,9 @@ class SaveButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        screenController.isLoading(true);
         await screenController.setSelectedScheduleTimeFunction();
+        screenController.isLoading(false);
       },
       child: Container(
         decoration:

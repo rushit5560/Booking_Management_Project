@@ -81,10 +81,11 @@ class VendorHomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getAppointmentListFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await getResourcesFunction();
-    }
+    }*/
+    await getResourcesFunction();
   }
 
   Future<void> getResourcesFunction() async {
@@ -118,10 +119,11 @@ class VendorHomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getResourcesFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await getBookingAvailabilityFunction();
-    }
+    }*/
+    await getBookingAvailabilityFunction();
   }
 
   getResourcesScheduleFunction({required String resId}) async {
@@ -198,7 +200,7 @@ class VendorHomeScreenController extends GetxController {
             isSelected: false,
           ));
         }
-        log("Time List : ${timeList.length}");
+        log("Time List123: ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
         Fluttertoast.showToast(msg: "Something went wrong!");
@@ -206,10 +208,10 @@ class VendorHomeScreenController extends GetxController {
     } catch (e) {
       log("getResourcesScheduleFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
-
+    }*/
+    // isLoading(false);
     return timeList;
   }
 
@@ -284,9 +286,10 @@ class VendorHomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getBookingAvailabilityFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   @override

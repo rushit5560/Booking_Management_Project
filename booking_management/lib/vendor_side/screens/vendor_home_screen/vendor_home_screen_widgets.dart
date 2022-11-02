@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
+import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -428,8 +431,24 @@ class ResourcesModule extends StatelessWidget {
           const SizedBox(height: 5),
           singleItem.timingList.isEmpty
               ? Row(
-                  children: const [
-                    Text("Time slot is not available."),
+                  children: [
+                    const Text("Time slot is not available. "),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => VendorScheduleTimeScreen(),
+                            transition: Transition.rightToLeft)!
+                            .then((value) async {
+                          await screenController.getAppointmentListFunction();
+                        });
+                      },
+                      child: Text(
+                          "Create Now",
+                        style: TextStyle(
+                          color: AppColors.accentColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ],
                 )
               : GridView.builder(
@@ -465,43 +484,64 @@ class ResourcesModule extends StatelessWidget {
                             color: singleItem.timingList[i].booking == false
                                 ? Colors.orangeAccent
                                 : null),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              singleItem.timingList[i].startDateTime,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                  color: singleItem.timingList[i].isSelected ==
-                                          true
-                                      ? Colors.white
-                                      : Colors.black),
-                            ),
-                            Text(
-                              "-",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color:
-                                    singleItem.timingList[i].isSelected == true
-                                        ? Colors.white
-                                        : Colors.black,
-                              ),
-                            ).commonSymmetricPadding(horizontal: 5),
-                            Text(
-                              singleItem.timingList[i].endDateTime,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color:
-                                    singleItem.timingList[i].isSelected == true
-                                        ? Colors.white
-                                        : Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: /*singleItem.vendorBooking.isServiceSlots
+                            ? */Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    singleItem.timingList[i].startDateTime,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                        color: singleItem
+                                                    .timingList[i].isSelected ==
+                                                true
+                                            ? Colors.white
+                                            : Colors.black),
+                                  ),
+                                  Text(
+                                    "-",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color:
+                                          singleItem.timingList[i].isSelected ==
+                                                  true
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ).commonSymmetricPadding(horizontal: 5),
+                                  Text(
+                                    singleItem.timingList[i].endDateTime,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color:
+                                          singleItem.timingList[i].isSelected ==
+                                                  true
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            /*: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Select",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color:
+                                          singleItem.timingList[i].isSelected ==
+                                                  true
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              )*/,
                       ).commonAllSidePadding(3),
                     );
                   },

@@ -55,7 +55,7 @@ class VendorUpdateResourcesScreen extends StatelessWidget {
               : SafeArea(
                   child: Column(
                     children: [
-                      commonAppbar(title: "Update Resources"),
+                      commonAppbar(title: "Update Resource"),
                       const SizedBox(height: 10),
                       Expanded(child: UpdateResourceFormModule()),
                     ],

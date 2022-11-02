@@ -342,7 +342,7 @@ class AppointmentListTextModule extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                GestureDetector(
+                /*GestureDetector(
                   onTap: () => screenController.selectedTabIndex.value = 2,
                   child: Container(
                     decoration: BoxDecoration(
@@ -391,7 +391,7 @@ class AppointmentListTextModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 12),*/
                 GestureDetector(
                   onTap: () => screenController.selectedTabIndex.value = 3,
                   child: Container(

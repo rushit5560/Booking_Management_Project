@@ -63,7 +63,7 @@ class _VendorScheduleTimeScreenState extends State<VendorScheduleTimeScreen> {
                                       ),
                                     ],
                                   )
-                                : SizedBox(),
+                                : const SizedBox(),
                             const SizedBox(height: 10),
                             TableModule(),
                             const SizedBox(height: 10),
@@ -93,12 +93,12 @@ class _VendorScheduleTimeScreenState extends State<VendorScheduleTimeScreen> {
                                           ),
                                         ],
                                       )
-                                : SizedBox(),
+                                : const SizedBox(),
                             vendorScheduleTimeScreenController
                                         .selectResourceTimeType.value ==
                                     "Hours"
                                 ? const SizedBox()
-                                : SizedBox(height: 10),
+                                : const SizedBox(height: 10),
                             vendorScheduleTimeScreenController
                                         .selectResourceTimeType.value ==
                                     "Hours"

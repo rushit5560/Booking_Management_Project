@@ -20,7 +20,7 @@ class VendorAddResourceScreen extends StatelessWidget {
               : Column(
                   children: [
                     const CommonAppBarModule(
-                      title: "Add Resources",
+                      title: "Add Resource",
                       appBarOption: AppBarOption.singleBackButtonOption,
                     ),
                     const SizedBox(height: 10),

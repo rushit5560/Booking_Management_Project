@@ -20,7 +20,7 @@ class VendorResourcesScreen extends StatelessWidget {
         child: Column(
           children: [
             const CommonAppBarModule(
-                title: "Resources",
+                title: "Resource List",
                 appBarOption: AppBarOption.singleBackButtonOption),
             Expanded(
                 child: Obx(

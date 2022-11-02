@@ -139,7 +139,7 @@ class SignInScreenController extends GetxController {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
             Get.snackbar(
-                "${signInModel.data.userName} you are Login Successfully", '');
+                "${signInModel.data.fullName} you are Login Successfully", '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
@@ -152,7 +152,7 @@ class SignInScreenController extends GetxController {
                 apiToken: signInModel.data.apiToken,
                 uniqueId: signInModel.data.id,
                 tableWiseId: signInModel.vendor.id,
-                userName: signInModel.data.userName,
+                userName: signInModel.data.fullName,
                 email: signInModel.data.email,
                 phoneNo: signInModel.data.phoneNumber,
                 dob: "",
@@ -206,7 +206,7 @@ class SignInScreenController extends GetxController {
                 apiToken: signInModel.data.apiToken,
                 uniqueId: signInModel.data.id,
                 tableWiseId: signInModel.vendor.id,
-                userName: signInModel.data.userName,
+                userName: signInModel.data.fullName,
                 email: signInModel.data.email,
                 phoneNo: signInModel.data.phoneNumber,
                 dob: "",

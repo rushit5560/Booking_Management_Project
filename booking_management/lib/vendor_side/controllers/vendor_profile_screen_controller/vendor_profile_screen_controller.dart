@@ -439,7 +439,7 @@ class VendorProfileScreenController extends GetxController {
         businessIdTextFieldController.text =
             getUserDetailsByIdModel.data.businessId;
         categoryId.value = getUserDetailsByIdModel.data.categoryId.toString();
-        nameTextFieldController.text = getUserDetailsByIdModel.data.userName;
+        nameTextFieldController.text = getUserDetailsByIdModel.data.fullName;
         emailTextFieldController.text = getUserDetailsByIdModel.data.email;
         businessNameTextFieldController.text =
             getUserDetailsByIdModel.data.businessName;

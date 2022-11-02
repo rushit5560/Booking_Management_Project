@@ -107,15 +107,31 @@ class VendorResourcesListModule extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Text(
-                                vendorResourcesScreenController
-                                    .getResourceList[i].resourceName!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
+                              Row(
+
+                                children: [
+                                  const Text(
+                                    'Resource Name : ',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      vendorResourcesScreenController
+                                          .getResourceList[i].resourceName!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        // fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               //const SizedBox(height: 8),
                               Html(

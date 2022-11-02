@@ -130,12 +130,16 @@ class VendorScheduleTimeScreenController extends GetxController {
             for (int i = 0; i < allScheduleTimeList.length; i++) {
               checkScheduleTimeList.add(true);
             }
+            isLoading(true);
+            isLoading(false);
           } else {
             log("getAllSLotsFunction Else Else");
             Fluttertoast.showToast(msg: "Something went wrong!");
           }
         });
-      } else {
+
+      }
+      else {
         var request = http.MultipartRequest('POST', Uri.parse(url));
         request.headers.addAll(apiHeader.headers);
 
@@ -169,18 +173,22 @@ class VendorScheduleTimeScreenController extends GetxController {
             for (int i = 0; i < allScheduleDaysList.length; i++) {
               checkScheduleTimeList.add(true);
             }
+            isLoading(true);
+            isLoading(false);
           } else {
             log("getAllSLotsFunction days Else Else");
             Fluttertoast.showToast(msg: "Something went wrong!");
           }
         });
+
       }
     } catch (e) {
       log("getAllSLotsFunction Error ::: $e");
 
-      rethrow;
+      // rethrow;
     }
 
+    isLoading(true);
     isLoading(false);
   }
 
@@ -312,9 +320,10 @@ class VendorScheduleTimeScreenController extends GetxController {
     } catch (e) {
       log("setSelectedScheduleTimeFunction Error ::: $e");
       rethrow;
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   /// Get Resources Time

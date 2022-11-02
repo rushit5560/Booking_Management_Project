@@ -56,7 +56,7 @@ class ReviewListModule extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 3),
-                      Text(
+                      /*Text(
                         singleItem.customer.email,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -64,8 +64,8 @@ class ReviewListModule extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
-                      ),
-                      const SizedBox(height: 8),
+                      ),*/
+                      /*const SizedBox(height: 8),*/
                       Row(
                         children: [
                           RatingBar.builder(

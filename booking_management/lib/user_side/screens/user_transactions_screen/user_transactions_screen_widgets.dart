@@ -23,7 +23,7 @@ class UserTransactionListModule extends StatelessWidget {
   Widget _transactionListTile(i) {
     String finalDate = "";
 
-    String d = screenController.transactionList[i].orderDate;
+    String d = screenController.transactionList[i].transactionDate;
     String d1 = d.substring(0, d.length - 17);
     // finalDate = d1;
     List<String> dateFormat = d1.split('-');
@@ -40,61 +40,156 @@ class UserTransactionListModule extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Booking Id : ${screenController.transactionList[i].bookingId}",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Paid by : ${screenController.transactionList[i].paidBy}",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  finalDate,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Column(
+          Row(
             children: [
-              const Text(
-                "Paid",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
+              const Expanded(
+                flex: 30,
+                child: Text(
+                  'Order Date',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
-              Text(
-                "\$${screenController.transactionList[i].price.toString()}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
+              const SizedBox(width: 10),
+
+              Expanded(
+                flex: 70,
+                child: Text(
+                  finalDate
+                  /*screenController.transactionList[i].transactionDate*/,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              /*Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Booking Id : ${screenController.transactionList[i].bookingId}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "Paid by : ${screenController.transactionList[i].paidBy}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      finalDate,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  const Text(
+                    "Paid",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(
+                    "\$${screenController.transactionList[i].price.toString()}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),*/
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Expanded(
+                flex: 30,
+                child: Text(
+                  'Price',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+
+              Expanded(
+                flex: 70,
+                child: Text(
+                  screenController.transactionList[i].order.price,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 10),
+
+          Row(
+            children: [
+              const Expanded(
+                flex: 30,
+                child: Text(
+                  'Paid to',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+
+              Expanded(
+                flex: 70,
+                child: Text(
+                  screenController.transactionList[i].transactionFor,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
         ],
       ).commonAllSidePadding(10),
     ).commonAllSidePadding(10);

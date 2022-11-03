@@ -1,15 +1,14 @@
 import 'package:booking_management/common_modules/common_widgets.dart';
-import 'package:booking_management/common_modules/constants/enums.dart';
-import 'package:booking_management/common_modules/custom_appbar/custom_appbar.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:booking_management/user_side/screens/user_checkout_screen/user_checkout_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/app_images.dart';
 import '../../../common_ui/commom_widgets/common_dialogs/alert_dialog.dart';
+
+
 
 class UserCheckoutScreen extends StatelessWidget {
   UserCheckoutScreen({Key? key}) : super(key: key);
@@ -33,25 +32,29 @@ class UserCheckoutScreen extends StatelessWidget {
           () => userCheckoutScreenController.isLoading.value
               ? const CustomCircularLoaderModule()
               : SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        customAppbar(),
-                        // const SizedBox(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // SelectPaymentMethod(),
-                            BookingSummaryModule(),
-                            const SizedBox(height: 10),
-                            PersonalInformationFormModule(),
-                            const SizedBox(height: 30),
-                            ConfirmAndPayButtonModule(),
-                          ],
-                        ).commonSymmetricPadding(horizontal: 12, vertical: 20),
-                      ],
-                    ),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      customAppbar(),
+                      // const SizedBox(height: 10),
+                      Expanded(
+                        // flex: 1,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              // SelectPaymentMethod(),
+                              BookingSummaryModule(),
+                              const SizedBox(height: 10),
+                              PersonalInformationFormModule(),
+                              const SizedBox(height: 30),
+                              ConfirmAndPayButtonModule(),
+                            ],
+                          ).commonSymmetricPadding(horizontal: 12, vertical: 20),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
         ),

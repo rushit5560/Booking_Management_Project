@@ -45,6 +45,8 @@ class BookAppointmentScreenController extends GetxController {
   List<BookServiceWorkerList> allServicesList = [];
   List<BookingResourceWorkerData> allResourcesList = [];
 
+  RxString commonSlotPrice = "0.0".obs;
+
   /// DD - Additional Slot
   List<AdditionalSlotWorkerList> allAdditionalSlotList = [];
   AdditionalSlotWorkerList additionalSlotWorkerList =
@@ -901,10 +903,11 @@ class BookAppointmentScreenController extends GetxController {
         }
       } catch (e) {
         log("bookSelectedSlotFunction Error ::: $e");
-      } finally {
+      } /*finally {
         isLoading(false);
-      }
+      }*/
     }
+    isLoading(false);
   }
 
   /// 6) Book Available Time Slot
@@ -943,7 +946,7 @@ class BookAppointmentScreenController extends GetxController {
             BookAppointmentModel.fromJson(json.decode(value));
         isSuccessStatus = bookAppointmentModel.success.obs;
         var msg = bookAppointmentModel.message.split(".")[0];
-        log('bookAppointmentModel: ${msg}');
+        log('bookAppointmentModel: $msg');
         if (isSuccessStatus.value) {
           Fluttertoast.showToast(msg: msg);
           String bookingId = bookAppointmentModel.id;

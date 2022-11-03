@@ -77,10 +77,11 @@ class HomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getAllCategoriesFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await getAllUpcomingAppointmentFunction();
-    }
+    }*/
+    await getAllUpcomingAppointmentFunction();
   }
 
   Future getCategorySearchFunction(String searchText) async {
@@ -171,10 +172,11 @@ class HomeScreenController extends GetxController {
       }
     } catch (e) {
       log(" getAllUpcomingAppointment Error ::: $e");
-    } finally {
+    }/* finally {
       // isLoading(false);
       await getFavouriteVendorByIdFunction();
-    }
+    }*/
+    await getFavouriteVendorByIdFunction();
   }
 
   ///getUpcomingAppointDateWise
@@ -205,9 +207,10 @@ class HomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getAllUpcomingAppointmentDateWise  Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   /// Search Vendor
@@ -264,16 +267,17 @@ class HomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getUpcomingAppointmentDetailsFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   /// Get Favourite Vendor List
   getFavouriteVendorByIdFunction() async {
     isLoading(true);
     String url =
-        ApiUrl.favouriteVendorListApi + "?cutomerid=${UserDetails.tableWiseId}";
+        ApiUrl.favouriteVendorListApi + "?customerid=${UserDetails.tableWiseId}";
     log("Favourite vendor List API URL : $url");
 
     try {
@@ -296,9 +300,11 @@ class HomeScreenController extends GetxController {
       }
     } catch (e) {
       log("getFavouriteVendorByIdFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   /// Add Vendor in Favorite
@@ -336,10 +342,12 @@ class HomeScreenController extends GetxController {
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await getFavouriteVendorByIdFunction();
-    }
+    }*/
+
+    await getFavouriteVendorByIdFunction();
   }
 
   Position? position;

@@ -297,6 +297,7 @@ class PersonalInformationFormModule extends StatelessWidget {
     return Row(
       children: [
         Expanded(
+          flex: 1,
           child: Text(
             "Select Quantity",
             style: TextStyle(
@@ -307,6 +308,7 @@ class PersonalInformationFormModule extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
+          flex: 1,
           child: Container(
             height: 45,
             decoration: BoxDecoration(
@@ -384,13 +386,12 @@ class AttendeeDetailsAddModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      shrinkWrap: true,
       itemCount: screenController.quantityValue.value,
+      shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+
       itemBuilder: (context, index) {
-        return AttendeeDetailsForm(
-          attendeeFormIndex: index,
-        );
+        return AttendeeDetailsForm(attendeeFormIndex: index);
       },
       separatorBuilder: (context, index) {
         return Divider(
@@ -500,7 +501,6 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     selectedValue = widget.criteriaValuesList[0];
     super.initState();
   }

@@ -236,11 +236,27 @@ class BookingServicesListModule extends StatelessWidget {
               if (singleItem.isSelect == true) {
                 // Selected Service Add in List
                 screenController.selectedServiceList.add(singleItem.id);
+                
+                if(screenController.commonSlotPrice.value == "") {
+                  double tempAmount = singleItem.price;
+                  screenController.commonSlotPrice.value =
+                      tempAmount.toString();
+                } else {
+                  double tempAmount = double.parse(
+                      screenController.commonSlotPrice.value) +
+                      singleItem.price;
+                  screenController.commonSlotPrice.value =
+                      tempAmount.toString();
+                }
                 log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
               } else {
                 // Selected Service Remove From the List
                 screenController.selectedServiceList
                     .removeWhere((element) => singleItem.id == element);
+
+                double tempAmount =  double.parse(screenController.commonSlotPrice.value) - double.parse(singleItem.price.toString());
+                screenController.commonSlotPrice.value = tempAmount.toString();
+
                 log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
               }
 
@@ -368,11 +384,17 @@ class BookingResourcesListModule extends StatelessWidget {
                     // ),
                     const SizedBox(height: 5),
                     screenController.isPriceDisplay.value
-                        ? Text(
-                            "\$${singleItem.price}",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          )
+                        ? screenController.commonSlotPrice.value == "0.0"
+                            ? Text(
+                                "\$${singleItem.price}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            : Text(
+                                "\$${screenController.commonSlotPrice.value}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              )
                         : Container(),
                   ],
                 ),

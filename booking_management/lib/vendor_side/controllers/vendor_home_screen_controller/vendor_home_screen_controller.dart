@@ -258,7 +258,6 @@ class VendorHomeScreenController extends GetxController {
     }
   }
 
-  // todo - Get Booking Availability Function
   Future<void> getBookingAvailabilityFunction() async {
     isLoading(true);
     String url =

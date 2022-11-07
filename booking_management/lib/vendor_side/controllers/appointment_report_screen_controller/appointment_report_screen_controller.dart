@@ -24,10 +24,10 @@ class AppointmentReportScreenController extends GetxController {
   /// DD List
   List<String> statusList = [
     "Select Status",
-    "Confirm",
-    "Done",
+    "Confirmed",
     "Pending",
-    "Cancel"
+    "Done",
+    // "Cancel"
   ];
   RxString selectedStatusValue = "Select Status".obs;
 
@@ -102,7 +102,7 @@ class AppointmentReportScreenController extends GetxController {
   // }
 
   /// Appointment Report All List
-  getAppointmentReportFunction() async {
+  Future<void> getAppointmentReportFunction() async {
     isLoading(true);
     String url = selectedStatusValue.value == "Select Status"
         ? ApiUrl.appointmentReportApi + "?userId=${UserDetails.uniqueId}"
@@ -132,13 +132,14 @@ class AppointmentReportScreenController extends GetxController {
     } catch (e) {
       log("AppointmentReportFunction Error ::: $e");
       rethrow;
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   /// Filter Appointment Report List
-  getFilterAppointmentReportFunction() async {
+  Future<void> getFilterAppointmentReportFunction() async {
     isLoading(true);
     String url = selectedStatusValue.value == "Select Status"
         ? ApiUrl.appointmentReportApi +
@@ -177,9 +178,10 @@ class AppointmentReportScreenController extends GetxController {
       }
     } catch (e) {
       log("FilterAppointmentReport Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   @override

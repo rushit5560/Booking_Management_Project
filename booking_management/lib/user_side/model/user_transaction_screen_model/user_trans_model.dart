@@ -168,7 +168,7 @@ class Order {
   Order({
     // this.id,
     // this.bookingId,
-    // this.orderDate,
+    required this.orderDate,
     required this.price,
     // this.paidBy,
     // this.applicationUserCreator,
@@ -179,7 +179,7 @@ class Order {
 
   // int id;
   // String bookingId;
-  // DateTime orderDate;
+  DateTime orderDate;
   String price;
   // String paidBy;
   // dynamic applicationUserCreator;
@@ -190,7 +190,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) => Order(
     // id: json["id"],
     // bookingId: json["bookingId"],
-    // orderDate: DateTime.parse(json["orderDate"]),
+    orderDate: DateTime.parse(json["orderDate"] ?? DateTime.now()),
     price: json["price"].toString(),
     // paidBy: json["paidBy"],
     // applicationUserCreator: json["applicationUserCreator"],

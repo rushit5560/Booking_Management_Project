@@ -80,13 +80,19 @@ class BusinessDetailsScreenController extends GetxController {
     } catch (e) {
       log("getVendorDetailsByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       // isLoading(false);
       if(UserDetails.isUserLoggedIn == true) {
         await getFavVendorFunction(vendorDetailsData!.vendor!.id);
       } else {
         await getVendorReviewFunction();
       }
+    }*/
+
+    if(UserDetails.isUserLoggedIn == true) {
+      await getFavVendorFunction(vendorDetailsData!.vendor!.id);
+    } else {
+      await getVendorReviewFunction();
     }
   }
 
@@ -155,10 +161,12 @@ class BusinessDetailsScreenController extends GetxController {
       }
     } catch (e) {
       log("getVendorReviewFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await getBusinessHoursFunction();
-    }
+    }*/
+
+    await getBusinessHoursFunction();
   }
 
   /// Add Customer Review
@@ -232,9 +240,11 @@ class BusinessDetailsScreenController extends GetxController {
 
     } catch (e) {
       log("addCustomerReviewFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   /// Get Business Hours
@@ -264,10 +274,12 @@ class BusinessDetailsScreenController extends GetxController {
       }
     } catch (e) {
       log("getBusinessHoursFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await fetchChatFromFirebase();
-    }
+    }*/
+
+    await fetchChatFromFirebase();
   }
 
   /// Get All Messages From Firebase
@@ -321,18 +333,25 @@ class BusinessDetailsScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         AddVendorInFavouriteModel addVendorInFavouriteModel =
             AddVendorInFavouriteModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorInFavouriteModel.success.obs;
-        log("Body : ${addVendorInFavouriteModel.statusCode}");
+        log("Body1111 : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
           // vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
-          if (vendorDetailsData!.favourites!) {
+
+          log('favourites123 : ${vendorDetailsData!.favourites}');
+          if (vendorDetailsData!.favourites == true) {
             Fluttertoast.showToast(msg: "Added in favourite");
+            vendorDetailsData!.favourites = false;
           } else {
             Fluttertoast.showToast(msg: "Removed from favourite");
+            vendorDetailsData!.favourites = true;
           }
         } else {
           Fluttertoast.showToast(msg: "Something went wrong!");
@@ -341,10 +360,12 @@ class BusinessDetailsScreenController extends GetxController {
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       // isLoading(false);
       loadUI();
-    }
+    }*/
+
+    loadUI();
   }
 
   getFavVendorFunction(int vendorId) async {
@@ -357,7 +378,7 @@ class BusinessDetailsScreenController extends GetxController {
     try {
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("response : ${response.body}");
+      log("Fav Vendor response : ${response.body}");
 
       GetFavoriteVendorModel getFavoriteVendorModel =
           GetFavoriteVendorModel.fromJson(json.decode(response.body));
@@ -365,15 +386,17 @@ class BusinessDetailsScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         isFavourite.value = getFavoriteVendorModel.workerList.isLike;
-        log("isFavourite.value : ${isFavourite.value}");
+        log("isFavourite.value111 : ${isFavourite.value}");
       } else {
         log("getFavVendorFunction Else Else");
       }
     } catch (e) {
       log("getFavVendorFunction Error ::: $e");
-    } finally {
+    } /*finally {
       await getVendorReviewFunction();
-    }
+    }*/
+
+    await getVendorReviewFunction();
   }
 
   // getUserReview()async{

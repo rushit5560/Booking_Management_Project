@@ -23,7 +23,7 @@ class UserTransactionScreenController extends GetxController {
   getUserTransactionFunction() async {
     isLoading(true);
     String url = ApiUrl.getTransactionListApi + "?id=${UserDetails.uniqueId}";
-    log("Transaction Get API URL : $url");
+    log("Transaction Get API URL1234 : $url");
     log('API token: ${apiHeader.headers}');
 
     try {

@@ -20,6 +20,9 @@ class VendorInvoiceDetailsScreenController extends GetxController {
   List<OrdersDatum> allInvoiceList = [];
   //OrderDetailsData? orderDetailsData;
 
+
+  String invoiceNo = "";
+
   String customerUserName = "";
   String customerEmail = "";
   String customerPhoneNumber = "";
@@ -33,8 +36,8 @@ class VendorInvoiceDetailsScreenController extends GetxController {
   WorkerList orderList = WorkerList();
 
   /// Order Details By Id
-  getOrderDetailsByIdFunction() async {
-    log("bookingidd is : $bookingId");
+  Future<void> getOrderDetailsByIdFunction() async {
+    log("bookingid is : $bookingId");
     isLoading(true);
     String url = ApiUrl.vendorOrderDetailsApi + "?id=$bookingId";
     log("Order Details API URL : $url");
@@ -55,6 +58,8 @@ class VendorInvoiceDetailsScreenController extends GetxController {
         descriptionList = getInvoiceDetailsModel.list;
         orderList = getInvoiceDetailsModel.workerList;
 
+        invoiceNo = getInvoiceDetailsModel.workerList.id.toString();
+
         // Customer
         customerUserName = getInvoiceDetailsModel.workerList.firstName!;
         customerEmail = getInvoiceDetailsModel.workerList.email!;
@@ -72,9 +77,11 @@ class VendorInvoiceDetailsScreenController extends GetxController {
       }
     } catch (e) {
       log("getOrderDetailsByIdFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   @override

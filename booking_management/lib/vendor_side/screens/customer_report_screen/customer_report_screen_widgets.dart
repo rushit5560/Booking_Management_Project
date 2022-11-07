@@ -86,14 +86,8 @@ class CustomerReportListModule extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, i) {
-              CustomerReportData singleItem =
-                  screenController.customerReportList[i];
+              CustomerReportData singleItem = screenController.customerReportList[i];
 
-              print(singleItem.email);
-              print(singleItem.firstName);
-              print(singleItem.phoneNo);
-              // print(singleItem.customer.userName);
-              // print(singleItem.customer.phoneNo);
               return _appointmentListTile(singleItem);
             },
           ).commonAllSidePadding(10);
@@ -116,76 +110,218 @@ class CustomerReportListModule extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  "Customer :",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 7,
-                child: Text(
-                  singleItem.firstName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
-                  // style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
+          _bookingIdModule(singleItem),
           const SizedBox(height: 5),
-          Row(
-            children: [
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  "Email :",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 7,
-                child: Text(
-                  singleItem.email,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
-                  // style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
+
+          _customerNameModule(singleItem),
           const SizedBox(height: 5),
-          Row(
-            children: [
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  "Phone No :",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                flex: 7,
-                child: Text(
-                  singleItem.phoneNo,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
-                  // style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
+
+          _emailModule(singleItem),
+          const SizedBox(height: 5),
+
+          _mobileModule(singleItem),
+          const SizedBox(height: 5),
+
+          _dateModule(singleItem),
+          const SizedBox(height: 5),
+
+          _resourceModule(singleItem),
+          const SizedBox(height: 5),
+
+          _priceModule(singleItem),
+          const SizedBox(height: 5),
         ],
       ).commonAllSidePadding(10),
     );
   }
+
+  Widget _bookingIdModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Booking Id :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            "${singleItem.id}",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _customerNameModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Customer :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.firstName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _emailModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Email :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.email,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _mobileModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Mobile No :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.phoneNo,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _dateModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Date :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.startDateTime,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _resourceModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Resource :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.resourceName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _priceModule(CustomerReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Price :",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.price,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+
 }

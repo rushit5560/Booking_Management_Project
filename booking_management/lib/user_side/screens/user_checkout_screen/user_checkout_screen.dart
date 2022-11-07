@@ -32,29 +32,31 @@ class UserCheckoutScreen extends StatelessWidget {
           () => userCheckoutScreenController.isLoading.value
               ? const CustomCircularLoaderModule()
               : SafeArea(
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      customAppbar(),
-                      // const SizedBox(height: 10),
-                      Expanded(
-                        // flex: 1,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              // SelectPaymentMethod(),
-                              BookingSummaryModule(),
-                              const SizedBox(height: 10),
-                              PersonalInformationFormModule(),
-                              const SizedBox(height: 30),
-                              ConfirmAndPayButtonModule(),
-                            ],
-                          ).commonSymmetricPadding(horizontal: 12, vertical: 20),
-                        ),
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        customAppbar(),
+                        // const SizedBox(height: 10),
+                        // Expanded(
+                        //   child: SingleChildScrollView(
+                        //     child:
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                // SelectPaymentMethod(),
+                                BookingSummaryModule(),
+                                const SizedBox(height: 10),
+                                PersonalInformationFormModule(),
+                                const SizedBox(height: 30),
+                                ConfirmAndPayButtonModule(),
+                              ],
+                            ).commonSymmetricPadding(horizontal: 12, vertical: 20),
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
         ),

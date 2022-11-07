@@ -19,10 +19,10 @@ class VendorNotificationScreenController extends GetxController {
   List<NotificationData> _notificationListData = [];
 
   /// Get Notification List
-  getNotificationListFunction() async {
+  Future<void> getNotificationListFunction() async {
     isLoading(true);
     String url = ApiUrl.getNotificationApi + "?id=${UserDetails.uniqueId}";
-    log("Notification Get API URL : $url");
+    log("Notification Get API URL123 : $url");
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
@@ -34,16 +34,17 @@ class VendorNotificationScreenController extends GetxController {
         notificationList.clear();
         _notificationListData = notificationGetModel.workerList;
         notificationList = _notificationListData;
-        log("notificationList : ${notificationList.length}");
+        log("notificationList123 : ${notificationList.length}");
       } else {
         log("getNotificationListFunction Else Else");
       }
 
     } catch(e) {
       log("getNotificationListFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
 

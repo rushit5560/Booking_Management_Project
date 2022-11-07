@@ -36,30 +36,7 @@ class OrderListModule extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Expanded(
-                      flex: 4,
-                      child: Text(
-                        "Booking Id",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 6,
-                      child: Text(
-                        singleItem.bookingId,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                    ),
-                  ],
-                ),
+                _bookingIdModule(singleItem),
                 const SizedBox(height: 3),
 
 
@@ -194,4 +171,33 @@ class OrderListModule extends StatelessWidget {
       ).commonAllSidePadding(20),
     );
   }
+
+  Widget _bookingIdModule(OrdersDatum singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Booking Id",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.bookingId,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+        ),
+      ],
+    );
+  }
+
+
 }

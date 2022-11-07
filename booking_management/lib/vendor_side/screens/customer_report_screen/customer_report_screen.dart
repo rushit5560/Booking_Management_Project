@@ -20,7 +20,7 @@ class CustomerReportScreen extends StatelessWidget {
           child: Column(
             children: [
               const CommonAppBarModule(
-                title: "Customer Report",
+                title: "My Customer",
                 appBarOption: AppBarOption.singleBackButtonOption,
               ),
               StatusDropDownModule(),

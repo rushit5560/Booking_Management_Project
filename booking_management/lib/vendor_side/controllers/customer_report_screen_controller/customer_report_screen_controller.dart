@@ -27,15 +27,12 @@ class CustomerReportScreenController extends GetxController {
   RxString selectedStatusValue = "AllCustomer".obs;
 
   /// Customer Report All List
-  getCustomerReportFunction() async {
+  Future<void> getCustomerReportFunction() async {
     isLoading(true);
     String url = ApiUrl.customerReportApi + "?vendorId=${UserDetails.uniqueId}";
     log("Customer Report Api Url : $url");
 
     try {
-
-
-
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
       log("Customer Report Response : ${response.body}");
@@ -56,13 +53,15 @@ class CustomerReportScreenController extends GetxController {
     } catch (e) {
       log("Customer report Error ::: $e");
       rethrow;
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   /// Filter Customer Report List
-  getFilterCustomerReportFunction({required String status}) async {
+  Future<void> getFilterCustomerReportFunction({required String status}) async {
     isLoading(true);
     String url = ApiUrl.customerReportApi +
         "?vendorid=${UserDetails.uniqueId}" +
@@ -90,9 +89,11 @@ class CustomerReportScreenController extends GetxController {
       }
     } catch (e) {
       log("getFilterCustomerReportFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   @override

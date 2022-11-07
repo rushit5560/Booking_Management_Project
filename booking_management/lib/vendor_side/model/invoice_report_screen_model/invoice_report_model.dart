@@ -57,6 +57,11 @@ class InvoiceReportData {
     required this.order,
     required this.bookingItems,
     required this.subscriptionUser,
+    required this.invoiceId,
+    required this.notes,
+    required this.email,
+    required this.fullName,
+    required this.mobile,
   });
 
   int id;
@@ -82,6 +87,11 @@ class InvoiceReportData {
   Order order;
   String bookingItems;
   String subscriptionUser;
+  int invoiceId;
+  String notes;
+  String email;
+  String fullName;
+  String mobile;
 
   factory InvoiceReportData.fromJson(Map<String, dynamic> json) =>
       InvoiceReportData(
@@ -109,6 +119,11 @@ class InvoiceReportData {
         order: Order.fromJson(json["order"] ?? {}),
         bookingItems: json["bookingItems"] ?? "",
         subscriptionUser: json["subscriptionUser"] ?? "",
+        invoiceId: json["invoiceId"] ?? 0,
+        notes: json["notes"] ?? "",
+        email: json["email"] ?? "",
+        fullName: json["fullName"] ?? "",
+        mobile: json["mobile"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

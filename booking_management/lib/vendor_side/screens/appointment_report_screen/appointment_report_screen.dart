@@ -51,9 +51,7 @@ class AppointmentReportScreen extends StatelessWidget {
                     // // ),
                     // SubmitButton(),
 
-                    Expanded(
-                      child: AppointmentReportListModule(),
-                    ),
+                    Expanded(child: AppointmentReportListModule()),
                   ],
                 ),
               ),

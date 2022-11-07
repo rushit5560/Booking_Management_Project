@@ -15,7 +15,7 @@ class VendorSubscriptionReportScreenController extends GetxController {
 
   List<SubscriptionData> subscriptionReportList = [];
 
-  getSubscriptionReportFunction() async {
+  Future<void> getSubscriptionReportFunction() async {
     isLoading(true);
     String url = ApiUrl.subscriptionReportApi + "?id=${UserDetails.uniqueId}";
     log("getSubscriptionReport Api Url : $url");
@@ -47,18 +47,20 @@ class VendorSubscriptionReportScreenController extends GetxController {
           log("getSubscriptionReport List : ${subscriptionReportList.length}");
 
           // log("transaction by : ${subscriptionReportList}");
+          isLoading(false);
         } else {
           log("getSubscriptionReportFunction Else Else");
           Fluttertoast.showToast(msg: "Something went wrong!");
+          isLoading(false);
         }
       });
     } catch (e) {
       log("getSubscriptionReportFunction Error ::: $e");
 
       rethrow;
-    } finally {
-      isLoading(false);
     }
+
+    // isLoading(false);
   }
 
   // getSubscriptionReportFunction() async {
@@ -97,9 +99,10 @@ class VendorSubscriptionReportScreenController extends GetxController {
   //   }
   // }
 
+
   @override
-  Future<void> onInit() async {
+  void onInit() {
+    getSubscriptionReportFunction();
     super.onInit();
-    await getSubscriptionReportFunction();
   }
 }

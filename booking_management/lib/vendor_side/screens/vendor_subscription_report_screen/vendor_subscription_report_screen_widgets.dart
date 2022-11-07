@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_subscription_report_screen_controller/vendor_subscription_report_screen_controller.dart';
@@ -29,9 +27,9 @@ class SubscriptionReportListModule extends StatelessWidget {
 
   Widget _subscriptionListTile(SubscriptionData singleItem) {
     DateTime date = DateTime.parse(singleItem.transactionDate);
-    log("Day : ${date.day}");
-    log("Month : ${date.month}");
-    log("Year : ${date.year}");
+    // log("Day : ${date.day}");
+    // log("Month : ${date.month}");
+    // log("Year : ${date.year}");
 
     return Container(
       margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
@@ -51,14 +49,20 @@ class SubscriptionReportListModule extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
-                "Transaction For : ",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              const Expanded(
+                flex: 45,
+                child: Text(
+                  "Transaction For : ",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               Expanded(
+                flex: 55,
                 child: Text(
                   singleItem.transactionFor,
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   // style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -68,12 +72,18 @@ class SubscriptionReportListModule extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              const Text(
-                "Transaction By :",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              const Expanded(
+                flex: 45,
+                child: Text(
+                  "Transaction By :",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(width: 5),
               Expanded(
+                flex: 55,
                 child: Text(
                   UserDetails.userName,
                   maxLines: 1,
@@ -86,12 +96,18 @@ class SubscriptionReportListModule extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              const Text(
-                "Transaction Date :",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              const Expanded(
+                flex: 45,
+                child: Text(
+                  "Transaction Date :",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(width: 5),
               Expanded(
+                flex: 55,
                 child: Text(
                   "${date.day}-${date.month}-${date.year}",
                   maxLines: 1,
@@ -104,14 +120,20 @@ class SubscriptionReportListModule extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              const Text(
-                "Price :",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              const Expanded(
+                flex: 45,
+                child: Text(
+                  "Price :",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(width: 5),
               Expanded(
+                flex: 55,
                 child: Text(
-                  singleItem.subscriptionUser.price,
+                  "\$${singleItem.subscriptionUser.price}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   // style: TextStyle(fontWeight: FontWeight.bold),

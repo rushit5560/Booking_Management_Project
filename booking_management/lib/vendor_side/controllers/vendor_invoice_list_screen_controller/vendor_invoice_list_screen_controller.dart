@@ -60,9 +60,12 @@ class VendorInvoiceListScreenController extends GetxController {
       }
     } catch (e) {
       log("getAllOrderListFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+
+    isLoading(false);
   }
 
   /// Order Details By Id
@@ -104,9 +107,11 @@ class VendorInvoiceListScreenController extends GetxController {
       }
     } catch (e) {
       log("getOrderDetailsByIdFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   @override

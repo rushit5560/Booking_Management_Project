@@ -40,7 +40,7 @@ class VendorHomeScreenController extends GetxController {
   String bookingAvailabilityString = "";
 
   /// Pending Appointments
-  getAppointmentListFunction() async {
+  Future<void> getAppointmentListFunction() async {
     String todayDateString = todayDate();
     isLoading(true);
     String url = ApiUrl.vendorAppointmentList +
@@ -52,7 +52,7 @@ class VendorHomeScreenController extends GetxController {
     try {
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
-      log("Appointment List Response : ${response.body}");
+      log("Appointment List Response12345 : ${response.body}");
 
       AppointmentListModel appointmentListModel =
           AppointmentListModel.fromJson(json.decode(response.body));
@@ -215,6 +215,7 @@ class VendorHomeScreenController extends GetxController {
     return timeList;
   }
 
+  // For Bottom Sheet Details
   Future<void> getBookingDetailsFunction({required String bookingId}) async {
     // isLoading(true);
     String url = ApiUrl.bookingDetailsApi + "?id=$bookingId";

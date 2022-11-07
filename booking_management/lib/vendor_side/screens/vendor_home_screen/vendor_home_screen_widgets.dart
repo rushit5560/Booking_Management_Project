@@ -178,11 +178,12 @@ class TodayAppointmentListModule extends StatelessWidget {
           const SizedBox(height: 8),
           _userEmailModule(singleItem),
           const SizedBox(height: 8),
+          _userPaidAmountModule(singleItem),
+          const SizedBox(height: 8),
           _dateAndTimeModule(singleItem),
           const SizedBox(height: 8),
           _statusModule(singleItem),
-          const SizedBox(height: 8),
-          _userPaidAmountModule(singleItem),
+
         ],
       ).commonAllSidePadding(10),
     );
@@ -197,37 +198,139 @@ class TodayAppointmentListModule extends StatelessWidget {
   }*/
 
   Widget _userNameModule(AppointmentListModule singleItem) {
-    return Text(
-      singleItem.firstName,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
-      ),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 45,
+          child: Text(
+            'Customer',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 55,
+          child: Text(
+            singleItem.firstName,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _userEmailModule(AppointmentListModule singleItem) {
-    return Text(
-      singleItem.email,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
-      ),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 45,
+          child: Text(
+            'Email',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 55,
+          child: Text(
+            singleItem.email,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _userPaidAmountModule(AppointmentListModule singleItem) {
-    return Text(
-      singleItem.price,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
-      ),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 45,
+          child: Text(
+            'Paid Amount',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 55,
+          child: Text(
+            singleItem.bookingItems.price,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _dateAndTimeModule(AppointmentListModule singleItem) {
     return Row(
+      children: [
+        const Expanded(
+          flex: 45,
+          child: Text(
+            'Appointment Date',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 55,
+          child: Text(
+            singleItem.startDateTime,
+            style: const TextStyle(fontSize: 13),
+          ),
+          /*child: Row(
+            children: [
+              Image.asset(
+                AppImages.dateImg,
+                height: 11,
+                width: 11,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                singleItem.startDateTime,
+                style: const TextStyle(fontSize: 12),
+              ),
+
+            ],
+          ),*/
+        ),
+      ],
+    );
+    /*return Row(
       children: [
         Image.asset(
           AppImages.dateImg,
@@ -241,31 +344,46 @@ class TodayAppointmentListModule extends StatelessWidget {
           style: const TextStyle(fontSize: 9),
         ),
 
-        // const SizedBox(width: 10),
-        //
-        // Image.asset(
-        //   AppImages.timeImg,
-        //   height: 11,
-        //   width: 11,
-        //   fit: BoxFit.cover,
-        // ),
-        // const SizedBox(width: 5),
-        // Text(
-        //   time,
-        //   style: const TextStyle(fontSize: 9),
-        // ),
       ],
-    );
+    );*/
   }
 
   Widget _statusModule(AppointmentListModule singleItem) {
-    return Text(
+    return Row(
+      children: [
+        const Expanded(
+          flex: 45,
+          child: Text(
+            'Status',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 55,
+          child: Text(
+            singleItem.status,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+    /*return Text(
       "Status - ${singleItem.status}",
       style: const TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.bold,
       ),
-    );
+    );*/
   }
 
   /*Widget _viewButton(AppointmentListModule singleItem) {

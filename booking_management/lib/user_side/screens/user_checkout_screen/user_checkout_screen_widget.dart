@@ -385,21 +385,24 @@ class AttendeeDetailsAddModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: screenController.quantityValue.value,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+    return Obx(
+      ()=> ListView.separated(
+        itemCount: screenController.quantityValue.value,
+        shrinkWrap: true,
 
-      itemBuilder: (context, index) {
-        return AttendeeDetailsForm(attendeeFormIndex: index);
-      },
-      separatorBuilder: (context, index) {
-        return Divider(
-          height: 10,
-          color: AppColors.colorGreyIconLight,
-          thickness: 0.8,
-        );
-      },
+        physics: const NeverScrollableScrollPhysics(),
+
+        itemBuilder: (context, index) {
+          return AttendeeDetailsForm(attendeeFormIndex: index);
+        },
+        separatorBuilder: (context, index) {
+          return Divider(
+            height: 10,
+            color: AppColors.colorGreyIconLight,
+            thickness: 0.8,
+          );
+        },
+      ),
     );
   }
 }
@@ -509,7 +512,8 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 75,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

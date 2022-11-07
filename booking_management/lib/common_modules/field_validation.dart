@@ -323,11 +323,16 @@ class FieldValidator {
   }
 
   String? validateCurrentPassword(String value) {
-    if (value.isEmpty) {
+    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+    if (value.trim().isEmpty) {
       return "Current password is required";
     } else if (value.length < 8) {
       return "Password must be at least 8 characters";
-    } else if (!value.contains(RegExp(r'[A-Z]'))) {
+    } else if(!regex.hasMatch(value)) {
+      return "Password must contain Uppercase, lowercase, numerical character and special character";
+    }
+    /*else if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must be at least one upper case letter";
     } else if (!value.contains(RegExp(r"[a-z]"))) {
       return "Password must be at least one lower case letter";
@@ -335,17 +340,23 @@ class FieldValidator {
       return "Password must be at least one numerical letter";
     } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return "Password must be at least one special character";
-    } else {
+    }*/
+    else {
       return null;
     }
   }
 
   String? validateNewPassword(String value) {
-    if (value.isEmpty) {
+    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+    if (value.trim().isEmpty) {
       return "New password is required";
     } else if (value.length < 8) {
       return "Password must be at least 8 characters";
-    } else if (!value.contains(RegExp(r'[A-Z]'))) {
+    } else if(!regex.hasMatch(value)) {
+      return "Password must contain Uppercase, lowercase, numerical character and special character";
+    }
+    /*else if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must be at least one upper case letter";
     } else if (!value.contains(RegExp(r"[a-z]"))) {
       return "Password must be at least one lower case letter";
@@ -353,16 +364,17 @@ class FieldValidator {
       return "Password must be at least one numerical letter";
     } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return "Password must be at least one special character";
-    } else {
+    } */
+    else {
       return null;
     }
   }
 
   String? validateConfirmPassword(String value, String value2) {
-    if (value.isEmpty) {
+    if (value.trim().isEmpty) {
       return "Confirm password is required";
     } else if (value != value2) {
-      return "Password must be at least one special character";
+      return "Password and confirm password must be same";
     } else {
       return null;
     }

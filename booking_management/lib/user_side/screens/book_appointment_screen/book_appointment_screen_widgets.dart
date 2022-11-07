@@ -233,31 +233,38 @@ class BookingServicesListModule extends StatelessWidget {
               singleItem.isSelect = !singleItem.isSelect;
               screenController.loadUI();
 
-              if (singleItem.isSelect == true) {
-                // Selected Service Add in List
-                screenController.selectedServiceList.add(singleItem.id);
-                
-                if(screenController.commonSlotPrice.value == "") {
-                  double tempAmount = singleItem.price;
-                  screenController.commonSlotPrice.value =
-                      tempAmount.toString();
+              if(screenController.isPriceDisplay.value) {
+                if (singleItem.isSelect == true) {
+                  // Selected Service Add in List
+                  screenController.selectedServiceList.add(singleItem.id);
+
+                  if (screenController.commonSlotPrice.value == "") {
+                    double tempAmount = singleItem.price;
+                    screenController.commonSlotPrice.value =
+                        tempAmount.toString();
+                  } else {
+                    double tempAmount = double.parse(
+                        screenController.commonSlotPrice.value) +
+                        singleItem.price;
+                    screenController.commonSlotPrice.value =
+                        tempAmount.toString();
+                  }
+                  log("screenController.selectedServiceList : ${screenController
+                      .selectedServiceList}");
                 } else {
+                  // Selected Service Remove From the List
+                  screenController.selectedServiceList
+                      .removeWhere((element) => singleItem.id == element);
+
                   double tempAmount = double.parse(
-                      screenController.commonSlotPrice.value) +
-                      singleItem.price;
+                      screenController.commonSlotPrice.value) -
+                      double.parse(singleItem.price.toString());
                   screenController.commonSlotPrice.value =
                       tempAmount.toString();
+
+                  log("screenController.selectedServiceList : ${screenController
+                      .selectedServiceList}");
                 }
-                log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
-              } else {
-                // Selected Service Remove From the List
-                screenController.selectedServiceList
-                    .removeWhere((element) => singleItem.id == element);
-
-                double tempAmount =  double.parse(screenController.commonSlotPrice.value) - double.parse(singleItem.price.toString());
-                screenController.commonSlotPrice.value = tempAmount.toString();
-
-                log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
               }
 
               await screenController.getAllResourcesListByIdFunction();
@@ -496,8 +503,9 @@ class BookingResourcesListModule extends StatelessWidget {
                                     singleItem.timingList[i].isSelected == true
                                         ? Colors.blue
                                         : null),
-                            child: screenController.isServiceSlot.value
-                                ? Row(
+                            //todo - show slot hours & days wise
+                            child: /*screenController.isServiceSlot.value
+                                ? */Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -537,7 +545,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                       ),
                                     ],
                                   )
-                                : Row(
+                                /*: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -553,7 +561,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  ),
+                                  )*/,
                           ).commonAllSidePadding(3),
                         );
                       },

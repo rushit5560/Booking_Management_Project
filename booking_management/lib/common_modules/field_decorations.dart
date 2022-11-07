@@ -145,6 +145,7 @@ InputDecoration changePasswordFormFieldDecoration(
     required BuildContext context}) {
   return InputDecoration(
       hintText: hintText,
+      errorMaxLines: 2,
       hintStyle: const TextStyle(color: Colors.grey),
       enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black)),

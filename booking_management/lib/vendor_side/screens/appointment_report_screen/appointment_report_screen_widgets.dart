@@ -61,10 +61,10 @@ class StatusDropDownModule extends StatelessWidget {
             //   "Ratting",
             //   style: TextStyle(color: Colors.black, fontSize: 11),
             // ),
-            onChanged: (newValue) {
+            onChanged: (newValue) async {
               screenController.isLoading(true);
               screenController.selectedStatusValue.value = newValue!;
-              screenController.getAppointmentReportFunction();
+              await screenController.getAppointmentReportFunction();
               screenController.isLoading(false);
               // if (screenController.searchType == SearchType.categoryWise) {
               //   await screenController.getSearchCategoryWithRatingWiseFunction();

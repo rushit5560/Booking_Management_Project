@@ -142,7 +142,7 @@ class BookAppointmentScreenController extends GetxController {
       }
     } catch (e) {
       log("getBookVendorDetailsByIdFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       if (isServiceSlot.value) {
         await getServicesListByIdFunction();
@@ -150,6 +150,12 @@ class BookAppointmentScreenController extends GetxController {
         await getAllResourcesListByIdFunction();
         await getAllAdditionalSlotFunction();
       }
+    }*/
+    if (isServiceSlot.value) {
+      await getServicesListByIdFunction();
+    } else {
+      await getAllResourcesListByIdFunction();
+      await getAllAdditionalSlotFunction();
     }
   }
 
@@ -880,6 +886,7 @@ class BookAppointmentScreenController extends GetxController {
         isSuccessStatus = bookAppointmentModel.success.obs;
 
         if (isSuccessStatus.value) {
+          log('bookAppointmentModel.message123 : ${bookAppointmentModel.message}');
           Fluttertoast.showToast(msg: bookAppointmentModel.message);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
@@ -946,11 +953,11 @@ class BookAppointmentScreenController extends GetxController {
             BookAppointmentModel.fromJson(json.decode(value));
         isSuccessStatus = bookAppointmentModel.success.obs;
         var msg = bookAppointmentModel.message.split(".")[0];
-        log('bookAppointmentModel: $msg');
+        log('bookAppointmentModel123: $msg');
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: msg);
+          // Fluttertoast.showToast(msg: "Your slot is confirm");
           String bookingId = bookAppointmentModel.id;
-          log("bookingId : $bookingId");
+          log("bookingId123 : $bookingId");
           // await addVendorInFavoriteFunction();
           Get.to(
             () => UserCheckoutScreen(),

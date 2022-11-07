@@ -56,6 +56,11 @@ class CustomerReportData {
     required this.price,
     required this.startDate,
     required this.endDate,
+    required this.resourceName,
+    // required this.bookingById,
+    // required this.stripePaymentIntentId,
+    // required this.lastModified,
+    // required this.quantity,
   });
 
   int id;
@@ -80,6 +85,11 @@ class CustomerReportData {
   String price;
   String startDate;
   String endDate;
+  String resourceName;
+  // dynamic bookingById;
+  // dynamic stripePaymentIntentId;
+  // dynamic lastModified;
+  // dynamic quantity;
 
   factory CustomerReportData.fromJson(Map<String, dynamic> json) =>
       CustomerReportData(
@@ -102,9 +112,14 @@ class CustomerReportData {
         bookingItems: json["bookingItems"] ?? "",
         serviceName: json["serviceName"] ?? "",
         service: json["service"] ?? "",
-        price: json["price"] == "" ? "" : json["price"].toString(),
+        price: json["price"].toString(),
         startDate: json["startDate"] ?? "",
         endDate: json["endDate"] ?? "",
+        resourceName: json["resourceName"] ?? "",
+        // bookingById: json["bookingById"],
+        // stripePaymentIntentId: json["stripePaymentIntentId"],
+        // lastModified: json["lastModified"],
+        // quantity: json["quantity"],
       );
 
   Map<String, dynamic> toJson() => {

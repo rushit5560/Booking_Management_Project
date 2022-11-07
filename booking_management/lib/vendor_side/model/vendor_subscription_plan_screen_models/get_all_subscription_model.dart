@@ -140,7 +140,7 @@ class SubscriptionWorkerList {
   String name;
   String detail;
   String interval;
-  int price;
+  double price;
   String image;
   bool isActive;
   String currency;
@@ -155,7 +155,7 @@ class SubscriptionWorkerList {
         name: json["name"] ?? "",
         detail: json["detail"] ?? "",
         interval: json["interval"] ?? "",
-        price: json["price"].toInt() ?? 0,
+        price: json["price"] ?? 0.0,
         image: json["image"] ?? "",
         isActive: json["isActive"] ?? false,
         currency: json["currency"] ?? "",

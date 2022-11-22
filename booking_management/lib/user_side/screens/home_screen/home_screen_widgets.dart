@@ -448,6 +448,7 @@ class SearchButtonModule extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
               boxShadow: [
                 BoxShadow(
                   // spreadRadius: 3,
@@ -456,13 +457,14 @@ class SearchButtonModule extends StatelessWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ]),
-          child: const Padding(
-            padding: EdgeInsets.all(12),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
             child: Text(
               'Search',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: AppColors.whiteColor,
               ),
             ),
           ),

@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
-import 'package:booking_management/user_side/controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/user_details.dart';
 import '../../model/booking_success_screen_model/booking_success_model.dart';
 import '../../model/booking_success_screen_model/notification_save_model.dart';
-import '../../model/get_payment_id_model/get_payment_id_model.dart';
 import '../../model/user_conversation_screen_model/get_fcm_token_model.dart';
+
+
 
 class BookingSuccessScreenController extends GetxController {
   /// Getting from checkout screen
@@ -138,10 +137,12 @@ class BookingSuccessScreenController extends GetxController {
       }
     } catch (e) {
       log("getBookingSuccessFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
       await getUserFcmTokenFunction();
-    }
+    }*/
+
+    await getUserFcmTokenFunction();
   }
 
   /// Get Fcm Token
@@ -182,10 +183,12 @@ class BookingSuccessScreenController extends GetxController {
       }
     } catch (e) {
       log("getUserFcmTokenFunction Error ::: $e");
-    } finally {
+    }/* finally {
       // isLoading(false);
       await addNotificationFunction();
-    }
+    }*/
+
+    await addNotificationFunction();
   }
 
   /// Add Notification
@@ -227,9 +230,11 @@ class BookingSuccessScreenController extends GetxController {
       });
     } catch (e) {
       log("Add Notification Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   @override

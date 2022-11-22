@@ -97,12 +97,14 @@ class VendorAddResourcesScreenController extends GetxController {
       // };
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
-      var stream = http.ByteStream(addFile!.openRead());
-      stream.cast();
-      var length = await addFile!.length();
 
-      request.files
-          .add(await http.MultipartFile.fromPath("Image", addFile!.path));
+      // var stream = http.ByteStream(addFile!.openRead());
+      // stream.cast();
+      // var length = await addFile!.length();
+
+      if(addFile != null) {
+        request.files.add(await http.MultipartFile.fromPath("Image", addFile!.path));
+      }
 
       request.headers.addAll(apiHeader.headers);
 
@@ -134,13 +136,13 @@ class VendorAddResourcesScreenController extends GetxController {
 
       //log('request.headers: ${request}');
 
-      var multiPart = http.MultipartFile(
-        'Image',
-        stream,
-        length,
-      );
+      // var multiPart = http.MultipartFile(
+      //   'Image',
+      //   stream,
+      //   length,
+      // );
 
-      request.files.add(multiPart);
+      // request.files.add(multiPart);
       log("Fields : ${request.fields}");
       log("request.files: ${request.files}");
       //log("headers : $headers");
@@ -154,8 +156,7 @@ class VendorAddResourcesScreenController extends GetxController {
           .transform(const LineSplitter())
           .listen((value) async {
         log("value : $value");
-        AddVendorResourceModel addVendorResourceModel =
-            AddVendorResourceModel.fromJson(json.decode(value));
+        AddVendorResourceModel addVendorResourceModel = AddVendorResourceModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorResourceModel.success.obs;
         log("Code : ${addVendorResourceModel.statusCode}");
 
@@ -170,7 +171,7 @@ class VendorAddResourcesScreenController extends GetxController {
         }
       });
     } catch (e) {
-      log("addVendorResourcesFunction Error ::: $e");
+      log("addVendorResourcesFunction Error1212 ::: $e");
     } finally {
       isLoading(false);
     }
@@ -181,7 +182,9 @@ class VendorAddResourcesScreenController extends GetxController {
     resourceDetailsFieldController.clear();
     resourcePriceFieldController.clear();
     // file!.deleteSync();
-    addFile!.deleteSync();
+    if(addFile != null) {
+      addFile!.deleteSync();
+    }
     //updatePhotoUrl = "";
   }
 }

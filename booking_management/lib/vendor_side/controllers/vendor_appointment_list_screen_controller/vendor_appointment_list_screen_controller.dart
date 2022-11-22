@@ -76,7 +76,7 @@ class VendorAppointmentListScreenController extends GetxController {
           if (allAppointmentList[i].status == "Pending") {
             pendingAppointmentList.add(allAppointmentList[i]);
           }
-          if (allAppointmentList[i].status == "Confirm") {
+          if (allAppointmentList[i].status == "Confirmed") {
             confirmAppointmentList.add(allAppointmentList[i]);
           }
           if (allAppointmentList[i].status == "Done") {

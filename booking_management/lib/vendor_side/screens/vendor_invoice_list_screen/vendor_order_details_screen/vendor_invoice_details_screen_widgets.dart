@@ -74,7 +74,7 @@ class OrderDetailFormModule extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${date.day}/${date.month}/${date.year}",
+                            "${date.month}/${date.day}/${date.year}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 16),

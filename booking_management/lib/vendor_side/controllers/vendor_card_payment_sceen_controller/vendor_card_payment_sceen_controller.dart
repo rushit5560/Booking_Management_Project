@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_subscription_plan_screen_controller/vendor_subscription_plan_screen_controller.dart';
+import 'package:booking_management/vendor_side/model/vendor_card_payment_screen_models/subscribe_user_in_stripe_model.dart';
 import 'package:booking_management/vendor_side/screens/vendor_index_screen/vendor_index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -70,6 +71,8 @@ class VendorCardPaymentScreenController extends GetxController {
 
     final customerStripeId = await getStripeCustomer();
 
+    log('customerStripeId1234 : $customerStripeId');
+
     // var _customer = subscribeUserInStripeFunction(
     //   productId: bookingSubProdId,
     // );
@@ -81,26 +84,30 @@ class VendorCardPaymentScreenController extends GetxController {
     );
     await attachPaymentMethod(
       paymentMethodId: _paymentMethod['id'],
-      customerId: customerStripeId,
+      customerId: "$customerStripeId",
     );
 
     await updateCustomer(
       paymentMethodId: _paymentMethod['id'],
-      customerId: customerStripeId,
+      customerId: "$customerStripeId",
     );
     // await createSubscriptionPrice();
     var subPlan = await createSubscriptionPlan(
-      customerId: customerStripeId,
+      customerId: "$customerStripeId",
       priceId: bookingPriceId,
     );
 
-    await subscribeUserInStripeFunction(
+    var subscriptionUserId = await subscribeUserInStripeFunction(
       productId: bookingSubProdId,
     );
+
     await subscriptionSuccessCall(
-      subscriptionUserId: subPlan["id"],
+      subscriptionUserId: subscriptionUserId.toString(),
       paymentIntentId: _paymentMethod['id'],
     );
+
+    await sendEmailVendorSubConfirm();
+
     isLoading(false);
   }
 
@@ -136,8 +143,8 @@ class VendorCardPaymentScreenController extends GetxController {
   subscribeUserInStripeFunction({required String productId}) async {
     // isLoading(true);
     String url = ApiUrl.purchaseSubscriptionPlanApi +
-        "?userId=${UserDetails.uniqueId}" +
-        "&Id=$productId";
+        "?Id&" + "UserId=${UserDetails.uniqueId}" +
+        "&productId=$productId";
     log("subscribeUserInStripeFunction Api Url : $url");
 
     try {
@@ -150,15 +157,20 @@ class VendorCardPaymentScreenController extends GetxController {
       log("subscribeUserInStripeFunction st code : ${response.statusCode}");
       log("subscribeUserInStripeFunction response body : ${response.body}");
 
-      DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
-          DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
-      isSuccessStatus = deleteSubscriptionPlanModel.success.obs;
+      // DeleteSubscriptionPlanModel deleteSubscriptionPlanModel =
+      //     DeleteSubscriptionPlanModel.fromJson(json.decode(response.body));
+      // isSuccessStatus = deleteSubscriptionPlanModel.success.obs;
+
+      SubscribeUserInStripeModel subscribeUserInStripeModel = SubscribeUserInStripeModel.fromJson(
+          json.decode(response.body));
+      isSuccessStatus = subscribeUserInStripeModel.success.obs;
+
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
+        // Fluttertoast.showToast(msg: deleteSubscriptionPlanModel.message);
         // await getAllSubscriptionPlanFunction();
-
-        return customerId;
+        log('subscribeUserInStripeModel.data.id : ${subscribeUserInStripeModel.data.id}');
+        return subscribeUserInStripeModel.data.id;
       } else {
         log("subscribeUserInStripeFunction Else Else");
       }
@@ -183,7 +195,7 @@ class VendorCardPaymentScreenController extends GetxController {
         // "transfer_data[amount]": "200",
         // "transfer_data[destination]": "acct_1LUVm2QPJWRM3XBj",
       };
-      log('body: $body');
+      log('body121212: $body');
 
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
@@ -271,6 +283,7 @@ class VendorCardPaymentScreenController extends GetxController {
         log("\n\n create subscription plan response success");
         Get.offAll(() => VendorIndexScreen());
         Get.snackbar("Thank you", "Your subscription has been confirmed.");
+        log('resBody1234 : $resBody');
         return resBody;
       } else {
         log("\n\n subscription plan response error else : $resBody");
@@ -286,7 +299,7 @@ class VendorCardPaymentScreenController extends GetxController {
     required String subscriptionUserId,
     required String paymentIntentId,
   }) async {
-    log("userId Is : ${UserDetails.userId}");
+    // log("userId Is : ${UserDetails.userId}");
     log("userUniqueId Is : ${UserDetails.uniqueId}");
     log("subscriptionUserId Is : $subscriptionUserId");
     log("paymentIntentId Is : $paymentIntentId");
@@ -298,7 +311,7 @@ class VendorCardPaymentScreenController extends GetxController {
     // };
 
     String url = ApiUrl.subscriptionSuccessCallApi +
-        "?userId=${UserDetails.uniqueId}" +
+        "?UserId=${UserDetails.uniqueId}" +
         "&subscriptionUserId=$subscriptionUserId" +
         "&paymentIntentId=$paymentIntentId";
 
@@ -320,7 +333,7 @@ class VendorCardPaymentScreenController extends GetxController {
       isSuccessStatus.value = resBody["success"];
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: resBody["success"]);
+        // Fluttertoast.showToast(msg: resBody["success"]);
         // await getAllSubscriptionPlanFunction();
 
         return resBody;
@@ -591,8 +604,8 @@ class VendorCardPaymentScreenController extends GetxController {
   Future<void> sendEmailVendorSubConfirm() async {
     // isLoading(true);
     log("Get user id is  : ${UserDetails.uniqueId}");
-    String url = ApiUrl.vendorSendEmailApi + "?userId=${UserDetails.uniqueId}";
-    log("Get Send Email Url  : $url");
+    String url = ApiUrl.vendorSendEmailApi + "?UserId=${UserDetails.uniqueId}";
+    log("Get Send Email Url 123 : $url");
 
     try {
       http.Response response = await http.get(

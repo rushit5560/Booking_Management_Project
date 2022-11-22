@@ -104,7 +104,7 @@ class VendorDrawer extends StatelessWidget {
 
               VendorDrawerSingleItemModule(
                 img: AppImages.addResourceSvgLogo,
-                name: 'Add Resources',
+                name: 'Manage Resources',
                 vendorDrawerOption: VendorDrawerOption.resources,
               ),
               const SizedBox(height: 20),

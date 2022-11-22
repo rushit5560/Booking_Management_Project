@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:booking_management/common_modules/constants/user_details.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,9 @@ class InvoiceReportScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
   List<InvoiceReportData> invoiceReportList = [];
+  List<InvoiceReportData> searchInvoiceReportList = [];
+
+  TextEditingController searchFieldController = TextEditingController();
 
   /// For Filter
   RxString startDate = "Select Start Date".obs;

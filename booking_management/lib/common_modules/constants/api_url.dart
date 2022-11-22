@@ -19,6 +19,7 @@ class ApiUrl {
   static const getAllCountriesApi =
       "https://setdaytime.com.au/API/GetAllCountry";
   static const signInApi = apiMainPath + "API/Login";
+  static const authenticationApi = apiMainPath + "API/Authentication";
   static const forgotPasswordApi = apiMainPath + "API/ForgotPassword";
   static const logoApi = apiMainPath + "API/Logo";
   static const getFcmTokenApi = apiMainPath + "API/GetFCM";

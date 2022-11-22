@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -29,21 +30,24 @@ class AddResourcesButton extends StatelessWidget {
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(borderRadius: BorderRadius.circular(10),
+                color: AppColors.accentColor,
+                boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
         ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'Add Resource',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -76,7 +80,18 @@ class VendorResourcesListModule extends StatelessWidget {
                 },
                 child: Container(
                   //margin: const EdgeInsets.only(left: 5, right: 5),
-                  decoration: shadowDecoration(),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey.withOpacity(0.3),
+                    boxShadow: [
+                      BoxShadow(
+                        // spreadRadius: 3,
+                        blurRadius: 5,
+                        color: AppColors.colorGreyIconLight.withOpacity(0.65),
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -151,7 +166,7 @@ class VendorResourcesListModule extends StatelessWidget {
                                   ? Row(
                                       children: [
                                         const Text(
-                                          'price:',
+                                          'Price:',
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(

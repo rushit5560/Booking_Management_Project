@@ -1,18 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
-import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/constants/payment_keys.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
-import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
 import 'package:booking_management/vendor_side/model/vendor_subscription_plan_screen_models/delete_subscription_plan_model.dart';
-//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:get/get.dart';
-
 import '../../model/vendor_subscription_plan_screen_models/get_all_subscription_model.dart';
+
 
 class VendorSubscriptionPlanScreenController extends GetxController {
   var subscriptionOption = Get.arguments;
@@ -277,7 +274,7 @@ class VendorSubscriptionPlanScreenController extends GetxController {
   purchaseSubscriptionPlanFunction({required String productId}) async {
     isLoading(true);
     String url = ApiUrl.purchaseSubscriptionPlanApi +
-        "?userId=${UserDetails.uniqueId}" +
+        "?UserId=${UserDetails.uniqueId}" +
         "&Id=$productId";
     log("Purchase Subscription Api Url : $url");
 

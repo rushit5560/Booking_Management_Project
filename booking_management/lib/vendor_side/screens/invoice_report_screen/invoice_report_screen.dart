@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/common_widgets.dart';
+import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,7 +47,72 @@ class InvoiceReportScreen extends StatelessWidget {
                     // const SizedBox(height: 15),
                     // SubmitButton(),
 
-                    Expanded(child: AppointmentReportListModule()),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 8,
+                            color: Colors.grey.shade300,
+                            blurStyle: BlurStyle.outer,
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        controller: invoiceReportScreenController.searchFieldController,
+                        cursorColor: Colors.grey,
+                        onChanged: (value) {
+                          if(invoiceReportScreenController.searchFieldController.text == ""){
+                            invoiceReportScreenController.searchInvoiceReportList.clear();
+                            log('Search List = ${invoiceReportScreenController.searchInvoiceReportList}');
+                          }
+                          invoiceReportScreenController.loadUI();
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search using customer name',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                          border: InputBorder.none,
+                          isDense: true,
+                          contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+
+                          suffixIcon: invoiceReportScreenController.searchFieldController.text == ""
+                              ? null
+                              : IconButton(
+                            icon: const Icon(Icons.search_rounded),
+                            color: Colors.grey,
+                            iconSize: 20,
+                            onPressed: () {
+
+                              if(invoiceReportScreenController.searchFieldController.text != "") {
+                                invoiceReportScreenController.searchInvoiceReportList.clear();
+
+                                String searchText = invoiceReportScreenController.searchFieldController.text;
+                                for (int i = 0; i < invoiceReportScreenController.invoiceReportList.length; i++) {
+                                  if (invoiceReportScreenController.invoiceReportList[i].fullName.contains(searchText)) {
+                                    invoiceReportScreenController.searchInvoiceReportList.add(invoiceReportScreenController.invoiceReportList[i]);
+                                  }
+                                }
+                              } else if(invoiceReportScreenController.searchFieldController.text == ""){
+                                invoiceReportScreenController.searchInvoiceReportList.clear();
+                                log('Search List = ${invoiceReportScreenController.searchInvoiceReportList}');
+                              }
+
+                              invoiceReportScreenController.loadUI();
+                            },
+                          ),
+
+                        ),
+                      ),
+                    ).commonSymmetricPadding(horizontal: 15, vertical: 10),
+
+                    Expanded(child: invoiceReportScreenController.searchInvoiceReportList.isEmpty ? AppointmentReportListModule()
+                    : AppointmentReportSearchListModule() ),
                   ],
                 ),
               ),

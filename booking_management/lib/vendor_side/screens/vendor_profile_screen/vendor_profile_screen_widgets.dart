@@ -1628,21 +1628,24 @@ class _VendorProfileDetailsModuleState
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(borderRadius: BorderRadius.circular(10),
+                color: AppColors.accentColor,
+                boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
         ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'SAVE',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -2261,21 +2264,24 @@ class MapSaveButtonModule extends StatelessWidget {
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(borderRadius: BorderRadius.circular(10),
+                color: AppColors.accentColor,
+                boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
         ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'Save Location',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

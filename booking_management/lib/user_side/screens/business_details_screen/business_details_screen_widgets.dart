@@ -91,17 +91,17 @@ class TabViewModule extends StatelessWidget {
                 //     width: 2
                 // ),
                 color: screenController.isOverviewSelected.value
-                    ? AppColors.colorLightGrey2
-                    : Colors.white,
+                    ? AppColors.accentColor
+                    : Colors.grey.withOpacity(0.5),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Center(
                   child: Text(
                     'Overview',
                     textScaleFactor: 1.1,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: AppColors.whiteColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -135,17 +135,17 @@ class TabViewModule extends StatelessWidget {
                 //     width: 2
                 // ),
                 color: screenController.isReviewSelected.value
-                    ? AppColors.colorLightGrey2
-                    : Colors.white,
+                    ? AppColors.accentColor
+                    : Colors.grey.withOpacity(0.5),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
                 child: Center(
                   child: Text(
                     'Reviews',
                     textScaleFactor: 1.1,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: AppColors.whiteColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -324,6 +324,7 @@ class OverviewModule extends StatelessWidget {
                     width: 40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.withOpacity(0.4),
                         boxShadow: [
                           BoxShadow(
                             color: AppColors.colorLightGrey,
@@ -332,7 +333,11 @@ class OverviewModule extends StatelessWidget {
                           ),
                         ]),
                     child: Center(
-                      child: Image.asset(AppImages.callingImg),
+                      child: Image.asset(
+                          AppImages.callingImg,
+                          color: AppColors.whiteColor,
+                      height: 15, width: 15,
+                      fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -401,6 +406,7 @@ class OverviewModule extends StatelessWidget {
                     width: 40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.withOpacity(0.4),
                         boxShadow: [
                           BoxShadow(
                             color: AppColors.colorLightGrey,
@@ -409,7 +415,10 @@ class OverviewModule extends StatelessWidget {
                           ),
                         ]),
                     child: Center(
-                      child: Image.asset(AppImages.msgImg),
+                      child: Image.asset(AppImages.msgImg,
+                          color: AppColors.whiteColor,
+                          height: 15, width: 15,
+                          fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -465,21 +474,24 @@ class OverviewModule extends StatelessWidget {
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(borderRadius: BorderRadius.circular(10),
+                color: AppColors.accentColor,
+                boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
         ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
           child: Text(
             'View Map',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -576,21 +588,23 @@ class OverviewModule extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
               boxShadow: [
                 BoxShadow(
-                  spreadRadius: 3,
+                  // spreadRadius: 3,
                   blurRadius: 5,
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
               ]),
-          child: const Padding(
-            padding: EdgeInsets.all(12.0),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Text(
               'BOOK APPOINTMENT',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
+                color: AppColors.whiteColor,
               ),
             ),
           ),
@@ -850,7 +864,7 @@ class ReviewModule extends StatelessWidget {
               validator: (value) => FieldValidator().validateReview(value!),
               decoration: InputDecoration(
                 hintText: "Add Review",
-                hintStyle: TextStyle(color: Colors.grey),
+                hintStyle: const TextStyle(color: Colors.grey),
                 enabledBorder: oulineInputBorder,
                 focusedBorder: oulineInputBorder,
                 errorBorder: oulineInputBorder,
@@ -858,9 +872,7 @@ class ReviewModule extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
           Expanded(
             flex: 1,
             child: GestureDetector(
@@ -881,22 +893,24 @@ class ReviewModule extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    color: AppColors.accentColor,
                     boxShadow: [
                       BoxShadow(
-                        spreadRadius: 3,
+                        // spreadRadius: 3,
                         blurRadius: 5,
                         color: Colors.grey.shade300,
                         blurStyle: BlurStyle.outer,
                       ),
                     ]),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
                   child: Center(
                     child: Text(
                       'SEND',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
+                        color: AppColors.whiteColor,
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import 'package:flutter/material.dart';
@@ -186,8 +187,8 @@ class ConfirmAppointmentButtonModule extends StatelessWidget {
       },
       child: Container(
         decoration: shadowDecoration(),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
           child: Text(
             'Confirm Appointment',
             maxLines: 1,
@@ -196,6 +197,7 @@ class ConfirmAppointmentButtonModule extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 11,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -220,8 +222,8 @@ class DoneAppointmentButtonModule extends StatelessWidget {
       },
       child: Container(
         decoration: shadowDecoration(),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
           child: Text(
             'Done Appointment',
             maxLines: 1,
@@ -230,6 +232,7 @@ class DoneAppointmentButtonModule extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 11,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -253,8 +256,8 @@ class CancelAppointmentButtonModule extends StatelessWidget {
       },
       child: Container(
         decoration: shadowDecoration(),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
           child: Text(
             'Cancel Appointment',
             maxLines: 1,
@@ -263,6 +266,7 @@ class CancelAppointmentButtonModule extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 11,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

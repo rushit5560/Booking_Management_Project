@@ -384,7 +384,8 @@ class UserCheckoutScreenController extends GetxController {
         if (isSuccessStatus.value) {
           returnId = confirmCheckoutModel.id;
           log("returnId : $returnId");
-          makeTransactionInDb(
+
+          await makeTransactionInDb(
             bookingSuccessId: returnId,
             quantityValue: quantityVar.toString(),
             userBookingNotes: notesFieldController.text.trim(),
@@ -403,9 +404,11 @@ class UserCheckoutScreenController extends GetxController {
       });
     } catch (e) {
       log("checkOutSubmitFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   getStripeKeyFunction() async {
@@ -462,7 +465,7 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['bookingId'] = bookingSuccessId;
         request.fields['FullName'] = UserDetails.userName;
         request.fields['Email'] = UserDetails.email;
-
+        // request.fields['sessionId'] = "";
         request.fields['PhoneNo'] = UserDetails.phoneNo;
         request.fields['Notes'] = userBookingNotes;
         request.fields['Quantity'] = quantityValue;
@@ -472,7 +475,7 @@ class UserCheckoutScreenController extends GetxController {
         request.fields['FullName'] =
             checkoutController.fNameFieldController.text;
         request.fields['Email'] = checkoutController.emailFieldController.text;
-
+        // request.fields['sessionId'] = "";
         request.fields['PhoneNo'] =
             checkoutController.phoneFieldController.text;
         request.fields['Notes'] = checkoutController.notesFieldController.text;
@@ -484,8 +487,8 @@ class UserCheckoutScreenController extends GetxController {
       // request.fields['sessionId'] = secretKey;
       // request.fields['paymentIntentld'] = id;
 
-      log("makeTransactionInDb Fields : ${request.fields}");
-      log('makeTransactionInDb headers: ${request.headers}');
+      log("makeTransactionInDb Fields121212: ${request.fields}");
+      log('makeTransactionInDb headers121212: ${request.headers}');
 
       var response = await request.send();
 
@@ -493,7 +496,7 @@ class UserCheckoutScreenController extends GetxController {
           .transform(const Utf8Decoder())
           .transform(const LineSplitter())
           .listen((value) async {
-        log('makeTransactionInDb response body: $value');
+        log('makeTransactionInDb response body121212: $value');
         GetPaymentIdModel getPaymentIdModel =
             GetPaymentIdModel.fromJson(json.decode(value));
         isSuccessStatus = getPaymentIdModel.success.obs;

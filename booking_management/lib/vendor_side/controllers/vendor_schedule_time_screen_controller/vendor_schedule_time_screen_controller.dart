@@ -122,14 +122,17 @@ class VendorScheduleTimeScreenController extends GetxController {
           isSuccessStatus = getAllScheduleTimeModel.success.obs;
 
           if (isSuccessStatus.value) {
+            checkScheduleTimeList.clear();
             allScheduleTimeList.clear();
 
             allScheduleTimeList = getAllScheduleTimeModel.workerList;
-            log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
+            // log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
+            log('allScheduleTimeList : $allScheduleTimeList');
 
             for (int i = 0; i < allScheduleTimeList.length; i++) {
               checkScheduleTimeList.add(true);
             }
+            log('checkScheduleTimeList121212 : ${checkScheduleTimeList.length}');
             isLoading(true);
             isLoading(false);
           } else {
@@ -168,11 +171,13 @@ class VendorScheduleTimeScreenController extends GetxController {
             allScheduleDaysList.clear();
 
             allScheduleDaysList = getAllScheduleTimeModel.workerList;
-            log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
+            // log("getAllScheduleTimeModel : $getAllScheduleTimeModel");
+            log('allScheduleDaysList111111 : $allScheduleDaysList');
 
             for (int i = 0; i < allScheduleDaysList.length; i++) {
               checkScheduleTimeList.add(true);
             }
+            log('checkScheduleTimeList121212 : ${checkScheduleTimeList.length}');
             isLoading(true);
             isLoading(false);
           } else {
@@ -202,6 +207,7 @@ class VendorScheduleTimeScreenController extends GetxController {
       List trueList = [];
 
       if (selectResourceTimeType.value == "Hours") {
+        log('allScheduleTimeList12345 : $allScheduleTimeList');
         for (int i = 0; i < allScheduleTimeList.length - 1; i++) {
           if (checkScheduleTimeList[i] == true) {
             String startTime = allScheduleTimeList[i].split("T")[1];
@@ -220,7 +226,7 @@ class VendorScheduleTimeScreenController extends GetxController {
           }
         }
 
-        log("listData : $trueList");
+        log("listData121212 : $trueList");
 
         var request = http.MultipartRequest('POST', Uri.parse(url));
         request.headers.addAll(apiHeader.headers);
@@ -255,19 +261,22 @@ class VendorScheduleTimeScreenController extends GetxController {
             Fluttertoast.showToast(msg: "Something went wrong!");
           }
         });
-      } else {
-        for (int i = 0; i < allScheduleTimeList.length; i++) {
+      }
+
+      else {
+        log('allScheduleTimeList123456 : $allScheduleTimeList');
+        for (int i = 0; i < allScheduleDaysList.length; i++) {
           if (checkScheduleTimeList[i] == true) {
             String startTime = DateFormat("d/MM/yyyy")
-                .format(DateTime.parse(allScheduleTimeList[i].toString()))
+                .format(DateTime.parse(allScheduleDaysList[i].toString()))
                 .split("T")[0];
             String endTime = DateFormat("d/MM/yyyy")
-                .format(DateTime.parse(allScheduleTimeList[i].toString()))
+                .format(DateTime.parse(allScheduleDaysList[i].toString()))
                 .split("T")[0];
 
             /// Rformat date for api call
             String scheduleDate = DateFormat("d-MMMM-yyyy")
-                .format(DateTime.parse(allScheduleTimeList[i].toString()))
+                .format(DateTime.parse(allScheduleDaysList[i].toString()))
                 .split("T")[0];
             String startDate = startTime;
             String endDate = endTime;
@@ -282,12 +291,13 @@ class VendorScheduleTimeScreenController extends GetxController {
         }
 
         // log("listData : $trueList");
+        log("listData121212 : $trueList");
 
         var request = http.MultipartRequest('POST', Uri.parse(url));
         request.headers.addAll(apiHeader.headers);
 
         request.fields['bookings'] = jsonEncode(trueList);
-        // request.fields['VendorId'] = "${UserDetails.tableWiseId}";
+        request.fields['VendorId'] = "${UserDetails.tableWiseId}";
 
         log("Fields : ${request.fields}");
         log('request.headers: ${request.headers}');

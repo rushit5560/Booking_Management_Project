@@ -1,3 +1,5 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
+import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_ui/common_screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,9 @@ class EmailFieldModule extends StatelessWidget {
     return TextFormField(
       controller: screenController.unameFieldController,
       keyboardType: TextInputType.text,
-      validator: (value) => FieldValidator().validateUserName(value!),
+      validator: (value) => FieldValidator().validateLoginField(value!),
       decoration: signInFormFieldDecoration(
-          hintText: 'User Name', controller: screenController),
+          hintText: 'UserName or Email', controller: screenController),
     );
   }
 }
@@ -89,22 +91,24 @@ class SignInButtonModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
           boxShadow: [
             BoxShadow(
-              spreadRadius: 3,
+              // spreadRadius: 3,
               blurRadius: 5,
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
           ],
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'SIGN IN',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -161,3 +165,49 @@ class SignUpTextModule extends StatelessWidget {
     );
   }
 }
+
+class SignInSocialMediaLoginButtonsModule extends StatelessWidget {
+  SignInSocialMediaLoginButtonsModule({Key? key}) : super(key: key);
+  final screenController = Get.find<SignInScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            await screenController.signInWithGoogleFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.googleLoginImg),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 60),
+        GestureDetector(
+          onTap: () async {
+            await screenController.signInWithFacebookFunction();
+          },
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.fbLoginImg),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+

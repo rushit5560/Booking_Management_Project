@@ -502,10 +502,13 @@ class BookingResourcesListModule extends StatelessWidget {
                                 color:
                                     singleItem.timingList[i].isSelected == true
                                         ? Colors.blue
-                                        : null),
+                                        : Colors.grey.shade300,
+                            ),
                             //todo - show slot hours & days wise
                             child: /*screenController.isServiceSlot.value
-                                ? */Row(
+                                ? */
+                            singleItem.timingList[i].endDateTime.length < 6
+                            ? Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -532,7 +535,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                         ),
                                       ).commonSymmetricPadding(horizontal: 5),
                                       Text(
-                                        singleItem.timingList[i].endDateTime,
+                                        singleItem.timingList[i].endDateTime.substring(0, 5),
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -545,7 +548,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                       ),
                                     ],
                                   )
-                                /*: Row(
+                                : Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -561,7 +564,7 @@ class BookingResourcesListModule extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  )*/,
+                                  ),
                           ).commonAllSidePadding(3),
                         );
                       },
@@ -630,21 +633,26 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
+              boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
-        ]),
-        child: const Padding(
-          padding: EdgeInsets.all(12.0),
+        ],
+            ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
           child: Text(
             'Submit',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -1090,21 +1098,23 @@ class SubmitButtonModule extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
               boxShadow: [
                 BoxShadow(
-                  spreadRadius: 3,
+                  // spreadRadius: 3,
                   blurRadius: 5,
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
               ]),
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
               'Submit',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
+                color: AppColors.whiteColor,
               ),
             ),
           ),
@@ -1357,21 +1367,23 @@ class BookButtonModule extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              color: AppColors.accentColor,
               boxShadow: [
                 BoxShadow(
-                  spreadRadius: 3,
+                  // spreadRadius: 3,
                   blurRadius: 5,
                   color: Colors.grey.shade300,
                   blurStyle: BlurStyle.outer,
                 ),
               ]),
-          child: const Padding(
-            padding: EdgeInsets.all(12.0),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Text(
               'Book',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
+                color: AppColors.whiteColor
               ),
             ),
           ),

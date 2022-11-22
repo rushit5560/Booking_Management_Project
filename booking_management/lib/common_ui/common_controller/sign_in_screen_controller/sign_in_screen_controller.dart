@@ -16,6 +16,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common_modules/constants/user_details.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -69,7 +70,8 @@ class SignInScreenController extends GetxController {
         Fluttertoast.showToast(msg: signInVendorErrorModel.message);
       } else if (body["statusCode"].toString().contains("417")) {
         Get.snackbar("Login Failed", body["errorMessage"]);
-      } else {
+      }
+      else {
         SignInModel signInModel =
             SignInModel.fromJson(json.decode(response.body));
 
@@ -78,9 +80,11 @@ class SignInScreenController extends GetxController {
         log("status: $isSuccessStatus");
 
         if (isSuccessStatus.value) {
-          if (signInModel.message.toString().contains("not Verified")) {
+          if (signInModel.message.toString().contains("not Verified"))
+          {
             Get.snackbar(signInModel.message, '');
-          } /*else if (signInModel.message.contains("Invalid login attempt")) {
+          }
+          /*else if (signInModel.message.contains("Invalid login attempt")) {
             Get.snackbar(signInModel.message, '');
           }*/
 
@@ -92,6 +96,9 @@ class SignInScreenController extends GetxController {
             // String dob = signInModel.customer.dateOfBirth;
             // String finalDob = dob.substring(0, dob.length - 9);
             // log("finalDob : $finalDob");
+
+            log("signInModel response1212 : ${signInModel.message}");
+            // log("signInModel response : ${signInModel.message}");
 
             if (signInModel.message
                 .toString()
@@ -274,7 +281,7 @@ class SignInScreenController extends GetxController {
 
   Future signInWithGoogleFunction() async {
     isLoading(true);
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     googleSignIn.signOut();
@@ -289,20 +296,25 @@ class SignInScreenController extends GetxController {
 
       // Getting users credential
       UserCredential result = await auth.signInWithCredential(authCredential);
-      // User? user = result.user;
+      User? user = result.user;
       log("Email: ${result.user!.email}");
       log("Username: ${result.user!.displayName}");
       log("User Id: ${result.user!.uid}");
 
-      //login = prefs.getString('userId');
-      //print(login);
+      // login = prefs.getString('userId');
+      // print(login);
       if (result != null) {
-        // prefs.setString('userId', result.user!.uid);
-        // prefs.setString('userName', result.user!.displayName!);
-        // prefs.setString('email', result.user!.email!);
-        // prefs.setString('photo', result.user!.photoURL!);
-        // prefs.setBool('isLoggedIn', false);
+        prefs.setString('userId', result.user!.uid);
+        prefs.setString('userName', result.user!.displayName!);
+        prefs.setString('email', result.user!.email!);
+        prefs.setString('photo', result.user!.photoURL!);
+        prefs.setBool('isLoggedIn', false);
 
+        // Entry in Database
+        await authenticationFunction(
+          userName: result.user!.displayName!,
+          email: result.user!.email!,
+        );
         // Get.offAll(() => IndexScreen());
 
       }
@@ -340,6 +352,13 @@ class SignInScreenController extends GetxController {
       imageUrl = await plugin1.getProfileImageUrl(width: 100);
       if (profile != null) {
         if (profile!.userId.isNotEmpty) {
+
+          // Entry in Database
+          await authenticationFunction(
+            userName: profile!.firstName!,
+            email: email!,
+          );
+
           // prefs.setString('userId', profile!.userId);
           // prefs.setString('userName', profile!.firstName!);
           // prefs.setString('email', email!);
@@ -352,6 +371,237 @@ class SignInScreenController extends GetxController {
           // log('id: $userId, username : $uName, email : $uEmail, photo : $uPhotoUrl');
         }
       }
+    }
+  }
+
+
+  Future<void> authenticationFunction({required String userName, required String email}) async {
+
+    String finalUserName = userName.replaceAll(" ", "");
+
+    String url = ApiUrl.authenticationApi + "?userName=${finalUserName.trim()}" +
+    "&email=$email" + "&password=Admin@123";
+    log('authenticationFunction Api Url $url');
+    try {
+
+      http.Response response = await http.post(Uri.parse(url));
+      log('Response status code : ${response.statusCode}');
+      log('Response : ${response.body}');
+
+      var body = jsonDecode(response.body);
+      if (response.body.toString().contains("Please confirm your email")) {
+        SignInVendorErrorModel signInVendorErrorModel =
+        SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(
+            msg:
+            "Your account is in-active. Please check your email to activate.");
+      } else if (response.statusCode.toString().contains("417")) {
+        SignInVendorErrorModel signInVendorErrorModel =
+        SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+      } else if (body["statusCode"].toString().contains("417")) {
+        Get.snackbar("Login Failed", body["errorMessage"]);
+      }
+      else {
+        SignInModel signInModel =
+        SignInModel.fromJson(json.decode(response.body));
+
+        isSuccessStatus = signInModel.success.obs;
+
+        log("status: $isSuccessStatus");
+
+        if (isSuccessStatus.value) {
+          if (signInModel.message.toString().contains("not Verified"))
+          {
+            Get.snackbar(signInModel.message, '');
+          }
+          /*else if (signInModel.message.contains("Invalid login attempt")) {
+            Get.snackbar(signInModel.message, '');
+          }*/
+
+          else if (signInModel.role[0] == "Customer") {
+            log('customer side');
+            Get.snackbar(
+                "${signInModel.data.userName} you are Login Successfully", '');
+
+            // String dob = signInModel.customer.dateOfBirth;
+            // String finalDob = dob.substring(0, dob.length - 9);
+            // log("finalDob : $finalDob");
+
+            if (signInModel.message
+                .toString()
+                .contains("Successfully Logged")) {
+              log("user logged in ");
+              sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.customer.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: signInModel.customer.dateOfBirth,
+                roleName: signInModel.role[0],
+                gender: signInModel.customer.gender,
+                businessName: "",
+                address: "",
+                street: "",
+                state: "",
+                country: "",
+                subUrb: "",
+                postCode: "",
+                stripeId: "",
+                //slotDuration: ""
+                vendorVerification: false,
+                businessId: "",
+                serviceSlot: false,
+                institutionName: "",
+                accountName: "",
+                accountNumber: "",
+                ifscCode: "",
+                isPriceDisplay: false,
+              );
+              log("Fcm Token : ${UserDetails.fcmToken}");
+              if (signInRoute == SignInRoute.fromBookScreen) {
+                Get.back();
+                Get.back();
+              } else {
+                Get.offAll(() => IndexScreen());
+              }
+            }
+
+            //Get.snackbar(signInModel.message, '');
+          } else if (signInModel.role[0] == "Vendor") {
+            log('Vendor side');
+            log('Api token: ${signInModel.data.apiToken}');
+            Get.snackbar(
+                "${signInModel.data.fullName} you are Login Successfully", '');
+
+            var isSub = true;
+            if (signInModel.message.contains("Subscription pending")) {
+              isSub = false;
+              log("vendor has no subscription");
+              log("logged in state");
+              log("subscription state is : $isSub");
+
+              sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.vendor.id,
+                userName: signInModel.data.fullName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: "",
+                roleName: signInModel.role[0],
+                gender: "",
+                businessName: signInModel.vendor.businessName,
+                address: signInModel.vendor.address,
+                street: signInModel.vendor.street,
+                state: signInModel.vendor.state,
+                country: signInModel.vendor.country,
+                subUrb: signInModel.vendor.suburb,
+                postCode: signInModel.vendor.postcode,
+                stripeId: signInModel.vendor.stripeId.isEmpty
+                    ? ""
+                    : signInModel.vendor.stripeId,
+                isSubscription: isSub,
+                // slotDuration: signInModel.vendor.
+                vendorVerification: signInModel.vendor.vendorVerification,
+                businessId: signInModel.vendor.businessId,
+                serviceSlot: signInModel.vendor.isServiceSlots,
+                institutionName: signInModel.vendor.financialInstitutionName,
+                accountName: signInModel.vendor.accountName,
+                accountNumber: signInModel.vendor.accountNumber,
+                ifscCode: signInModel.vendor.accountCode,
+                isPriceDisplay: signInModel.vendor.isPriceDisplay,
+              );
+
+              // DateTime subscription = signInModel.vendor.nextPayment;
+              //
+              // if(subscription == "") {
+              //   Get.offAll(()=> VendorSubscriptionPlanScreen(), transition: Transition.zoom);
+              // }
+              // else {
+              //   Get.offAll(() => VendorIndexScreen());
+              // }
+
+              log("navigate to subscription plan screen");
+              Get.offAll(
+                    () => VendorSubscriptionPlanScreen(),
+                arguments: SubscriptionOption.direct,
+              );
+            } else if (signInModel.message
+                .toString()
+                .contains("Successfully Logged")) {
+              isSub = true;
+
+              log("logged in state");
+              log("subscription state is : $isSub");
+
+              sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.vendor.id,
+                userName: signInModel.data.fullName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: "",
+                roleName: signInModel.role[0],
+                gender: "",
+                businessName: signInModel.vendor.businessName,
+                address: signInModel.vendor.address,
+                street: signInModel.vendor.street,
+                state: signInModel.vendor.state,
+                country: signInModel.vendor.country,
+                subUrb: signInModel.vendor.suburb,
+                postCode: signInModel.vendor.postcode,
+                stripeId: signInModel.vendor.stripeId.isEmpty
+                    ? ""
+                    : signInModel.vendor.stripeId,
+                isSubscription: isSub,
+                // slotDuration: signInModel.vendor.
+                vendorVerification: signInModel.vendor.vendorVerification,
+                businessId: signInModel.vendor.businessId,
+                serviceSlot: signInModel.vendor.isServiceSlots,
+                institutionName: signInModel.vendor.financialInstitutionName,
+                accountName: signInModel.vendor.accountName,
+                accountNumber: signInModel.vendor.accountNumber,
+                ifscCode: signInModel.vendor.accountCode,
+                isPriceDisplay: signInModel.vendor.isPriceDisplay,
+              );
+
+              // DateTime subscription = signInModel.vendor.nextPayment;
+              //
+              // if(subscription == "") {
+              //   Get.offAll(()=> VendorSubscriptionPlanScreen(), transition: Transition.zoom);
+              // }
+              // else {
+              //   Get.offAll(() => VendorIndexScreen());
+              // }
+
+              // if (isSub == false) {
+              log("navigate to subscription plan screen");
+              Get.offAll(
+                    () => VendorIndexScreen(),
+                arguments: SubscriptionOption.direct,
+              );
+              // } else {
+              //   log("navigate to vendor index screen");
+              //   Get.offAll(() => VendorIndexScreen());
+              // }
+
+            }
+          }
+        } else {
+          log('SignIn False False');
+          log('SignIn message from api ' + signInModel.message);
+          // Get.snackbar(signInModel.message, '');
+          log("asdasdsd");
+        }
+      }
+    } catch (e) {
+      log('SignIn Error : $e');
+      Fluttertoast.showToast(msg: "Invalid login attempt");
+      rethrow;
     }
   }
 }

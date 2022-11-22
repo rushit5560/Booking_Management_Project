@@ -1,18 +1,14 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
-import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/user_card_payment_sceen_controller/user_card_payment_sceen_controller.dart';
-import 'package:booking_management/vendor_side/screens/vendor_wallet_screen/vendor_wallet_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../common_modules/constants/app_images.dart';
-import '../../../common_modules/constants/enums.dart';
-import '../../../common_modules/custom_appbar/custom_appbar.dart';
 import '../../../common_ui/commom_widgets/common_dialogs/alert_dialog.dart';
+
+
 
 class UserCardPaymentScreen extends StatefulWidget {
   const UserCardPaymentScreen({Key? key}) : super(key: key);
@@ -46,9 +42,8 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         customAppbar(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
+
                         showPaymentSummaryWidget(context),
                       ],
                     ),
@@ -93,7 +88,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               ),
             ),
             Text(
-              "${cardScreenController.payCurrencySymbol} $userPrice",
+              "${cardScreenController.payCurrencySymbol} ${bookPrice.toString()}",
               style: TextStyle(
                 color: AppColors.colorGreyIconLight,
                 fontSize: 16,
@@ -102,7 +97,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
             ),
           ],
         ),
-        Padding(
+        /*Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,7 +120,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
               ),
             ],
           ),
-        ),
+        ),*/
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,6 +146,7 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
         const SizedBox(height: 20),
         const Divider(),
         const SizedBox(height: 20),
+
         ElevatedButton(
           onPressed: () async {
             var uPrice = userPrice * 100;

@@ -858,6 +858,7 @@ class BusinessListModule extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
+                              color: AppColors.accentColor,
                               boxShadow: [
                                 BoxShadow(
                                   // spreadRadius: 3,
@@ -866,13 +867,14 @@ class BusinessListModule extends StatelessWidget {
                                   blurStyle: BlurStyle.outer,
                                 ),
                               ]),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
                             child: Text(
                               'BOOK APPOINTMENT',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
+                                color: AppColors.whiteColor,
                               ),
                             ),
                           ),

@@ -702,9 +702,10 @@ class ResourceCreateButton extends StatelessWidget {
       onTap: () async {
         if (vendorAddResourcesScreenController.resourceAddFormKey.currentState!
             .validate()) {
-          if (vendorAddResourcesScreenController.addFile == null) {
+          /*if (vendorAddResourcesScreenController.addFile == null) {
             Fluttertoast.showToast(msg: "Image is required");
-          } else {
+          }*/
+          // else {
             for (int i = 0;
                 i <
                     vendorAddResourcesScreenController
@@ -732,25 +733,28 @@ class ResourceCreateButton extends StatelessWidget {
             await vendorAddResourcesScreenController
                 .addVendorResourcesFunction();
           }
-        }
+        // }
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(borderRadius: BorderRadius.circular(10),
+                color: AppColors.accentColor,
+                boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
         ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'Create',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

@@ -2,22 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
-import 'package:booking_management/common_modules/sharedpreference_data/sharedpreference_data.dart';
-import 'package:booking_management/common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
-import 'package:booking_management/common_ui/model/sign_out_model/sign_out_model.dart';
 import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
-import 'package:booking_management/user_side/screens/booking_success_screen/booking_success_screen.dart';
-import 'package:booking_management/vendor_side/screens/invoice_report_screen/invoice_report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
-import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
-
-import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/constants/payment_keys.dart';
-import '../../model/get_payment_id_model/get_payment_id_model.dart';
+
 
 class UserCardPaymentScreenController extends GetxController {
   String bookingPrice = Get.arguments[0];
@@ -40,7 +32,7 @@ class UserCardPaymentScreenController extends GetxController {
   }
 
   calculateAdminCharges(int amount) {
-    int price = amount * 100;
+    // int price = amount * 100;
     int calPrice = (amount * 0.10).toInt();
     return calPrice;
   }
@@ -99,10 +91,14 @@ class UserCardPaymentScreenController extends GetxController {
   }
 
   Future<void> initPaymentSheet(
-      {context, userPayingAmount, adminFeesAmount}) async {
+      {
+        context,
+        userPayingAmount,
+        adminFeesAmount,
+      }) async {
     try {
       isLoading(true);
-      print(bookingPrice);
+      log(bookingPrice);
 
       final checkoutController = Get.find<UserCheckoutScreenController>();
       var price = double.parse(bookingPrice);
@@ -143,7 +139,7 @@ class UserCardPaymentScreenController extends GetxController {
 
       await Stripe.instance.presentPaymentSheet();
       await Stripe.instance.confirmPaymentSheetPayment();
-
+      log('responseFinal1234');
       await checkoutController.checkOutSubmitFunction();
 
       // await getPaymentIdFunction(
@@ -173,7 +169,70 @@ class UserCardPaymentScreenController extends GetxController {
     }
   }
 
-  checkoutSubscriptionSuccess() async {
+
+
+
+  /*Future<Map<String, dynamic>> createStripePaymentSession({
+    required String transactionPriceId,
+
+  }) async {
+    try {
+      Stripe.merchantIdentifier;
+
+      log("stripe key is ::: $vendorStripeAccId");
+
+      Map<String, dynamic> body = {
+        // 'api_key': PaymentKeys.secretKey,
+        'success_url': "https://example.com/success",
+        'cancel_url': "https://example.com/cancel",
+        'payment_method_types[]': 'card',
+        "line_items": [
+          {
+            "price": transactionPriceId,
+            "quantity": 1,
+          }
+        ],
+        "mode": "payment",
+      };
+      log('body: $body');
+
+      //    Subscription subscription =
+      // Subscription.create(params);
+
+      var response = await http.post(
+          Uri.parse('https://api.stripe.com/v1/checkout/sessions'),
+          body: body,
+          headers: {
+            'Authorization': 'Bearer ${PaymentKeys.secretKey}',
+            'Content-type': 'application/x-www-form-urlencoded'
+          });
+
+      log("response.body is :: ${response.body}");
+
+      var resBody = jsonDecode(response.body);
+
+      // var resCode = response.statusCode;
+      // log("response.statusCode: $resCode");
+      // log("payment intent res body: $resBody");
+      //
+      // if (resCode != 200) {
+      //   var errorMsg = resBody["error"]["code"];
+      //   Get.snackbar("Payment Failed", "Vendor Account has $errorMsg");
+      //   isLoading(false);
+      // } else {
+      //   isLoading(true);
+      // }
+
+      // log(response.body.toString());
+      return jsonDecode(response.body.toString());
+    } catch (e) {
+      log("createStripePaymentSession error found ::: $e");
+      print("createStripePaymentSession error occured : ${e.toString()}");
+      rethrow;
+    }
+  }*/
+
+  /*checkoutSubscriptionSuccess() async {
     // final userCheckoutController = Get.find<UserCheckoutScreenController>();
     // await vendorSubscriptionPlanScreenController
     //     .purchaseSubscriptionPlanFunction(
@@ -200,7 +259,7 @@ class UserCardPaymentScreenController extends GetxController {
     //   },
     // );
     // isLoading(false);
-  }
+  }*/
 
   @override
   void dispose() {

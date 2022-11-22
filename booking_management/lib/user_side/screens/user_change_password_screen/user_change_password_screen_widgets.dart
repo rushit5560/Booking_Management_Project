@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/field_decorations.dart';
 import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/user_side/controllers/user_change_password_screen_controller/user_change_password_screen_controller.dart';
@@ -107,22 +108,24 @@ class SaveButtonModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
             boxShadow: [
               BoxShadow(
-                spreadRadius: 3,
+                // spreadRadius: 3,
                 blurRadius: 5,
                 color: Colors.grey.shade300,
                 blurStyle: BlurStyle.outer,
               ),
             ]
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
           child: Text(
             'SAVE',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

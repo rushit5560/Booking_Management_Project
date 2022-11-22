@@ -41,7 +41,7 @@ class VendorSubscriptionReportScreenController extends GetxController {
         if (isSuccessStatus.value) {
           subscriptionReportList.clear();
 
-          // print(vendorSubscriptionReportModel)
+          // print(vendorSubscriptionReportModel);
 
           subscriptionReportList = vendorSubscriptionReportModel.workerList;
           log("getSubscriptionReport List : ${subscriptionReportList.length}");

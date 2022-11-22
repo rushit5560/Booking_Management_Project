@@ -562,38 +562,36 @@ class ResourceDetailsModule extends StatelessWidget {
         const SizedBox(height: 8),
         Stack(
           children: [
-            Expanded(
-              child: Container(
-                // height: 200,
-                decoration: BoxDecoration(
-                  // color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  // border: Border.all(color: AppColors.colorLightGrey),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.colorLightGrey,
-                      blurRadius: 5,
-                      // spreadRadius: 5,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
-                ),
-                child: TextFormField(
-                  maxLines: null,
-                  controller: vendorUpdateResController
-                      .updateResourceDetailsFieldController,
-                  keyboardType: TextInputType.multiline,
-
-                  validator: (value) =>
-                      FieldValidator().validateResourceDetail(value!),
-                  decoration: InputDecoration(
-                    hintText: "Resource Details",
-                    focusedBorder: border,
-                    border: border,
-                    enabledBorder: border,
+            Container(
+              // height: 200,
+              decoration: BoxDecoration(
+                // color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                // border: Border.all(color: AppColors.colorLightGrey),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 5,
+                    // spreadRadius: 5,
+                    blurStyle: BlurStyle.outer,
                   ),
-                  // serviceFormFieldDecoration(hintText: 'Resource Details'),
+                ],
+              ),
+              child: TextFormField(
+                maxLines: null,
+                controller: vendorUpdateResController
+                    .updateResourceDetailsFieldController,
+                keyboardType: TextInputType.multiline,
+
+                validator: (value) =>
+                    FieldValidator().validateResourceDetail(value!),
+                decoration: InputDecoration(
+                  hintText: "Resource Details",
+                  focusedBorder: border,
+                  border: border,
+                  enabledBorder: border,
                 ),
+                // serviceFormFieldDecoration(hintText: 'Resource Details'),
               ),
             ),
           ],
@@ -1135,21 +1133,24 @@ class ResourceUpdateButton extends StatelessWidget {
       },
       child: Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
+            BoxDecoration(borderRadius: BorderRadius.circular(10),
+                color: AppColors.accentColor,
+                boxShadow: [
           BoxShadow(
-            spreadRadius: 3,
+            // spreadRadius: 3,
             blurRadius: 5,
             color: Colors.grey.shade300,
             blurStyle: BlurStyle.outer,
           ),
         ]),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'Update',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

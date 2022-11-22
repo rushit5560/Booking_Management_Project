@@ -659,3 +659,269 @@ class AppointmentReportListModule extends StatelessWidget {
 
 
 }
+
+class AppointmentReportSearchListModule extends StatelessWidget {
+  AppointmentReportSearchListModule({Key? key}) : super(key: key);
+  final screenController = Get.find<InvoiceReportScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return screenController.searchInvoiceReportList.isEmpty
+        ? const Center(child: Text("No data available!"))
+        : ListView.builder(
+      itemCount: screenController.searchInvoiceReportList.length,
+      physics: const BouncingScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, i) {
+        InvoiceReportData singleItem =
+        screenController.searchInvoiceReportList[i];
+        return _appointmentListTile(singleItem);
+      },
+    ).commonAllSidePadding(10);
+  }
+
+  Widget _appointmentListTile(InvoiceReportData singleItem) {
+
+    return GestureDetector(
+      onTap: () {
+        Get.to(
+              () => VendorInvoiceDetailsScreen(),
+          arguments: singleItem.id.toString(),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 3,
+              blurRadius: 5,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            /// Booking id
+            _bookingIdModule(singleItem),
+            const SizedBox(height: 5),
+
+            // Customer
+            _customerModule(singleItem),
+            const SizedBox(height: 5),
+
+            // Email
+            _emailModule(singleItem),
+            const SizedBox(height: 5),
+
+            // Mobile
+            _mobileModule(singleItem),
+            const SizedBox(height: 5),
+
+            /// Transaction Date
+            _dateModule(singleItem),
+            const SizedBox(height: 5),
+
+            // Price
+            _priceModule(singleItem),
+            const SizedBox(height: 5),
+
+            // Transaction For
+            _transactionForModule(singleItem),
+            const SizedBox(height: 5),
+
+
+          ],
+        ).commonAllSidePadding(10),
+      ),
+    );
+  }
+
+  Widget _bookingIdModule(InvoiceReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Booking Id : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            "${singleItem.invoiceId}",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _customerModule(InvoiceReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Customer : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.fullName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _emailModule(InvoiceReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Email : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.email,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _mobileModule(InvoiceReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Mobile No : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.mobile,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _dateModule(InvoiceReportData singleItem) {
+    // final transactionDate = singleItem.transactionDate.split("T")[0];
+    // final transactionTime = singleItem.transactionDate.split("T")[1].split(".")[0];
+
+    DateTime date = DateTime.parse(singleItem.transactionDate);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Date : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 6,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Date - ${date.day}/${date.month}/${date.year}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                // style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Time - ${date.hour}:${date.minute}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                // style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _priceModule(InvoiceReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Price : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.order.price.toString(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _transactionForModule(InvoiceReportData singleItem) {
+    return Row(
+      children: [
+        const Expanded(
+          flex: 4,
+          child: Text(
+            "Transaction For : ",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            singleItem.transactionFor,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+
+
+}

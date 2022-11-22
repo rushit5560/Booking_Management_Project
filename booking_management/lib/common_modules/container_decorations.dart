@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 BoxDecoration shadowDecoration() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(10),
+    color: AppColors.accentColor,
     boxShadow: [
       BoxShadow(
-        spreadRadius: 3,
+        // spreadRadius: 3,
         blurRadius: 5,
         color: AppColors.colorGreyIconLight.withOpacity(0.65),
         blurStyle: BlurStyle.outer,

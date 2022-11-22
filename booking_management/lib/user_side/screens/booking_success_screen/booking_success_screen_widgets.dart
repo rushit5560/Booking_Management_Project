@@ -1,3 +1,4 @@
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/controllers/book_appointment_screen_controller/book_appointment_screen_controller.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
@@ -105,19 +106,21 @@ class ButtonsModule extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
+                      color: AppColors.accentColor,
                       boxShadow: [
                         BoxShadow(
-                          spreadRadius: 3,
+                          // spreadRadius: 3,
                           blurRadius: 5,
                           color: Colors.grey.shade300,
                           blurStyle: BlurStyle.outer,
                         ),
                       ]),
-                  child: const Text(
+                  child: Text(
                     'View Invoice',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ).commonSymmetricPadding(horizontal: 10),
@@ -133,6 +136,7 @@ class ButtonsModule extends StatelessWidget {
                         horizontal: 25, vertical: 15),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        color: AppColors.accentColor,
                         boxShadow: [
                           BoxShadow(
                             spreadRadius: 3,
@@ -141,11 +145,12 @@ class ButtonsModule extends StatelessWidget {
                             blurStyle: BlurStyle.outer,
                           ),
                         ]),
-                    child: const Text(
+                    child: Text(
                       'Continue Booking',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
+                        color: AppColors.whiteColor,
                       ),
                     ),
                   ),

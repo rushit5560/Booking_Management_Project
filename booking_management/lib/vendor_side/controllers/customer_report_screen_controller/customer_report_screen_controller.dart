@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,8 @@ class CustomerReportScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
   List<CustomerReportData> customerReportList = [];
+  List<CustomerReportData> customerReportSearchList = [];
+  TextEditingController searchFieldController = TextEditingController();
 
   /// For Filter
   RxString startDate = "Select Start Date".obs;

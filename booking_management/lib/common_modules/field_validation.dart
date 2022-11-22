@@ -149,6 +149,13 @@ class FieldValidator {
     return null;
   }
 
+  String? validateLoginField(String value) {
+    if (value.isEmpty) {
+      return 'Field is required';
+    }
+    return null;
+  }
+
   String? validateServiceName(String value) {
     String pattern = r'^(?=.*?[A-Z])';
     RegExp regExp = RegExp(pattern);

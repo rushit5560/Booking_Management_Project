@@ -411,7 +411,7 @@ class AppointmentListTextModule extends StatelessWidget {
                       child: Row(
                         children: [
                           const Text(
-                            'Confirm',
+                            'Confirmed',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14),
                           ),
@@ -808,22 +808,24 @@ class AllAppointmentListModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
           boxShadow: [
             BoxShadow(
-              spreadRadius: 1,
+              // spreadRadius: 1,
               blurRadius: 2,
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
           ],
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
           child: Text(
             'View',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -1165,7 +1167,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
 
   Widget _dateAndTimeModule(i) {
     List<String> dateList =
-        screenController.pendingAppointmentList[i].startDateTime.split('T');
+        screenController.confirmAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
     return Row(
       children: [
@@ -1220,22 +1222,24 @@ class ConfirmAppointmentListModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
           boxShadow: [
             BoxShadow(
-              spreadRadius: 1,
+              // spreadRadius: 1,
               blurRadius: 2,
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
           ],
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
           child: Text(
             'View',
             style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.bold,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -1422,22 +1426,24 @@ class CancelAppointmentListModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
           boxShadow: [
             BoxShadow(
-              spreadRadius: 1,
+              // spreadRadius: 1,
               blurRadius: 2,
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
           ],
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
           child: Text(
             'View',
             style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.bold,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -1624,22 +1630,24 @@ class DoneAppointmentListModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
           boxShadow: [
             BoxShadow(
-              spreadRadius: 1,
+              // spreadRadius: 1,
               blurRadius: 2,
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
           ],
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
           child: Text(
             'View',
             style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.bold,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

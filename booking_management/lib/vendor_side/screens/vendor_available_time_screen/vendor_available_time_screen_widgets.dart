@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
@@ -1606,22 +1607,24 @@ class SetAvailableTimeButtonModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
             boxShadow: [
               BoxShadow(
-                spreadRadius: 3,
+                // spreadRadius: 3,
                 blurRadius: 5,
                 color: Colors.grey.shade300,
                 blurStyle: BlurStyle.outer,
               ),
             ]
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+        child:  Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'Set Available Time',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

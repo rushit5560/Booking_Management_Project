@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -14,6 +15,8 @@ class AppointmentReportScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
   List<AppointmentListModule> appointmentReportList = [];
+  List<AppointmentListModule> appointmentReportSearchList = [];
+  TextEditingController searchFieldController = TextEditingController();
 
   /// For Filter
   RxString startDate = "Select Start Date".obs;

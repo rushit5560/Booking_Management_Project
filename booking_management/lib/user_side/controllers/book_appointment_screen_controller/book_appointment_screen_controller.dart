@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
-import 'package:booking_management/user_side/controllers/user_checkout_screen_controller/user_checkout_screen_controller.dart';
 import 'package:booking_management/user_side/model/user_business_details_model/add_vendor_in_favourite_model.dart';
-import 'package:booking_management/user_side/model/user_sign_up_model/user_sign_up_model.dart';
 import 'package:booking_management/user_side/model/vendor_details_screen_models/vendor_details_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
@@ -21,6 +19,8 @@ import '../../model/book_appointment_screen_model/get_booking_resources_model.da
 import '../../model/book_appointment_screen_model/get_booking_service_model.dart';
 import '../../model/book_appointment_screen_model/get_vendor_booking_model.dart';
 import '../../screens/user_checkout_screen/user_checkout_screen.dart';
+
+
 
 class BookAppointmentScreenController extends GetxController {
   int vendorId = Get.arguments;
@@ -185,10 +185,12 @@ class BookAppointmentScreenController extends GetxController {
       }
     } catch (e) {
       log("getServicesListByIdFunction Error ::: $e");
-    } finally {
+    } /*finally {
       // isLoading(false);
       await getAllResourcesListByIdFunction();
-    }
+    }*/
+
+    await getAllResourcesListByIdFunction();
   }
 
   /// 2 & 3) Get Resources List
@@ -292,7 +294,7 @@ class BookAppointmentScreenController extends GetxController {
     } catch (e) {
       log("getAllResourcesListByIdFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       log("isServiceSlot.value : ${isServiceSlot.value}");
       selectedResourceTimeSlotId = 0;
       isLoading(false);
@@ -303,7 +305,12 @@ class BookAppointmentScreenController extends GetxController {
       //   await getAllAdditionalSlotFunction();
       // }
 
-    }
+    }*/
+
+    log("isServiceSlot.value : ${isServiceSlot.value}");
+    selectedResourceTimeSlotId = 0;
+    isLoading(false);
+
   }
 
   /// 4) Get Resources Time List
@@ -394,9 +401,11 @@ class BookAppointmentScreenController extends GetxController {
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       isLoading(true);
-    }
+    }*/
+
+    isLoading(true);
 
     // return [timeList, nextDate];
     return {"timeList": timeList, "nextDate": nextDate};
@@ -502,9 +511,11 @@ class BookAppointmentScreenController extends GetxController {
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       isLoading(true);
-    }
+    }*/
+
+    isLoading(true);
 
     // return timeList;
     return {"timeList": timeList, "nextDate": nextDate};
@@ -592,9 +603,11 @@ class BookAppointmentScreenController extends GetxController {
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    }/* finally {
       isLoading(true);
-    }
+    }*/
+
+    isLoading(true);
 
     // return timeList;
     return {"timeList": timeList, "nextDate": nextDate};
@@ -665,9 +678,11 @@ class BookAppointmentScreenController extends GetxController {
       Fluttertoast.showToast(
           msg:
               "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.");
-    } finally {
+    } /*finally {
       isLoading(true);
-    }
+    }*/
+
+    isLoading(true);
 
     // return timeList;
     return {"timeList": timeList, "nextDate": nextDate};
@@ -735,10 +750,10 @@ class BookAppointmentScreenController extends GetxController {
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       isLoading(true);
-    }
-
+    }*/
+    isLoading(true);
     // return timeList;
     return {"timeList": timeList, "nextDate": nextDate};
   }
@@ -805,9 +820,10 @@ class BookAppointmentScreenController extends GetxController {
       Fluttertoast.showToast(
           msg:
               "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.");
-    } finally {
+    } /*finally {
       isLoading(true);
-    }
+    }*/
+    isLoading(true);
 
     return timeList;
   }
@@ -851,9 +867,10 @@ class BookAppointmentScreenController extends GetxController {
       }
     } catch (e) {
       log("getAllAdditionalSlotFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+    isLoading(false);
   }
 
   /// 6) Book Slot
@@ -979,9 +996,11 @@ class BookAppointmentScreenController extends GetxController {
       });
     } catch (e) {
       log("bookAvailableTimeSlotFunction Error ::: $e");
-    } finally {
+    } /*finally {
       isLoading(false);
-    }
+    }*/
+
+    isLoading(false);
   }
 
   addVendorInFavoriteFunction() async {
@@ -1022,10 +1041,11 @@ class BookAppointmentScreenController extends GetxController {
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
       Fluttertoast.showToast(msg: "Something went wrong!");
-    } finally {
+    } /*finally {
       // isLoading(false);
       loadUI();
-    }
+    }*/
+    loadUI();
   }
 
   @override

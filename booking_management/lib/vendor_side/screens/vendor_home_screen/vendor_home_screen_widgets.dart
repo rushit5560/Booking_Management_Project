@@ -601,9 +601,28 @@ class ResourcesModule extends StatelessWidget {
                             ],
                             color: singleItem.timingList[i].booking == false
                                 ? Colors.orangeAccent
-                                : null),
+                                : Colors.grey.withOpacity(0.5)),
                         child: /*singleItem.vendorBooking.isServiceSlots
-                            ? */Row(
+                            ? */
+                        singleItem.timingList[i].endDateTime.length > 6
+                        ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Select",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color:
+                                singleItem.timingList[i].isSelected ==
+                                    true
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ],
+                        )
+                        : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
@@ -630,7 +649,7 @@ class ResourcesModule extends StatelessWidget {
                                     ),
                                   ).commonSymmetricPadding(horizontal: 5),
                                   Text(
-                                    singleItem.timingList[i].endDateTime,
+                                    singleItem.timingList[i].endDateTime.substring(0, 5),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,

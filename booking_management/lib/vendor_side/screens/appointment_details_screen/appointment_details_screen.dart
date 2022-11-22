@@ -55,7 +55,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                       ],
                                     ),
                                 )
-                                : appointmentDetailsScreenController.appointmentDetailsData.status == "Confirm"
+                                : appointmentDetailsScreenController.appointmentDetailsData.status == "Confirmed"
                             ? SizedBox(
                               height: 50,
                               width: Get.width,

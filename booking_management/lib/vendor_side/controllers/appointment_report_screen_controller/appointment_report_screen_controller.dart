@@ -130,7 +130,7 @@ class AppointmentReportScreenController extends GetxController {
         log("appointmentReportList : ${appointmentReportList.length}");
       } else {
         log("AppointmentReportFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("AppointmentReportFunction Error ::: $e");
@@ -177,7 +177,7 @@ class AppointmentReportScreenController extends GetxController {
         log("FilterAppointmentReportList : ${appointmentReportList.length}");
       } else {
         log("FilterAppointmentReport Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("FilterAppointmentReport Error ::: $e");

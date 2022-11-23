@@ -82,7 +82,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
         }
       } else {
         log("getVendorAllAdditionalSlot Something went wrong!");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllAdditionalSlotFunction Error ::: $e");
@@ -147,13 +147,13 @@ class VendorAdditionalSlotScreenController extends GetxController {
         log("Add Additional Slot stCode : ${addAdditionalSlotModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Additional slot added successfully");
+          Fluttertoast.showToast(msg: "Additional slot added successfully", toastLength: Toast.LENGTH_SHORT);
           _removeFieldData();
           await getVendorAllAdditionalSlotFunction();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addAdditionalSlotModel.message}");
-          Fluttertoast.showToast(msg: "Something wnt wrong!");
+          Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -180,10 +180,10 @@ class VendorAdditionalSlotScreenController extends GetxController {
       log("Delete Additional Slot Code : ${deleteAdditionalSlotModel.statusCode}");
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: deleteAdditionalSlotModel.message);
+        Fluttertoast.showToast(msg: deleteAdditionalSlotModel.message, toastLength: Toast.LENGTH_SHORT);
         await getVendorAllAdditionalSlotFunction();
       } else {
-        Fluttertoast.showToast(msg: "Something wnt wrong!");
+        Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("deleteAdditionalSlotFunction Error ::: $e");
@@ -249,13 +249,13 @@ class VendorAdditionalSlotScreenController extends GetxController {
         log("Code : ${updateAdditionalSlotModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Additional slot updated successfully");
+          Fluttertoast.showToast(msg: "Additional slot updated successfully", toastLength: Toast.LENGTH_SHORT);
           // removeFieldData();
           await getVendorAllAdditionalSlotFunction();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${updateAdditionalSlotModel.message}");
-          Fluttertoast.showToast(msg: "Something wnt wrong!");
+          Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -322,7 +322,7 @@ class VendorAdditionalSlotScreenController extends GetxController {
           updateAdditionalTimeDuration.value = 4;
         }
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAdditionalDetailsByIdFunction Else Else");
       }
     } catch (e) {

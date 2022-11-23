@@ -35,7 +35,7 @@ class UserFavouriteListScreenController extends GetxController {
         favouriteVendorList = getFavouriteVendorModel.data;
          log("favouriteVendorList : ${favouriteVendorList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getFavouriteVendorByIdFunction Else Else");
       }
 
@@ -73,14 +73,14 @@ class UserFavouriteListScreenController extends GetxController {
         log("Body : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: "Removed from favourite");
+            Fluttertoast.showToast(msg: "Removed from favourite", toastLength: Toast.LENGTH_SHORT);
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } finally {
       // isLoading(false);
       await getFavouriteVendorByIdFunction();

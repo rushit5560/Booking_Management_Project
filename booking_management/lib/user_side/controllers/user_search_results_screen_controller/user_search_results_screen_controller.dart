@@ -69,7 +69,7 @@ class UserSearchResultsScreenController extends GetxController {
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAllSearchVendorListFunction Else Else");
       }
     } catch (e) {
@@ -139,7 +139,7 @@ class UserSearchResultsScreenController extends GetxController {
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAllSearchVendorListRatingWiseFunction Else Else");
       }
     } catch (e) {
@@ -191,7 +191,7 @@ class UserSearchResultsScreenController extends GetxController {
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getSearchCategoryWiseFunction Else Else");
       }
     } catch (e) {
@@ -268,7 +268,7 @@ class UserSearchResultsScreenController extends GetxController {
         searchVendorList = getAllSearchVendorModel.data;
         log("searchVendorList : ${searchVendorList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getSearchCategoryWithRatingWiseFunction Else Else");
       }
     } catch (e) {

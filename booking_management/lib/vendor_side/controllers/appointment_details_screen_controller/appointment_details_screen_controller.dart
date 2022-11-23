@@ -68,7 +68,7 @@ class AppointmentDetailsScreenController extends GetxController {
         log("appointmentDetailsData :: $appointmentDetailsData");
       } else {
         log("getAppointmentDetailsByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAppointmentDetailsByIdFunction Error ::: $e");
@@ -94,7 +94,7 @@ class AppointmentDetailsScreenController extends GetxController {
       isSuccessStatus = appointmentStatusChangeModel.success.obs;
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: "Appointment Confirmed!");
+        Fluttertoast.showToast(msg: "Appointment Confirmed!", toastLength: Toast.LENGTH_SHORT);
 
         String title = "${UserDetails.userName} appointment confirmed";
         String msg =
@@ -105,11 +105,11 @@ class AppointmentDetailsScreenController extends GetxController {
         // Get.back();
       } else {
         log("confirmAppointmentByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("confirmAppointmentByIdFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } finally {
       isLoading(false);
     }
@@ -132,7 +132,7 @@ class AppointmentDetailsScreenController extends GetxController {
       isSuccessStatus = appointmentStatusChangeModel.success.obs;
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: "Appointment Done!");
+        Fluttertoast.showToast(msg: "Appointment Done!", toastLength: Toast.LENGTH_SHORT);
 
         String title = "${UserDetails.userName} appointment done";
         String msg =
@@ -143,11 +143,11 @@ class AppointmentDetailsScreenController extends GetxController {
         // Get.back();
       } else {
         log("confirmAppointmentByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("confirmAppointmentByIdFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } finally {
       isLoading(false);
     }
@@ -185,7 +185,7 @@ class AppointmentDetailsScreenController extends GetxController {
         if (isSuccessStatus.value) {
           //UserDetails().vendorId = response1.data.id;
           log("Cancel Appointment");
-          Fluttertoast.showToast(msg: 'Successfully Cancelled');
+          Fluttertoast.showToast(msg: 'Successfully Cancelled', toastLength: Toast.LENGTH_SHORT);
           reasonFieldController.clear();
           Get.back();
           //id = vendorAppointmentCancelModel.data.id;

@@ -89,10 +89,10 @@ class VendorScheduleManagementScreenController extends GetxController {
         isSuccessStatus = getVendorAutoScheduleModel.success.obs;
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: getVendorAutoScheduleModel.message);
+          Fluttertoast.showToast(msg: getVendorAutoScheduleModel.message, toastLength: Toast.LENGTH_SHORT);
         } else {
           log("getVendorAutoScheduleFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -144,7 +144,7 @@ class VendorScheduleManagementScreenController extends GetxController {
         log('selectedResourceIdList : $selectedResourceIdList');
       } else {
         log("getResourcesFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesFunction Error ::: $e");
@@ -215,7 +215,7 @@ class VendorScheduleManagementScreenController extends GetxController {
         log("Time end : ${timeList.first.endDateTime}");
       } else {
         log("Search With Resource List Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("Search With Resource List Error ::: $e");

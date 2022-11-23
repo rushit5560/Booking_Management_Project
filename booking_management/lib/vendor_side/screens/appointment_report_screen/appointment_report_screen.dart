@@ -101,7 +101,8 @@ class AppointmentReportScreen extends StatelessWidget {
 
                                 String searchText = appointmentReportScreenController.searchFieldController.text;
                                 for (int i = 0; i < appointmentReportScreenController.appointmentReportList.length; i++) {
-                                  if (appointmentReportScreenController.appointmentReportList[i].firstName.contains(searchText)) {
+                                  if (appointmentReportScreenController.appointmentReportList[i].firstName.contains(searchText)
+                                  || appointmentReportScreenController.appointmentReportList[i].bookingId.contains(searchText)) {
                                     appointmentReportScreenController.appointmentReportSearchList.add(appointmentReportScreenController.appointmentReportList[i]);
                                   }
                                 }

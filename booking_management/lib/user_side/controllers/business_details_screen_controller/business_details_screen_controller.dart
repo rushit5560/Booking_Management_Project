@@ -75,11 +75,11 @@ class BusinessDetailsScreenController extends GetxController {
         log("vendorDetailsData : $vendorDetailsData");
       } else {
         log("getVendorDetailsByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getVendorDetailsByIdFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       // isLoading(false);
       if(UserDetails.isUserLoggedIn == true) {
@@ -156,7 +156,7 @@ class BusinessDetailsScreenController extends GetxController {
         reviewList = getVendorReviewsModel.data;
         log("reviewList : ${reviewList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getVendorReviewFunction Else Else");
       }
     } catch (e) {
@@ -204,7 +204,7 @@ class BusinessDetailsScreenController extends GetxController {
         log("response body : ${addCustomerReviewsModel.data}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: addCustomerReviewsModel.data);
+          Fluttertoast.showToast(msg: addCustomerReviewsModel.data, toastLength: Toast.LENGTH_SHORT);
           await getVendorReviewFunction();
         }
 
@@ -269,7 +269,7 @@ class BusinessDetailsScreenController extends GetxController {
           log("businessHoursList : ${businessHoursList[i].day}");
         }
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getBusinessHoursFunction Else Else");
       }
     } catch (e) {
@@ -347,19 +347,19 @@ class BusinessDetailsScreenController extends GetxController {
 
           log('favourites123 : ${vendorDetailsData!.favourites}');
           if (vendorDetailsData!.favourites == true) {
-            Fluttertoast.showToast(msg: "Added in favourite");
+            Fluttertoast.showToast(msg: "Added in favourite", toastLength: Toast.LENGTH_SHORT);
             vendorDetailsData!.favourites = false;
           } else {
-            Fluttertoast.showToast(msg: "Removed from favourite");
+            Fluttertoast.showToast(msg: "Removed from favourite", toastLength: Toast.LENGTH_SHORT);
             vendorDetailsData!.favourites = true;
           }
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       // isLoading(false);
       loadUI();

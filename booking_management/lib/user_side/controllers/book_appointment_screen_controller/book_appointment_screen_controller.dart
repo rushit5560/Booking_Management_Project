@@ -137,7 +137,7 @@ class BookAppointmentScreenController extends GetxController {
         log("isServiceSlot : ${isServiceSlot.value}");
         log("isPriceDisplay : ${isPriceDisplay.value}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getBookVendorDetailsByIdFunction Else Else");
       }
     } catch (e) {
@@ -180,7 +180,7 @@ class BookAppointmentScreenController extends GetxController {
 
         allServicesList = getBookingServiceModel.workerList;
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getServicesListByIdFunction Else Else");
       }
     } catch (e) {
@@ -289,11 +289,11 @@ class BookAppointmentScreenController extends GetxController {
         }
       } else {
         log("getAllResourcesListByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllResourcesListByIdFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       log("isServiceSlot.value : ${isServiceSlot.value}");
       selectedResourceTimeSlotId = 0;
@@ -396,11 +396,11 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -506,11 +506,11 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -598,11 +598,11 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     }/* finally {
       isLoading(true);
     }*/
@@ -670,14 +670,15 @@ class BookAppointmentScreenController extends GetxController {
       } else {
         log("getResourcesTimeListFunction Else Else");
         Fluttertoast.showToast(
-            msg: getAllTimeListByResourceIdModel.errorMessage);
+            msg: getAllTimeListByResourceIdModel.errorMessage, toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
       // Fluttertoast.showToast(msg: "Something went wrong!");
       Fluttertoast.showToast(
           msg:
-              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.");
+              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot."
+          , toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -744,12 +745,12 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         // Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -811,7 +812,7 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         // Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
     } catch (e) {
@@ -819,7 +820,8 @@ class BookAppointmentScreenController extends GetxController {
       // Fluttertoast.showToast(msg: "Something went wrong!");
       Fluttertoast.showToast(
           msg:
-              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.");
+              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot."
+          , toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -863,7 +865,7 @@ class BookAppointmentScreenController extends GetxController {
 
       } else {
         log("Something went wrong!");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllAdditionalSlotFunction Error ::: $e");
@@ -881,9 +883,9 @@ class BookAppointmentScreenController extends GetxController {
     String serviceId = s2.replaceAll(" ", "");
 
     if (serviceId.isEmpty) {
-      Fluttertoast.showToast(msg: "Please select any service box!");
+      Fluttertoast.showToast(msg: "Please select any service box!", toastLength: Toast.LENGTH_SHORT);
     } else if (selectedResourceTimeSlotId == 0) {
-      Fluttertoast.showToast(msg: "Please select any timing slot!");
+      Fluttertoast.showToast(msg: "Please select any timing slot!", toastLength: Toast.LENGTH_SHORT);
     } else {
       isLoading(true);
       String url = ApiUrl.bookSelectedSlotApi +
@@ -904,7 +906,7 @@ class BookAppointmentScreenController extends GetxController {
 
         if (isSuccessStatus.value) {
           log('bookAppointmentModel.message123 : ${bookAppointmentModel.message}');
-          Fluttertoast.showToast(msg: bookAppointmentModel.message);
+          Fluttertoast.showToast(msg: bookAppointmentModel.message, toastLength: Toast.LENGTH_SHORT);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
           // await addVendorInFavoriteFunction();
@@ -923,7 +925,7 @@ class BookAppointmentScreenController extends GetxController {
           );
         } else {
           log("bookSelectedSlotFunction Else Else");
-          Fluttertoast.showToast(msg: bookAppointmentModel.errorMessage);
+          Fluttertoast.showToast(msg: bookAppointmentModel.errorMessage, toastLength: Toast.LENGTH_SHORT);
         }
       } catch (e) {
         log("bookSelectedSlotFunction Error ::: $e");
@@ -991,7 +993,7 @@ class BookAppointmentScreenController extends GetxController {
           );
         } else {
           log("bookAvailableTimeSlotFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -1033,14 +1035,14 @@ class BookAppointmentScreenController extends GetxController {
         log("status code : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Added to favourites");
+          Fluttertoast.showToast(msg: "Added to favourites", toastLength: Toast.LENGTH_SHORT);
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       // isLoading(false);
       loadUI();

@@ -92,12 +92,16 @@ class InvoiceReportScreen extends StatelessWidget {
                               if(invoiceReportScreenController.searchFieldController.text != "") {
                                 invoiceReportScreenController.searchInvoiceReportList.clear();
 
-                                String searchText = invoiceReportScreenController.searchFieldController.text;
+                                String searchText = invoiceReportScreenController.searchFieldController.text.trim();
                                 for (int i = 0; i < invoiceReportScreenController.invoiceReportList.length; i++) {
-                                  if (invoiceReportScreenController.invoiceReportList[i].fullName.contains(searchText)) {
+                                  if (invoiceReportScreenController.invoiceReportList[i].fullName.contains(searchText)
+                                      || invoiceReportScreenController.invoiceReportList[i].email.contains(searchText)
+                                      || invoiceReportScreenController.invoiceReportList[i].invoiceId.toString().contains(searchText)) {
                                     invoiceReportScreenController.searchInvoiceReportList.add(invoiceReportScreenController.invoiceReportList[i]);
                                   }
                                 }
+
+                                log('searchInvoiceReportList : ${invoiceReportScreenController.searchInvoiceReportList.length}');
                               } else if(invoiceReportScreenController.searchFieldController.text == ""){
                                 invoiceReportScreenController.searchInvoiceReportList.clear();
                                 log('Search List = ${invoiceReportScreenController.searchInvoiceReportList}');

@@ -161,13 +161,13 @@ class VendorAddResourcesScreenController extends GetxController {
         log("Code : ${addVendorResourceModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: addVendorResourceModel.message);
+          Fluttertoast.showToast(msg: addVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
           removeFieldData();
           await vendorResScreenController.getAllResourceAPI();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addVendorResourceModel.message}");
-          Fluttertoast.showToast(msg: addVendorResourceModel.message);
+          Fluttertoast.showToast(msg: addVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {

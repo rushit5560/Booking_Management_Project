@@ -48,7 +48,7 @@ class InvoiceScreenController extends GetxController {
         cstEmail = "${invoiceDetailsModel.workerList.email}";
         cstPhoneNo = "${invoiceDetailsModel.workerList.phoneNo}";
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getInvoiceDetailsFunction Else Else");
       }
     } catch (e) {

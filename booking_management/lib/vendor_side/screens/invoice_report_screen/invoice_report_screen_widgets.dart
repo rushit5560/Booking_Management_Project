@@ -357,9 +357,9 @@ class SubmitButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (screenController.startDate.value == "Select Start Date") {
-          Fluttertoast.showToast(msg: "Please select start date");
+          Fluttertoast.showToast(msg: "Please select start date", toastLength: Toast.LENGTH_SHORT);
         } else if (screenController.endDate.value == "Select End Date") {
-          Fluttertoast.showToast(msg: "Please select end date");
+          Fluttertoast.showToast(msg: "Please select end date", toastLength: Toast.LENGTH_SHORT);
         } else {
           // await screenController.getFilterInvoiceReportFunction();
         }

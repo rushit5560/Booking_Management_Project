@@ -492,6 +492,12 @@ class BookingResourcesListModule extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Colors.grey,
+                                // color: singleItem.timingList[i].booking == true
+                                //     ? Colors.grey
+                                //     : Colors.transparent,
+                              ),
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 5,
@@ -1288,17 +1294,17 @@ class BookButtonModule extends StatelessWidget {
 
             if (timeSlotsCount == screenController.allResourcesList.length) {
               Fluttertoast.showToast(
-                msg: "There is no time slots available to book appointment !",
+                msg: "There is no time slots available to book appointment !", toastLength: Toast.LENGTH_SHORT
               );
             } else if (timeSlotsCount !=
                 screenController.allResourcesList.length) {
               if (screenController.selectedResourceTimeSlotId == 0) {
-                Fluttertoast.showToast(msg: "Please select time slot!");
+                Fluttertoast.showToast(msg: "Please select time slot!", toastLength: Toast.LENGTH_SHORT);
               } else {
                 //api calling
                 if (screenController.isServiceSlot.value) {
                   if (screenController.selectedServiceList.isEmpty) {
-                    Fluttertoast.showToast(msg: "No services available !");
+                    Fluttertoast.showToast(msg: "No services available !", toastLength: Toast.LENGTH_SHORT);
                   } else {
                     await screenController.bookSelectedSlotFunction(
                         userName: "", email: "");
@@ -1356,7 +1362,7 @@ class BookButtonModule extends StatelessWidget {
           }
         } else if (UserDetails.isUserLoggedIn == false) {
           if (screenController.selectedResourceTimeSlotId == 0) {
-            Fluttertoast.showToast(msg: "Please select time slot!");
+            Fluttertoast.showToast(msg: "Please select time slot!", toastLength: Toast.LENGTH_SHORT);
           } else {
             await _bottomSheetModule(context);
           }

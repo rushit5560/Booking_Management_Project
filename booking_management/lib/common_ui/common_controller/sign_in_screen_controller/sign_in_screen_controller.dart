@@ -63,11 +63,11 @@ class SignInScreenController extends GetxController {
             SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(
             msg:
-                "Your account is in-active. Please check your email to activate.");
+                "Your account is in-active. Please check your email to activate.", toastLength: Toast.LENGTH_SHORT);
       } else if (response.statusCode.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel =
             SignInVendorErrorModel.fromJson(json.decode(response.body));
-        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+        Fluttertoast.showToast(msg: signInVendorErrorModel.message, toastLength: Toast.LENGTH_SHORT);
       } else if (body["statusCode"].toString().contains("417")) {
         Get.snackbar("Login Failed", body["errorMessage"]);
       }
@@ -272,7 +272,7 @@ class SignInScreenController extends GetxController {
       }
     } catch (e) {
       log('SignIn Error : $e');
-      Fluttertoast.showToast(msg: "Invalid login attempt");
+      Fluttertoast.showToast(msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
       rethrow;
     } finally {
       isLoading(false);
@@ -394,11 +394,11 @@ class SignInScreenController extends GetxController {
         SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(
             msg:
-            "Your account is in-active. Please check your email to activate.");
+            "Your account is in-active. Please check your email to activate.", toastLength: Toast.LENGTH_SHORT);
       } else if (response.statusCode.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel =
         SignInVendorErrorModel.fromJson(json.decode(response.body));
-        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+        Fluttertoast.showToast(msg: signInVendorErrorModel.message, toastLength: Toast.LENGTH_SHORT);
       } else if (body["statusCode"].toString().contains("417")) {
         Get.snackbar("Login Failed", body["errorMessage"]);
       }
@@ -600,7 +600,7 @@ class SignInScreenController extends GetxController {
       }
     } catch (e) {
       log('SignIn Error : $e');
-      Fluttertoast.showToast(msg: "Invalid login attempt");
+      Fluttertoast.showToast(msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
       rethrow;
     }
   }

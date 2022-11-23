@@ -137,7 +137,7 @@ class VendorScheduleTimeScreenController extends GetxController {
             isLoading(false);
           } else {
             log("getAllSLotsFunction Else Else");
-            Fluttertoast.showToast(msg: "Something went wrong!");
+            Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
 
@@ -182,7 +182,7 @@ class VendorScheduleTimeScreenController extends GetxController {
             isLoading(false);
           } else {
             log("getAllSLotsFunction days Else Else");
-            Fluttertoast.showToast(msg: "Something went wrong!");
+            Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
 
@@ -253,12 +253,12 @@ class VendorScheduleTimeScreenController extends GetxController {
           log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+            Fluttertoast.showToast(msg: setScheduleTimeModel.message, toastLength: Toast.LENGTH_SHORT);
 
             Get.back();
           } else {
             log("setSelectedScheduleTimeFunction Else Else");
-            Fluttertoast.showToast(msg: "Something went wrong!");
+            Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
       }
@@ -318,12 +318,12 @@ class VendorScheduleTimeScreenController extends GetxController {
           log("setScheduleTimeModel.message : ${setScheduleTimeModel.message}");
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: setScheduleTimeModel.message);
+            Fluttertoast.showToast(msg: setScheduleTimeModel.message, toastLength: Toast.LENGTH_SHORT);
 
             Get.back();
           } else {
             log("setSelectedScheduleTimeFunction Else Else");
-            Fluttertoast.showToast(msg: "Something went wrong!");
+            Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
       }
@@ -370,7 +370,7 @@ class VendorScheduleTimeScreenController extends GetxController {
         log("Time List : $timeList");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");

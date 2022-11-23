@@ -59,7 +59,7 @@ class VendorHomeScreenController extends GetxController {
       isSuccessStatus = appointmentListModel.success.obs;
 
       if (appointmentListModel.message.contains("No Record Found")) {
-        Fluttertoast.showToast(msg: appointmentListModel.message);
+        Fluttertoast.showToast(msg: appointmentListModel.message, toastLength: Toast.LENGTH_SHORT);
       }
 
       if (isSuccessStatus.value) {
@@ -76,7 +76,7 @@ class VendorHomeScreenController extends GetxController {
         log("allAppointmentList : ${allAppointmentList.length}");
         log("pendingAppointmentList : ${pendingAppointmentList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAppointmentListFunction Else Else");
       }
     } catch (e) {
@@ -115,7 +115,7 @@ class VendorHomeScreenController extends GetxController {
               resId: allResourcesList[i].id.toString());
         }
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesFunction Error ::: $e");
@@ -203,11 +203,11 @@ class VendorHomeScreenController extends GetxController {
         log("Time List123: ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesScheduleFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(false);
     }*/

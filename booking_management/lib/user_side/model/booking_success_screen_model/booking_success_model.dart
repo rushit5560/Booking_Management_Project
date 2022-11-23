@@ -187,14 +187,17 @@ class Customer {
 
 class Vendor {
   Vendor({
+    required this.id,
     required this.businessName,
     required this.userId,
   });
 
+  int id;
   String businessName;
   String userId;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+    id: json["id"] ?? 0,
     businessName: json["businessName"] ?? "",
      userId: json["userId"] ?? "", 
   );

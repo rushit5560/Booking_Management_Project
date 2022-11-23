@@ -1,21 +1,17 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:booking_management/common_modules/common_widgets.dart';
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
-import 'package:booking_management/vendor_side/screens/choose_court_screen/choose_court_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_add_resource_screen/vendor_add_resource_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-
-import '../../../common_modules/container_decorations.dart';
 import '../../controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
+
+
 
 class AddResourcesButton extends StatelessWidget {
   const AddResourcesButton({Key? key}) : super(key: key);
@@ -83,6 +79,7 @@ class VendorResourcesListModule extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey.withOpacity(0.3),
+                    border: Border.all(color: Colors.grey),
                     boxShadow: [
                       BoxShadow(
                         // spreadRadius: 3,

@@ -63,7 +63,7 @@ class BankInfoScreenController extends GetxController {
         var body = jsonDecode(value);
         if (isSuccessStatus.value) {
           Fluttertoast.showToast(
-              msg: "Bank Account Information update successfully");
+              msg: "Bank Account Information update successfully", toastLength: Toast.LENGTH_SHORT);
           await sharedPreferenceData.setBankInfoInPrefs(
             instituteName: getBankInfoModel.workerList.financialInstitutionName,
             accountName: getBankInfoModel.workerList.accountName,
@@ -71,7 +71,7 @@ class BankInfoScreenController extends GetxController {
             ifscCode: getBankInfoModel.workerList.accountCode,
           );
         } else if (body["statusCode"].toString().contains("417")) {
-          Fluttertoast.showToast(msg: body["errorMessage"]);
+          Fluttertoast.showToast(msg: body["errorMessage"], toastLength: Toast.LENGTH_SHORT);
           log("saveBankInfoFunction Else if");
           // Get.snackbar("", message);
         } else {

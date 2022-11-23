@@ -50,7 +50,7 @@ class VendorBusinessDocumentScreenController extends GetxController {
         businessDocumentList = getAllBusinessDocumentsModel.workerList;
         log("businessDocumentList : ${businessDocumentList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAllBusinessDocumentsByIdFunction Else Else");
       }
     } catch (e) {
@@ -106,14 +106,14 @@ class VendorBusinessDocumentScreenController extends GetxController {
         log("Body : ${addBusinessDocumentsModel.message}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: addBusinessDocumentsModel.message);
+          Fluttertoast.showToast(msg: addBusinessDocumentsModel.message, toastLength: Toast.LENGTH_SHORT);
           selectedDocTypeValue.value = "Attach photo identification";
           file!.delete();
           await getAllBusinessDocumentsByIdFunction();
           Get.back();
         } else {
           log("addBusinessDocumentFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {

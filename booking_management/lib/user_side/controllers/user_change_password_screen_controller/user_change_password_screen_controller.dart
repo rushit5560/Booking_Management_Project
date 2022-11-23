@@ -66,7 +66,7 @@ class UserChangePasswordScreenController extends GetxController {
         if (isStatus.value == 200) {
           //UserDetails().vendorId = response1.data.id;
           //log("Vendor Id: ${UserDetails().vendorId}");
-          Fluttertoast.showToast(msg: response1.message);
+          Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           clearChangePasswordFieldsFunction();
           Get.back();
           //Get.off(SignInScreen(), transition: Transition.zoom);

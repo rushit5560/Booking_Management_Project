@@ -461,7 +461,7 @@ class OverviewModule extends StatelessWidget {
         if (screenController.vendorDetailsData!.vendor!.latitude.isEmpty ||
             screenController.vendorDetailsData!.vendor!.longitude.isEmpty) {
           Fluttertoast.showToast(
-              msg: "Vendor has not provided his location details.");
+              msg: "Vendor has not provided his location details.", toastLength: Toast.LENGTH_SHORT);
         } else {
           Get.to(
             () => UserMapScreen(),
@@ -884,7 +884,7 @@ class ReviewModule extends StatelessWidget {
                     .trim()
                     .isEmpty) {
                   Fluttertoast.showToast(
-                      msg: "Enter your valuable comments for review.");
+                      msg: "Enter your valuable comments for review.", toastLength: Toast.LENGTH_SHORT);
                 } else {
                   await screenController.addCustomerReviewFunction();
                   screenController.reviewFieldController.clear();

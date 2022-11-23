@@ -51,7 +51,7 @@ class CustomerReportScreenController extends GetxController {
         log("Customer report list : ${customerReportList.length}");
       } else {
         log("Customer report Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("Customer report Error ::: $e");
@@ -88,7 +88,7 @@ class CustomerReportScreenController extends GetxController {
         log("customerReportList : ${customerReportList.length}");
       } else {
         log("getFilterCustomerReportFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getFilterCustomerReportFunction Error ::: $e");

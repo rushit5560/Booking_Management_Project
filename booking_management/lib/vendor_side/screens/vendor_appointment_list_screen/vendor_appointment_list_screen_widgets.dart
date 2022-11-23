@@ -753,6 +753,10 @@ class AllAppointmentListModule extends StatelessWidget {
   }
 
   Widget _dateAndTimeModule(i) {
+
+    List<String> dateList =
+    screenController.allAppointmentList[i].startDateTime.split('T');
+    String date = dateList[0];
     return Row(
       children: [
         Image.asset(
@@ -763,7 +767,7 @@ class AllAppointmentListModule extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          screenController.allAppointmentList[i].startDateTime,
+          date,
           style: const TextStyle(fontSize: 10),
         ),
 
@@ -1013,22 +1017,24 @@ class PendingAppointmentListModule extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
           boxShadow: [
             BoxShadow(
-              spreadRadius: 1,
+              // spreadRadius: 1,
               blurRadius: 2,
               color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
             ),
           ],
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
           child: Text(
             'View',
             style: TextStyle(
-              fontSize: 9,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
+              color: AppColors.whiteColor,
             ),
           ),
         ),
@@ -1237,7 +1243,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
           child: Text(
             'View',
             style: TextStyle(
-              fontSize: 9,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: AppColors.whiteColor,
             ),
@@ -1441,7 +1447,7 @@ class CancelAppointmentListModule extends StatelessWidget {
           child: Text(
             'View',
             style: TextStyle(
-              fontSize: 9,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: AppColors.whiteColor,
             ),
@@ -1575,7 +1581,7 @@ class DoneAppointmentListModule extends StatelessWidget {
 
   Widget _dateAndTimeModule(i) {
     List<String> dateList =
-        screenController.pendingAppointmentList[i].startDateTime.split('T');
+        screenController.doneAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
     return Row(
       children: [
@@ -1645,7 +1651,7 @@ class DoneAppointmentListModule extends StatelessWidget {
           child: Text(
             'View',
             style: TextStyle(
-              fontSize: 9,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: AppColors.whiteColor,
             ),

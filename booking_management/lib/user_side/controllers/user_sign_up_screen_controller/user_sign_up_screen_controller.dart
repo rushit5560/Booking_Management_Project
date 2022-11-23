@@ -232,7 +232,7 @@ class UserSignUpScreenController extends GetxController {
         if (isStatus.value == 200) {
           // UserDetails.customerId = response1.data.id;
           Fluttertoast.showToast(
-              msg: "${response1.message}. Please confirm your email.");
+              msg: "${response1.message}. Please confirm your email.", toastLength: Toast.LENGTH_SHORT);
           clearSignUpFieldsFunction();
 
           if (signInRoute == SignInRoute.fromBookScreen) {
@@ -243,7 +243,7 @@ class UserSignUpScreenController extends GetxController {
           }
         } else {
           log(response1.data.toString());
-          Fluttertoast.showToast(msg: response1.message);
+          Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           log('False False');
         }
       });
@@ -384,11 +384,11 @@ class UserSignUpScreenController extends GetxController {
         SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(
             msg:
-            "Your account is in-active. Please check your email to activate.");
+            "Your account is in-active. Please check your email to activate.", toastLength: Toast.LENGTH_SHORT);
       } else if (response.statusCode.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel =
         SignInVendorErrorModel.fromJson(json.decode(response.body));
-        Fluttertoast.showToast(msg: signInVendorErrorModel.message);
+        Fluttertoast.showToast(msg: signInVendorErrorModel.message, toastLength: Toast.LENGTH_SHORT);
       } else if (body["statusCode"].toString().contains("417")) {
         Get.snackbar("Login Failed", body["errorMessage"]);
       }
@@ -590,7 +590,7 @@ class UserSignUpScreenController extends GetxController {
       }
     } catch (e) {
       log('SignIn Error : $e');
-      Fluttertoast.showToast(msg: "Invalid login attempt");
+      Fluttertoast.showToast(msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
       rethrow;
     }
   }

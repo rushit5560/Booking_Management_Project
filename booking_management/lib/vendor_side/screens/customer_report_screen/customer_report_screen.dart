@@ -77,7 +77,9 @@ class CustomerReportScreen extends StatelessWidget {
 
                           String searchText = customerReportScreenController.searchFieldController.text;
                           for (int i = 0; i < customerReportScreenController.customerReportList.length; i++) {
-                            if (customerReportScreenController.customerReportList[i].firstName.contains(searchText)) {
+                            if (customerReportScreenController.customerReportList[i].firstName.contains(searchText)
+                            || customerReportScreenController.customerReportList[i].email.contains(searchText)
+                            || customerReportScreenController.customerReportList[i].id.toString().contains(searchText)) {
                               customerReportScreenController.customerReportSearchList.add(customerReportScreenController.customerReportList[i]);
                             }
                           }

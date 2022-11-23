@@ -7,6 +7,7 @@ import 'package:booking_management/user_side/controllers/user_checkout_screen_co
 import 'package:booking_management/user_side/screens/user_card_payment_screen/user_card_payment_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/field_decorations.dart';
@@ -647,41 +648,59 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
       onTap: () async {
         // String uniqueId = bookAppointmentScreenController.vendorUniqueId;
         screenController.selectedValuesPassList.clear();
+        screenController.isTextFieldFilled.value = true;
         if (screenController.checkOutFormKey.currentState!.validate()) {
           if (screenController.isPriceDisplay) {
-            for (int i = 0;
-                i < screenController.attendeeCritDetailsList.length;
-                i++) {
-              screenController.selectedValuesPassList.add(
-                {
-                  "Name": screenController.attendeeNameControllerList[i].text,
-                  "Criterias": [
-                    for (int j = 0;
-                        j < screenController.attendeeCritDetailsList[i].length;
-                        j++)
-                      {"Id": screenController.attendeeCritDetailsList[i][j]}
-                  ],
-                },
-              );
+
+            for(int i =0; i < screenController.attendeeNameControllerList.length; i++) {
+              if(screenController.attendeeNameControllerList[i].text.trim().isEmpty) {
+                screenController.isTextFieldFilled.value = false;
+              }
             }
 
-            log("screenController.selectedValuesPassList :: ${screenController.selectedValuesPassList}");
-            Get.to(
-              () => const UserCardPaymentScreen(),
-              arguments: [
-                (screenController.bookingPrice.value *
-                        screenController.quantityValue.value)
-                    .toString()
-                    .split(".")[0]
-                    .toString(),
-                screenController.bookingId,
-                screenController.vendorAccountStripeId,
-                screenController.priceCurrencySymbol,
-                screenController.quantityValue.value.toString(),
-                screenController.fNameFieldController.text.toString(),
-                // screenController.selectedValuesPassList,
-              ],
-            );
+            if(screenController.isTextFieldFilled.value) {
+              for (int i = 0;
+              i < screenController.attendeeCritDetailsList.length;
+              i++) {
+                screenController.selectedValuesPassList.add(
+                  {
+                    "Name": screenController.attendeeNameControllerList[i].text,
+                    "Criterias": [
+                      for (int j = 0;
+                      j < screenController.attendeeCritDetailsList[i].length;
+                      j++)
+                        {"Id": screenController.attendeeCritDetailsList[i][j]}
+                    ],
+                  },
+                );
+              }
+
+              log("screenController.selectedValuesPassList :: ${screenController.selectedValuesPassList}");
+              Get.to(
+                    () => const UserCardPaymentScreen(),
+                arguments: [
+                  (screenController.bookingPrice.value *
+                      screenController.quantityValue.value)
+                      .toString()
+                      .split(".")[0]
+                      .toString(),
+                  screenController.bookingId,
+                  screenController.vendorAccountStripeId,
+                  screenController.priceCurrencySymbol,
+                  screenController.quantityValue.value.toString(),
+                  screenController.fNameFieldController.text.toString(),
+                  // screenController.selectedValuesPassList,
+                ],
+              );
+
+
+            }
+            else {
+              Fluttertoast.showToast(msg: "Please fill attendee name",
+                  toastLength: Toast.LENGTH_SHORT);
+            }
+
+
           } else {
             await screenController.checkOutSubmitFunction();
           }

@@ -191,11 +191,11 @@ class VendorSignUpScreenController extends GetxController {
           //UserDetails().vendorId = response1.data.id;
           //log("Vendor Id: ${UserDetails().vendorId}");
           Fluttertoast.showToast(
-              msg: "${response1.message}. Please confirm your email.");
+              msg: "${response1.message}. Please confirm your email.", toastLength: Toast.LENGTH_SHORT);
           clearSignUpFieldsFunction();
           Get.off(() => SignInScreen(), transition: Transition.zoom);
         } else {
-          Fluttertoast.showToast(msg: response1.message);
+          Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           log('False False');
         }
       });

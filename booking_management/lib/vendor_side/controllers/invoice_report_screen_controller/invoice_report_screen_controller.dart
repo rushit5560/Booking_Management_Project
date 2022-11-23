@@ -51,7 +51,7 @@ class InvoiceReportScreenController extends GetxController {
         log("InvoiceReportList : ${invoiceReportList.length}");
       } else {
         log("InvoiceReport Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("InvoiceReport Error ::: $e");

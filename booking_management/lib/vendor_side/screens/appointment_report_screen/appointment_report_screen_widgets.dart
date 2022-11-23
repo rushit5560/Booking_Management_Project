@@ -430,9 +430,9 @@ class SubmitButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (screenController.startDate.value == "Select Start Date") {
-          Fluttertoast.showToast(msg: "Please select start date");
+          Fluttertoast.showToast(msg: "Please select start date", toastLength: Toast.LENGTH_SHORT);
         } else if (screenController.endDate.value == "Select End Date") {
-          Fluttertoast.showToast(msg: "Please select end date");
+          Fluttertoast.showToast(msg: "Please select end date", toastLength: Toast.LENGTH_SHORT);
         } else {
           await screenController.getFilterAppointmentReportFunction();
         }
@@ -529,6 +529,9 @@ class AppointmentReportListModule extends StatelessWidget {
   }
 
   Widget _appointmentListTile(AppointmentListModule singleItem) {
+    DateTime startTime = DateTime.parse(singleItem.startDateTime);
+    DateTime endTime = DateTime.parse(singleItem.endDateTime);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
       decoration: BoxDecoration(
@@ -613,7 +616,7 @@ class AppointmentReportListModule extends StatelessWidget {
                         const SizedBox(width: 5),
                         Expanded(
                           child: Text(
-                            singleItem.startDateTime,
+                            "${startTime.day}/${startTime.month}/${startTime.year}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             // style: TextStyle(fontWeight: FontWeight.bold),
@@ -631,7 +634,7 @@ class AppointmentReportListModule extends StatelessWidget {
                         const SizedBox(width: 5),
                         Expanded(
                           child: Text(
-                            singleItem.endDateTime,
+                            "${endTime.day}/${endTime.month}/${endTime.year}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             // style: TextStyle(fontWeight: FontWeight.bold),
@@ -700,6 +703,9 @@ class AppointmentReportSearchListModule extends StatelessWidget {
   }
 
   Widget _appointmentListTile(AppointmentListModule singleItem) {
+  DateTime startTime = DateTime.parse(singleItem.startDateTime);
+  DateTime endTime = DateTime.parse(singleItem.endDateTime);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
       decoration: BoxDecoration(
@@ -784,7 +790,7 @@ class AppointmentReportSearchListModule extends StatelessWidget {
                         const SizedBox(width: 5),
                         Expanded(
                           child: Text(
-                            singleItem.startDateTime,
+                            "${startTime.day}/${startTime.month}/${startTime.year}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             // style: TextStyle(fontWeight: FontWeight.bold),
@@ -802,7 +808,7 @@ class AppointmentReportSearchListModule extends StatelessWidget {
                         const SizedBox(width: 5),
                         Expanded(
                           child: Text(
-                            singleItem.endDateTime,
+                            "${endTime.day}/${endTime.month}/${endTime.year}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             // style: TextStyle(fontWeight: FontWeight.bold),

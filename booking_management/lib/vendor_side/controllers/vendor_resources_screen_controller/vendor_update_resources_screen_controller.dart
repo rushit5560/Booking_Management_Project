@@ -188,13 +188,13 @@ class VendorUpdateResourcesScreenController extends GetxController {
           log("Code : ${updateVendorResourceModel.statusCode}");
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: updateVendorResourceModel.message);
+            Fluttertoast.showToast(msg: updateVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
             // removeFieldData();
             vendorResScreenController.getAllResourceAPI();
             Get.back();
           } else {
             log("updateVendorResourcesFunction if file ${updateVendorResourceModel.message}");
-            Fluttertoast.showToast(msg: "Something want wrong!");
+            Fluttertoast.showToast(msg: "Something want wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
       } else if (updateFile == null) {
@@ -240,12 +240,12 @@ class VendorUpdateResourcesScreenController extends GetxController {
           log("Code : ${updateVendorResourceModel.statusCode}");
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: updateVendorResourceModel.message);
+            Fluttertoast.showToast(msg: updateVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
             vendorResScreenController.getAllResourceAPI();
             Get.back();
           } else {
             log("updateVendorResourcesFunction Else ${updateVendorResourceModel.message}");
-            Fluttertoast.showToast(msg: "Something want wrong!");
+            Fluttertoast.showToast(msg: "Something want wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
       }
@@ -353,7 +353,7 @@ class VendorUpdateResourcesScreenController extends GetxController {
         // updateTimeDuration = getServiceDetailsModel.workerList.timeDuration.obs;
 
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getResourcesDetailsByIdFunction Else Else");
       }
     } catch (e) {

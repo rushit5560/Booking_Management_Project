@@ -39,7 +39,7 @@ class ReviewScreenController extends GetxController {
 
         log("reviewList : ${reviewList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAllReviewsFunction Else Else");
       }
 

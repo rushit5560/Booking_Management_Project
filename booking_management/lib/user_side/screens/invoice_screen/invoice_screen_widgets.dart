@@ -109,11 +109,11 @@ class OrderInvoiceFormModule extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: AppColors.blackColor),
                       ),
-                      Text(
-                        screenController.invoiceDetailsData.vendor!.email,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      // Text(
+                      //   screenController.invoiceDetailsData.vendor!.email,
+                      //   maxLines: 2,
+                      //   overflow: TextOverflow.ellipsis,
+                      // ),
                       Text(
                         screenController.invoiceDetailsData.vendor!.phoneNo,
                         maxLines: 1,

@@ -105,7 +105,7 @@ class VendorAvailableTimeScreenController extends GetxController {
         setListValuesFunction(allAvailableTimeList);
         log("allAvailableTimeList : ${allAvailableTimeList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getVendorAvailableTimeFunction Error ::: $e");
@@ -245,10 +245,10 @@ class VendorAvailableTimeScreenController extends GetxController {
         isSuccessStatus = setVendorAvailableTimeModel.success.obs;
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: setVendorAvailableTimeModel.message);
+          Fluttertoast.showToast(msg: setVendorAvailableTimeModel.message, toastLength: Toast.LENGTH_SHORT);
         } else {
           log("setVendorAvailableTimeFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
 

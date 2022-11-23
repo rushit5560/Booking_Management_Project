@@ -99,7 +99,7 @@ class UserProfileScreenController extends GetxController {
           isSuccessStatus = updateUserProfileModel.success.obs;
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: "User update successfully.");
+            Fluttertoast.showToast(msg: "User update successfully.", toastLength: Toast.LENGTH_SHORT);
             log(updateUserProfileModel.dataVendor.userName);
             log(updateUserProfileModel.dataVendor.email);
             log(updateUserProfileModel.dataVendor.phoneNo);
@@ -150,7 +150,7 @@ class UserProfileScreenController extends GetxController {
           isSuccessStatus = updateUserProfileModel.success.obs;
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: "User update successfully.");
+            Fluttertoast.showToast(msg: "User update successfully.", toastLength: Toast.LENGTH_SHORT);
             log(updateUserProfileModel.dataVendor.userName);
             log(updateUserProfileModel.dataVendor.email);
             log(updateUserProfileModel.dataVendor.phoneNo);

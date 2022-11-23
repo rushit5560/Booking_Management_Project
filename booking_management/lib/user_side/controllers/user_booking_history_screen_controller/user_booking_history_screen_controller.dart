@@ -45,7 +45,7 @@ class UserBookingHistoryScreenController extends GetxController {
         log('allHistoryList : $historyList');
       } else {
         log('Get All History Else Else');
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log('userBookingHistoryFunction Error ::: $e');
@@ -75,7 +75,7 @@ class UserBookingHistoryScreenController extends GetxController {
         log("appointmentDetails : $appointDetailsData");
       } else {
         log("getUpcomingAppointmentDetailsFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getUpcomingAppointmentDetailsFunction Error ::: $e");

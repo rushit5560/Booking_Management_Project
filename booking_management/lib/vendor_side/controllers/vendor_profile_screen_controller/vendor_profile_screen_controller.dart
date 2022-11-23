@@ -209,7 +209,7 @@ class VendorProfileScreenController extends GetxController {
           if (isStatus.value == 200) {
             getUserDetailsById();
             log("response1.message : ${response1.message}");
-            Fluttertoast.showToast(msg: response1.message);
+            Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
@@ -275,7 +275,7 @@ class VendorProfileScreenController extends GetxController {
           if (isStatus.value == 200) {
             getUserDetailsById();
             log("response1.message : ${response1.message}");
-            Fluttertoast.showToast(msg: response1.message);
+            Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
@@ -533,7 +533,7 @@ class VendorProfileScreenController extends GetxController {
       isSuccessStatus = saveVendorLatLongModel.success.obs;
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: "Location Saved");
+        Fluttertoast.showToast(msg: "Location Saved", toastLength: Toast.LENGTH_SHORT);
         await getAllBusinessTypeList();
       } else {
         log("saveVendorLatLongFunction Else Else");

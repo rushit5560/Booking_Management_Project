@@ -65,7 +65,7 @@ class VendorServicesScreenController extends GetxController {
       if (isSuccessStatus.value) {
         allResourcesList = getAllVendorServiceModel.workerList;
       } else {
-        Fluttertoast.showToast(msg: "Something wnt wrong!");
+        Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllVendorServiceFunction Error ::: $e");
@@ -111,13 +111,13 @@ class VendorServicesScreenController extends GetxController {
         log("Code : ${addVendorServiceModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Service has been added successfully.");
+          Fluttertoast.showToast(msg: "Service has been added successfully.", toastLength: Toast.LENGTH_SHORT);
           removeFieldData();
           await getAllVendorServiceFunction();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addVendorServiceModel.message}");
-          Fluttertoast.showToast(msg: "Something wnt wrong!");
+          Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -144,10 +144,10 @@ class VendorServicesScreenController extends GetxController {
       log("Code : ${deleteServiceServiceModel.statusCode}");
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: "Service has been deleted successfully.");
+        Fluttertoast.showToast(msg: "Service has been deleted successfully.", toastLength: Toast.LENGTH_SHORT);
         await getAllVendorServiceFunction();
       } else {
-        Fluttertoast.showToast(msg: "Something wnt wrong!");
+        Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("deleteVendorResourcesFunction Error ::: $e");
@@ -192,13 +192,13 @@ class VendorServicesScreenController extends GetxController {
         log("Code : ${updateVendorServiceModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: updateVendorServiceModel.message);
+          Fluttertoast.showToast(msg: updateVendorServiceModel.message, toastLength: Toast.LENGTH_SHORT);
           // removeFieldData();
           getAllVendorServiceFunction();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${updateVendorServiceModel.message}");
-          Fluttertoast.showToast(msg: "Something wnt wrong!");
+          Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -235,7 +235,7 @@ class VendorServicesScreenController extends GetxController {
             getServiceDetailsModel.workerList.price.toString();
         updateTimeDuration = getServiceDetailsModel.workerList.timeDuration.obs;
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAdditionalDetailsByIdFunction Else Else");
       }
     } catch (e) {

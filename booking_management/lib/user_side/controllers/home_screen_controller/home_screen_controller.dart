@@ -73,7 +73,7 @@ class HomeScreenController extends GetxController {
         log("allCategoryList : ${allCategoryList.length}");
       } else {
         log("getAllCategoriesFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllCategoriesFunction Error ::: $e");
@@ -107,7 +107,7 @@ class HomeScreenController extends GetxController {
                 return searchListString.contains(searchTextNew);
               }).toList();
       } else {
-        Fluttertoast.showToast(msg: searchModel.message);
+        Fluttertoast.showToast(msg: searchModel.message, toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getCategorySearchFunction Error :::$e");
@@ -156,7 +156,7 @@ class HomeScreenController extends GetxController {
         headers: apiHeader.headers,
       );
 
-      log(" getAllUpcomingAppointment res body : ${response.body}");
+      log("getAllUpcomingAppointment res body : ${response.body}");
 
       GetAllAppointmentListModel getAllAppointmentListModel =
           GetAllAppointmentListModel.fromJson(json.decode(response.body));
@@ -168,7 +168,7 @@ class HomeScreenController extends GetxController {
         log(" getAllUpcomingAppointment list : $allUpcomingAppointmentList");
       } else {
         log(" getAllUpcomingAppointment Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log(" getAllUpcomingAppointment Error ::: $e");
@@ -203,7 +203,7 @@ class HomeScreenController extends GetxController {
         log("getAllUpcomingAppointmentDateWise : ${allUpcomingAppointmentList.length}");
       } else {
         log("getAllUpcomingAppointmentDateWise Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllUpcomingAppointmentDateWise  Error ::: $e");
@@ -263,7 +263,7 @@ class HomeScreenController extends GetxController {
         log("appointmentDetails : $appointDetailsData");
       } else {
         log("getUpcomingAppointmentDetailsFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getUpcomingAppointmentDetailsFunction Error ::: $e");
@@ -283,7 +283,8 @@ class HomeScreenController extends GetxController {
     try {
       http.Response response =
           await http.get(Uri.parse(url), headers: apiHeader.headers);
-      // log("Favourite Vendor Response : ${response.body}");
+      log("Favourite Vendor Response : ${response.body}");
+      log("apiHeader.headers : ${apiHeader.headers}");
 
       GetFavouriteVendorModel getFavouriteVendorModel =
           GetFavouriteVendorModel.fromJson(json.decode(response.body));
@@ -295,7 +296,7 @@ class HomeScreenController extends GetxController {
         favouriteVendorList = getFavouriteVendorModel.data;
         log("favouriteVendorList : ${favouriteVendorList.length}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getFavouriteVendorByIdFunction Else Else");
       }
     } catch (e) {
@@ -327,21 +328,24 @@ class HomeScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.statusCode}');
 
-      response.stream.transform(utf8.decoder).listen((value) async {
+      response.stream.
+      transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
         AddVendorInFavouriteModel addVendorInFavouriteModel =
             AddVendorInFavouriteModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorInFavouriteModel.success.obs;
         log("Body : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Removed from favourite");
+          Fluttertoast.showToast(msg: "Removed from favourite", toastLength: Toast.LENGTH_SHORT);
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!");
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       // isLoading(false);
       await getFavouriteVendorByIdFunction();

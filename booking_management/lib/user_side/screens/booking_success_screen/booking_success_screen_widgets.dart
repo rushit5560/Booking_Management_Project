@@ -139,7 +139,7 @@ class ButtonsModule extends StatelessWidget {
                         color: AppColors.accentColor,
                         boxShadow: [
                           BoxShadow(
-                            spreadRadius: 3,
+                            // spreadRadius: 3,
                             blurRadius: 5,
                             color: Colors.grey.shade300,
                             blurStyle: BlurStyle.outer,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:booking_management/common_modules/constants/api_header.dart';
+import 'package:booking_management/user_side/model/user_business_details_model/add_vendor_in_favourite_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
@@ -27,6 +28,7 @@ class BookingSuccessScreenController extends GetxController {
   String vendorName = "";
   String date = "";
   String slotTime = "";
+  String vendorId = "";
 
   String vendorUniquId = "";
 
@@ -116,6 +118,7 @@ class BookingSuccessScreenController extends GetxController {
         bookingId = bookingSuccessModel.workerList.bookingId;
         vendorName = bookingSuccessModel.workerList.vendor.businessName;
         vendorUniquId = bookingSuccessModel.workerList.vendor.userId;
+        vendorId = bookingSuccessModel.workerList.vendor.id.toString();
         String tempDate = bookingSuccessModel.workerList.startDateTime;
         date = tempDate.substring(0, tempDate.length - 9);
 
@@ -132,7 +135,7 @@ class BookingSuccessScreenController extends GetxController {
         log("date :$date");
         log("slotTime :$slotTime");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getBookingSuccessFunction Else Else");
       }
     } catch (e) {
@@ -234,12 +237,58 @@ class BookingSuccessScreenController extends GetxController {
       isLoading(false);
     }*/
 
-    isLoading(false);
+    await addVendorInFavoriteFunction();
+
+    // isLoading(false);
+  }
+
+  addVendorInFavoriteFunction() async {
+    isLoading(true);
+    String url = ApiUrl.addFavouriteVendorAtBookingTimeApi;
+    log("Add Vendor in Favourite At Booking Time API URL : $url");
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      request.headers.addAll(apiHeader.headers);
+
+      request.fields['VendorId'] = vendorId;
+      request.fields['CustomerId'] = "${UserDetails.tableWiseId}";
+      request.fields['IsLike'] = jsonEncode(true);
+
+      log("Fields : ${request.fields}");
+      log('request.headers: ${request.headers}');
+
+      var response = await request.send();
+      log('response: ${response.statusCode}');
+
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) async {
+        log("vendor favorite add body : ${json.decode(value)}");
+        AddVendorInFavouriteModel addVendorInFavouriteModel =
+        AddVendorInFavouriteModel.fromJson(json.decode(value));
+        isSuccessStatus = addVendorInFavouriteModel.success.obs;
+        log("status code : ${addVendorInFavouriteModel.statusCode}");
+
+        if (isSuccessStatus.value) {
+          // Fluttertoast.showToast(msg: "Added to favourites", toastLength: Toast.LENGTH_SHORT);
+        } else {
+          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        }
+      });
+    } catch (e) {
+      log("addVendorInFavoriteFunction Error ::: $e");
+      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+    } finally {
+      isLoading(false);
+    }
   }
 
   @override
   void onInit() {
-    log('Sucees Id: $successId');
+    log('Success Id: $successId');
 
     getBookingSuccessFunction();
     // getBookingSuccessFunction();

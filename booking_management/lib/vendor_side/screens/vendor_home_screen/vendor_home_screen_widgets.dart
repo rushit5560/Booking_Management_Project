@@ -592,6 +592,11 @@ class ResourcesModule extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: singleItem.timingList[i].booking == true
+                                  ? Colors.grey
+                                  : Colors.transparent,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 blurRadius: 5,

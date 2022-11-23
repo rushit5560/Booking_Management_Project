@@ -56,7 +56,7 @@ class VendorInvoiceListScreenController extends GetxController {
         log("getAllOrdersModel : ${allInvoiceList.length}");
       } else {
         log("getAllOrderListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!");
+        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllOrderListFunction Error ::: $e");

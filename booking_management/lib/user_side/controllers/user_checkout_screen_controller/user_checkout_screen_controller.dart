@@ -80,6 +80,7 @@ class UserCheckoutScreenController extends GetxController {
   List<List<String>> attendeeCritDetailsList = [];
 
   List<TextEditingController> attendeeNameControllerList = [];
+  RxBool isTextFieldFilled = true.obs;
   RxInt numberOfDropdown = 0.obs;
   List<Map<String, dynamic>> selectedValuesPassList = [];
 

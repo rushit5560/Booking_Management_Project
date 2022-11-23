@@ -64,6 +64,8 @@ class ApiUrl {
   static const addFavouriteVendorApi = apiMainPath + "API/Favourites";
   static const getFavVendorApi = apiMainPath + "API/GetFavourites";
 
+  static const addFavouriteVendorAtBookingTimeApi = apiMainPath + "API/CheckoutFavourites";
+
   /// Cst - Vendor Details
   static const vendorDetailsApi = apiMainPath + "API/GetVendorDetails";
 

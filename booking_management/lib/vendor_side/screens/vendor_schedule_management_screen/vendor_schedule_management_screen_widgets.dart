@@ -509,12 +509,12 @@ class SubmitButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (screenController.startDate.value == "Select Start Date") {
-          Fluttertoast.showToast(msg: "Please select start date");
+          Fluttertoast.showToast(msg: "Please select start date", toastLength: Toast.LENGTH_SHORT);
         } else if (screenController.endDate.value == "Select End Date") {
-          Fluttertoast.showToast(msg: "Please select end date");
+          Fluttertoast.showToast(msg: "Please select end date", toastLength: Toast.LENGTH_SHORT);
         } else {
           if(screenController.selectedResourceIdList.isEmpty) {
-            Fluttertoast.showToast(msg: "Please select resources");
+            Fluttertoast.showToast(msg: "Please select resources", toastLength: Toast.LENGTH_SHORT);
           }
           else {
             await screenController.getAutoScheduleFunction();
@@ -745,7 +745,7 @@ class SearchScheduleSubmitButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (screenController.scheduleTimingDate.value == "Select Date") {
-          Fluttertoast.showToast(msg: "Please select date");
+          Fluttertoast.showToast(msg: "Please select date", toastLength: Toast.LENGTH_SHORT);
         } else {
           await screenController.getAllResourceListFunction(
               searchWise: SearchWise.dateWise);

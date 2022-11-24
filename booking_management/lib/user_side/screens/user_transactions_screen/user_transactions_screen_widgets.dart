@@ -187,7 +187,7 @@ class UserTransactionListModule extends StatelessWidget {
                 Expanded(
                   flex: 70,
                   child: Text(
-                    screenController.transactionList[i].transactionFor,
+                    screenController.transactionList[i].vendorBussiness,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

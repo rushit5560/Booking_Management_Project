@@ -22,6 +22,8 @@ class UserCardPaymentScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
+  RxBool isProceedToPayButton = true.obs;
+
   ApiHeader apiHeader = ApiHeader();
 
   Map<String, dynamic>? paymentIntentData;
@@ -147,6 +149,7 @@ class UserCardPaymentScreenController extends GetxController {
       //   paymentIntentData!['client_secret'],
       // );
       isLoading(false);
+      isProceedToPayButton.value = true;
     } catch (e) {
       if (e is StripeException) {
         Get.snackbar(
@@ -161,11 +164,13 @@ class UserCardPaymentScreenController extends GetxController {
           "$e",
           colorText: Colors.black,
         );
+        isProceedToPayButton.value = true;
         log("Error ::: $e");
         rethrow;
       }
     } finally {
       isLoading(false);
+      isProceedToPayButton.value = true;
     }
   }
 

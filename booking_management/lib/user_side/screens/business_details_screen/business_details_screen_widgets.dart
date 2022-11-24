@@ -461,7 +461,8 @@ class OverviewModule extends StatelessWidget {
         if (screenController.vendorDetailsData!.vendor!.latitude.isEmpty ||
             screenController.vendorDetailsData!.vendor!.longitude.isEmpty) {
           Fluttertoast.showToast(
-              msg: "Vendor has not provided his location details.", toastLength: Toast.LENGTH_SHORT);
+              msg: "Vendor has not provided his location details.", toastLength: Toast.LENGTH_SHORT,
+          );
         } else {
           Get.to(
             () => UserMapScreen(),

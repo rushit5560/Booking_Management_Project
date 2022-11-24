@@ -149,17 +149,21 @@ class _CardPaymentScreenState extends State<UserCardPaymentScreen> {
 
         ElevatedButton(
           onPressed: () async {
-            var uPrice = userPrice * 100;
-            var aPrice = adminPrice * 100;
+            if(cardScreenController.isProceedToPayButton.value) {
+              var uPrice = userPrice * 100;
+              var aPrice = adminPrice * 100;
 
-            log("user price : $uPrice");
-            log("admin price : $aPrice");
+              log("user price : $uPrice");
+              log("admin price : $aPrice");
 
-            await cardScreenController.initPaymentSheet(
-              context: context,
-              adminFeesAmount: aPrice,
-              userPayingAmount: uPrice,
-            );
+              await cardScreenController.initPaymentSheet(
+                context: context,
+                adminFeesAmount: aPrice,
+                userPayingAmount: uPrice,
+              );
+              cardScreenController.isProceedToPayButton.value = false;
+            }
+
           },
           child: const Text("Proceed to Pay"),
           style: ElevatedButton.styleFrom(

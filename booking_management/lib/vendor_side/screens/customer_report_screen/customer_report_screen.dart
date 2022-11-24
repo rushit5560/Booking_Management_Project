@@ -54,7 +54,7 @@ class CustomerReportScreen extends StatelessWidget {
                     customerReportScreenController.loadUI();
                   },
                   decoration: InputDecoration(
-                    hintText: 'Search using customer name',
+                    hintText: 'Search...',
                     hintStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 15,

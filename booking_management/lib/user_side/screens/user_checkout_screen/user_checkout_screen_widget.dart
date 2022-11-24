@@ -8,6 +8,7 @@ import 'package:booking_management/user_side/screens/user_card_payment_screen/us
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../common_modules/field_decorations.dart';
@@ -696,8 +697,10 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
 
             }
             else {
+              Fluttertoast.cancel();
               Fluttertoast.showToast(msg: "Please fill attendee name",
                   toastLength: Toast.LENGTH_SHORT);
+
             }
 
 

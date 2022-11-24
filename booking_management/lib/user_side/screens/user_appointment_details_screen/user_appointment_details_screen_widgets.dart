@@ -31,7 +31,7 @@ class UserVendorDetailsModule extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                screenController.appointDetailsData!.vendor.userName,
+                screenController.appointDetailsData!.vendor.businessName,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontWeight: FontWeight.w400),

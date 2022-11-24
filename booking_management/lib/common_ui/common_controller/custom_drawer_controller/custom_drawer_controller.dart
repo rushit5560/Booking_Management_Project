@@ -42,7 +42,6 @@ class CustomDrawerController extends GetxController {
       isLoading(false);
     }
 
-
   }
 
 }

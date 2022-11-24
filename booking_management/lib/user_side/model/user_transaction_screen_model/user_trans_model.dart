@@ -54,6 +54,7 @@ class WorkerListTrans {
     // this.customer,
     // this.vendor,
     required this.order,
+    required this.vendorBussiness,
     // this.bookingItems,
     // this.subscriptionUser,
     // this.startDate,
@@ -88,6 +89,7 @@ class WorkerListTrans {
   // dynamic customer;
   // dynamic vendor;
   Order order;
+  String vendorBussiness;
   // dynamic bookingItems;
   // dynamic subscriptionUser;
   // dynamic startDate;
@@ -122,6 +124,7 @@ class WorkerListTrans {
     // customer: json["customer"],
     // vendor: json["vendor"],
     order: Order.fromJson(json["order"] ?? {}),
+    vendorBussiness: json["vendorBussiness"] ?? "",
     // bookingItems: json["bookingItems"],
     // subscriptionUser: json["subscriptionUser"],
     // startDate: json["startDate"],

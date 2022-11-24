@@ -104,7 +104,7 @@ class OrderInvoiceFormModule extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        screenController.invoiceDetailsData.vendor!.userName,
+                        screenController.invoiceDetailsData.vendor!.businessName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: AppColors.blackColor),

@@ -70,6 +70,7 @@ dependencies:
   flutter_html: ^2.2.1
 
 
+
   # For Map Use Direction
   google_maps_flutter: 2.1.2
   geolocator: ^8.2.1

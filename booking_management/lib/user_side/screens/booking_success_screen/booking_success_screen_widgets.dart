@@ -191,3 +191,30 @@ class ButtonsModule extends StatelessWidget {
           );
   }
 }
+
+
+class HyperLinkButton extends StatelessWidget {
+  const HyperLinkButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.offAll(() => IndexScreen());
+          },
+          child: const Text(
+            "Home",
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+

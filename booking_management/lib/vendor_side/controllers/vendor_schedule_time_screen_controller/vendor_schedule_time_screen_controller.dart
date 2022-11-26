@@ -137,7 +137,15 @@ class VendorScheduleTimeScreenController extends GetxController {
             isLoading(false);
           } else {
             log("getAllSLotsFunction Else Else");
-            Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+            // Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+            var res1 = jsonDecode(value);
+            if(res1['message'] == "No Record Found") {
+
+              Fluttertoast.showToast(
+                msg: "Please set your Availability from Business Timings",
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            }
           }
         });
 
@@ -182,7 +190,15 @@ class VendorScheduleTimeScreenController extends GetxController {
             isLoading(false);
           } else {
             log("getAllSLotsFunction days Else Else");
-            Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+            var res1 = jsonDecode(value);
+            if(res1['message'] == "No Record Found") {
+
+              Fluttertoast.showToast(
+                  msg: "Please set your Availability from Business Timings",
+                  toastLength: Toast.LENGTH_SHORT,
+              );
+            }
+
           }
         });
 

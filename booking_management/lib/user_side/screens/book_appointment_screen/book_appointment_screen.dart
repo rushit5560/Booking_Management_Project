@@ -102,15 +102,22 @@ class BookAppointmentScreen extends StatelessWidget {
                           ],
                         ).commonAllSidePadding(20),
                       ),
-                    )
+                    ),
+
+                    BookButtonModule().commonSymmetricPadding(vertical: 8),
                   ],
                 ),
               ),
       ),
-
-      bottomNavigationBar: SizedBox(
-          height: 60,
-          child: BookButtonModule()),
+      // bottomNavigationBar: Obx(
+      //   () => bookAppointmentScreenController.isLoading.value
+      //       ? Container()
+      //       : SizedBox(
+      //           height:
+      //               bookAppointmentScreenController.isLoading.value ? 0 : 60,
+      //           child: BookButtonModule(),
+      //         ),
+      // ),
     );
   }
 }

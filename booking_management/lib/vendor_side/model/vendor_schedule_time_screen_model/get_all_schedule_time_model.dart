@@ -21,7 +21,7 @@ class GetAllScheduleTimeModel {
       GetAllScheduleTimeModel(
         statusCode: json["statusCode"] ?? 0,
         success: json["success"] ?? false,
-        workerList: List<String>.from((json["workerList"]).map((x) => x) ?? []),
+        workerList: List<String>.from((json["workerList"] ?? []).map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {

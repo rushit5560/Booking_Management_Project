@@ -91,7 +91,7 @@ class SignInScreenController extends GetxController {
           else if (signInModel.role[0] == "Customer") {
             log('customer side');
             Get.snackbar(
-                "${signInModel.data.userName} you are Login Successfully", '');
+                "${signInModel.data.userName} login successfully", '');
 
             // String dob = signInModel.customer.dateOfBirth;
             // String finalDob = dob.substring(0, dob.length - 9);
@@ -146,7 +146,7 @@ class SignInScreenController extends GetxController {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
             Get.snackbar(
-                "${signInModel.data.fullName} you are Login Successfully", '');
+                "${signInModel.data.fullName} login successfully", '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
@@ -422,7 +422,7 @@ class SignInScreenController extends GetxController {
           else if (signInModel.role[0] == "Customer") {
             log('customer side');
             Get.snackbar(
-                "${signInModel.data.userName} you are Login Successfully", '');
+                "${signInModel.data.userName} login successfully", '');
 
             // String dob = signInModel.customer.dateOfBirth;
             // String finalDob = dob.substring(0, dob.length - 9);
@@ -474,7 +474,7 @@ class SignInScreenController extends GetxController {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
             Get.snackbar(
-                "${signInModel.data.fullName} you are Login Successfully", '');
+                "${signInModel.data.fullName} login successfully", '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {

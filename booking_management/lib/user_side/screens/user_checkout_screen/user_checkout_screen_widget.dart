@@ -659,24 +659,52 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
               }
             }
 
-            if(screenController.isTextFieldFilled.value) {
-              for (int i = 0;
-              i < screenController.attendeeCritDetailsList.length;
-              i++) {
-                screenController.selectedValuesPassList.add(
-                  {
-                    "Name": screenController.attendeeNameControllerList[i].text,
-                    "Criterias": [
-                      for (int j = 0;
-                      j < screenController.attendeeCritDetailsList[i].length;
-                      j++)
-                        {"Id": screenController.attendeeCritDetailsList[i][j]}
-                    ],
-                  },
-                );
-              }
+            if(screenController.critSubList.isNotEmpty) {
+              if(screenController.isTextFieldFilled.value) {
+                for (int i = 0;
+                i < screenController.attendeeCritDetailsList.length;
+                i++) {
+                  screenController.selectedValuesPassList.add(
+                    {
+                      "Name": screenController.attendeeNameControllerList[i].text,
+                      "Criterias": [
+                        for (int j = 0;
+                        j < screenController.attendeeCritDetailsList[i].length;
+                        j++)
+                          {"Id": screenController.attendeeCritDetailsList[i][j]}
+                      ],
+                    },
+                  );
+                }
 
-              log("screenController.selectedValuesPassList :: ${screenController.selectedValuesPassList}");
+                log("screenController.selectedValuesPassList :: ${screenController.selectedValuesPassList}");
+                Get.to(
+                      () => const UserCardPaymentScreen(),
+                  arguments: [
+                    (screenController.bookingPrice.value *
+                        screenController.quantityValue.value)
+                        .toString()
+                        .split(".")[0]
+                        .toString(),
+                    screenController.bookingId,
+                    screenController.vendorAccountStripeId,
+                    screenController.priceCurrencySymbol,
+                    screenController.quantityValue.value.toString(),
+                    screenController.fNameFieldController.text.toString(),
+                    // screenController.selectedValuesPassList,
+                  ],
+                );
+
+
+              }
+              else {
+                Fluttertoast.cancel();
+                Fluttertoast.showToast(msg: "Please fill attendee name",
+                    toastLength: Toast.LENGTH_SHORT);
+
+              }
+            }
+            else {
               Get.to(
                     () => const UserCardPaymentScreen(),
                 arguments: [
@@ -693,15 +721,9 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                   // screenController.selectedValuesPassList,
                 ],
               );
-
-
             }
-            else {
-              Fluttertoast.cancel();
-              Fluttertoast.showToast(msg: "Please fill attendee name",
-                  toastLength: Toast.LENGTH_SHORT);
 
-            }
+
 
 
           } else {

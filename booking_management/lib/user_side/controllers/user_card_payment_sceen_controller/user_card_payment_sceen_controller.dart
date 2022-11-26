@@ -148,9 +148,12 @@ class UserCardPaymentScreenController extends GetxController {
       //   paymentIntentData!['id'],
       //   paymentIntentData!['client_secret'],
       // );
-      isLoading(false);
-      isProceedToPayButton.value = true;
+
+      // isLoading(false);//todo - Remove isLoading
+      isProceedToPayButton(true);
     } catch (e) {
+      isProceedToPayButton(true);
+      isLoading(false);
       if (e is StripeException) {
         Get.snackbar(
           "Payment Failure",
@@ -158,19 +161,20 @@ class UserCardPaymentScreenController extends GetxController {
           colorText: Colors.black,
         );
         log("Make Payment Error ::: ${e.error.localizedMessage}");
+
       } else {
         Get.snackbar(
           "Payment Failure",
           "$e",
           colorText: Colors.black,
         );
-        isProceedToPayButton.value = true;
+        isProceedToPayButton(true);
         log("Error ::: $e");
         rethrow;
       }
     } finally {
-      isLoading(false);
-      isProceedToPayButton.value = true;
+      // isLoading(false); //todo -> Remove this loading to loading continue in card check out screen
+      isProceedToPayButton(true);
     }
   }
 

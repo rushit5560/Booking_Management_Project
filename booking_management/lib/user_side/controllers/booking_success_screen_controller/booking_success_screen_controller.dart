@@ -97,7 +97,7 @@ class BookingSuccessScreenController extends GetxController {
 
   /// Getting Booking Success
   getBookingSuccessFunction() async {
-    // isLoading(true);
+    isLoading(true);
     // log("${successId}");
     log('Success Id: $successId');
     log(successId);

@@ -96,9 +96,9 @@ class BookAppointmentScreen extends StatelessWidget {
 
                             /// Always Show
                             BookingResourcesListModule(),
-                            const SizedBox(height: 40),
+                            // const SizedBox(height: 40),
 
-                            BookButtonModule(),
+                            // BookButtonModule(),
                           ],
                         ).commonAllSidePadding(20),
                       ),
@@ -107,6 +107,10 @@ class BookAppointmentScreen extends StatelessWidget {
                 ),
               ),
       ),
+
+      bottomNavigationBar: SizedBox(
+          height: 60,
+          child: BookButtonModule()),
     );
   }
 }

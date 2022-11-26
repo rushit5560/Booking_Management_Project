@@ -390,14 +390,19 @@ class UserCheckoutScreenController extends GetxController {
             bookingSuccessId: returnId,
             quantityValue: quantityVar.toString(),
             userBookingNotes: notesFieldController.text.trim(),
-          ).then(
+          );/*.whenComplete(() => Get.to(
+                () => BookingSuccessScreen(),
+            arguments: returnId,
+          ));*/
+
+          /*.then(
             (value) {
               Get.to(
                 () => BookingSuccessScreen(),
                 arguments: returnId,
               );
             },
-          );
+          );*/
         } else {
           //Fluttertoast.showToast(msg: "Something went wrong!");
           log("checkOutSubmitFunction Else Else");
@@ -409,7 +414,7 @@ class UserCheckoutScreenController extends GetxController {
       isLoading(false);
     }*/
 
-    isLoading(false);
+    // isLoading(false);//todo - change remove isLoading
   }
 
   getStripeKeyFunction() async {
@@ -508,6 +513,12 @@ class UserCheckoutScreenController extends GetxController {
           var bookingIdGet = getPaymentIdModel.workerList.bookingId;
           log("transactionId : $transactionId");
           log("bookingIdGet : $bookingIdGet");
+
+          Get.to(
+                () => BookingSuccessScreen(),
+            arguments: returnId,
+          );
+
         } else {
           // Fluttertoast.showToast(msg: "Something went wrong!");
           log("makeTransactionInDb Else Else");
@@ -516,7 +527,7 @@ class UserCheckoutScreenController extends GetxController {
     } catch (e) {
       log("makeTransactionInDb Error ::: $e");
     } finally {
-      isLoading(false);
+      // isLoading(false);
     }
   }
 

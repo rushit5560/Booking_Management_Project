@@ -117,7 +117,9 @@ class VendorServicesScreenController extends GetxController {
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addVendorServiceModel.message}");
-          Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
+          // Fluttertoast.showToast(msg: "Something wnt wrong!", toastLength: Toast.LENGTH_SHORT);
+          var res1 = jsonDecode(value);
+          Fluttertoast.showToast(msg: "${res1['message']}", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {

@@ -906,7 +906,7 @@ class BookAppointmentScreenController extends GetxController {
 
         if (isSuccessStatus.value) {
           log('bookAppointmentModel.message123 : ${bookAppointmentModel.message}');
-          Fluttertoast.showToast(msg: bookAppointmentModel.message, toastLength: Toast.LENGTH_SHORT);
+          // Fluttertoast.showToast(msg: bookAppointmentModel.message, toastLength: Toast.LENGTH_SHORT);
           String bookingId = bookAppointmentModel.id;
           log("bookingId : $bookingId");
           // await addVendorInFavoriteFunction();

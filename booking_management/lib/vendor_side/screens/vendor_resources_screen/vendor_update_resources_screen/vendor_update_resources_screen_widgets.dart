@@ -35,9 +35,11 @@ class UpdateResourceFormModule extends StatelessWidget {
               const SizedBox(height: 20),
               EventCheckBoxModule(),
               const SizedBox(height: 20),
-              ResourceCapacityFieldModule(),
+              vendorUpdateResController.updateEvent.value
+                  ? ResourceCapacityFieldModule() : Container(),
               const SizedBox(height: 10),
-              IsAdditionalCriteriaModule(),
+              vendorUpdateResController.updateEvent.value
+              ? IsAdditionalCriteriaModule() : Container(),
               const SizedBox(height: 10),
               vendorUpdateResController.updateRequireCriteria.value
                   ? CriteriaManageUpdateModule()
@@ -726,13 +728,13 @@ class EventCheckBoxModule extends StatelessWidget {
             value: vendorUpdateResController.updateEvent.value,
             onChanged: (value) {
               vendorUpdateResController.isLoading(true);
-              vendorUpdateResController.updateEvent.value =
-                  !vendorUpdateResController.updateEvent.value;
+              vendorUpdateResController.updateEvent.value = !vendorUpdateResController.updateEvent.value;
               if (vendorUpdateResController.updateEvent.value == false) {
-                vendorUpdateResController.updateResourceCapacityFieldController
-                    .clear();
+                vendorUpdateResController.updateResourceCapacityFieldController.clear();
+                vendorUpdateResController.updateRequireCriteria.value = false;
               }
               log('updateEvent123 : ${vendorUpdateResController.updateEvent.value}');
+
               vendorUpdateResController.isLoading(false);
               // if(vendorUpdateResController.isSundayOn.value == false) {
               //   vendorUpdateResController.sundayStartTime.value = "00:00";

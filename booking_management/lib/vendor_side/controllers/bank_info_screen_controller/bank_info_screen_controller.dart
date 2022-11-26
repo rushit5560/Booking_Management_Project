@@ -49,7 +49,8 @@ class BankInfoScreenController extends GetxController {
       log('request.headers: ${request.headers}');
 
       var response = await request.send();
-      log('response: ${response.request}');
+      log('response11111: ${response.statusCode}');
+      log('response11111: ${response.reasonPhrase}');
 
       response.stream
           .transform(const Utf8Decoder())

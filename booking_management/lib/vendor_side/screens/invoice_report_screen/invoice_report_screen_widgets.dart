@@ -487,7 +487,7 @@ class AppointmentReportListModule extends StatelessWidget {
         Expanded(
           flex: 6,
           child: Text(
-            "${singleItem.id}",
+            "${singleItem.invoiceId}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             // style: TextStyle(fontWeight: FontWeight.bold),

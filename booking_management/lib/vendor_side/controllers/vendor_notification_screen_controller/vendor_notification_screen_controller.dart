@@ -26,6 +26,7 @@ class VendorNotificationScreenController extends GetxController {
 
     try {
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('response.body111111 : ${response.body}');
 
       NotificationGetModel notificationGetModel = NotificationGetModel.fromJson(json.decode(response.body));
       isSuccessStatus = notificationGetModel.success.obs;

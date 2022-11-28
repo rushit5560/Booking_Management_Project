@@ -734,7 +734,7 @@ class ResourcesModule extends StatelessWidget {
                       heading: "Vendor Name:",
                       value: screenController.vendorName),
                   const SizedBox(height: 5),
-                  _singleItemModule(
+                  _singleHtmlTextItemModule(
                       heading: "Details:", value: screenController.details),
                   const SizedBox(height: 5),
                   const Text(
@@ -787,6 +787,27 @@ class ResourcesModule extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(color: Colors.grey, fontSize: 18),
+        ),
+      ],
+    );
+  }
+
+  Widget _singleHtmlTextItemModule({required String heading, required String value}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          heading,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        // const SizedBox(height: 5),
+        Html(
+          data: value,
+          // style: const TextStyle(color: Colors.grey, fontSize: 18),
         ),
       ],
     );

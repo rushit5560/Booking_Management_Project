@@ -81,7 +81,11 @@ class HomeScreenController extends GetxController {
       // isLoading(false);
       await getAllUpcomingAppointmentFunction();
     }*/
-    await getAllUpcomingAppointmentFunction();
+    if(UserDetails.isUserLoggedIn == true) {
+      await getAllUpcomingAppointmentFunction();
+    } else {
+      isLoading(false);
+    }
   }
 
   Future getCategorySearchFunction(String searchText) async {
@@ -168,7 +172,7 @@ class HomeScreenController extends GetxController {
         log(" getAllUpcomingAppointment list : $allUpcomingAppointmentList");
       } else {
         log(" getAllUpcomingAppointment Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        // Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log(" getAllUpcomingAppointment Error ::: $e");
@@ -176,7 +180,12 @@ class HomeScreenController extends GetxController {
       // isLoading(false);
       await getFavouriteVendorByIdFunction();
     }*/
-    await getFavouriteVendorByIdFunction();
+    if(UserDetails.isUserLoggedIn == true) {
+      await getFavouriteVendorByIdFunction();
+    } else {
+      isLoading(false);
+    }
+
   }
 
   ///getUpcomingAppointDateWise
@@ -203,7 +212,7 @@ class HomeScreenController extends GetxController {
         log("getAllUpcomingAppointmentDateWise : ${allUpcomingAppointmentList.length}");
       } else {
         log("getAllUpcomingAppointmentDateWise Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        // Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllUpcomingAppointmentDateWise  Error ::: $e");
@@ -263,7 +272,7 @@ class HomeScreenController extends GetxController {
         log("appointmentDetails : $appointDetailsData");
       } else {
         log("getUpcomingAppointmentDetailsFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        // Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getUpcomingAppointmentDetailsFunction Error ::: $e");

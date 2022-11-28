@@ -789,7 +789,7 @@ class ReviewModule extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
@@ -806,6 +806,7 @@ class ReviewModule extends StatelessWidget {
                         : Container(),
                     const SizedBox(height: 20),
                     showReviewList(),
+                    const SizedBox(height: 65),
                   ],
                 ),
               ),
@@ -929,7 +930,7 @@ class ReviewModule extends StatelessWidget {
         ? const Center(child: Text('Vendor has no reviews.'))
         : ListView.builder(
             shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: screenController.reviewList.length,
             itemBuilder: (context, index) {
               return Container(

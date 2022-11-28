@@ -50,6 +50,7 @@ class BookingSuccessScreen extends StatelessWidget {
                               const SizedBox(height: 45),
                               ButtonsModule(),
 
+                              const SizedBox(height: 45),
                               HyperLinkButton(),
                             ],
                           ),

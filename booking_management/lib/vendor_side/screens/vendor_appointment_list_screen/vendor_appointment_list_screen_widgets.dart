@@ -1377,7 +1377,7 @@ class CancelAppointmentListModule extends StatelessWidget {
 
   Widget _dateAndTimeModule(i) {
     List<String> dateList =
-        screenController.pendingAppointmentList[i].startDateTime.split('T');
+        screenController.cancelAppointmentList[i].startDateTime.split('T');
     String date = dateList[0];
     return Row(
       children: [

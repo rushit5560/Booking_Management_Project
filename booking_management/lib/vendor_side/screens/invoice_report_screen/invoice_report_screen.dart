@@ -115,7 +115,8 @@ class InvoiceReportScreen extends StatelessWidget {
                       ),
                     ).commonSymmetricPadding(horizontal: 15, vertical: 10),
 
-                    Expanded(child: invoiceReportScreenController.searchInvoiceReportList.isEmpty ? AppointmentReportListModule()
+                    Expanded(child: invoiceReportScreenController.searchInvoiceReportList.isEmpty
+                        ? AppointmentReportListModule()
                     : AppointmentReportSearchListModule() ),
                   ],
                 ),

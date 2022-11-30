@@ -47,6 +47,7 @@ class WorkerList {
     required this.status,
     required this.bookingItems,
     required this.serviceName,
+    required this.resourceName,
   });
 
   int id;
@@ -65,6 +66,7 @@ class WorkerList {
   String notes;
   String status;
   String bookingItems;
+  String resourceName;
   String serviceName;
 
   factory WorkerList.fromJson(Map<String, dynamic> json) => WorkerList(
@@ -85,6 +87,7 @@ class WorkerList {
     status: json["status"] ?? "",
     bookingItems: json["bookingItems"] ?? "",
     serviceName: json["serviceName"] ?? "",
+    resourceName: json["resourceName"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

@@ -29,6 +29,7 @@ class BookingSuccessScreenController extends GetxController {
   String date = "";
   String slotTime = "";
   String vendorId = "";
+  String resourceName = "";
 
   String vendorUniquId = "";
 
@@ -115,6 +116,7 @@ class BookingSuccessScreenController extends GetxController {
       isSuccessStatus = bookingSuccessModel.success.obs;
 
       if (isSuccessStatus.value) {
+        resourceName = bookingSuccessModel.workerList.serviceName;
         bookingId = bookingSuccessModel.workerList.bookingId;
         vendorName = bookingSuccessModel.workerList.vendor.businessName;
         vendorUniquId = bookingSuccessModel.workerList.vendor.userId;
@@ -172,13 +174,13 @@ class BookingSuccessScreenController extends GetxController {
           fcmToken: oppositeUserFcmToken, // Getting From API
           title: "${UserDetails.userName} booked appointment",
           body:
-              "${UserDetails.userName} booked appointment for serviceName on $date at $slotTime",
+              "${UserDetails.userName} booked appointment for $resourceName on $date at $slotTime",
 
           type: 0,
         );
 
         message =
-            "${UserDetails.userName} booked appointment for serviceName on $date at $slotTime";
+            "${UserDetails.userName} booked appointment for $resourceName on $date at $slotTime";
 
         log("oppositeUserFcmToken : $oppositeUserFcmToken");
       } else {

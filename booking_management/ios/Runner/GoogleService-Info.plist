@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>260977589875-o8sro8prura7f2fqn1216d7dhnjbgiu4.apps.googleusercontent.com</string>
+	<string>712971325029-73l8e4jmc964tobeibg0q4gsk7l4kdrl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.260977589875-o8sro8prura7f2fqn1216d7dhnjbgiu4</string>
+	<string>com.googleusercontent.apps.712971325029-73l8e4jmc964tobeibg0q4gsk7l4kdrl</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>260977589875-vmu4q0ugf31cmj3k6etqcv7n582g0kau.apps.googleusercontent.com</string>
+	<string>712971325029-40cba31trdrhskaf430llg6cmgqla408.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCmeczb3drBz2ouONSSd7SaialSHmP2VBQ</string>
+	<string>AIzaSyC2IY1Ifpe_LSxwcrBaWzVoYVH4t-iEJ_c</string>
 	<key>GCM_SENDER_ID</key>
-	<string>260977589875</string>
+	<string>712971325029</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.setdaytime.ios</string>
 	<key>PROJECT_ID</key>
-	<string>booking-aae71</string>
+	<string>setdaytime-ce4c0</string>
 	<key>STORAGE_BUCKET</key>
-	<string>booking-aae71.appspot.com</string>
+	<string>setdaytime-ce4c0.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:260977589875:ios:d0e9b36f66d3d3add23406</string>
+	<string>1:712971325029:ios:632ab67dbe5477ed31c08c</string>
 </dict>
 </plist>

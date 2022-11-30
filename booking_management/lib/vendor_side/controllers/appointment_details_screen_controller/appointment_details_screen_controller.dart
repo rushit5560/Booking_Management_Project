@@ -174,7 +174,10 @@ class AppointmentDetailsScreenController extends GetxController {
       var response = await request.send();
       log('response: ${response.request}');
 
-      response.stream.transform(utf8.decoder).listen((value) {
+      response.stream
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter())
+          .listen((value) {
         VendorAppointmentCancelModel vendorAppointmentCancelModel =
             VendorAppointmentCancelModel.fromJson(json.decode(value));
         log('response1 ::::::${vendorAppointmentCancelModel.statusCode}');
@@ -187,6 +190,7 @@ class AppointmentDetailsScreenController extends GetxController {
           log("Cancel Appointment");
           Fluttertoast.showToast(msg: 'Successfully Cancelled', toastLength: Toast.LENGTH_SHORT);
           reasonFieldController.clear();
+          Get.back();
           Get.back();
           //id = vendorAppointmentCancelModel.data.id;
           // log('Cancel id : $id');

@@ -56,7 +56,12 @@ class BankInfoScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              SaveChangesButtonModule(),
+                              bankInfoScreenController.isEditable.value == false
+                                  ? const Text(
+                                      'Note: Please contact admin to change bank detail.',
+                                      style: TextStyle(color: Colors.red),
+                                    )
+                                  : SaveChangesButtonModule(),
                             ],
                           ).commonAllSidePadding(5),
                         ).commonAllSidePadding(10),

@@ -778,7 +778,7 @@ class BusinessListModule extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
                                         color: singleItem.workingHoursStatus ==
-                                                "Close"
+                                                "Closed"
                                             ? Colors.red
                                             : Colors.green),
                                   ),
@@ -786,8 +786,8 @@ class BusinessListModule extends StatelessWidget {
                                   Expanded(
                                       flex: 20,
                                       child: Text(
-                                        singleItem.workingHoursStatus == "Close"
-                                            ? "Close"
+                                        singleItem.workingHoursStatus == "Closed"
+                                            ? "Closed"
                                             : "Open",
                                         maxLines: 1,
                                         style: const TextStyle(

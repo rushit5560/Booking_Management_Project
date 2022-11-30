@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
+import 'package:booking_management/vendor_side/screens/appointment_details_screen/appointment_details_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_invoice_list_screen/vendor_order_details_screen/vendor_invoice_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -535,8 +536,16 @@ class AppointmentReportListModule extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        log('121212 : ${singleItem.bookingId}');
         // Get.to(()=> VendorInvoiceDetailsScreen(),
-        // arguments: singleItem.id.toString());
+        // arguments: singleItem.bookingId.toString());
+        Get.to(()=> AppointmentDetailsScreen(),
+          arguments: [
+            singleItem.bookingId,
+            singleItem.status,
+            singleItem.id
+          ],
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
@@ -713,153 +722,164 @@ class AppointmentReportSearchListModule extends StatelessWidget {
   DateTime startTime = DateTime.parse(singleItem.startDateTime);
   DateTime endTime = DateTime.parse(singleItem.endDateTime);
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              const Text(
-                "Booking Id : ",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Expanded(
-                child: Text(
-                  singleItem.bookingId,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  // style: TextStyle(fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {
+        Get.to(()=> AppointmentDetailsScreen(),
+          arguments: [
+            singleItem.bookingId,
+            singleItem.status,
+            singleItem.id
+          ],
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 17, left: 5, right: 5, top: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 3,
+              blurRadius: 5,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  "Booking Id : ",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Expanded(
+                  child: Text(
+                    singleItem.bookingId,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    // style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            "Vendor :",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              singleItem.vendor.businessName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              // style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          const Text(
+                            "Customer :",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              singleItem.firstName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              // style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          const Text(
+                            "Start Time :",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              "${startTime.day}/${startTime.month}/${startTime.year}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              // style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          const Text(
+                            "End Time :",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              "${endTime.day}/${endTime.month}/${endTime.year}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              // style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
-                      children: [
-                        const Text(
-                          "Vendor :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            singleItem.vendor.businessName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "\$${singleItem.bookingItems.price}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                     const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          "Customer :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            singleItem.firstName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "${singleItem.bookingItems.quantity}",
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          "Start Time :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            "${startTime.day}/${startTime.month}/${startTime.year}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          "End Time :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            "${endTime.day}/${endTime.month}/${endTime.year}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      singleItem.status,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "\$${singleItem.bookingItems.price}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "${singleItem.bookingItems.quantity}",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    singleItem.status,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          // const SizedBox(width: 5),
-          // _viewButton(),
-        ],
-      ).commonAllSidePadding(10),
+              ],
+            ),
+            // const SizedBox(width: 5),
+            // _viewButton(),
+          ],
+        ).commonAllSidePadding(10),
+      ),
     );
   }
 }

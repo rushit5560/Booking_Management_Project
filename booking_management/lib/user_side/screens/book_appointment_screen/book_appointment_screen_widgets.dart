@@ -233,7 +233,7 @@ class BookingServicesListModule extends StatelessWidget {
               singleItem.isSelect = !singleItem.isSelect;
               screenController.loadUI();
 
-              if(screenController.isPriceDisplay.value) {
+              if (screenController.isPriceDisplay.value) {
                 if (singleItem.isSelect == true) {
                   // Selected Service Add in List
                   screenController.selectedServiceList.add(singleItem.id);
@@ -243,27 +243,25 @@ class BookingServicesListModule extends StatelessWidget {
                     screenController.commonSlotPrice.value =
                         tempAmount.toString();
                   } else {
-                    double tempAmount = double.parse(
-                        screenController.commonSlotPrice.value) +
-                        singleItem.price;
+                    double tempAmount =
+                        double.parse(screenController.commonSlotPrice.value) +
+                            singleItem.price;
                     screenController.commonSlotPrice.value =
                         tempAmount.toString();
                   }
-                  log("screenController.selectedServiceList : ${screenController
-                      .selectedServiceList}");
+                  log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
                 } else {
                   // Selected Service Remove From the List
                   screenController.selectedServiceList
                       .removeWhere((element) => singleItem.id == element);
 
-                  double tempAmount = double.parse(
-                      screenController.commonSlotPrice.value) -
-                      double.parse(singleItem.price.toString());
+                  double tempAmount =
+                      double.parse(screenController.commonSlotPrice.value) -
+                          double.parse(singleItem.price.toString());
                   screenController.commonSlotPrice.value =
                       tempAmount.toString();
 
-                  log("screenController.selectedServiceList : ${screenController
-                      .selectedServiceList}");
+                  log("screenController.selectedServiceList : ${screenController.selectedServiceList}");
                 }
               }
 
@@ -426,6 +424,8 @@ class BookingResourcesListModule extends StatelessWidget {
                             log("dateModuleList.length : ${dateModuleList.length}");
                             screenController.selectedDate.value =
                                 "${dateModuleList[2]}-${dateModuleList[0]}-${dateModuleList[1]}";
+                            screenController.selectedShowDate.value =
+                                "${dateModuleList[1]}-${dateModuleList[0]}-${dateModuleList[2]}";
                             await screenController
                                 .getAllResourcesListByIdFunction(
                                     searchType2: SearchType2.dateTimeWise);
@@ -491,86 +491,90 @@ class BookingResourcesListModule extends StatelessWidget {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                 color: Colors.grey,
                                 // color: singleItem.timingList[i].booking == true
                                 //     ? Colors.grey
                                 //     : Colors.transparent,
                               ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: Colors.grey.shade300,
-                                    blurStyle: BlurStyle.outer,
-                                  ),
-                                ],
-                                color:
-                                    singleItem.timingList[i].isSelected == true
-                                        ? Colors.blue
-                                        : Colors.grey.shade300,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Colors.grey.shade300,
+                                  blurStyle: BlurStyle.outer,
+                                ),
+                              ],
+                              color: singleItem.timingList[i].isSelected == true
+                                  ? Colors.blue
+                                  : Colors.grey.shade300,
                             ),
                             //todo - show slot hours & days wise
                             child: /*screenController.isServiceSlot.value
                                 ? */
-                            singleItem.timingList[i].endDateTime.length < 6
-                            ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        singleItem.timingList[i].startDateTime,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            color: singleItem.timingList[i]
-                                                        .isSelected ==
-                                                    true
-                                                ? Colors.white
-                                                : Colors.black),
+                                singleItem.timingList[i].endDateTime.length < 6
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            singleItem
+                                                .timingList[i].startDateTime,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13,
+                                                color: singleItem.timingList[i]
+                                                            .isSelected ==
+                                                        true
+                                                    ? Colors.white
+                                                    : Colors.black),
+                                          ),
+                                          Text(
+                                            "-",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
+                                              color: singleItem.timingList[i]
+                                                          .isSelected ==
+                                                      true
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                          ).commonSymmetricPadding(
+                                              horizontal: 5),
+                                          Text(
+                                            singleItem.timingList[i].endDateTime
+                                                .substring(0, 5),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
+                                              color: singleItem.timingList[i]
+                                                          .isSelected ==
+                                                      true
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Select",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
+                                              color: singleItem.timingList[i]
+                                                          .isSelected ==
+                                                      true
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "-",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: singleItem.timingList[i]
-                                                      .isSelected ==
-                                                  true
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                      ).commonSymmetricPadding(horizontal: 5),
-                                      Text(
-                                        singleItem.timingList[i].endDateTime.substring(0, 5),
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: singleItem.timingList[i]
-                                                      .isSelected ==
-                                                  true
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Select",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: singleItem.timingList[i]
-                                                      .isSelected ==
-                                                  true
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                           ).commonAllSidePadding(3),
                         );
                       },
@@ -638,19 +642,18 @@ class AdditionalSlotSubmitButton extends StatelessWidget {
         // }
       },
       child: Container(
-        decoration:
-            BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              color: AppColors.accentColor,
-              boxShadow: [
-          BoxShadow(
-            // spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.accentColor,
+          boxShadow: [
+            BoxShadow(
+              // spreadRadius: 3,
+              blurRadius: 5,
+              color: Colors.grey.shade300,
+              blurStyle: BlurStyle.outer,
             ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(
@@ -1294,17 +1297,21 @@ class BookButtonModule extends StatelessWidget {
 
             if (timeSlotsCount == screenController.allResourcesList.length) {
               Fluttertoast.showToast(
-                msg: "There is no time slots available to book appointment !", toastLength: Toast.LENGTH_SHORT
-              );
+                  msg: "There is no time slots available to book appointment !",
+                  toastLength: Toast.LENGTH_SHORT);
             } else if (timeSlotsCount !=
                 screenController.allResourcesList.length) {
               if (screenController.selectedResourceTimeSlotId == 0) {
-                Fluttertoast.showToast(msg: "Please select time slot!", toastLength: Toast.LENGTH_SHORT);
+                Fluttertoast.showToast(
+                    msg: "Please select time slot!",
+                    toastLength: Toast.LENGTH_SHORT);
               } else {
                 //api calling
                 if (screenController.isServiceSlot.value) {
                   if (screenController.selectedServiceList.isEmpty) {
-                    Fluttertoast.showToast(msg: "No services available !", toastLength: Toast.LENGTH_SHORT);
+                    Fluttertoast.showToast(
+                        msg: "No services available !",
+                        toastLength: Toast.LENGTH_SHORT);
                   } else {
                     await screenController.bookSelectedSlotFunction(
                         userName: "", email: "");
@@ -1362,7 +1369,9 @@ class BookButtonModule extends StatelessWidget {
           }
         } else if (UserDetails.isUserLoggedIn == false) {
           if (screenController.selectedResourceTimeSlotId == 0) {
-            Fluttertoast.showToast(msg: "Please select time slot!", toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: "Please select time slot!",
+                toastLength: Toast.LENGTH_SHORT);
           } else {
             await _bottomSheetModule(context);
           }
@@ -1387,10 +1396,9 @@ class BookButtonModule extends StatelessWidget {
             child: Text(
               'Book',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: AppColors.whiteColor
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: AppColors.whiteColor),
             ),
           ),
         ),

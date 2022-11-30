@@ -22,6 +22,8 @@ class BankInfoScreenController extends GetxController {
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController ifscCodeController = TextEditingController();
 
+  RxBool isEditable = true.obs;
+
   // Save Bank Info
   saveBankInfoFunction() async {
     isLoading(true);
@@ -88,13 +90,24 @@ class BankInfoScreenController extends GetxController {
   }
 
 
+  void loadBankPrefsData() {
+    isLoading(true);
 
-  @override
-  void onInit() {
     financialInstituteNameController.text = UserDetails.institutionName;
     accountNameController.text = UserDetails.accountName;
     accountNumberController.text = UserDetails.accountNumber;
     ifscCodeController.text = UserDetails.ifscCode;
+    log('Abc : ${financialInstituteNameController.text}');
+
+    if(financialInstituteNameController.text != "") {
+      isEditable.value = false;
+    }
+    isLoading(false);
+  }
+
+  @override
+  void onInit() {
+    loadBankPrefsData();
     super.onInit();
   }
 }

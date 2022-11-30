@@ -51,13 +51,13 @@ class UserSearchResultsScreenController extends GetxController {
         "&CurrentLongitude=$longitude" +
         "&Distance=$distance";
 
-    log("Search Vendor List API URL : $url");
+    log("Search Vendor List API URL12121 : $url");
 
     try {
       http.Response response = await http.get(
         Uri.parse(url), /*headers: apiHeader.headers*/
       );
-      // log("Search Vendor List ${response.body}");
+      log("Search Vendor List12121 ${response.body}");
 
       GetAllSearchVendorModel getAllSearchVendorModel =
           GetAllSearchVendorModel.fromJson(json.decode(response.body));

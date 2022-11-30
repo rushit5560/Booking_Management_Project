@@ -46,7 +46,7 @@ class VendorHomeScreenController extends GetxController {
     String url = ApiUrl.vendorAppointmentList +
         "?UserId=${UserDetails.uniqueId}" +
         "&Status=&dDate=$todayDateString";
-    log("Appointment List APi ULR : $url");
+    log("Appointment List APi ULR11111111 : $url");
     log('header: ${apiHeader.headers}');
 
     try {

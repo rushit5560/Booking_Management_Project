@@ -10,7 +10,6 @@ import 'package:booking_management/common_modules/constants/user_details.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/payment_keys.dart';
 
-
 class UserCardPaymentScreenController extends GetxController {
   String bookingPrice = Get.arguments[0];
   String bookingSubId = Get.arguments[1];
@@ -77,7 +76,12 @@ class UserCardPaymentScreenController extends GetxController {
 
       if (resCode != 200) {
         var errorMsg = resBody["error"]["code"];
-        Get.snackbar("Payment Failed", "Vendor Account has $errorMsg");
+
+        if (errorMsg.toString().contains("parameter_invalid")) {
+          Get.snackbar(
+              "Payment Failed", "Vendor bank account details is not valid.");
+        }
+
         isLoading(false);
       } else {
         isLoading(true);
@@ -92,12 +96,11 @@ class UserCardPaymentScreenController extends GetxController {
     }
   }
 
-  Future<void> initPaymentSheet(
-      {
-        context,
-        userPayingAmount,
-        adminFeesAmount,
-      }) async {
+  Future<void> initPaymentSheet({
+    context,
+    userPayingAmount,
+    adminFeesAmount,
+  }) async {
     try {
       isLoading(true);
       log(bookingPrice);
@@ -161,7 +164,6 @@ class UserCardPaymentScreenController extends GetxController {
           colorText: Colors.black,
         );
         log("Make Payment Error ::: ${e.error.localizedMessage}");
-
       } else {
         Get.snackbar(
           "Payment Failure",
@@ -177,9 +179,6 @@ class UserCardPaymentScreenController extends GetxController {
       isProceedToPayButton(true);
     }
   }
-
-
-
 
   /*Future<Map<String, dynamic>> createStripePaymentSession({
     required String transactionPriceId,

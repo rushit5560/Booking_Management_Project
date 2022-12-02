@@ -82,11 +82,11 @@ class IsAdditionalCriteriaModule extends StatelessWidget {
               vendorUpdateResController.updateRequireCriteria.value =
                   !vendorUpdateResController.updateRequireCriteria.value;
 
-              if (vendorUpdateResController.updateRequireCriteria.value ==
-                  false) {
-                vendorUpdateResController.updateResourceCapacityFieldController
-                    .clear();
-              }
+              // if (vendorUpdateResController.updateRequireCriteria.value ==
+              //     false) {
+              //   vendorUpdateResController.updateResourceCapacityFieldController
+              //       .clear();
+              // }
             },
           ),
         ),

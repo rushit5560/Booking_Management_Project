@@ -43,7 +43,7 @@ class VendorUpdateResourcesScreen extends StatelessWidget {
               ],
             ),
           ) ??
-          false; //if showDialouge had returned null, then return false
+          false; //if showDialogue had returned null, then return false
     }
 
     return WillPopScope(

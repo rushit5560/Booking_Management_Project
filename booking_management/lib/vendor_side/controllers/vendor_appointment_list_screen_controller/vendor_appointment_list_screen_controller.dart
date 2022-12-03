@@ -101,6 +101,8 @@ class VendorAppointmentListScreenController extends GetxController {
         // log("processingAppointmentList : ${processingAppointmentList.length}");
         // log("scheduledAppointmentList : ${scheduledAppointmentList.length}");
 
+        Get.back();
+
       } else {
         Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getAppointmentListFunction Else Else");

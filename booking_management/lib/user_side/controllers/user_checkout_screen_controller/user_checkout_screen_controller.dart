@@ -176,6 +176,7 @@ class UserCheckoutScreenController extends GetxController {
         endBookingTime = endTime1;
         //
         bookingPrice.value = checkoutSummaryModel.workerList.price;
+        log('bookingPrice.value1212 : ${bookingPrice.value}');
         bookingQty = checkoutSummaryModel.workerList.quantity;
 
         // bookingTotalAmount = bookingPrice * bookingQty;

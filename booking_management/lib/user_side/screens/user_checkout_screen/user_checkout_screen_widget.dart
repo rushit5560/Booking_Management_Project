@@ -651,7 +651,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
         screenController.selectedValuesPassList.clear();
         screenController.isTextFieldFilled.value = true;
         if (screenController.checkOutFormKey.currentState!.validate()) {
-          if (screenController.isPriceDisplay) {
+          if (screenController.isPriceDisplay && screenController.bookingPrice.value != 0.0) {
 
             for(int i =0; i < screenController.attendeeNameControllerList.length; i++) {
               if(screenController.attendeeNameControllerList[i].text.trim().isEmpty) {
@@ -723,10 +723,8 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
               );
             }
 
-
-
-
-          } else {
+          }
+          else {
             await screenController.checkOutSubmitFunction();
           }
           // await screenController.checkOutSubmitFunction();

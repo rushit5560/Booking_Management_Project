@@ -84,7 +84,8 @@ class VendorHomeScreen extends StatelessWidget {
                                                   padding:
                                                       const EdgeInsets.all(12),
                                                   child: Text(
-                                                    vendorHomeScreenController.bookingAvailabilityString,
+                                                    vendorHomeScreenController
+                                                        .bookingAvailabilityString,
                                                     style: TextStyle(
                                                       color:
                                                           AppColors.whiteColor,
@@ -96,7 +97,8 @@ class VendorHomeScreen extends StatelessWidget {
                                                 ),
                                               )
                                             : Container(),
-                                        vendorHomeScreenController.isBookingAvailability.value
+                                        vendorHomeScreenController
+                                                .isBookingAvailability.value
                                             ? const SizedBox(height: 20)
                                             : Container(),
                                         Row(

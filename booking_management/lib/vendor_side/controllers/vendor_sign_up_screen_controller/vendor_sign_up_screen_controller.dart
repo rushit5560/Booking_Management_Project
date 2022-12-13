@@ -117,7 +117,7 @@ class VendorSignUpScreenController extends GetxController {
         "PasswordHash" : password,
         "PhoneNo" : mobile,
         // "Gender" : "Male",
-        // "About" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+        // "About" : " is simply dummy text of the printing and typesetting industry",
         // "FaxNumber" : "20",
         // "IsActive": "true",
         //"DateOfBirth" : dobFieldController.text.trim()
@@ -142,7 +142,7 @@ class VendorSignUpScreenController extends GetxController {
       // request.fields['PasswordHash'] = "Admin@123";
       // request.fields['PhoneNo'] = "7896541320";
       // request.fields['Gender'] = "Male";
-      // request.fields['About'] = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+      // request.fields['About'] = " is simply dummy text of the printing and typesetting industry.";
       // request.fields['LastVisit'] = "2001-12-01";
       // request.fields['FaxNumber'] = "20";
       // request.fields['DateOfBirth'] = "2001-12-01";

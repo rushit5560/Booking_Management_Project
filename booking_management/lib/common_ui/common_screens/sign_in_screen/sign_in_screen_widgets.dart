@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_ui/common_screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:booking_management/user_side/screens/index_screen/index_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import '../../../common_modules/common_widgets.dart';
 import '../../../common_modules/field_decorations.dart';
 import '../../../common_modules/field_validation.dart';
 import '../../../user_side/screens/user_sign_up_screen/user_sign_up_screen.dart';
@@ -28,6 +32,7 @@ class EmailFieldModule extends StatelessWidget {
 class PasswordFieldModule extends StatelessWidget {
   PasswordFieldModule({Key? key}) : super(key: key);
   final screenController = Get.find<SignInScreenController>();
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -71,6 +76,7 @@ class SignInSkipButton extends StatelessWidget {
 class SignInButtonModule extends StatelessWidget {
   SignInButtonModule({Key? key}) : super(key: key);
   final screenController = Get.find<SignInScreenController>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -206,8 +212,69 @@ class SignInSocialMediaLoginButtonsModule extends StatelessWidget {
             ),
           ),
         ),
+        screenController.isIosPlatform.value
+            ? const SizedBox(width: 60)
+            : const SizedBox(),
+        screenController.isIosPlatform.value
+            ? GestureDetector(
+                onTap: () async {
+                  // await screenController.signInWithAppleFunction();
+                  try {
+                    final credential =
+                        await SignInWithApple.getAppleIDCredential(
+                      scopes: [
+                        AppleIDAuthorizationScopes.email,
+                        AppleIDAuthorizationScopes.fullName,
+                      ],
+                    );
+
+                    log("apple login email are :: ${credential.email}");
+                    log("apple login givenName are :: ${credential.givenName}");
+                    // log("apple login userIdentifier are :: ${credential.userIdentifier}");
+                    // log("apple login familyName are :: ${credential.familyName}");
+                    // log("apple login identityToken are :: ${credential.identityToken}");
+                    // log("apple login state are :: ${credential.state}");
+
+                    if (credential.email!.isNotEmpty &&
+                        credential.givenName!.isNotEmpty) {
+                      await screenController.authenticationFunction(
+                        userName:
+                            credential.givenName! + credential.familyName!,
+                        email: credential.email!,
+                        socialProv: "apple",
+                      );
+                    } else {
+                      // CommonWidgets.yesOrNoDialog(
+                      //   context: context,
+                      //   body:
+                      //       "Unfortunately apple sign in not working. try another login method.",
+                      //   title: "Apple sign in failed",
+                      //   onNoPressed: () {
+                      //     Get.back();
+                      //   },
+                      //   onYesPressed: () {
+                      //     Get.back();
+                      //   },
+                      // );
+                    }
+                  } catch (e) {
+                    log("error occured while apple signin :: $e");
+                    rethrow;
+                  }
+                },
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(AppImages.appleLoginImg),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }
 }
-

@@ -64,7 +64,8 @@ class ApiUrl {
   static const addFavouriteVendorApi = apiMainPath + "API/Favourites";
   static const getFavVendorApi = apiMainPath + "API/GetFavourites";
 
-  static const addFavouriteVendorAtBookingTimeApi = apiMainPath + "API/CheckoutFavourites";
+  static const addFavouriteVendorAtBookingTimeApi =
+      apiMainPath + "API/CheckoutFavourites";
 
   /// Cst - Vendor Details
   static const vendorDetailsApi = apiMainPath + "API/GetVendorDetails";
@@ -195,6 +196,9 @@ class ApiUrl {
   static const vendorBusinessTypeApi =
       apiMainPath + "API/AvailableCategorieslist";
   static const getUserDetailsByIdApi = apiMainPath + "API/GetUserDetailById";
+  static const deActivateByIdApi = apiMainPath + "API/DeActivate";
+  static const deActivateCustomerByIdApi =
+      apiMainPath + "API/DeActivateCustomer";
 
   static const vendorGetAllResourcesApi =
       apiMainPath + "API/ResourceIndex"; // Get ALL

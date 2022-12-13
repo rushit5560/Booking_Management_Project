@@ -57,24 +57,24 @@ class VendorChatList extends StatelessWidget {
                               mainAxisAlignment:
                               MainAxisAlignment.spaceEvenly,
                               children: const [
-                                Text(
-                                  'Dr. Lorem Ipsum',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                                // Text(
+                                //   'Dr.',
+                                //   maxLines: 1,
+                                //   overflow: TextOverflow.ellipsis,
+                                //   style: TextStyle(
+                                //     fontSize: 16,
+                                //     fontWeight: FontWeight.bold,
+                                //   ),
+                                // ),
                                 SizedBox(height: 5),
-                                Text(
-                                  'Lorem Ipsum dummy Text for printing',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
+                                // Text(
+                                //   ' dummy Text for printing',
+                                //   maxLines: 1,
+                                //   overflow: TextOverflow.ellipsis,
+                                //   style: TextStyle(
+                                //     fontSize: 11,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

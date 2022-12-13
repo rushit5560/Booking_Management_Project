@@ -127,9 +127,9 @@ class VendorAddResourcesScreenController extends GetxController {
       }
 
       // request.fields['Name'] = "Shaving";
-      // request.fields['ShortDescription'] = "Lorem Ipsum is simply dummy text of the printing.";
+      // request.fields['ShortDescription'] = " is simply dummy text of the printing.";
       // request.fields['Price'] = "123.50";
-      // request.fields['LongDescription'] = "Lorem Ipsum is simply dummy text of the printing.";
+      // request.fields['LongDescription'] = " is simply dummy text of the printing.";
       // request.fields['TimeDuration'] = "30";
       // request.fields['CreatedBy'] = UserDetails.uniqueId;
       // request.fields['VendorId'] = "${UserDetails.tableWiseId}";

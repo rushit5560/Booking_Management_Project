@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common_modules/constants/user_details.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io' show Platform;
 
 class SignInScreenController extends GetxController {
   SignInRoute signInRoute = Get.arguments ?? SignInRoute.none;
@@ -28,6 +29,8 @@ class SignInScreenController extends GetxController {
   // RxInt isStatus = 0.obs;
   RxBool isPasswordVisible = true.obs;
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+
+  RxBool isIosPlatform = false.obs;
 
   /// Fb Login
   FacebookUserProfile? profile;
@@ -63,15 +66,23 @@ class SignInScreenController extends GetxController {
             SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(
             msg:
-                "Your account is in-active. Please check your email to activate.", toastLength: Toast.LENGTH_SHORT);
+                "Your account is in-active. Please check your email to activate.",
+            toastLength: Toast.LENGTH_SHORT);
       } else if (response.statusCode.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel =
             SignInVendorErrorModel.fromJson(json.decode(response.body));
-        Fluttertoast.showToast(msg: signInVendorErrorModel.message, toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: signInVendorErrorModel.message,
+            toastLength: Toast.LENGTH_SHORT);
+      } else if (response.body
+          .toString()
+          .contains("Your account is DeActivate")) {
+        Fluttertoast.showToast(
+            msg: "Your account is DeActivated.",
+            toastLength: Toast.LENGTH_SHORT);
       } else if (body["statusCode"].toString().contains("417")) {
         Get.snackbar("Login Failed", body["errorMessage"]);
-      }
-      else {
+      } else {
         SignInModel signInModel =
             SignInModel.fromJson(json.decode(response.body));
 
@@ -80,8 +91,7 @@ class SignInScreenController extends GetxController {
         log("status: $isSuccessStatus");
 
         if (isSuccessStatus.value) {
-          if (signInModel.message.toString().contains("not Verified"))
-          {
+          if (signInModel.message.toString().contains("not Verified")) {
             Get.snackbar(signInModel.message, '');
           }
           /*else if (signInModel.message.contains("Invalid login attempt")) {
@@ -90,8 +100,7 @@ class SignInScreenController extends GetxController {
 
           else if (signInModel.role[0] == "Customer") {
             log('customer side');
-            Get.snackbar(
-                "${signInModel.data.userName} login successfully", '');
+            Get.snackbar("${signInModel.data.userName} login successfully", '');
 
             // String dob = signInModel.customer.dateOfBirth;
             // String finalDob = dob.substring(0, dob.length - 9);
@@ -145,8 +154,7 @@ class SignInScreenController extends GetxController {
           } else if (signInModel.role[0] == "Vendor") {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
-            Get.snackbar(
-                "${signInModel.data.fullName} login successfully", '');
+            Get.snackbar("${signInModel.data.fullName} login successfully", '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
@@ -272,7 +280,8 @@ class SignInScreenController extends GetxController {
       }
     } catch (e) {
       log('SignIn Error : $e');
-      Fluttertoast.showToast(msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
       rethrow;
     } finally {
       isLoading(false);
@@ -314,6 +323,7 @@ class SignInScreenController extends GetxController {
         await authenticationFunction(
           userName: result.user!.displayName!,
           email: result.user!.email!,
+          socialProv: "google",
         );
         // Get.offAll(() => IndexScreen());
 
@@ -352,11 +362,11 @@ class SignInScreenController extends GetxController {
       imageUrl = await plugin1.getProfileImageUrl(width: 100);
       if (profile != null) {
         if (profile!.userId.isNotEmpty) {
-
           // Entry in Database
           await authenticationFunction(
             userName: profile!.firstName!,
             email: email!,
+            socialProv: "facebook",
           );
 
           // prefs.setString('userId', profile!.userId);
@@ -374,16 +384,20 @@ class SignInScreenController extends GetxController {
     }
   }
 
-
-  Future<void> authenticationFunction({required String userName, required String email}) async {
-
+  Future<void> authenticationFunction({
+    required String userName,
+    required String email,
+    required String socialProv,
+  }) async {
     String finalUserName = userName.replaceAll(" ", "");
 
-    String url = ApiUrl.authenticationApi + "?userName=${finalUserName.trim()}" +
-    "&email=$email" + "&password=Admin@123";
+    String url = ApiUrl.authenticationApi +
+        "?userName=${finalUserName.trim()}" +
+        "&email=$email" +
+        "&password=Admin@123" +
+        "&socialProvider=$socialProv";
     log('authenticationFunction Api Url $url');
     try {
-
       http.Response response = await http.post(Uri.parse(url));
       log('Response status code : ${response.statusCode}');
       log('Response : ${response.body}');
@@ -391,28 +405,29 @@ class SignInScreenController extends GetxController {
       var body = jsonDecode(response.body);
       if (response.body.toString().contains("Please confirm your email")) {
         SignInVendorErrorModel signInVendorErrorModel =
-        SignInVendorErrorModel.fromJson(json.decode(response.body));
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
         Fluttertoast.showToast(
             msg:
-            "Your account is in-active. Please check your email to activate.", toastLength: Toast.LENGTH_SHORT);
+                "Your account is in-active. Please check your email to activate.",
+            toastLength: Toast.LENGTH_SHORT);
       } else if (response.statusCode.toString().contains("417")) {
         SignInVendorErrorModel signInVendorErrorModel =
-        SignInVendorErrorModel.fromJson(json.decode(response.body));
-        Fluttertoast.showToast(msg: signInVendorErrorModel.message, toastLength: Toast.LENGTH_SHORT);
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(
+            msg: signInVendorErrorModel.message,
+            toastLength: Toast.LENGTH_SHORT);
       } else if (body["statusCode"].toString().contains("417")) {
         Get.snackbar("Login Failed", body["errorMessage"]);
-      }
-      else {
+      } else {
         SignInModel signInModel =
-        SignInModel.fromJson(json.decode(response.body));
+            SignInModel.fromJson(json.decode(response.body));
 
         isSuccessStatus = signInModel.success.obs;
 
         log("status: $isSuccessStatus");
 
         if (isSuccessStatus.value) {
-          if (signInModel.message.toString().contains("not Verified"))
-          {
+          if (signInModel.message.toString().contains("not Verified")) {
             Get.snackbar(signInModel.message, '');
           }
           /*else if (signInModel.message.contains("Invalid login attempt")) {
@@ -421,8 +436,7 @@ class SignInScreenController extends GetxController {
 
           else if (signInModel.role[0] == "Customer") {
             log('customer side');
-            Get.snackbar(
-                "${signInModel.data.userName} login successfully", '');
+            Get.snackbar("${signInModel.data.userName} login successfully", '');
 
             // String dob = signInModel.customer.dateOfBirth;
             // String finalDob = dob.substring(0, dob.length - 9);
@@ -473,8 +487,7 @@ class SignInScreenController extends GetxController {
           } else if (signInModel.role[0] == "Vendor") {
             log('Vendor side');
             log('Api token: ${signInModel.data.apiToken}');
-            Get.snackbar(
-                "${signInModel.data.fullName} login successfully", '');
+            Get.snackbar("${signInModel.data.fullName} login successfully", '');
 
             var isSub = true;
             if (signInModel.message.contains("Subscription pending")) {
@@ -526,7 +539,7 @@ class SignInScreenController extends GetxController {
 
               log("navigate to subscription plan screen");
               Get.offAll(
-                    () => VendorSubscriptionPlanScreen(),
+                () => VendorSubscriptionPlanScreen(),
                 arguments: SubscriptionOption.direct,
               );
             } else if (signInModel.message
@@ -581,7 +594,7 @@ class SignInScreenController extends GetxController {
               // if (isSub == false) {
               log("navigate to subscription plan screen");
               Get.offAll(
-                    () => VendorIndexScreen(),
+                () => VendorIndexScreen(),
                 arguments: SubscriptionOption.direct,
               );
               // } else {
@@ -600,8 +613,21 @@ class SignInScreenController extends GetxController {
       }
     } catch (e) {
       log('SignIn Error : $e');
-      Fluttertoast.showToast(msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
       rethrow;
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    if (Platform.isAndroid) {
+      // Android-specific code
+    } else if (Platform.isIOS) {
+      // iOS-specific code
+      isIosPlatform.value = true;
     }
   }
 }

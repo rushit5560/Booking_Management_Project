@@ -45,7 +45,7 @@ class VendorBookingHistoryList extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Lorem Ipsum", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
+                            // Text("", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
                             SizedBox(height: 7,),
                             Row(
                               children: [

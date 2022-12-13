@@ -111,7 +111,7 @@ class UserFavouriteListScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold, fontSize: 14),
                     ),
                     /*Text(
-                  'Lorem Ipsum',
+                  '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

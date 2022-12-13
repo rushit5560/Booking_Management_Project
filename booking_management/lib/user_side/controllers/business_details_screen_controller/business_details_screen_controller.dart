@@ -436,7 +436,7 @@ class BusinessDetailsScreenController extends GetxController {
   //     Map data = {
   //       "VendorId": "1",
   //       "CustomerId": "2",
-  //       "Description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+  //       "Description": " is simply dummy text of the printing and typesetting industry",
   //       "Ratting": "4",
   //       "Id" : "8"
   //     };

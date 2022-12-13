@@ -10,6 +10,7 @@ import 'package:booking_management/vendor_side/controllers/vendor_profile_screen
 import 'package:booking_management/vendor_side/model/vendor_profile_screen_model/timeslot_duration_model.dart';
 import 'package:booking_management/vendor_side/screens/vendor_business_document_screen/vendor_business_document_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -198,6 +199,11 @@ class _VendorProfileDetailsModuleState
               uploadVerifyDocButtonModule(),
             ],
           ),
+          const SizedBox(height: 30),
+          deactivateAccountButtonModule(),
+
+          const SizedBox(height: 30),
+          deleteAccountButtonModule(),
           /*Row(
             children: [
               Expanded(
@@ -1209,44 +1215,53 @@ class _VendorProfileDetailsModuleState
                 ),
                 Obx(
                   () => screenController.isLoading.value
-    ? Container()
-                  : Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    width: Get.width,
-                    //gives the width of the dropdown button
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      //color: Colors.grey.shade200,
-                    ),
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        canvasColor: Colors.grey.shade100,
-                        buttonTheme: ButtonTheme.of(context).copyWith(
-                          alignedDropdown: true,
-                        ),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<TimeSlotDurationModel>(
-                          value: screenController.timeSlotDurationModel,
-                          items: screenController.timeSlotDurationList.map<DropdownMenuItem<TimeSlotDurationModel>>((TimeSlotDurationModel value) {
-                            return DropdownMenuItem<TimeSlotDurationModel>(
-                              value: value,
-                              child: Text(
-                                value.name,
-                                style: const TextStyle(color: Colors.black),
+                      ? Container()
+                      : Container(
+                          padding: const EdgeInsets.only(left: 10),
+                          width: Get.width,
+                          //gives the width of the dropdown button
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            //color: Colors.grey.shade200,
+                          ),
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              canvasColor: Colors.grey.shade100,
+                              buttonTheme: ButtonTheme.of(context).copyWith(
+                                alignedDropdown: true,
                               ),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            screenController.isLoading(true);
-                            screenController.timeSlotDurationModel = value!;
-                            screenController.slotDurationValue.value = screenController.timeSlotDurationModel!.value;
-                            screenController.isLoading(false);
-                          },
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<TimeSlotDurationModel>(
+                                value: screenController.timeSlotDurationModel,
+                                items: screenController.timeSlotDurationList
+                                    .map<
+                                            DropdownMenuItem<
+                                                TimeSlotDurationModel>>(
+                                        (TimeSlotDurationModel value) {
+                                  return DropdownMenuItem<
+                                      TimeSlotDurationModel>(
+                                    value: value,
+                                    child: Text(
+                                      value.name,
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  screenController.isLoading(true);
+                                  screenController.timeSlotDurationModel =
+                                      value!;
+                                  screenController.slotDurationValue.value =
+                                      screenController
+                                          .timeSlotDurationModel!.value;
+                                  screenController.isLoading(false);
+                                },
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ))
@@ -1627,21 +1642,169 @@ class _VendorProfileDetailsModuleState
         }
       },
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10),
-                color: AppColors.accentColor,
-                boxShadow: [
-          BoxShadow(
-            // spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
             'SAVE',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: AppColors.whiteColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// deactivate account Button
+  Widget deactivateAccountButtonModule() {
+    return GestureDetector(
+      onTap: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              title: Text(
+                "Are you sure you want to Deactivate your account?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              content: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text:
+                      "After deactivate you account if you want to activate your account please contact on ",
+                  style: TextStyle(
+                    color: AppColors.colorGreyIconDark,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "info@setdaytime.com.au",
+                      style: TextStyle(
+                        color: AppColors.colorGreyIconDark,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                    screenController.deactivateUserAccountById();
+                  },
+                  child: Text(
+                    'Yes, deactivate it!',
+                    style: TextStyle(
+                      color: AppColors.redColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text(
+                    'No, cancel!',
+                    style: TextStyle(
+                      color: AppColors.colorGreyIconDark,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.redColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: AppColors.redColor,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'DeActivate Account',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: AppColors.whiteColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// delete account Button
+  Widget deleteAccountButtonModule() {
+    return GestureDetector(
+      onTap: () {
+        String msg = "Please email info@setdaytime.com with brief information "
+            "for Account deletion request.For App review put this info: We "
+            "have implemented Flag in database for Support staff upon “Account "
+            "Deactivate” and “Account Delete” click. Reason why we have "
+            "intervention for manual check before automated process from user "
+            "is run is because nature of our business, as in past we have "
+            "negative feedback due to future bookings removed due to deletion"
+            " and deactivation so to avoid any payment or bookings related "
+            "issues it is vital for our clients and our business reputation "
+            "to not give direct control of deletion and deactivation to our "
+            "users but to run same in automated cycle in controlled environment.";
+        Fluttertoast.cancel();
+        Fluttertoast.showToast(msg: msg,toastLength: Toast.LENGTH_LONG);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.redColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: AppColors.redColor,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Delete Account',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
@@ -2263,17 +2426,17 @@ class MapSaveButtonModule extends StatelessWidget {
         await screenController.saveVendorLatLongFunction();
       },
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10),
-                color: AppColors.accentColor,
-                boxShadow: [
-          BoxShadow(
-            // spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(

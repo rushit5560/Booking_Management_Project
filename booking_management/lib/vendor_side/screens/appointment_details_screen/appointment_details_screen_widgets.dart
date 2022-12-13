@@ -32,7 +32,7 @@ class UserImageModule extends StatelessWidget {
   }
 }
 
-class UserDetailsModule extends StatelessWidget {
+/*class UserDetailsModule extends StatelessWidget {
   UserDetailsModule({Key? key}) : super(key: key);
   final screenController = Get.find<AppointmentDetailsScreenController>();
 
@@ -42,7 +42,7 @@ class UserDetailsModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
-          'Lorem Ipsum',
+          '',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -98,7 +98,7 @@ class UserDetailsModule extends StatelessWidget {
             Expanded(
               flex: 75,
               child: Text(
-                'Lorem Ipsum has been the industry',
+                ' has been the industry',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -170,7 +170,7 @@ class UserDetailsModule extends StatelessWidget {
       ],
     ).commonSymmetricPadding(horizontal: 30, vertical: 20);
   }
-}
+}*/
 
 /// Confirm Button
 class ConfirmAppointmentButtonModule extends StatelessWidget {

@@ -1089,7 +1089,7 @@ class FavouriteVendorsModule extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
                       /*Text(
-                    'Lorem Ipsum',
+                    '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

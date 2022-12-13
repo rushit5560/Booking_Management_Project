@@ -210,7 +210,7 @@ class _UserChatListScreenState extends State<UserChatListScreen> {
                             ),
                             // const SizedBox(height: 5),
                             // Text(
-                            //   'Lorem Ipsum dummy Text for printing',
+                            //   ' dummy Text for printing',
                             //   maxLines: 1,
                             //   overflow: TextOverflow.ellipsis,
                             //   style: TextStyle(fontSize: 11),

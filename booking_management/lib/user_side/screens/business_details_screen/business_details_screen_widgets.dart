@@ -274,7 +274,7 @@ class OverviewModule extends StatelessWidget {
     return Text(
       screenController.vendorDetailsData!.description!.isNotEmpty
           ? screenController.vendorDetailsData!.description!
-          : "Lorem Ipsum",
+          : "",
       style: const TextStyle(fontSize: 13, color: Colors.black),
     );
   }
@@ -614,7 +614,7 @@ class OverviewModule extends StatelessWidget {
     );
   }
 
-  Widget resourcesList() {
+  /*Widget resourcesList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -664,7 +664,7 @@ class OverviewModule extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
                                   Text(
-                                    "Lorem Ipsum",
+                                    "",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
@@ -673,7 +673,7 @@ class OverviewModule extends StatelessWidget {
                                     height: 7,
                                   ),
                                   Text(
-                                    "Lorem Ipsum is simply dummy text of the following",
+                                    " is simply dummy text of the following",
                                     maxLines: 1,
                                     style: TextStyle(
                                       fontSize: 11,
@@ -726,7 +726,7 @@ class OverviewModule extends StatelessWidget {
             })
       ],
     );
-  }
+  }*/
 
   Widget businessHoursModule() {
     return Column(

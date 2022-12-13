@@ -14,8 +14,8 @@ class ScanAppointmentDetailsScreen extends StatelessWidget {
   final scanAppointmentDetailsScreenController =
       Get.put(ScanAppointmentDetailsScreenController());
 
-  final vendorAppointmentListScreenController =
-      Get.put(VendorAppointmentListScreenController());
+  // final vendorAppointmentListScreenController =
+  //     Get.put(VendorAppointmentListScreenController());
 
   @override
   Widget build(BuildContext context) {

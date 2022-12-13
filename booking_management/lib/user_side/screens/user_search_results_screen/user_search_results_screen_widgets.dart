@@ -641,7 +641,7 @@ class BusinessListModule extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Lorem Ipsum", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+                                    Text("", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
                                     Row(
                                       children: [
                                         Text("4.5", style: TextStyle(fontSize: 12),),
@@ -667,7 +667,7 @@ class BusinessListModule extends StatelessWidget {
 
                                       ],
                                     ),
-                                    Text("Lorem Ipsum is simply dummy text of the printing", maxLines: 1),
+                                    Text(" is simply dummy text of the printing", maxLines: 1),
 
                                     Text("Location - 1156, Lorem Soc. simply dummy text of the printing", maxLines: 1,
                                     style: TextStyle(fontWeight: FontWeight.w500),),

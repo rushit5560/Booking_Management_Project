@@ -18,17 +18,17 @@ class VendorConversationScreen extends StatelessWidget {
         child: Column(
           children: [
             const CommonAppBarModule(title: 'Dr. John Doe', appBarOption: AppBarOption.userConversationScreen),
-            Expanded(
-              child: ListView.builder(
-                itemCount: vendorConversationScreenController.userChatList.length,
-                itemBuilder: (context, i) {
-                  return VendorSingleMessageBubble(
-                    isSendByMe: vendorConversationScreenController.userChatList[i].isSendByMe,
-                    message: vendorConversationScreenController.userChatList[i].message,
-                  );
-                },
-              ).commonAllSidePadding(20),
-            ),
+            // Expanded(
+              // child: ListView.builder(
+              //   itemCount: vendorConversationScreenController.userChatList.length,
+              //   itemBuilder: (context, i) {
+              //     return VendorSingleMessageBubble(
+              //       isSendByMe: vendorConversationScreenController.userChatList[i].isSendByMe,
+              //       message: vendorConversationScreenController.userChatList[i].message,
+              //     );
+              //   },
+              // ).commonAllSidePadding(20),
+            // ),
             const VendorMessageWriteTextFieldModule(),
           ],
         ),

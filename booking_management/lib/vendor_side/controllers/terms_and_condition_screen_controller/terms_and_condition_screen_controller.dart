@@ -18,7 +18,9 @@ class TermsAndConditionScreenController extends GetxController{
 
   getTermsAndConditionFunction()async{
     isLoading(true);
-    String url = ApiUrl.getPrivacyPolicyApi + "?pageName=TermsConditions";
+    // String url = ApiUrl.getPrivacyPolicyApi + "?pageName=TermsConditions";
+    // String url = "https://setdaytime.com.au/TermsConditions";
+    String url = "https://setdaytime.com.au/API/CMS?pageName=TermsConditions";
     log("Terms And Condition API URL : $url");
     //log('apiHeader.headers: ${apiHeader.headers}');
 

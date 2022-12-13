@@ -8,10 +8,12 @@ import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common_modules/constants/api_header.dart';
+import '../../../common_modules/sharedpreference_data/sharedpreference_data.dart';
+import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import '../../../common_ui/model/deactivate_account_model/deactivate_account_model.dart';
+import '../../../common_ui/model/sign_out_model/sign_out_model.dart';
 import '../../model/user_profile_screen_model/update_user_profile_model.dart';
 import '../../model/user_profile_screen_model/user_profile_details_model.dart';
-
-
 
 class UserProfileScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -24,6 +26,8 @@ class UserProfileScreenController extends GetxController {
   // RxString selectedDate = UserDetails.dob.obs;
   DateTime selectedDate = DateTime.now();
   RxString gender = 'Male'.obs;
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   ApiHeader apiHeader = ApiHeader();
 
@@ -42,7 +46,6 @@ class UserProfileScreenController extends GetxController {
 
     String url = ApiUrl.userProfileApi;
     log("Update User Profile url: $url");
-
 
     log('UserDetails.userid: ${UserDetails.uniqueId}');
 
@@ -99,7 +102,9 @@ class UserProfileScreenController extends GetxController {
           isSuccessStatus = updateUserProfileModel.success.obs;
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: "User update successfully.", toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: "User update successfully.",
+                toastLength: Toast.LENGTH_SHORT);
             log(updateUserProfileModel.dataVendor.userName);
             log(updateUserProfileModel.dataVendor.email);
             log(updateUserProfileModel.dataVendor.phoneNo);
@@ -150,7 +155,9 @@ class UserProfileScreenController extends GetxController {
           isSuccessStatus = updateUserProfileModel.success.obs;
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: "User update successfully.", toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: "User update successfully.",
+                toastLength: Toast.LENGTH_SHORT);
             log(updateUserProfileModel.dataVendor.userName);
             log(updateUserProfileModel.dataVendor.email);
             log(updateUserProfileModel.dataVendor.phoneNo);
@@ -213,6 +220,79 @@ class UserProfileScreenController extends GetxController {
     } catch (e) {
       log('Get All User Details Error ::: $e');
       rethrow;
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// deactivate user acvount api call
+
+  deactivateUserAccountById() async {
+    isLoading(true);
+    String url =
+        ApiUrl.deActivateCustomerByIdApi + "?userId=${UserDetails.uniqueId}";
+    log('Url : $url');
+    log('header: ${apiHeader.headers}');
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+      log('deactivateUserAccountById Response : ${response.body}');
+
+      DeactivateAccountModel deactivateAccountModel =
+          DeactivateAccountModel.fromJson(json.decode(response.body));
+      isStatus = deactivateAccountModel.statusCode.obs;
+      log('deactivateUserAccountById message  :: ${deactivateAccountModel.message}');
+      log('getUserDetailsByIdModelStatus : $isStatus');
+
+      if (isStatus.value == 200) {
+        // String responseMsg = deactivateAccountModel.message;
+        String responseMsg = "Account deactivate is successfully enabled "
+            "and account will be deactivated by our support team in 5 "
+            "business working days. ";
+
+        Fluttertoast.cancel();
+        Fluttertoast.showToast(
+          msg: responseMsg,
+          toastLength: Toast.LENGTH_SHORT,
+        );
+
+        await signOutFunction();
+      } else {
+        log('deactivateUserAccountById Else Else');
+      }
+    } catch (e) {
+      log('deactivateUserAccountById Error ::: $e');
+      rethrow;
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> signOutFunction() async {
+    isLoading(true);
+    String url = ApiUrl.logOutApi + "?id=${UserDetails.uniqueId}";
+    log("SignOut Api Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      log("Response : ${response.body}");
+
+      SignOutModel signOutModel =
+          SignOutModel.fromJson(json.decode(response.body));
+      isSuccessStatus = signOutModel.success.obs;
+
+      if (isSuccessStatus.value) {
+        await sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+        Get.offAll(() => SignInScreen(), transition: Transition.zoom);
+        Get.snackbar('You Have Successfully Logout', '');
+      } else {
+        log("signOutFunction Else Else");
+      }
+    } catch (e) {
+      log("SignOutFunction Error ::: $e");
     } finally {
       isLoading(false);
     }

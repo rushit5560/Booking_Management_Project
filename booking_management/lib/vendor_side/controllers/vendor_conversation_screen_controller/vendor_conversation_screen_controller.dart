@@ -5,15 +5,15 @@ class VendorConversationScreenController extends GetxController {
 
   final TextEditingController messageFieldController = TextEditingController();
 
-  List<VendorChatMessageModel> userChatList = [
-    VendorChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type "),
-    VendorChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    VendorChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
-    VendorChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever"),
-    VendorChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    VendorChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    VendorChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
-  ];
+  // List<VendorChatMessageModel> userChatList = [
+  //   VendorChatMessageModel(isSendByMe: false, message: "Hi  dummy text ever since the 150s, when an unknown printer to ok a gallery of type "),
+  //   VendorChatMessageModel(isSendByMe: false, message: "Hi  dummy text ever"),
+  //   VendorChatMessageModel(isSendByMe: true, message: "Hi  dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
+  //   VendorChatMessageModel(isSendByMe: true, message: "Hi  dummy text ever"),
+  //   VendorChatMessageModel(isSendByMe: false, message: "Hi  dummy text ever"),
+  //   VendorChatMessageModel(isSendByMe: false, message: "Hi  dummy text ever"),
+  //   VendorChatMessageModel(isSendByMe: true, message: "Hi  dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
+  // ];
 
 }
 

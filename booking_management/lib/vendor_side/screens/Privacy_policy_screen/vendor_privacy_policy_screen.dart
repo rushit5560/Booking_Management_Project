@@ -25,7 +25,7 @@ class VendorPrivacyPolicyScreen extends StatelessWidget {
 
               SizedBox(height: 10),
 
-              PrivacyPolicyWidget()
+              Expanded(child: SingleChildScrollView(child: PrivacyPolicyWidget()))
             ],
           ),
         ),

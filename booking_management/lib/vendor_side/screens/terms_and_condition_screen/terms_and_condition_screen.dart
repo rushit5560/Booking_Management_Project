@@ -25,7 +25,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                       appBarOption: AppBarOption.singleBackButtonOption,
                     ),
                     const SizedBox(height: 10),
-                    TermsAndConditionWidget()
+                    Expanded(child: SingleChildScrollView(child: TermsAndConditionWidget()))
                   ],
                 ),
         ),

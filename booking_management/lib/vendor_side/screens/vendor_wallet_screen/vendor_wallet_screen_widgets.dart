@@ -151,15 +151,15 @@ class TransactionsListModule extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    Text(
-                      'Paid to Lorem Ipsum',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
+                    // Text(
+                    //   'Paid to ',
+                    //   maxLines: 1,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 14,
+                    //   ),
+                    // ),
                     SizedBox(height: 5),
                     Text(
                       '12 March 2022 at 12:00 PM',

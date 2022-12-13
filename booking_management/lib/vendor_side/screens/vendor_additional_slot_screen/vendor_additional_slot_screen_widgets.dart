@@ -17,17 +17,17 @@ class AddAdditionalSlotButton extends StatelessWidget {
       onTap: () => Get.to(() => VendorAddAdditionalSlotScreen(),
           transition: Transition.zoom),
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10),
-                color: AppColors.accentColor,
-                boxShadow: [
-          BoxShadow(
-            // spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(

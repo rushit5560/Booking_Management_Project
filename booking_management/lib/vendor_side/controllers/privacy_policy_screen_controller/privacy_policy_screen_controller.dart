@@ -19,7 +19,9 @@ class PrivacyPolicyScreenController extends GetxController{
 
   getPrivacyPolicyFunction()async{
     isLoading(true);
-    String url = ApiUrl.getPrivacyPolicyApi + "?pageName=Policy";
+    // String url = ApiUrl.getPrivacyPolicyApi + "?pageName=Policy";
+    // String url = "https://setdaytime.com.au/Policy";
+    String url = "https://setdaytime.com.au/API/CMS?pageName=Policy";
     log("Privacy Policy API URL : $url");
     log('apiHeader.headers: ${apiHeader.headers}');
 

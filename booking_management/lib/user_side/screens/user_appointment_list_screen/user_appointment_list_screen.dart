@@ -5,50 +5,50 @@ import 'package:booking_management/user_side/screens/user_appointment_list_scree
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserAppointmentListScreen extends StatelessWidget {
-  UserAppointmentListScreen({Key? key}) : super(key: key);
-
-  final userAppointmentListScreenController = Get.put(UserAppointmentScreenController());
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CommonAppBarModule(title: 'Appointment List'),
-            // const SizedBox(height: 10),
-
-            Expanded(
-              child: Column(
-                children: [
-                  // SearchAppointmentField(),
-                  // SizedBox(height: 30),
-                  AppointmentListTextModule(),
-
-                  Obx(
-                        ()=> userAppointmentListScreenController.isLoading.value
-                        ? const Center(child: CircularProgressIndicator()) :
-                    Expanded(
-                      child: userAppointmentListScreenController.selectedTabIndex.value == 1
-                          ? const AllAppointmentListModule()
-                          : userAppointmentListScreenController.selectedTabIndex.value == 2
-                          ? const UserPendingAppointmentListModule()
-                          : userAppointmentListScreenController.selectedTabIndex.value == 3
-                          ? ConfirmAppointmentListModule()
-                          : userAppointmentListScreenController.selectedTabIndex.value ==4
-                          ? CancelAppointmentListModule()
-                          : DoneAppointmentListModule(),
-                    ),
-                  ),
-                ],
-              ).commonAllSidePadding(20),
-            )
-
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class UserAppointmentListScreen extends StatelessWidget {
+//   UserAppointmentListScreen({Key? key}) : super(key: key);
+//
+//   final userAppointmentListScreenController = Get.put(UserAppointmentScreenController());
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: SafeArea(
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             const CommonAppBarModule(title: 'Appointment List'),
+//             // const SizedBox(height: 10),
+//
+//             Expanded(
+//               child: Column(
+//                 children: [
+//                   // SearchAppointmentField(),
+//                   // SizedBox(height: 30),
+//                   AppointmentListTextModule(),
+//
+//                   Obx(
+//                         ()=> userAppointmentListScreenController.isLoading.value
+//                         ? const Center(child: CircularProgressIndicator()) :
+//                     Expanded(
+//                       child: userAppointmentListScreenController.selectedTabIndex.value == 1
+//                           ? const AllAppointmentListModule()
+//                           : userAppointmentListScreenController.selectedTabIndex.value == 2
+//                           ? const UserPendingAppointmentListModule()
+//                           : userAppointmentListScreenController.selectedTabIndex.value == 3
+//                           ? ConfirmAppointmentListModule()
+//                           : userAppointmentListScreenController.selectedTabIndex.value ==4
+//                           ? CancelAppointmentListModule()
+//                           : DoneAppointmentListModule(),
+//                     ),
+//                   ),
+//                 ],
+//               ).commonAllSidePadding(20),
+//             )
+//
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

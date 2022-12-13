@@ -5,6 +5,7 @@ import 'package:booking_management/common_modules/constants/app_colors.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:booking_management/user_side/model/book_appointment_screen_model/get_booking_resources_model.dart';
+import 'package:booking_management/vendor_side/screens/qr_scan_screen/qr_scan_screen.dart';
 import 'package:booking_management/vendor_side/screens/vendor_schedule_time_screen/vendor_schedule_time_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -55,24 +56,24 @@ class VendorHeaderModule extends StatelessWidget {
               ),
             ),
           ),
-          // Positioned(
-          //   top: 10,
-          //   right: 10,
-          //   child: GestureDetector(
-          //     onTap: () async {
-          //       log("scan tapped");
+          Positioned(
+            top: 10,
+            right: 10,
+            child: GestureDetector(
+              onTap: () async {
+                log("scan tapped");
 
-          //       Get.to(
-          //         () => QrScanScreen(),
-          //       );
-          //     },
-          //     child: Icon(
-          //       Icons.qr_code_scanner_rounded,
-          //       color: Colors.grey.shade600,
-          //       size: 28,
-          //     ),
-          //   ),
-          // )
+                Get.to(
+                  () => QrScanScreen(),
+                );
+              },
+              child: Icon(
+                Icons.qr_code_scanner_rounded,
+                color: Colors.grey.shade600,
+                size: 28,
+              ),
+            ),
+          )
         ],
       ),
     );

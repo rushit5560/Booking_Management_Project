@@ -12,6 +12,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../common_modules/constants/app_colors.dart';
 import '../../../vendor_side/model/vendor_additional_slot_screen_model/get_all_additional_slot_model.dart';
@@ -1515,10 +1516,11 @@ class BookButtonModule extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Tooltip(
-          message: "This feature is coming soon",
-          preferBelow: true,
-          triggerMode: TooltipTriggerMode.tap,
+        GestureDetector(
+          onTap: () async {
+            Get.back();
+            await screenController.signInWithGoogleFunction();
+          },
           child: Container(
             height: 30,
             width: 30,
@@ -1530,26 +1532,12 @@ class BookButtonModule extends StatelessWidget {
             ),
           ),
         ),
-        // GestureDetector(
-        //   onTap: () async {
-        //     await screenController.signInWithGoogleFunction();
-        //   },
-        //   child: Container(
-        //     height: 30,
-        //     width: 30,
-        //     decoration: const BoxDecoration(
-        //       image: DecorationImage(
-        //         image: AssetImage(AppImages.googleLoginImg),
-        //         fit: BoxFit.cover,
-        //       ),
-        //     ),
-        //   ),
-        // ),
         const SizedBox(width: 60),
-        Tooltip(
-          message: "This feature is coming soon",
-          preferBelow: true,
-          triggerMode: TooltipTriggerMode.tap,
+        GestureDetector(
+          onTap: () async {
+            Get.back();
+            await screenController.signInWithFacebookFunction();
+          },
           child: Container(
             height: 30,
             width: 30,
@@ -1561,22 +1549,70 @@ class BookButtonModule extends StatelessWidget {
             ),
           ),
         ),
+        screenController.isIosPlatform.value
+            ? const SizedBox(width: 60)
+            : const SizedBox(),
+        screenController.isIosPlatform.value
+            ? GestureDetector(
+                onTap: () async {
+                  Get.back();
+                  // await screenController.signInWithAppleFunction();
 
-        // GestureDetector(
-        //   onTap: () async {
-        //     await screenController.signInWithFacebookFunction();
-        //   },
-        //   child: Container(
-        //     height: 30,
-        //     width: 30,
-        //     decoration: const BoxDecoration(
-        //       image: DecorationImage(
-        //         image: AssetImage(AppImages.fbLoginImg),
-        //         fit: BoxFit.cover,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+                  try {
+                    final credential =
+                        await SignInWithApple.getAppleIDCredential(
+                      scopes: [
+                        AppleIDAuthorizationScopes.email,
+                        AppleIDAuthorizationScopes.fullName,
+                      ],
+                    );
+
+                    log("apple login email are :: ${credential.email}");
+                    log("apple login givenName are :: ${credential.givenName}");
+                    // log("apple login userIdentifier are :: ${credential.userIdentifier}");
+                    // log("apple login familyName are :: ${credential.familyName}");
+                    // log("apple login identityToken are :: ${credential.identityToken}");
+                    // log("apple login state are :: ${credential.state}");
+
+                    if (credential.email!.isNotEmpty &&
+                        credential.givenName!.isNotEmpty) {
+                      await screenController.authenticationFunction(
+                        userName:
+                            credential.givenName! + credential.familyName!,
+                        email: credential.email!,
+                        socialProv: "apple",
+                      );
+                    } else {
+                      // CommonWidgets.yesOrNoDialog(
+                      //   context: context,
+                      //   body:
+                      //       "Unfortunately apple sign in not working. try another login method.",
+                      //   title: "Apple sign in failed",
+                      //   onNoPressed: () {
+                      //     Get.back();
+                      //   },
+                      //   onYesPressed: () {
+                      //     Get.back();
+                      //   },
+                      // );
+                    }
+                  } catch (e) {
+                    log("error occured while apple signin $e");
+                    rethrow;
+                  }
+                },
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(AppImages.appleLoginImg),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

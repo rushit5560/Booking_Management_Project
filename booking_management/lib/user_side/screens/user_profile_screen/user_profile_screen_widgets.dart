@@ -8,6 +8,7 @@ import 'package:booking_management/common_modules/field_validation.dart';
 import 'package:booking_management/user_side/controllers/user_profile_screen_controller/user_profile_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -57,6 +58,10 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
                     // countryTextField(),
                     const SizedBox(height: 15),
                     saveButtonModule(),
+                    const SizedBox(height: 30),
+                    deactivateAccountButtonModule(),
+                    const SizedBox(height: 30),
+                    deleteAccountButtonModule(),
                   ],
                 ).commonAllSidePadding(20),
               ),
@@ -137,7 +142,7 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
-            child: Icon(Icons.edit),
+            child: const Icon(Icons.edit),
           ),
         ),
       ],
@@ -170,24 +175,24 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
+          title: const Text(
             "Choose option",
             style: TextStyle(color: Colors.black),
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                Divider(
+                const Divider(
                   height: 1,
                   color: Colors.black,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ListTile(
                   onTap: () {
                     _openGallery(context);
                   },
-                  title: Text("Gallery"),
-                  leading: Icon(
+                  title: const Text("Gallery"),
+                  leading: const Icon(
                     Icons.account_box,
                     color: Colors.black,
                   ),
@@ -200,8 +205,8 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
                   onTap: () {
                     _openCamera(context);
                   },
-                  title: Text("Camera"),
-                  leading: Icon(
+                  title: const Text("Camera"),
+                  leading: const Icon(
                     Icons.camera,
                     color: Colors.black,
                   ),
@@ -818,17 +823,17 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
         }
       },
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10),
-                color: AppColors.accentColor,
-                boxShadow: [
-          BoxShadow(
-            // spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
           child: Text(
@@ -843,6 +848,156 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
       ),
     );
   }
+
+  /// deactivate account Button
+  Widget deactivateAccountButtonModule() {
+    return GestureDetector(
+      onTap: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              title: Text(
+                "Are you sure you want to Deactivate your account?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              content: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text:
+                      "After deactivate you account if you want to activate your account please contact on ",
+                  style: TextStyle(
+                    color: AppColors.colorGreyIconDark,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "info@setdaytime.com.au",
+                      style: TextStyle(
+                        color: AppColors.colorGreyIconDark,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                    screenController.deactivateUserAccountById();
+                  },
+                  child: Text(
+                    'Yes, deactivate it!',
+                    style: TextStyle(
+                      color: AppColors.redColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text(
+                    'No, cancel!',
+                    style: TextStyle(
+                      color: AppColors.colorGreyIconDark,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.redColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: AppColors.redColor,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'DeActivate Account',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: AppColors.whiteColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// delete account Button
+  Widget deleteAccountButtonModule() {
+    return GestureDetector(
+      onTap: () {
+        String msg = "Please email info@setdaytime.com with brief information "
+            "for Account deletion request.For App review put this info: We "
+            "have implemented Flag in database for Support staff upon “Account "
+            "Deactivate” and “Account Delete” click. Reason why we have "
+            "intervention for manual check before automated process from user "
+            "is run is because nature of our business, as in past we have "
+            "negative feedback due to future bookings removed due to deletion"
+            " and deactivation so to avoid any payment or bookings related "
+            "issues it is vital for our clients and our business reputation "
+            "to not give direct control of deletion and deactivation to our "
+            "users but to run same in automated cycle in controlled environment.";
+        Fluttertoast.cancel();
+        Fluttertoast.showToast(msg: msg,toastLength: Toast.LENGTH_LONG);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.redColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: AppColors.redColor,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          child: Text(
+            'Delete Account',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: AppColors.whiteColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
 }
 
 class SelectDateModule extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:booking_management/common_modules/constants/api_header.dart';
 import 'package:booking_management/user_side/model/user_business_details_model/add_vendor_in_favourite_model.dart';
 import 'package:booking_management/user_side/model/vendor_details_screen_models/vendor_details_model.dart';
@@ -10,8 +11,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common_modules/constants/enums.dart';
 import '../../../common_modules/constants/user_details.dart';
+import '../../../common_modules/sharedpreference_data/sharedpreference_data.dart';
+import '../../../common_ui/model/sign_in_screen_model/sign_in_screen_model.dart';
+import '../../../common_ui/model/sign_in_screen_model/sign_vendor_model.dart';
 import '../../../vendor_side/model/vendor_additional_slot_screen_model/get_all_additional_slot_model.dart';
 import '../../../vendor_side/model/vendor_schedule_time_screen_model/get_all_time_list_by_resource_id_model.dart';
 import '../../model/book_appointment_screen_model/book_appointment_model.dart';
@@ -19,8 +24,6 @@ import '../../model/book_appointment_screen_model/get_booking_resources_model.da
 import '../../model/book_appointment_screen_model/get_booking_service_model.dart';
 import '../../model/book_appointment_screen_model/get_vendor_booking_model.dart';
 import '../../screens/user_checkout_screen/user_checkout_screen.dart';
-
-
 
 class BookAppointmentScreenController extends GetxController {
   int vendorId = Get.arguments;
@@ -32,6 +35,8 @@ class BookAppointmentScreenController extends GetxController {
 
   bool selectedResourceIsEvent = false;
   int selectedResource = 0;
+
+  RxBool isIosPlatform = false.obs;
 
   /// Fb Login
   FacebookUserProfile? profile;
@@ -51,6 +56,8 @@ class BookAppointmentScreenController extends GetxController {
   List<AdditionalSlotWorkerList> allAdditionalSlotList = [];
   AdditionalSlotWorkerList additionalSlotWorkerList =
       AdditionalSlotWorkerList();
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   int selectedResourceTimeSlotId = 0;
   String selectedAdditionalTime = "";
@@ -137,7 +144,8 @@ class BookAppointmentScreenController extends GetxController {
         log("isServiceSlot : ${isServiceSlot.value}");
         log("isPriceDisplay : ${isPriceDisplay.value}");
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getBookVendorDetailsByIdFunction Else Else");
       }
     } catch (e) {
@@ -180,7 +188,8 @@ class BookAppointmentScreenController extends GetxController {
 
         allServicesList = getBookingServiceModel.workerList;
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         log("getServicesListByIdFunction Else Else");
       }
     } catch (e) {
@@ -289,11 +298,13 @@ class BookAppointmentScreenController extends GetxController {
         }
       } else {
         log("getAllResourcesListByIdFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllResourcesListByIdFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       log("isServiceSlot.value : ${isServiceSlot.value}");
       selectedResourceTimeSlotId = 0;
@@ -310,7 +321,6 @@ class BookAppointmentScreenController extends GetxController {
     log("isServiceSlot.value : ${isServiceSlot.value}");
     selectedResourceTimeSlotId = 0;
     isLoading(false);
-
   }
 
   /// 4) Get Resources Time List
@@ -396,11 +406,13 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -506,11 +518,13 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -598,12 +612,14 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
-    }/* finally {
+      Fluttertoast.showToast(
+          msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+    } /* finally {
       isLoading(true);
     }*/
 
@@ -670,15 +686,16 @@ class BookAppointmentScreenController extends GetxController {
       } else {
         log("getResourcesTimeListFunction Else Else");
         Fluttertoast.showToast(
-            msg: getAllTimeListByResourceIdModel.errorMessage, toastLength: Toast.LENGTH_SHORT);
+            msg: getAllTimeListByResourceIdModel.errorMessage,
+            toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
       // Fluttertoast.showToast(msg: "Something went wrong!");
       Fluttertoast.showToast(
           msg:
-              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot."
-          , toastLength: Toast.LENGTH_SHORT);
+              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.",
+          toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -745,12 +762,14 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         // Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
     } catch (e) {
       log("getResourcesTimeListFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -812,7 +831,8 @@ class BookAppointmentScreenController extends GetxController {
         log("Time List : ${timeList.length}");
       } else {
         log("getResourcesTimeListFunction Else Else");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         // Fluttertoast.showToast(msg: getAllTimeListByResourceIdModel.errorMessage);
       }
     } catch (e) {
@@ -820,8 +840,8 @@ class BookAppointmentScreenController extends GetxController {
       // Fluttertoast.showToast(msg: "Something went wrong!");
       Fluttertoast.showToast(
           msg:
-              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot."
-          , toastLength: Toast.LENGTH_SHORT);
+              "Selected resource slot is available but rest of the slot are already reserved. Please select another slot.",
+          toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       isLoading(true);
     }*/
@@ -865,7 +885,8 @@ class BookAppointmentScreenController extends GetxController {
 
       } else {
         log("Something went wrong!");
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
       }
     } catch (e) {
       log("getAllAdditionalSlotFunction Error ::: $e");
@@ -883,9 +904,13 @@ class BookAppointmentScreenController extends GetxController {
     String serviceId = s2.replaceAll(" ", "");
 
     if (serviceId.isEmpty) {
-      Fluttertoast.showToast(msg: "Please select any service box!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Please select any service box!",
+          toastLength: Toast.LENGTH_SHORT);
     } else if (selectedResourceTimeSlotId == 0) {
-      Fluttertoast.showToast(msg: "Please select any timing slot!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Please select any timing slot!",
+          toastLength: Toast.LENGTH_SHORT);
     } else {
       isLoading(true);
       String url = ApiUrl.bookSelectedSlotApi +
@@ -925,7 +950,9 @@ class BookAppointmentScreenController extends GetxController {
           );
         } else {
           log("bookSelectedSlotFunction Else Else");
-          Fluttertoast.showToast(msg: bookAppointmentModel.errorMessage, toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+              msg: bookAppointmentModel.errorMessage,
+              toastLength: Toast.LENGTH_SHORT);
         }
       } catch (e) {
         log("bookSelectedSlotFunction Error ::: $e");
@@ -993,7 +1020,8 @@ class BookAppointmentScreenController extends GetxController {
           );
         } else {
           log("bookAvailableTimeSlotFunction Else Else");
-          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+              msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -1035,14 +1063,17 @@ class BookAppointmentScreenController extends GetxController {
         log("status code : ${addVendorInFavouriteModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: "Added to favourites", toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+              msg: "Added to favourites", toastLength: Toast.LENGTH_SHORT);
         } else {
-          Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+              msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
       log("addVendorInFavoriteFunction Error ::: $e");
-      Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(
+          msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
     } /*finally {
       // isLoading(false);
       loadUI();
@@ -1056,6 +1087,12 @@ class BookAppointmentScreenController extends GetxController {
 
     /// Get Today Date Only
     getTodayDateFunction();
+    if (Platform.isAndroid) {
+      // Android-specific code
+    } else if (Platform.isIOS) {
+      // iOS-specific code
+      isIosPlatform.value = true;
+    }
     super.onInit();
   }
 
@@ -1089,7 +1126,8 @@ class BookAppointmentScreenController extends GetxController {
     }
 
     selectedDate.value = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-    selectedShowDate.value = "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+    selectedShowDate.value =
+        "${dateTime.day}-${dateTime.month}-${dateTime.year}";
     selectedTime.value = "$hour:$minute:00";
     log("selectedDate : ${selectedDate.value}");
   }
@@ -1098,6 +1136,7 @@ class BookAppointmentScreenController extends GetxController {
     isLoading(true);
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     final FirebaseAuth auth = FirebaseAuth.instance;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final GoogleSignIn googleSignIn = GoogleSignIn();
     googleSignIn.signOut();
     final GoogleSignInAccount? googleSignInAccount =
@@ -1121,6 +1160,19 @@ class BookAppointmentScreenController extends GetxController {
       if (result != null) {
         String userName = result.user!.displayName!;
         String email = result.user!.email!;
+
+        prefs.setString('userId', result.user!.uid);
+        prefs.setString('userName', result.user!.displayName!);
+        prefs.setString('email', result.user!.email!);
+        prefs.setString('photo', result.user!.photoURL!);
+        prefs.setBool('isLoggedIn', false);
+
+        // Entry in Database
+        await authenticationFunction(
+          userName: result.user!.displayName!,
+          email: result.user!.email!,
+          socialProv: "google",
+        );
         // userNameFieldController.text = userName.wordCapitalize();
         // emailFieldController.text = email;
         // passwordFieldController.text = "${userNameFieldController.text}@123";
@@ -1133,11 +1185,11 @@ class BookAppointmentScreenController extends GetxController {
 
         // Get.offAll(() => IndexScreen());
 
-        if (isServiceSlot.value) {
-          await bookSelectedSlotFunction(userName: userName, email: email);
-        } else {
-          await bookAvailableTimeSlotFunction(userName: userName, email: email);
-        }
+        // if (isServiceSlot.value) {
+        //   await bookSelectedSlotFunction(userName: userName, email: email);
+        // } else {
+        //   await bookAvailableTimeSlotFunction(userName: userName, email: email);
+        // }
       }
     }
     isLoading(false);
@@ -1175,14 +1227,267 @@ class BookAppointmentScreenController extends GetxController {
         if (profile!.userId.isNotEmpty) {
           String userName = profile!.name!;
 
-          if (isServiceSlot.value) {
-            await bookSelectedSlotFunction(userName: userName, email: email!);
-          } else {
-            await bookAvailableTimeSlotFunction(
-                userName: userName, email: email!);
-          }
+          // Entry in Database
+          await authenticationFunction(
+            userName: userName,
+            email: email!,
+            socialProv: "facebook",
+          );
+
+          // if (isServiceSlot.value) {
+          //   await bookSelectedSlotFunction(userName: userName, email: email!);
+          // } else {
+          //   await bookAvailableTimeSlotFunction(
+          //       userName: userName, email: email!);
+          // }
         }
       }
+    }
+  }
+
+  Future<void> authenticationFunction({
+    required String userName,
+    required String email,
+    required String socialProv,
+  }) async {
+    String finalUserName = userName.replaceAll(" ", "");
+
+    String url = ApiUrl.authenticationApi +
+        "?userName=${finalUserName.trim()}" +
+        "&email=$email" +
+        "&password=Admin@123" +
+        "&socialProvider=$socialProv";
+    log('authenticationFunction Api Url $url');
+    try {
+      http.Response response = await http.post(Uri.parse(url));
+      log('Response status code : ${response.statusCode}');
+      log('Response : ${response.body}');
+
+      var body = jsonDecode(response.body);
+      if (response.body.toString().contains("Please confirm your email")) {
+        SignInVendorErrorModel signInVendorErrorModel =
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(
+            msg:
+                "Your account is in-active. Please check your email to activate.",
+            toastLength: Toast.LENGTH_SHORT);
+      } else if (response.statusCode.toString().contains("417")) {
+        SignInVendorErrorModel signInVendorErrorModel =
+            SignInVendorErrorModel.fromJson(json.decode(response.body));
+        Fluttertoast.showToast(
+            msg: signInVendorErrorModel.message,
+            toastLength: Toast.LENGTH_SHORT);
+      } else if (body["statusCode"].toString().contains("417")) {
+        Get.snackbar("Login Failed", body["errorMessage"]);
+      } else {
+        SignInModel signInModel =
+            SignInModel.fromJson(json.decode(response.body));
+
+        isSuccessStatus = signInModel.success.obs;
+
+        log("status: $isSuccessStatus");
+
+        if (isSuccessStatus.value) {
+          if (signInModel.message.toString().contains("not Verified")) {
+            Get.snackbar(signInModel.message, '');
+          }
+          /*else if (signInModel.message.contains("Invalid login attempt")) {
+            Get.snackbar(signInModel.message, '');
+          }*/
+
+          else if (signInModel.role[0] == "Customer") {
+            log('customer side');
+            Get.snackbar("${signInModel.data.userName} login successfully", '');
+
+            // String dob = signInModel.customer.dateOfBirth;
+            // String finalDob = dob.substring(0, dob.length - 9);
+            // log("finalDob : $finalDob");
+
+            if (signInModel.message
+                .toString()
+                .contains("Successfully Logged")) {
+              log("user logged in ");
+              sharedPreferenceData.setUserLoginDetailsInPrefs(
+                apiToken: signInModel.data.apiToken,
+                uniqueId: signInModel.data.id,
+                tableWiseId: signInModel.customer.id,
+                userName: signInModel.data.userName,
+                email: signInModel.data.email,
+                phoneNo: signInModel.data.phoneNumber,
+                dob: signInModel.customer.dateOfBirth,
+                roleName: signInModel.role[0],
+                gender: signInModel.customer.gender,
+                businessName: "",
+                address: "",
+                street: "",
+                state: "",
+                country: "",
+                subUrb: "",
+                postCode: "",
+                stripeId: "",
+                //slotDuration: ""
+                vendorVerification: false,
+                businessId: "",
+                serviceSlot: false,
+                institutionName: "",
+                accountName: "",
+                accountNumber: "",
+                ifscCode: "",
+                isPriceDisplay: false,
+              );
+              log("Fcm Token : ${UserDetails.fcmToken}");
+              if (isServiceSlot.value) {
+                await bookSelectedSlotFunction(
+                    userName: userName, email: email);
+              } else {
+                await bookAvailableTimeSlotFunction(
+                    userName: userName, email: email);
+              }
+              // if (signInRoute == SignInRoute.fromBookScreen) {
+              //   Get.back();
+              //   Get.back();
+              // } else {
+              //   Get.offAll(() => IndexScreen());
+              // }
+            }
+
+            //Get.snackbar(signInModel.message, '');
+          }
+
+          // else if (signInModel.role[0] == "Vendor") {
+          //   log('Vendor side');
+          //   log('Api token: ${signInModel.data.apiToken}');
+          //   Get.snackbar("${signInModel.data.fullName} login successfully", '');
+
+          //   var isSub = true;
+          //   if (signInModel.message.contains("Subscription pending")) {
+          //     isSub = false;
+          //     log("vendor has no subscription");
+          //     log("logged in state");
+          //     log("subscription state is : $isSub");
+
+          //     sharedPreferenceData.setUserLoginDetailsInPrefs(
+          //       apiToken: signInModel.data.apiToken,
+          //       uniqueId: signInModel.data.id,
+          //       tableWiseId: signInModel.vendor.id,
+          //       userName: signInModel.data.fullName,
+          //       email: signInModel.data.email,
+          //       phoneNo: signInModel.data.phoneNumber,
+          //       dob: "",
+          //       roleName: signInModel.role[0],
+          //       gender: "",
+          //       businessName: signInModel.vendor.businessName,
+          //       address: signInModel.vendor.address,
+          //       street: signInModel.vendor.street,
+          //       state: signInModel.vendor.state,
+          //       country: signInModel.vendor.country,
+          //       subUrb: signInModel.vendor.suburb,
+          //       postCode: signInModel.vendor.postcode,
+          //       stripeId: signInModel.vendor.stripeId.isEmpty
+          //           ? ""
+          //           : signInModel.vendor.stripeId,
+          //       isSubscription: isSub,
+          //       // slotDuration: signInModel.vendor.
+          //       vendorVerification: signInModel.vendor.vendorVerification,
+          //       businessId: signInModel.vendor.businessId,
+          //       serviceSlot: signInModel.vendor.isServiceSlots,
+          //       institutionName: signInModel.vendor.financialInstitutionName,
+          //       accountName: signInModel.vendor.accountName,
+          //       accountNumber: signInModel.vendor.accountNumber,
+          //       ifscCode: signInModel.vendor.accountCode,
+          //       isPriceDisplay: signInModel.vendor.isPriceDisplay,
+          //     );
+
+          //     // DateTime subscription = signInModel.vendor.nextPayment;
+          //     //
+          //     // if(subscription == "") {
+          //     //   Get.offAll(()=> VendorSubscriptionPlanScreen(), transition: Transition.zoom);
+          //     // }
+          //     // else {
+          //     //   Get.offAll(() => VendorIndexScreen());
+          //     // }
+
+          //     log("navigate to subscription plan screen");
+
+          //     // Get.offAll(
+          //     //   () => VendorSubscriptionPlanScreen(),
+          //     //   arguments: SubscriptionOption.direct,
+          //     // );
+          //   } else
+          //   if (signInModel.message
+          //       .toString()
+          //       .contains("Successfully Logged")) {
+          //     isSub = true;
+
+          //     log("logged in state");
+          //     log("subscription state is : $isSub");
+
+          //     sharedPreferenceData.setUserLoginDetailsInPrefs(
+          //       apiToken: signInModel.data.apiToken,
+          //       uniqueId: signInModel.data.id,
+          //       tableWiseId: signInModel.vendor.id,
+          //       userName: signInModel.data.fullName,
+          //       email: signInModel.data.email,
+          //       phoneNo: signInModel.data.phoneNumber,
+          //       dob: "",
+          //       roleName: signInModel.role[0],
+          //       gender: "",
+          //       businessName: signInModel.vendor.businessName,
+          //       address: signInModel.vendor.address,
+          //       street: signInModel.vendor.street,
+          //       state: signInModel.vendor.state,
+          //       country: signInModel.vendor.country,
+          //       subUrb: signInModel.vendor.suburb,
+          //       postCode: signInModel.vendor.postcode,
+          //       stripeId: signInModel.vendor.stripeId.isEmpty
+          //           ? ""
+          //           : signInModel.vendor.stripeId,
+          //       isSubscription: isSub,
+          //       // slotDuration: signInModel.vendor.
+          //       vendorVerification: signInModel.vendor.vendorVerification,
+          //       businessId: signInModel.vendor.businessId,
+          //       serviceSlot: signInModel.vendor.isServiceSlots,
+          //       institutionName: signInModel.vendor.financialInstitutionName,
+          //       accountName: signInModel.vendor.accountName,
+          //       accountNumber: signInModel.vendor.accountNumber,
+          //       ifscCode: signInModel.vendor.accountCode,
+          //       isPriceDisplay: signInModel.vendor.isPriceDisplay,
+          //     );
+
+          //     // DateTime subscription = signInModel.vendor.nextPayment;
+          //     //
+          //     // if(subscription == "") {
+          //     //   Get.offAll(()=> VendorSubscriptionPlanScreen(), transition: Transition.zoom);
+          //     // }
+          //     // else {
+          //     //   Get.offAll(() => VendorIndexScreen());
+          //     // }
+
+          //     // if (isSub == false) {
+          //     log("navigate to subscription plan screen");
+          //     Get.offAll(
+          //       () => VendorIndexScreen(),
+          //       arguments: SubscriptionOption.direct,
+          //     );
+          //     // } else {
+          //     //   log("navigate to vendor index screen");
+          //     //   Get.offAll(() => VendorIndexScreen());
+          //     // }
+
+          //   }
+          // }
+        } else {
+          log('SignIn False False');
+          log('SignIn message from api ' + signInModel.message);
+          // Get.snackbar(signInModel.message, '');
+          log("asdasdsd");
+        }
+      }
+    } catch (e) {
+      log('SignIn Error : $e');
+      Fluttertoast.showToast(
+          msg: "Invalid login attempt", toastLength: Toast.LENGTH_SHORT);
+      rethrow;
     }
   }
 }

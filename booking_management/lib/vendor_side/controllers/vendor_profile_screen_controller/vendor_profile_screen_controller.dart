@@ -19,6 +19,9 @@ import 'package:google_place/google_place.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common_ui/common_screens/sign_in_screen/sign_in_screen.dart';
+import '../../../common_ui/model/deactivate_account_model/deactivate_account_model.dart';
+import '../../../common_ui/model/sign_out_model/sign_out_model.dart';
 import '../../model/vendor_profile_screen_model/save_vendor_lat_long_model.dart';
 
 class VendorProfileScreenController extends GetxController {
@@ -198,7 +201,7 @@ class VendorProfileScreenController extends GetxController {
             .transform(const Utf8Decoder())
             .transform(const LineSplitter())
             .listen((value) {
-              log('value123 : $value');
+          log('value123 : $value');
           VendorEditProfileModel response1 =
               VendorEditProfileModel.fromJson(json.decode(value));
           log('response1 ::::::${response1.statusCode}');
@@ -209,7 +212,8 @@ class VendorProfileScreenController extends GetxController {
           if (isStatus.value == 200) {
             getUserDetailsById();
             log("response1.message : ${response1.message}");
-            Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
@@ -275,7 +279,8 @@ class VendorProfileScreenController extends GetxController {
           if (isStatus.value == 200) {
             getUserDetailsById();
             log("response1.message : ${response1.message}");
-            Fluttertoast.showToast(msg: response1.message, toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: response1.message, toastLength: Toast.LENGTH_SHORT);
           } else {
             // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
@@ -454,8 +459,8 @@ class VendorProfileScreenController extends GetxController {
         slotDurationValue.value =
             getUserDetailsByIdModel.data.duration.toString();
 
-        for(int i =0; i < timeSlotDurationList.length; i++) {
-          if(timeSlotDurationList[i].value == slotDurationValue.value) {
+        for (int i = 0; i < timeSlotDurationList.length; i++) {
+          if (timeSlotDurationList[i].value == slotDurationValue.value) {
             timeSlotDurationModel = timeSlotDurationList[i];
           }
         }
@@ -533,13 +538,84 @@ class VendorProfileScreenController extends GetxController {
       isSuccessStatus = saveVendorLatLongModel.success.obs;
 
       if (isSuccessStatus.value) {
-        Fluttertoast.showToast(msg: "Location Saved", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+            msg: "Location Saved", toastLength: Toast.LENGTH_SHORT);
         await getAllBusinessTypeList();
       } else {
         log("saveVendorLatLongFunction Else Else");
       }
     } catch (e) {
       log("saveVendorLatLongFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// deactivate vendor acvount api call
+  deactivateUserAccountById() async {
+    isLoading(true);
+    String url = ApiUrl.deActivateByIdApi + "?userId=${UserDetails.uniqueId}";
+    log('Url : $url');
+    log('header: ${apiHeader.headers}');
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: apiHeader.headers,
+      );
+      log('deactivateUserAccountById Response : ${response.body}');
+
+      DeactivateAccountModel deactivateAccountModel =
+          DeactivateAccountModel.fromJson(json.decode(response.body));
+      isStatus = deactivateAccountModel.statusCode.obs;
+      log('deactivateUserAccountById message  :: ${deactivateAccountModel.message}');
+      log('getUserDetailsByIdModelStatus : $isStatus');
+
+      if (isStatus.value == 200) {
+        // String responseMsg = deactivateAccountModel.message;
+        String responseMsg = "Account deactivate is successfully enabled "
+            "and account will be deactivated by our support team in 5 "
+            "business working days. ";
+
+        Fluttertoast.showToast(
+          msg: responseMsg,
+          toastLength: Toast.LENGTH_SHORT,
+        );
+
+        await signOutFunction();
+      } else {
+        log('deactivateUserAccountById Else Else');
+      }
+    } catch (e) {
+      log('deactivateUserAccountById Error ::: $e');
+      rethrow;
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> signOutFunction() async {
+    isLoading(true);
+    String url = ApiUrl.logOutApi + "?id=${UserDetails.uniqueId}";
+    log("SignOut Api Url : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      log("Response : ${response.body}");
+
+      SignOutModel signOutModel =
+          SignOutModel.fromJson(json.decode(response.body));
+      isSuccessStatus = signOutModel.success.obs;
+
+      if (isSuccessStatus.value) {
+        await sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+        Get.offAll(() => SignInScreen(), transition: Transition.zoom);
+        Get.snackbar('You Have Successfully Logout', '');
+      } else {
+        log("signOutFunction Else Else");
+      }
+    } catch (e) {
+      log("SignOutFunction Error ::: $e");
     } finally {
       isLoading(false);
     }

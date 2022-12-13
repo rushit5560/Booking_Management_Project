@@ -36,18 +36,18 @@ class BackArrow extends StatelessWidget {
   }
 }
 
-class VendorName extends StatelessWidget {
+/*class VendorName extends StatelessWidget {
   const VendorName({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Text(
-      "Lorem Ipsum",
+      "",
       style: TextStyle(
           color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),
     );
   }
-}
+}*/
 
 class BookingDateAndTime extends StatelessWidget {
   const BookingDateAndTime({Key? key}) : super(key: key);
@@ -82,19 +82,19 @@ class BookingDateAndTime extends StatelessWidget {
   }
 }
 
-class Description extends StatelessWidget {
+/*class Description extends StatelessWidget {
   const Description({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Text(
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+      " is simply dummy text of the printing and typesetting industry.  has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
       style: TextStyle(fontSize: 13, color: Colors.black),
     );
   }
-}
+}*/
 
-class BookingDetails extends StatelessWidget {
+/*class BookingDetails extends StatelessWidget {
   const BookingDetails({Key? key}) : super(key: key);
 
   @override
@@ -114,7 +114,7 @@ class BookingDetails extends StatelessWidget {
                 )),
             Expanded(
                 flex: 3,
-                child: Text("Lorem Ipsum has been the industry",
+                child: Text(" has been the industry",
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -193,7 +193,7 @@ class BookingDetails extends StatelessWidget {
       ],
     );
   }
-}
+}*/
 
 class VendorDetailsModule extends StatelessWidget {
   VendorDetailsModule({Key? key}) : super(key: key);

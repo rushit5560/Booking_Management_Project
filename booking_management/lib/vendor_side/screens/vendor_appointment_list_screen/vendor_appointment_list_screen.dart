@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,10 +8,23 @@ import '../../../common_modules/custom_appbar/custom_appbar.dart';
 import '../../controllers/vendor_appointment_list_screen_controller/vendor_appointment_list_screen_controller.dart';
 import 'vendor_appointment_list_screen_widgets.dart';
 
-class VendorAppointmentListScreen extends StatelessWidget {
+class VendorAppointmentListScreen extends StatefulWidget {
   VendorAppointmentListScreen({Key? key}) : super(key: key);
+
+  @override
+  State<VendorAppointmentListScreen> createState() => _VendorAppointmentListScreenState();
+}
+
+class _VendorAppointmentListScreenState extends State<VendorAppointmentListScreen> {
   final vendorAppointmentListScreenController =
       Get.put(VendorAppointmentListScreenController());
+
+  @override
+  void initState() {
+    log('Appointment Setstate121212');
+    vendorAppointmentListScreenController.getAppointmentListFunction();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +44,13 @@ class VendorAppointmentListScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    AppointmentListTextModule()
-                        .commonSymmetricPadding(horizontal: 20),
+                    Obx(
+                      ()=> vendorAppointmentListScreenController
+                          .isLoading.value
+                        ? Container()
+                      : AppointmentListTextModule()
+                          .commonSymmetricPadding(horizontal: 20),
+                    ),
                     Obx(
                       () => vendorAppointmentListScreenController
                               .isLoading.value

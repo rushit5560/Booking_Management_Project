@@ -785,15 +785,33 @@ class BusinessListModule extends StatelessWidget {
                                   const SizedBox(width: 5),
                                   Expanded(
                                       flex: 20,
-                                      child: Text(
-                                        singleItem.workingHoursStatus == "Closed"
-                                            ? "Closed"
-                                            : "Open",
-                                        maxLines: 1,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12),
-                                      ))
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            singleItem.workingHoursStatus == "Closed"
+                                                ? "Closed"
+                                                : "Open",
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12),
+                                          ),
+                                          const SizedBox(width: 5),
+
+                                          singleItem.workingHoursStatus == "Closed"
+                                          ? Container()
+                                          : Text(
+                                            "Closing at - ${singleItem.avilableTime}",
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12),
+                                          ),
+
+
+                                        ],
+                                      ),
+                                  ),
                                 ],
                               ),
                             ],

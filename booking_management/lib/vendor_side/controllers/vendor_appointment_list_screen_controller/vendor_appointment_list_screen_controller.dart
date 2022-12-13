@@ -50,7 +50,7 @@ class VendorAppointmentListScreenController extends GetxController {
         : ApiUrl.vendorAppointmentList +
             "?UserId=${UserDetails.uniqueId}&Status=&dDate=$selectedDate";
 
-    log("Appointment List APi ULR : $url");
+    log("Appointment List APi ULR New New : $url");
     log("user id: ${UserDetails.uniqueId}");
     log('header: ${apiHeader.headers}');
     try {
@@ -146,11 +146,11 @@ class VendorAppointmentListScreenController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    getAppointmentListFunction();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   getAppointmentListFunction();
+  //   super.onInit();
+  // }
 
   loadUI() {
     isLoading(true);

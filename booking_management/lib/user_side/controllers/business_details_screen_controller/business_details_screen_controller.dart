@@ -346,12 +346,14 @@ class BusinessDetailsScreenController extends GetxController {
           // vendorDetailsData!.favourites = !vendorDetailsData!.favourites;
 
           log('favourites123 : ${vendorDetailsData!.favourites}');
-          if (vendorDetailsData!.favourites == true) {
-            Fluttertoast.showToast(msg: "Added in favourite", toastLength: Toast.LENGTH_SHORT);
-            vendorDetailsData!.favourites = false;
-          } else {
+          if (isFavourite.value == true) {
             Fluttertoast.showToast(msg: "Removed from favourite", toastLength: Toast.LENGTH_SHORT);
-            vendorDetailsData!.favourites = true;
+            // vendorDetailsData!.favourites = false;
+            isFavourite.value = false;
+          } else {
+            Fluttertoast.showToast(msg: "Added in favourite", toastLength: Toast.LENGTH_SHORT);
+            // vendorDetailsData!.favourites = true;
+            isFavourite.value = true;
           }
         } else {
           Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);

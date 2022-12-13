@@ -251,8 +251,8 @@ class OverviewModule extends StatelessWidget {
         IconButton(
           onPressed: () async {
             if (UserDetails.isUserLoggedIn == true) {
-              screenController.isFavourite.value =
-                  !screenController.isFavourite.value;
+              // screenController.isFavourite.value = !screenController.isFavourite.value;
+              log('Test Favourite :${screenController.isFavourite.value}');
               await screenController.addVendorInFavoriteFunction();
             } else {
               Get.to(() => SignInScreen(), transition: Transition.zoom);
@@ -789,7 +789,7 @@ class ReviewModule extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
@@ -806,7 +806,7 @@ class ReviewModule extends StatelessWidget {
                         : Container(),
                     const SizedBox(height: 20),
                     showReviewList(),
-                    const SizedBox(height: 65),
+                    const SizedBox(height: 120),
                   ],
                 ),
               ),

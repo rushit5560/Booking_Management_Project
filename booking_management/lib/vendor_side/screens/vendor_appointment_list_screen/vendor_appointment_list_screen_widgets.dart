@@ -54,11 +54,19 @@ class AppointmentListSearchAppointmentField extends StatelessWidget {
 }
 
 /// Filter List Module
-class AppointmentListTextModule extends StatelessWidget {
+class AppointmentListTextModule extends StatefulWidget {
   AppointmentListTextModule({Key? key}) : super(key: key);
+
+  @override
+  State<AppointmentListTextModule> createState() => _AppointmentListTextModuleState();
+}
+class _AppointmentListTextModuleState extends State<AppointmentListTextModule> {
   final screenController = Get.find<VendorAppointmentListScreenController>();
+
   CalendarFormat format = CalendarFormat.month;
+
   DateTime selectedDay = DateTime.now();
+
   DateTime focusedDay = DateTime.now();
 
   @override
@@ -173,6 +181,8 @@ class AppointmentListTextModule extends StatelessWidget {
             selectedDay = selectDay;
             focusedDay = focusDay;
 
+            // screenController.isLoading(true);
+
             String month = '';
             if (selectedDay.month == 1) {
               month = "january";
@@ -200,8 +210,8 @@ class AppointmentListTextModule extends StatelessWidget {
               month = "December";
             }
 
-            screenController.selectedDate.value =
-                "${selectedDay.day}/$month/${selectedDay.year}";
+            // screenController.selectedDate.value = "${selectedDay.day}/$month/${selectedDay.year}";
+            screenController.selectedDate.value = "${selectedDay.day}/${selectedDay.month}/${selectedDay.year}";
             screenController.selectedDisplayDate.value =
                 "${selectedDay.day}/${selectedDay.month}/${selectedDay.year}";
 
@@ -209,7 +219,9 @@ class AppointmentListTextModule extends StatelessWidget {
             screenController.isAppointmentListCalenderShow.value =
                 !screenController.isAppointmentListCalenderShow.value;
             screenController.loadUI();
-            await screenController.getAppointmentListFunction();
+            // await screenController.getAppointmentListFunction();
+
+            // screenController.isLoading(false);
           },
 
           // Day Changed

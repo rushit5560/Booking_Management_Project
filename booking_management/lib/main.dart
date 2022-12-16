@@ -53,6 +53,7 @@ void main() async {
     http.Response response = await http.get(
       Uri.parse(url),
     );
+
     log("Stripe Secret Key Response : ${response.body}");
 
     GetStripeSecretKeyModel getStripeSecretKeyModel =

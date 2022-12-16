@@ -41,6 +41,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>

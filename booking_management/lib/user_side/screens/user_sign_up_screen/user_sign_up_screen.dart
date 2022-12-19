@@ -68,6 +68,15 @@ class UserSignUpScreen extends StatelessWidget {
                           SocialMediaLoginModule(
                               userSignUpScreenController:
                                   userSignUpScreenController),
+                          const SizedBox(height: 15),
+
+                          userSignUpScreenController.isIosPlatform.value
+                          ? SignInWithAppleButtonModule(
+                              userSignUpScreenController:
+                              userSignUpScreenController
+                          ).commonSymmetricPadding(horizontal: 20)
+                          : const SizedBox(),
+
                           const SizedBox(height: 25),
                           SkipButton(),
                           const SizedBox(height: 15),

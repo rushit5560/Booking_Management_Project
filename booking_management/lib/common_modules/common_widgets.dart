@@ -99,73 +99,185 @@ class SocialMediaLoginModule extends StatelessWidget {
             ),
           ),
         ),
-        userSignUpScreenController.isIosPlatform.value
-            ? const SizedBox(width: 60)
-            : const SizedBox(),
-        userSignUpScreenController.isIosPlatform.value
-            ? GestureDetector(
-                onTap: () async {
-                  // await screenController.signInWithAppleFunction();
+        // userSignUpScreenController.isIosPlatform.value
+        //     ? const SizedBox(width: 60)
+        //     : const SizedBox(),
+        // userSignUpScreenController.isIosPlatform.value
+        //     ? SignInWithAppleButton(
+        //  onPressed: () async {
+        //    // await screenController.signInWithAppleFunction();
+        //
+        //    try {
+        //      final credential =
+        //      await SignInWithApple.getAppleIDCredential(
+        //        scopes: [
+        //          AppleIDAuthorizationScopes.email,
+        //          AppleIDAuthorizationScopes.fullName,
+        //        ],
+        //      );
+        //
+        //      log("apple login email are :: ${credential.email.toString()}");
+        //      log("apple login givenName are :: ${credential.givenName.toString()}");
+        //      // log("apple login userIdentifier are :: ${credential.userIdentifier}");
+        //      // log("apple login familyName are :: ${credential.familyName}");
+        //      // log("apple login identityToken are :: ${credential.identityToken}");
+        //      // log("apple login state are :: ${credential.state}");
+        //
+        //      if (credential.email!.isNotEmpty &&
+        //          credential.givenName!.isNotEmpty) {
+        //        await userSignUpScreenController.authenticationFunction(
+        //          userName:
+        //          credential.givenName! + credential.familyName!,
+        //          email: credential.email!,
+        //          socialProv: "apple",
+        //        );
+        //      } else {
+        //        // CommonWidgets.yesOrNoDialog(
+        //        //   context: context,
+        //        //   body:
+        //        //       "Unfortunately apple sign in not working. try another login method.",
+        //        //   title: "Apple sign in failed",
+        //        //   onNoPressed: () {
+        //        //     Get.back();
+        //        //   },
+        //        //   onYesPressed: () {
+        //        //     Get.back();
+        //        //   },
+        //        // );
+        //      }
+        //    } catch (e) {
+        //      log("error occured while apple signin $e");
+        //      rethrow;
+        //    }
+        //  },
+        //   text: "Sign in with apple",
+        // )   : const SizedBox(),
 
-                  try {
-                    final credential =
-                        await SignInWithApple.getAppleIDCredential(
-                      scopes: [
-                        AppleIDAuthorizationScopes.email,
-                        AppleIDAuthorizationScopes.fullName,
-                      ],
-                    );
-
-                    log("apple login email are :: ${credential.email.toString()}");
-                    log("apple login givenName are :: ${credential.givenName.toString()}");
-                    // log("apple login userIdentifier are :: ${credential.userIdentifier}");
-                    // log("apple login familyName are :: ${credential.familyName}");
-                    // log("apple login identityToken are :: ${credential.identityToken}");
-                    // log("apple login state are :: ${credential.state}");
-
-                    if (credential.email!.isNotEmpty &&
-                        credential.givenName!.isNotEmpty) {
-                      await userSignUpScreenController.authenticationFunction(
-                        userName:
-                            credential.givenName! + credential.familyName!,
-                        email: credential.email!,
-                        socialProv: "apple",
-                      );
-                    } else {
-                      // CommonWidgets.yesOrNoDialog(
-                      //   context: context,
-                      //   body:
-                      //       "Unfortunately apple sign in not working. try another login method.",
-                      //   title: "Apple sign in failed",
-                      //   onNoPressed: () {
-                      //     Get.back();
-                      //   },
-                      //   onYesPressed: () {
-                      //     Get.back();
-                      //   },
-                      // );
-                    }
-                  } catch (e) {
-                    log("error occured while apple signin $e");
-                    rethrow;
-                  }
-                },
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(AppImages.appleLoginImg),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              )
-            : const SizedBox(),
+        // GestureDetector(
+        //         onTap: () async {
+        //           // await screenController.signInWithAppleFunction();
+        //
+        //           try {
+        //             final credential =
+        //                 await SignInWithApple.getAppleIDCredential(
+        //               scopes: [
+        //                 AppleIDAuthorizationScopes.email,
+        //                 AppleIDAuthorizationScopes.fullName,
+        //               ],
+        //             );
+        //
+        //             log("apple login email are :: ${credential.email.toString()}");
+        //             log("apple login givenName are :: ${credential.givenName.toString()}");
+        //             // log("apple login userIdentifier are :: ${credential.userIdentifier}");
+        //             // log("apple login familyName are :: ${credential.familyName}");
+        //             // log("apple login identityToken are :: ${credential.identityToken}");
+        //             // log("apple login state are :: ${credential.state}");
+        //
+        //             if (credential.email!.isNotEmpty &&
+        //                 credential.givenName!.isNotEmpty) {
+        //               await userSignUpScreenController.authenticationFunction(
+        //                 userName:
+        //                     credential.givenName! + credential.familyName!,
+        //                 email: credential.email!,
+        //                 socialProv: "apple",
+        //               );
+        //             } else {
+        //               // CommonWidgets.yesOrNoDialog(
+        //               //   context: context,
+        //               //   body:
+        //               //       "Unfortunately apple sign in not working. try another login method.",
+        //               //   title: "Apple sign in failed",
+        //               //   onNoPressed: () {
+        //               //     Get.back();
+        //               //   },
+        //               //   onYesPressed: () {
+        //               //     Get.back();
+        //               //   },
+        //               // );
+        //             }
+        //           } catch (e) {
+        //             log("error occured while apple signin $e");
+        //             rethrow;
+        //           }
+        //         },
+        //         child: Container(
+        //           height: 30,
+        //           width: 30,
+        //           decoration: const BoxDecoration(
+        //             image: DecorationImage(
+        //               image: AssetImage(AppImages.appleLoginImg),
+        //               fit: BoxFit.cover,
+        //             ),
+        //           ),
+        //         ),
+        //       )
+        //     : const SizedBox(),
       ],
     );
   }
 }
+
+class SignInWithAppleButtonModule extends StatelessWidget {
+  final UserSignUpScreenController userSignUpScreenController;
+  const SignInWithAppleButtonModule(
+      {Key? key, required this.userSignUpScreenController})
+      : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SignInWithAppleButton(
+      onPressed: () async {
+        // await screenController.signInWithAppleFunction();
+
+        try {
+          final credential =
+          await SignInWithApple.getAppleIDCredential(
+            scopes: [
+              AppleIDAuthorizationScopes.email,
+              AppleIDAuthorizationScopes.fullName,
+            ],
+          );
+
+          log("apple login email are :: ${credential.email.toString()}");
+          log("apple login givenName are :: ${credential.givenName.toString()}");
+          // log("apple login userIdentifier are :: ${credential.userIdentifier}");
+          // log("apple login familyName are :: ${credential.familyName}");
+          // log("apple login identityToken are :: ${credential.identityToken}");
+          // log("apple login state are :: ${credential.state}");
+
+          if (credential.email!.isNotEmpty &&
+              credential.givenName!.isNotEmpty) {
+            await userSignUpScreenController.authenticationFunction(
+              userName:
+              credential.givenName! + credential.familyName!,
+              email: credential.email!,
+              socialProv: "apple",
+            );
+          } else {
+            // CommonWidgets.yesOrNoDialog(
+            //   context: context,
+            //   body:
+            //       "Unfortunately apple sign in not working. try another login method.",
+            //   title: "Apple sign in failed",
+            //   onNoPressed: () {
+            //     Get.back();
+            //   },
+            //   onYesPressed: () {
+            //     Get.back();
+            //   },
+            // );
+          }
+        } catch (e) {
+          log("error occured while apple signin $e");
+          rethrow;
+        }
+      },
+      text: "Sign in with apple",
+    );
+  }
+}
+
 
 class CustomCircularLoaderModule extends StatelessWidget {
   const CustomCircularLoaderModule({Key? key}) : super(key: key);

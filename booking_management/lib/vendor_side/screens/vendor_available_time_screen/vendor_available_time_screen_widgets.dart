@@ -1618,7 +1618,7 @@ class SetAvailableTimeButtonModule extends StatelessWidget {
             ]
         ),
         child:  Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
           child: Text(
             'Set Available Time',
             style: TextStyle(

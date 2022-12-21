@@ -1393,7 +1393,7 @@ class BookButtonModule extends StatelessWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14),
             child: Text(
               'Book',
               style: TextStyle(

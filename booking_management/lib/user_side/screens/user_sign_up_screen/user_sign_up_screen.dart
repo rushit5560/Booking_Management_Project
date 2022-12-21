@@ -74,7 +74,7 @@ class UserSignUpScreen extends StatelessWidget {
                           ? SignInWithAppleButtonModule(
                               userSignUpScreenController:
                               userSignUpScreenController
-                          ).commonSymmetricPadding(horizontal: 20)
+                          ).commonSymmetricPadding(horizontal: 50)
                           : const SizedBox(),
 
                           const SizedBox(height: 25),

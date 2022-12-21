@@ -863,7 +863,7 @@ class BusinessListModule extends StatelessWidget {
                       ],
                     ),*/
 
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
                         Get.to(
@@ -886,7 +886,7 @@ class BusinessListModule extends StatelessWidget {
                                 ),
                               ]),
                           child: Padding(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                             child: Text(
                               'BOOK APPOINTMENT',
                               style: TextStyle(

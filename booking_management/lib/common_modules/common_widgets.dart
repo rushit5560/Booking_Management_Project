@@ -73,8 +73,8 @@ class SocialMediaLoginModule extends StatelessWidget {
             await userSignUpScreenController.signInWithGoogleFunction();
           },
           child: Container(
-            height: 30,
-            width: 30,
+            height: 40,
+            width: 40,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.googleLoginImg),
@@ -89,8 +89,8 @@ class SocialMediaLoginModule extends StatelessWidget {
             await userSignUpScreenController.signInWithFacebookFunction();
           },
           child: Container(
-            height: 30,
-            width: 30,
+            height: 40,
+            width: 40,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.fbLoginImg),

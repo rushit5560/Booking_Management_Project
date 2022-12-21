@@ -537,7 +537,7 @@ class SubmitButton extends StatelessWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
             child: Text(
               'Submit',
               style: TextStyle(
@@ -767,7 +767,7 @@ class SearchScheduleSubmitButton extends StatelessWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
             child: Text(
               'Submit',
               style: TextStyle(

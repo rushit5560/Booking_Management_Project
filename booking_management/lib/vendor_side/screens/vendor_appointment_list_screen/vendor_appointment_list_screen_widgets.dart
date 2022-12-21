@@ -292,7 +292,7 @@ class _AppointmentListTextModuleState extends State<AppointmentListTextModule> {
 
   Widget _selectableTabsModule() {
     return SizedBox(
-      height: Get.height / 23,
+      height: Get.height / 20,
       child: ListView.builder(
         itemCount: 1,
         shrinkWrap: true,
@@ -319,7 +319,7 @@ class _AppointmentListTextModuleState extends State<AppointmentListTextModule> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       child: Row(
                         children: [
                           const Text(
@@ -419,7 +419,7 @@ class _AppointmentListTextModuleState extends State<AppointmentListTextModule> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       child: Row(
                         children: [
                           const Text(
@@ -469,7 +469,7 @@ class _AppointmentListTextModuleState extends State<AppointmentListTextModule> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       child: Row(
                         children: [
                           const Text(
@@ -519,7 +519,7 @@ class _AppointmentListTextModuleState extends State<AppointmentListTextModule> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       child: Row(
                         children: [
                           const Text(
@@ -835,7 +835,7 @@ class AllAppointmentListModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
           child: Text(
             'View',
             style: TextStyle(
@@ -1251,7 +1251,7 @@ class ConfirmAppointmentListModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
           child: Text(
             'View',
             style: TextStyle(
@@ -1455,7 +1455,7 @@ class CancelAppointmentListModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
           child: Text(
             'View',
             style: TextStyle(
@@ -1532,27 +1532,33 @@ class DoneAppointmentListModule extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 70,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _userNameModule(i),
-                          const SizedBox(height: 8),
-                          _dateAndTimeModule(i),
-                          const SizedBox(height: 8),
-                          _statusModule(i),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _userNameModule(i),
+                            const SizedBox(height: 8),
+                            _dateAndTimeModule(i),
+                            const SizedBox(height: 8),
+                            _statusModule(i),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(width: 5),
                     Expanded(
                       flex: 30,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          _viewButton(i),
-                          // const SizedBox(width: 10),
-                          // _confirmButton(),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _viewButton(i),
+                            // const SizedBox(width: 10),
+                            // _confirmButton(),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -1659,7 +1665,7 @@ class DoneAppointmentListModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
           child: Text(
             'View',
             style: TextStyle(

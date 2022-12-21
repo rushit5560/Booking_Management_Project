@@ -458,7 +458,7 @@ class SearchButtonModule extends StatelessWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
             child: Text(
               'Search',
               style: TextStyle(

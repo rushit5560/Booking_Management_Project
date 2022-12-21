@@ -37,7 +37,7 @@ class AddResourcesButton extends StatelessWidget {
           ),
         ]),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
           child: Text(
             'Add Resource',
             style: TextStyle(

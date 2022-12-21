@@ -44,9 +44,9 @@ class SignInScreen extends StatelessWidget {
                         const SizedBox(height: 15),
                         SignInSocialMediaLoginButtonsModule(),
                         const SizedBox(height: 15),
-                        signInScreenController.isIosPlatform.value ?
-                        SignInWithAppleModule().commonSymmetricPadding(horizontal: 20)
-                        : const SizedBox(),
+                        signInScreenController.isIosPlatform.value
+                            ? SignInWithAppleModule().commonSymmetricPadding(horizontal: 50)
+                            : const SizedBox(),
                         const SizedBox(height: 30),
                         const SignUpTextModule(),
                         const SizedBox(height: 10),

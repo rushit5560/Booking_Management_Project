@@ -835,7 +835,7 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
               ),
             ]),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
           child: Text(
             'SAVE',
             style: TextStyle(
@@ -938,7 +938,7 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
               ),
             ]),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
           child: Text(
             'DeActivate Account',
             style: TextStyle(
@@ -957,16 +957,7 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
     return GestureDetector(
       onTap: () {
         String msg = "Please email info@setdaytime.com with brief information "
-            "for Account deletion request.For App review put this info: We "
-            "have implemented Flag in database for Support staff upon “Account "
-            "Deactivate” and “Account Delete” click. Reason why we have "
-            "intervention for manual check before automated process from user "
-            "is run is because nature of our business, as in past we have "
-            "negative feedback due to future bookings removed due to deletion"
-            " and deactivation so to avoid any payment or bookings related "
-            "issues it is vital for our clients and our business reputation "
-            "to not give direct control of deletion and deactivation to our "
-            "users but to run same in automated cycle in controlled environment.";
+            "for Account deletion request.";
         Fluttertoast.cancel();
         Fluttertoast.showToast(msg: msg,toastLength: Toast.LENGTH_LONG);
       },
@@ -983,7 +974,7 @@ class _ProfileDetailsModuleState extends State<ProfileDetailsModule> {
               ),
             ]),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
           child: Text(
             'Delete Account',
             style: TextStyle(

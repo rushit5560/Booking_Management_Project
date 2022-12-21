@@ -261,7 +261,9 @@ class OverviewModule extends StatelessWidget {
           },
           icon: Icon(screenController.isFavourite.value == true
               ? Icons.favorite_rounded
-              : Icons.favorite_border_rounded),
+              : Icons.favorite_border_rounded,
+          size: 30,
+          ),
           color: screenController.isFavourite.value == true
               ? Colors.red
               : Colors.grey,
@@ -486,7 +488,7 @@ class OverviewModule extends StatelessWidget {
           ),
         ]),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
             'View Map',
             style: TextStyle(

@@ -682,6 +682,7 @@ class VendorSignUpButtonModule extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () async {
+
             if (screenController.vendorSignUpFormKey.currentState!.validate()) {
               if (screenController.selectedCountryCode.value == "SC") {
                 Get.snackbar(
@@ -701,15 +702,14 @@ class VendorSignUpButtonModule extends StatelessWidget {
               } else {
                 await screenController.vendorSignUpFunction();
               }
-
               // else if (screenController.serviceCheckBox.value == false) {
               //   Get.snackbar(
               //     "Required Field",
               //     "Please accept additional sub-service field",
               //   );
               // }
-
             }
+
           },
           child: Container(
             decoration: BoxDecoration(
@@ -724,7 +724,7 @@ class VendorSignUpButtonModule extends StatelessWidget {
                   ),
                 ]),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               child: Text(
                 'SIGN UP',
                 style: TextStyle(

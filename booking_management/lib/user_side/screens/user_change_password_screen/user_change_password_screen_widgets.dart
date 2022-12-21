@@ -119,7 +119,7 @@ class SaveButtonModule extends StatelessWidget {
             ]
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
           child: Text(
             'SAVE',
             style: TextStyle(

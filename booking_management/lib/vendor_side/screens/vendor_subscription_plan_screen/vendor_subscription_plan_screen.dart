@@ -262,7 +262,7 @@ class VendorSubscriptionPlanScreen extends StatelessWidget {
                     child: Text(
                       singleItem.isActive == true ? "Cancel" : "Purchase Now",
                       style: const TextStyle(color: Colors.white),
-                    ).commonSymmetricPadding(horizontal: 15, vertical: 10),
+                    ).commonSymmetricPadding(horizontal: 32, vertical: 12),
                   ),
                 ),
               ),

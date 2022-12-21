@@ -108,7 +108,7 @@ class SignInButtonModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
           child: Text(
             'SIGN IN',
             style: TextStyle(
@@ -186,8 +186,8 @@ class SignInSocialMediaLoginButtonsModule extends StatelessWidget {
             await screenController.signInWithGoogleFunction();
           },
           child: Container(
-            height: 30,
-            width: 30,
+            height: 40,
+            width: 40,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.googleLoginImg),
@@ -202,8 +202,8 @@ class SignInSocialMediaLoginButtonsModule extends StatelessWidget {
             await screenController.signInWithFacebookFunction();
           },
           child: Container(
-            height: 30,
-            width: 30,
+            height: 40,
+            width: 40,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.fbLoginImg),

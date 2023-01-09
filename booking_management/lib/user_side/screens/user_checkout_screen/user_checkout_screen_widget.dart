@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:booking_management/common_modules/constants/api_url.dart';
 import 'package:booking_management/common_modules/constants/app_images.dart';
 import 'package:booking_management/common_modules/extension_methods/extension_methods.dart';
@@ -388,12 +387,10 @@ class AttendeeDetailsAddModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      ()=> ListView.separated(
+      () => ListView.separated(
         itemCount: screenController.quantityValue.value,
         shrinkWrap: true,
-
         physics: const NeverScrollableScrollPhysics(),
-
         itemBuilder: (context, index) {
           return AttendeeDetailsForm(attendeeFormIndex: index);
         },
@@ -515,126 +512,480 @@ class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Text(
-              widget.criteriaName,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
+      // height: 75,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColors.colorGreyIconLight,
+            width: 0.5,
           ),
-          Container(
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.grey, width: 0.65),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<SubCriteriasList>(
-                // Initial Value
-                // hint: Text(criteriaName),
-
-                value: selectedValue,
-                // Down Arrow Icon
-                icon: const Icon(Icons.keyboard_arrow_down),
-                style: const TextStyle(color: Colors.black),
-                isExpanded: true,
-                // Array list of items
-                items: widget.criteriaValuesList.map((value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(value.text.toString()),
-                  );
-                }).toList(),
-
-                // screenController.countriesList.map((String items) {
-                //   return DropdownMenuItem(
-                //     value: items,
-                //     child: Text(items),
-                //   );
-                // }).toList(),
-                // After selecting the desired option,it will
-                // change button value to selected value
-                onChanged: (newValue) {
-                  screenController.isLoading(true);
-
-                  // screenController.attendeeCritDetailsList[attendeeFormIndex]
-                  //     .add();
-                  // log("attendeeFormIndex is :: $attendeeFormIndex");
-                  // log("index is :: $index");
-
-                  selectedValue = newValue!;
-
-                  for (int i = 0;
-                      i < screenController.attendeeCritDetailsList.length;
-                      i++) {
-                    if (i == widget.attendeeFormIndex) {
-                      List<String> tempList = screenController
-                          .attendeeCritDetailsList[widget.attendeeFormIndex];
-
-                      List<String> tempList2 = [];
-                      log('tempList : $tempList');
-                      log('iiiii : $i');
-
-                      for (int j = 0; j < tempList.length; j++) {
-                        if (j == widget.index) {
-                          tempList2.add(newValue.value);
-                        } else {
-                          tempList2.add(tempList[j]);
-                        }
-                      }
-                      log('tempList2 : $tempList2');
-
-                      // screenController.attendeeCritDetailsList[attendeeFormIndex].indexWhere((element) => element == index ? element[index]);
-                      // for(int j = 0; j < tempList.length; j++) {
-                      //   if(j == index) {
-                      //     tempList[index] = newValue!.value;
-                      // }
-                      // }
-
-                      screenController.attendeeCritDetailsList[
-                          widget.attendeeFormIndex] = tempList2;
-
-                      // for (int j = 0; j < screenController.critSubList.length; j++) {
-
-                      // if (j == index) {
-                      //   log("i is :: $i ");
-                      //   log("attendeeFormIndex is :: $attendeeFormIndex ");
-                      //   //todo - logic
-                      //   screenController
-                      //           .attendeeCritDetailsList[attendeeFormIndex]
-                      //       [index] = newValue!.value;
-                      //   // screenController..attendeeCritDetailsList[attendeeFormIndex].critSubList[index] = newValue!.value;
-                      // }
-                      // }
-                    }
-                  }
-
-                  log("screenController.attendeeCritDetailsList : ${screenController.attendeeCritDetailsList}");
-                  // screenController.critSubList.indexWhere(
-                  //   (element) {},
-                  // );
-
-                  // screenController.critSubList
-                  // criteriaValuesList = newValue!;
-
-                  // log("countryData : ${screenController.countryData!.code}");
-                  // screenController.selectedCountryCode.value
-                  // = "${screenController.countryData!.code}";
-
-                  screenController.isLoading(false);
-                },
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Text(
+                widget.criteriaName,
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
-            ).commonSymmetricPadding(horizontal: 10),
-          ),
-        ],
+            ),
+            Container(
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey, width: 0.65),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<SubCriteriasList>(
+                  // Initial Value
+                  // hint: Text(criteriaName),
+
+                  value: selectedValue,
+                  // Down Arrow Icon
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  style: const TextStyle(color: Colors.black),
+                  isExpanded: true,
+                  // Array list of items
+                  items: widget.criteriaValuesList.map((value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(value.text.toString()),
+                    );
+                  }).toList(),
+
+                  // screenController.countriesList.map((String items) {
+                  //   return DropdownMenuItem(
+                  //     value: items,
+                  //     child: Text(items),
+                  //   );
+                  // }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (newValue) {
+                    screenController.isLoading(true);
+
+                    // screenController.attendeeCritDetailsList[attendeeFormIndex]
+                    //     .add();
+                    // log("attendeeFormIndex is :: $attendeeFormIndex");
+                    // log("index is :: $index");
+
+                    selectedValue = newValue!;
+
+                    for (int i = 0;
+                        i < screenController.attendeeCritDetailsList.length;
+                        i++) {
+                      if (i == widget.attendeeFormIndex) {
+                        List<String> tempList = screenController
+                            .attendeeCritDetailsList[widget.attendeeFormIndex];
+
+                        List<String> tempList2 = [];
+                        log('tempList : $tempList');
+                        log('iiiii : $i');
+
+                        for (int j = 0; j < tempList.length; j++) {
+                          if (j == widget.index) {
+                            tempList2.add(newValue.value);
+                          } else {
+                            tempList2.add(tempList[j]);
+                          }
+                        }
+                        log('tempList2 : $tempList2');
+
+                        // screenController.attendeeCritDetailsList[attendeeFormIndex].indexWhere((element) => element == index ? element[index]);
+                        // for(int j = 0; j < tempList.length; j++) {
+                        //   if(j == index) {
+                        //     tempList[index] = newValue!.value;
+                        // }
+                        // }
+
+                        screenController.attendeeCritDetailsList[
+                            widget.attendeeFormIndex] = tempList2;
+
+                        // for (int j = 0; j < screenController.critSubList.length; j++) {
+
+                        // if (j == index) {
+                        //   log("i is :: $i ");
+                        //   log("attendeeFormIndex is :: $attendeeFormIndex ");
+                        //   //todo - logic
+                        //   screenController
+                        //           .attendeeCritDetailsList[attendeeFormIndex]
+                        //       [index] = newValue!.value;
+                        //   // screenController..attendeeCritDetailsList[attendeeFormIndex].critSubList[index] = newValue!.value;
+                        // }
+                        // }
+                      }
+                    }
+
+                    log("screenController.attendeeCritDetailsList : ${screenController.attendeeCritDetailsList}");
+                    // screenController.critSubList.indexWhere(
+                    //   (element) {},
+                    // );
+
+                    // screenController.critSubList
+                    // criteriaValuesList = newValue!;
+
+                    // log("countryData : ${screenController.countryData!.code}");
+                    // screenController.selectedCountryCode.value
+                    // = "${screenController.countryData!.code}";
+
+                    screenController.isLoading(false);
+                  },
+                ),
+              ).commonSymmetricPadding(horizontal: 10),
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Text(
+                          "Sub-Criteria",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        height: 45,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey, width: 0.65),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<SubCriteriasList>(
+                            // Initial Value
+                            // hint: Text(criteriaName),
+
+                            value: selectedValue,
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            style: const TextStyle(color: Colors.black),
+                            isExpanded: true,
+                            // Array list of items
+                            items: widget.criteriaValuesList.map((value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value.text.toString()),
+                              );
+                            }).toList(),
+
+                            onChanged: (newValue) {
+                              screenController.isLoading(true);
+
+                              selectedValue = newValue!;
+
+                              for (int i = 0;
+                                  i <
+                                      screenController
+                                          .attendeeCritDetailsList.length;
+                                  i++) {
+                                if (i == widget.attendeeFormIndex) {
+                                  List<String> tempList =
+                                      screenController.attendeeCritDetailsList[
+                                          widget.attendeeFormIndex];
+
+                                  List<String> tempList2 = [];
+                                  log('tempList : $tempList');
+                                  log('iiiii : $i');
+
+                                  for (int j = 0; j < tempList.length; j++) {
+                                    if (j == widget.index) {
+                                      tempList2.add(newValue.value);
+                                    } else {
+                                      tempList2.add(tempList[j]);
+                                    }
+                                  }
+                                  log('tempList2 : $tempList2');
+
+                                  screenController.attendeeCritDetailsList[
+                                      widget.attendeeFormIndex] = tempList2;
+                                }
+                              }
+
+                              log("screenController.attendeeCritDetailsList : ${screenController.attendeeCritDetailsList}");
+
+                              screenController.isLoading(false);
+                            },
+                          ),
+                        ).commonSymmetricPadding(horizontal: 10),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Text(
+                          "Price",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        height: 45,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey, width: 0.65),
+                        ),
+                        child: const Text("140").commonSymmetricPadding(
+                            horizontal: 10, vertical: 10),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 }
+
+// class AttendeeDetailsForm extends StatelessWidget {
+//   AttendeeDetailsForm({Key? key, required this.attendeeFormIndex})
+//       : super(key: key);
+
+//   final int attendeeFormIndex;
+//   final screenController = Get.find<UserCheckoutScreenController>();
+
+//   final border = OutlineInputBorder(
+//     borderRadius: const BorderRadius.all(
+//       Radius.circular(12),
+//     ),
+//     borderSide: BorderSide(
+//       color: AppColors.colorGreyIconLight,
+//       width: 0.8,
+//     ),
+//   );
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+//       decoration: BoxDecoration(
+//         border: Border.all(
+//           color: AppColors.colorGreyIconLight,
+//           width: 0.5,
+//         ),
+//         borderRadius: const BorderRadius.all(
+//           Radius.circular(12),
+//         ),
+//       ),
+//       child: Column(
+//         children: [
+//           TextFormField(
+//             controller:
+//                 screenController.attendeeNameControllerList[attendeeFormIndex],
+//             decoration: InputDecoration(
+//               isDense: true,
+//               contentPadding:
+//                   const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+//               labelText: "Attendee Name*",
+//               border: border,
+//               enabledBorder: border,
+//               focusedBorder: border,
+//             ),
+//           ),
+//           const SizedBox(height: 5),
+//           ListView.builder(
+//             itemCount: screenController.criteriasCountList.length,
+//             shrinkWrap: true,
+//             physics: const NeverScrollableScrollPhysics(),
+//             itemBuilder: (context, index) {
+//               var critDropDownValuesList =
+//                   screenController.criteriasCountList[index].criteriasList;
+//               var critDropDownName =
+//                   screenController.criteriasCountList[index].name;
+//               return DropDownSelectWidget(
+//                 criteriaName: critDropDownName,
+//                 criteriaValuesList: critDropDownValuesList,
+//                 index: index,
+//                 attendeeFormIndex: attendeeFormIndex,
+//               );
+//             },
+//             // separatorBuilder: (context, index) {
+//             //   return const SizedBox(height: 5);
+//             // },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class DropDownSelectWidget extends StatefulWidget {
+//   DropDownSelectWidget({
+//     Key? key,
+//     required this.criteriaName,
+//     required this.criteriaValuesList,
+//     required this.index,
+//     required this.attendeeFormIndex,
+//   }) : super(key: key);
+
+//   final int index;
+//   final int attendeeFormIndex;
+//   final String criteriaName;
+//   final List<SubCriteriasList> criteriaValuesList;
+
+//   @override
+//   State<DropDownSelectWidget> createState() => _DropDownSelectWidgetState();
+// }
+
+// class _DropDownSelectWidgetState extends State<DropDownSelectWidget> {
+//   final screenController = Get.find<UserCheckoutScreenController>();
+
+//   SubCriteriasList? selectedValue;
+
+//   @override
+//   void initState() {
+//     selectedValue = widget.criteriaValuesList[0];
+//     super.initState();
+//   }
+
+//   // widget.criteriaValuesList[0];
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 75,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+//             child: Text(
+//               widget.criteriaName,
+//               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+//             ),
+//           ),
+//           Container(
+//             height: 45,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(10),
+//               border: Border.all(color: Colors.grey, width: 0.65),
+//             ),
+//             child: DropdownButtonHideUnderline(
+//               child: DropdownButton<SubCriteriasList>(
+//                 // Initial Value
+//                 // hint: Text(criteriaName),
+
+//                 value: selectedValue,
+//                 // Down Arrow Icon
+//                 icon: const Icon(Icons.keyboard_arrow_down),
+//                 style: const TextStyle(color: Colors.black),
+//                 isExpanded: true,
+//                 // Array list of items
+//                 items: widget.criteriaValuesList.map((value) {
+//                   return DropdownMenuItem(
+//                     value: value,
+//                     child: Text(value.text.toString()),
+//                   );
+//                 }).toList(),
+
+//                 // screenController.countriesList.map((String items) {
+//                 //   return DropdownMenuItem(
+//                 //     value: items,
+//                 //     child: Text(items),
+//                 //   );
+//                 // }).toList(),
+//                 // After selecting the desired option,it will
+//                 // change button value to selected value
+//                 onChanged: (newValue) {
+//                   screenController.isLoading(true);
+
+//                   // screenController.attendeeCritDetailsList[attendeeFormIndex]
+//                   //     .add();
+//                   // log("attendeeFormIndex is :: $attendeeFormIndex");
+//                   // log("index is :: $index");
+
+//                   selectedValue = newValue!;
+
+//                   for (int i = 0;
+//                       i < screenController.attendeeCritDetailsList.length;
+//                       i++) {
+//                     if (i == widget.attendeeFormIndex) {
+//                       List<String> tempList = screenController
+//                           .attendeeCritDetailsList[widget.attendeeFormIndex];
+
+//                       List<String> tempList2 = [];
+//                       log('tempList : $tempList');
+//                       log('iiiii : $i');
+
+//                       for (int j = 0; j < tempList.length; j++) {
+//                         if (j == widget.index) {
+//                           tempList2.add(newValue.value);
+//                         } else {
+//                           tempList2.add(tempList[j]);
+//                         }
+//                       }
+//                       log('tempList2 : $tempList2');
+
+//                       // screenController.attendeeCritDetailsList[attendeeFormIndex].indexWhere((element) => element == index ? element[index]);
+//                       // for(int j = 0; j < tempList.length; j++) {
+//                       //   if(j == index) {
+//                       //     tempList[index] = newValue!.value;
+//                       // }
+//                       // }
+
+//                       screenController.attendeeCritDetailsList[
+//                           widget.attendeeFormIndex] = tempList2;
+
+//                       // for (int j = 0; j < screenController.critSubList.length; j++) {
+
+//                       // if (j == index) {
+//                       //   log("i is :: $i ");
+//                       //   log("attendeeFormIndex is :: $attendeeFormIndex ");
+//                       //   //todo - logic
+//                       //   screenController
+//                       //           .attendeeCritDetailsList[attendeeFormIndex]
+//                       //       [index] = newValue!.value;
+//                       //   // screenController..attendeeCritDetailsList[attendeeFormIndex].critSubList[index] = newValue!.value;
+//                       // }
+//                       // }
+//                     }
+//                   }
+
+//                   log("screenController.attendeeCritDetailsList : ${screenController.attendeeCritDetailsList}");
+//                   // screenController.critSubList.indexWhere(
+//                   //   (element) {},
+//                   // );
+
+//                   // screenController.critSubList
+//                   // criteriaValuesList = newValue!;
+
+//                   // log("countryData : ${screenController.countryData!.code}");
+//                   // screenController.selectedCountryCode.value
+//                   // = "${screenController.countryData!.code}";
+
+//                   screenController.isLoading(false);
+//                 },
+//               ),
+//             ).commonSymmetricPadding(horizontal: 10),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 /// Confirm And Pay Button
 class ConfirmAndPayButtonModule extends StatelessWidget {
@@ -651,26 +1002,33 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
         screenController.selectedValuesPassList.clear();
         screenController.isTextFieldFilled.value = true;
         if (screenController.checkOutFormKey.currentState!.validate()) {
-          if (screenController.isPriceDisplay && screenController.bookingPrice.value != 0.0) {
-
-            for(int i =0; i < screenController.attendeeNameControllerList.length; i++) {
-              if(screenController.attendeeNameControllerList[i].text.trim().isEmpty) {
+          if (screenController.isPriceDisplay &&
+              screenController.bookingPrice.value != 0.0) {
+            for (int i = 0;
+                i < screenController.attendeeNameControllerList.length;
+                i++) {
+              if (screenController.attendeeNameControllerList[i].text
+                  .trim()
+                  .isEmpty) {
                 screenController.isTextFieldFilled.value = false;
               }
             }
 
-            if(screenController.critSubList.isNotEmpty) {
-              if(screenController.isTextFieldFilled.value) {
+            if (screenController.critSubList.isNotEmpty) {
+              if (screenController.isTextFieldFilled.value) {
                 for (int i = 0;
-                i < screenController.attendeeCritDetailsList.length;
-                i++) {
+                    i < screenController.attendeeCritDetailsList.length;
+                    i++) {
                   screenController.selectedValuesPassList.add(
                     {
-                      "Name": screenController.attendeeNameControllerList[i].text,
+                      "Name":
+                          screenController.attendeeNameControllerList[i].text,
                       "Criterias": [
                         for (int j = 0;
-                        j < screenController.attendeeCritDetailsList[i].length;
-                        j++)
+                            j <
+                                screenController
+                                    .attendeeCritDetailsList[i].length;
+                            j++)
                           {"Id": screenController.attendeeCritDetailsList[i][j]}
                       ],
                     },
@@ -679,10 +1037,10 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
 
                 log("screenController.selectedValuesPassList :: ${screenController.selectedValuesPassList}");
                 Get.to(
-                      () => const UserCardPaymentScreen(),
+                  () => const UserCardPaymentScreen(),
                   arguments: [
                     (screenController.bookingPrice.value *
-                        screenController.quantityValue.value)
+                            screenController.quantityValue.value)
                         .toString()
                         .split(".")[0]
                         .toString(),
@@ -694,22 +1052,18 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                     // screenController.selectedValuesPassList,
                   ],
                 );
-
-
-              }
-              else {
+              } else {
                 Fluttertoast.cancel();
-                Fluttertoast.showToast(msg: "Please fill attendee name",
+                Fluttertoast.showToast(
+                    msg: "Please fill attendee name",
                     toastLength: Toast.LENGTH_SHORT);
-
               }
-            }
-            else {
+            } else {
               Get.to(
-                    () => const UserCardPaymentScreen(),
+                () => const UserCardPaymentScreen(),
                 arguments: [
                   (screenController.bookingPrice.value *
-                      screenController.quantityValue.value)
+                          screenController.quantityValue.value)
                       .toString()
                       .split(".")[0]
                       .toString(),
@@ -722,9 +1076,7 @@ class ConfirmAndPayButtonModule extends StatelessWidget {
                 ],
               );
             }
-
-          }
-          else {
+          } else {
             await screenController.checkOutSubmitFunction();
           }
           // await screenController.checkOutSubmitFunction();

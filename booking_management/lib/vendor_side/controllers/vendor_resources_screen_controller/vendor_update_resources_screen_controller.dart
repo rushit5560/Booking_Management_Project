@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:booking_management/vendor_side/controllers/vendor_resources_screen_controller/vendor_resources_screen_controller.dart';
 import 'package:booking_management/vendor_side/model/vendor_get_all_resources_list_model/criteria_model.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ import '../../model/vendor_get_all_resources_list_model/get_vendor_service_detai
 import '../../model/vendor_get_all_resources_list_model/update_vendor_resource_model.dart';
 import '../../screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_screen_widgets.dart';
 
-enum CriteriaMode { add, update }
+
 
 class VendorUpdateResourcesScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -79,9 +80,7 @@ class VendorUpdateResourcesScreenController extends GetxController {
   void onInit() {
     super.onInit();
 
-    getResourcesDetailsByIdFunction(
-      id: resourceId,
-    );
+    getResourcesDetailsByIdFunction(id: resourceId);
 
     // criteriaNameUpdateControllerList.add(criteriaNameFieldUpdateController);
     // criteriaOptionUpdateControllerList.add(criteriaOptionFieldUpdateController);
@@ -300,17 +299,12 @@ class VendorUpdateResourcesScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         selectedItemId = getResourceDetailsModel.workerList.id;
-        updateResourceNameFieldController.text =
-            getResourceDetailsModel.workerList.resourceName;
-        updateResourceDetailsFieldController.text =
-            getResourceDetailsModel.workerList.details;
-        updateResourcePriceFieldController.text =
-            getResourceDetailsModel.workerList.price.toString();
-        updateResourceCapacityFieldController.text =
-            getResourceDetailsModel.workerList.capacity.toString();
+        updateResourceNameFieldController.text = getResourceDetailsModel.workerList.resourceName;
+        updateResourceDetailsFieldController.text = getResourceDetailsModel.workerList.details;
+        updateResourcePriceFieldController.text = getResourceDetailsModel.workerList.price.toString();
+        updateResourceCapacityFieldController.text = getResourceDetailsModel.workerList.capacity.toString();
         updateEvent.value = getResourceDetailsModel.workerList.isEvent;
-        updateRequireCriteria.value =
-            getResourceDetailsModel.workerList.requireCriteria;
+        updateRequireCriteria.value = getResourceDetailsModel.workerList.requireCriteria;
 
         criteriaGetList = getResourceDetailsModel.workerList.criterias;
 
@@ -355,12 +349,9 @@ class VendorUpdateResourcesScreenController extends GetxController {
             // criteriaOptionUpdateFieldController.text =
             //     criteriaGetList[i].options;
 
-            criteriaNameUpdateControllerList
-                .add(TextEditingController(text: criteriaGetList[i].name));
-            criteriaOptionUpdateControllerList
-                .add(TextEditingController(text: criteriaGetList[i].options));
-            criteriaPriceUpdateControllerList.add(TextEditingController(
-                text: criteriaGetList[i].price.toString()));
+            criteriaNameUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].name));
+            criteriaOptionUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].options));
+            criteriaPriceUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].price.toString()));
 
             List<TextEditingController> subCriteriaGetOptionList = [];
             List<TextEditingController> subCriteriaGetPriceList = [];
@@ -372,17 +363,12 @@ class VendorUpdateResourcesScreenController extends GetxController {
               criteriaModeList.add(CriteriaMode.update);
 
               for (int j = 0; j < criteriaGetList[i].subCriteria.length; j++) {
-                CriteriaData singleSubCriteria =
-                    criteriaGetList[i].subCriteria[j];
+                CriteriaData singleSubCriteria = criteriaGetList[i].subCriteria[j];
 
                 //options controller adding to OptionList
-                subCriteriaGetOptionList.add(
-                  TextEditingController(text: singleSubCriteria.options),
-                );
+                subCriteriaGetOptionList.add(TextEditingController(text: singleSubCriteria.options));
                 //price  controller adding to PriceList
-                subCriteriaGetPriceList.add(TextEditingController(
-                  text: singleSubCriteria.price.toString(),
-                ));
+                subCriteriaGetPriceList.add(TextEditingController(text: singleSubCriteria.price.toString()));
                 log(" singleSubCriteria.options is  :: ${singleSubCriteria.options.toString()}");
                 log("singleSubCriteria.price is  :: ${singleSubCriteria.price.toString()}");
               }
@@ -397,8 +383,8 @@ class VendorUpdateResourcesScreenController extends GetxController {
                 optionFieldController: criteriaOptionUpdateControllerList[i],
                 priceFieldController: criteriaPriceUpdateControllerList[i],
                 criteriaModeIs: criteriaModeList[i],
-                optionContollerList: subCriteriaGetOptionList,
-                priceContollerList: subCriteriaGetPriceList,
+                optionControllerList: subCriteriaGetOptionList,
+                priceControllerList: subCriteriaGetPriceList,
               ),
             );
           }

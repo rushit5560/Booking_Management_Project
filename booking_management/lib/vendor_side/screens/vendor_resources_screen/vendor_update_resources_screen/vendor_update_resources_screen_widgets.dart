@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:booking_management/common_modules/constants/app_images.dart';
+import 'package:booking_management/common_modules/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -837,8 +838,8 @@ class _CriteriaManageUpdateModuleState
                               .criteriaPriceUpdateControllerList[iNumber],
                           criteriaModeIs: vendorUpdateResController
                               .criteriaModeList[iNumber],
-                          optionContollerList: [],
-                          priceContollerList: [],
+                          optionControllerList: [],
+                          priceControllerList: [],
                         ),
                       );
                       vendorUpdateResController.criteriaGetIndexList.add(0);
@@ -907,8 +908,8 @@ class CriteriaFormUpdateWidget extends StatefulWidget {
   TextEditingController criteriaNameFieldController;
   TextEditingController optionFieldController;
   TextEditingController priceFieldController;
-  List<TextEditingController>? optionContollerList;
-  List<TextEditingController>? priceContollerList;
+  List<TextEditingController>? optionControllerList;
+  List<TextEditingController>? priceControllerList;
   CriteriaMode criteriaModeIs;
 
   CriteriaFormUpdateWidget({
@@ -919,8 +920,8 @@ class CriteriaFormUpdateWidget extends StatefulWidget {
     required this.optionFieldController,
     required this.priceFieldController,
     required this.criteriaModeIs,
-    this.optionContollerList,
-    this.priceContollerList,
+    this.optionControllerList,
+    this.priceControllerList,
   }) : super(key: key);
 
   @override
@@ -929,14 +930,14 @@ class CriteriaFormUpdateWidget extends StatefulWidget {
 }
 
 class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
-  final vendorUpdateResController =
-      Get.find<VendorUpdateResourcesScreenController>();
+  final vendorUpdateResController = Get.find<VendorUpdateResourcesScreenController>();
 
   // TextEditingController criteriaNameFieldController = TextEditingController();
   // TextEditingController optionFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
     final inputBorder = OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.colorGreyIconLight,
@@ -944,6 +945,7 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
       ),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
     );
+
     return Obx(
       () => vendorUpdateResController.isLoading.value
           ? const CustomCircularLoaderModule()
@@ -977,30 +979,23 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                           log('Criteria Name :${vendorUpdateResController.criteriaNameUpdateControllerList[widget.index].text}');
                           log('Criteria Option :${vendorUpdateResController.criteriaOptionUpdateControllerList[widget.index].text}');
 
-                          vendorUpdateResController.criteriaUpdateList
-                              .removeAt(widget.index);
-                          vendorUpdateResController
-                              .criteriaNameUpdateControllerList
-                              .removeAt(widget.index);
-                          vendorUpdateResController
-                              .criteriaOptionUpdateControllerList
-                              .removeAt(widget.index);
+                          vendorUpdateResController.criteriaUpdateList.removeAt(widget.index);
+                          vendorUpdateResController.criteriaNameUpdateControllerList.removeAt(widget.index);
+                          vendorUpdateResController.criteriaOptionUpdateControllerList.removeAt(widget.index);
 
-                          if (vendorUpdateResController
-                              .criteriaGetIndexList.isEmpty) {
+                          if (vendorUpdateResController.criteriaGetIndexList.isEmpty) {
                             log("id index is not there :: ");
 
                             // if(vendorUpdateResController
                             //   .criteriaGetIndexList.){}
                           } else {
-                            vendorUpdateResController.criteriaGetIndexList
-                                .removeAt(widget.index);
+                            vendorUpdateResController.criteriaGetIndexList.removeAt(widget.index);
                             log("vendorUpdateResController.criteriaGetIndexList is :: ${vendorUpdateResController.criteriaGetIndexList}");
                           }
 
                           vendorUpdateResController.isLoading(false);
 
-                          log("criteias list lentgh is : ${vendorUpdateResController.criteriaGetIndexList}");
+                          log("criterias list length is : ${vendorUpdateResController.criteriaGetIndexList}");
                         },
                         child: Container(
                           height: 28,
@@ -1027,14 +1022,36 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            RichText(
+                              text: TextSpan(
+                                  text: "Criteria Name",
+                                  style: TextStyle(
+                                    // fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: AppColors.blackColor,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: AppColors.redColor,
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                            ),
+
+                            /*const Text(
                               "Criteria Name *",
                               maxLines: 2,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                               ),
-                            ),
+                            ),*/
                             const SizedBox(height: 5),
                             TextFormField(
                               controller: widget.criteriaNameFieldController,
@@ -1056,14 +1073,35 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            RichText(
+                              text: TextSpan(
+                                  text: "Option to select from",
+                                  style: TextStyle(
+                                    // fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: AppColors.blackColor,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: AppColors.redColor,
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                            /*const Text(
                               "Option to select from *",
                               maxLines: 2,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                               ),
-                            ),
+                            ),*/
                             const SizedBox(height: 5),
                             TextFormField(
                               controller: widget.optionFieldController,
@@ -1090,14 +1128,35 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            RichText(
+                              text: TextSpan(
+                                  text: "Price",
+                                  style: TextStyle(
+                                    // fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: AppColors.blackColor,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: AppColors.redColor,
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                            /*const Text(
                               "Price *",
                               maxLines: 2,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                               ),
-                            ),
+                            ),*/
                             const SizedBox(height: 5),
                             TextFormField(
                               controller: widget.priceFieldController,
@@ -1134,9 +1193,8 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                                   GestureDetector(
                                     onTap: () {
                                       vendorUpdateResController.isLoading(true);
-
-                                      vendorUpdateResController
-                                          .isLoading(false);
+                                      //todo - sub criteria
+                                      vendorUpdateResController.isLoading(false);
                                     },
                                     child: Container(
                                       height: 42,
@@ -1190,13 +1248,13 @@ class _CriteriaFormUpdateWidgetState extends State<CriteriaFormUpdateWidget> {
                       : const SizedBox(height: 10),
                   ListView.separated(
                     shrinkWrap: true,
-                    itemCount: widget.priceContollerList!.length,
+                    itemCount: widget.priceControllerList!.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return SubCriteriaSingleWidget(
                         optionFieldController:
-                            widget.optionContollerList![index],
-                        priceFieldController: widget.priceContollerList![index],
+                            widget.optionControllerList![index],
+                        priceFieldController: widget.priceControllerList![index],
                         // index: index,
                       );
                     },
@@ -1242,14 +1300,35 @@ class SubCriteriaSingleWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              RichText(
+                text: TextSpan(
+                    text: "Option to select from",
+                    style: TextStyle(
+                      // fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      overflow: TextOverflow.ellipsis,
+                      color: AppColors.blackColor,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: ' *',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: AppColors.redColor,
+                        ),
+                      ),
+                    ]
+                ),
+              ),
+              /*const Text(
                 "Option to select from *",
                 maxLines: 2,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                 ),
-              ),
+              ),*/
               const SizedBox(height: 5),
               TextFormField(
                 controller: optionFieldController,
@@ -1271,14 +1350,35 @@ class SubCriteriaSingleWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              RichText(
+                text: TextSpan(
+                    text: "Price",
+                    style: TextStyle(
+                      // fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      overflow: TextOverflow.ellipsis,
+                      color: AppColors.blackColor,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: ' *',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: AppColors.redColor,
+                        ),
+                      ),
+                    ]
+                ),
+              ),
+              /*const Text(
                 "Price *",
                 maxLines: 2,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                 ),
-              ),
+              ),*/
               const SizedBox(height: 5),
               TextFormField(
                 controller: priceFieldController,

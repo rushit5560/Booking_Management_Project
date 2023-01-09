@@ -87,3 +87,5 @@ enum SubscriptionOption {
 enum SearchWise {
   none, dateWise
 }
+
+enum CriteriaMode { add, update }

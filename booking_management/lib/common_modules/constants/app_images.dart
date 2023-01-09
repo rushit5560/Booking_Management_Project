@@ -10,6 +10,9 @@ class AppImages {
   static const rightArrowImg = root + "right_arrow.png";
   static const backArrowImg = root + "back_arrow.png";
 
+  static const minusImgLogo = root + "minus-button.png";
+
+
   static const menuHomeImg = root + "home.png";
   static const menuHome1Img = root + "home1.png";
   static const menuListImg = root + "list.png";
@@ -70,4 +73,6 @@ class AppImages {
   static const appointReportSvgLogo = svgRoot + "appointments_logo.svg";
   static const invoiceSvgLogo = svgRoot + "invoice_logo.svg";
   static const subscriptionsSvgLogo = svgRoot + "subscription_logo.svg";
+
+
 }

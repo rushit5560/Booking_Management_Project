@@ -154,18 +154,38 @@ class CriteriaData {
     required this.resourceId,
     required this.name,
     required this.options,
+    required this.parentId,
+    required this.price,
+    // this.criteriaSelectedId,
+    // this.subCriteriaSelectedId,
+    // required this.criteriaPrice,
+    // this.criteriaId,
+    // this.parentCriteriaId,
+    required this.subCriteria,
   });
 
   final int id;
   final int resourceId;
   final String name;
   final String options;
+  final int parentId;
+  final double price;
+  // final dynamic criteriaSelectedId;
+  // final dynamic subCriteriaSelectedId;
+  // final int criteriaPrice;
+  // final dynamic criteriaId;
+  // final dynamic parentCriteriaId;
+  final List<CriteriaData> subCriteria;
 
   factory CriteriaData.fromJson(Map<String, dynamic> json) => CriteriaData(
         id: json["id"] ?? 0,
         resourceId: json["resourceId"] ?? 0,
         name: json["name"] ?? "",
         options: json["options"] ?? "",
+        parentId: json["parentId"] ?? 0,
+        price: (json["price"] ?? 0).toDouble(),
+        subCriteria: List<CriteriaData>.from(
+            (json["subCriteria"] ?? []).map((x) => CriteriaData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -173,6 +193,7 @@ class CriteriaData {
         "resourceId": resourceId,
         "name": name,
         "options": options,
+        "subCriteria": List<dynamic>.from(subCriteria.map((x) => x.toJson())),
       };
 }
 

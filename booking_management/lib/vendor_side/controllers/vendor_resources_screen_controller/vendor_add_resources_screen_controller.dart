@@ -44,11 +44,13 @@ class VendorAddResourcesScreenController extends GetxController {
   List<String> criteriaIdNumberList = [];
   List<TextEditingController> criteriaNameControllerList = [];
   List<TextEditingController> criteriaOptionControllerList = [];
+  List<TextEditingController> criteriaPriceControllerList = [];
 
   List<Map<String, String>> criteriaObjectList = [];
 
   TextEditingController criteriaNameFieldController = TextEditingController();
   TextEditingController criteriaOptionFieldController = TextEditingController();
+  TextEditingController criteriaPriceFieldController = TextEditingController();
 
   File? addFile;
 
@@ -61,12 +63,14 @@ class VendorAddResourcesScreenController extends GetxController {
 
     criteriaNameControllerList.add(criteriaNameFieldController);
     criteriaOptionControllerList.add(criteriaOptionFieldController);
+    criteriaPriceControllerList.add(criteriaPriceFieldController);
 
     criteriaList = [
       CriteriaFormWidget(
         index: 0,
         criteriaNameFieldController: criteriaNameControllerList[0],
         optionFieldController: criteriaOptionControllerList[0],
+        priceFieldController: criteriaPriceControllerList[0],
       ),
     ];
   }
@@ -102,8 +106,9 @@ class VendorAddResourcesScreenController extends GetxController {
       // stream.cast();
       // var length = await addFile!.length();
 
-      if(addFile != null) {
-        request.files.add(await http.MultipartFile.fromPath("Image", addFile!.path));
+      if (addFile != null) {
+        request.files
+            .add(await http.MultipartFile.fromPath("Image", addFile!.path));
       }
 
       request.headers.addAll(apiHeader.headers);
@@ -156,18 +161,23 @@ class VendorAddResourcesScreenController extends GetxController {
           .transform(const LineSplitter())
           .listen((value) async {
         log("value : $value");
-        AddVendorResourceModel addVendorResourceModel = AddVendorResourceModel.fromJson(json.decode(value));
+        AddVendorResourceModel addVendorResourceModel =
+            AddVendorResourceModel.fromJson(json.decode(value));
         isSuccessStatus = addVendorResourceModel.success.obs;
         log("Code : ${addVendorResourceModel.statusCode}");
 
         if (isSuccessStatus.value) {
-          Fluttertoast.showToast(msg: addVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+              msg: addVendorResourceModel.message,
+              toastLength: Toast.LENGTH_SHORT);
           removeFieldData();
           await vendorResScreenController.getAllResourceAPI();
           Get.back();
         } else {
           log("addVendorResourcesFunction Else Else ${addVendorResourceModel.message}");
-          Fluttertoast.showToast(msg: addVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+              msg: addVendorResourceModel.message,
+              toastLength: Toast.LENGTH_SHORT);
         }
       });
     } catch (e) {
@@ -182,7 +192,7 @@ class VendorAddResourcesScreenController extends GetxController {
     resourceDetailsFieldController.clear();
     resourcePriceFieldController.clear();
     // file!.deleteSync();
-    if(addFile != null) {
+    if (addFile != null) {
       addFile!.deleteSync();
     }
     //updatePhotoUrl = "";

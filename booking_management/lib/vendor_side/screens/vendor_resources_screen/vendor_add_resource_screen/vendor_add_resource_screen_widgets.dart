@@ -21,7 +21,7 @@ class AddResourceFormModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('VendorAddResourcesScreenController.isEvent.value: ${vendorAddResourcesScreenController.isEvent.value}');
+    // log('VendorAddResourcesScreenController.isEvent.value: ${vendorAddResourcesScreenController.isEvent.value}');
     return SingleChildScrollView(
       child: Form(
         key: vendorAddResourcesScreenController.resourceAddFormKey,
@@ -421,6 +421,8 @@ class IsAdditionalCriteriaModule extends StatelessWidget {
                             .criteriaNameControllerList[0],
                     optionFieldController: vendorAddResourcesScreenController
                         .criteriaOptionControllerList[0],
+                    priceFieldController: vendorAddResourcesScreenController
+                        .criteriaPriceControllerList[0],
                   ),
                 ];
               }
@@ -483,11 +485,15 @@ class _CriteriaManageAddModuleState extends State<CriteriaManageAddModule> {
                   TextEditingController();
               TextEditingController criteriaOptionFieldController =
                   TextEditingController();
+              TextEditingController criteriaPriceFieldController =
+                  TextEditingController();
 
               vendorAddResourcesScreenController.criteriaNameControllerList
                   .add(criteriaNameFieldController);
               vendorAddResourcesScreenController.criteriaOptionControllerList
                   .add(criteriaOptionFieldController);
+              vendorAddResourcesScreenController.criteriaPriceControllerList
+                  .add(criteriaPriceFieldController);
 
               vendorAddResourcesScreenController.criteriaList.add(
                 CriteriaFormWidget(
@@ -497,8 +503,12 @@ class _CriteriaManageAddModuleState extends State<CriteriaManageAddModule> {
                           .criteriaNameControllerList[iNumber],
                   optionFieldController: vendorAddResourcesScreenController
                       .criteriaOptionControllerList[iNumber],
+                  priceFieldController: vendorAddResourcesScreenController
+                      .criteriaPriceControllerList[iNumber],
                 ),
               );
+
+              log("criteias list lentgh is : ${vendorAddResourcesScreenController.criteriaList}");
             },
             child: const Center(
               child: Text(
@@ -512,33 +522,37 @@ class _CriteriaManageAddModuleState extends State<CriteriaManageAddModule> {
           ),
         ),
         // ),
-        // Obx(
-        //   () =>
-        vendorAddResourcesScreenController.criteriaList.isEmpty
-            ? const SizedBox()
-            : ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                itemCount:
-                    vendorAddResourcesScreenController.criteriaList.length,
-                itemBuilder: (BuildContext context, int i) {
-                  return vendorAddResourcesScreenController.criteriaList[i];
-                  /* return CriteriaFormWidget(
-                    index: index,
-                  );*/
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    height: 25,
-                    color: AppColors.colorGreyIconLight,
-                    thickness: 0.6,
-                  );
-                },
-              ),
+        Obx(
+          () => vendorAddResourcesScreenController.isLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : vendorAddResourcesScreenController.criteriaList.isEmpty
+                  ? const SizedBox()
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      itemCount: vendorAddResourcesScreenController
+                          .criteriaList.length,
+                      itemBuilder: (BuildContext context, int i) {
+                        return vendorAddResourcesScreenController
+                            .criteriaList[i];
+                        /* return CriteriaFormWidget(
+                             index: index,
+                        );*/
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(height: 5);
 
-        // ),
+                        // return Divider(
+                        //   height: 25,
+                        //   color: AppColors.colorGreyIconLight,
+                        //   thickness: 0.6,
+                        // );
+                      },
+                    ),
+        ),
         // addCriteriaFormWidget(inputBorder),
       ],
     );
@@ -549,12 +563,14 @@ class CriteriaFormWidget extends StatefulWidget {
   final int index;
   TextEditingController criteriaNameFieldController;
   TextEditingController optionFieldController;
+  TextEditingController priceFieldController;
 
   CriteriaFormWidget({
     Key? key,
     required this.index,
     required this.criteriaNameFieldController,
     required this.optionFieldController,
+    required this.priceFieldController,
   }) : super(key: key);
 
   @override
@@ -575,117 +591,176 @@ class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
         color: AppColors.colorGreyIconLight,
         width: 0.8,
       ),
-      borderRadius: const BorderRadius.all(Radius.circular(12)),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
     );
     return Obx(
       () => vendorAddResourcesScreenController.isLoading.value
           ? const CustomCircularLoaderModule()
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
+          : Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    offset: const Offset(0, 0),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Criteria Name*",
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                      GestureDetector(
+                        onTap: () {
+                          vendorAddResourcesScreenController.isLoading(true);
+                          setState(() {});
+                          vendorAddResourcesScreenController.criteriaList
+                              .removeAt(widget.index);
+                          vendorAddResourcesScreenController
+                              .criteriaNameControllerList
+                              .removeAt(widget.index);
+                          vendorAddResourcesScreenController
+                              .criteriaOptionControllerList
+                              .removeAt(widget.index);
+                          vendorAddResourcesScreenController.isLoading(false);
+
+                          log("criteias list lentgh is : ${vendorAddResourcesScreenController.criteriaList}");
+                        },
+                        child: Container(
+                          height: 28,
+                          width: 28,
+                          decoration: BoxDecoration(
+                            color: AppColors.redColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.close,
+                              size: 20,
+                              color: AppColors.whiteColor,
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          TextFormField(
-                            controller: widget.criteriaNameFieldController,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 12),
-                              isDense: true,
-                              border: inputBorder,
-                              enabledBorder: inputBorder,
-                              focusedBorder: inputBorder,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Option to select from*",
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          TextFormField(
-                            controller: widget.optionFieldController,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 12),
-                              isDense: true,
-                              border: inputBorder,
-                              enabledBorder: inputBorder,
-                              focusedBorder: inputBorder,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  height: 35,
-                  width: 75,
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.redColor,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2, vertical: 10),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Criteria Name *",
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            TextFormField(
+                              controller: widget.criteriaNameFieldController,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 12),
+                                isDense: true,
+                                border: inputBorder,
+                                enabledBorder: inputBorder,
+                                focusedBorder: inputBorder,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    onPressed: () {
-                      vendorAddResourcesScreenController.isLoading(true);
-                      setState(() {
-                        vendorAddResourcesScreenController.criteriaList
-                            .removeAt(widget.index);
-                        vendorAddResourcesScreenController
-                            .criteriaNameControllerList
-                            .removeAt(widget.index);
-                        vendorAddResourcesScreenController
-                            .criteriaOptionControllerList
-                            .removeAt(widget.index);
-                      });
-                      vendorAddResourcesScreenController.isLoading(false);
-                    },
-                    child: const Center(
-                      child: Text(
-                        "Remove",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Option to select from *",
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            TextFormField(
+                              controller: widget.optionFieldController,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 12),
+                                isDense: true,
+                                border: inputBorder,
+                                enabledBorder: inputBorder,
+                                focusedBorder: inputBorder,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Price *",
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            TextFormField(
+                              controller: widget.priceFieldController,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 12),
+                                isDense: true,
+                                border: inputBorder,
+                                enabledBorder: inputBorder,
+                                focusedBorder: inputBorder,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // ListView.separated(
+                  //     itemBuilder: (context, index) {
+                  //       return SubCriteriaSingleWidget();
+                  //     },
+                  //     separatorBuilder: (ctx, ind) {
+                  //       return Container();
+                  //     },
+                  //     itemCount: ,
+
+                  //     ),
+                ],
+              ),
             ),
     );
   }
@@ -706,47 +781,53 @@ class ResourceCreateButton extends StatelessWidget {
             Fluttertoast.showToast(msg: "Image is required");
           }*/
           // else {
-            for (int i = 0;
-                i <
-                    vendorAddResourcesScreenController
-                        .criteriaNameControllerList.length;
-                i++) {
-              vendorAddResourcesScreenController.criteriaObjectList.add({
-                "Name": vendorAddResourcesScreenController
-                    .criteriaNameControllerList[i].text
-                    .trim(),
-                "Options": vendorAddResourcesScreenController
-                    .criteriaOptionControllerList[i].text
-                    .trim(),
-              });
-              log("criteria object  list  map :: ${vendorAddResourcesScreenController.criteriaObjectList[i]}");
-            }
-            // log("criteria object  list  map :: ${VendorAddResourcesScreenController.criteriaObjectList}");
 
-            // for (int i = 0;
-            //     i <
-            //         VendorAddResourcesScreenController
-            //             .criteriaOptionControllerList.length;
-            //     i++) {
-            //   log("criteriaOption list text :: ${VendorAddResourcesScreenController.criteriaOptionControllerList[i].text}");
-            // }
-            await vendorAddResourcesScreenController
-                .addVendorResourcesFunction();
+          vendorAddResourcesScreenController.criteriaObjectList.clear();
+          for (int i = 0;
+              i <
+                  vendorAddResourcesScreenController
+                      .criteriaNameControllerList.length;
+              i++) {
+            vendorAddResourcesScreenController.criteriaObjectList.add({
+              "Name": vendorAddResourcesScreenController
+                  .criteriaNameControllerList[i].text
+                  .trim(),
+              "Options": vendorAddResourcesScreenController
+                  .criteriaOptionControllerList[i].text
+                  .trim(),
+              "Price": vendorAddResourcesScreenController
+                  .criteriaPriceControllerList[i].text
+                  .trim(),
+            });
+            log("criteria object  list  map :: ${vendorAddResourcesScreenController.criteriaObjectList[i]}");
           }
+
+          await vendorAddResourcesScreenController.addVendorResourcesFunction();
+
+          // log("criteria object  list  map :: ${VendorAddResourcesScreenController.criteriaObjectList}");
+
+          // for (int i = 0;
+          //     i <
+          //         VendorAddResourcesScreenController
+          //             .criteriaOptionControllerList.length;
+          //     i++) {
+          //   log("criteriaOption list text :: ${VendorAddResourcesScreenController.criteriaOptionControllerList[i].text}");
+          // }
+        }
         // }
       },
       child: Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(10),
-                color: AppColors.accentColor,
-                boxShadow: [
-          BoxShadow(
-            // spreadRadius: 3,
-            blurRadius: 5,
-            color: Colors.grey.shade300,
-            blurStyle: BlurStyle.outer,
-          ),
-        ]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.accentColor,
+            boxShadow: [
+              BoxShadow(
+                // spreadRadius: 3,
+                blurRadius: 5,
+                color: Colors.grey.shade300,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
           child: Text(
@@ -762,3 +843,156 @@ class ResourceCreateButton extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+// class CriteriaFormWidget extends StatefulWidget {
+//   final int index;
+//   TextEditingController criteriaNameFieldController;
+//   TextEditingController optionFieldController;
+
+//   CriteriaFormWidget({
+//     Key? key,
+//     required this.index,
+//     required this.criteriaNameFieldController,
+//     required this.optionFieldController,
+//   }) : super(key: key);
+
+//   @override
+//   State<CriteriaFormWidget> createState() => _CriteriaFormWidgetState();
+// }
+
+// class _CriteriaFormWidgetState extends State<CriteriaFormWidget> {
+//   final vendorAddResourcesScreenController =
+//       Get.find<VendorAddResourcesScreenController>();
+
+//   // TextEditingController criteriaNameFieldController = TextEditingController();
+//   // TextEditingController optionFieldController = TextEditingController();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final inputBorder = OutlineInputBorder(
+//       borderSide: BorderSide(
+//         color: AppColors.colorGreyIconLight,
+//         width: 0.8,
+//       ),
+//       borderRadius: const BorderRadius.all(Radius.circular(12)),
+//     );
+//     return Obx(
+//       () => vendorAddResourcesScreenController.isLoading.value
+//           ? const CustomCircularLoaderModule()
+//           : Row(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 Expanded(
+//                   child: Column(
+//                     children: [
+//                       Column(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const Text(
+//                             "Criteria Name*",
+//                             maxLines: 2,
+//                             style: TextStyle(
+//                               fontWeight: FontWeight.w500,
+//                               fontSize: 14,
+//                             ),
+//                           ),
+//                           const SizedBox(height: 5),
+//                           TextFormField(
+//                             controller: widget.criteriaNameFieldController,
+//                             textInputAction: TextInputAction.done,
+//                             decoration: InputDecoration(
+//                               contentPadding: const EdgeInsets.symmetric(
+//                                   vertical: 12, horizontal: 12),
+//                               isDense: true,
+//                               border: inputBorder,
+//                               enabledBorder: inputBorder,
+//                               focusedBorder: inputBorder,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       const SizedBox(height: 5),
+//                       Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const Text(
+//                             "Option to select from*",
+//                             maxLines: 2,
+//                             style: TextStyle(
+//                               fontWeight: FontWeight.w500,
+//                               fontSize: 14,
+//                             ),
+//                           ),
+//                           const SizedBox(height: 5),
+//                           TextFormField(
+//                             controller: widget.optionFieldController,
+//                             textInputAction: TextInputAction.next,
+//                             decoration: InputDecoration(
+//                               contentPadding: const EdgeInsets.symmetric(
+//                                   vertical: 12, horizontal: 12),
+//                               isDense: true,
+//                               border: inputBorder,
+//                               enabledBorder: inputBorder,
+//                               focusedBorder: inputBorder,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 const SizedBox(width: 8),
+//                 Container(
+//                   height: 35,
+//                   width: 75,
+//                   margin: const EdgeInsets.symmetric(vertical: 5),
+//                   child: ElevatedButton(
+//                     style: ElevatedButton.styleFrom(
+//                       primary: AppColors.redColor,
+//                       padding: const EdgeInsets.symmetric(
+//                           horizontal: 2, vertical: 10),
+//                       shape: const RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.all(
+//                           Radius.circular(10),
+//                         ),
+//                       ),
+//                     ),
+//                     onPressed: () {
+//                       vendorAddResourcesScreenController.isLoading(true);
+//                       setState(() {});
+//                       vendorAddResourcesScreenController.criteriaList
+//                           .removeAt(widget.index);
+//                       vendorAddResourcesScreenController
+//                           .criteriaNameControllerList
+//                           .removeAt(widget.index);
+//                       vendorAddResourcesScreenController
+//                           .criteriaOptionControllerList
+//                           .removeAt(widget.index);
+//                       vendorAddResourcesScreenController.isLoading(false);
+
+//                       log("criteias list lentgh is : ${vendorAddResourcesScreenController.criteriaList}");
+//                     },
+//                     child: const Center(
+//                       child: Text(
+//                         "Remove",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.w500,
+//                           fontSize: 13,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//     );
+//   }
+// }

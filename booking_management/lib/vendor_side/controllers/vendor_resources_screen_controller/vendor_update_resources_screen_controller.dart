@@ -14,6 +14,8 @@ import '../../model/vendor_get_all_resources_list_model/get_vendor_service_detai
 import '../../model/vendor_get_all_resources_list_model/update_vendor_resource_model.dart';
 import '../../screens/vendor_resources_screen/vendor_update_resources_screen/vendor_update_resources_screen_widgets.dart';
 
+enum CriteriaMode { add, update }
+
 class VendorUpdateResourcesScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
@@ -34,16 +36,28 @@ class VendorUpdateResourcesScreenController extends GetxController {
   TextEditingController updateResourceCapacityFieldController =
       TextEditingController();
 
+  List<CriteriaMode> criteriaModeList = [];
+
   /// update resource  values
   RxBool updateEvent = false.obs;
   RxBool updateRequireCriteria = false.obs;
 
   List<Widget> criteriaUpdateList = [];
+  // List<TextEditingController> subCriteriaGetOptionList = [];
+  // List<TextEditingController> subCriteriaGetPriceList = [];
 
   List<String> criteriaIdNumberUpdateList = [];
+
+  //only criteria lissst
   List<TextEditingController> criteriaNameUpdateControllerList = [];
   List<TextEditingController> criteriaOptionUpdateControllerList = [];
+  List<TextEditingController> criteriaPriceUpdateControllerList = [];
 
+  //only criteria lissst
+  // List<List<TextEditingController>> subcriteriaOptionUpdateControllerList = [];
+  // List<List<TextEditingController>> subcriteriaPriceUpdateControllerList = [];
+
+  //passing criteria data to api
   List<Map<String, dynamic>> criteriaObjectUpdateList = [];
 
   // TextEditingController criteriaNameFieldUpdateController =
@@ -152,12 +166,16 @@ class VendorUpdateResourcesScreenController extends GetxController {
         // var multiPart = http.MultipartFile('Image', stream, length);
         // request.files.add(multiPart);
 
-        request.fields['ResourceName'] = updateResourceNameFieldController.text.trim();
-        request.fields['Details'] = updateResourceDetailsFieldController.text.trim();
-        request.fields['Price'] = updateResourcePriceFieldController.text.trim();
+        request.fields['ResourceName'] =
+            updateResourceNameFieldController.text.trim();
+        request.fields['Details'] =
+            updateResourceDetailsFieldController.text.trim();
+        request.fields['Price'] =
+            updateResourcePriceFieldController.text.trim();
         request.fields['id'] = "$selectedItemId";
         request.fields['CreatedBy'] = UserDetails.uniqueId;
-        request.fields['Capacity'] = updateResourceCapacityFieldController.text.isEmpty
+        request.fields['Capacity'] =
+            updateResourceCapacityFieldController.text.isEmpty
                 ? "0"
                 : updateResourceCapacityFieldController.text.trim();
         request.fields['isEvent'] = "${updateEvent.value}";
@@ -188,13 +206,16 @@ class VendorUpdateResourcesScreenController extends GetxController {
           log("Code : ${updateVendorResourceModel.statusCode}");
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: updateVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: updateVendorResourceModel.message,
+                toastLength: Toast.LENGTH_SHORT);
             // removeFieldData();
             vendorResScreenController.getAllResourceAPI();
             Get.back();
           } else {
             log("updateVendorResourcesFunction if file ${updateVendorResourceModel.message}");
-            Fluttertoast.showToast(msg: "Something want wrong!", toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: "Something want wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
       } else if (updateFile == null) {
@@ -240,12 +261,15 @@ class VendorUpdateResourcesScreenController extends GetxController {
           log("Code : ${updateVendorResourceModel.statusCode}");
 
           if (isSuccessStatus.value) {
-            Fluttertoast.showToast(msg: updateVendorResourceModel.message, toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: updateVendorResourceModel.message,
+                toastLength: Toast.LENGTH_SHORT);
             vendorResScreenController.getAllResourceAPI();
             Get.back();
           } else {
             log("updateVendorResourcesFunction Else ${updateVendorResourceModel.message}");
-            Fluttertoast.showToast(msg: "Something want wrong!", toastLength: Toast.LENGTH_SHORT);
+            Fluttertoast.showToast(
+                msg: "Something want wrong!", toastLength: Toast.LENGTH_SHORT);
           }
         });
       }
@@ -276,12 +300,17 @@ class VendorUpdateResourcesScreenController extends GetxController {
 
       if (isSuccessStatus.value) {
         selectedItemId = getResourceDetailsModel.workerList.id;
-        updateResourceNameFieldController.text =getResourceDetailsModel.workerList.resourceName;
-        updateResourceDetailsFieldController.text = getResourceDetailsModel.workerList.details;
-        updateResourcePriceFieldController.text = getResourceDetailsModel.workerList.price.toString();
-        updateResourceCapacityFieldController.text = getResourceDetailsModel.workerList.capacity.toString();
+        updateResourceNameFieldController.text =
+            getResourceDetailsModel.workerList.resourceName;
+        updateResourceDetailsFieldController.text =
+            getResourceDetailsModel.workerList.details;
+        updateResourcePriceFieldController.text =
+            getResourceDetailsModel.workerList.price.toString();
+        updateResourceCapacityFieldController.text =
+            getResourceDetailsModel.workerList.capacity.toString();
         updateEvent.value = getResourceDetailsModel.workerList.isEvent;
-        updateRequireCriteria.value = getResourceDetailsModel.workerList.requireCriteria;
+        updateRequireCriteria.value =
+            getResourceDetailsModel.workerList.requireCriteria;
 
         criteriaGetList = getResourceDetailsModel.workerList.criterias;
 
@@ -326,8 +355,38 @@ class VendorUpdateResourcesScreenController extends GetxController {
             // criteriaOptionUpdateFieldController.text =
             //     criteriaGetList[i].options;
 
-            criteriaNameUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].name));
-            criteriaOptionUpdateControllerList.add(TextEditingController(text: criteriaGetList[i].options));
+            criteriaNameUpdateControllerList
+                .add(TextEditingController(text: criteriaGetList[i].name));
+            criteriaOptionUpdateControllerList
+                .add(TextEditingController(text: criteriaGetList[i].options));
+            criteriaPriceUpdateControllerList.add(TextEditingController(
+                text: criteriaGetList[i].price.toString()));
+
+            List<TextEditingController> subCriteriaGetOptionList = [];
+            List<TextEditingController> subCriteriaGetPriceList = [];
+
+            if (criteriaGetList[i].subCriteria.isEmpty) {
+              criteriaModeList.add(CriteriaMode.add);
+            } else {
+              //criteria mode assign
+              criteriaModeList.add(CriteriaMode.update);
+
+              for (int j = 0; j < criteriaGetList[i].subCriteria.length; j++) {
+                CriteriaData singleSubCriteria =
+                    criteriaGetList[i].subCriteria[j];
+
+                //options controller adding to OptionList
+                subCriteriaGetOptionList.add(
+                  TextEditingController(text: singleSubCriteria.options),
+                );
+                //price  controller adding to PriceList
+                subCriteriaGetPriceList.add(TextEditingController(
+                  text: singleSubCriteria.price.toString(),
+                ));
+                log(" singleSubCriteria.options is  :: ${singleSubCriteria.options.toString()}");
+                log("singleSubCriteria.price is  :: ${singleSubCriteria.price.toString()}");
+              }
+            }
 
             criteriaUpdateList.add(
               CriteriaFormUpdateWidget(
@@ -336,6 +395,10 @@ class VendorUpdateResourcesScreenController extends GetxController {
                 criteriaNameFieldController:
                     criteriaNameUpdateControllerList[i],
                 optionFieldController: criteriaOptionUpdateControllerList[i],
+                priceFieldController: criteriaPriceUpdateControllerList[i],
+                criteriaModeIs: criteriaModeList[i],
+                optionContollerList: subCriteriaGetOptionList,
+                priceContollerList: subCriteriaGetPriceList,
               ),
             );
           }
@@ -353,7 +416,10 @@ class VendorUpdateResourcesScreenController extends GetxController {
         // updateTimeDuration = getServiceDetailsModel.workerList.timeDuration.obs;
 
       } else {
-        Fluttertoast.showToast(msg: "Something went wrong!", toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+          msg: "Something went wrong!",
+          toastLength: Toast.LENGTH_SHORT,
+        );
         log("getResourcesDetailsByIdFunction Else Else");
       }
     } catch (e) {
@@ -369,6 +435,7 @@ class VendorUpdateResourcesScreenController extends GetxController {
     updateResourceDetailsFieldController.clear();
     updateResourcePriceFieldController.clear();
     updateResourceCapacityFieldController.clear();
+
     // file!.deleteSync();
     updateFile!.delete();
     //updatePhotoUrl = "";
